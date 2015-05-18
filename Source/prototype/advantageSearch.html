@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
+        <link rel="stylesheet" type="text/css" href="font-awesome-4.3.0/css/font-awesome.min.css">
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+    </head>
+    <body>
+        <nav style="background-color: #01579b">
+            <div class="nav-wrapper">
+                <a href="home.html" class="brand-logo">Logo</a>
+                <a href="home.html" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">Consign</a></li>                  
+                    <li><a href="#">Help & Contact</a></li>
+                    <li><a href="#">Sign in</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="#">Consign</a></li>                  
+                    <li><a href="#">Help & Contact</a></li>
+                    <li><a href="#">Sign in</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="wrapper" class="container z-depth-1" style="min-height:600px; border:solid 1px #616161;margin-top:50px">
+            <div style="margin-top: 50px">
+                <h4 style="color: #F44336">Advantage Search</h4>
+            </div>
+
+            <div class="row">
+                <div class="col s12 l12 m12">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a class="active" href="#test1">by items</a></li>
+                        <li class="tab col s3"><a href="#test2">by sellers</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12">
+                    <div class="row" style="margin-top: 50px">
+                        <form class="col s12">
+                            <h5>Key words</h5>   
+                            <div class="row">                                                         
+                                <div class="input-field col s6 l3 m4 offset-l2 offset-m3" style="padding-top: 15px">
+                                    <i class="mdi-communication-vpn-key prefix"></i>
+                                    <input id="txtkey" type="text" class="validate">
+                                    <label style="padding-top: 15px" for="txtkey">Key words</label>
+                                </div>
+                                <div class="input-field col s6 l3 m4">
+                                    <select id="typeKey">
+                                        <option value="Women">All words</option>
+                                        <option value="Men">Exactly words</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <h5>Price</h5>
+                            <div class="row">                               
+                                <div class="input-field col s6 l3 m4 offset-l2 offset-m3">
+                                    <i class="mdi-editor-attach-money prefix"></i>
+                                    <input id="txtkey" type="text" class="validate">
+                                    <label for="txtkey">From</label>
+                                </div>
+                                <div class="input-field col s6 l3 m4">
+                                    <input id="txtkey" type="text" class="validate">
+                                    <label for="txtkey">To</label>
+                                </div>
+                            </div>
+                            <h5>Category</h5>
+                            <div class="row">                               
+                                <div class="col s12 l6 m6 offset-l2 offset-m3">
+                                    <select id="typeKey">
+                                        <option value="all">All categories</option>
+                                        <option value="Women">Women</option>
+                                        <option value="Men">Men</option>
+                                        <option value="Baby">Baby</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <h5>Condition</h5>
+                            <div class="row">
+                                <div class="col s12 l1 m4 offset-l2 offset-m3">
+                                    <p>
+                                        <input type="checkbox" id="chk1" />
+                                        <label for="chk1">New</label>
+                                    </p>
+                                </div>
+                                <div class="col s12 l1 m4 offset-l2 offset-m3">
+                                    <p>
+                                        <input type="checkbox" id="chk2" />
+                                        <label for="chk2">Used</label>
+                                    </p>
+                                </div>
+                                <div class="col s12 l3 m4 offset-l2 offset-m3">
+                                    <p>
+                                        <input type="checkbox" id="chk3" />
+                                        <label for="chk3">Not Specified</label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div style="padding-top: 5px; text-align: center; margin-top: 5px " class="col s12 m4 l5 offset-l7 offset-m8">
+                                    <button style="background-color:  #F44336" id="btnSearch" class="waves-effect waves-light btn btn-large btn-fullwidth btn-flat disabled" ><i class="mdi-action-search right"></i>Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="test2" class="col s12">
+                    <div class="row" style="margin-top: 50px">
+                        <h5>User's ID</h5>   
+                        <div class="row">                                                         
+                            <div class="input-field col s6 l3 m4 offset-l2 offset-m3" style="padding-top: 15px">
+                                <i class="mdi-communication-vpn-key prefix"></i>
+                                <input id="txtkey" type="text" class="validate">
+                                <label style="padding-top: 15px" for="txtkey">User's ID</label>
+                            </div>
+                            <div class="input-field col s6 l3 m4">
+                                <select id="typeKey">
+                                    <option value="Women">All words</option>
+                                    <option value="Men">Exactly words</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div style="padding-top: 5px; text-align: center; margin-top: 5px " class="col s12 m4 l5 offset-l7 offset-m8">
+                            <button style="background-color:  #F44336" id="btnSearch" class="waves-effect waves-light btn btn-large btn-fullwidth btn-flat disabled" ><i class="mdi-action-search right"></i>Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <footer style="background-color: #01579b" class="page-footer">
+            <div id="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Hanging Product Store</h5>
+                        <p class="grey-text text-lighten-4">Address!</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Follow Us</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Twitter</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Google+</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2015 Group 8
+                    <a class="grey-text text-lighten-4 right" href="#!">Designed by Hoang Nguyen</a>
+                </div>
+            </div>
+        </footer>
+        <script>
+            $(document).ready(function () {
+                //nav bar
+                $(".button-collapse").sideNav();
+                //Date time picker
+                $('.datepicker').pickadate({
+                    selectMonths: false, // Creates a dropdown to control month
+                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                });
+                //dropdown selection
+                $('select').material_select();
+                //validate Search
+                validateSearch();
+                // parallax 
+                $('.parallax').parallax();
+
+            });
+            function validateSearch() {
+                var temp = false;
+                if ($('#category').val() !== null) {
+                    temp = true;
+                }
+                ;
+                if (temp) {
+                    $('#btnSearch').removeClass('btn-flat disabled');
+                    $('#btnSearch').addClass('myButton');
+                } else {
+                    $('#btnSearch').addClass('btn-flat disabled');
+                }
+                ;
+            }
+
+
+        </script>
+    </body>
+</html>
