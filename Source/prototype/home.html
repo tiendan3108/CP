@@ -25,14 +25,14 @@ and open the template in the editor.
                     <li><a href="#">Help & Contact</a></li>
                     <li><a href="#">Sign in</a></li>
                     <li><a href="#">Register</a></li>
-                   <li><a href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
+                    <li><a onclick="$('#modal3').openModal();" href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
                 </ul>
                 <ul class="side-nav" id="mobile-demo">
                     <li><a href="#">Consign</a></li>                  
                     <li><a href="#">Help & Contact</a></li>
                     <li><a href="#">Sign in</a></li>
                     <li><a href="#">Register</a></li>
-                    <li><a href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
+                    <li><a onclick="$('#modal3').openModal();" href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
                 </ul>
             </div>
         </nav>
@@ -63,7 +63,7 @@ and open the template in the editor.
                 </div>
                 <div class="col s12 offset-l7 offset-m7">
                     <a href="advantageSearch.html">Advantage Search</a>
-                     <!-- Modal Structure -->
+                    <!-- Modal Structure -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>Modal Header</h4>
@@ -288,7 +288,8 @@ and open the template in the editor.
                 //validate Search
                 validateSearch();
                 // parallax 
-                $('.parallax').parallax();         
+                $('.parallax').parallax();
+                $('.modal-trigger').leanModal();
             });
             function validateSearch() {
                 var temp = false;
@@ -307,5 +308,69 @@ and open the template in the editor.
 
 
         </script>
+        <div id="modal3" class="modal bottom-sheet" style="display: block; opacity: 0; bottom: -100%;">
+            <div class="modal-content">
+                <h4>Cart Management</h4>
+                <table class="hoverable bordered">
+                    <thead>
+                        <tr>
+                            <th data-field="id">Product Name</th>
+                            <th data-field="name">Quantity</th>
+                            <th data-field="price">Price($)</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>aber</td>
+                            <td><select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select>                        
+                            </td>
+                            <td>12</td>
+                            <td><i class="small mdi-action-delete"></i></td>
+                        </tr>
+                        <tr>
+                            <td>levis</td>
+                            <td><select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select></td>
+                            <td>5</td>
+                            <td><i class="small mdi-action-delete"></i></td>
+                        </tr>
+                        <tr>
+                            <td>CK</td>
+                            <td><select>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select></td>
+                            <td>10</td>
+                            <td>                             
+                                <i class="small mdi-action-delete"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Total</td>
+                            <td><span style="font-weight: bold">27</span></td>
+                            <td></td>
+                        </tr>                  
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div class="col s12 m3 l3">
+                    <a style="background-color:#F44336" class="btn waves-effect waves-light">Checkout
+                        <i class="mdi-content-send right"></i>
+                    </a>
+                </div>
+                </div>
+                
+            </div>
+        </div>
     </body>
 </html>
