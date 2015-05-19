@@ -1,6 +1,8 @@
 /* General CSS */
 #wrapper{
     min-height:500px;
+	width: 90%;
+	margin:auto;
 }
 ::-webkit-scrollbar {
     width: 12px;
