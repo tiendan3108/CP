@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
+        <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
+        <link rel="stylesheet" type="text/css" href="font-awesome-4.3.0/css/font-awesome.min.css">
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/materialize.js"></script>
+    </head>
+    <body>
+        <div class="navbar-fixed">
+            <nav style="background-color: #01579b">
+                <div class="nav-wrapper">
+                    <<a href="home.html" class="brand-logo">Logo</a>
+                    <a href="home.html" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#">Hello Store Owner</a></li>                  
+                        <li><a href="#">Manage Product</a></li>
+                        <li><a href="#">Manage Payment</a></li>
+                        <li><a onclick="$('#modal3').openModal();" href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li><a href="#">Hello Store Owner</a></li>                  
+                        <li><a href="#">Manage Product</a></li>
+                        <li><a href="#">Manage Payment</a></li>
+                        <li><a onclick="$('#modal3').openModal();" href="#"><i style="color: #F44336" class="large mdi-action-add-shopping-cart"></i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Add code here -->
+        <div id="wrapper">
+            <h4 style="color: #F44336">Manage Payment</h4>
+            <div class="row">
+
+                <div class="col s12 l12 m12">
+                    <ul class="tabs">
+                        <li class="tab col s3"><a class="active" href="#test1">Overview</a></li>
+                        <li class="tab col s3"><a class="active" href="#test2">Provide info</a></li>
+                        <li class="tab col s3"><a class="active" href="#test3">Submit payment</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12">
+                    <table class="responsive-table">
+                        <thead>
+                            <tr>
+                                <th data-field="id">Consignor</th>
+                                <th data-field="name">Item Name</th>
+                                <th data-field="price">Item Price</th>
+                                <th data-field="price">Status</th>
+                                <th data-field="price">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Alvin</td>
+                                <td>Jean</td>
+                                <td>$0.87</td>
+                                <td>On web</td>
+                                <td><a class="btn-large disabled">Transfer</a></td>
+                            </tr>
+                            <tr>
+                                <td>Alan</td>
+                                <td>Watch</td>
+                                <td>$3.76</td>
+                                <td>Sold</td>
+                                <td><a id="btnOne" class="waves-effect waves-light btn">Transfer</a></td>
+                            </tr>
+                            <tr>
+                                <td>Jonathan</td>
+                                <td>Jewels</td>
+                                <td>$7.00</td>
+                                <td>In inventory</td>
+                                <td><a class="btn-large disabled">Transfer</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="test2" class="col s12">
+                    <div class="row">
+                        <div class="col s6">
+                            <p>Consignor info</p>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input value="Alan" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input value="+84 234 25231" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Phone</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input value="North Riding, Johannesburg, 2161" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Address</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input value="4221 5100 0807 5189" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Credit card</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <p>Store owner infor</p>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <input value="Alibaba" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <input value="9875 2341 3453 1252" id="first_name2" type="text" class="validate">
+                                    <label class="active" for="first_name2">Credit Card</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="row">
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="row" align="right"> 
+                                <button style="background-color:  #37474f" id="btnBack2" class="waves-effect waves-light btn btn-large btn-fullwidth myButton">Back</button>
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="row" align="left"> 
+                                <button style="background-color:  #ff6f00" id="btnNext2" class="waves-effect waves-light btn btn-large btn-fullwidth myButton">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="test3">
+                    <div class="row">
+                        <p>cac thong tin bao con lai cua chuyen khoan</p>
+                        <p>Số tiền: </p>
+                        <p>Nội dung: </p>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <div class="row">
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="row" align="right"> 
+                                <button style="background-color:  #37474f" id="btnBack3" class="waves-effect waves-light btn btn-large btn-fullwidth myButton">Back</button>
+                            </div>
+                        </div>
+                        <div class="col s3">
+                            <div class="row" align="left"> 
+                                <button style="background-color:  #ff6f00" id="btnSubmit" class="waves-effect waves-light btn btn-large btn-fullwidth myButton">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer -->
+        <footer style="background-color: #01579b" class="page-footer">
+            <div id="container">
+                <div class="row">
+                    <div class="col l6 s12">
+                        <h5 class="white-text">Hanging Product Store</h5>
+                        <p class="grey-text text-lighten-4">Address!</p>
+                    </div>
+                    <div class="col l4 offset-l2 s12">
+                        <h5 class="white-text">Follow Us</h5>
+                        <ul>
+                            <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Twitter</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Google+</a></li>
+                            <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2015 Group 8
+                    <a class="grey-text text-lighten-4 right" href="#!">Designed by Hoang Nguyen</a>
+                </div>
+            </div>
+        </footer>
+        <script>
+            $(document).ready(function () {
+                //nav bar
+                $(".button-collapse").sideNav();
+                //Date time picker
+                $('.datepicker').pickadate({
+                    selectMonths: false, // Creates a dropdown to control month
+                    selectYears: 15 // Creates a dropdown of 15 years to control year
+                });
+                //dropdown selection
+                $('select').material_select();
+                //validate Search
+                validateSearch();
+                // parallax 
+                $('.parallax').parallax();
+
+            });
+            function validateSearch() {
+                var temp = false;
+                if ($('#category').val() !== null) {
+                    temp = true;
+                }
+                ;
+                if (temp) {
+                    $('#btnSearch').removeClass('btn-flat disabled');
+                    $('#btnSearch').addClass('myButton');
+                } else {
+                    $('#btnSearch').addClass('btn-flat disabled');
+                }
+                ;
+            }
+            $('#btnOne').on('click', function (e) {
+                $('ul.tabs').tabs('select_tab', 'test2');
+                window.scrollTo(0, 0);
+            })
+            $('#btnBack2').on('click', function (e) {
+                $('ul.tabs').tabs('select_tab', 'test1');
+                window.scrollTo(0, 0);
+            })
+            $('#btnNext2').on('click', function (e) {
+                $('ul.tabs').tabs('select_tab', 'test3');
+                window.scrollTo(0, 0);
+            })
+            $('#btnBack3').on('click', function (e) {
+                $('ul.tabs').tabs('select_tab', 'test2');
+                window.scrollTo(0, 0);
+            })
+            $('#btnSubmit').on('click', function (e) {
+                Materialize.toast('Payment request(s) has been completed!', 3000, 'rounded');
+                $('ul.tabs').tabs('select_tab', 'test1');
+                window.scrollTo(0, 0);
+            })
+
+        </script>
+    </body>
+</html>
