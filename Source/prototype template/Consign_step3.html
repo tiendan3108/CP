@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="txtFullName" class="col-sm-3 control-label">Full name<font color="red">*</font></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" maxlength="30" name="defaultconfig" id="maxlength_defaultconfig">
+                                <input type="text" class="form-control" maxlength="50" name="defaultconfig" id="maxlength_defaultconfig">
 
 								<p class="help-block"> </p>
 								</div>
@@ -116,19 +116,9 @@
 						<div class="form-group">
                             <label for="txtIdNumber" class="col-sm-3 control-label"> ID number<font color="red">*</font> </label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="mask_number" type="text"/>
+                                <input class="form-control" id="mask_number" type="text" placeholder="Number only"/>
 
-								<p class="help-block">Number only </p>
-                            </div>
-                        </div>
-						
-						
-                        
-						
-						<div class="form-group">
-                            <label for="txtAddress" class="col-sm-3 control-label"> Address </label>
-                            <div class="col-sm-9">
-                                <textarea id="txtAddress" class="form-control" maxlength="225" rows="4" placeholder="This textarea has a limit of 225 chars."></textarea>
+								<p class="help-block"> </p>
                             </div>
                         </div>
 						
@@ -138,11 +128,20 @@
 				</div>
 				
 				<div class="col-sm-6">
+				<div class="form-horizontal">
+				<div class="form-group">
+                            <label for="txtAddress" class="col-sm-3 control-label"> Address<font color="red">*</font> </label>
+                            <div class="col-sm-9">
+                                <textarea id="txtAddress" class="form-control" maxlength="225" rows="3" placeholder="limit of 225 chars."></textarea>
+                            </div>
+                        </div>
+				
+				
 				<div class="form-group">
                             <label for="txtPhone" class="col-sm-3 control-label"> Phone<font color="red">*</font> </label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="mask_phone" type="text"/>
-								<p class="help-block">Number only </p>
+                                <input class="form-control" id="mask_phone" type="text" placeholder="Number only"/>
+								<p class="help-block"></p>
 								
                             </div>
                         </div>
@@ -150,22 +149,22 @@
 						<div class="form-group">
                             <label for="txtEmail" class="col-sm-3 control-label">Email<font color="red">*</font></label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="txtEmail" placeholder="">
-								<p class="help-block">We will contact you if something comes up </p>
+                                <input type="text" class="form-control" id="txtEmail" placeholder="example@abc.com">
+								<p class="help-block"></p>
 								</div>
 								</div>
 						
 						<div class="form-group">
                             <label for="txtCreditCard" class="col-sm-3 control-label"> Credit card<font color="red">*</font> </label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="mask_ssn" type="text"/>
+                                <input class="form-control" id="mask_ssn" type="text" placeholder="Number only"/>
 
 
-								<p class="help-block">Number only </p>
+								<p class="help-block"></p>
                             </div>
                         </div>
 				</div>
-				
+				</div>
                     </div>
                 
 				
@@ -175,7 +174,7 @@
 						   </div>
 						   <div class="col-sm-4"> </div>
                             <div class="col-sm-4">
-                                <a href="store_consigment_request_list.html" id="btnStep2_1" type="submit" class="btn-block btn-lg btn green" >SUBMIT <i class="m-icon-big-swapup m-icon-white"></i></a>
+                                <a href="#modal_submit" id="btnStep2_1" data-toggle="modal" class="btn-block btn-lg btn green" >SUBMIT <i class="m-icon-big-swapup m-icon-white"></i></a>
                             </div>
                     
 				</div>
@@ -209,6 +208,39 @@
                 </div>
             </footer>
             <!-- END FOOTER -->
+			
+			
+			<div class="modal fade" id="modal_submit" tabindex="-1" role="modal_submit" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+											<h4 class="modal-title">Completed</h4>
+										</div>
+										<div class="modal-body">
+										
+											 <div class="row" align="center">
+											 <h3> <strong> Consign product request has been sent.</strong> <h3>
+											 <h3>  Your item's id is: <font color="blue"><strong>A12345</strong> </font> <h3>
+													
+											 </div>
+										</div>
+										<div class="modal-footer">
+										<div class="row">
+											
+						   <div class="col-sm-4"> </div>
+                            <div class="col-sm-4">
+                                <a href="store_consigment_request_list.html" id="btnStep" class="btn-block btn-lg btn blue" >GO TO ITEM</a>
+                            </div>
+										</div>
+										</div>
+									</div>
+									<!-- /.modal-content -->
+								</div>
+								<!-- /.modal-dialog -->
+							</div>
+							<!-- /.modal -->
+			
             <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
             <script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
             <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>      
