@@ -70,8 +70,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="page-header-inner">
             <!-- BEGIN LOGO -->
             <div class="page-logo">
-                <a href="index.html">
-                    <img src="./assets/admin/layout/img/logo.png" alt="logo" class="logo-default" />
+                <a href="store_dashboard.html">
+                    <h4 class="text-success">Hanging Product Store</h4>
                 </a>
                 <div class="menu-toggler sidebar-toggler hide">
                     <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -85,6 +85,34 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- BEGIN TOP NAVIGATION MENU -->
             <div class="top-menu">
                 <ul class="nav navbar-nav pull-right">
+                    <!-- BEGIN NOTIFICATION DROPDOWN -->
+                    <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+                    <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                            <i class="icon-bell"></i>
+                            <span class="badge badge-default">1</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="external">
+                                <h3><span class="bold">1 pending</span> request</h3>
+                                <a href="store_consigment_request_list.html">view all</a>
+                            </li>
+                            <li>
+                                <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">
+                                    <li>
+                                        <a href="store_consigment_request_detail.html">
+                                            <span class="time">just now</span>
+                                            <span class="details">
+									<span class="label label-sm label-icon label-success">
+									<i class="fa fa-plus"></i>
+									</span> Casio Watch. </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END NOTIFICATION DROPDOWN -->
                     <!-- BEGIN USER LOGIN DROPDOWN -->
                     <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                     <li class="dropdown dropdown-user">
@@ -268,6 +296,192 @@ License: You must have a valid license purchased only from themeforest(the above
                     </div>
                 </div>
                 <!-- END PAGE HEADER-->
+                <!-- BEGIN DASHBOARD STATS -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="dashboard-stat blue-madison">
+                            <div class="visual">
+                                <i class="fa fa-comments"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    1
+                                </div>
+                                <div class="desc">
+                                    New Requests
+                                </div>
+                            </div>
+                            <a class="more" href="store_consigment_request_list.html">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="dashboard-stat red-intense">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    12,5M$
+                                </div>
+                                <div class="desc">
+                                    Total Profit
+                                </div>
+                            </div>
+                            <a class="more" href="#">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="dashboard-stat green-haze">
+                            <div class="visual">
+                                <i class="fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    549
+                                </div>
+                                <div class="desc">
+                                    New Orders
+                                </div>
+                            </div>
+                            <a class="more" href="#">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="dashboard-stat purple-plum">
+                            <div class="visual">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    +89%
+                                </div>
+                                <div class="desc">
+                                    Brand Popularity
+                                </div>
+                            </div>
+                            <a class="more" href="#">
+						View more <i class="m-icon-swapright m-icon-white"></i>
+						</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- END DASHBOARD STATS -->
+                <div class="clearfix">
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet solid bordered grey-cararra">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-bar-chart-o"></i>Site Visits
+                                </div>
+                                <div class="actions">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn grey-steel btn-sm active">
+                                            <input type="radio" name="options" class="toggle" id="option1">New</label>
+                                        <label class="btn grey-steel btn-sm">
+                                            <input type="radio" name="options" class="toggle" id="option2">Returning</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div id="site_statistics_loading">
+                                    <img src="./assets/admin/layout/img/loading.gif" alt="loading" />
+                                </div>
+                                <div id="site_statistics_content" class="display-none">
+                                    <div id="site_statistics" class="chart">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET-->
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <!-- BEGIN PORTLET-->
+                        <div class="portlet solid grey-cararra bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-bullhorn"></i>Revenue
+                                </div>
+                                <div class="actions">
+                                    <div class="btn-group pull-right">
+                                        <a href="" class="btn grey-steel btn-sm dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+									Filter <span class="fa fa-angle-down">
+									</span>
+									</a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li>
+                                                <a href="javascript:;">
+											Q1 2014 <span class="label label-sm label-default">
+											past </span>
+											</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+											Q2 2014 <span class="label label-sm label-default">
+											past </span>
+											</a>
+                                            </li>
+                                            <li class="active">
+                                                <a href="javascript:;">
+											Q3 2014 <span class="label label-sm label-success">
+											current </span>
+											</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+											Q4 2014 <span class="label label-sm label-warning">
+											upcoming </span>
+											</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div id="site_activities_loading">
+                                    <img src="./assets/admin/layout/img/loading.gif" alt="loading" />
+                                </div>
+                                <div id="site_activities_content" class="display-none">
+                                    <div id="site_activities" style="height: 228px;">
+                                    </div>
+                                </div>
+                                <div style="margin: 20px 0 10px 30px">
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                            <span class="label label-sm label-success">
+										Revenue: </span>
+                                            <h3>$13,234</h3>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                            <span class="label label-sm label-info">
+										Tax: </span>
+                                            <h3>$134,900</h3>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                            <span class="label label-sm label-danger">
+										Shipment: </span>
+                                            <h3>$1,134</h3>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-6 text-stat">
+                                            <span class="label label-sm label-warning">
+										Orders: </span>
+                                            <h3>235090</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET-->
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END CONTENT -->
@@ -1006,15 +1220,6 @@ License: You must have a valid license purchased only from themeforest(the above
         });
     </script>
     <!-- END JAVASCRIPTS -->
-
-    <div role="alert" aria-live="polite" class="toast-top-right" id="toast-container">
-        <div style="" class="toast toast-info">
-            <button role="button" class="toast-close-button">×</button>
-            <div class="toast-title">Casio Watch</div>
-            <div class="toast-message"><a href="store_consigment_request_detail.html#antony">Antony</a> has just send you a consignment request of Casio Watch for $12,000.</div>
-            <a href="./store_consigment_request_detail.html" class="btn btn-default">View</a>
-        </div>
-    </div>
 
 </body>
 <!-- END BODY -->

@@ -67,7 +67,7 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- BEGIN LOGO -->
             <div class="page-logo">
                 <a href="index.html">
-                    <img src="./assets/admin/layout/img/logo.png" alt="logo" class="logo-default" />
+                    <h4 class="text-success">Hanging Product Store</h4>
                 </a>
                 <div class="menu-toggler sidebar-toggler hide">
                     <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -333,9 +333,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <th>
                                                     <i class="fa fa-star"></i>
                                                 </th>
-                                                <th>
-                                                    Image
-                                                </th>
                                                 <th width="20%">
                                                     Product
                                                 </th>
@@ -349,22 +346,13 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     Consign Price
                                                 </th>
                                                 <th>
-                                                    Min Price
-                                                </th>
-                                                <th>
-                                                    Max Price
-                                                </th>
-                                                <th>
-                                                    Status
+                                                    Transfering Date
                                                 </th>
                                                 <th>
                                                     Actions
                                                 </th>
                                             </tr>
                                             <tr role="row" class="filter">
-                                                <td>
-                                                    <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
                                                 </td>
@@ -395,25 +383,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To" />
                                                 </td>
                                                 <td>
-                                                    <div class="margin-bottom-5">
-                                                        <input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_quantity_from" placeholder="From" />
+                                                    <div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+                                                        <input type="text" class="form-control form-filter input-sm" readonly name="order_date_from" placeholder="From">
+                                                        <span class="input-group-btn">
+											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
                                                     </div>
-                                                    <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To" />
-                                                </td>
-                                                <td>
-                                                    <div class="margin-bottom-5">
-                                                        <input type="text" class="form-control form-filter input-sm margin-bottom-5 clearfix" name="order_quantity_from" placeholder="From" />
+                                                    <div class="input-group date date-picker" data-date-format="dd/mm/yyyy">
+                                                        <input type="text" class="form-control form-filter input-sm" readonly name="order_date_to" placeholder="To">
+                                                        <span class="input-group-btn">
+											<button class="btn btn-sm default" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
                                                     </div>
-                                                    <input type="text" class="form-control form-filter input-sm" name="order_quantity_to" placeholder="To" />
-                                                </td>
-                                                <td>
-                                                    <select name="order_status" class="form-control form-filter input-sm">
-                                                        <option value="">Select...</option>
-                                                        <option value="pending">Negotiating</option>
-                                                        <option value="closed">Accepted</option>
-                                                        <option value="hold">Refused</option>
-                                                        <option value="fraud">Canceled</option>
-                                                    </select>
                                                 </td>
                                                 <td>
                                                     <div class="margin-bottom-5">
@@ -424,14 +405,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="info">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
-                                                    <a href="./assets/product/1.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                                        <img class="img-responsive" src="./assets/product/1.jpg" alt="">
-                                                    </a>
                                                 </td>
                                                 <td>
                                                     Casio Watch
@@ -446,26 +422,15 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     $12,000
                                                 </td>
                                                 <td>
-                                                    $12,500
-                                                </td>
-                                                <td>
-                                                    $13,500
-                                                </td>
-                                                <td>
-                                                    <span class="label label-info">Negotiating</span>
+                                                    May 25, 2015
                                                 </td>
                                                 <td>
                                                     <a href="./store_consigment_request_detail.html" class="btn btn-default">View</a>
                                                 </td>
                                             </tr>
-                                            <tr class="info">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
-                                                    <a href="./assets/product/1_gold.jpg" class="fancybox-button" data-rel="fancybox-button">
-                                                        <img class="img-responsive" src="./assets/product/1_gold.jpg" alt="">
-                                                    </a>
                                                 </td>
                                                 <td>
                                                     Casio Watch Gold
@@ -480,26 +445,15 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     $14,000
                                                 </td>
                                                 <td>
-                                                    $12,500
-                                                </td>
-                                                <td>
-                                                    $13,500
-                                                </td>
-                                                <td>
-                                                    <span class="label label-info">Negotiating</span>
+                                                    May 22, 2015
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-default">View</button>
                                                 </td>
                                             </tr>
-                                            <tr class="warning">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
-                                                    <a href="./assets/product/handbag.png" class="fancybox-button" data-rel="fancybox-button">
-                                                        <img class="img-responsive" src="./assets/product/handbag.png" alt="">
-                                                    </a>
                                                 </td>
                                                 <td>
                                                     Channel Handbag
@@ -511,26 +465,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     May 10, 2015
                                                 </td>
                                                 <td>
-                                                    $17,9000
+                                                    Wait for evaluation
                                                 </td>
                                                 <td>
-                                                    $11,500
-                                                </td>
-                                                <td>
-                                                    $15,500
-                                                </td>
-                                                <td>
-                                                    <span class="label label-warning">Refused</span>
+                                                    today
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-default">View</button>
                                                 </td>
                                             </tr>
-                                            <tr class="success">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
                                                 </td>
                                                 <td>
                                                     Calvin Klein Belt
@@ -545,23 +491,14 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     $13,000
                                                 </td>
                                                 <td>
-                                                    $11,500
-                                                </td>
-                                                <td>
-                                                    $15,500
-                                                </td>
-                                                <td>
-                                                    <span class="label label-success">Accepted</span>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-default">View</button>
                                                 </td>
                                             </tr>
-                                            <tr class="success">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
                                                 </td>
                                                 <td>
                                                     Nike Shoes
@@ -576,23 +513,14 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     $22,000
                                                 </td>
                                                 <td>
-
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <span class="label label-success">Accepted</span>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-default">View</button>
                                                 </td>
                                             </tr>
-                                            <tr class="warning">
+                                            <tr>
                                                 <td>
                                                     <input type="checkbox" class="form-control form-filter input-sm" name="order_ship_to">
-                                                </td>
-                                                <td>
                                                 </td>
                                                 <td>
                                                     Gucci Sunglasses
@@ -604,16 +532,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     May 09, 2015
                                                 </td>
                                                 <td>
-                                                    $2,000
+                                                    Wait for evaluation
                                                 </td>
                                                 <td>
-
-                                                </td>
-                                                <td>
-
-                                                </td>
-                                                <td>
-                                                    <span class="label label-warning">Refused</span>
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-default">View</button>

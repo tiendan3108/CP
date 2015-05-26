@@ -63,7 +63,6 @@
     </div>
     <!-- Header END -->
 
-
     <div class="main">
         <div id="wrapper">
 
@@ -151,71 +150,77 @@
                         <div class="row">
                             <div class="page-content">
                                 <ul id="myTab" class="nav nav-tabs">
+                                    <li class="active"><a href="#Status" data-toggle="tab">Status</a>
+                                    </li>
                                     <li><a href="#Product" data-toggle="tab">Product</a>
                                     </li>
-                                    <li class="active"><a href="#RequestedStore" data-toggle="tab">Consign Store</a>
-                                    </li>
-                                    <li><a href="#CancelConsignment" data-toggle="tab">Cancel Consignment</a>
+                                    <li><a href="#RequestedStore" data-toggle="tab">Consign Store</a>
                                     </li>
                                 </ul>
                                 <div id="myTabContent" class="tab-content">
+                                    <div class="tab-pane fade in active" id="Status">
+                                        <form class="form-horizontal" role="form">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Consign Price</label>
+                                                    <div class="col-md-9">
+                                                        <p class="form-control-static">
+                                                            $12,000
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Status</label>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control" disabled>
+                                                            <option>Wait for transfering</option>
+                                                            <option>Wait for transfering</option>
+                                                            <option>Wait for transfering</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Consign Date</label>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" type="date" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Sell Date</label>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" type="date" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label">Return Date</label>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" type="date" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-actions fluid">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <button type="submit" class="btn btn-primary">Process</button>
+                                                    <a class="btn btn-link" data-toggle="modal" href="#cancelConsignment">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="tab-pane fade" id="Product">
 
                                         <h1>Casio Watch <small>from</small> <a data-toggle="modal" href="#antony">Antony</a> <small></small></h1>
                                         <div class="content-page">
                                             <div class="row margin-bottom-30">
                                                 <!-- BEGIN CAROUSEL -->
-                                                <div class="col-md-4 front-carousel">
+                                                <div class="col-lg-4 col-md-12">
 
                                                     <div class="carousel slide" id="myCarousel">
                                                         <!-- Carousel items -->
                                                         <div class="carousel-inner">
-                                                            <div class="item">
+                                                            <div class="item active">
                                                                 <img alt="" src="./assets/product/1.jpg">
                                                                 <div class="carousel-caption">
                                                                     <p>Excepturi sint occaecati cupiditate non provident</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item active">
-                                                                <img alt="" src="./assets/product/2.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ducimus qui blanditiis praesentium voluptatum</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/3.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/4.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/5.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/6.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/7.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <img alt="" src="./assets/product/8.jpg">
-                                                                <div class="carousel-caption">
-                                                                    <p>Ut non libero consectetur adipiscing elit magna</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -230,50 +235,44 @@
 
                                                 </div>
                                                 <!-- END CAROUSEL -->
-
                                                 <!-- BEGIN PRODUCT DESCRIPTION -->
-                                                <div class="col-md-8">
-                                                    <div class="note note-info">
-                                                        <h3 class="text-danger">$12,000</h3> Verified min price: <strong>$12,500</strong>
-                                                        <br/> Verified max price: <strong>$13,500</strong>
-                                                        <br/>
-                                                    </div>
-                                                    <h2>Quis tempor incididunt</h2>
-                                                    <p>Molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa quis tempor incididunt ut et dolore et dolorum fuga. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus.</p>
-                                                    <p>Lorem ipsum dolor sit amet, dolore eiusmod quis tempor incididunt ut et dolore Ut veniam unde nostrudlaboris. Sed unde omnis iste natus error sit voluptatem.</p>
-                                                    <br>
-                                                    <div class="row front-lists-v2 margin-bottom-15">
-                                                        <div class="col-md-6">
-                                                            <ul>
-                                                                <li>1/100-second stopwatch</li>
-                                                                <li>World map for World Time</li>
-                                                                <li>5 alarms</li>
-                                                                <li>LED light</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <ul>
-                                                                <li>Dial Color: Black, Case Shape: Rectangular</li>
-                                                                <li>Band Color: Black, Band Material: Resin</li>
-                                                                <li>Watch Movement Type: Quartz, Watch Display Type: Digital</li>
-                                                                <li>Case Material: Resin, Resin Bezel</li>
-                                                            </ul>
+                                                <div class="col-lg-8 col-md-12">
+                                                    <div class="row margin-bottom-30">
+                                                        <h2>Quis tempor incididunt</h2>
+                                                        <p>Molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa quis tempor incididunt ut et dolore et dolorum fuga. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus.</p>
+                                                        <p>Lorem ipsum dolor sit amet, dolore eiusmod quis tempor incididunt ut et dolore Ut veniam unde nostrudlaboris. Sed unde omnis iste natus error sit voluptatem.</p>
+                                                        <br>
+                                                        <div class="row front-lists-v2 margin-bottom-15">
+                                                            <div class="col-md-6">
+                                                                <ul>
+                                                                    <li>1/100-second stopwatch</li>
+                                                                    <li>World map for World Time</li>
+                                                                    <li>5 alarms</li>
+                                                                    <li>LED light</li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <ul>
+                                                                    <li>Dial Color: Black, Case Shape: Rectangular</li>
+                                                                    <li>Band Color: Black, Band Material: Resin</li>
+                                                                    <li>Watch Movement Type: Quartz, Watch Display Type: Digital</li>
+                                                                    <li>Case Material: Resin, Resin Bezel</li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- END PRODUCT DESCRIPTION -->
                                             </div>
                                         </div>
-
                                     </div>
-                                    <div class="tab-pane fade in active" id="RequestedStore">
-                                        <table class="table table-bordered">
+                                    <div class="tab-pane fade" id="RequestedStore">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>Store's name</th>
                                                     <th>Address</th>
-                                                    <th>Store's Price</th>
-                                                    <th>Status</th>
+                                                    <th>Transfered Date</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -281,78 +280,12 @@
                                                 <tr>
                                                     <td>KR Store</td>
                                                     <td>26, Quang Trung Go Vap</td>
-                                                    <td>$13,500</td>
-                                                    <td>
-                                                        <span class="label label-info">Negotiating</span>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-default" data-toggle="modal" href="#activity">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>FA Store</td>
-                                                    <td>176/11, Au Co, Tan Phu</td>
-                                                    <td>$12,500</td>
-                                                    <td>
-                                                        <span class="label label-info">Negotiating</span>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-default">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Levi Store</td>
-                                                    <td>69, To Ky, Q.12</td>
-                                                    <td>$13,000</td>
-                                                    <td>
-                                                        <span class="label label-warning">Refused</span>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-default">View</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Sentai Store</td>
-                                                    <td>27, Pasteur, Q.3</td>
-                                                    <td>$12,000</td>
-                                                    <td>
-                                                        <span class="label label-success">Accepted</span>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-default">View</a>
+                                                    <td>May 25, 2015</td>
+                                                    <td><a class="btn btn-default" data-toggle="modal" href="#activity">View</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div class="tab-pane fade" id="CancelConsignment">
-                                        <div class="well">
-                                            <h4>Policy</h4> Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.Integer molestie lorem at massa Integer molestie lorem at massa Integer molestie lorem at massa Integer molestie lorem at massa.
-                                        </div>
-
-                                        <form role="form">
-                                            <div class="form-body">
-                                                <div class="form-group">
-                                                    <label>Reasons</label>
-                                                    <div class="checkbox-list">
-                                                        <label>
-                                                            <input type="checkbox"> Checkbox 1 </label>
-                                                        <label>
-                                                            <input type="checkbox"> Checkbox 2 </label>
-                                                        <label>
-                                                            <input type="checkbox"> Checkbox 2 </label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Others</label>
-                                                    <textarea class="form-control" rows="3"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-actions text-right">
-                                                <button type="button" class="btn default">Cancel</button>
-                                                <button type="submit" class="btn blue">Submit</button>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -433,39 +366,43 @@
         });
     </script>
     <!-- END PAGE LEVEL JAVASCRIPTS -->
-    <!-- Activity Modal -->
-    <div class="modal fade" id="activity" tabindex="-1" role="basic" aria-hidden="true">
+
+
+    <!-- Cancel Modal -->
+    <div class="modal fade" id="cancelConsignment" tabindex="-1" role="basic" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                     <h4 class="modal-title">Negotiation</h4>
                 </div>
-                <div class="modal-body blog-item">
-                    <dl>
-                        <dt>You</dt>
-                        <dd>Send consignment request for $14,000.</dd>
-                        <dt>KR Store</dt>
-                        <dd>Will accept if consign price is $10,000.</dd>
-                        <dt>You</dt>
-                        <dd>Send consignment request for $12,000.</dd>
-                    </dl>
-                    <h4>New desirable price</h4>
+                <div class="modal-body">
+                    <div class="well">
+                        <h4>Policy</h4> Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet.Integer molestie lorem at massa Integer molestie lorem at massa Integer molestie lorem at massa Integer molestie lorem at massa.
+                    </div>
+
                     <form role="form">
-                        <div class="input-group">
-                            <input type="number" min="0" class="form-control">
-                            <span class="input-group-btn">
-                                                <button class="btn blue" type="button">Submit</button>
-                                                </span>
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label>Reasons</label>
+                                <div class="checkbox-list">
+                                    <label>
+                                        <input type="checkbox"> Checkbox 1 </label>
+                                    <label>
+                                        <input type="checkbox"> Checkbox 2 </label>
+                                    <label>
+                                        <input type="checkbox"> Checkbox 2 </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Others</label>
+                                <textarea class="form-control" rows="3"></textarea>
+                            </div>
                         </div>
                     </form>
-                    <br/>
-                    <div class="text-right">
-                        <a class="btn"> Refuse</a>
-                        <a class="btn btn-primary"> Accept</a>
-                    </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
                 </div>
             </div>
