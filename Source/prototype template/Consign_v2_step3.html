@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Consign v2 step1</title>
+        <title>Consign v2 step3</title>
 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -94,29 +94,29 @@
 								<form action="#" class="form-horizontal" id="submit_form" method="POST">
 									<div class="form-wizard">
 										<div class="form-body">
-											<ul class="nav nav-pills nav-justified steps">
-												<li class="active">
+											<ul class="nav nav-pills nav-justified steps" >
+												<li class="done">
 													<a id="ltap1" href="#tab1" data-toggle="tab" class="step" aria-expanded="false">
 													<span class="number">
 													1 </span>
-													<span class="desc" >
-													<i class="fa fa-check"></i> <b style="font-size:125%">Product's info </b></span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> Product's info </span>
 													</a>
 												</li>
-												<li>
+												<li class="done">
 													<a id="ltap2" href="#tab2" data-toggle="tab" class="step">
 													<span class="number">
 													2 </span>
 													<span class="desc" style="font-size:125%">
-													<i class="fa fa-check"></i>  Choose store </span>
+													<i class="fa fa-check"></i> Choose store </span>
 													</a>
 												</li>
-												<li >
+												<li class="active">
 													<a id="ltap3" href="#tab3" data-toggle="tab" class="step active">
 													<span class="number">
 													3 </span>
 													<span class="desc" style="font-size:125%">
-													<i class="fa fa-check"></i> Personal info </span>
+													<i class="fa fa-check"></i> <b>Personal info</b>  </span>
 													</a>
 												</li>
 												
@@ -135,141 +135,104 @@
 													<button class="close" data-dismiss="alert"></button>
 													Your form validation is successful!
 												</div> -->
-												<div class="tab-pane active" id="tab1">
+												<div class="tab-pane" id="tab1">
 												
-													<!-- <h3 class="block">Provide your account details</h3> -->
+												</div>
+												<div class="tab-pane" id="tab2">
 													
+													
+												</div>
+												<div class="tab-pane active" id="tab3">
 													<div class="row">
+
 													<div class="col-sm-6">
 					<div class="form-horizontal">
                         <div class="form-group">
-                            <label for="txtProductName" class="col-sm-4 control-label">Product name<span class="required">* </span></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" maxlength="50" name="defaultconfig" id="maxlength_defaultconfig">
+                            <label for="txtFullName" class="col-sm-3 control-label">Full name<font color="red">*</font></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" maxlength="50" name="defaultconfig" id="maxlength_defaultconfig" placeholder="1-50 characters">
+
 								<p class="help-block"> </p>
 								</div>
 								</div>
-                            
-                        
-						
-						<div class="form-group">
-                            <label for="txtSerial" class="col-sm-4 control-label"> Serial number </label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" id="txtSerial" placeholder="Number only">
-								<p class="help-block"> </p>
-                            </div>
-                        </div>
-						
-						<!-- <div class="form-group">
-											<label class="control-label col-sm-4">Category</label>
-											<div class="col-sm-8">
-												<select class="form-control input-medium select2me" data-placeholder="Select...">
-													
-													<option value="AL">Shirt</option>
-													<option value="WY">Pants</option>
-													<option value="WY">Shoes</option>
-													<option value="WY">Hat</option>
-													<option value="WY">Glass</option>
-													
-												</select>
-												<span class="help-block">
-												 </span>
-											</div>
-										</div> -->
-
-						
-						<div class="form-group">
-											<label class="control-label col-sm-4">Purchase date<span class="required">* </span></label>
-											<div class="col-sm-8">
-												<div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
-													<input type="text" class="form-control" readonly>
-													<span class="input-group-btn">
-													<button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
-													</span>
-												</div>
-												<!-- /input-group -->
-												<span class="help-block">
-												 </span>
-											</div>
-										</div>
-
-
-						
-						<!-- <div class="form-group">
-                            <label for="txtNew" class="col-sm-4 control-label"> New<span class="required">
-* </span> </label>
-                             <div class="col-sm-8">
-                                <div class="input-inline input-medium">
-												<input id="touchspin_demo2" type="text" value="55" name="demo1" class="form-control">
-											</div>
-
-                            </div>
-							</div> -->
-                        
-						
-						<div class="form-group">
-                            <label for="txtDescription" class="col-sm-4 control-label"> Description </label>
-                            <div class="col-sm-8">
-                                <textarea id="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="This textarea has a limit of 225 chars."></textarea>
+								
+								<div class="form-group">
+                            <label for="txtAddress" class="col-sm-3 control-label"> Address </label>
+                            <div class="col-sm-9">
+                                <textarea id="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="limit of 225 chars."></textarea>
                             </div>
                         </div>
 						
 						
-						
-						<!-- <div class="form-group">
-                            <label for="txtPrice" class="col-sm-4 control-label">Price<span class="required">
-* </span> </label>
-                            <div class="col-sm-8">
-                                <div class="input-inline input-medium">
-												<input id="touchspin_demo1" type="text" value="55" name="demo1" class="form-control">
-											</div>
-
-                            </div>
-						</div> -->
 					
 					</div>
 				</div>
 				
 				<div class="col-sm-6">
-				<div class="row">
+				<div class="form-horizontal">
 				
-					<div class="form-group last">
-											<label class="control-label col-md-3">Image <span class="required">
-* </span></label>
-											<div class="col-md-9">
-												<div class="fileinput fileinput-new" data-provides="fileinput">
-													<div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-														<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
-													</div>
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
-													</div>
-													<div>
-														<span class="btn default btn-file">
-														<span class="fileinput-new btn">
-														Select image </span>
-														<span class="fileinput-exists btn">
-														Change </span>
-														<input type="file" name="...">
-														</span>
-														<a href="#" class="btn btn-lg red fileinput-exists" data-dismiss="fileinput">
-														Remove </a>
-													</div>
-												</div>
+				<div class="form-group">
+											<label for="txtPhon" class="col-sm-3 control-label"> Contact by </label>
+											
+											<div class="checkbox-list col-sm-9">
+												<label class="checkbox-inline">
+												<input checked type="checkbox" id="cbPhone" value="Phone" > Phone </label>
+												<label class="checkbox-inline">
+												<input type="checkbox" id="cbEmail" value="Email" > Email </label>
 												
 											</div>
 										</div>
+
+				
+				<div class="form-group">
+                            <label for="txtPhone" class="col-sm-3 control-label"> Phone </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="mask_phone" type="text" placeholder="Number only" />
+								<p class="help-block"></p>
+								
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label for="txtEmail" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="txtEmail" placeholder="example@abc.com" disabled>
+								<p class="help-block"></p>
 								</div>
-				</div> 
-													</div>
+								</div>
+								
+								<div class="form-group">
+											<label for="txtPhon" class="col-sm-3 control-label"> </label>
+											
+											<div class="checkbox-list col-sm-9">
+												<label class="checkbox-inline">
+												<input type="checkbox" id="cbCC" value="Phone" > Use creadit card </label>
+												
+												
+											</div>
+										</div>
+						
+						<div id="divCCNumber" class="form-group" style="display: none" >
+                            <label for="txtCreditCard" class="col-sm-3 control-label"> Credit card</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="mask_ssn" type="text" placeholder="Number only"/>
+
+
+								<p class="help-block"></p>
+                            </div>
+                        </div>
+						
+						<div id="divCCOwner" class="form-group" style="display: none">
+                            <label for="txtCreaditCardOwner" class="col-sm-3 control-label">Card owner</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="txtCreaditCardOwner" placeholder="1-50 characters">
+								<p class="help-block"></p>
+								</div>
+								</div>
+				</div>
+				</div>
 													
-													
-												</div>
-												<div class="tab-pane" id="tab2">
-													<h3 class="block">Provide your profile details</h3>
-													
-												</div>
-												<div class="tab-pane" id="tab3">
-													<h3 class="block">Provide your billing and credit card details</h3>
+													</div>													
 													
 												</div>
 												
@@ -281,13 +244,13 @@
     padding-right: 5px;
     padding-left: 5px;
 ">
-											<div class="row">
-					      <div class="col-sm-8"> 
-						   
+<div class="row">
+					      <div class="col-sm-4"> 
+						   <a href="Consign_v2_step2.html" id="btnStep1" type="submit" class=" btn-block btn-lg btn default"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</a>
 						   </div>
-						   
+						   <div class="col-sm-4"> </div>
                             <div class="col-sm-4">
-                                <a href="#basic" data-toggle="modal" id="btnStep2_1" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></a>
+                                <a href="#modal_submit" data-toggle="modal" id="btnStep2_1" type="submit" class="btn-block btn-lg btn btn blue" >CONSIGN <i class="m-icon-big-swapup m-icon-white"></i></a>
                             </div>
                     
 				</div>
@@ -328,37 +291,29 @@
             </footer>
             <!-- END FOOTER -->
 			
-			
-			<div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+			<div class="modal fade" id="modal_submit" tabindex="-1" role="modal_submit" aria-hidden="true">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-											<h4 class="modal-title">Checking product</h4>
+											<h4 class="modal-title">Completed</h4>
 										</div>
 										<div class="modal-body">
 										
-											 <div class="row">
-											 <div class="form-horizontal">
-											 <h3 align="center"> <strong> Suggested price for product: <font color="green"> 95$</font> </strong> </h3>
-											 <h3 align="center"> <strong> Do you accept it?</strong> </h3>
-													 <!-- <div class="form-group">
-													<label for="txtPrice" class=" col-sm-offset-1 col-sm-3 control-label">Desired price<span class="required">
-														* </span> </label>
-																					<div class="col-sm-6">
-																						<div class="input-inline input-medium">
-																						<input id="touchspin_demo1" type="text" value="90" name="demo1" class="form-control">
-																						</div>
-
-																					</div>
-													</div>  -->
-												</div>
-												</div>
-											 
+											 <div class="row" align="center">
+											 <h3> <strong> Consign product request has been sent.</strong> <h3>
+											 <h3>  Your item's id is: <font color="blue"><strong>A12345</strong> </font> <h3>
+													
+											 </div>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn  btn-lg default" data-dismiss="modal">Close</button>
-											<a href="Consign_v2_step2.html" type="button" class="btn btn-lg blue">OK</a>
+										<div class="row">
+											
+						   <div class="col-sm-4"> </div>
+                            <div class="col-sm-4">
+                                <a href="store_consigment_request_list.html" id="btnStep" class="btn-block btn-lg btn blue" >GO TO ITEM</a>
+                            </div>
+										</div>
 										</div>
 									</div>
 									<!-- /.modal-content -->
@@ -366,6 +321,7 @@
 								<!-- /.modal-dialog -->
 							</div>
 							<!-- /.modal -->
+			
             
 			
 			<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -422,15 +378,40 @@ var RecaptchaOptions = {
         };
 
 $( "#btnNext" ).click(function() {
-<!-- if($("#ltab1").hasClass("active")){ -->
+});
+	
+	
 
-  
-  
-  
-  
-  
-<!-- } -->
+$("#cbPhone").click(function(){
+        if($("#cbPhone").attr("checked") ){
+			$("#mask_phone").prop('disabled', false);
+		}
+		else{
+			$("#mask_phone").prop('disabled', true);
+			$("#mask_phone").val("");
+		}
+});
 
+$("#cbEmail").click(function(){
+        if($("#cbEmail").attr("checked") ){
+			$("#txtEmail").prop('disabled', false);
+		}
+		else{
+			$("#txtEmail").prop('disabled', true);
+			$("#txtEmail").val("");
+		}
+});
+
+$("#cbCC").click(function(){
+if($("#cbCC").attr("checked") ){
+			$("#divCCNumber").show();
+			$("#divCCOwner").show();
+		}
+		else{
+		$("#divCCNumber").hide();
+			$("#divCCOwner").hide();
+			
+		}
 });
 
 </script>
