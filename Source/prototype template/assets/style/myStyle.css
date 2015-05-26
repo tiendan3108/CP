@@ -18,7 +18,7 @@
     margin-bottom: 30px;
 }
 .right {
-  float: right !important; }
+    float: right !important; }
 #nav a {
     color: white; 
     text-decoration: none;
@@ -28,7 +28,7 @@
     background-color: rgba(0, 0, 0, 0.1); 
 }
 #nav ul li:hover ul.fallback {
-   
+
 }
 #nav ul li ul.fallback {
     display: none;
@@ -36,7 +36,7 @@
 #nav ul li ul {
     position:fixed;background:#FFF;z-index: 1000;
     width: 240px;
-    
+
 }
 #nav ul li ul li {
     width:240px;
@@ -107,3 +107,12 @@ footer.page-footer .footer-copyright {
 ::-webkit-scrollbar-thumb:hover {
     background-color: #00acc1;
 }
+.imgCrop{
+    width: 144px;
+    height: 192px;
+}
+.imgCrop2{
+    width: 175px;
+    height: 234px;
+}
+
