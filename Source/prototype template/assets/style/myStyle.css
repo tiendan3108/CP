@@ -17,12 +17,36 @@
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     margin-bottom: 30px;
 }
+.right {
+  float: right !important; }
 #nav a {
     color: white; 
     text-decoration: none;
+    display: block;
 }
 #nav ul li:hover, nav ul li.active {
     background-color: rgba(0, 0, 0, 0.1); 
+}
+#nav ul li:hover ul.fallback {
+   
+}
+#nav ul li ul.fallback {
+    display: none;
+}
+#nav ul li ul {
+    position:fixed;background:#FFF;z-index: 1000;
+    width: 240px;
+    
+}
+#nav ul li ul li {
+    width:240px;
+    padding-left: 0;margin-left: 0;
+}
+#nav ul li ul li a {
+    display:block;color:#444;
+}
+#nav ul li ul li:hover a {
+    background:#F7F7F7;
 }
 .brand-logo {
     position: absolute;
@@ -63,7 +87,7 @@ footer.page-footer .footer-copyright {
 }
 .link1 a:link{
     text-decoration: none;
-    color:white;
+    color:white; 
 }
 .link a:hover, a:visited{
     text-decoration: none;
