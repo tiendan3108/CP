@@ -88,7 +88,7 @@
 			<!-- BEGIN PAGE CONTENT-->
 				<div class="row">
 					<div class="col-md-12">
-						<div class="portlet box blue" id="form_wizard_1">
+						<div class="portlet box " id="form_wizard_1">
 							
 							<div class="portlet-body form">
 								<form action="#" class="form-horizontal" id="submit_form" method="POST">
@@ -172,49 +172,52 @@
 				<div class="form-horizontal">
 				
 				<div class="form-group">
-											<label for="txtPhon" class="col-sm-3 control-label"> Contact by </label>
+											<label for="txtPhon" class="col-sm-4 control-label"> Contact by </label>
 											
-											<div class="checkbox-list col-sm-9">
-												<label class="checkbox-inline">
-												<input checked type="checkbox" id="cbPhone" value="Phone" > Phone </label>
-												<label class="checkbox-inline">
-												<input type="checkbox" id="cbEmail" value="Email" > Email </label>
-												
+											<div class="radio-list col-sm-8">
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios4" value="Phone" checked> Phone </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios5" value="Email"> Email </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios6" value="Both"> Both </label>
 											</div>
+
 										</div>
 
 				
-				<div class="form-group">
-                            <label for="txtPhone" class="col-sm-3 control-label"> Phone </label>
-                            <div class="col-sm-9">
+				<div class="form-group" id="divPhone">
+                            <label for="txtPhone" class="col-sm-4 control-label"> Phone </label>
+                            <div class="col-sm-8">
                                 <input class="form-control" id="mask_phone" type="text" placeholder="Number only" />
 								<p class="help-block"></p>
 								
                             </div>
                         </div>
 						
-						<div class="form-group">
-                            <label for="txtEmail" class="col-sm-3 control-label">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="txtEmail" placeholder="example@abc.com" disabled>
+						<div class="form-group" id="divEmail" style="display: none;">
+                            <label for="txtEmail" class="col-sm-4 control-label">Email</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="txtEmail" placeholder="example@abc.com">
 								<p class="help-block"></p>
 								</div>
 								</div>
 								
 								<div class="form-group">
-											<label for="txtPhon" class="col-sm-3 control-label"> </label>
+											<label for="" class="col-sm-4 control-label"> Payment method </label>
 											
-											<div class="checkbox-list col-sm-9">
-												<label class="checkbox-inline">
-												<input type="checkbox" id="cbCC" value="Phone" > Use creadit card </label>
-												
-												
+											<div class="radio-list col-sm-8">
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios2" id="optionsRadios7" value="Phone" checked> Direct </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios2" id="optionsRadios8" value="CC"> Credit card </label>
 											</div>
+
 										</div>
 						
 						<div id="divCCNumber" class="form-group" style="display: none" >
-                            <label for="txtCreditCard" class="col-sm-3 control-label"> Credit card</label>
-                            <div class="col-sm-9">
+                            <label for="txtCreditCard" class="col-sm-4 control-label"> Card number</label>
+                            <div class="col-sm-8">
                                 <input class="form-control" id="mask_ssn" type="text" placeholder="Number only"/>
 
 
@@ -223,8 +226,8 @@
                         </div>
 						
 						<div id="divCCOwner" class="form-group" style="display: none">
-                            <label for="txtCreaditCardOwner" class="col-sm-3 control-label">Card owner</label>
-                            <div class="col-sm-9">
+                            <label for="txtCreaditCardOwner" class="col-sm-4 control-label">Card owner</label>
+                            <div class="col-sm-8">
                                 <input type="text" class="form-control" id="txtCreaditCardOwner" placeholder="1-50 characters">
 								<p class="help-block"></p>
 								</div>
@@ -379,31 +382,29 @@ var RecaptchaOptions = {
 
 $( "#btnNext" ).click(function() {
 });
-	
-	
 
-$("#cbPhone").click(function(){
-        if($("#cbPhone").attr("checked") ){
-			$("#mask_phone").prop('disabled', false);
-		}
-		else{
-			$("#mask_phone").prop('disabled', true);
-			$("#mask_phone").val("");
-		}
+$('input:radio[name="optionsRadios1"]').change(function(){
+    if ($(this).val()== "Phone"){
+		$("#divPhone").show();
+		$("#divEmail").hide();
+		$("#divEmail").val() == "";
+	}
+	else if($(this).val() == "Email"){
+		$("#divPhone").hide();
+		$("#divPhone").val() == "";
+		$("#divEmail").show();
+	}
+	else if($(this).val() == "Both"){
+		$("#divPhone").show();
+		$("#divEmail").show();
+	}
+       
+    
 });
+	
 
-$("#cbEmail").click(function(){
-        if($("#cbEmail").attr("checked") ){
-			$("#txtEmail").prop('disabled', false);
-		}
-		else{
-			$("#txtEmail").prop('disabled', true);
-			$("#txtEmail").val("");
-		}
-});
-
-$("#cbCC").click(function(){
-if($("#cbCC").attr("checked") ){
+$('input:radio[name="optionsRadios2"]').change(function(){
+if ($(this).val()== "CC"){
 			$("#divCCNumber").show();
 			$("#divCCOwner").show();
 		}
