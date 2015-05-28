@@ -23593,7 +23593,7 @@
 							"width": 177,
 							"height": 92,
 							"autoResize": false,
-							"text": "Condition: Search function have result and User clicks \"View Detail\" button in result item.\nExtension point: View Detail",
+							"text": "Condition: Search function has the result and User clicks \"View Detail\" button in result item.\nExtension point: View Detail",
 							"wordWrap": true
 						},
 						{
