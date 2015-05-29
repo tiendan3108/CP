@@ -18,6 +18,7 @@
         <link href="assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
         <link href="assets/frontend/layout/css/custom.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"> 
         <!-- Theme styles END -->        
         <jsp:invoke fragment="extraHeadContent" />
     </jsp:attribute>
@@ -42,16 +43,31 @@
                 Layout.initTouchspin();
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#nofi").click(function () {
+                    $("#nav ul li ul.fallback").css("display", "block");
+                    $('html').click(function (event) {
+                        if ($(event.target).parents('#nofi').length == 0) {
+                            $("#nav ul li ul.fallback").css("display", "none");
+                            $(this).unbind(event);
+                        }
+
+                    })
+                });
+
+            });
+        </script>
         <!-- END PAGE LEVEL JAVASCRIPTS -->
 
         <jsp:invoke fragment="extraBottomContent" />
     </jsp:attribute>
     <jsp:attribute name="navigationContent">
+        <jsp:invoke fragment="extraNavigationContent" />
         <li><a href="shop-account.html">My Account</a></li>
         <li><a href="shop-wishlist.html">My Wishlist</a></li>
         <li><a href="shop-checkout.html">Checkout</a></li>
-        <li><a href="page-login.html">Log In</a></li>
-        <jsp:invoke fragment="extraNavigationContent" />
+        <li><a href="page-login.html">Log In</a></li>            
     </jsp:attribute>
     <jsp:body>
         <jsp:doBody />
