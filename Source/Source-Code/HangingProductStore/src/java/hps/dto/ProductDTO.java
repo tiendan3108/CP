@@ -15,7 +15,7 @@ public class ProductDTO {
 
     private int productID;
     private String name;
-    private String status;
+    private int status;
     private String description;
     private float price;
     private String image;
@@ -26,7 +26,7 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public ProductDTO(int productID, String name, String status, String description, float price, String image, String receivedDay, int categoryID, int parentCategoryID) {
+    public ProductDTO(int productID, String name, int status, String description, float price, String image, String receivedDay, int categoryID, int parentCategoryID) {
         this.productID = productID;
         this.name = name;
         this.status = status;
@@ -69,14 +69,14 @@ public class ProductDTO {
     /**
      * @return the status
      */
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

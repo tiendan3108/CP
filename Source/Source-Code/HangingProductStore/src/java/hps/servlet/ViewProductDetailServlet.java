@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HoangNHSE61007
  */
-@WebServlet(name = "HomeServlet", urlPatterns = {"/HomeServlet"})
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "ViewProductDetailServlet", urlPatterns = {"/ViewProductDetailServlet"})
+public class ViewProductDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,11 +37,23 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String sProductID = request.getParameter("productID");
+            int productID;
+            try {
+                productID = Integer.parseInt(sProductID);
+            } catch (NumberFormatException e) {
+                productID = 0;
+                e.printStackTrace();
+            }
             productDAO dao = new productDAO();
-            List<ProductDTO> data = dao.getNewData();
-            System.out.println("servlet" + data.get(1).getImage());
-            request.setAttribute("DATA", data);
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            ProductDTO product = dao.getProductByID(productID);
+            if (product != null) {
+                int categoryID = product.getCategoryID();
+                List<ProductDTO> similarProducts = dao.getSimilarProduct(categoryID,productID);
+                request.setAttribute("PRODUCT", product);
+                request.setAttribute("SIMILARPRODUCT", similarProducts);
+            }
+            RequestDispatcher rd = request.getRequestDispatcher("viewDetail.jsp");
             rd.forward(request, response);
         }
     }
