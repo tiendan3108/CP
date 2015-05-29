@@ -7,6 +7,7 @@ package hps.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author HoangNHSE61007
  */
 public class ProcessServlet extends HttpServlet {
-
+    private final String homeServlet = "HomeServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,7 +32,11 @@ public class ProcessServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+            String action = request.getParameter("btnAction");
+            if(action.equals("home")){
+                RequestDispatcher rd =request.getRequestDispatcher(homeServlet);
+                rd.forward(request, response);
+            }
         }
     }
 
