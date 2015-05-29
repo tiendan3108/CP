@@ -1,298 +1,160 @@
-<%-- 
-    Document   : home
-    Created on : May 16, 2015, 4:00:20 PM
-    Author     : HoangNHSE61007
---%>
+<template:shopbasic htmlTitle="Home" bodyTitle="">
+    <jsp:attribute name="extraHeadContent">
+        <!-- Nơi để khai báo page level css, theme, style -->
+    </jsp:attribute>        
+    <jsp:attribute name="extraBottomContent">
+        <!-- Nơi để khai báo page level javascript -->
+    </jsp:attribute>
+    <jsp:attribute name="extraNavigationContent">
+        <!-- Nơi để chèn thêm link vào top navigation bar -->
+    </jsp:attribute>
+    <jsp:body>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width">
-        <title>JSP Page</title>
-        <link rel="stylesheet" type="text/css" href="css/materialize.css" />
-        <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
-        <link rel="stylesheet" type="text/css" href="font-awesome-4.3.0/css/font-awesome.min.css">
-        <script src="js/jquery-2.1.1.min.js"></script>
-        <script src="js/materialize.js"></script>
-    </head>
-    <body>
-        <!-- navigation bar -->
-        <nav style="background-color: #01579b">
-            <div class="nav-wrapper">
-                <a href="home.jsp" class="brand-logo">Logo</a>
-                <a href="home.jsp" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#">Consign</a></li>                  
-                    <li><a href="#">Help & Contact</a></li>
-                    <li><a href="#">Sign in</a></li>
-                    <li><a href="#">Register</a></li>
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li><a href="#">Consign</a></li>                  
-                    <li><a href="#">Help & Contact</a></li>
-                    <li><a href="#">Sign in</a></li>
-                    <li><a href="#">Register</a></li>
-                </ul>
-            </div>
-        </nav>
-        <!-- parallax banner -->
-        <div class="parallax-container">
-            <div class="parallax"><img src="images/banner.jpg"></div>
-        </div>
-        <!-- Search bar -->
-        <div style="background-color: white;" class="row">
-            <div  id="search">
-                <div class="col s12 grid-example ">
-                    <div class=" col s6 m4 l4 offset-l3 offset-m3">
-                        <select id="category" onchange="validateSearch()">
-                            <option value="" disabled selected>all</option>
-                            <option value="Women">Women</option>
-                            <option value="Men">Men</option>
-                            <option value="Girls">Girls</option>
-                            <option value="Boys">Boys</option>
-                        </select>
+        <div class="row margin-bottom-40" style="z-index: 5">
+            <c:set var="data" value="${requestScope.DATA}"/>
+            <!-- BEGIN SALE PRODUCT -->
+            <c:if test="${not empty data}">
+                <div class="col-md-12 sale-product">
+                    <h2>New Arrivals</h2>
+                    <div class="owl-carousel owl-carousel5">
+                        <c:forEach var="item" items="${data}">     
+                            <div>
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img src='${item.image}' class="imgCrop">
+                                    </div>
+                                    <h3>${item.name}</h3>
+                                    <div class="pi-price">$ ${item.price}</div>
+                                    <a href="productDetail.html" class="btn btn-default add2cart">View Detail</a>
+                                    <div class="sticker sticker-new"></div>
+                                </div>
+                            </div>
+                        </c:forEach>    
                     </div>
-
-                    <div style="padding-top: 5px; text-align: center; margin-top: 5px " class="col s6 m2 l2">
-                        <button id="btnSearch" class="waves-effect waves-light btn btn-large btn-fullwidth btn-flat disabled" ><i class="mdi-action-search right"></i>Search</button>
-                    </div>
-
                 </div>
-            </div>
-        </div> 
-        <div id="wrapper">
+            </c:if>
+            <!-- END SALE PRODUCT -->        
+        </div>
+        <div class="content-search margin-bottom-20">
             <div class="row">
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
+                <div class="col-md-3">
+                    <select class="bs-select form-control input-small" data-style="blue">
+                        <option>All</option>
+                        <option>Ladies</option>
+                        <option>Mens</option>
+                        <option>Kids</option>
+                        <option>Sports</option>
+                        <option>Brand</option>
+                    </select>
                 </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
+                <div class="col-md-7">
+                    <form action="#">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search" class="form-control">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </span>
                         </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m6 l4">
-                    <div class="card">
-                        <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="images/current.jpg">
-                        </div>
-                        <div class="card-content">
-                            <span class="card-title activator grey-text text-darken-4">Card Title <i class="mdi-navigation-more-vert right"></i></span>
-                            <p><a class="waves-effect waves-light btn" href="#">Add To Cart</a></p>
-                        </div>
-                        <div class="card-reveal">
-                            <span class="card-title grey-text text-darken-4">Card Title <i class="mdi-navigation-close right"></i></span>
-                            <p>Here is some more information about this product that is only revealed once clicked on.</p>
-                        </div>
-                    </div>
-                </div>
-                
-               
             </div>
         </div>
-        <!-- footer -->
-        <footer style="background-color: #01579b" class="page-footer">
-            <div id="container">
-                <div class="row">
-                    <div class="col l6 s12">
-                        <h5 class="white-text">Hanging Product Store</h5>
-                        <p class="grey-text text-lighten-4">Address!</p>
-                    </div>
-                    <div class="col l4 offset-l2 s12">
-                        <h5 class="white-text">Follow Us</h5>
-                        <ul>
-                            <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Twitter</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Google+</a></li>
-                            <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+
+        <div class="row margin-bottom-40 ">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-4">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix"><a href="showProduct.html"><i class="fa fa-angle-right"></i> Ladies</a></li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a href="#">
+                            <i class="fa fa-angle-right"></i>
+                            Mens               
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="list-group-item dropdown clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i> Shoes </a>
+                            </li>
+                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Trainers</a></li>
+                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Jeans</a></li>
+                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Chinos</a></li>
+                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
                         </ul>
+                    </li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Kids</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Sports</a></li>
+                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Brands</a></li>
+                </ul>
+            </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-8">
+                <h2>SAVE ITEMS</h2>
+                <div class="owl-carousel owl-carousel3">
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress"> 
+                            </div>
+                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            <div class="sticker sticker-new"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <h3>Berry Lace Dress2</h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <h3>Berry Lace Dress3</h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <h3>Berry Lace Dress4</h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            <div class="sticker sticker-sale"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <h3>Berry Lace Dress5</h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                            </div>
+                            <h3>Berry Lace Dress6</h3>
+                            <div class="pi-price">$29.00</div>
+                            <a href="#" class="btn btn-default add2cart">View Detail</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2015 Group 8
-                    <a class="grey-text text-lighten-4 right" href="#!">Designed by Hoang Nguyen</a>
-                </div>
-            </div>
-        </footer>
-        <script>
-            $(document).ready(function () {
-                //nav bar
-                $(".button-collapse").sideNav();
-                //Date time picker
-                $('.datepicker').pickadate({
-                    selectMonths: false, // Creates a dropdown to control month
-                    selectYears: 15 // Creates a dropdown of 15 years to control year
-                });
-                //dropdown selection
-                $('select').material_select();
-                //validate Search
-                validateSearch();
-                // parallax 
-                $('.parallax').parallax();
-
-            });
-            function validateSearch() {
-                var temp = false;
-                if ($('#category').val() !== null) {
-                    temp = true;
-                }
-                ;
-                if (temp) {
-                    $('#btnSearch').removeClass('btn-flat disabled');
-                    $('#btnSearch').addClass('myButton');
-                } else {
-                    $('#btnSearch').addClass('btn-flat disabled');
-                }
-                ;
-            }
-
-
-        </script>
-    </body>
-</html>
-
+            <!-- END CONTENT -->
+        </div>
+    </jsp:body>
+</template:shopbasic>
