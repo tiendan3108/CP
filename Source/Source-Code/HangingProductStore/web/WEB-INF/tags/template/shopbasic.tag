@@ -40,10 +40,6 @@
                 Layout.initOWL();
                 LayersliderInit.initLayerSlider();
                 Layout.initTouchspin();
-                Layout.initTwitter();
-
-                Layout.initFixHeaderWithPreHeader();
-                Layout.initNavScrolling();
             });
         </script>
         <!-- END PAGE LEVEL JAVASCRIPTS -->

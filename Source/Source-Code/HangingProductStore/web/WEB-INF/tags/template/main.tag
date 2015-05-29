@@ -32,13 +32,13 @@
     <!-- Head END -->
 
     <!-- Body BEGIN -->
-    <body class="ecommerce" style="background-color: white">
+    <body class="ecommerce">
 
         <!-- Header BEGIN -->
         <div id= "nav">
             <div class="container">
                 <div class="row" >
-                    <a href="home.html" class="brand-logo">Logo</a>
+                    <a href="home.html" class="brand-logo">Hanging Product Store</a>
                     <!-- Top-bar-menu BEGIN -->
                     <ul class="list-unstyled list-inline pull-right navhover">
                         <jsp:invoke fragment="navigationContent" />
@@ -66,13 +66,13 @@
                         <p class="footerTitle">Hanging Product Store</p>
                         <p class="grey-text text-lighten-4">Information here.</p>
                     </div>
-                    <div class="col-lg-4 col-lg-offset-2 col-sm-12">
+                    <div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-12">
                         <p class="footerTitle">Follow Us</p>
                         <ul>
-                            <li><a class="link1" href="#!">Facebook</a></li>
-                            <li><a class="link1" href="#!">Twitter</a></li>
-                            <li><a class="link1" href="#!">Google+</a></li>
-                            <li><a class="link1" href="#!">Instagram</a></li>
+                            <li><a style="color: white;text-decoration: none" href="#!">Facebook</a></li>
+                            <li><a style="color: white;text-decoration: none" href="#!">Twitter</a></li>
+                            <li><a style="color: white;text-decoration: none" href="#!">Google+</a></li>
+                            <li><a style="color: white;text-decoration: none" href="#!">Instagram</a></li>
                         </ul>
                     </div>
                 </div>
@@ -80,7 +80,6 @@
             <div class="footer-copyright">
                 <div class="container">
                     © 2015 Group8
-                    <a style="margin-left: 800px" class="grey-text text-lighten-4 right" href="#!">Design by HoangNguyen</a>
                 </div>
             </div>
         </footer>
