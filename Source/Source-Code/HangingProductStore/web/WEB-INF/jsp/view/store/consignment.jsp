@@ -98,7 +98,7 @@
                             May 25, 2015
                         </td>
                         <td>
-                            <a href="./consignor?id=11" class="btn btn-primary">View</a>
+                            <a href="./consignment?id=11" class="btn btn-primary">View</a>
                         </td>
                     </tr>
                     <tr>
