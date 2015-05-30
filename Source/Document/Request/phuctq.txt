@@ -1,0 +1,1 @@
+﻿Bổ sung thêm thuộc tính và quan hệ như trong hình "Consignment Data Model.png".
