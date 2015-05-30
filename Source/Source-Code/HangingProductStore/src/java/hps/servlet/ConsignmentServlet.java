@@ -51,6 +51,9 @@ public class ConsignmentServlet extends HttpServlet {
                 consignmentBLO.makeConsignmentAsViewed(id);                
                 request.setAttribute("consignment", consignment);
                 
+                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
+                session.setAttribute("nonViewRequest", nonViewRequest);   
+                
             } else if (request.getParameter("search") != null) {
                 userPath = "/consignment_search";
             } else {

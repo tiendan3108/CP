@@ -23,8 +23,7 @@
                 <div class="row">
                     <div class="col-md-12 col-md-12">
                         <h1>
-                            ${consignment.product.name}
-                            <small>from</small>
+                            ${consignment.product.name} <small>from</small>
                             <a data-toggle="modal" href="#antony">${consignment.customerName}</a>
 
                             <c:choose>
@@ -83,14 +82,10 @@
                                                    href="#refusingModal">Refuse</a>
                                             </c:when>
                                             <c:when test="${not empty consignment.acceptDate}">
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#refusingModal">Cancel Consignment</a>
+                                                <a class="btn btn-link">Cancel Consignment</a>
                                             </c:when>
                                             <c:when test="${not empty consignment.refuseDate}">
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#refusingModal">Cancel Refuse</a>
+                                                <a class="btn btn-link">Cancel Refuse</a>
                                             </c:when>
                                         </c:choose>
                                     </div>
@@ -234,8 +229,10 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <form action="consignment" method="post">
-                            <input type="hidden" name="id" value="${consignment.id}">
+                    <c:url var="current" value="consignment">
+                        <c:param name="id" value="${consignment.id}"/>
+                    </c:url>
+                    <form action="${current}" method="post">
                         <button class="btn btn-primary" type="submit" name="accept">Accept</button>
                         <button type="button" class="btn default" data-dismiss="modal">Close</button>
                     </form>
@@ -257,7 +254,10 @@
                     Are you sure you want to refuse this consignment?
                 </div>
                 <div class="modal-footer">
-                    <form action="consignment" method="post">
+                    <c:url var="current" value="consignment">
+                        <c:param name="id" value="${consignment.id}"/>
+                    </c:url>
+                    <form action="${current}" method="post">
                         <input type="hidden" name="id" value="${consignment.id}">
                         <button class="btn btn-primary" type="submit" name="refuse">Refuse</button>
                         <button class="btn default" type="button" data-dismiss="modal">Close</button>
