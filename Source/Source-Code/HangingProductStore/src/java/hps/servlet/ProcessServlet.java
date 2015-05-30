@@ -33,7 +33,7 @@ public class ProcessServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("btnAction");
+            String action = request.getParameter("action");
             if(action.equals("home")){
                 RequestDispatcher rd =request.getRequestDispatcher(homeServlet);
                 rd.forward(request, response);
