@@ -130,6 +130,7 @@ public class productDAO {
             stm.setInt(2, productID);
             rs = stm.executeQuery();
             while (rs.next()) {
+                int id = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
                 int status = rs.getInt("Status");
                 String description = rs.getString("Description");
@@ -137,7 +138,7 @@ public class productDAO {
                 String image = rs.getString("Image");
                 String receivedDay = rs.getString("ReceivedDay");
                 int parentCategoryID = rs.getInt("ParentID");
-                ProductDTO product = new ProductDTO(productID, productName, status, description, sellingPrice, image, receivedDay, categoryID, parentCategoryID);
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, receivedDay, categoryID, parentCategoryID);
                 products.add(product);
             }
             return products;
