@@ -31,7 +31,11 @@
         <jsp:invoke fragment="extraBottomContent" />
     </jsp:attribute>
     <jsp:attribute name="navigationContent">
-        <li><a href="./consignment">Consignment <span class="badge">1</span></a>
+        <li><a href="./consignment">Consignment
+                <c:if test="${nonViewRequest > 0}">
+                    <span class="badge">${nonViewRequest}</span>
+                </c:if>
+            </a>
         </li>
         <li><a href="shop-account.html">Order <span class="badge">1</span></a>
         </li>

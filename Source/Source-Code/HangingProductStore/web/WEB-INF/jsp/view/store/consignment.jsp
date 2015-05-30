@@ -1,3 +1,4 @@
+<%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:storebasic htmlTitle="Consignment Request" bodyTitle="Consignment Request">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
@@ -84,105 +85,41 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            Casio Watch
-                        </td>
-                        <td>
-                            May 21, 2015
-                        </td>
-                        <td>
-                            $12,000
-                        </td>
-                        <td>
-                            May 25, 2015
-                        </td>
-                        <td>
-                            <a href="./consignment?id=11" class="btn btn-primary">View</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Casio Watch Gold
-                        </td>
-                        <td>
-                            May 11, 2015
-                        </td>
-                        <td>
-                            $14,000
-                        </td>
-                        <td>
-                            May 22, 2015
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-link">View</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Channel Handbag
-                        </td>
-                        <td>
-                            May 10, 2015
-                        </td>
-                        <td>
-                            Wait for evaluation
-                        </td>
-                        <td>
-                            today
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-link">View</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Calvin Klein Belt
-                        </td>
-                        <td>
-                            May 09, 2015
-                        </td>
-                        <td>
-                            $13,000
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-link">View</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Nike Shoes
-                        </td>
-                        <td>
-                            May 09, 2015
-                        </td>
-                        <td>
-                            $22,000
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-link">View</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Gucci Sunglasses
-                        </td>
-                        <td>
-                            May 09, 2015
-                        </td>
-                        <td>
-                            Wait for evaluation
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-link">View</button>
-                        </td>
-                    </tr>
+                    <c:forEach var="c" items="${consignments}">
+                        <tr>
+                            <td>
+                                ${c.product.name}
+                                <c:choose>
+                                    <c:when test="${not empty c.acceptDate}">
+                                        <br/><span class="label label-primary">accepted</span>
+                                    </c:when>
+                                    <c:when test="${not empty c.refuseDate}">
+                                        <br/><span class="label label-danger">refused</span>
+                                    </c:when>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>
+                            </td>
+                            <td>
+                                <fmt:formatNumber type="currency" currencySymbol="$" value="${c.consignPrice}" />
+                            </td>
+                            <td>
+                                <fmt:formatDate type="date" dateStyle="long" value="${c.transferDate}"/>
+                            </td>
+                            <td>
+                                <c:url var="detailUrl" value="consignment">
+                                    <c:param name="id" value="${c.id}"/>
+                                </c:url>
+                                <a href="${detailUrl}" 
+                                   class="btn
+                                   <c:choose>
+                                       <c:when test="${empty c.viewDate}">btn-primary</c:when>
+                                       <c:otherwise>btn-default</c:otherwise>
+                                   </c:choose>">View</a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

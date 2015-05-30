@@ -1,5 +1,5 @@
-<template:storebasic htmlTitle="${requestScope.consigment.name}"
-                     bodyTitle="${requestScope.consigment.name}">
+<template:storebasic htmlTitle="${consignment.product.name}"
+                     bodyTitle="${consignment.product.name}">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->
@@ -22,7 +22,20 @@
                 <!-- BEGIN PAGE CONTENT-->
                 <div class="row">
                     <div class="col-md-12 col-md-12">
-                        <h1>Casio Watch <small>from</small> <a data-toggle="modal" href="#antony">Antony</a> <small></small></h1>
+                        <h1>
+                            ${consignment.product.name}
+                            <small>from</small>
+                            <a data-toggle="modal" href="#antony">${consignment.customerName}</a>
+
+                            <c:choose>
+                                <c:when test="${not empty consignment.acceptDate}">
+                                    <span class="label label-primary">accepted</span>
+                                </c:when>
+                                <c:when test="${not empty consignment.refuseDate}">
+                                    <span class="label label-danger">refused</span>
+                                </c:when>
+                            </c:choose>
+                        </h1>
                         <div class="content-page">
                             <div class="row margin-bottom-30">
                                 <!-- BEGIN CAROUSEL -->
@@ -53,34 +66,33 @@
                                 <!-- BEGIN PRODUCT DESCRIPTION -->
                                 <div class="col-lg-8 col-md-12">
                                     <div class="note note-info">
-                                        <h3 class="text-danger">$12,000</h3>
+                                        <h3 class="text-danger">
+                                            <fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.consignPrice}"/>
+                                        </h3>
                                     </div>
-                                    <h2>Quis tempor incididunt</h2>
-                                    <p>Molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa quis tempor incididunt ut et dolore et dolorum fuga. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus.</p>
-                                    <p>Lorem ipsum dolor sit amet, dolore eiusmod quis tempor incididunt ut et dolore Ut veniam unde nostrudlaboris. Sed unde omnis iste natus error sit voluptatem.</p>
-                                    <br>
-                                    <div class="row front-lists-v2 margin-bottom-15">
-                                        <div class="col-md-6">
-                                            <ul>
-                                                <li>1/100-second stopwatch</li>
-                                                <li>World map for World Time</li>
-                                                <li>5 alarms</li>
-                                                <li>LED light</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <ul>
-                                                <li>Dial Color: Black, Case Shape: Rectangular</li>
-                                                <li>Band Color: Black, Band Material: Resin</li>
-                                                <li>Watch Movement Type: Quartz, Watch Display Type: Digital</li>
-                                                <li>Case Material: Resin, Resin Bezel</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <p>${consignment.product.description}</p>
 
                                     <div class="btn-group btn-group-justified">
-                                        <a class="btn btn-primary" href="store_consigment_request_list_accepted.html"> Accept</a>
-                                        <a class="btn btn-link" href="#"> Refuse</a>
+                                        <c:choose>
+                                            <c:when test="${empty consignment.acceptDate}">
+                                                <a class="btn btn-primary"
+                                                   data-toggle="modal"
+                                                   href="#acceptingModal">Accept</a>
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#refusingModal">Refuse</a>
+                                            </c:when>
+                                            <c:when test="${not empty consignment.acceptDate}">
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#refusingModal">Cancel Consignment</a>
+                                            </c:when>
+                                            <c:when test="${not empty consignment.refuseDate}">
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#refusingModal">Cancel Refuse</a>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <!-- END PRODUCT DESCRIPTION -->
@@ -197,4 +209,62 @@
         </div>
     </div>
     <!-- END SIDEBAR & CONTENT -->
+
+    <!-- Accepting Modal BEGIN -->
+    <div class="modal face" id="acceptingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4>Consignment Accepting</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Consign Price</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="number" value="${consignment.consignPrice}"
+                                           <c:if test="${not empty consignment.consignPrice}">disabled=""</c:if>>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-action right">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="consignment" method="post">
+                            <input type="hidden" name="id" value="${consignment.id}">
+                        <button class="btn btn-primary" type="submit" name="accept">Accept</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Accepting Modal END -->
+
+    <!-- Refusing Modal BEGIN -->
+    <div class="modal face" id="refusingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal"></button>
+                    <h4>Consignment Refusing</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to refuse this consignment?
+                </div>
+                <div class="modal-footer">
+                    <form action="consignment" method="post">
+                        <input type="hidden" name="id" value="${consignment.id}">
+                        <button class="btn btn-primary" type="submit" name="refuse">Refuse</button>
+                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Refusing Modal END -->
 </template:storebasic>
