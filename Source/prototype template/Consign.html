@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Consign step1</title>
+        <title>Consign</title>
 
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -86,17 +86,18 @@
         <div class="main">
             <div id="wrapper">
 			<!-- BEGIN PAGE CONTENT-->
-				<div class="row">
+			<!-- BEGIN DIV STEP1 -->
+				<div id="divStep1" class="row">
 					<div class="col-md-12">
 						<div class="portlet box blue" id="form_wizard_1">
 							
 							<div class="portlet-body form">
-								<form action="#" class="form-horizontal" id="submit_form" method="POST">
+								<div class="form-horizontal" id="submit_form">
 									<div class="form-wizard">
 										<div class="form-body">
 											<ul class="nav nav-pills nav-justified steps">
 												<li class="active">
-													<a id="ltap1" href="#tab1" data-toggle="tab" class="step" aria-expanded="false">
+													<a  class="step">
 													<span class="number">
 													1 </span>
 													<span class="desc" >
@@ -104,7 +105,7 @@
 													</a>
 												</li>
 												<li>
-													<a id="ltap2" href="#tab2" data-toggle="tab" class="step">
+													<a class="step">
 													<span class="number">
 													2 </span>
 													<span class="desc" style="font-size:125%">
@@ -112,7 +113,7 @@
 													</a>
 												</li>
 												<li >
-													<a id="ltap3" href="#tab3" data-toggle="tab" class="step active">
+													<a class="step">
 													<span class="number">
 													3 </span>
 													<span class="desc" style="font-size:125%">
@@ -244,14 +245,6 @@
 													
 													
 												</div>
-												<div class="tab-pane" id="tab2">
-													<h3 class="block">Provide your profile details</h3>
-													
-												</div>
-												<div class="tab-pane" id="tab3">
-													<h3 class="block">Provide your billing and credit card details</h3>
-													
-												</div>
 												
 											</div>
 										</div>
@@ -267,17 +260,425 @@
 						   </div>
 						   
                             <div class="col-sm-4">
-                                <a href="Consign_step2.html" id="btnStep2_1" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></a>
+                                <a  id="btnNext1" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></a>
                             </div>
                     
 				</div>
 										</div>
 									</div>
-								</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<!-- END DIV STEP1 -->
+				
+				<!-- BEGIN DIV STEP2 -->
+				<div id="divStep2" class="row" style="display: none">
+					<div class="col-md-12">
+						<div class="portlet box blue" id="form_wizard_1">
+							
+							<div class="portlet-body form">
+								<div  class="form-horizontal" id="submit_form">
+									<div class="form-wizard">
+										<div class="form-body">
+											<ul class="nav nav-pills nav-justified steps">
+												<li class="done">
+													<a id="ltap1" href="#tab1" data-toggle="tab" class="step" aria-expanded="false">
+													<span class="number">
+													1 </span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> Product's info </span>
+													</a>
+												</li>
+												<li class="active">
+													<a id="ltap2" href="#tab2" data-toggle="tab" class="step">
+													<span class="number">
+													2 </span>
+													<span class="desc" >
+													<i class="fa fa-check"></i> <b style="font-size:125%"> Choose store </b> </span>
+													</a>
+												</li>
+												<li >
+													<a id="ltap3" href="#tab3" data-toggle="tab" class="step active">
+													<span class="number">
+													3 </span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> Personal info </span>
+													</a>
+												</li>
+												
+											</ul>
+											<!-- <div id="bar" class="progress progress-striped" role="progressbar">
+												<div class="progress-bar progress-bar-success">
+												</div>
+											</div> -->
+											<hr/>
+											<div class="tab-content">
+												<!-- <div class="alert alert-danger display-none">
+													<button class="close" data-dismiss="alert"></button>
+													You have some form errors. Please check below.
+												</div>
+												<div class="alert alert-success display-none">
+													<button class="close" data-dismiss="alert"></button>
+													Your form validation is successful!
+												</div> -->
+												<div class="tab-pane" id="tab1">
+												
+												</div>
+												<div class="tab-pane active" id="tab2">
+													<!-- <h3 class="block">Provide your profile details</h3> -->
+													<div class="portlet-body">
+								
+									<table class="table table-striped table-hover">
+									<thead>
+									<tr>
+										<th>
+											 #
+										</th>
+										<th>
+											 Store name
+										</th>
+										<th>
+											 Address
+										</th>
+										<th>
+											 Reliability
+										</th>
+										<th>
+											 Price
+										</th>
+										<th>
+											 Choose
+										</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td>
+											 1
+										</td>
+										<td>
+											 KR Store
+										</td>
+										<td>
+											 45/6, Son Ky, Q.Binh Tan
+										</td>
+										
+										<td>
+											<span class="label  bg-green" style="width:2px">
+											Average </span>
+										</td>
+										<td>
+											<b> <font color="red"> 93 $</font> </b>
+										</td>
+										<td>
+										<input name="choose" type="radio"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											 2
+										</td>
+										<td>
+											 FM Store
+										</td>
+										<td>
+											 256, Su Van Hanh, Q.Tan Binh
+										</td>
+										
+										<td>
+											<span class="label  bg-blue">
+											High </span>
+										</td>
+										<td>
+											<b> <font > 95 $</font> </b>
+										</td>
+										<td>
+										<input name="choose" type="radio"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											 3
+										</td>
+										<td>
+											 Ruby Store
+										</td>
+										<td>
+											 188, Quang Trung, Go Vap
+										</td>
+										
+										<td>
+											<span class="label  label-danger">
+											Low </span>
+										</td>
+										<td>
+											<b> <font color="green"> 100 $</font> </b>
+										</td>
+										<td>
+										<input name="choose" type="radio"></input>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											 4
+										</td>
+										<td>
+											 HT Store
+										</td>
+										<td>
+											 332, Au Co , Tan Phu
+										</td>
+										
+										<td>
+											<span class="label label-danger">
+											Low </span>
+										</td>
+										<td>
+											<b> <font color="green"> 99 $</font> </b>
+										</td>
+										<td>
+										<input name="choose" type="radio"></input>
+										</td>
+									</tr>
+									</tbody>
+									</table>
+								
+							</div>
+													
+													
+												
+												</div>
+												<div class="tab-pane" id="tab3">
+													<h3 class="block">Provide your billing and credit card details</h3>
+													
+												</div>
+												
+											</div>
+										</div>
+										<div class="form-actions" style="
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+">
+											<div class="row">
+					      <div class="col-sm-4"> 
+						   <a id="btnBack1"  class=" btn-block btn-lg btn default"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</a>
+						   </div>
+						   <div class="col-sm-4"> </div>
+                            <div class="col-sm-4">
+                                <a  id="btnNext2" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></a>
+                            </div>
+                    
+				</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END DIV STEP2 -->
+				
+				<!-- BEGIN DIV STEP3 -->
+				<div id="divStep3" class="row" style="display: none">
+					<div class="col-md-12">
+						<div class="portlet box " id="form_wizard_1">
+							
+							<div class="portlet-body form">
+								<div class="form-horizontal" id="submit_form">
+									<div class="form-wizard">
+										<div class="form-body">
+											<ul class="nav nav-pills nav-justified steps" >
+												<li class="done">
+													<a id="ltap1" href="#tab1" data-toggle="tab" class="step" aria-expanded="false">
+													<span class="number">
+													1 </span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> Product's info </span>
+													</a>
+												</li>
+												<li class="done">
+													<a id="ltap2" href="#tab2" data-toggle="tab" class="step">
+													<span class="number">
+													2 </span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> Choose store </span>
+													</a>
+												</li>
+												<li class="active">
+													<a id="ltap3" href="#tab3" data-toggle="tab" class="step active">
+													<span class="number">
+													3 </span>
+													<span class="desc" style="font-size:125%">
+													<i class="fa fa-check"></i> <b>Personal info</b>  </span>
+													</a>
+												</li>
+												
+											</ul>
+											<!-- <div id="bar" class="progress progress-striped" role="progressbar">
+												<div class="progress-bar progress-bar-success">
+												</div>
+											</div> -->
+											<hr/>
+											<div class="tab-content">
+												<!-- <div class="alert alert-danger display-none">
+													<button class="close" data-dismiss="alert"></button>
+													You have some form errors. Please check below.
+												</div>
+												<div class="alert alert-success display-none">
+													<button class="close" data-dismiss="alert"></button>
+													Your form validation is successful!
+												</div> -->
+												<div class="tab-pane" id="tab1">
+												
+												</div>
+												<div class="tab-pane" id="tab2">
+													
+													
+												</div>
+												<div class="tab-pane active" id="tab3">
+													<div class="row">
+
+													<div class="col-sm-6">
+					<div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="txtFullName" class="col-sm-4 control-label">Full name<span class="required">* </span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" maxlength="50" name="defaultconfig" id="maxlength_defaultconfig" placeholder="1-50 characters">
+
+								<p class="help-block"> </p>
+								</div>
+								</div>
+								
+								<div class="form-group">
+											<label class="control-label col-sm-4">Delivery date<span class="required">*</span></label>
+											<div class="col-sm-8">
+												<div class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+													<input type="text" class="form-control" name="from">
+													<span class="input-group-addon">
+													to </span>
+													<input type="text" class="form-control" name="to">
+												</div>
+												<!-- /input-group -->
+												<span class="help-block">
+												Select date range </span>
+											</div>
+										</div>
+
+								
+								<div class="form-group">
+                            <label for="txtAddress" class="col-sm-4 control-label"> Address </label>
+                            <div class="col-sm-8">
+                                <textarea id="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="limit of 225 chars."></textarea>
+                            </div>
+                        </div>
+						
+						
+					
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+				<div class="form-horizontal">
+				
+				<div class="form-group">
+											<label for="txtPhon" class="col-sm-4 control-label"> Contact by </label>
+											
+											<div class="radio-list col-sm-8">
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios4" value="Phone" checked> Phone </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios5" value="Email"> Email </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios1" id="optionsRadios6" value="Both"> Both </label>
+											</div>
+
+										</div>
+
+				
+				<div class="form-group" id="divPhone">
+                            <label for="txtPhone" class="col-sm-4 control-label"> Phone<span class="required">* </span> </label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="mask_phone" type="text" placeholder="Number only" />
+								<p class="help-block"></p>
+								
+                            </div>
+                        </div>
+						
+						<div class="form-group" id="divEmail" style="display: none;">
+                            <label for="txtEmail" class="col-sm-4 control-label">Email<span class="required">* </span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="txtEmail" placeholder="example@abc.com">
+								<p class="help-block"></p>
+								</div>
+								</div>
+								
+								<div class="form-group">
+											<label for="" class="col-sm-4 control-label"> Payment method </label>
+											
+											<div class="radio-list col-sm-8">
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios2" id="optionsRadios7" value="Phone" checked> Direct </label>
+												<label class="radio-inline">
+												<input type="radio" name="optionsRadios2" id="optionsRadios8" value="CC"> Credit card </label>
+											</div>
+
+										</div>
+						
+						<div id="divCCNumber" class="form-group" style="display: none" >
+                            <label for="txtCreditCard" class="col-sm-4 control-label"> Card number<span class="required">* </span></label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="mask_ssn" type="text" placeholder="Number only"/>
+
+
+								<p class="help-block"></p>
+                            </div>
+                        </div>
+						
+						<div id="divCCOwner" class="form-group" style="display: none">
+                            <label for="txtCreaditCardOwner" class="col-sm-4 control-label">Card owner<span class="required">* </span></label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="txtCreaditCardOwner" placeholder="1-50 characters">
+								<p class="help-block"></p>
+								</div>
+								</div>
+				</div>
+				</div>
+													
+													</div>													
+													
+												</div>
+												
+											</div>
+										</div>
+										<div class="form-actions" style="
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+">
+<div class="row">
+					      <div class="col-sm-4"> 
+						   <a  id="btnBack2" class=" btn-block btn-lg btn default"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</a>
+						   </div>
+						   <div class="col-sm-4"> </div>
+                            <div class="col-sm-4">
+                                <a href="#modal_submit" data-toggle="modal" id="btnConsign" type="submit" class="btn-block btn-lg btn btn blue" >CONSIGN <i class="m-icon-big-swapup m-icon-white"></i></a>
+                            </div>
+                    
+				</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END DIV STEP3 -->
+				
 			</div>
 		</div>	
             <!-- BEGIN FOOTER -->
@@ -425,7 +826,7 @@ jQuery(document).ready(function() {
    Metronic.init(); // init metronic core components
 Layout.init(); // init current layout
 Demo.init(); // init demo features
-   FormWizard.init();
+   
    
     // initiate layout and plugins
            ComponentsFormTools.init();
@@ -442,12 +843,61 @@ var RecaptchaOptions = {
            custom_theme_widget: 'recaptcha_widget'
         };
 
-$( "#btnNext" ).click(function() {
+$( "#btnNext1" ).click(function() {
+$("#divStep1").hide();
+$("#divStep2").show();
+});
+
+$( "#btnNext2" ).click(function() {
+$("#divStep2").hide();
+$("#divStep3").show();
+});
+
+$( "#btnBack1" ).click(function() {
+$("#divStep2").hide();
+$("#divStep1").show();
+});
+
+$( "#btnBack2" ).click(function() {
+$("#divStep3").hide();
+$("#divStep2").show();
 });
 
 jQuery('.tabs a').on('click tabs-click', function() {
 	// Switch to the tab, load some content, whatever	
 	
+});
+
+$('input:radio[name="optionsRadios1"]').change(function(){
+    if ($(this).val()== "Phone"){
+		$("#divPhone").show();
+		$("#divEmail").hide();
+		$("#divEmail").val() == "";
+	}
+	else if($(this).val() == "Email"){
+		$("#divPhone").hide();
+		$("#divPhone").val() == "";
+		$("#divEmail").show();
+	}
+	else if($(this).val() == "Both"){
+		$("#divPhone").show();
+		$("#divEmail").show();
+	}
+       
+    
+});
+	
+
+$('input:radio[name="optionsRadios2"]').change(function(){
+if ($(this).val()== "CC"){
+			$("#divCCNumber").show();
+			$("#divCCOwner").show();
+		}
+		else{
+		$("#divCCNumber").hide();
+			$("#divCCOwner").hide();
+			
+		}
 });
 
 </script>
