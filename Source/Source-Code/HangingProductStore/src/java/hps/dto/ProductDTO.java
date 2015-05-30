@@ -15,18 +15,19 @@ public class ProductDTO {
 
     private int productID;
     private String name;
-    private String status;
+    private int status;
     private String description;
     private float price;
     private String image;
     private String receivedDay;
     private int categoryID;
     private int parentCategoryID;
+    private String consignmentID;// for store owner management page
 
     public ProductDTO() {
     }
 
-    public ProductDTO(int productID, String name, String status, String description, float price, String image, String receivedDay, int categoryID, int parentCategoryID) {
+    public ProductDTO(int productID, String name, int status, String description, float price, String image, String receivedDay, int categoryID, int parentCategoryID) {
         this.productID = productID;
         this.name = name;
         this.status = status;
@@ -37,7 +38,14 @@ public class ProductDTO {
         this.categoryID = categoryID;
         this.parentCategoryID = parentCategoryID;
     }
-
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, int status) {
+        this.productID = productID;
+        this.name = productName;
+        this.receivedDay = receivedDate;
+        this.consignmentID = consignmentID;
+        this.price = price;
+        this.status = status;
+    }
     /**
      * @return the productID
      */
@@ -69,14 +77,14 @@ public class ProductDTO {
     /**
      * @return the status
      */
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -162,6 +170,20 @@ public class ProductDTO {
      */
     public void setParentCategoryID(int parentCategoryID) {
         this.parentCategoryID = parentCategoryID;
+    }
+
+    /**
+     * @return the consignmentID
+     */
+    public String getConsignmentID() {
+        return consignmentID;
+    }
+
+    /**
+     * @param consignmentID the consignmentID to set
+     */
+    public void setConsignmentID(String consignmentID) {
+        this.consignmentID = consignmentID;
     }
 
 }

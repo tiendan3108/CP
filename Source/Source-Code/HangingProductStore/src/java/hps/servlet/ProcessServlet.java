@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ProcessServlet extends HttpServlet {
     private final String homeServlet = "HomeServlet";
+    private final String viewProductDetailServlet = "ViewProductDetailServlet";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,6 +36,9 @@ public class ProcessServlet extends HttpServlet {
             String action = request.getParameter("btnAction");
             if(action.equals("home")){
                 RequestDispatcher rd =request.getRequestDispatcher(homeServlet);
+                rd.forward(request, response);
+            }else if(action.equals("viewDetail")){
+                RequestDispatcher rd = request.getRequestDispatcher(viewProductDetailServlet);
                 rd.forward(request, response);
             }
         }
