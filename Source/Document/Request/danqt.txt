@@ -1,0 +1,3 @@
+﻿+ thêm class GlobalVariables, tất cả các biến trong đây đều là public static final. 
+Bất cứ biến nào không phải do user tạo mà do mình tự tao đều nằm trong đây hết.kể cả tên servlet hay tên trang jsp.
++ thêm vào bảng product và consignment cột isNew để lấy notifycation.
