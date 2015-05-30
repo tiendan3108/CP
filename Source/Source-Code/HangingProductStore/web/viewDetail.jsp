@@ -120,7 +120,11 @@
                                         </div>
                                         <h3>${productItem.name}</h3>
                                         <div class="pi-price">${productItem.price}</div>
-                                        <a href="#" class="btn btn-default add2cart">View Details</a>
+                                        <c:url var="viewDetail" value = "ProcessServlet">
+                                            <c:param name="action" value="viewDetail" />
+                                            <c:param name="productID" value="${productItem.productID}"/>
+                                        </c:url>
+                                        <a href="${viewDetail}" class="btn btn-default add2cart">View Details</a>
                                         <div class="sticker sticker-new"></div>
                                     </div>
                                 </div>
