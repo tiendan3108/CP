@@ -22,6 +22,7 @@ public class ProductDTO {
     private String receivedDay;
     private int categoryID;
     private int parentCategoryID;
+    private String consignmentID;// for store owner management page
 
     public ProductDTO() {
     }
@@ -37,7 +38,14 @@ public class ProductDTO {
         this.categoryID = categoryID;
         this.parentCategoryID = parentCategoryID;
     }
-
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, int status) {
+        this.productID = productID;
+        this.name = productName;
+        this.receivedDay = receivedDate;
+        this.consignmentID = consignmentID;
+        this.price = price;
+        this.status = status;
+    }
     /**
      * @return the productID
      */
@@ -162,6 +170,20 @@ public class ProductDTO {
      */
     public void setParentCategoryID(int parentCategoryID) {
         this.parentCategoryID = parentCategoryID;
+    }
+
+    /**
+     * @return the consignmentID
+     */
+    public String getConsignmentID() {
+        return consignmentID;
+    }
+
+    /**
+     * @param consignmentID the consignmentID to set
+     */
+    public void setConsignmentID(String consignmentID) {
+        this.consignmentID = consignmentID;
     }
 
 }

@@ -59,11 +59,11 @@ public class TestServlet extends HttpServlet {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select * from [person]";
+            String query = "select * from [Users]";
             stm = con.prepareStatement(query);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("name");
+                String name = rs.getString("UserID");
                 System.out.println(name);
                 names.add(name);                
             }
