@@ -68,24 +68,15 @@
                                         </li>
 
                                     </ul>
-                                    <!-- <div id="bar" class="progress progress-striped" role="progressbar">
-                                            <div class="progress-bar progress-bar-success">
-                                            </div>
-                                    </div> -->
+                                    
                                     <hr/>
                                     <div class="tab-content ">
-                                        <!-- <div class="alert alert-danger display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                You have some form errors. Please check below.
-                                        </div>
-                                        <div class="alert alert-success display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Your form validation is successful!
-                                        </div> -->
+                                        
 
                                         <div>
-                                            <c:set var="data" value="${requestScope.STORELIST}"/>
+                                            <c:set var="data" value="${sessionScope.STORELIST}"/>
                                             <c:set var="price" value="${sessionScope.PRICE}"/>
+                                            <c:set var="store" value="${sessionScope.STORE}"/>
                                             <!-- <h3 class="block">Provide your profile details</h3> -->
 
                                             
@@ -131,7 +122,18 @@
 
                                                                     </td>
                                                                     <td align="center">
-                                                                        <input  name="rdStore" value="${item.name}" type="radio"></input>
+                                                                        <c:if test="${not empty store}">
+                                                                            <c:if test="${store == item.name}">
+                                                                                <input checked="checked"  name="rdStore" value="${item.name}" type="radio"/>
+                                                                            </c:if>
+                                                                                <c:if test="${store != item.name}">
+                                                                                <input  name="rdStore" value="${item.name}" type="radio"/>
+                                                                            </c:if>
+                                                                                </c:if>
+                                                                                <c:if test="${empty store}">
+                                                                                    <input  name="rdStore" value="${item.name}" type="radio"/>
+                                                                                </c:if>
+                                                                        
                                                                     </td>
                                                                 </tr>
                                                             </c:forEach>
@@ -139,12 +141,8 @@
                                                     </table>
 
                                                 </c:if>
-                                            
-
-
 
                                         </div>
-
 
                                     </div>
                                 </div>

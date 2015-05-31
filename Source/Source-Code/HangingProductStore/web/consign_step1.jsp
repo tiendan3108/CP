@@ -30,7 +30,7 @@
 
         <!-- BEGIN PAGE CONTENT-->
         <!-- BEGIN DIV STEP1 -->
-        <form  action="ConsignServlet" method="POST">
+        <form  action="ConsignServlet" method="POST" >
             <div class="row">
 
                 <div class="portlet box" id="form_wizard_1">
@@ -64,59 +64,41 @@
                                                     <i class="fa fa-check"></i> Personal info </span>
                                             </a>
                                         </li>
-
-
                                     </ul>
-                                    <!-- <div id="bar" class="progress progress-striped" role="progressbar">
-                                            <div class="progress-bar progress-bar-success">
-                                            </div>
-                                    </div> -->
-                                    <hr/>
-                                    <div>
-                                        <!-- <div class="alert alert-danger display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                You have some form errors. Please check below.
-                                        </div>
-                                        <div class="alert alert-success display-none">
-                                                <button class="close" data-dismiss="alert"></button>
-                                                Your form validation is successful!
-                                        </div> -->
-                                        <div class="tab-content">
-                                            <c:set var="data" value="${sessionScope.PRODUCT}"/>
-                                            <!-- <h3 class="block">Provide your account details</h3> -->
 
+                                    <hr/>
+
+                                    <div>
+                                        <div class="tab-content">
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
                                                             <label for="txtProductName" class="col-sm-4 control-label">Product name<span class="required">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <input  name="txtProductName" type="text" class="form-control" maxlength="50" value="${param.txtProductName}">
-                                                                <p class="help-block"> </p>
+                                                                <input  name="txtProductName" type="text" class="form-control" maxlength="50" value="">
+                                                                <p class="help-block" id="erProductName"> </p>
                                                             </div>
                                                         </div>
-
-
 
                                                         <div class="form-group">
                                                             <label for="txtSerial" class="col-sm-4 control-label"> Serial number </label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" class="form-control" name="txtSerialNumber" value="${sessionScope.SERIAL}">
-                                                                <p class="help-block"> </p>
+                                                                <p class="help-block" id="erSerialNumber"> </p>
                                                             </div>
                                                         </div>
-                                                                
-                                                                <div class="form-group">
+
+                                                        <div class="form-group">
                                                             <label class="control-label col-sm-4">Purchased date<span class="required">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                                     <input type="text" class="form-control" name="txtDate" readonly>
                                                                     <span class="input-group-btn">
-                                                                        <button class="btn default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                                                     </span>
                                                                 </div>
-                                                                <span class="help-block"
-                                                                      Select date </span>
+                                                                <span class="help-block" id="erDate"> </span>
                                                             </div>
                                                         </div>
 
@@ -132,7 +114,7 @@
                                                                     <option value="5">Glasses</option>
                                                                 </select>
 
-                                                                <span class="help-block">
+                                                                <span class="help-block" id="erCategory">
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -140,25 +122,21 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-4">Brand</label>
                                                             <div class="col-sm-8">
-                                                                <select name="txtBrand" class="bs-select form-control">
-                                                                    <option value='' disabled selected style='display:none;'>Select...</option>
-                                                                    <option value="1">Gucci</option>
-                                                                    <option value="2">CK</option>
-                                                                    <option value="3">Vanz</option>
-                                                                    <option value="3">Other</option>
-                                                                </select>
+                                                                <input  name="txtBrand" type="text" class="form-control" maxlength="50">
 
-                                                                <span class="help-block">
+                                                                <span class="help-block" id="erBrand">
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                          
+
 
 
                                                         <div class="form-group">
                                                             <label for="txtDescription" class="col-sm-4 control-label"> Description </label>
                                                             <div class="col-sm-8">
                                                                 <textarea name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="This textarea has a limit of 225 chars."></textarea>
+                                                                <span class="help-block" id="erDescription">
+                                                                </span>
                                                             </div>
                                                         </div>
 
@@ -178,9 +156,9 @@
                                                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
                                                                     </div>
                                                                     <div>
-                                                                        <span class="btn default btn-file">
+                                                                        <span class="btn btn-info btn-file">
                                                                             <span class="fileinput-new btn">
-                                                                                Select image </span>
+                                                                                SELECT IMAGE </span>
                                                                             <span class="fileinput-exists btn">
                                                                                 Change </span>
                                                                             <input  type="file" name="txtImage">
@@ -189,7 +167,8 @@
                                                                             Remove </a>
                                                                     </div>
                                                                 </div>
-
+                                                                <span class="help-block" id="erImage">
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
