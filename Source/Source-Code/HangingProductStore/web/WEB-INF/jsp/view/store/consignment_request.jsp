@@ -8,7 +8,7 @@
                 <li class="list-group-item clearfix">
                     <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
                 </li>
-                <li class="list-group-item clearfix">
+                <li class="list-group-item clearfix active">
                     <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
                 </li>
                 <li class="list-group-item clearfix">

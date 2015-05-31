@@ -14,7 +14,7 @@
                 <li class="list-group-item clearfix">
                     <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
                 </li>
-                <li class="list-group-item clearfix">
+                <li class="list-group-item clearfix active">
                     <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
                 </li>
             </ul>

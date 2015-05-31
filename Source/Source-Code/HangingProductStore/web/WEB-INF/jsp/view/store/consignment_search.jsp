@@ -4,7 +4,7 @@
         <!-- BEGIN SIDEBAR -->
         <div class="sidebar col-md-3 col-sm-4">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-                <li class="list-group-item clearfix">
+                <li class="list-group-item clearfix active">
                     <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
                 </li>
                 <li class="list-group-item clearfix">

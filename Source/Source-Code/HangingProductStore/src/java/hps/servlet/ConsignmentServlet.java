@@ -2,6 +2,7 @@ package hps.servlet;
 
 import hps.blo.ConsignmentBLO;
 import hps.blo.ConsignmentBLOFactory;
+import hps.dto.Alert;
 import hps.dto.Consignment;
 import hps.dto.Customer;
 import java.io.IOException;
@@ -116,10 +117,16 @@ public class ConsignmentServlet extends HttpServlet {
                 long id = Long.parseLong(request.getParameter("id"));
                 if (request.getParameter("accept") != null) {
                     consignmentBLO.makeConsignmentAsAccepted(id);
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Accepted Successful!", "");
+                    request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
                     consignmentBLO.makeConsignmentAsRefused(id);
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Refused Successful!", "");
+                    request.setAttribute("alert", alert);
                 } else if (request.getParameter("import") != null) {
                     consignmentBLO.makeConsignmentAsImported(id);
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
+                    request.setAttribute("alert", alert);
                 }
                 
                 userPath = CONSIGNMENT_DETAIL;

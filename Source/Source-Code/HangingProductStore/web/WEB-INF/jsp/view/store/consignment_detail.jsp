@@ -25,6 +25,12 @@
                 <!-- BEGIN PAGE CONTENT-->
                 <div class="row">
                     <div class="col-md-12 col-md-12">
+                        <c:if test="${not empty alert}">
+                            <div class="alert alert-${alert.type.name} alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                <strong>${alert.title}</strong> ${alert.body}
+                            </div>
+                        </c:if>
                         <h1>
                             ${consignment.product.name} <small>from</small>
                             <a data-toggle="modal" href="#contactModal">${consignment.customerName}</a>

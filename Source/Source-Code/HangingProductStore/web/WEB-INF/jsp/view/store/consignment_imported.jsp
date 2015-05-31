@@ -11,7 +11,7 @@
                 <li class="list-group-item clearfix">
                     <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
                 </li>
-                <li class="list-group-item clearfix">
+                <li class="list-group-item clearfix active">
                     <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
                 </li>
                 <li class="list-group-item clearfix">
