@@ -70,6 +70,10 @@ public class ConsignServlet extends HttpServlet {
                 if(productName.contains("Gucci")){
                     price = 500000;
                 }
+                if(productName.contains("PT")){
+                    price = 300000;
+                }
+                
                 session.setAttribute("PRICE", price);
                 List<StoreOwnerDTO> allStore = getStoreOwnerList();
                 List<StoreOwnerDTO> storeOwners = new ArrayList<StoreOwnerDTO>();
@@ -78,7 +82,8 @@ public class ConsignServlet extends HttpServlet {
                         storeOwners.add(allStore.get(i));
                     }
                 }
-                request.setAttribute("STORELIST", storeOwners);
+                
+                session.setAttribute("STORELIST", storeOwners);
                 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("consign_step2.jsp");
         dispatcher.forward(request, response);
@@ -134,12 +139,24 @@ public class ConsignServlet extends HttpServlet {
         StoreOwnerDTO s2 = new StoreOwnerDTO("Levi Store", "167/15, Quang Trung, Q.GV", 1, "High", 8);
         StoreOwnerDTO s3 = new StoreOwnerDTO("Alvin Store", "88, To Ky, Q.12", 2, "High", 5);
         StoreOwnerDTO s4 = new StoreOwnerDTO("Fashion Store", "286 Au Co, Q.TP", 1, "Average", 12);
-        StoreOwnerDTO s5 = new StoreOwnerDTO("Marvel Store", "55 Nguyen Thai Son, Q.GV", 3, "Low", 15);
+        StoreOwnerDTO s5 = new StoreOwnerDTO("Marvel Store", "155 Nguyen Thai Son, Q.GV", 3, "Low", 16);
+        StoreOwnerDTO s6 = new StoreOwnerDTO("Adam Store", "21 Pham Ngu Lao, Q.GV", 2, "Low", 13);
+        StoreOwnerDTO s7 = new StoreOwnerDTO("Marvel Store", "401 Tan Ky Tan Quy, Q.GV", 3, "Low", 15);
+        StoreOwnerDTO s8 = new StoreOwnerDTO("Mark Store", "55 Nguyen Thai Son, Q.GV", 5, "High", 11);
+        StoreOwnerDTO s9 = new StoreOwnerDTO("Ami Store", "277 CMT8, Q.Binh Thanh", 3, "Average", 13);
+        StoreOwnerDTO s10 = new StoreOwnerDTO("Cloud Store", "267 Nguyen Van Qua, Q.GV", 3, "Low", 14);
+        
+        
         storeOwners.add(s1);
         storeOwners.add(s2);
         storeOwners.add(s3);
         storeOwners.add(s4);
         storeOwners.add(s5);
+        storeOwners.add(s6);
+        storeOwners.add(s7);
+        storeOwners.add(s8);
+        storeOwners.add(s9);
+        storeOwners.add(s10);
         
         return storeOwners;
     }
