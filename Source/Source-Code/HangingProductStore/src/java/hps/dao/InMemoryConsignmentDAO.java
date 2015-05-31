@@ -1,9 +1,7 @@
 package hps.dao;
 
 import hps.dto.Consignment;
-import hps.dto.Customer;
-import hps.dto.ProductDTO;
-import hps.dto.Store;
+import hps.dto.ConsignmentStatus;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -80,43 +78,23 @@ public class InMemoryConsignmentDAO implements ConsignmentDAO {
     }
 
     @Override
-    public void makeConsignmentAsViewed(long id) {
-        Consignment c = database.get(id);
-        if (c != null) {
-            c.setViewDate(new Date());
+    public List<Consignment> getConsignmentByStatus(long storeId, ConsignmentStatus status) {
+        List<Consignment> consignments = new LinkedList<>();
+        for (Consignment c : database.values()) {
+            if (c.getStore() != null &&
+                    c.getStore().getId() == storeId &&
+                    status.inStatus(c)) {
+                consignments.add(c);
+            }
         }
+        return Collections.unmodifiableList(consignments);
     }
 
     @Override
-    public void makeConsignmentAsAccepted(long id) {
+    public void makeConsignmentAsStatus(long id, ConsignmentStatus status) {
         Consignment c = database.get(id);
         if (c != null) {
-            c.setAcceptDate(new Date());
+            status.setStatus(c);
         }
     }
-
-    @Override
-    public void makeConsignmentAsRefused(long id) {
-        Consignment c = database.get(id);
-        if (c != null) {
-            c.setRefuseDate(new Date());
-        }
-    }
-
-    @Override
-    public void makeConsignmentAsTransfered(long id) {
-        Consignment c = database.get(id);
-        if (c != null) {
-            c.setTransferDate(new Date());
-        }
-    }
-
-    @Override
-    public void makeConsignmentAsCanceled(long id) {
-        Consignment c = database.get(id);
-        if (c != null) {
-            c.setCanceledDate(new Date());
-        }
-    }
-    
 }

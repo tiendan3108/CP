@@ -4,6 +4,7 @@ import hps.dao.ConsignmentDAO;
 import hps.dao.CustomerDAO;
 import hps.dao.StoreDAO;
 import hps.dto.Consignment;
+import hps.dto.ConsignmentStatus;
 import hps.dto.Customer;
 import hps.dto.ProductDTO;
 import hps.dto.Store;
@@ -62,33 +63,53 @@ public class DefaultConsignmentBLO implements ConsignmentBLO {
     }
 
     @Override
+    public List<Consignment> getConsigmentsRequest(long storeId) {
+        return consignmentDAO.getConsignmentByStatus(storeId, ConsignmentStatus.REQUEST);
+    }
+
+    @Override
+    public List<Consignment> getConsigmentsImported(long storeId) {
+        return consignmentDAO.getConsignmentByStatus(storeId, ConsignmentStatus.IMPORTED);
+    }
+
+    @Override
+    public List<Consignment> getConsigmentsSold(long storeId) {
+        return consignmentDAO.getConsignmentByStatus(storeId, ConsignmentStatus.SOLD);
+    }
+
+    @Override
     public List<Consignment> getConsigmentsByCustomer(long customerId) {
         return consignmentDAO.getConsigmentsByCustomer(customerId);
     }
 
     @Override
     public void makeConsignmentAsViewed(long id) {
-        consignmentDAO.makeConsignmentAsViewed(id);
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.VIEWED);
     }
 
     @Override
     public void makeConsignmentAsAccepted(long id) {
-        consignmentDAO.makeConsignmentAsAccepted(id);
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.ACCEPTED);
     }
 
     @Override
     public void makeConsignmentAsRefused(long id) {
-        consignmentDAO.makeConsignmentAsRefused(id);
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.REFUSED);
     }
 
     @Override
     public void makeConsignmentAsTransfered(long id) {
-        consignmentDAO.makeConsignmentAsTransfered(id);
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.TRANSFER);
+    }
+
+    @Override
+    public void makeConsignmentAsImported(long id) {
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.IMPORTED);
     }
 
     @Override
     public void makeConsignmentAsCanceled(long id) {
-        consignmentDAO.makeConsignmentAsTransfered(id);
+        consignmentDAO.makeConsignmentAsStatus(id, ConsignmentStatus.CANCELED);
     }
 
     @Override

@@ -1,9 +1,7 @@
 package hps.dao;
 
 import hps.dto.Consignment;
-import hps.dto.Customer;
-import hps.dto.ProductDTO;
-import hps.dto.Store;
+import hps.dto.ConsignmentStatus;
 import java.util.List;
 
 /**
@@ -17,9 +15,6 @@ public interface ConsignmentDAO {
     int getNonViewRequest(long storeId);
     List<Consignment> getConsigmentsByStore(long storeId);
     List<Consignment> getConsigmentsByCustomer(long customerId);
-    void makeConsignmentAsViewed(long id);
-    void makeConsignmentAsAccepted(long id);
-    void makeConsignmentAsRefused(long id);
-    void makeConsignmentAsTransfered(long id);
-    void makeConsignmentAsCanceled(long id);
+    List<Consignment> getConsignmentByStatus(long storeId, ConsignmentStatus status);
+    void makeConsignmentAsStatus(long id, ConsignmentStatus status);
 }

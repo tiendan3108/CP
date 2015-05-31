@@ -15,11 +15,15 @@ public interface ConsignmentBLO {
     Consignment getConsignment(long id);
     int getNonViewRequest(long storeId);
     List<Consignment> getConsigmentsByStore(long storeId);
+    List<Consignment> getConsigmentsRequest(long storeId);
+    List<Consignment> getConsigmentsImported(long storeId);
+    List<Consignment> getConsigmentsSold(long storeId);
     List<Consignment> getConsigmentsByCustomer(long customerId);
     void makeConsignmentAsViewed(long id);
     void makeConsignmentAsAccepted(long id);
     void makeConsignmentAsRefused(long id);
     void makeConsignmentAsTransfered(long id);
+    void makeConsignmentAsImported(long id);
     void makeConsignmentAsCanceled(long id);
     List<Customer> getConsignorsByStore(long storeId);
 }

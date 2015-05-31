@@ -14,6 +14,9 @@ public class Consignment {
     private Date acceptDate;
     private Date refuseDate;
     private Date transferDate;
+    private Date importDate;
+    private Date sellDate;
+    private Date payDate;
     private Date canceledDate;
     private int status;
     private String customerName;
@@ -83,6 +86,30 @@ public class Consignment {
 
     public void setTransferDate(Date transferDate) {
         this.transferDate = transferDate;
+    }
+
+    public Date getImportDate() {
+        return importDate;
+    }
+
+    public void setImportDate(Date importDate) {
+        this.importDate = importDate;
+    }
+
+    public Date getSellDate() {
+        return sellDate;
+    }
+
+    public void setSellDate(Date sellDate) {
+        this.sellDate = sellDate;
+    }
+
+    public Date getPayDate() {
+        return payDate;
+    }
+
+    public void setPayDate(Date payDate) {
+        this.payDate = payDate;
     }
 
     public Date getCanceledDate() {

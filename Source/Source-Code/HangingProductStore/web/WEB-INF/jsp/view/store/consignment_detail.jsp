@@ -6,13 +6,16 @@
         <div class="sidebar col-md-3 col-sm-4">
             <ul class="list-group margin-bottom-25 sidebar-menu">
                 <li class="list-group-item clearfix">
-                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Advance Search</a>
+                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
                 </li>
                 <li class="list-group-item clearfix">
-                    <a href="./consignment"><i class="fa fa-angle-right"></i> Request List</a>
+                    <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
                 </li>
                 <li class="list-group-item clearfix">
-                    <a href="./consignor"><i class="fa fa-angle-right"></i> Consignor List</a>
+                    <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
+                </li>
+                <li class="list-group-item clearfix">
+                    <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
                 </li>
             </ul>
         </div>
@@ -24,9 +27,12 @@
                     <div class="col-md-12 col-md-12">
                         <h1>
                             ${consignment.product.name} <small>from</small>
-                            <a data-toggle="modal" href="#antony">${consignment.customerName}</a>
+                            <a data-toggle="modal" href="#contactModal">${consignment.customerName}</a>
 
                             <c:choose>
+                                <c:when test="${not empty consignment.importDate}">
+                                    <span class="label label-primary">imported</span>
+                                </c:when>
                                 <c:when test="${not empty consignment.acceptDate}">
                                     <span class="label label-primary">accepted</span>
                                 </c:when>
@@ -73,7 +79,7 @@
 
                                     <div class="btn-group btn-group-justified">
                                         <c:choose>
-                                            <c:when test="${empty consignment.acceptDate}">
+                                            <c:when test="${empty consignment.acceptDate and empty consignment.refuseDate}">
                                                 <a class="btn btn-primary"
                                                    data-toggle="modal"
                                                    href="#acceptingModal">Accept</a>
@@ -81,11 +87,27 @@
                                                    data-toggle="modal"
                                                    href="#refusingModal">Refuse</a>
                                             </c:when>
+                                            <c:when test="${not empty consignment.importDate}">
+                                                <a class="btn btn-primary"
+                                                   data-toggle="modal"
+                                                   href="#raisingModal">Raise on Web</a>
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#cancelingModal">Cancel</a>
+                                            </c:when>
                                             <c:when test="${not empty consignment.acceptDate}">
-                                                <a class="btn btn-link">Cancel Consignment</a>
+                                                <a class="btn btn-primary"
+                                                   data-toggle="modal"
+                                                   href="#importingModal">Import</a>
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#cancelingModal">Cancel Accept</a>
                                             </c:when>
                                             <c:when test="${not empty consignment.refuseDate}">
-                                                <a class="btn btn-link">Cancel Refuse</a>
+                                                <a class="btn"></a>
+                                                <a class="btn btn-link"
+                                                   data-toggle="modal"
+                                                   href="#cancelingModal">Cancel Refuse</a>
                                             </c:when>
                                         </c:choose>
                                     </div>
@@ -258,7 +280,6 @@
                         <c:param name="id" value="${consignment.id}"/>
                     </c:url>
                     <form action="${current}" method="post">
-                        <input type="hidden" name="id" value="${consignment.id}">
                         <button class="btn btn-primary" type="submit" name="refuse">Refuse</button>
                         <button class="btn default" type="button" data-dismiss="modal">Close</button>
                     </form>
@@ -267,4 +288,82 @@
         </div>
     </div>
     <!-- Refusing Modal END -->
-</template:storebasic>
+
+    <!-- Importing Modal BEGIN -->
+    <div class="modal face" id="importingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal"></button>
+                    <h4>Product Importing</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to import this product?
+                </div>
+                <div class="modal-footer">
+                    <c:url var="current" value="consignment">
+                        <c:param name="id" value="${consignment.id}"/>
+                    </c:url>
+                    <form action="${current}" method="post">
+                        <button class="btn btn-primary" type="submit" name="import">Import</button>
+                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Importing Modal END -->
+
+    <!-- Deleting Modal BEGIN -->
+    <div class="modal face" id="deletingModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal"></button>
+                    <h4>Deleting</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <c:url var="current" value="consignment">
+                        <c:param name="id" value="${consignment.id}"/>
+                    </c:url>
+                    <form action="${current}" method="post">
+                        <button class="btn btn-primary" type="submit" name="delete">Delete</button>
+                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Deleting Modal END -->
+
+    <!-- Contact Modal BEGIN -->
+    <div class="modal face" id="contactModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" type="button" data-dismiss="modal"></button>
+                    <h4>Contact</h4>
+                </div>
+                <div class="modal-body">
+                    <h3 class="form-section">${consignment.customerName}</h3>
+                    <div class="well">
+                        <h4>Address</h4>
+                        <address>
+                            <strong>${consignment.customerAddress}</strong><br>
+                            <abbr title="Phone">P:</abbr> ${consignment.customerPhone}</address>
+                        <address>
+                            <strong>Email</strong><br>
+                            <a href="mailto:#">${consignment.customerEmail}</a>
+                        </address>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact Modal END -->
+    </template:storebasic>

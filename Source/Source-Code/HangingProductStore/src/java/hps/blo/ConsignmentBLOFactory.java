@@ -63,6 +63,13 @@ public class ConsignmentBLOFactory {
 
         ProductDTO p2 = new ProductDTO();
         p2.setName("Casio Watch Gold ");
+        p2.setDescription("Molestias excepturi sint occaecati cupiditate non"
+                + " provident, similique sunt in culpa quis tempor incididunt"
+                + " ut et dolore et dolorum fuga. Ut non libero consectetur"
+                + " adipiscing elit magna. Sed et quam lacus."
+                + " Lorem ipsum dolor sit amet, dolore eiusmod quis tempor"
+                + " incididunt ut et dolore Ut veniam unde nostrudlaboris."
+                + " Sed unde omnis iste natus error sit voluptatem.");
 
         Consignment con2 = new Consignment();
         con2.setRequestDate(new Date(2015, 4, 11));
@@ -79,6 +86,13 @@ public class ConsignmentBLOFactory {
 
         ProductDTO p3 = new ProductDTO();
         p3.setName("Channel Handbag");
+        p3.setDescription("Molestias excepturi sint occaecati cupiditate non"
+                + " provident, similique sunt in culpa quis tempor incididunt"
+                + " ut et dolore et dolorum fuga. Ut non libero consectetur"
+                + " adipiscing elit magna. Sed et quam lacus."
+                + " Lorem ipsum dolor sit amet, dolore eiusmod quis tempor"
+                + " incididunt ut et dolore Ut veniam unde nostrudlaboris."
+                + " Sed unde omnis iste natus error sit voluptatem.");
 
         Consignment con3 = new Consignment();
         con3.setRequestDate(new Date(2015, 4, 10));
@@ -89,6 +103,13 @@ public class ConsignmentBLOFactory {
         // Consignment 4
         ProductDTO p4 = new ProductDTO();
         p4.setName("Calvin Klein Belt");
+        p4.setDescription("Molestias excepturi sint occaecati cupiditate non"
+                + " provident, similique sunt in culpa quis tempor incididunt"
+                + " ut et dolore et dolorum fuga. Ut non libero consectetur"
+                + " adipiscing elit magna. Sed et quam lacus."
+                + " Lorem ipsum dolor sit amet, dolore eiusmod quis tempor"
+                + " incididunt ut et dolore Ut veniam unde nostrudlaboris."
+                + " Sed unde omnis iste natus error sit voluptatem.");
 
         Consignment con4 = new Consignment();
         con4.setRequestDate(new Date(2015, 4, 9));
@@ -101,6 +122,13 @@ public class ConsignmentBLOFactory {
         // Consignment 5
         ProductDTO p5 = new ProductDTO();
         p5.setName("Nike Shoes");
+        p5.setDescription("Molestias excepturi sint occaecati cupiditate non"
+                + " provident, similique sunt in culpa quis tempor incididunt"
+                + " ut et dolore et dolorum fuga. Ut non libero consectetur"
+                + " adipiscing elit magna. Sed et quam lacus."
+                + " Lorem ipsum dolor sit amet, dolore eiusmod quis tempor"
+                + " incididunt ut et dolore Ut veniam unde nostrudlaboris."
+                + " Sed unde omnis iste natus error sit voluptatem.");
 
         Consignment con5 = new Consignment();
         con5.setRequestDate(new Date(2015, 4, 9));
@@ -113,6 +141,13 @@ public class ConsignmentBLOFactory {
         // Consignment 6
         ProductDTO p6 = new ProductDTO();
         p6.setName("Gucci Sunglasses");
+        p6.setDescription("Molestias excepturi sint occaecati cupiditate non"
+                + " provident, similique sunt in culpa quis tempor incididunt"
+                + " ut et dolore et dolorum fuga. Ut non libero consectetur"
+                + " adipiscing elit magna. Sed et quam lacus."
+                + " Lorem ipsum dolor sit amet, dolore eiusmod quis tempor"
+                + " incididunt ut et dolore Ut veniam unde nostrudlaboris."
+                + " Sed unde omnis iste natus error sit voluptatem.");
 
         Consignment con6 = new Consignment();
         con6.setRequestDate(new Date(2015, 4, 9));

@@ -5,13 +5,16 @@
         <div class="sidebar col-md-3 col-sm-4">
             <ul class="list-group margin-bottom-25 sidebar-menu">
                 <li class="list-group-item clearfix">
-                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Advance Search</a>
+                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
                 </li>
                 <li class="list-group-item clearfix">
-                    <a href="./consignment"><i class="fa fa-angle-right"></i> Request List</a>
+                    <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
                 </li>
                 <li class="list-group-item clearfix">
-                    <a href="./consignor"><i class="fa fa-angle-right"></i> Consignor List</a>
+                    <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
+                </li>
+                <li class="list-group-item clearfix">
+                    <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
                 </li>
             </ul>
         </div>
