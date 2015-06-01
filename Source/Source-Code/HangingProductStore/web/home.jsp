@@ -1,3 +1,5 @@
+<%@page import="hps.dto.CategoryDTO"%>
+<%@page import="java.util.List"%>
 <template:shopbasic htmlTitle="Home" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
@@ -19,15 +21,61 @@
             </ul>
         </li>
     </jsp:attribute>
-    <jsp:body>
-
+    <jsp:body>      
         <div class="row margin-bottom-40" style="z-index: 5">
+            <div class="sidebar col-md-3 col-sm-4">              
+                <li class="list-group-item clearfix dropdown">
+                    <a href="#"><i class="fa fa-angle-right"></i>Mens</a>
+                    <ul class="dropdown-menu">
+                        <li class="list-group-item dropdown clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i> Shoes </a>
+                        </li>
+                        <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Trainers</a></li>
+                        <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Jeans</a></li>
+                        <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Chinos</a></li>
+                        <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
+                    </ul>
+                </li>
+                <li class="list-group-item clearfix dropdown">
+                    <a href="#"><i class="fa fa-angle-right"></i>Ladies</a>
+                </li>
+                <li class="list-group-item clearfix dropdown">
+                    <a href="#"><i class="fa fa-angle-right"></i>kids</a>
+                </li>
+                <li class="list-group-item clearfix dropdown">
+                    <a href="#"><i class="fa fa-angle-right"></i>Brands</a>
+                </li>
+            </div>
             <c:set var="data" value="${requestScope.DATA}"/>
             <!-- BEGIN SALE PRODUCT -->
             <c:if test="${not empty data}">
-                <div class="col-md-12 sale-product">
+                <div class="col-md-9 col-sm-8 sale-product">
+                    <div class="content-search margin-bottom-20">         
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select class="bs-select form-control input-small" data-style="blue">
+                                    <option>All</option>                    
+                                    <option>Ladies</option>
+                                    <option>Mens</option>
+                                    <option>Kids</option>
+                                    <option>Sports</option>
+                                    <option>Brand</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <form action="#">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <h2>New Arrivals</h2>
-                    <div class="owl-carousel owl-carousel5">
+                    <div class="owl-carousel owl-carousel4">
                         <c:forEach var="item" items="${data}">     
                             <div>
                                 <div class="product-item">
@@ -50,57 +98,11 @@
             </c:if>
             <!-- END SALE PRODUCT -->        
         </div>
-        <div class="content-search margin-bottom-20">
-            <div class="row">
-                <div class="col-md-3">
-                    <select class="bs-select form-control input-small" data-style="blue">
-                        <option>All</option>
-                        <option>Ladies</option>
-                        <option>Mens</option>
-                        <option>Kids</option>
-                        <option>Sports</option>
-                        <option>Brand</option>
-                    </select>
-                </div>
-                <div class="col-md-7">
-                    <form action="#">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search" class="form-control">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit">Search</button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <div class="row margin-bottom-40 ">
-            <!-- BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-4">
-                <ul class="list-group margin-bottom-25 sidebar-menu">
-                    <li class="list-group-item clearfix"><a href="showProduct.html"><i class="fa fa-angle-right"></i> Ladies</a></li>
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#">
-                            <i class="fa fa-angle-right"></i>
-                            Mens               
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item dropdown clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i> Shoes </a>
-                            </li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Trainers</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Jeans</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Chinos</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
-                        </ul>
-                    </li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Kids</a></li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Sports</a></li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Brands</a></li>
-                </ul>
+            <div class="sidebar col-md-3 col-sm-4">              
+
             </div>
-            <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
             <div class="col-md-9 col-sm-8">
                 <h2>SAVE ITEMS</h2>
