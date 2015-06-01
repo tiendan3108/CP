@@ -10,6 +10,7 @@ package hps.ultils;
  * @author Tien Dan
  */
 public class GlobalVariables {
+
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
@@ -23,5 +24,6 @@ public class GlobalVariables {
     public static final int CANCEL = 6;// consignor request cancel consignment and not yet take product back.
     public static final int RETURNED = 7;// product is returned to consignor.
     public static final int COMPLETED = 8;// product is sold and store owner pay consignor.
+    public static final int CANCEL_ON_WEB = 9; //consignor request cancel consignment while product is on web
 
 }
