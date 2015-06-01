@@ -5,7 +5,9 @@
  */
 package hps.servlet;
 
+import hps.dao.CategoryDAO;
 import hps.dao.productDAO;
+import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,10 +39,23 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            productDAO dao = new productDAO();
-            List<ProductDTO> data = dao.getNewData();
-            System.out.println("servlet" + data.get(1).getImage());
+            productDAO productDao = new productDAO();
+            List<ProductDTO> data = productDao.getNewData();
+            CategoryDAO cateDao = new CategoryDAO();
+            List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+            for (int i = 0; i < parentCategories.size(); i++) {
+                CategoryDTO parent = parentCategories.get(i);
+                parent.setChildCategories(cateDao.getCategoryByParentId(parent.getCategoryId()));
+                parentCategories.set(i, parent);           
+            }
+            for(int i = 0;i<parentCategories.size();i++){
+                System.out.println(parentCategories.get(i).getCategoryName());
+                for(int j=0; j<parentCategories.get(i).getChildCategories().size();j++){
+                    System.out.println("--" + parentCategories.get(i).getChildCategories().get(j).getCategoryName());
+                }
+            }
             request.setAttribute("DATA", data);
+            request.setAttribute("CATEGORY", parentCategories);
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
