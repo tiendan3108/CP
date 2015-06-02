@@ -36,15 +36,19 @@
     <body class="ecommerce">
 
         <!-- Header BEGIN -->
-        <div id= "nav">
+        <div id="nav">
             <div class="container">
                 <div class="row" >
-                    <a href="home.html" class="brand-logo">Hanging Product Store</a>
-                    <!-- Top-bar-menu BEGIN -->
-                    <ul class="list-unstyled list-inline pull-right navhover">
-                        <jsp:invoke fragment="navigationContent" />
-                    </ul>
-                    <!-- Top-bar-menu END -->
+                    <div class="col-md-4 col-sm-12 logo">
+                        <a href="HomeServlet" class="brand-logo">Hanging Product Store</a>
+                    </div>
+                    <div class="col-md-8 col-sm-12 contentNav">
+                        <!-- Top-bar-menu BEGIN -->
+                        <ul>
+                            <jsp:invoke fragment="navigationContent" />
+                        </ul>
+                        <!-- Top-bar-menu END -->
+                    </div>
                 </div>
             </div>        
         </div>
