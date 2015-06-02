@@ -1,2 +1,3 @@
 2/6/2015
 - Them quan he giua 2 bang product va consigment.
+- DB bang StoreOwner tao truoc moi tao duoc Account -> sai chieu quan he. De nghi sua lai
