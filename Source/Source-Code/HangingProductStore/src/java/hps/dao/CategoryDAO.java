@@ -61,7 +61,7 @@ public class CategoryDAO {
         return null;
     }
 
-    public List<CategoryDTO> getCategoryByParentId(int parentId) {
+    public List<CategoryDTO> getAllCategory() {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -69,13 +69,13 @@ public class CategoryDAO {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select * from Category where ParentID = ?";
+            String query = "select * from Category";
             stm = con.prepareStatement(query);
-            stm.setInt(1, parentId);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("CategoryID");
                 String name = rs.getString("CategoryName");
+                int parentId = rs.getInt("ParentID");
                 CategoryDTO category = new CategoryDTO(id, name, parentId);
                 categories.add(category);
             }

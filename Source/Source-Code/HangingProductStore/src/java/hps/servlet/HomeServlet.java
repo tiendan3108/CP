@@ -43,19 +43,10 @@ public class HomeServlet extends HttpServlet {
             List<ProductDTO> data = productDao.getNewData();
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();
-            for (int i = 0; i < parentCategories.size(); i++) {
-                CategoryDTO parent = parentCategories.get(i);
-                parent.setChildCategories(cateDao.getCategoryByParentId(parent.getCategoryId()));
-                parentCategories.set(i, parent);           
-            }
-            for(int i = 0;i<parentCategories.size();i++){
-                System.out.println(parentCategories.get(i).getCategoryName());
-                for(int j=0; j<parentCategories.get(i).getChildCategories().size();j++){
-                    System.out.println("--" + parentCategories.get(i).getChildCategories().get(j).getCategoryName());
-                }
-            }
+            List<CategoryDTO> category = cateDao.getAllCategory();
             request.setAttribute("DATA", data);
             request.setAttribute("CATEGORY", parentCategories);
+            request.setAttribute("ALLCATE", category);
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
