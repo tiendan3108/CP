@@ -36,14 +36,16 @@ public class productDAO {
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
-                int status = rs.getInt("Status");
-                String description = rs.getString("Description");
-                float sellingPrice = rs.getFloat("SellingPrice");
-                String image = rs.getString("Image");
-                String receivedDay = rs.getString("ReceivedDay");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
                 int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                ProductDTO product = new ProductDTO(productID, productName, status, description, sellingPrice, image, receivedDay, categoryID, parentCategoryID);
+                ProductDTO product = new ProductDTO(productID, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
                 products.add(product);
                 System.out.println(product.getImage());
             }
@@ -82,14 +84,16 @@ public class productDAO {
             rs = stm.executeQuery();
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
-                int status = rs.getInt("Status");
-                String description = rs.getString("Description");
-                float sellingPrice = rs.getFloat("SellingPrice");
-                String image = rs.getString("Image");
-                String receivedDay = rs.getString("ReceivedDay");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
                 int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                product = new ProductDTO(productID, productName, status, description, sellingPrice, image, receivedDay, categoryID, parentCategoryID);
+                product = new ProductDTO(productID, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
             }
             return product;
         } catch (SQLException ex) {
@@ -112,7 +116,7 @@ public class productDAO {
         return null;
     }
 
-    public List<ProductDTO> getSimilarProduct(int categoryID,int productID) {
+    public List<ProductDTO> getSimilarProduct(int categoryID, int productID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -132,13 +136,15 @@ public class productDAO {
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
-                int status = rs.getInt("Status");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
-                float sellingPrice = rs.getFloat("SellingPrice");
                 String image = rs.getString("Image");
-                String receivedDay = rs.getString("ReceivedDay");
+                int status = rs.getInt("Status");           
+                float sellingPrice = rs.getFloat("SellingPrice");              ;                             
                 int parentCategoryID = rs.getInt("ParentID");
-                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, receivedDay, categoryID, parentCategoryID);
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
                 products.add(product);
             }
             return products;

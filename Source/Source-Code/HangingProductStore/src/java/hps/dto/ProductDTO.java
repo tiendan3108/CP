@@ -5,7 +5,6 @@
  */
 package hps.dto;
 
-import java.util.Date;
 
 /**
  *
@@ -17,35 +16,41 @@ public class ProductDTO {
     private String name;
     private int status;
     private String description;
-    private float price;
+    private float sellingPrice;
     private String image;
-    private String receivedDay;
+    private String purchasedDay;
     private int categoryID;
     private int parentCategoryID;
     private String consignmentID;// for store owner management page
+    private String brand;
+    private String serialNumber;
 
     public ProductDTO() {
     }
 
-    public ProductDTO(int productID, String name, int status, String description, float price, String image, String receivedDay, int categoryID, int parentCategoryID) {
+    public ProductDTO(int productID, String name, int status, String description, float price, String image, String purchasedDay, int categoryID, int parentCategoryID,String brand,String serialNumber) {
         this.productID = productID;
         this.name = name;
         this.status = status;
         this.description = description;
-        this.price = price;
+        this.sellingPrice = price;
         this.image = image;
-        this.receivedDay = receivedDay;
+        this.purchasedDay = purchasedDay;
         this.categoryID = categoryID;
         this.parentCategoryID = parentCategoryID;
+        this.brand = brand;
+        this.serialNumber = serialNumber;
     }
-    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, int status) {
+
+    public ProductDTO(int productID, String productName, String purchasedDay, String consignmentID, float sellingPrice, int status) {
         this.productID = productID;
         this.name = productName;
-        this.receivedDay = receivedDate;
+        this.purchasedDay = purchasedDay;
         this.consignmentID = consignmentID;
-        this.price = price;
+        this.sellingPrice = sellingPrice;
         this.status = status;
     }
+
     /**
      * @return the productID
      */
@@ -106,14 +111,14 @@ public class ProductDTO {
      * @return the price
      */
     public float getPrice() {
-        return price;
+        return sellingPrice;
     }
 
     /**
      * @param price the price to set
      */
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPrice(float sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     /**
@@ -134,14 +139,14 @@ public class ProductDTO {
      * @return the receivedDay
      */
     public String getReceivedDay() {
-        return receivedDay;
+        return purchasedDay;
     }
 
     /**
      * @param receivedDay the receivedDay to set
      */
     public void setReceivedDay(String receivedDay) {
-        this.receivedDay = receivedDay;
+        this.purchasedDay = receivedDay;
     }
 
     /**
@@ -186,4 +191,32 @@ public class ProductDTO {
         this.consignmentID = consignmentID;
     }
 
+    /**
+     * @return the brand
+     */
+    public String getBrand() {
+        return brand;
+    }
+
+    /**
+     * @param brand the brand to set
+     */
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    /**
+     * @return the serialNumber
+     */
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    /**
+     * @param serialNumber the serialNumber to set
+     */
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+    
 }
