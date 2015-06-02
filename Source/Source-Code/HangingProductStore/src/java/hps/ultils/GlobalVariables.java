@@ -25,5 +25,13 @@ public class GlobalVariables {
     public static final int RETURNED = 7;// product is returned to consignor.
     public static final int COMPLETED = 8;// product is sold and store owner pay consignor.
     public static final int CANCEL_ON_WEB = 9; //consignor request cancel consignment while product is on web
-
+    public static final String MANAGERMENT_SERVLET = "ManageProductStatusServlet";
+    public static final String MANAGERMENT_PAGE = "manageProductStatus.jsp";
+    public static final String SEARCH_PRODUCT_STATUS = "SearchProductStatusServlet";
+    public static final String CANCEL_PRODUCT_SERVLET = "CancelProductServlet";
+    public static final String PAY_CONSIGNOR = "payConsignor.jsp";
+    public static final String LOAD_PAYMENT_SERVLET = "LoadPaymentPageServlet";
+    public static final String LOAD_PUBLISH_PAGE_SERVLET = "LoadPublishOnWebPage";
+    public static final String PUBLISH_PAGE = "publishOnWeb.jsp";
+    public static final String PUBLISH_PRODUCT_SERVLET = "PublishOnWebServlet";
 }

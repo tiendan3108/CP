@@ -5,6 +5,8 @@
  */
 package hps.servlet;
 
+import hps.dao.DanqtDAO;
+import hps.dto.UsersDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,12 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author HoangNHSE61007
+ * @author Tien Dan
  */
-public class ProcessServlet extends HttpServlet {
-
-    private final String homeServlet = "HomeServlet";
-    private final String viewProductDetailServlet = "ViewProductDetailServlet";
+public class LoadPaymentPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,49 +35,17 @@ public class ProcessServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("action");
-            switch (action) {
-                case "home": {
-                    RequestDispatcher rd = request.getRequestDispatcher(homeServlet);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "viewDetail": {
-                    RequestDispatcher rd = request.getRequestDispatcher(viewProductDetailServlet);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "manage": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.MANAGERMENT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "searchStatus": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.SEARCH_PRODUCT_STATUS);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "cancel": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.CANCEL_PRODUCT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "pay": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PAYMENT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "publish": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PUBLISH_PAGE_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "finalPublish": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PUBLISH_PRODUCT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-            }
+            /* TODO output your page here. You may use following sample code. */
+            String consignmentID = request.getParameter("consignmentID");
+            DanqtDAO dao = new DanqtDAO();
+            UsersDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
+            UsersDTO consignee = dao.getConsigneeInforByConsignmentID(consignmentID);
+            float mount = dao.getConsignmentPrice(consignmentID);
+            request.setAttribute("consignor", consignor);
+            request.setAttribute("consignee", consignee);
+            request.setAttribute("amount", mount);
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PAY_CONSIGNOR);
+            rd.forward(request, response);
         }
     }
 

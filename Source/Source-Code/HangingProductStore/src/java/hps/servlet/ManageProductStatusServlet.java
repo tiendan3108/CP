@@ -5,9 +5,12 @@
  */
 package hps.servlet;
 
+import hps.dao.DanqtDAO;
+import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,12 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author HoangNHSE61007
+ * @author Tien Dan
  */
-public class ProcessServlet extends HttpServlet {
-
-    private final String homeServlet = "HomeServlet";
-    private final String viewProductDetailServlet = "ViewProductDetailServlet";
+public class ManageProductStatusServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,49 +36,12 @@ public class ProcessServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("action");
-            switch (action) {
-                case "home": {
-                    RequestDispatcher rd = request.getRequestDispatcher(homeServlet);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "viewDetail": {
-                    RequestDispatcher rd = request.getRequestDispatcher(viewProductDetailServlet);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "manage": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.MANAGERMENT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "searchStatus": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.SEARCH_PRODUCT_STATUS);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "cancel": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.CANCEL_PRODUCT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "pay": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PAYMENT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "publish": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PUBLISH_PAGE_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-                case "finalPublish": {
-                    RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PUBLISH_PRODUCT_SERVLET);
-                    rd.forward(request, response);
-                    break;
-                }
-            }
+            /* TODO output your page here. You may use following sample code. */
+            DanqtDAO dao = new DanqtDAO();
+            List<ProductDTO> result = dao.getProductStatus();
+            request.setAttribute("result", result);
+            RequestDispatcher rd= request.getRequestDispatcher(GlobalVariables.MANAGERMENT_PAGE);
+            rd.forward(request, response);
         }
     }
 
