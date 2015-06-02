@@ -46,34 +46,35 @@
                     <a href="#"><i class="fa fa-angle-right"></i>Brands</a>
                 </li>
             </div>
-            <c:set var="data" value="${requestScope.DATA}"/>
-            <!-- BEGIN SALE PRODUCT -->
-            <c:if test="${not empty data}">
-                <div class="col-md-9 col-sm-8 sale-product">
-                    <div class="content-search margin-bottom-20">         
-                        <div class="row">
-                            <div class="col-md-4">
-                                <select class="bs-select form-control input-small" data-style="blue">
-                                    <option>All</option>                    
-                                    <option>Ladies</option>
-                                    <option>Mens</option>
-                                    <option>Kids</option>
-                                    <option>Sports</option>
-                                    <option>Brand</option>
-                                </select>
-                            </div>
-                            <div class="col-md-8">
-                                <form action="#">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Search" class="form-control">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="submit">Search</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
+
+            <div class="col-md-9 col-sm-8 sale-product">
+                <div class="content-search margin-bottom-20">         
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="bs-select form-control input-small" data-style="blue">
+                                <option>All</option>                    
+                                <option>Ladies</option>
+                                <option>Mens</option>
+                                <option>Kids</option>
+                                <option>Sports</option>
+                                <option>Brand</option>
+                            </select>
+                        </div>
+                        <div class="col-md-8">
+                            <form action="#">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </span>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
+                <c:set var="data" value="${requestScope.DATA}"/>
+                <!-- BEGIN SALE PRODUCT -->
+                <c:if test="${not empty data}">
                     <h2>New Arrivals</h2>
                     <div class="owl-carousel owl-carousel4">
                         <c:forEach var="item" items="${data}">     
@@ -100,11 +101,8 @@
         </div>
 
         <div class="row margin-bottom-40 ">
-            <div class="sidebar col-md-3 col-sm-4">              
-
-            </div>
             <!-- BEGIN CONTENT -->
-            <div class="col-md-9 col-sm-8">
+            <div class="col-md-9 col-sm-8 col-md-offset-3">
                 <h2>SAVE ITEMS</h2>
                 <div class="owl-carousel owl-carousel3">
                     <div>
