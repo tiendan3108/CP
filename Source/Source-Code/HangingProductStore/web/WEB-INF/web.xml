@@ -5,11 +5,34 @@
         <servlet-name>ProcessServlet</servlet-name>
         <servlet-class>hps.servlet.ProcessServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageProductStatusServlet</servlet-name>
+        <servlet-class>hps.servlet.ManageProductStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchProductStatusServlet</servlet-name>
+        <servlet-class>hps.servlet.SearchProductStatusServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelProductServlet</servlet-name>
+        <servlet-class>hps.servlet.CancelProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadPaymentPageServlet</servlet-name>
+        <servlet-class>hps.servlet.LoadPaymentPageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PublishOnWebServlet</servlet-name>
+        <servlet-class>hps.servlet.PublishOnWebServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadPublishOnWebPage</servlet-name>
+        <servlet-class>hps.servlet.LoadPublishOnWebPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProcessServlet</servlet-name>
         <url-pattern>/ProcessServlet</url-pattern>
     </servlet-mapping>
-    
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
@@ -20,14 +43,36 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
-    
+    <servlet-mapping>
+        <servlet-name>ManageProductStatusServlet</servlet-name>
+        <url-pattern>/ManageProductStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchProductStatusServlet</servlet-name>
+        <url-pattern>/SearchProductStatusServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelProductServlet</servlet-name>
+        <url-pattern>/CancelProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPaymentPageServlet</servlet-name>
+        <url-pattern>/LoadPaymentPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PublishOnWebServlet</servlet-name>
+        <url-pattern>/PublishOnWebServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPublishOnWebPage</servlet-name>
+        <url-pattern>/LoadPublishOnWebPage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <welcome-file-list>
-        <welcome-file>HomeServlet</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
