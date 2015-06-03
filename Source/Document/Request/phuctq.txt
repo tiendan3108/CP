@@ -1,1 +1,3 @@
 ﻿Bổ sung thêm thuộc tính và quan hệ như trong hình "Consignment Data Model.png".
+Bổ sung trạng thái Accepted, sau khi nhận được request Consignee chấp nhận cho ký gửi (trước khi nhập sản phẩm)
+Bổ sung trạng thái Refused, sau khi nhận được request Consignee từ chối cho ký gửi (trước khi nhập sản phẩm)
