@@ -84,86 +84,39 @@
                     </form>
                 </div>
                 <div class="row product-list">
-                    <!-- PRODUCT ITEM START -->
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/nike_air_jordan_4_retro_2013110110_0.jpg" class="imgCrop2">
+                    <c:set var="data" value="${requestScope.DATA}"/>
+                    <c:if test="${empty data}">
+                        <h2>No result found</h2>
+                    </c:if>
+                    <c:if test="${not empty data}">
+                        <c:forEach var="item" items="${data}">
+                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img src="${item.image}" class="imgCrop2">
+                                    </div>
+                                    <h3><a href="shop-item.html">${item.name}</a></h3>
+                                    <div class="pi-price">$29.00</div>
+                                    <a href="#" class="btn btn-default add2cart">View Details</a>
+                                </div>
                             </div>
-                            <h3><a href="shop-item.html">Nike</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>
-                    <!-- PRODUCT ITEM END -->
-                    <!-- PRODUCT ITEM START -->
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop2">
-                            </div>
-                            <h3><a href="shop-item.html">Casio</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>
-                    <!-- PRODUCT ITEM END -->
-                    <!-- PRODUCT ITEM START -->
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop2">
-                            </div>
-                            <h3><a href="shop-item.html">Casio</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>              
-                    <!-- PRODUCT ITEM END -->
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop2">
-                            </div>
-                            <h3><a href="shop-item.html">Casio</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>  
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop2">
-                            </div>
-                            <h3><a href="shop-item.html">Casio</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>  
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop2">
-                            </div>
-                            <h3><a href="shop-item.html">Casio</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Details</a>
-                        </div>
-                    </div>  
+                        </c:forEach>
+                    </c:if>
+                    <!-- PRODUCT ITEM START -->                  
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-sm-4 items-info"></div>
                     <div class="col-md-8 col-sm-8">
                         <ul class="pagination pull-right">
-                            <li><a href="#">&laquo;</a></li>
-                            <li><a href="product.jsp">1</a></li>
+                            <li><a onclick="location.href = URL_add_parameter(location.href, 'page', '1');" href="#">&laquo;</a></li>
+                            <li><a href="ProductServlet?page=2">1</a></li>
                             <li><span>2</span></li>
-                            <li><a href="#">3</a></li>
+                            <li><a onclick="location.href = URL_add_parameter(location.href, 'page', '2');" href="#">3</a></li>
                             <li><a href="product.jsp">4</a></li>
                             <li><a href="#">5</a></li>
                             <li><a href="#">&raquo;</a></li>
                         </ul>
-                    </div>
+                    </div>                   
                 </div>
             </div>
 

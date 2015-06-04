@@ -25,17 +25,17 @@
             <div class="sidebar col-md-3 col-sm-4">   
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <c:forEach var="category" items="${categories}">
-                        <li class="list-group-item clearfix dropdown">
-                            <a href="#"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                            <ul class="dropdown-menu">
-                                <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                                <c:forEach var="childCate" items="${allCate}">
-                                    <c:if test="${category.categoryId == childCate.parentId}">
-                                        <li class="list-group-item dropdown clearfix">
-                                            <a href="#"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                        </li>    
-                                    </c:if>
-                                </c:forEach>                                             
+                        <li class="list-group-item clearfix">
+                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="sidebar-menu">
+                                <li class="list-group-item clearfix">
+                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                    <c:forEach var="childCate" items="${allCate}">
+                                        <c:if test="${category.categoryId == childCate.parentId}">
+                                            <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
+                                            </c:if>
+                                        </c:forEach>       
+                                </li>
                             </ul>
                         </li>
                     </c:forEach>
@@ -107,81 +107,81 @@
                             </div>
                         </c:forEach>    
                     </div>
+                </c:if>
+                <div class="row margin-bottom-40 " style="margin-top:100px">
+                    <!-- BEGIN CONTENT -->
+                    <h2>SAVE ITEMS</h2>
+                    <div class="owl-carousel owl-carousel3">
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress"> 
+                                </div>
+                                <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                                <div class="sticker sticker-new"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                </div>
+                                <h3>Berry Lace Dress2</h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                </div>
+                                <h3>Berry Lace Dress3</h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                </div>
+                                <h3>Berry Lace Dress4</h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                                <div class="sticker sticker-sale"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                </div>
+                                <h3>Berry Lace Dress5</h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                </div>
+                                <h3>Berry Lace Dress6</h3>
+                                <div class="pi-price">$29.00</div>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END CONTENT -->
                 </div>
-            </c:if>
+
+            </div>
             <!-- END SALE PRODUCT -->        
         </div>
 
-        <div class="row margin-bottom-40 ">
-            <!-- BEGIN CONTENT -->
-            <div class="col-md-9 col-sm-8 col-md-offset-3">
-                <h2>SAVE ITEMS</h2>
-                <div class="owl-carousel owl-carousel3">
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress"> 
-                            </div>
-                            <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            <div class="sticker sticker-new"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                            </div>
-                            <h3>Berry Lace Dress2</h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
-                            </div>
-                            <h3>Berry Lace Dress3</h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
-                            </div>
-                            <h3>Berry Lace Dress4</h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            <div class="sticker sticker-sale"></div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                            </div>
-                            <h3>Berry Lace Dress5</h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                            </div>
-                            <h3>Berry Lace Dress6</h3>
-                            <div class="pi-price">$29.00</div>
-                            <a href="#" class="btn btn-default add2cart">View Detail</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END CONTENT -->
-        </div>       
+
     </jsp:body>
 </template:shopbasic>
