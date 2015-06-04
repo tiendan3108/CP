@@ -1,5 +1,3 @@
-<%@page import="hps.dto.CategoryDTO"%>
-<%@page import="java.util.List"%>
 <template:shopbasic htmlTitle="Home" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
@@ -24,22 +22,42 @@
     <jsp:body>      
         <c:set var="categories" value="${requestScope.CATEGORY}"/>
         <div class="row margin-bottom-40" style="z-index: 5">          
-            <div class="sidebar col-md-3 col-sm-4">                 
-                <c:forEach var="category" items="${categories}">
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                        <ul class="dropdown-menu">
-                            <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                            <c:forEach var="childCate" items="${allCate}">
-                                <c:if test="${category.categoryId == childCate.parentId}">
-                                    <li class="list-group-item dropdown clearfix">
-                                        <a href="#"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                    </li>    
-                                </c:if>
-                            </c:forEach>                                             
-                        </ul>
-                    </li>
-                </c:forEach>
+            <div class="sidebar col-md-3 col-sm-4">   
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <c:forEach var="category" items="${categories}">
+                        <li class="list-group-item clearfix dropdown">
+                            <a href="#"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="dropdown-menu">
+                                <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                <c:forEach var="childCate" items="${allCate}">
+                                    <c:if test="${category.categoryId == childCate.parentId}">
+                                        <li class="list-group-item dropdown clearfix">
+                                            <a href="#"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
+                                        </li>    
+                                    </c:if>
+                                </c:forEach>                                             
+                            </ul>
+                        </li>
+                    </c:forEach>
+                </ul>
+                <div class="sidebar-products clearfix">
+                    <h2>Bestsellers</h2>
+                    <div class="item">
+                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k1.jpg" alt="Some Shoes in Animal with Cut Out"></a>
+                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
+                        <div class="price">$31.00</div>
+                    </div>
+                    <div class="item">
+                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k4.jpg" alt="Some Shoes in Animal with Cut Out"></a>
+                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
+                        <div class="price">$23.00</div>
+                    </div>
+                    <div class="item">
+                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k3.jpg" alt="Some Shoes in Animal with Cut Out"></a>
+                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
+                        <div class="price">$86.00</div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-9 col-sm-8 sale-product">
@@ -80,8 +98,7 @@
                                     </div>
                                     <h3>${item.name}</h3>
                                     <div class="pi-price">$ ${item.price}</div>
-                                    <c:url var="viewDetail" value = "ProcessServlet">
-                                        <c:param name="action" value="viewDetail" />
+                                    <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                         <c:param name="productID" value="${item.productID}"/>
                                     </c:url>
                                     <a href="${viewDetail}" class="btn btn-default add2cart">View Detail</a>
