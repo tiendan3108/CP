@@ -141,8 +141,243 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");           
-                float sellingPrice = rs.getFloat("SellingPrice");              ;                             
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int parentCategoryID = rs.getInt("ParentID");
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public List<ProductDTO> getProductByCategoryAndName(int categoryID, String name, int page) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int next = (page - 1) * 6;
+        List<ProductDTO> products = new ArrayList<ProductDTO>();
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT TOP 6 * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.ProductName like ? "
+                    + "And Product.CategoryID = ? "
+                    + "And Product.ProductID NOT IN "
+                    + "  (SELECT TOP (?) ProductID "
+                    + "   FROM Product "
+                    + "   ORDER BY ProductID ASC) "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setString(1, "%" + name + "%");
+            stm.setInt(2, categoryID);
+            stm.setInt(3, next);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int parentCategoryID = rs.getInt("ParentID");
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public List<ProductDTO> getProductByCategory(int categoryID, int page) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int next = (page - 1) * 6;
+        List<ProductDTO> products = new ArrayList<ProductDTO>();
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT TOP 6 * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.CategoryID = ? "
+                    + "And Product.ProductID NOT IN "
+                    + "  (SELECT TOP (?) ProductID "
+                    + "   FROM Product "
+                    + "   ORDER BY ProductID ASC) "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, categoryID);
+            stm.setInt(2, next);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int parentCategoryID = rs.getInt("ParentID");
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public List<ProductDTO> getProductByParentCategory(int parentCategoryID, int page) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int next = (page - 1) * 6;
+        List<ProductDTO> products = new ArrayList<ProductDTO>();
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT TOP 6 * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Category.ParentID = ? "
+                    + "And Product.ProductID NOT IN "
+                    + "  (SELECT TOP (?) ProductID "
+                    + "   FROM Product "
+                    + "   ORDER BY ProductID ASC) "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, parentCategoryID);
+            stm.setInt(2, next);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int categoryID = rs.getInt("CategoryID");
+                ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public List<ProductDTO> getProductByName(String name, int page) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int next = (page - 1) * 6;
+        List<ProductDTO> products = new ArrayList<ProductDTO>();
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT TOP 6 * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.ProductName like ? "
+                    + "And Product.ProductID NOT IN "
+                    + "  (SELECT TOP (?) ProductID "
+                    + "   FROM Product "
+                    + "   ORDER BY ProductID ASC) "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setString(1, "%" + name + "%");
+            stm.setInt(2, next);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int categoryID = rs.getInt("CategoryID");
+                int status = rs.getInt("Status");
+                float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
                 products.add(product);
