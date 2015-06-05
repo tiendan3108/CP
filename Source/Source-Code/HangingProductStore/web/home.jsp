@@ -62,20 +62,19 @@
 
             <div class="col-md-9 col-sm-8 sale-product">
                 <div class="content-search margin-bottom-20"> 
-                    <form action="#">
+                    <form action="ProductServlet">
                         <div class="row">
                             <div class="col-md-4">
-                                <select class="bs-select form-control input-small" data-style="blue">
-                                    <option>All</option>                    
+                                <select name="parentId" class="bs-select form-control input-small" data-style="blue">
+                                    <option value="all">All</option>                    
                                     <c:forEach var="category" items="${categories}">
-                                        <option>${category.categoryName}</option>
+                                        <option value="${category.categoryId}">${category.categoryName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="col-md-8">
-
                                 <div class="input-group">
-                                    <input type="text" placeholder="Search" class="form-control">
+                                    <input required="true" name="key" type="text" placeholder="Search" class="form-control">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="submit">Search</button>
                                     </span>
