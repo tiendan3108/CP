@@ -35,26 +35,23 @@
         <div class="row margin-bottom-40">
             <!-- BEGIN SIDEBAR -->
             <div class="sidebar col-md-3 col-sm-4">
+                <c:set var="categories" value="${requestScope.CATEGORY}"/>
                 <ul class="list-group margin-bottom-25 sidebar-menu">
-                    <li class="list-group-item clearfix"><a href="showProduct.html"><i class="fa fa-angle-right"></i> Ladies</a></li>
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#">
-                            <i class="fa fa-angle-right"></i>
-                            Mens               
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item dropdown clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i> Shoes </a>
-                            </li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Trainers</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Jeans</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> Chinos</a></li>
-                            <li><a href="shop-product-list.html"><i class="fa fa-angle-right"></i> T-Shirts</a></li>
-                        </ul>
-                    </li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Kids</a></li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Sports</a></li>
-                    <li class="list-group-item clearfix"><a href="#"><i class="fa fa-angle-right"></i> Brands</a></li>
+                    <c:forEach var="category" items="${categories}">
+                        <li class="list-group-item clearfix">
+                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="sidebar-menu">
+                                <li class="list-group-item clearfix">
+                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                    <c:forEach var="childCate" items="${allCate}">
+                                        <c:if test="${category.categoryId == childCate.parentId}">
+                                            <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
+                                            </c:if>
+                                        </c:forEach>       
+                                </li>
+                            </ul>
+                        </li>
+                    </c:forEach>
                 </ul>
             </div>
             <!-- END SIDEBAR -->
@@ -82,20 +79,21 @@
                                 </div>
                                 <div class="product-page-options">
                                     <div class="pull-left">
-                                        <label class="control-label">Size: L</label>
+                                        <label style="font-size: 20px;" class="control-label">Brand: ${item.brand}</label>
                                     </div>
-                                    <div class="pull-left">
-                                        <label class="control-label">Color: Red</label>
-                                    </div>
+
                                 </div>
+                                <div class="product-page-options">
+                                    <div class="pull-left">
+                                        <label style="font-size: 20px;" class="control-label">Serial Number: ${item.serialNumber}</label>
+                                    </div>
+                                </div>                             
                                 <div class="product-page-cart">
                                     <div class="product-quantity">
 
                                     </div>
                                     <button class="btn btn-primary" type="submit">Add to cart</button>
                                 </div>
-
-                                <div class="sticker sticker-sale"></div>
                             </div>
                         </div>
                     </div>

@@ -30,14 +30,21 @@
         <div class="row margin-bottom-40" style="z-index: 5">          
             <div class="sidebar col-md-3 col-sm-5">  
                 <ul class="list-group margin-bottom-25 sidebar-menu">
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#"><i class="fa fa-angle-right"></i>Men</a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item dropdown clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i>Shoes</a>
-                            </li>                                               
-                        </ul>
-                    </li>
+                    <c:forEach var="category" items="${categories}">
+                        <li class="list-group-item clearfix">
+                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="sidebar-menu">
+                                <li class="list-group-item clearfix">
+                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                    <c:forEach var="childCate" items="${allCate}">
+                                        <c:if test="${category.categoryId == childCate.parentId}">
+                                            <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
+                                            </c:if>
+                                        </c:forEach>       
+                                </li>
+                            </ul>
+                        </li>
+                    </c:forEach>
                 </ul>
                 <div class="sidebar-products clearfix">
                     <h2>Bestsellers</h2>
@@ -61,22 +68,21 @@
 
             <div class="col-md-9 col-sm-7">
                 <div class="content-search margin-bottom-20"> 
-                    <form action="Test">
+                    <form action="ProductServlet">
                         <div class="row">
                             <div class="col-md-4">
-                                <select name="select" class="bs-select form-control input-small" data-style="blue">
+                                <select name="parentId" class="bs-select form-control input-small" data-style="blue">
                                     <option value="all">All</option>                    
                                     <c:forEach var="category" items="${categories}">
-                                        <option value="123">${category.categoryName}</option>
+                                        <option value="${category.categoryId}">${category.categoryName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="col-md-8">
-
                                 <div class="input-group">
-                                    <input type="text" placeholder="Search" class="form-control">
+                                    <input required="true" name="key" type="text" placeholder="Search" class="form-control">
                                     <span class="input-group-btn">
-                                        <button name="action" value="123" class="btn btn-primary" type="submit">Search</button>
+                                        <button  class="btn btn-primary" type="submit">Search</button>
                                     </span>
                                 </div>
                             </div>
@@ -95,9 +101,9 @@
                                     <div class="pi-img-wrapper">
                                         <img src="${item.image}" class="imgCrop2">
                                     </div>
-                                    <h3><a href="shop-item.html">${item.name}</a></h3>
+                                    <h3>${item.name}</h3>
                                     <div class="pi-price">$29.00</div>
-                                    <a href="#" class="btn btn-default add2cart">View Details</a>
+                                    <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">View Details</a>
                                 </div>
                             </div>
                         </c:forEach>
@@ -108,13 +114,21 @@
                     <div class="col-md-4 col-sm-4 items-info"></div>
                     <div class="col-md-8 col-sm-8">
                         <ul class="pagination pull-right">
-                            <li><a onclick="location.href = URL_add_parameter(location.href, 'page', '1');" href="#">&laquo;</a></li>
-                            <li><a href="ProductServlet?page=2">1</a></li>
-                            <li><span>2</span></li>
-                            <li><a onclick="location.href = URL_add_parameter(location.href, 'page', '2');" href="#">3</a></li>
-                            <li><a href="product.jsp">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&raquo;</a></li>
+                            <c:set var="end" value="${requestScope.NUMPAGE}"/>
+                            <c:set var="pageNUm" value="${requestScope.PAGE}"/>
+                            <c:if test="${not empty end and not empty pageNUm}">
+                                <c:forEach var="i" begin="1" end ="${end}">                                 
+                                    <c:if test="${i == pageNUm}">
+                                        <li><span>${i}</span></li>
+                                            </c:if>
+                                            <c:if test="${i != pageNUm}">
+                                        <li>
+                                            <a onclick="location.href = URL_add_parameter(location.href, 'page', '${i}');" href="#">${i}</a>
+                                        </li>   
+                                    </c:if>
+                                </c:forEach>
+                            </c:if>
+
                         </ul>
                     </div>                   
                 </div>

@@ -168,7 +168,7 @@ public class productDAO {
         return null;
     }
 
-    public List<ProductDTO> getProductByCategoryAndName(int categoryID, String name, int page) {
+    public List<ProductDTO> getProductByParentCategoryAndName(int parentCategoryID, String name, int page) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -182,7 +182,7 @@ public class productDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductName like ? "
-                    + "And Product.CategoryID = ? "
+                    + "And Category.ParentID = ? "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
                     + "   FROM Product "
@@ -190,7 +190,7 @@ public class productDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
-            stm.setInt(2, categoryID);
+            stm.setInt(2, parentCategoryID);
             stm.setInt(3, next);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -203,7 +203,7 @@ public class productDAO {
                 String image = rs.getString("Image");
                 int status = rs.getInt("Status");
                 float sellingPrice = rs.getFloat("SellingPrice");;
-                int parentCategoryID = rs.getInt("ParentID");
+                int categoryID = rs.getInt("CategoryID");
                 ProductDTO product = new ProductDTO(id, productName, status, description, sellingPrice, image, purchasedDate, categoryID, parentCategoryID, brand, serialNumber);
                 products.add(product);
             }
@@ -228,17 +228,59 @@ public class productDAO {
         return null;
     }
 
+    public int getSizeProductByParentCategoryAndName(int parentCategoryID, String name) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int total = 0;
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.ProductName like ? "
+                    + "And Category.ParentID = ? "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setString(1, "%" + name + "%");
+            stm.setInt(2, parentCategoryID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                total++;
+            }
+            return total;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
+
     public List<ProductDTO> getProductByCategory(int categoryID, int page) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         int next = (page - 1) * 6;
         List<ProductDTO> products = new ArrayList<ProductDTO>();
-
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "SELECT TOP 6 * "
+            String query = "SELECT Top 6 * "
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.CategoryID = ? "
@@ -284,6 +326,47 @@ public class productDAO {
             }
         }
         return null;
+    }
+
+    public int getSizeProductByCategory(int categoryID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int total = 0;
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.CategoryID = ? "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, categoryID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                total++;
+            }
+            return total;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
     }
 
     public List<ProductDTO> getProductByParentCategory(int parentCategoryID, int page) {
@@ -344,6 +427,47 @@ public class productDAO {
         return null;
     }
 
+    public int getSizeProductByParentCategory(int parentcategoryID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int total = 0;
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Category.ParentID = ? "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, parentcategoryID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                total++;
+            }
+            return total;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
+
     public List<ProductDTO> getProductByName(String name, int page) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -401,5 +525,46 @@ public class productDAO {
             }
         }
         return null;
+    }
+
+    public int getSizeProductByName(String name) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int total = 0;
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT * "
+                    + "FROM Product, Category "
+                    + "WHERE Product.CategoryID = Category.CategoryID "
+                    + "And Product.ProductName like ? "
+                    + "ORDER BY Product.ProductID ASC";
+            stm = con.prepareStatement(query);
+            stm.setString(1, name);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                total++;
+            }
+            return total;
+        } catch (SQLException ex) {
+            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
     }
 }

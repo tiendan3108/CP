@@ -5,7 +5,9 @@
  */
 package hps.servlet;
 
+import hps.dao.CategoryDAO;
 import hps.dao.productDAO;
+import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +45,7 @@ public class ProductServlet extends HttpServlet {
             String key = request.getParameter("key");
             String sparentCategoryId = request.getParameter("parentId");
             List<ProductDTO> products = new ArrayList<ProductDTO>();
+            int totalProduct = 0;
             productDAO dao = new productDAO();
             int page;
             int categoryId;
@@ -57,35 +60,47 @@ public class ProductServlet extends HttpServlet {
                     page = 0;
                 }
             }
-            if (sparentCategoryId != null) {
-                try {
-                    parentId = Integer.parseInt(sparentCategoryId);
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                    parentId = 0;
-                }
-                products = dao.getProductByParentCategory(parentId, page);
 
-            } else {
-                if (sCategoryId != null) {
-                    if (sCategoryId.equals("all")) {
-                        products = dao.getProductByName(key, page);
+            if (sparentCategoryId != null) {
+                if (sparentCategoryId.equals("all")) {
+                    products = dao.getProductByName(key, page);
+                    totalProduct = dao.getSizeProductByName(key);
+                } else {
+                    try {
+                        parentId = Integer.parseInt(sparentCategoryId);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        parentId = 0;
+                    }
+                    if (key != null) {
+                        products = dao.getProductByParentCategoryAndName(parentId, key, page);
+                        totalProduct = dao.getSizeProductByParentCategoryAndName(parentId, key);
                     } else {
-                        try {
-                            categoryId = Integer.parseInt(sCategoryId);
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                            categoryId = 0;
-                        }
-                        if (key == null) {
-                            products = dao.getProductByCategory(categoryId, page);
-                        } else {
-                            products = dao.getProductByCategoryAndName(categoryId, key, page);
-                        }
+                        products = dao.getProductByParentCategory(parentId, page);
+                        totalProduct = dao.getSizeProductByParentCategory(parentId);
                     }
                 }
+            } else {
+                if (sCategoryId != null) {
+                    try {
+                        categoryId = Integer.parseInt(sCategoryId);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        categoryId = 0;
+                    }
+                    products = dao.getProductByCategory(categoryId, page);
+                    totalProduct = dao.getSizeProductByCategory(categoryId);
+                }
             }
+            int numPage = (int) Math.ceil((double) totalProduct / 6);
+            CategoryDAO cateDao = new CategoryDAO();
+            List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+            List<CategoryDTO> category = cateDao.getAllCategory();
+            request.setAttribute("CATEGORY", parentCategories);
+            request.setAttribute("ALLCATE", category);
             request.setAttribute("DATA", products);
+            request.setAttribute("NUMPAGE", numPage);
+            request.setAttribute("PAGE", page);
             RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
             rd.forward(request, response);
         }

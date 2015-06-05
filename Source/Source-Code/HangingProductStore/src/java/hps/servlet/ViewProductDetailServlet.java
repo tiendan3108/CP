@@ -5,7 +5,9 @@
  */
 package hps.servlet;
 
+import hps.dao.CategoryDAO;
 import hps.dao.productDAO;
+import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,12 +49,17 @@ public class ViewProductDetailServlet extends HttpServlet {
             }
             productDAO dao = new productDAO();
             ProductDTO product = dao.getProductByID(productID);
+            CategoryDAO cateDao = new CategoryDAO();
+            List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+            List<CategoryDTO> category = cateDao.getAllCategory();
             if (product != null) {
                 int categoryID = product.getCategoryID();
-                List<ProductDTO> similarProducts = dao.getSimilarProduct(categoryID,productID);
+                List<ProductDTO> similarProducts = dao.getSimilarProduct(categoryID, productID);
                 request.setAttribute("PRODUCT", product);
                 request.setAttribute("SIMILARPRODUCT", similarProducts);
             }
+            request.setAttribute("CATEGORY", parentCategories);
+            request.setAttribute("ALLCATE", category);
             RequestDispatcher rd = request.getRequestDispatcher("viewDetail.jsp");
             rd.forward(request, response);
         }
