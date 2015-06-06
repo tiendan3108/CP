@@ -92,7 +92,7 @@
                                     <div class="product-quantity">
 
                                     </div>
-                                    <button class="btn btn-primary" type="submit">Add to cart</button>
+                                    <a class="btn btn-primary" href="AddToCartServlet?productId=${item.productID}">Add to cart</a>
                                 </div>
                             </div>
                         </div>
