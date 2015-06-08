@@ -1,12 +1,7 @@
 package hps.servlet;
 
-import hps.blo.ConsignmentBLO;
-import hps.blo.ConsignmentBLOFactory;
 import hps.dto.Alert;
-import hps.dto.Consignment;
-import hps.dto.Customer;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,8 +28,6 @@ public class ConsignmentServlet extends HttpServlet {
     private static final String CONSIGNMENT_SOLD = "/consignment_sold";
     private static final String CONSIGNMENT_DETAIL = "/consignment_detail";
     
-    private ConsignmentBLO consignmentBLO = ConsignmentBLOFactory.getDemoInstance();
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -54,12 +47,12 @@ public class ConsignmentServlet extends HttpServlet {
                 userPath = CONSIGNMENT_DETAIL;
                 
                 long id = Long.parseLong(request.getParameter("id"));
-                Consignment consignment = consignmentBLO.getConsignment(id);
-                consignmentBLO.makeConsignmentAsViewed(id);                
-                request.setAttribute("consignment", consignment);
+//                Consignment consignment = consignmentBLO.getConsignment(id);
+//                consignmentBLO.makeConsignmentAsViewed(id);                
+//                request.setAttribute("consignment", consignment);
                 
-                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
-                session.setAttribute("nonViewRequest", nonViewRequest);   
+//                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
+//                session.setAttribute("nonViewRequest", nonViewRequest);   
                 
             } else if (request.getParameter("search") != null) {
                 userPath = CONSIGNMENT_SEARCH;          
@@ -67,28 +60,28 @@ public class ConsignmentServlet extends HttpServlet {
             } else if (request.getParameter("imported") != null) {
                 userPath = CONSIGNMENT_IMPORTED;
                 
-                List<Consignment> consignments = consignmentBLO.getConsigmentsImported(STORE_ID);
-                request.setAttribute("consignments", consignments);
+//                List<Consignment> consignments = consignmentBLO.getConsigmentsImported(STORE_ID);
+//                request.setAttribute("consignments", consignments);
                 
             } else if (request.getParameter("sold") != null) {
                 userPath = CONSIGNMENT_SOLD;
                 
-                List<Consignment> consignments = consignmentBLO.getConsigmentsSold(STORE_ID);
-                request.setAttribute("consignments", consignments);
+//                List<Consignment> consignments = consignmentBLO.getConsigmentsSold(STORE_ID);
+//                request.setAttribute("consignments", consignments);
                                 
             } else /*if (request.getParameter("request") != null)*/ {
                 userPath = CONSIGNMENT_REQUEST;
                 
-                List<Consignment> consignments = consignmentBLO.getConsigmentsRequest(STORE_ID);
-                request.setAttribute("consignments", consignments);
+//                List<Consignment> consignments = consignmentBLO.getConsigmentsRequest(STORE_ID);
+//                request.setAttribute("consignments", consignments);
                 
-                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
-                session.setAttribute("nonViewRequest", nonViewRequest);
+//                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
+//                session.setAttribute("nonViewRequest", nonViewRequest);
                 
             }
         } else if (userPath.equals("/consignor")) {
-            List<Customer> consignors = consignmentBLO.getConsignorsByStore(STORE_ID);
-            request.setAttribute("consignors", consignors);
+//            List<Customer> consignors = consignmentBLO.getConsignorsByStore(STORE_ID);
+//            request.setAttribute("consignors", consignors);
         }
 
         String url = STORE_VIEW + userPath + ".jsp";
@@ -116,25 +109,25 @@ public class ConsignmentServlet extends HttpServlet {
             if (request.getParameter("id") != null) {
                 long id = Long.parseLong(request.getParameter("id"));
                 if (request.getParameter("accept") != null) {
-                    consignmentBLO.makeConsignmentAsAccepted(id);
+//                    consignmentBLO.makeConsignmentAsAccepted(id);
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Accepted Successful!", "");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
-                    consignmentBLO.makeConsignmentAsRefused(id);
+//                    consignmentBLO.makeConsignmentAsRefused(id);
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Refused Successful!", "");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("import") != null) {
-                    consignmentBLO.makeConsignmentAsImported(id);
+//                    consignmentBLO.makeConsignmentAsImported(id);
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
                     request.setAttribute("alert", alert);
                 }
                 
                 userPath = CONSIGNMENT_DETAIL;
                 
-                Consignment consignment = consignmentBLO.getConsignment(id);
-                consignmentBLO.makeConsignmentAsViewed(id);
+//                Consignment consignment = consignmentBLO.getConsignment(id);
+//                consignmentBLO.makeConsignmentAsViewed(id);
                 
-                request.setAttribute("consignment", consignment);
+//                request.setAttribute("consignment", consignment);
             } else if (request.getParameter("search") != null) {
                 
             }
