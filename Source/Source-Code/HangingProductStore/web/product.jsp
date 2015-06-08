@@ -31,17 +31,17 @@
             <div class="sidebar col-md-3 col-sm-5">  
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <c:forEach var="category" items="${categories}">
-                        <li class="list-group-item clearfix">
-                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                            <ul class="sidebar-menu">
-                                <li class="list-group-item clearfix">
-                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                                    <c:forEach var="childCate" items="${allCate}">
-                                        <c:if test="${category.categoryId == childCate.parentId}">
+                        <li class="list-group-item clearfix dropdown">
+                            <a><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="dropdown-menu">                             
+                                <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                <c:forEach var="childCate" items="${allCate}">
+                                    <c:if test="${category.categoryId == childCate.parentId}">
+                                        <li>
                                             <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                            </c:if>
-                                        </c:forEach>       
-                                </li>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>       
                             </ul>
                         </li>
                     </c:forEach>
