@@ -7,23 +7,39 @@ package hps.dto;
 
 /**
  *
- * @author Robingios
+ * @author DucHC
  */
 public class StoreOwnerDTO {
+    private int storeOwnerID;
     private String name;
     private String address;
-    private int categoryId;
+    private String phone;
+    private String email;
+    private String cardNumber;
+    private String cardOwner;
+    private double formula;
     private String reliability;
-    private double percent;
     
     public StoreOwnerDTO(){}
 
-    public StoreOwnerDTO(String name, String address, int categoryId, String reliability, double percent) {
+    public StoreOwnerDTO(int storeOwnerID, String name, String address, String phone, String email, String cardNumber, String cardOwner, double formula, String reliability) {
+        this.storeOwnerID = storeOwnerID;
         this.name = name;
         this.address = address;
-        this.categoryId = categoryId;
+        this.phone = phone;
+        this.email = email;
+        this.cardNumber = cardNumber;
+        this.cardOwner = cardOwner;
+        this.formula = formula;
         this.reliability = reliability;
-        this.percent = percent;
+    }
+
+    public int getStoreOwnerID() {
+        return storeOwnerID;
+    }
+
+    public void setStoreOwnerID(int storeOwnerID) {
+        this.storeOwnerID = storeOwnerID;
     }
 
     public String getName() {
@@ -42,14 +58,45 @@ public class StoreOwnerDTO {
         this.address = address;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getCardOwner() {
+        return cardOwner;
+    }
+
+    public void setCardOwner(String cardOwner) {
+        this.cardOwner = cardOwner;
+    }
+
+    public double getFormula() {
+        return formula;
+    }
+
+    public void setFormula(double formula) {
+        this.formula = formula;
+    }
 
     public String getReliability() {
         return reliability;
@@ -57,14 +104,6 @@ public class StoreOwnerDTO {
 
     public void setReliability(String reliability) {
         this.reliability = reliability;
-    }
-
-    public double getPercent() {
-        return percent;
-    }
-
-    public void setPercent(double percent) {
-        this.percent = percent;
     }
     
     }
