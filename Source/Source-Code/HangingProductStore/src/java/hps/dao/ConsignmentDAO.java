@@ -1,6 +1,7 @@
 package hps.dao;
 
-import hps.dto.ConsignmentDTO;
+import hps.dto.Consignment;
+import hps.dto.ConsignmentStatus;
 import java.util.List;
 
 /**
@@ -8,9 +9,12 @@ import java.util.List;
  * @author Phuc Tran
  */
 public interface ConsignmentDAO {
-    void save(ConsignmentDTO consignment);
-    ConsignmentDTO get(long id);
+    void save(Consignment consignment);
+    Consignment get(long id);
     void delete(long id);
-    List<ConsignmentDTO> getConsigmentsByStore(long storeId);
-    List<ConsignmentDTO> getConsigmentsByCustomer(long customerId);
+    int getNonViewRequest(long storeId);
+    List<Consignment> getConsigmentsByStore(long storeId);
+    List<Consignment> getConsigmentsByCustomer(long customerId);
+    List<Consignment> getConsignmentByStatus(long storeId, ConsignmentStatus status);
+    void makeConsignmentAsStatus(long id, ConsignmentStatus status);
 }
