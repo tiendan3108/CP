@@ -21,7 +21,7 @@
         </div>
         <!-- END SIDEBAR -->
         <div class="col-md-9">
-            <div class="page-content">
+            <div class="content-page">
                 <!-- BEGIN PAGE CONTENT-->
                 <div class="row">
                     <div class="col-md-12 col-md-12">
@@ -50,7 +50,7 @@
                         <div class="content-page">
                             <div class="row margin-bottom-30">
                                 <!-- BEGIN CAROUSEL -->
-                                <div class="col-lg-4 col-md-12 front-carousel">
+                                <div class="col-lg-4 col-md-5 front-carousel">
 
                                     <div class="carousel slide" id="myCarousel">
                                         <!-- Carousel items -->
@@ -75,7 +75,7 @@
                                 <!-- END CAROUSEL -->
 
                                 <!-- BEGIN PRODUCT DESCRIPTION -->
-                                <div class="col-lg-8 col-md-12">
+                                <div class="col-lg-8 col-md-7">
                                     <div class="note note-info">
                                         <h3 class="text-danger">
                                             <fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.consignPrice}"/>
