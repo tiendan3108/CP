@@ -34,15 +34,19 @@
 
     <!-- Body BEGIN -->
     <body class="ecommerce">
-
+        <div id="top">
+            <div class="contain">
+                Hanging Product Store
+            </div>          
+        </div>
         <!-- Header BEGIN -->
         <div id="nav">
-            <div class="container">
+            <div class="contain">
                 <div class="row" >
-                    <div class="col-md-4 col-sm-12 logo">
-                        <a href="HomeServlet" class="brand-logo">Hanging Product Store</a>
+                    <div class="col-md-2 col-sm-4">
+                        <ul><li><a href="HomeServlet"><img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Home</a></li></ul>
                     </div>
-                    <div class="col-md-8 col-sm-12 contentNav">
+                    <div class="col-md-10 col-sm-8">
                         <!-- Top-bar-menu BEGIN -->
                         <ul>
                             <jsp:invoke fragment="navigationContent" />
