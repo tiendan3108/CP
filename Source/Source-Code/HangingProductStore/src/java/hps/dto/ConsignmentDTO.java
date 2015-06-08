@@ -5,163 +5,196 @@
  */
 package hps.dto;
 
-import java.util.Date;
-
 /**
  *
  * @author Tien Dan
+ * modify Cong Duc
  */
 public class ConsignmentDTO {
-    
-    private String consignmentID;
+    private String consigmentID;
     private int productID;
-    private String consignorID;
-    private Date eceivedDate;
-    private Date fromDate;
-    private Date toDate;
-    private String consigneeiD;
-    private int status;
-    private float price;
+    private int memberID;
+    private int storeOwnerID;
+    private String name;
+    private String address;
+    private String phone;
+    private String email;
+    private String cardNumber;
+    private String cardOwner;
+    private String fromDate;
+    private String toDate;
+    private String raiseWebDate;
+    private String status;
+    private int period;
+    private double maxPrice;
+    private double returnPrice;
+    private String receivedDate;
 
     public ConsignmentDTO() {
     }
 
-    public ConsignmentDTO(String consignmentID, int productID, String consignorID, Date eceivedDate, Date fromDate, Date toDate, String consigneeiD, int status, float price) {
-        this.consignmentID = consignmentID;
+    public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String cardNumber, String cardOwner, String fromDate, String status, int period, double maxPrice) {
+        this.consigmentID = consigmentID;
         this.productID = productID;
-        this.consignorID = consignorID;
-        this.eceivedDate = eceivedDate;
+        this.memberID = memberID;
+        this.storeOwnerID = storeOwnerID;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.cardNumber = cardNumber;
+        this.cardOwner = cardOwner;
         this.fromDate = fromDate;
-        this.toDate = toDate;
-        this.consigneeiD = consigneeiD;
         this.status = status;
-        this.price = price;
+        this.period = period;
+        this.maxPrice = maxPrice;
     }
 
-    /**
-     * @return the consignmentID
-     */
-    public String getConsignmentID() {
-        return consignmentID;
+    public String getConsigmentID() {
+        return consigmentID;
     }
 
-    /**
-     * @param consignmentID the consignmentID to set
-     */
-    public void setConsignmentID(String consignmentID) {
-        this.consignmentID = consignmentID;
+    public void setConsigmentID(String consigmentID) {
+        this.consigmentID = consigmentID;
     }
 
-    /**
-     * @return the productID
-     */
     public int getProductID() {
         return productID;
     }
 
-    /**
-     * @param productID the productID to set
-     */
     public void setProductID(int productID) {
         this.productID = productID;
     }
 
-    /**
-     * @return the consignorID
-     */
-    public String getConsignorID() {
-        return consignorID;
+    public int getMemberID() {
+        return memberID;
     }
 
-    /**
-     * @param consignorID the consignorID to set
-     */
-    public void setConsignorID(String consignorID) {
-        this.consignorID = consignorID;
+    public void setMemberID(int memberID) {
+        this.memberID = memberID;
     }
 
-    /**
-     * @return the eceivedDate
-     */
-    public Date getEceivedDate() {
-        return eceivedDate;
+    public int getStoreOwnerID() {
+        return storeOwnerID;
     }
 
-    /**
-     * @param eceivedDate the eceivedDate to set
-     */
-    public void setEceivedDate(Date eceivedDate) {
-        this.eceivedDate = eceivedDate;
+    public void setStoreOwnerID(int storeOwnerID) {
+        this.storeOwnerID = storeOwnerID;
     }
 
-    /**
-     * @return the fromDate
-     */
-    public Date getFromDate() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public String getCardOwner() {
+        return cardOwner;
+    }
+
+    public void setCardOwner(String cardOwner) {
+        this.cardOwner = cardOwner;
+    }
+
+    public String getFromDate() {
         return fromDate;
     }
 
-    /**
-     * @param fromDate the fromDate to set
-     */
-    public void setFromDate(Date fromDate) {
+    public void setFromDate(String fromDate) {
         this.fromDate = fromDate;
     }
 
-    /**
-     * @return the toDate
-     */
-    public Date getToDate() {
+    public String getToDate() {
         return toDate;
     }
 
-    /**
-     * @param toDate the toDate to set
-     */
-    public void setToDate(Date toDate) {
+    public void setToDate(String toDate) {
         this.toDate = toDate;
     }
 
-    /**
-     * @return the consigneeiD
-     */
-    public String getConsigneeiD() {
-        return consigneeiD;
+    public String getRaiseWebDate() {
+        return raiseWebDate;
     }
 
-    /**
-     * @param consigneeiD the consigneeiD to set
-     */
-    public void setConsigneeiD(String consigneeiD) {
-        this.consigneeiD = consigneeiD;
+    public void setRaiseWebDate(String raiseWebDate) {
+        this.raiseWebDate = raiseWebDate;
     }
 
-    /**
-     * @return the status
-     */
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    /**
-     * @return the price
-     */
-    public float getPrice() {
-        return price;
+    public int getPeriod() {
+        return period;
     }
 
-    /**
-     * @param price the price to set
-     */
-    public void setPrice(float price) {
-        this.price = price;
+    public void setPeriod(int period) {
+        this.period = period;
     }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public double getReturnPrice() {
+        return returnPrice;
+    }
+
+    public void setReturnPrice(double returnPrice) {
+        this.returnPrice = returnPrice;
+    }
+
+    public String getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(String receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+    
+    
+    
     
 }

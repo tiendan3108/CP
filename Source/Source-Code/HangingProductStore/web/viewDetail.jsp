@@ -13,6 +13,8 @@
         <script type="text/javascript">
             jQuery(document).ready(function () {
                 Layout.initImageZoom();
+                var modalObj = $('#messModal').modal(); // initialize
+                modalObj.modal('show');
             });
         </script>
     </jsp:attribute>
@@ -30,7 +32,33 @@
             </ul>
         </li>
     </jsp:attribute>
-    <jsp:body>
+    <jsp:body> 
+        <c:set var="mess" value="${requestScope.MESSAGE}"/>
+        <c:if test="${not empty mess}">
+            <div class="modal face" id="messModal">   
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Message:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="well">
+                                <h4>${mess}</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn default" type="button" data-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    var modalObj = $('#messModal').modal(); // initialize
+                    modalObj.modal('show');
+                });
+            </script>
+        </c:if>         
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
             <!-- BEGIN SIDEBAR -->
