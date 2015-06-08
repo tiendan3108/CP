@@ -30,7 +30,7 @@
 
         <!-- BEGIN PAGE CONTENT-->
         <!-- BEGIN DIV STEP1 -->
-        <form  action="ConsignServlet" method="POST" >
+        <form  action="ConsignServlet" method="POST" onsubmit="return validation()" >
             <div class="row">
 
                 <div class="portlet box" id="form_wizard_1">
@@ -68,6 +68,7 @@
 
                                     <hr/>
 
+                                    <c:set var="product" value="${sessionScope.PRODUCT}" />
                                     <div>
                                         <div class="tab-content">
                                             <div class="row">
@@ -76,7 +77,7 @@
                                                         <div class="form-group">
                                                             <label for="txtProductName" class="col-sm-4 control-label">Product name<span class="required">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <input  name="txtProductName" type="text" class="form-control" maxlength="50" value="">
+                                                                <input  name="txtProductName" type="text" class="form-control" maxlength="50" value="${product.name}"/>
                                                                 <p class="help-block" id="erProductName"> </p>
                                                             </div>
                                                         </div>
@@ -84,7 +85,7 @@
                                                         <div class="form-group">
                                                             <label for="txtSerial" class="col-sm-4 control-label"> Serial number </label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" class="form-control" name="txtSerialNumber" value="${sessionScope.SERIAL}">
+                                                                <input type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                                 <p class="help-block" id="erSerialNumber"> </p>
                                                             </div>
                                                         </div>
@@ -93,7 +94,7 @@
                                                             <label class="control-label col-sm-4">Purchased date<span class="required">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
-                                                                    <input type="text" class="form-control" name="txtDate" readonly>
+                                                                    <input type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                     <span class="input-group-btn">
                                                                         <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                                                     </span>
@@ -102,16 +103,34 @@
                                                             </div>
                                                         </div>
 
+                                                        <c:set var="fCate" value="${sessionScope.FCATE}" />
+                                                        <c:set var="category" value="${sessionScope.CATEGORY}" />
+
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-4">Category<span class="required">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <select name="txtCategory" class="bs-select form-control" >
                                                                     <option value='' disabled selected style='display:none;'>Select...</option>
-                                                                    <option value="1">Shirt</option>
-                                                                    <option value="2">Pants</option>
-                                                                    <option value="3">Hat</option>
-                                                                    <option value="4">Shoes</option>
-                                                                    <option value="5">Glasses</option>
+
+                                                                    <c:forEach var="father" items="${fCate}">
+                                                                        <optgroup label="${father.categoryName}">
+                                                                            <c:forEach var="child" items="${category}">
+                                                                                <c:if test="${child.parentId == father.categoryId}">
+                                                                                    <c:if test="${child.categoryId == product.categoryID}">
+                                                                                        <option value="${child.categoryId}" selected>${child.categoryName}</option>
+                                                                                    </c:if>
+                                                                                    <c:if test="${child.categoryId != product.categoryID}">
+                                                                                        <option value="${child.categoryId}">${child.categoryName}</option>
+                                                                                    </c:if>
+
+
+
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                        </optgroup>
+
+                                                                    </c:forEach>
+
                                                                 </select>
 
                                                                 <span class="help-block" id="erCategory">
@@ -122,7 +141,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-4">Brand</label>
                                                             <div class="col-sm-8">
-                                                                <input  name="txtBrand" type="text" class="form-control" maxlength="50">
+                                                                <input  name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
 
                                                                 <span class="help-block" id="erBrand">
                                                                 </span>
@@ -132,9 +151,9 @@
 
 
                                                         <div class="form-group">
-                                                            <label for="txtDescription" class="col-sm-4 control-label"> Description </label>
+                                                            <label  class="col-sm-4 control-label"> Description </label>
                                                             <div class="col-sm-8">
-                                                                <textarea name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder=""></textarea>
+                                                                <textarea name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="" value="${product.description}"/>${product.description}</textarea>
                                                                 <span class="help-block" id="erDescription">
                                                                 </span>
                                                             </div>
@@ -144,9 +163,9 @@
                                                 </div>
 
                                                 <div class="col-sm-6">
-                                                    <div class="row">
+                                                    <div class="form-horizontal">
 
-                                                        <div class="form-group last">
+                                                        <div class="form-group">
                                                             <label class="control-label col-md-3">Image <span class="required">* </span></label>
                                                             <div class="col-md-9">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -157,11 +176,11 @@
                                                                     </div>
                                                                     <div>
                                                                         <span class="btn btn-info btn-file">
-                                                                            <span class="fileinput-new btn">
+                                                                            <span class="fileinput-new btn" >
                                                                                 SELECT IMAGE </span>
                                                                             <span class="fileinput-exists btn">
                                                                                 Change </span>
-                                                                            <input  type="file" name="txtImage">
+                                                                            <input  type="file" name="txtImage" id="txtImage" value="${product.image}">
                                                                         </span>
                                                                         <a href="#" class="btn btn-lg red fileinput-exists" data-dismiss="fileinput">
                                                                             Remove </a>
@@ -171,7 +190,10 @@
                                                                 </span>
                                                             </div>
                                                         </div>
+                                                        
                                                     </div>
+
+
                                                 </div> 
                                             </div>
 
@@ -216,6 +238,11 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
+    
 
+
+    function validation() {
+
+    }
 
 </script>

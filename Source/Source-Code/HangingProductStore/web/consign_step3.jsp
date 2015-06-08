@@ -69,20 +69,10 @@
                                             </li>
 
                                         </ul>
-                                        <!-- <div id="bar" class="progress progress-striped" role="progressbar">
-                                                <div class="progress-bar progress-bar-success">
-                                                </div>
-                                        </div> -->
+                                        
                                         <hr/>
+                                        <c:set var="member" value="${sessionScope.MEMBER}"/>
                                         <div class="tab-content">
-                                            <!-- <div class="alert alert-danger display-none">
-                                                    <button class="close" data-dismiss="alert"></button>
-                                                    You have some form errors. Please check below.
-                                            </div>
-                                            <div class="alert alert-success display-none">
-                                                    <button class="close" data-dismiss="alert"></button>
-                                                    Your form validation is successful!
-                                            </div> -->
 
                                             <div>
                                                 <div class="row">
@@ -92,9 +82,9 @@
                                                             <div class="form-group">
                                                                 <label for="txtFullName" class="col-sm-4 control-label">Full name<span class="required">*</span></label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" maxlength="50" name="txtFullName" placeholder="">
+                                                                    <input type="text" class="form-control" maxlength="50" name="txtFullName" placeholder="" value="${member.name}">
 
-                                                                    <p class="help-block"> </p>
+                                                                    <p class="help-block" id="erFullName"> </p>
                                                                 </div>
                                                             </div>
 
@@ -107,9 +97,9 @@
                                                                             to </span>
                                                                         <input type="text" class="form-control" name="txtToDate">
                                                                     </div>
-                                                                    <!-- /input-group -->
-                                                                    <span class="help-block">
-                                                                        Select date range </span>
+                                                                    
+                                                                    <span class="help-block" id="erDate">
+                                                                         </span>
                                                                 </div>
                                                             </div>
 
@@ -117,7 +107,9 @@
                                                             <div class="form-group">
                                                                 <label for="txtAddress" class="col-sm-4 control-label"> Address </label>
                                                                 <div class="col-sm-8">
-                                                                    <textarea name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder=""></textarea>
+                                                                    <textarea name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" value="${member.address}"></textarea>
+                                                                     <span class="help-block" id="erAddress">
+                                                                         </span>
                                                                 </div>
                                                             </div>
 
@@ -147,7 +139,7 @@
                                                             <div class="form-group" id="divPhone">
                                                                 <label for="txtPhone" class="col-sm-4 control-label"> Phone<span class="required">*</span> </label>
                                                                 <div class="col-sm-8">
-                                                                    <input name="txtPhone" class="form-control"  type="text" placeholder="" />
+                                                                    <input name="txtPhone" class="form-control"  type="text" placeholder="" value="${member.phone}" />
                                                                     <p class="help-block"></p>
 
                                                                 </div>
@@ -156,7 +148,7 @@
                                                             <div class="form-group" id="divEmail" style="display: none;">
                                                                 <label for="txtEmail" class="col-sm-4 control-label">Email<span class="required">*</span></label>
                                                                 <div class="col-sm-8">
-                                                                    <input type="text" class="form-control" name="txtEmail" placeholder="example@abc.com">
+                                                                    <input type="text" class="form-control" name="txtEmail" placeholder="example@abc.com" value="${member.email}">
                                                                     <p class="help-block"></p>
                                                                 </div>
                                                             </div>
@@ -176,7 +168,7 @@
                                                             <div id="divCCNumber" class="form-group" style="display: none" >
                                                                 <label for="txtCardNumber" class="col-sm-4 control-label"> Card number<span class="required">*</span></label>
                                                                 <div class="col-sm-8">
-                                                                    <input name="txtCardNumber" class="form-control"  type="text" placeholder=""/>
+                                                                    <input name="txtCardNumber" class="form-control"  type="text" placeholder="" value="${member.cardNumber}"/>
 
 
                                                                     <p class="help-block"></p>
@@ -186,7 +178,7 @@
                                                             <div id="divCCOwner" class="form-group" style="display: none">
                                                                 <label for="txtCardOwner" class="col-sm-4 control-label">Card owner<span class="required">*</span></label>
                                                                 <div class="col-sm-8">
-                                                                    <input name="txtCardOwner" type="text" class="form-control" id="txtCreaditCardOwner" placeholder="">
+                                                                    <input name="txtCardOwner" type="text" class="form-control" id="txtCreaditCardOwner" placeholder="" value="${member.cardOwner}">
                                                                     <p class="help-block"></p>
                                                                 </div>
                                                             </div>
@@ -211,7 +203,7 @@
                                             </div>
                                             <div class="col-sm-4"> </div>
                                             <div class="col-sm-4">
-                                                <button name="btnAction" value="consign" type="submit" class="btn-block btn-lg btn btn blue" >CONSIGN <i class="m-icon-big-swapup m-icon-white"></i></button>
+                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn blue" >CONSIGN <i class="m-icon-big-swapup m-icon-white"></i></button>
                                             </div>
 
                                         </div>

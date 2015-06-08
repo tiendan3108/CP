@@ -94,9 +94,9 @@
                                                             <th>
                                                                 Address
                                                             </th>
-                                                            <th>
+<!--                                                            <th>
                                                                 Reliability
-                                                            </th>
+                                                            </th>-->
                                                             <c:if test="${price != 0}">
                                                                 <th>
                                                                     Price
@@ -117,28 +117,30 @@
                                                                     ${item.address}
                                                                 </td>
 
-                                                                <td>
-                                                                    ${item.reliability}
-                                                                </td>
+<!--                                                                <td>
+                                                                    
+                                                                </td>-->
                                                                 <c:if test="${price != 0}">
                                                                     <td>
                                                                         <fmt:formatNumber 
-                                                                            value="${(item.percent/100) * price + price}" 
+                                                                            value="${price - (item.formula/100) * price}" 
+                                                                            maxFractionDigits="3"/> ~ <fmt:formatNumber 
+                                                                            value="${price + (item.formula/100) * price }" 
                                                                             maxFractionDigits="3"/>
 
                                                                     </td>
                                                                 </c:if>
                                                                 <td align="center">
                                                                     <c:if test="${not empty store}">
-                                                                        <c:if test="${store == item.name}">
-                                                                            <input checked="checked"  name="rdStore" value="${item.name}" type="radio"/>
+                                                                        <c:if test="${store == item.storeOwnerID}">
+                                                                            <input checked="checked"  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
                                                                         </c:if>
-                                                                        <c:if test="${store != item.name}">
-                                                                            <input  name="rdStore" value="${item.name}" type="radio"/>
+                                                                        <c:if test="${store != item.storeOwnerID}">
+                                                                            <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
                                                                         </c:if>
                                                                     </c:if>
                                                                     <c:if test="${empty store}">
-                                                                        <input  name="rdStore" value="${item.name}" type="radio"/>
+                                                                        <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
                                                                     </c:if>
 
                                                                 </td>
@@ -188,12 +190,17 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
+    
+    
 
     function validation() {
+//        var val = $("input[type=submit][clicked=true]").val();
+//        alert(val);
         if (!$("input:radio[name='rdStore']").is(":checked")) {
             alert("Please choose a store");
             return false;
         }
+        
 
     }
 

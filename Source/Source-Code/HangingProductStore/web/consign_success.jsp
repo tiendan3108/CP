@@ -81,7 +81,7 @@
                                     <hr/>
                                     <div class="tab-content" style="text-align: center" >
                                         <h3>Your consign request has been sent!</h3>
-                                        <h3><b>${requestScope.storeName}</b> will contact you later.</h3>
+                                        <h3><b>Store Owner</b> will contact you later.</h3>
                                         <h3>Your product's code is <b>[${requestScope.trackId}]</b>. Use this to track your product's status.</h3>
                                     </div>
                                 </div>
