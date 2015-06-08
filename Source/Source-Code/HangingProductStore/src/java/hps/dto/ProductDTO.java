@@ -44,15 +44,25 @@ public class ProductDTO {
         this.brand = brand;
         this.serialNumber = serialNumber;
     }
-    // ban cu anh huong productDAO cua Hoang
-    public ProductDTO(int productID, String productName, String purchasedDate, String consignmentID, float sellingPrice, int status) {
+    /*
+        HoangNH     
+    */
+
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int status, float sellingPrice, int parentCategoryID, int orderID) {
         this.productID = productID;
-        this.name = productName;
+        this.name = name;
+        this.serialNumber = serialNumber;
         this.purchasedDate = purchasedDate;
-        this.consignmentID = consignmentID;
-        this.sellingPrice = sellingPrice;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+        this.image = image;
         this.status = status;
+        this.sellingPrice = sellingPrice;
+        this.parentCategoryID = parentCategoryID;
+        this.orderID = orderID;
     }
+   
     // constructor all tham so moi
     public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int status, float sellingPrice, int parentCategoryID, String consignmentID) {
         this.productID = productID;

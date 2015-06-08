@@ -32,6 +32,16 @@ public class Cart {
         items.add(productId);
         return true;
     }
+    public void removeProduct(int productId){
+        if (items.size() > 0) {
+            for (int i = 0; i < getItems().size(); i++) {
+                int currentProductId = getItems().get(i);
+                if (currentProductId == productId) {
+                    items.remove(i);
+                }
+            }
+        }
+    }
 
     /**
      * @return the items
