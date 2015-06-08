@@ -93,7 +93,7 @@
     </jsp:attribute>
     <jsp:attribute name="navigationContent">      
         <li><a href="shop-account.html">My Account</a></li>      
-        <li><a href="shop-checkout.html">Shopping Cart</a></li>  
+        <li><a href="ViewCartServlet">Shopping Cart</a></li>  
         <li><a href="shop-wishlist.html">Consign</a></li>
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
