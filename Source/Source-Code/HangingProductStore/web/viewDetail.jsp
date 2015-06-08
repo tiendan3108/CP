@@ -66,17 +66,17 @@
                 <c:set var="categories" value="${requestScope.CATEGORY}"/>
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <c:forEach var="category" items="${categories}">
-                        <li class="list-group-item clearfix">
-                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                            <ul class="sidebar-menu">
-                                <li class="list-group-item clearfix">
-                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                                    <c:forEach var="childCate" items="${allCate}">
-                                        <c:if test="${category.categoryId == childCate.parentId}">
+                        <li class="list-group-item clearfix dropdown">
+                            <a><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="dropdown-menu">                             
+                                <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                <c:forEach var="childCate" items="${allCate}">
+                                    <c:if test="${category.categoryId == childCate.parentId}">
+                                        <li>
                                             <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                            </c:if>
-                                        </c:forEach>       
-                                </li>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>       
                             </ul>
                         </li>
                     </c:forEach>
@@ -97,11 +97,7 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <h1>${item.name}</h1>
-                                <div class="price-availability-block clearfix">
-                                    <div class="price">
-                                        <strong><span>$</span>${item.price}</strong>
-                                    </div>
-                                </div>
+                             
                                 <div class="description">
                                     <p>${item.description}</p>
                                 </div>
@@ -145,7 +141,7 @@
                                             <img src='${productItem.image}' class="imgCrop3">
                                         </div>
                                         <h3>${productItem.name}</h3>
-                                        <div class="pi-price">${productItem.price}</div>
+                                       
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${productItem.productID}"/>
                                         </c:url>

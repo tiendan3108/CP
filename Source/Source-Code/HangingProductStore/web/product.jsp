@@ -102,7 +102,7 @@
                                         <img src="${item.image}" class="imgCrop2">
                                     </div>
                                     <h3>${item.name}</h3>
-                                    <div class="pi-price">$29.00</div>
+  
                                     <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">View Details</a>
                                 </div>
                             </div>

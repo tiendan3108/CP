@@ -96,7 +96,7 @@
                                         <img src='${item.image}' class="imgCrop">
                                     </div>
                                     <h3>${item.name}</h3>
-                                    <div class="pi-price">$ ${item.price}</div>
+         
                                     <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                         <c:param name="productID" value="${item.productID}"/>
                                     </c:url>
