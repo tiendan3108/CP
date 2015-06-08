@@ -36,7 +36,18 @@
     <body class="ecommerce">
         <div id="top">
             <div class="contain">
-                Hanging Product Store
+                <div style="float: left;line-height: 70px">
+                    Hanging Product Store  
+                </div>
+                <div style="line-height: 10px;margin-top: 10px; font-size: 12px;color: whitesmoke; margin-left: 10px" class="col-md-8">
+                    <p><i style="color: white" class="fa fa-phone"></i>
+                        090966668888</p>
+                    <p><i style="color: white" class="fa fa-map-marker"></i>
+                        123 Quang Trung, 12 District, Ho Chi Minh c.</p>
+                    <p><i style="color: white" class="fa fa-envelope"></i>
+                        hangingproductstorevn@gmail.com</p>
+                </div>
+
             </div>          
         </div>
         <!-- Header BEGIN -->
