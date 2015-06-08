@@ -14,13 +14,13 @@
 <%@attribute name="extraBottomContent" fragment="true" required="false"%>
 <%@attribute name="extraNavigationContent" fragment="true" required="false"%>
 <%@include file="/WEB-INF/jsp/base.jspf" %>
-<template:main htmlTitle="${htmlTitle}" bodyTitle="${bodyTitle}">
+<template:main htmlTitle="${htmlTitle}" bodyTitle="">
     <jsp:attribute name="headContent">
         <!-- Theme styles START -->
         <link href="assets/style/myStyle.css" rel="stylesheet">
+        <link href="assets/global/css/components.css" rel="stylesheet">
+        <link href="assets/global/css/plugins.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/style.css" rel="stylesheet">
-        <link href="assets/frontend/pages/css/style-shop.css" rel="stylesheet" type="text/css">
-        <link href="assets/frontend/pages/css/style-layer-slider.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
         <link href="assets/frontend/layout/css/custom.css" rel="stylesheet">
@@ -29,27 +29,43 @@
     </jsp:attribute>
     <jsp:attribute name="bottomContent">
         <jsp:invoke fragment="extraBottomContent" />
+        <script>
+            $(document).ready(function () {
+                $("#nofi").click(function () {
+                    $("#nav ul li ul.fallback").css("display", "block");
+                    $('html').click(function (event) {
+                        if ($(event.target).parents('#nofi').length == 0) {
+                            $("#nav ul li ul.fallback").css("display", "none");
+                            $(this).unbind(event);
+                        }
+
+                    })
+                });
+                $(".removeColapse").removeClass("collapsed");
+
+            });
+        </script>
     </jsp:attribute>
     <jsp:attribute name="navigationContent">
-        <li><a href="./consignment">Consignment
-                <c:if test="${nonViewRequest > 0}">
-                    <span class="badge">${nonViewRequest}</span>
-                </c:if>
-            </a>
-        </li>
-        <li><a href="shop-account.html">Order <span class="badge">1</span></a>
-        </li>
-        <li><a href="shop-account.html">Inventory</a>
-        </li>
-        <li><a href="./statistic">Statistic</a>
-        </li>
-        <li><a href="shop-account.html">My Account</a>
-        </li>
-        <li><a href="shop-account.html">My Management <span class="badge">4</span></a>
-        </li>
+        <jsp:invoke fragment="extraNavigationContent" />
         <li><a href="page-login.html">Log Out</a>
         </li>
-        <jsp:invoke fragment="extraNavigationContent" />
+        <li><a href="shop-account.html">Account</a>
+        </li>
+        <li><a href="shop-account.html">Management</a>
+        </li>        
+        <li id="nofi">
+            <a href="#">
+                <i class="icon-bell"></i>
+                <span class="badge badge-default">3</span>           
+            </a>
+            <ul class="fallback">
+                <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
+                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
+                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
+                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
+            </ul>
+        </li>
     </jsp:attribute>
     <jsp:body>
         <jsp:doBody />
