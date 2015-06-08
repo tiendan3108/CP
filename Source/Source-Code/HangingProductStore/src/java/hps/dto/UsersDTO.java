@@ -23,6 +23,15 @@ public class UsersDTO {
     public UsersDTO() {
     }
 
+    public UsersDTO(String fullName, String address, String phone, String email, String cardNumber, String cardOwner)
+    {
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.creditCardNumber = cardNumber;
+        this.creditCardOwner = cardOwner;
+    }
     public UsersDTO(String userID, String password, String fullName, String address, String phone, String email, String creditCardNumber, String creditCardOwner, String role) {
         this.userID = userID;
         this.password = password;

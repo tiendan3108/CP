@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tien Dan
  */
+@WebServlet(name = "LoadPaymentPageServlet", urlPatterns = {"/LoadPaymentPageServlet"})
 public class LoadPaymentPageServlet extends HttpServlet {
 
     /**
@@ -44,7 +46,7 @@ public class LoadPaymentPageServlet extends HttpServlet {
             request.setAttribute("consignor", consignor);
             request.setAttribute("consignee", consignee);
             request.setAttribute("amount", mount);
-            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PAY_CONSIGNOR);
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PAYMENT_PAGE);
             rd.forward(request, response);
         }
     }

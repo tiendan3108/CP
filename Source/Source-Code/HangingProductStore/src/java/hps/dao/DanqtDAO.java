@@ -24,18 +24,20 @@ import java.util.logging.Logger;
  */
 public class DanqtDAO {
 
-    public List<ProductDTO> getProductStatus() {
+    public List<ProductDTO> getProductStatus(String storeOwnerID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
         List<ProductDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.Price,c.Status "
+            String query = "SELECT p.ProductID, p.ProductName, c.ReceivedDate, c.ConsignmentID, c.ReturnedPrice, c.Status "
                     + "FROM Product p ,Consignment c "
-                    + "WHERE p.Status != ? AND c.ProductID = p.ProductID ORDER BY Status";
+                    + "WHERE p.Status != ? AND c.ProductID = p.ProductID AND c.StoreOwnerID = ?"
+                    + "ORDER BY p.Status";
             stm = conn.prepareStatement(query);
             stm.setString(1, "" + GlobalVariables.NOT_AVAILABLE);
+            stm.setString(2, storeOwnerID);
             rs = stm.executeQuery();
             String productName, receivedDate, consignmentID;
             float price;
@@ -46,7 +48,7 @@ public class DanqtDAO {
                 productName = rs.getString("ProductName");
                 receivedDate = rs.getString("ReceivedDate");
                 consignmentID = rs.getString("ConsignmentID");
-                price = Float.parseFloat(rs.getString("Price"));
+                price = Float.parseFloat(rs.getString("ReturnedPrice"));
                 status = Integer.parseInt(rs.getString("Status"));
                 product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
                 result.add(product);
@@ -191,7 +193,7 @@ public class DanqtDAO {
         }
     }
 
-    public List<ProductDTO> searchProduct(String keywords, String type) {
+    public List<ProductDTO> searchProduct(String keywords, String type, String storeOwnerID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -207,21 +209,23 @@ public class DanqtDAO {
             if (!searchType.equals("")) {
                 query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.Price,p.Status "
                         + "FROM Product p ,Consignment c "
-                        + "WHERE ? LIKE ? ";
+                        + "WHERE ? LIKE ? AND c.StoreOwnerID = ?";
                 stm = conn.prepareStatement(query);
                 stm.setString(1, searchType);
                 stm.setString(2, "%" + keywords + "%");
+                stm.setString(3, storeOwnerID);
                 rs = stm.executeQuery();
             } else {
                 query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.Price,p.Status "
                         + "FROM Product p ,Consignment c "
                         + "WHERE p.ProductName LIKE ? OR c.ReceivedDate LIKE ? "
-                        + "OR c.ConsignmentID LIKE ? OR p.Status LIKE ?";
+                        + "OR c.ConsignmentID LIKE ? OR p.Status LIKE ? AND c.StoreOwnerID = ?";
                 stm = conn.prepareStatement(query);
                 stm.setString(1, "%" + keywords + "%");
                 stm.setString(2, "%" + keywords + "%");
                 stm.setString(3, "%" + keywords + "%");
                 stm.setString(4, "%" + keywords + "%");
+                stm.setString(5, storeOwnerID);
                 rs = stm.executeQuery();
             }
             while (rs.next()) {
@@ -270,28 +274,27 @@ public class DanqtDAO {
         }
     }
 
-    public UsersDTO getConsignorInforByConsignmentID(String id) {
+    public UsersDTO getConsignorInforByConsignmentID(String consignmentID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT * FROM Users u WHERE u.UserID = (SELECT c.ConsignorID FROM Consignment c WHERE c.ConsignmentID = ?)";
+            String query = "SELECT c.FullName, c.Address, c.Phone, c.Email, c.CardNumber, c.CardOwner "
+                    + "FROM Consignment "
+                    + "WHERE c.ConsignmentID = ?";
             stm = conn.prepareStatement(query);
-            stm.setString(1, id);
+            stm.setString(1, consignmentID);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String userID, password, fullName, address, phone, email, creditCardNumber, creditCardOnwer, role;
-                userID = rs.getString(1);
-                password = rs.getString(2);
-                fullName = rs.getString(3);
-                address = rs.getString(4);
-                phone = rs.getString(5);
-                email = rs.getString(6);
-                creditCardNumber = rs.getString(7);
-                creditCardOnwer = rs.getString(8);
-                role = rs.getString(9);
-                return new UsersDTO(userID, password, fullName, address, phone, email, creditCardNumber, creditCardOnwer, role);
+                String fullName, address, phone, email, creditCardNumber, creditCardOnwer;
+                fullName = rs.getString(1);
+                address = rs.getString(2);
+                phone = rs.getString(3);
+                email = rs.getString(4);
+                creditCardNumber = rs.getString(5);
+                creditCardOnwer = rs.getString(6);
+                return new UsersDTO(fullName, address, phone, email, creditCardNumber, creditCardOnwer);
             }
             return null;
         } catch (SQLException e) {

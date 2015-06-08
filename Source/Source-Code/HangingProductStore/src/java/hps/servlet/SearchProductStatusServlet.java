@@ -13,14 +13,17 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Tien Dan
  */
+@WebServlet(name = "SearchProductStatusServlet", urlPatterns = {"/SearchProductStatusServlet"})
 public class SearchProductStatusServlet extends HttpServlet {
 
     /**
@@ -37,12 +40,20 @@ public class SearchProductStatusServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String keywords = request.getParameter("txtKeywords");
-            String type = request.getParameter("typeSearch");
-            DanqtDAO dao = new DanqtDAO();
-            List<ProductDTO> result = dao.searchProduct(keywords, type);
-            request.setAttribute("result", result);
-            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.MANAGERMENT_PAGE);
+            HttpSession session = request.getSession(false);
+            String url = "";
+            String storeOwnerID = (String) session.getAttribute("ID");
+            if (storeOwnerID == null) {
+                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+            } else {
+                String keywords = request.getParameter("txtKeywords");
+                String type = request.getParameter("typeSearch");
+                DanqtDAO dao = new DanqtDAO();
+                List<ProductDTO> result = dao.searchProduct(keywords, type, storeOwnerID);
+                request.setAttribute("result", result);
+                url = GlobalVariables.MANAGERMENT_PAGE;
+            }
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }

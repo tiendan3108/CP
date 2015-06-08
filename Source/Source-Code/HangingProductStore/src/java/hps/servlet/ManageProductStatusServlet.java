@@ -13,14 +13,17 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Tien Dan
  */
+@WebServlet(name = "ManageProductStatusServlet", urlPatterns = {"/ManageProductStatusServlet"})
 public class ManageProductStatusServlet extends HttpServlet {
 
     /**
@@ -38,9 +41,17 @@ public class ManageProductStatusServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DanqtDAO dao = new DanqtDAO();
-            List<ProductDTO> result = dao.getProductStatus();
-            request.setAttribute("result", result);
-            RequestDispatcher rd= request.getRequestDispatcher(GlobalVariables.MANAGERMENT_PAGE);
+            String url = "";
+            HttpSession session = request.getSession(false);
+            String storeOwnerID = (String) session.getAttribute("ID");
+            if (storeOwnerID == null) {
+                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+            } else {
+                List<ProductDTO> result = dao.getProductStatus(storeOwnerID);
+                request.setAttribute("result", result);
+                url = GlobalVariables.MANAGERMENT_PAGE;
+            }
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }

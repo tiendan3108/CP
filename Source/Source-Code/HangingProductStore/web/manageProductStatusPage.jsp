@@ -65,41 +65,50 @@
                                 <td>
                                     <c:set var="status" value="${item.status}"/>
                                     <c:choose>
-                                        <c:when test="${status==1}">
-                                            <form action="ProcessServlet" method="POST">
+                                        <c:when test="${status==2}">
+                                            <form action="LoadPaymentPageServlet" method="POST">
                                                 <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                                 <input name="productID" type="hidden" value="${item.productID}">
                                                 <button class="btn btn-info" name="action" type="submit" value="pay">Sold</button>
                                             </form>
                                         </c:when>
-                                        <c:when test="${status==2}">
+                                        <c:when test="${status==1}">
                                             <form action="ProcessServlet" method="POST">
                                                 <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                                 <input name="productID" type="hidden" value="${item.productID}">
-                                                <button class="btn btn-info" name="action" type="submit" value="publish">In Inventory</button>
+                                                <button class="btn btn-info" name="action" type="submit" value="order">Ordered</button>
                                             </form>
                                         </c:when>
                                         <c:when test="${status==3}">
-                                            <a href="#" class="label-primary">On web</a>
+                                            <a href="ViewProductDetailServlet?productID=${item.productID}" class="label-primary">On web</a>
                                         </c:when>
                                         <c:when test="${status==4}">
-
+                                            <label class="label-danger">Owned</label>
                                         </c:when>
                                         <c:when test="${status==5}">
-
+                                            <label class="label-danger">Out of Date</label>
                                         </c:when>
                                         <c:when test="${status==6}">
+                                            <label class="label-danger">Cancel by Consignor</label>
+                                        </c:when>
+                                        <c:when test="${status==7}">
+                                            <label class="label-danger">Returned</label>
+                                        </c:when>
+                                        <c:when test="${status==8}">
+                                            <label class="label-danger">Completed</label>
+                                        </c:when>
+                                        <c:when test="${status==8}">
                                             <label class="label-danger">Cancel by Consignor</label>
                                         </c:when>
                                     </c:choose>
                                 </td>
                                 <td>
                                     <c:if test="${(status==2) || (status==3)}">
-                                    <form action="ProcessServlet" method="POST">
-                                        <button class="btn btn-warning" name="action" type="submit" value="cancel" onclick="return confirm('Are you sure to cancel this consignment?')">Cancel</button>
-                                        <input name="consignmentID" type="hidden" value="${item.consignmentID}">
-                                        <input name="productID" type="hidden" value="${item.productID}">
-                                    </form>
+                                        <form action="ProcessServlet" method="POST">
+                                            <button class="btn btn-warning" name="action" type="submit" value="cancel">Cancel</button>
+                                            <input name="consignmentID" type="hidden" value="${item.consignmentID}">
+                                            <input name="productID" type="hidden" value="${item.productID}">
+                                        </form>
                                     </c:if>
                                 </td>
                             </tr>
