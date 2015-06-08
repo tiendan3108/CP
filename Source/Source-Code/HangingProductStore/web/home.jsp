@@ -12,7 +12,7 @@
                 <span class="badge badge-default">3</span>           
             </a>
             <ul class="fallback">
-                <li style="margin-left: -40px"><a href="ManageProductStatusServlet">Manage Product Status</a></li>
+                <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
                 <li style="margin-left: -40px"><a href="#">notification 2</a></li>
                 <li style="margin-left: -40px"><a href="#">notification 3</a></li>
                 <li style="margin-left: -40px"><a href="#">notification 4</a></li>
@@ -25,17 +25,17 @@
             <div class="sidebar col-md-3 col-sm-4">   
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <c:forEach var="category" items="${categories}">
-                        <li class="list-group-item clearfix">
-                            <a href="ProductServlet?parentId=${category.categoryId}"><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                            <ul class="sidebar-menu">
-                                <li class="list-group-item clearfix">
-                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                                    <c:forEach var="childCate" items="${allCate}">
-                                        <c:if test="${category.categoryId == childCate.parentId}">
+                        <li class="list-group-item clearfix dropdown">
+                            <a><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                            <ul class="dropdown-menu">                             
+                                <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                <c:forEach var="childCate" items="${allCate}">
+                                    <c:if test="${category.categoryId == childCate.parentId}">
+                                        <li>
                                             <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                            </c:if>
-                                        </c:forEach>       
-                                </li>
+                                        </li>
+                                    </c:if>
+                                </c:forEach>       
                             </ul>
                         </li>
                     </c:forEach>

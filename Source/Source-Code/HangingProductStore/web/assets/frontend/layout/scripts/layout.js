@@ -175,7 +175,7 @@ var Layout = function () {
 
     var handleSidebarMenu = function () {
         $(".sidebar .dropdown a").click(function (event) {
-            event.preventDefault();
+            //event.preventDefault();
             if ($(this).hasClass("collapsed") == false) {
                 $(this).addClass("collapsed");
                 $(this).siblings(".dropdown-menu").slideDown(300);
