@@ -40,24 +40,6 @@
                         </li>
                     </c:forEach>
                 </ul>
-                <div class="sidebar-products clearfix">
-                    <h2>Bestsellers</h2>
-                    <div class="item">
-                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k1.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                        <div class="price">$31.00</div>
-                    </div>
-                    <div class="item">
-                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k4.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                        <div class="price">$23.00</div>
-                    </div>
-                    <div class="item">
-                        <a href="shop-item.html"><img src="assets/frontend/pages/img/products/k3.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-                        <h3><a href="shop-item.html">Some Shoes in Animal with Cut Out</a></h3>
-                        <div class="price">$86.00</div>
-                    </div>
-                </div>
             </div>
 
             <div class="col-md-9 col-sm-8 sale-product">
@@ -87,89 +69,74 @@
                 <c:set var="data" value="${requestScope.DATA}"/>
                 <!-- BEGIN SALE PRODUCT -->
                 <c:if test="${not empty data}">
-                    <h2>New Arrivals</h2>
-                    <div class="owl-carousel owl-carousel4">
-                        <c:forEach var="item" items="${data}">     
-                            <div>
-                                <div class="product-item">
-                                    <div class="pi-img-wrapper">
-                                        <img src='${item.image}' class="imgCrop">
+                    <div class="row">
+                        <h2>New Arrivals</h2>
+                        <div class="owl-carousel owl-carousel4">
+                            <c:forEach var="item" items="${data}">     
+                                <div>
+                                    <div class="product-item">
+                                        <div class="pi-img-wrapper">
+                                            <img src='${item.image}' class="imgCrop">
+                                        </div>
+                                        <h3>${item.name}</h3>
+
+                                        <c:url var="viewDetail" value = "ViewProductDetailServlet">
+                                            <c:param name="productID" value="${item.productID}"/>
+                                        </c:url>
+                                        <a href="${viewDetail}" class="btn btn-default add2cart">View Detail</a>
+                                        <div class="sticker sticker-new"></div>
                                     </div>
-                                    <h3>${item.name}</h3>
-         
-                                    <c:url var="viewDetail" value = "ViewProductDetailServlet">
-                                        <c:param name="productID" value="${item.productID}"/>
-                                    </c:url>
-                                    <a href="${viewDetail}" class="btn btn-default add2cart">View Detail</a>
-                                    <div class="sticker sticker-new"></div>
                                 </div>
-                            </div>
-                        </c:forEach>    
+                            </c:forEach>    
+                        </div>
                     </div>
                 </c:if>
-                <div class="row margin-bottom-40 " style="margin-top:100px">
+                <div class="row margin-bottom-40 " style="margin-top:50px">
                     <!-- BEGIN CONTENT -->
-                    <h2>SAVE ITEMS</h2>
+                    <h2>HOT ITEMS</h2>
                     <div class="owl-carousel owl-carousel3">
                         <div>
                             <div class="product-item">
                                 <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress"> 
+                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
                                 </div>
-                                <h3><a href="shop-item.html">Berry Lace Dress</a></h3>
-                                <div class="pi-price">$29.00</div>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                                <div class="sticker sticker-new"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                </div>
-                                <h3>Berry Lace Dress2</h3>
-                                <div class="pi-price">$29.00</div>
+                                <h3>Casio Gshock</h3>
                                 <a href="#" class="btn btn-default add2cart">View Detail</a>
                             </div>
                         </div>
                         <div>
                             <div class="product-item">
                                 <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k3.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
                                 </div>
-                                <h3>Berry Lace Dress3</h3>
-                                <div class="pi-price">$29.00</div>
+                                <h3>Casio Gshock</h3>
                                 <a href="#" class="btn btn-default add2cart">View Detail</a>
                             </div>
                         </div>
                         <div>
                             <div class="product-item">
                                 <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k4.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
                                 </div>
-                                <h3>Berry Lace Dress4</h3>
-                                <div class="pi-price">$29.00</div>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                                <div class="sticker sticker-sale"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k1.jpg" class="img-responsive" alt="Berry Lace Dress">
-                                </div>
-                                <h3>Berry Lace Dress5</h3>
-                                <div class="pi-price">$29.00</div>
+                                <h3>Casio Gshock</h3>
                                 <a href="#" class="btn btn-default add2cart">View Detail</a>
                             </div>
                         </div>
                         <div>
                             <div class="product-item">
                                 <div class="pi-img-wrapper">
-                                    <img src="assets/frontend/pages/img/products/k2.jpg" class="img-responsive" alt="Berry Lace Dress">
+                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
                                 </div>
-                                <h3>Berry Lace Dress6</h3>
-                                <div class="pi-price">$29.00</div>
+                                <h3>Casio Gshock</h3>
+                                <a href="#" class="btn btn-default add2cart">View Detail</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="product-item">
+                                <div class="pi-img-wrapper">
+                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
+                                </div>
+                                <h3>Casio Gshock</h3>
                                 <a href="#" class="btn btn-default add2cart">View Detail</a>
                             </div>
                         </div>

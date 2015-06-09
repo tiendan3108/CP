@@ -42,11 +42,9 @@
                             <h4>Message:</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="well">
-                                <h4>${mess}</h4>
-                            </div>
+                            <h4>${mess}</h4>
                             <div class="modal-footer">
-                                <button class="btn default" type="button" data-dismiss="modal">OK</button>
+                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
                             </div>
                         </div>
                     </div>
@@ -97,7 +95,7 @@
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <h1>${item.name}</h1>
-                             
+
                                 <div class="description">
                                     <p>${item.description}</p>
                                 </div>
@@ -141,7 +139,7 @@
                                             <img src='${productItem.image}' class="imgCrop3">
                                         </div>
                                         <h3>${productItem.name}</h3>
-                                       
+
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${productItem.productID}"/>
                                         </c:url>
