@@ -51,6 +51,25 @@ public class ConsignmentDTO {
         this.period = period;
         this.maxPrice = maxPrice;
     }
+    
+    //duchc - contructor dùng cho Consign Servlet
+    public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String cardNumber, String cardOwner, String fromDate, String toDate, String status, int period, double maxPrice) {
+        this.consigmentID = consigmentID;
+        this.productID = productID;
+        this.memberID = memberID;
+        this.storeOwnerID = storeOwnerID;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.cardNumber = cardNumber;
+        this.cardOwner = cardOwner;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.status = status;
+        this.period = period;
+        this.maxPrice = maxPrice;
+    }
 
     public String getConsigmentID() {
         return consigmentID;
