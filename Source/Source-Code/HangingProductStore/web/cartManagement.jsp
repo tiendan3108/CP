@@ -63,7 +63,10 @@
                         </c:if>
                     </div>
                     <a href="HomeServlet" class="btn btn-default">Continue shopping <i class="fa fa-shopping-cart"></i></a>
-                    <a class="btn btn-primary">Complete Order <i class="fa fa-check"></i></a>
+                        <c:if test="${not empty items}">
+                        <a class="btn btn-primary">Complete Order <i class="fa fa-check"></i></a>
+                        </c:if>
+
                 </div>
             </div>
             <!-- END CONTENT -->

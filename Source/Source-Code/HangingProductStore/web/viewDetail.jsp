@@ -44,18 +44,13 @@
                         <div class="modal-body">
                             <h4>${mess}</h4>
                             <div class="modal-footer">
-                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK</button>
+                                <a style="background-color: #408cc2" href="ViewCartServlet" class="btn btn-default">Go to Shopping Cart</a>
+                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK<i class="fa fa-check"></i></button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
-                jQuery(document).ready(function () {
-                    var modalObj = $('#messModal').modal(); // initialize
-                    modalObj.modal('show');
-                });
-            </script>
         </c:if>         
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
