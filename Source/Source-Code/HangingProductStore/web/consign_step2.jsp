@@ -32,7 +32,7 @@
 
 
         <!-- BEGIN DIV STEP2 -->
-        <form action="ConsignServlet" method="POST" onsubmit="return validation()">
+        <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">
             <div id="divStep2" class="row" >
 
                 <div class="portlet box" id="form_wizard_1">
@@ -71,10 +71,10 @@
 
                                     <hr/>
                                     <c:set var="data" value="${sessionScope.STORELIST}"/>
-                                    <c:set var="price" value="${sessionScope.PRICE}"/>
+                                    <c:set var="basicPrice" value="${sessionScope.BASICPRICE}"/>
                                     <c:set var="store" value="${sessionScope.STORE}"/>
                                     <div class="tab-content ">
-                                        <c:if test="${price == 0}">
+                                        <c:if test="${basicPrice <= 0}">
                                             <div class="alert alert-warning" style="text-align: center">
                                                 <strong>We could not find your product. Store owner will check and price your product later.</strong>
                                             </div>    
@@ -94,10 +94,10 @@
                                                             <th>
                                                                 Address
                                                             </th>
-<!--                                                            <th>
-                                                                Reliability
-                                                            </th>-->
-                                                            <c:if test="${price != 0}">
+                                                            <!--                                                            <th>
+                                                                                                                            Reliability
+                                                                                                                        </th>-->
+                                                            <c:if test="${basicPrice != 0}">
                                                                 <th>
                                                                     Price
                                                                 </th>
@@ -117,17 +117,16 @@
                                                                     ${item.address}
                                                                 </td>
 
-<!--                                                                <td>
-                                                                    
-                                                                </td>-->
-                                                                <c:if test="${price != 0}">
+                                                                <!--                                                                <td>
+                                                                                                                                    
+                                                                                                                                </td>-->
+                                                                <c:if test="${basicPrice > 0}">
                                                                     <td>
                                                                         <fmt:formatNumber 
-                                                                            value="${price - (item.formula/100) * price}" 
-                                                                            maxFractionDigits="3"/> ~ <fmt:formatNumber 
-                                                                            value="${price + (item.formula/100) * price }" 
-                                                                            maxFractionDigits="3"/>
-
+                                                                            value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
+                                                                            maxFractionDigits="1"/> ~ <fmt:formatNumber 
+                                                                            value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
+                                                                            maxFractionDigits="1"/>
                                                                     </td>
                                                                 </c:if>
                                                                 <td align="center">
@@ -163,11 +162,11 @@
                                      ">
                                     <div class="row">
                                         <div class="col-sm-4"> 
-                                            <button name="btnAction" type="submit" value="backstep1"  class=" btn-block btn-lg btn btn-primary"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</button>
+                                            <button id="btnBack"  name="btnAction" type="submit" value="backstep1"  class=" btn-block btn-lg btn btn-primary"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</button>
                                         </div>
                                         <div class="col-sm-4"> </div>
                                         <div class="col-sm-4">
-                                            <button  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></button>
+                                            <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT <i class="m-icon-big-swapright m-icon-white"></i></button>
                                         </div>
 
                                     </div>
@@ -190,18 +189,21 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
-    
-    
 
-    function validation() {
-//        var val = $("input[type=submit][clicked=true]").val();
-//        alert(val);
-        if (!$("input:radio[name='rdStore']").is(":checked")) {
-            alert("Please choose a store");
-            return false;
+    function btnBackEvent() {
+
+    }
+    function btnNextEvent() {
+
+    }
+
+    function validation(form) {        
+        if (jQuery("#form2").context.activeElement.value == 'tostep3') {
+            if (!$("input:radio[name='rdStore']").is(":checked")) {
+                alert("Please choose a store");
+                return false;
+            }
         }
-        
-
     }
 
 

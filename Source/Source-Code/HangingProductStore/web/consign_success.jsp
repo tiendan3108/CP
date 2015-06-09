@@ -81,8 +81,12 @@
                                     <hr/>
                                     <div class="tab-content" style="text-align: center" >
                                         <h3>Your consign request has been sent!</h3>
-                                        <h3><b>Store Owner</b> will contact you later.</h3>
-                                        <h3>Your product's code is <b>[${requestScope.trackId}]</b>. Use this to track your product's status.</h3>
+                                        <h3>Store Owner will contact you later.</h3>
+                                        <c:if test="${empty sessionScope.MEMBER}">
+                                            <h3>Your product's code is <b>[${requestScope.trackId}]</b>. Use this to track your product's status.</h3>
+                                        </c:if>
+                                            <h3>Click <a href="">Here</a> to check your product's status.</h3>
+                                        
                                     </div>
                                 </div>
                                 <div class="form-action" style="

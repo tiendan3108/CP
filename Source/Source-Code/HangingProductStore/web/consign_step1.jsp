@@ -77,15 +77,15 @@
                                                         <div class="form-group">
                                                             <label for="txtProductName" class="col-sm-4 control-label">Product name<span class="required">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <input  name="txtProductName" type="text" class="form-control" maxlength="50" value="${product.name}"/>
-                                                                <p class="help-block" id="erProductName"> </p>
+                                                                <input id="txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="50" value="${product.name}"/>
+                                                                <p class="help-block" id="erProductName">  </p>
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label for="txtSerial" class="col-sm-4 control-label"> Serial number </label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
+                                                                <input id="txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                                 <p class="help-block" id="erSerialNumber"> </p>
                                                             </div>
                                                         </div>
@@ -94,7 +94,7 @@
                                                             <label class="control-label col-sm-4">Purchased date<span class="required">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
-                                                                    <input type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
+                                                                    <input id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                     <span class="input-group-btn">
                                                                         <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                                                     </span>
@@ -109,7 +109,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-4">Category<span class="required">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <select name="txtCategory" class="bs-select form-control" >
+                                                                <select id="txtCategory" name="txtCategory" class="bs-select form-control" >
                                                                     <option value='' disabled selected style='display:none;'>Select...</option>
 
                                                                     <c:forEach var="father" items="${fCate}">
@@ -141,7 +141,7 @@
                                                         <div class="form-group">
                                                             <label class="control-label col-sm-4">Brand</label>
                                                             <div class="col-sm-8">
-                                                                <input  name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+                                                                <input id="txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
 
                                                                 <span class="help-block" id="erBrand">
                                                                 </span>
@@ -153,7 +153,7 @@
                                                         <div class="form-group">
                                                             <label  class="col-sm-4 control-label"> Description </label>
                                                             <div class="col-sm-8">
-                                                                <textarea name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="" value="${product.description}"/>${product.description}</textarea>
+                                                                <textarea id="txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="" value="${product.description}"/>${product.description}</textarea>
                                                                 <span class="help-block" id="erDescription">
                                                                 </span>
                                                             </div>
@@ -180,7 +180,7 @@
                                                                                 SELECT IMAGE </span>
                                                                             <span class="fileinput-exists btn">
                                                                                 Change </span>
-                                                                            <input  type="file" name="txtImage" id="txtImage" value="${product.image}">
+                                                                            <input  type="file" id="txtImage" name="txtImage" id="txtImage" value="${product.image}">
                                                                         </span>
                                                                         <a href="#" class="btn btn-lg red fileinput-exists" data-dismiss="fileinput">
                                                                             Remove </a>
@@ -190,7 +190,7 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
 
 
@@ -238,11 +238,24 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
-    
-
 
     function validation() {
-
+        var check = true;
+        if($('#txtProductName').val().trim().length < 5 || $('#txtProductName').val().trim().length > 50){
+            $('#erProductName').html("<font color='red'>Required 5-50 characters</font>");
+            check = false;
+        }
+        else{
+            $('#erProductName').html("");
+        }
+        if($('#txtCategory').val() == null){
+            $('#erCategory').html("<font color='red'>Please choose a category</font>");
+            check = false;
+        }else{
+            $('#erCategory').html("");
+        }
+        
+        return check;
     }
 
 </script>
