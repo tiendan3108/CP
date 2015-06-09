@@ -27,7 +27,7 @@
     </jsp:attribute>
     <jsp:body>
         <div id="searchDiv" class="col-md-9 col-sm-7">
-            <form action="ProcessServlet" method="POST">
+            <form action="SearchProductStatusServlet" method="POST">
                 <input type="text" name="txtKeywords" value="">
                 <select name="typeSearch" >
                     <option>All</option>
@@ -59,24 +59,22 @@
                             <tr>
                                 <td>${counter.count}</td>
                                 <td>${item.name}</td>
-                                <td>${item.receivedDay}</td>
+                                <td>${item.receivedDate}</td>
                                 <td>${item.consignmentID}</td>
-                                <td>${item.price} USD</td>
+                                <td>${item.consignedPrice} USD</td>
                                 <td>
                                     <c:set var="status" value="${item.status}"/>
                                     <c:choose>
                                         <c:when test="${status==2}">
-                                            <form action="LoadPaymentPageServlet" method="POST">
+                                            <form action="LoadPaymentPageServlet" method="GET">
+                                                <button class="btn btn-info" type="submit">Sold</button>
                                                 <input name="consignmentID" type="hidden" value="${item.consignmentID}">
-                                                <input name="productID" type="hidden" value="${item.productID}">
-                                                <button class="btn btn-info" name="action" type="submit" value="pay">Sold</button>
                                             </form>
                                         </c:when>
                                         <c:when test="${status==1}">
-                                            <form action="ProcessServlet" method="POST">
-                                                <input name="consignmentID" type="hidden" value="${item.consignmentID}">
+                                            <form action="LoadCustomerPageServlet" method="GET">
+                                                <button class="btn btn-info" type="submit">Ordered</button>
                                                 <input name="productID" type="hidden" value="${item.productID}">
-                                                <button class="btn btn-info" name="action" type="submit" value="order">Ordered</button>
                                             </form>
                                         </c:when>
                                         <c:when test="${status==3}">
@@ -103,8 +101,8 @@
                                     </c:choose>
                                 </td>
                                 <td>
-                                    <c:if test="${(status==2) || (status==3)}">
-                                        <form action="ProcessServlet" method="POST">
+                                    <c:if test="${status==3}">
+                                        <form action="LoadCancelProductPageServlet" method="POST">
                                             <button class="btn btn-warning" name="action" type="submit" value="cancel">Cancel</button>
                                             <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                             <input name="productID" type="hidden" value="${item.productID}">

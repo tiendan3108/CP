@@ -19,6 +19,8 @@ public class UsersDTO {
     private String creditCardNumber;
     private String creditCardOwner;
     private String role;
+    //danqt
+    private float consignedPrice;
 
     public UsersDTO() {
     }
@@ -31,6 +33,17 @@ public class UsersDTO {
         this.email = email;
         this.creditCardNumber = cardNumber;
         this.creditCardOwner = cardOwner;
+    }
+    //danqt
+    public UsersDTO(String fullName, String address, String phone, String email, String cardNumber, String cardOwner, float consignedPrice)
+    {
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.creditCardNumber = cardNumber;
+        this.creditCardOwner = cardOwner;
+        this.consignedPrice = consignedPrice;
     }
     public UsersDTO(String userID, String password, String fullName, String address, String phone, String email, String creditCardNumber, String creditCardOwner, String role) {
         this.userID = userID;
@@ -168,6 +181,20 @@ public class UsersDTO {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /**
+     * @return the consignedPrice
+     */
+    public float getConsignedPrice() {
+        return consignedPrice;
+    }
+
+    /**
+     * @param consignedPrice the consignedPrice to set
+     */
+    public void setConsignedPrice(float consignedPrice) {
+        this.consignedPrice = consignedPrice;
     }
     
 }

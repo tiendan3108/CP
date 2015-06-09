@@ -2,8 +2,8 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <display-name>Hanging Product Store</display-name>
     <servlet>
-        <servlet-name>ManageProductStatusServlet</servlet-name>
-        <servlet-class>hps.servlet.ManageProductStatusServlet</servlet-class>
+        <servlet-name>LoadManageProductPageServlet</servlet-name>
+        <servlet-class>hps.servlet.LoadManageProductPageServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchProductStatusServlet</servlet-name>
@@ -27,9 +27,17 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
+    <servlet>
+        <servlet-name>LoadCancelProductPageServlet</servlet-name>
+        <servlet-class>hps.servlet.LoadCancelProductPageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadCustomerPageServlet</servlet-name>
+        <servlet-class>hps.servlet.LoadCustomerPageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>ManageProductStatusServlet</servlet-name>
-        <url-pattern>/ManageProductStatusServlet</url-pattern>
+        <servlet-name>LoadManageProductPageServlet</servlet-name>
+        <url-pattern>/LoadManageProductPageServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchProductStatusServlet</servlet-name>
@@ -42,6 +50,14 @@
     <servlet-mapping>
         <servlet-name>LoadPaymentPageServlet</servlet-name>
         <url-pattern>/LoadPaymentPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadCancelProductPageServlet</servlet-name>
+        <url-pattern>/LoadCancelProductPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadCustomerPageServlet</servlet-name>
+        <url-pattern>/LoadCustomerPageServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

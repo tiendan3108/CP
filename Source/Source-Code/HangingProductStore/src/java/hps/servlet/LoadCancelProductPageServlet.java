@@ -6,14 +6,13 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
+import hps.dao.productDAO;
 import hps.dto.ProductDTO;
+import hps.dto.UsersDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "ManageProductStatusServlet", urlPatterns = {"/ManageProductStatusServlet"})
-public class ManageProductStatusServlet extends HttpServlet {
+public class LoadCancelProductPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,19 +38,25 @@ public class ManageProductStatusServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            DanqtDAO dao = new DanqtDAO();
-            String url = "";
             HttpSession session = request.getSession(false);
-            String storeOwnerID = (String) session.getAttribute("ID");
-            if (storeOwnerID == null) {
+            String ID = (String) session.getAttribute("ID");
+            String url = "";
+            if (ID == null) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                List<ProductDTO> result = dao.getProductStatus(storeOwnerID);
-                request.setAttribute("result", result);
-                url = GlobalVariables.MANAGERMENT_PAGE;
+                String temp_productID = request.getParameter("productID");
+                int productID = Integer.parseInt(temp_productID);
+                String consignmentID = request.getParameter("consignmentID");
+                DanqtDAO ddao = new DanqtDAO();
+                productDAO pdao = new productDAO();
+                ProductDTO product = pdao.getProductByID(productID);
+                UsersDTO consignor = ddao.getConsignorInforByConsignmentID(consignmentID);
+                request.setAttribute("product", product);
+                request.setAttribute("consignor", consignor);
+                request.setAttribute("productID", productID);
+                url = GlobalVariables.CANCEL_PAGE;
             }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
