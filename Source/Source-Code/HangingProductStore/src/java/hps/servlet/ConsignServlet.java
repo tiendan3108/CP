@@ -29,11 +29,12 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ConsignServlet", urlPatterns = {"/ConsignServlet"})
 public class ConsignServlet extends HttpServlet {
+
     private static final String STEP1 = "consign_step1.jsp";
     private static final String STEP2 = "consign_step2.jsp";
     private static final String STEP3 = "consign_step3.jsp";
     private static final String COMPLETED = "consign_success.jsp";
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,63 +44,52 @@ public class ConsignServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("btnAction");
-            if( action == null){
+            if (action == null) {
                 action = "consign";
             }
             String url = "";
             if (action.equals("consign")) {
-                CategoryDAO cateDao = new CategoryDAO();
-                List<CategoryDTO> parentCategories = cateDao.getParentCategory();
-                List<CategoryDTO> category = cateDao.getAllCategory();
                 HttpSession session = request.getSession();
-                if(session.getAttribute("FCATE") == null){
+                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
+                    CategoryDAO cateDao = new CategoryDAO();
+                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                    List<CategoryDTO> category = cateDao.getAllCategory();
                     session.setAttribute("FCATE", parentCategories);
-                }
-                if(session.getAttribute("CATEGORY") == null){
                     session.setAttribute("CATEGORY", category);
                 }
                 url = STEP1;
             } else if (action.equals("tostep2")) {
                 String productName = request.getParameter("txtProductName");
                 String serialNumber = request.getParameter("txtSerialNumber");
-                int categoryID = Integer.parseInt(request.getParameter("txtCategory")); 
+                int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
                 String brand = request.getParameter("txtBrand");
                 String date = request.getParameter("txtDate");
                 String description = request.getParameter("txtDescription");
                 String image = request.getParameter("txtImage");
-                
-                
-                
+
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, image, 0);
-//                ProductDTO product = new ProductDTO();
-//                product.setName(productName);
-//                product.setCategoryID(categoryID);
-//                product.setPurchasedDate(date);
-//                product.setDescription(description);
-//                product.setImage(image);
-//                product.setStatus(0); 
-//                product.setSerialNumber(serialNumber);
-//                product.setBrand(brand);
 
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT", product);
 
-                double price = 0;
+                double basicPrice = 0;
                 if (productName.contains("Gucci")) {
-                    price = 500000;
+                    basicPrice = 50;
                 }
-                if (productName.contains("PT")) {
-                    price = 300000;
+                else if (productName.contains("PT")) {
+                    basicPrice = 30;
+                }
+                else if (productName.contains("CK")){
+                    basicPrice = 35.5;
                 }
 
-                session.setAttribute("PRICE", price);
+                session.setAttribute("BASICPRICE", basicPrice);
                 DuchcDAO dDAO = new DuchcDAO();
                 List<StoreOwnerDTO> list = dDAO.getStoreOwnerByCategory(categoryID);
 
@@ -123,33 +113,52 @@ public class ConsignServlet extends HttpServlet {
                 String cardOwner = request.getParameter("txtCardOwner");
 
                 HttpSession session = request.getSession();
-                ProductDTO product = (ProductDTO)session.getAttribute("PRODUCT");
-                
+                ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
+                if (product.getImage() == null) {
+                    product.setImage("CCC");
+                }
+
                 DuchcDAO dao = new DuchcDAO();
                 int productID = dao.addProduct(product);
                 int memberID = -1;
-                if(session.getAttribute("MEMBER") != null){
-                    memberID = ((MemberDTO)session.getAttribute("MEMBER")).getMemberID();
+                if (session.getAttribute("MEMBER") != null) {
+                    memberID = ((MemberDTO) session.getAttribute("MEMBER")).getMemberID();
                 }
                 int storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-                
-                String consigmentID = dao.generateConsignmentID(product.getName(), fullName);
-                boolean result = dao.addConsigment(consigmentID, productID, memberID, storeOwnerID, fullName, address, phone, email, cardNumber, cardOwner, fromDate, toDate);
-                request.setAttribute("trackId", consigmentID );
+                double maxPrice = 0;
+                if(session.getAttribute("BASICPRICE") != null){
+                    maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
+                }
 
+                String consigmentID = dao.generateConsignmentID(product.getName(), fullName);
+                ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
+                        address, phone, email, cardNumber, cardOwner, fromDate, toDate, "NOT AVAILABLE", 10, maxPrice);
+                boolean result = dao.addConsigment(consignment);
+                request.setAttribute("trackId", consigmentID);
+                session.removeAttribute("PRODUCT");
+                session.removeAttribute("BASICPRICE");
+                session.removeAttribute("STORE");
+                session.removeAttribute("FCATE");
+                session.removeAttribute("CATEGORY");
                 url = COMPLETED;
             } else if (action.equals("backstep1")) {
-               url = STEP1;
+                HttpSession session = request.getSession();
+                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
+                    CategoryDAO cateDao = new CategoryDAO();
+                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                    List<CategoryDTO> category = cateDao.getAllCategory();
+                    session.setAttribute("FCATE", parentCategories);
+                    session.setAttribute("CATEGORY", category);
+                }
+                url = STEP1;
             } else if (action.equals("backstep2")) {
                 url = STEP2;
             }
-            
+
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-                dispatcher.forward(request, response);
+            dispatcher.forward(request, response);
         }
     }
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
