@@ -47,7 +47,6 @@ public class RemoveProductServlet extends HttpServlet {
                 productID = 0;
             }
             HttpSession session = request.getSession(false);
-            List<Integer> itemIDs = new ArrayList<Integer>();
             if (session != null) {
                 Cart cart = (Cart) session.getAttribute("CART");
                 if (cart != null) {
