@@ -1,7 +1,10 @@
 package hps.servlet;
 
+import hps.dao.ConsignmentDAO;
 import hps.dto.Alert;
+import hps.dto.ConsignmentDTO;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +21,7 @@ import javax.servlet.http.HttpSession;
             "/consignment",
             "/consignor"})
 public class ConsignmentServlet extends HttpServlet {
-    
+
     private static final String STORE_VIEW = "WEB-INF/jsp/view/store";
     private static final int STORE_ID = 1;
     private static final String CONSIGNMENT_SEARCH = "/consignment_search";
@@ -27,7 +30,9 @@ public class ConsignmentServlet extends HttpServlet {
     private static final String CONSIGNMENT_IMPORTED = "/consignment_imported";
     private static final String CONSIGNMENT_SOLD = "/consignment_sold";
     private static final String CONSIGNMENT_DETAIL = "/consignment_detail";
-    
+
+    private ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -36,48 +41,36 @@ public class ConsignmentServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userPath = request.getServletPath();
         HttpSession session = request.getSession();
-        
+
         if (userPath.equals(CONSIGNMENT)) {
             if (request.getParameter("id") != null) {
                 userPath = CONSIGNMENT_DETAIL;
-                
-                long id = Long.parseLong(request.getParameter("id"));
-//                Consignment consignment = consignmentBLO.getConsignment(id);
-//                consignmentBLO.makeConsignmentAsViewed(id);                
-//                request.setAttribute("consignment", consignment);
-                
-//                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
-//                session.setAttribute("nonViewRequest", nonViewRequest);   
+
+                String id = request.getParameter("id");
+                ConsignmentDTO consignment = consignmentDAO.getConsignment(id);
+                request.setAttribute("consignment", consignment);
                 
             } else if (request.getParameter("search") != null) {
-                userPath = CONSIGNMENT_SEARCH;          
-                
+                userPath = CONSIGNMENT_SEARCH;
+
             } else if (request.getParameter("imported") != null) {
                 userPath = CONSIGNMENT_IMPORTED;
-                
+
 //                List<Consignment> consignments = consignmentBLO.getConsigmentsImported(STORE_ID);
 //                request.setAttribute("consignments", consignments);
-                
             } else if (request.getParameter("sold") != null) {
                 userPath = CONSIGNMENT_SOLD;
-                
+
 //                List<Consignment> consignments = consignmentBLO.getConsigmentsSold(STORE_ID);
 //                request.setAttribute("consignments", consignments);
-                                
             } else /*if (request.getParameter("request") != null)*/ {
                 userPath = CONSIGNMENT_REQUEST;
-                
-//                List<Consignment> consignments = consignmentBLO.getConsigmentsRequest(STORE_ID);
-//                request.setAttribute("consignments", consignments);
-                
-//                int nonViewRequest = consignmentBLO.getNonViewRequest(STORE_ID);
-//                session.setAttribute("nonViewRequest", nonViewRequest);
-                
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStore(2);
+                request.setAttribute("consignments", consignments);
             }
         } else if (userPath.equals("/consignor")) {
 //            List<Customer> consignors = consignmentBLO.getConsignorsByStore(STORE_ID);
@@ -104,7 +97,7 @@ public class ConsignmentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userPath = request.getServletPath();
-        
+
         if (userPath.equals(CONSIGNMENT)) {
             if (request.getParameter("id") != null) {
                 long id = Long.parseLong(request.getParameter("id"));
@@ -121,18 +114,17 @@ public class ConsignmentServlet extends HttpServlet {
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
                     request.setAttribute("alert", alert);
                 }
-                
+
                 userPath = CONSIGNMENT_DETAIL;
-                
+
 //                Consignment consignment = consignmentBLO.getConsignment(id);
 //                consignmentBLO.makeConsignmentAsViewed(id);
-                
 //                request.setAttribute("consignment", consignment);
             } else if (request.getParameter("search") != null) {
-                
+
             }
         }
-        
+
         String url = STORE_VIEW + userPath + ".jsp";
         try {
             request.getRequestDispatcher(url).forward(request, response);

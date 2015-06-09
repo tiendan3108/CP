@@ -27,9 +27,9 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="input-group">
-                                <input id="newpassword" class="form-control" type="text" name="search">
+                                <input id="newpassword" class="form-control" type="text" name="searchValue">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success" type="button">Search</button>
+                                    <button class="btn btn-success" type="submit" name="search">Search</button>
                                 </span>
                             </div>
                         </div>
@@ -62,35 +62,27 @@
                 <tbody>
                     <c:if test="${empty consignments}">
                         <tr>
-                            <td colspan="5">There is no request.</td>
+                            <td colspan="6">There is no request.</td>
                         </tr>
                     </c:if>
-                    <c:forEach var="c" items="${consignments}" varStatus="counter">
+                    <c:forEach var="c" items="${consignments}">
                         <tr>
-                            <td>${counter.count}</td>
+                            <td>${c.product.productID}</td>
                             <td>
                                 ${c.product.name}
-                                <c:choose>
-                                    <c:when test="${not empty c.acceptDate}">
-                                        <br/><span class="label label-primary">accepted</span>
-                                    </c:when>
-                                    <c:when test="${not empty c.refuseDate}">
-                                        <br/><span class="label label-danger">refused</span>
-                                    </c:when>
-                                </c:choose>
                             </td>
                             <td>
-                                <fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>
+                                <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
                             </td>
                             <td>
-                                <fmt:formatNumber type="currency" currencySymbol="$" value="${c.consignPrice}" />
+                                <fmt:formatNumber type="currency" currencySymbol="$" value="${c.maxPrice}" />
                             </td>
                             <td>
-                                <fmt:formatDate type="date" dateStyle="long" value="${c.transferDate}"/>
+                                ${c.fromDate} - ${c.toDate}
                             </td>
                             <td>
                                 <c:url var="detailUrl" value="consignment">
-                                    <c:param name="id" value="${c.id}"/>
+                                    <c:param name="id" value="${c.consigmentID}"/>
                                 </c:url>
                                 <a href="${detailUrl}" 
                                    class="btn btn-primary">View</a>

@@ -21,217 +21,173 @@
         </div>
         <!-- END SIDEBAR -->
         <div class="col-md-9">
-            <div class="content-page">
-                <!-- BEGIN PAGE CONTENT-->
-                <div class="row">
-                    <div class="col-md-12 col-md-12">
-                        <c:if test="${not empty alert}">
-                            <div class="alert alert-${alert.type.name} alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-                                <strong>${alert.title}</strong> ${alert.body}
-                            </div>
-                        </c:if>
-                        <h1>
-                            ${consignment.product.name} <small>from</small>
-                            <a data-toggle="modal" href="#contactModal">${consignment.customerName}</a>
+            <c:if test="${not empty alert}">
+                <div class="alert alert-${alert.type.name} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>${alert.title}</strong> ${alert.body}
+                </div>
+            </c:if>
+            
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row margin-bottom-25">
+                <!-- BEGIN CAROUSEL -->
+                <div class="col-lg-4 col-md-4 front-carousel">
 
-                            <c:choose>
-                                <c:when test="${not empty consignment.importDate}">
-                                    <span class="label label-primary">imported</span>
-                                </c:when>
-                                <c:when test="${not empty consignment.acceptDate}">
-                                    <span class="label label-primary">accepted</span>
-                                </c:when>
-                                <c:when test="${not empty consignment.refuseDate}">
-                                    <span class="label label-danger">refused</span>
-                                </c:when>
-                            </c:choose>
-                        </h1>
-                        <div class="content-page">
-                            <div class="row margin-bottom-30">
-                                <!-- BEGIN CAROUSEL -->
-                                <div class="col-lg-4 col-md-5 front-carousel">
-
-                                    <div class="carousel slide" id="myCarousel">
-                                        <!-- Carousel items -->
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <img alt="" src="./assets/product/1.jpg">
-                                                <div class="carousel-caption">
-                                                    <p>Excepturi sint occaecati cupiditate non provident</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Carousel nav -->
-                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-
+                    <div class="carousel slide" id="myCarousel">
+                        <!-- Carousel items -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img alt="" src="./assets/product/1.jpg">
+                                <div class="carousel-caption">
+                                    <p>Excepturi sint occaecati cupiditate non provident</p>
                                 </div>
-                                <!-- END CAROUSEL -->
-
-                                <!-- BEGIN PRODUCT DESCRIPTION -->
-                                <div class="col-lg-8 col-md-7">
-                                    <div class="note note-info">
-                                        <h3 class="text-danger">
-                                            <fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.consignPrice}"/>
-                                        </h3>
-                                    </div>
-                                    <p>${consignment.product.description}</p>
-
-                                    <div class="btn-group btn-group-justified">
-                                        <c:choose>
-                                            <c:when test="${empty consignment.acceptDate and empty consignment.refuseDate}">
-                                                <a class="btn btn-primary"
-                                                   data-toggle="modal"
-                                                   href="#acceptingModal">Accept</a>
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#refusingModal">Refuse</a>
-                                            </c:when>
-                                            <c:when test="${not empty consignment.importDate}">
-                                                <a class="btn btn-primary"
-                                                   data-toggle="modal"
-                                                   href="#raisingModal">Raise on Web</a>
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#cancelingModal">Cancel</a>
-                                            </c:when>
-                                            <c:when test="${not empty consignment.acceptDate}">
-                                                <a class="btn btn-primary"
-                                                   data-toggle="modal"
-                                                   href="#importingModal">Import</a>
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#cancelingModal">Cancel Accept</a>
-                                            </c:when>
-                                            <c:when test="${not empty consignment.refuseDate}">
-                                                <a class="btn"></a>
-                                                <a class="btn btn-link"
-                                                   data-toggle="modal"
-                                                   href="#cancelingModal">Cancel Refuse</a>
-                                            </c:when>
-                                        </c:choose>
-                                    </div>
-                                </div>
-                                <!-- END PRODUCT DESCRIPTION -->
                             </div>
                         </div>
+                        <!-- Carousel nav -->
+                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
                     </div>
-                </div>
 
-                <!-- BEGIN AMAZON INFORMATION -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <h2>Amazon Information</h2>
-                        <div class="content-page">
-                            <div class="row">
-                                <!-- BEGIN PRODUCT SPECIFICATION -->
-                                <div class="col-md-6">
-                                    <table class="table table-hover">
-                                        <caption>Watch Information</caption>
-                                        <tbody>
-                                            <tr>
-                                                <td>Band Colour</td>
-                                                <td>Black</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Band Material</td>
-                                                <td>Resin</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Band Width</td>
-                                                <td>18 Millimeters</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bezel Material</td>
-                                                <td>Resin</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brand</td>
-                                                <td>Casio</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Case Diameter</td>
-                                                <td>43</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Case Material</td>
-                                                <td>Resin</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Case Thickness</td>
-                                                <td>13 Millimeters</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Collection</td>
-                                                <td>Youth-Digital</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dial Colour</td>
-                                                <td>Grey</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Display Type</td>
-                                                <td>Digital</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Case Shape</td>
-                                                <td>Rectangular</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Item Weight</td>
-                                                <td>32 Grams</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model Number</td>
-                                                <td>AE-1200WH-1A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model Year</td>
-                                                <td>2013</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Part Number</td>
-                                                <td>AE-1200WH-1A</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Warranty Type</td>
-                                                <td>Manufacturer Warranty</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Movement</td>
-                                                <td>Quartz</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Water Resistance Depth</td>
-                                                <td>200 Meters</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Warranty Description</td>
-                                                <td>2 Years</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                </div>
+                <!-- END CAROUSEL -->
+
+                <!-- BEGIN PRODUCT DESCRIPTION -->
+                <div class="col-lg-8 col-md-8">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Product No.</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+                                        ${consignment.product.productID}
+                                    </p>
                                 </div>
-                                <!-- END PRODUCT SPECIFICATION -->
-                                <!-- BEGIN PRODUCT DESCRIPTION -->
-                                <div class="col-md-6">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Product Name</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+                                        ${consignment.product.name}
+                                    </p>
                                 </div>
-                                <!-- END PRODUCT DESCRIPTION -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Description</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+                                        ${consignment.product.description}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Request Date</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Price</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+                                        <fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.maxPrice}" />
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Delivery Date</label>
+                                <div class="col-md-9">
+                                    <p class="form-control-static">
+                                        ${consignment.fromDate} - ${consignment.toDate}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Appointment</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="date" value="${consignment.receivedDate}" disabled="">
+                                </div>
                             </div>
                         </div>
+                        <div class="form-actions fluid">
+                            <div class="col-md-12">
+                                <a class="btn btn-primary"
+                                   data-toggle="modal"
+                                   href="#appointmentModal">Make Appointment</a>
+                                <a class="btn btn-primary"
+                                   data-toggle="modal"
+                                   href="#acceptingModal">Accept</a>
+                                <a class="btn btn-info"
+                                   data-toggle="modal"
+                                   href="#refusingModal">Refuse</a>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="btn-group btn-group-justified">
                     </div>
                 </div>
-                <!-- END AMAZON INFORMATION -->
+                <!-- END PRODUCT DESCRIPTION -->
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="well">
+                        <h4 class="form-section">Contact: ${consignment.name}</h4>
+                        <address>
+                            <strong>${consignment.address}</strong><br>
+                            <abbr title="Phone">P:</abbr> ${consignment.phone}</address>
+                        <address>
+                            <strong>Email</strong><br>
+                            <a href="mailto:#">${consignment.email}</a>
+                        </address>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- END SIDEBAR & CONTENT -->
+
+    <!-- Appointment Modal BEGIN -->
+    <div class="modal face" id="appointmentModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4>Consignment Appointment</h4>
+                </div>
+                <div class="modal-body">
+                    <p>${consignment.name} is free from ${consignment.fromDate} to ${consignment.toDate}.</p>
+                    <form class="form-horizontal">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Appointment Date</label>
+                                <div class="col-md-9">
+                                    <input class="form-control" type="date" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-action right">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <c:url var="current" value="consignment">
+                        <c:param name="id" value="${consignment.consigmentID}"/>
+                    </c:url>
+                    <form action="${current}" method="post">
+                        <button class="btn btn-primary" type="submit" name="accept">Make</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Appointment Modal END -->
 
     <!-- Accepting Modal BEGIN -->
     <div class="modal face" id="acceptingModal">
@@ -247,8 +203,8 @@
                             <div class="form-group">
                                 <label class="col-md-3 control-label">Consign Price</label>
                                 <div class="col-md-9">
-                                    <input class="form-control" type="number" value="${consignment.consignPrice}"
-                                           <c:if test="${not empty consignment.consignPrice}">disabled=""</c:if>>
+                                    <input class="form-control" type="number" value="${consignment.maxPrice}"
+                                           <c:if test="${not empty consignment.maxPrice}">disabled=""</c:if>>
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +214,7 @@
                     </div>
                     <div class="modal-footer">
                     <c:url var="current" value="consignment">
-                        <c:param name="id" value="${consignment.id}"/>
+                        <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
                         <button class="btn btn-primary" type="submit" name="accept">Accept</button>
@@ -283,7 +239,7 @@
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
-                        <c:param name="id" value="${consignment.id}"/>
+                        <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
                         <button class="btn btn-primary" type="submit" name="refuse">Refuse</button>
@@ -308,7 +264,7 @@
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
-                        <c:param name="id" value="${consignment.id}"/>
+                        <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
                         <button class="btn btn-primary" type="submit" name="import">Import</button>
@@ -333,7 +289,7 @@
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
-                        <c:param name="id" value="${consignment.id}"/>
+                        <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
                         <button class="btn btn-primary" type="submit" name="delete">Delete</button>
@@ -354,15 +310,15 @@
                     <h4>Contact</h4>
                 </div>
                 <div class="modal-body">
-                    <h3 class="form-section">${consignment.customerName}</h3>
+                    <h3 class="form-section">${consignment.name}</h3>
                     <div class="well">
                         <h4>Address</h4>
                         <address>
-                            <strong>${consignment.customerAddress}</strong><br>
-                            <abbr title="Phone">P:</abbr> ${consignment.customerPhone}</address>
+                            <strong>${consignment.address}</strong><br>
+                            <abbr title="Phone">P:</abbr> ${consignment.phone}</address>
                         <address>
                             <strong>Email</strong><br>
-                            <a href="mailto:#">${consignment.customerEmail}</a>
+                            <a href="mailto:#">${consignment.email}</a>
                         </address>
                     </div>
                     <div class="modal-footer">

@@ -29,6 +29,8 @@ public class ConsignmentDTO {
     private double maxPrice;
     private double returnPrice;
     private String receivedDate;
+    
+    private ProductDTO product;
 
     public ConsignmentDTO() {
     }
@@ -192,9 +194,13 @@ public class ConsignmentDTO {
 
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
+    }    
+
+    public ProductDTO getProduct() {
+        return product;
     }
-    
-    
-    
-    
+
+    public void setProduct(ProductDTO product) {
+        this.product = product;
+    }
 }
