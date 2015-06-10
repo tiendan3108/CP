@@ -41,12 +41,14 @@ public class HomeServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             ProductDAO productDao = new ProductDAO();
             List<ProductDTO> data = productDao.getNewData();
+            List<ProductDTO> seasonItems = productDao.getProductBySeason(2);
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();
             List<CategoryDTO> category = cateDao.getAllCategory();
             request.setAttribute("DATA", data);
             request.setAttribute("CATEGORY", parentCategories);
             request.setAttribute("ALLCATE", category);
+            request.setAttribute("SEASONDATA", seasonItems);
             RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
             rd.forward(request, response);
         }
