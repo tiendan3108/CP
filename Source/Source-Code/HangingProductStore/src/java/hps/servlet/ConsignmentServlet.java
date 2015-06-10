@@ -58,7 +58,7 @@ public class ConsignmentServlet extends HttpServlet {
                 userPath = CONSIGNMENT_REQUEST;
                 
                 String searchValue = request.getParameter("searchValue");
-                List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductName(STORE_ID, searchValue);
+                List<ConsignmentDTO> consignments = consignmentDAO.findWaitingConsignmentByProductName(STORE_ID, searchValue);
                 request.setAttribute("consignments", consignments);
                 
             } else if (request.getParameter("advand-search") != null) {
@@ -76,7 +76,7 @@ public class ConsignmentServlet extends HttpServlet {
 //                request.setAttribute("consignments", consignments);
             } else /*if (request.getParameter("request") != null)*/ {
                 userPath = CONSIGNMENT_REQUEST;
-                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStore(STORE_ID);
+                List<ConsignmentDTO> consignments = consignmentDAO.getWaitingConsignmentByStore(STORE_ID);
                 request.setAttribute("consignments", consignments);
             }
         } else if (userPath.equals("/consignor")) {
@@ -107,26 +107,25 @@ public class ConsignmentServlet extends HttpServlet {
 
         if (userPath.equals(CONSIGNMENT)) {
             if (request.getParameter("id") != null) {
-                long id = Long.parseLong(request.getParameter("id"));
+                String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
-//                    consignmentBLO.makeConsignmentAsAccepted(id);
+                    consignmentDAO.makeConsignmentAsStatus(consignmentId, 3);
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Accepted Successful!", "");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
-//                    consignmentBLO.makeConsignmentAsRefused(id);
+                    consignmentDAO.makeConsignmentAsStatus(consignmentId, 2);
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Refused Successful!", "");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("import") != null) {
-//                    consignmentBLO.makeConsignmentAsImported(id);
+                    
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
                     request.setAttribute("alert", alert);
                 }
 
                 userPath = CONSIGNMENT_DETAIL;
 
-//                Consignment consignment = consignmentBLO.getConsignment(id);
-//                consignmentBLO.makeConsignmentAsViewed(id);
-//                request.setAttribute("consignment", consignment);
+                ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentId);
+                request.setAttribute("consignment", consignment);
             } else if (request.getParameter("search") != null) {
 
             }
