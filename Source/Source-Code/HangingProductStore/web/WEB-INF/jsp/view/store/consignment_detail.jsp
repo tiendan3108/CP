@@ -1,4 +1,4 @@
-<template:storebasic htmlTitle="${consignment.product.name}"
+<template:shopbasic htmlTitle="${consignment.product.name}"
                      bodyTitle="${consignment.product.name}">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
@@ -27,7 +27,9 @@
                     <strong>${alert.title}</strong> ${alert.body}
                 </div>
             </c:if>
-            
+
+            <h1>${consignment.product.name}&nbsp;<small>from</small> ${consignment.name}</h1>
+
             <!-- BEGIN PAGE CONTENT-->
             <div class="row margin-bottom-25">
                 <!-- BEGIN CAROUSEL -->
@@ -57,65 +59,33 @@
 
                 <!-- BEGIN PRODUCT DESCRIPTION -->
                 <div class="col-lg-8 col-md-8">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Product No.</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-                                        ${consignment.product.productID}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Product Name</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-                                        ${consignment.product.name}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Description</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-                                        ${consignment.product.description}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Request Date</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Price</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-                                        <fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.maxPrice}" />
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Delivery Date</label>
-                                <div class="col-md-9">
-                                    <p class="form-control-static">
-                                        ${consignment.fromDate} - ${consignment.toDate}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Appointment</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="date" value="${consignment.receivedDate}" disabled="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-actions fluid">
-                            <div class="col-md-12">
+                    <table class="table">
+                        <tr>
+                            <td width="100px">Product Name</td>
+                            <td>${consignment.product.name}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>${consignment.product.description}</td>
+                        </tr>
+                        <tr>
+                            <td>Request Date</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td><fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.maxPrice}" /></td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Date</td>
+                            <td>${consignment.fromDate} - ${consignment.toDate}</td>
+                        </tr>
+                        <tr>
+                            <td>Appointment</td>
+                            <td>${consignment.receivedDate}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
                                 <a class="btn btn-primary"
                                    data-toggle="modal"
                                    href="#appointmentModal">Make Appointment</a>
@@ -125,12 +95,10 @@
                                 <a class="btn btn-info"
                                    data-toggle="modal"
                                    href="#refusingModal">Refuse</a>
-                            </div>
-                        </div>
-                    </form>
+                            </td>
+                        </tr>
+                    </table>
 
-                    <div class="btn-group btn-group-justified">
-                    </div>
                 </div>
                 <!-- END PRODUCT DESCRIPTION -->
             </div>
@@ -328,4 +296,4 @@
             </div>
         </div>
         <!-- Contact Modal END -->
-    </template:storebasic>
+    </template:shopbasic>

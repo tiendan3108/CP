@@ -1,5 +1,5 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
-<template:storebasic htmlTitle="Consignment Request" bodyTitle="Consignment Request">
+<template:shopbasic htmlTitle="Consignment Request" bodyTitle="Consignment Request">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->
@@ -12,7 +12,7 @@
                     <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
                 </li>
                 <li class="list-group-item clearfix">
-                    <a href="./consignment?action=manage"><i class="fa fa-angle-right"></i> Manage Status</a>
+                    <a href="./consignment?action=manage"><i class="fa fa-angle-right"></i> Product List</a>
                 </li>
                 <li class="list-group-item clearfix">
                     <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
@@ -21,13 +21,13 @@
         </div>
         <!-- END SIDEBAR -->
         <div class="col-md-9">
-            <h4>Request List</h4>
-            <form class="form-horizontal" role="form">
+            <h1>Request List</h1>
+            <form class="form-horizontal" role="form" action="consignment">
                 <div class="form-body">
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="input-group">
-                                <input id="newpassword" class="form-control" type="text" name="searchValue">
+                                <input id="newpassword" class="form-control" type="text" name="searchValue" value="${param.searchValue}">
                                 <span class="input-group-btn">
                                     <button class="btn btn-success" type="submit" name="search">Search</button>
                                 </span>
@@ -52,7 +52,7 @@
                             Price
                         </th>
                         <th>
-                            Transfer Date
+                            Delivery Date
                         </th>
                         <th>
                             Actions
@@ -61,13 +61,19 @@
                 </thead>
                 <tbody>
                     <c:if test="${empty consignments}">
+
                         <tr>
-                            <td colspan="6">There is no request.</td>
+                            <c:if test="${empty param.searchValue}">
+                                <td colspan="6">There is no request.</td>
+                            </c:if>
+                            <c:if test="${not empty param.searchValue}">
+                                <td colspan="6">There is no request with product name like "${param.searchValue}".</td>
+                            </c:if>
                         </tr>
                     </c:if>
-                    <c:forEach var="c" items="${consignments}">
+                    <c:forEach var="c" items="${consignments}" varStatus="counter">
                         <tr>
-                            <td>${c.product.productID}</td>
+                            <td>${counter.count}</td>
                             <td>
                                 ${c.product.name}
                             </td>
@@ -94,4 +100,4 @@
         </div>
     </div>
     <!-- END SIDEBAR & CONTENT -->
-</template:storebasic>
+</template:shopbasic>
