@@ -53,9 +53,9 @@ public class AddToCartServlet extends HttpServlet {
             session.setAttribute("CART", cart);
             String message;
             if (isSuccess) {
-                message = "This product is added in your cart";
+                message = "Sản phẩm đã được thêm vào giỏ hàng của bạn.";
             } else {
-                message = "This product is available in yout cart";
+                message = "Sản phẩm này đã nằm trong giỏ hàng của bạn rồi.";
             }
             request.setAttribute("MESSAGE", message);
             RequestDispatcher rd = request.getRequestDispatcher("ViewProductDetailServlet?productID=" + productId);
