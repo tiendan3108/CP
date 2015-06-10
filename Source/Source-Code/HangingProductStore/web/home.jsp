@@ -95,51 +95,23 @@
                     <!-- BEGIN CONTENT -->
                     <h2>HOT ITEMS</h2>
                     <div class="owl-carousel owl-carousel3">
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
+                        <c:set var="seasonItems" value="${requestScope.SEASONDATA}"/>
+                        <c:if test="${not empty seasonItems}">
+                            <c:forEach items="${seasonItems}" var="seasonItem">
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img src="${seasonItem.image}" class="imgCrop3">
+                                    </div>
+                                    <h3>${seasonItem.name}name</h3>
+                                    <c:url var="viewDetail2" value = "ViewProductDetailServlet">
+                                        <c:param name="productID" value="${seasonItem.productID}"/>
+                                    </c:url>
+                                    <a href="${viewDetail2}" class="btn btn-default add2cart">View Detail</a>
                                 </div>
-                                <h3>Casio Gshock</h3>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
-                                </div>
-                                <h3>Casio Gshock</h3>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
-                                </div>
-                                <h3>Casio Gshock</h3>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
-                                </div>
-                                <h3>Casio Gshock</h3>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="product-item">
-                                <div class="pi-img-wrapper">
-                                    <img src="assets/image/GA110AC-7A_xlarge.png" class="imgCrop3">
-                                </div>
-                                <h3>Casio Gshock</h3>
-                                <a href="#" class="btn btn-default add2cart">View Detail</a>
-                            </div>
-                        </div>
+
+                            </c:forEach>
+
+                        </c:if>
                     </div>
                     <!-- END CONTENT -->
                 </div>
