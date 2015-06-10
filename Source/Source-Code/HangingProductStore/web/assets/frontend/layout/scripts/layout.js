@@ -177,6 +177,12 @@ var Layout = function () {
         $(".sidebar .dropdown a").click(function (event) {
             //event.preventDefault();
             if ($(this).hasClass("collapsed") == false) {
+                $(".sidebar .dropdown a").each(function(){
+                    if ($(this).hasClass("collapsed")) {
+                        $(this).removeClass("collapsed");
+                        $(this).siblings(".dropdown-menu").slideUp(300);
+                    }
+                })
                 $(this).addClass("collapsed");
                 $(this).siblings(".dropdown-menu").slideDown(300);
             } else {
