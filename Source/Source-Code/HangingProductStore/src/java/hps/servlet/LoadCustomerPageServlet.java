@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.ProductDTO;
 import hps.dto.UsersDTO;
 import hps.ultils.GlobalVariables;

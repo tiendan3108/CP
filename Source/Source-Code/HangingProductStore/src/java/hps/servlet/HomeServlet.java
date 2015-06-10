@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            productDAO productDao = new productDAO();
+            ProductDAO productDao = new ProductDAO();
             List<ProductDTO> data = productDao.getNewData();
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();

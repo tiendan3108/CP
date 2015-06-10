@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.ProductDTO;
 import hps.dto.UsersDTO;
 import hps.ultils.GlobalVariables;
@@ -48,7 +48,7 @@ public class LoadCancelProductPageServlet extends HttpServlet {
                 int productID = Integer.parseInt(temp_productID);
                 String consignmentID = request.getParameter("consignmentID");
                 DanqtDAO ddao = new DanqtDAO();
-                productDAO pdao = new productDAO();
+                ProductDAO pdao = new ProductDAO();
                 ProductDTO product = pdao.getProductByID(productID);
                 UsersDTO consignor = ddao.getConsignorInforByConsignmentID(consignmentID);
                 request.setAttribute("product", product);

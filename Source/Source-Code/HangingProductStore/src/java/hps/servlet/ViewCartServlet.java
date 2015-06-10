@@ -5,7 +5,7 @@
  */
 package hps.servlet;
 
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.Cart;
 import hps.dto.ProductDTO;
 import java.io.IOException;
@@ -50,7 +50,7 @@ public class ViewCartServlet extends HttpServlet {
             }
             if (itemIDs.size() > 0) {
                 List<ProductDTO> items = new ArrayList<ProductDTO>();
-                productDAO dao = new productDAO();
+                ProductDAO dao = new ProductDAO();
                 for (int i = 0; i < itemIDs.size(); i++) {
                     ProductDTO item = dao.getProductByID(itemIDs.get(i));
                     items.add(item);

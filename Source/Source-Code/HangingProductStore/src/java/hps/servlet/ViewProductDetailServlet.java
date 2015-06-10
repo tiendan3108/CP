@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class ViewProductDetailServlet extends HttpServlet {
                 productID = 0;
                 e.printStackTrace();
             }
-            productDAO dao = new productDAO();
+            ProductDAO dao = new ProductDAO();
             ProductDTO product = dao.getProductByID(productID);
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();

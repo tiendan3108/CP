@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
-import hps.dao.productDAO;
+import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class ProductServlet extends HttpServlet {
             String sparentCategoryId = request.getParameter("parentId");
             List<ProductDTO> products = new ArrayList<ProductDTO>();
             int totalProduct = 0;
-            productDAO dao = new productDAO();
+            ProductDAO dao = new ProductDAO();
             int page;
             int categoryId;
             int parentId;
