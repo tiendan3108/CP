@@ -19,16 +19,19 @@ public class ConsignmentDTO {
     private String address;
     private String phone;
     private String email;
+    private String paypalAccount;
     private String cardNumber;
     private String cardOwner;
     private String fromDate;
     private String toDate;
     private String raiseWebDate;
-    private String status;
     private int period;
     private double maxPrice;
     private double returnPrice;
     private String receivedDate;
+    private String createdDate;
+    private int consignmentStatusID;
+    private String status;
     
     private ProductDTO product;
 
@@ -44,10 +47,7 @@ public class ConsignmentDTO {
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.cardNumber = cardNumber;
-        this.cardOwner = cardOwner;
         this.fromDate = fromDate;
-        this.status = status;
         this.period = period;
         this.maxPrice = maxPrice;
     }
@@ -62,11 +62,8 @@ public class ConsignmentDTO {
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.cardNumber = cardNumber;
-        this.cardOwner = cardOwner;
         this.fromDate = fromDate;
         this.toDate = toDate;
-        this.status = status;
         this.period = period;
         this.maxPrice = maxPrice;
     }
@@ -135,6 +132,14 @@ public class ConsignmentDTO {
         this.email = email;
     }
 
+    public String getPaypalAccount() {
+        return paypalAccount;
+    }
+
+    public void setPaypalAccount(String paypalAccount) {
+        this.paypalAccount = paypalAccount;
+    }
+
     public String getCardNumber() {
         return cardNumber;
     }
@@ -175,14 +180,6 @@ public class ConsignmentDTO {
         this.raiseWebDate = raiseWebDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public int getPeriod() {
         return period;
     }
@@ -221,5 +218,29 @@ public class ConsignmentDTO {
 
     public void setProduct(ProductDTO product) {
         this.product = product;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public int getConsignmentStatusID() {
+        return consignmentStatusID;
+    }
+
+    public void setConsignmentStatusID(int consignmentStatusID) {
+        this.consignmentStatusID = consignmentStatusID;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -151,16 +151,16 @@ public class ConsignmentDAO {
         String address = rs.getString("Address");
         String phone = rs.getString("Phone");
         String email = rs.getString("Email");
-        String cardNumber = rs.getString("CardNumber");
-        String cardOwner = rs.getString("CardOwner");
+        String paypalAccount = rs.getString("PaypalAccount");
         String fromDate = rs.getString("FromDate");
         String toDate = rs.getString("ToDate");
         String raiseWebDate = rs.getString("RaiseWebDate");
-        String status = rs.getString("Status");
         int period = rs.getInt("Period");
         float maxPrice = rs.getFloat("MaxPrice");
         float returnPrice = rs.getFloat("ReturnedPrice");
         String receiveDate = rs.getString("ReceivedDate");
+        String createdDate = rs.getString("CreatedDate");
+        int consignmentStatusID = rs.getInt("ConsignmentStatusID");
 
         ConsignmentDTO consignment = new ConsignmentDTO();
         consignment.setConsigmentID(consignmentID);
@@ -173,16 +173,16 @@ public class ConsignmentDAO {
         consignment.setAddress(address);
         consignment.setPhone(phone);
         consignment.setEmail(email);
-        consignment.setCardNumber(cardNumber);
-        consignment.setCardOwner(cardOwner);
+        consignment.setPaypalAccount(paypalAccount);
         consignment.setFromDate(fromDate);
         consignment.setToDate(toDate);
         consignment.setRaiseWebDate(raiseWebDate);
-        consignment.setStatus(status);
         consignment.setPeriod(period);
         consignment.setMaxPrice(maxPrice);
         consignment.setReturnPrice(returnPrice);
         consignment.setReceivedDate(receiveDate);
+        consignment.setCreatedDate(createdDate);
+        consignment.setConsignmentStatusID(consignmentStatusID);
         
         return consignment;
     }
