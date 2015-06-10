@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <select name="parentId" class="bs-select form-control input-small" data-style="blue">
-                                    <option value="all">All</option>                    
+                                    <option value="all">Tất cả</option>                    
                                     <c:forEach var="category" items="${categories}">
                                         <option value="${category.categoryId}">${category.categoryName}</option>
                                     </c:forEach>
@@ -62,9 +62,9 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input required="true" name="key" type="text" placeholder="Search" class="form-control">
+                                    <input required="true" name="key" type="text" placeholder="Tìm Kiếm" class="form-control">
                                     <span class="input-group-btn">
-                                        <button  class="btn btn-primary" type="submit">Search</button>
+                                        <button  class="btn btn-primary" type="submit">Tìm Kiếm</button>
                                     </span>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                 <div class="row product-list">
                     <c:set var="data" value="${requestScope.DATA}"/>
                     <c:if test="${empty data}">
-                        <h2>No result found</h2>
+                        <h2>Không tìm thấy sản phẩm nào phù hợp</h2>
                     </c:if>
                     <c:if test="${not empty data}">
                         <c:forEach var="item" items="${data}">
@@ -85,7 +85,7 @@
                                     </div>
                                     <h3>${item.name}</h3>
   
-                                    <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">View Details</a>
+                                    <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">Xem Chi tiết</a>
                                 </div>
                             </div>
                         </c:forEach>

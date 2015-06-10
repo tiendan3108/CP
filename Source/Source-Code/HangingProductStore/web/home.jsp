@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <select name="parentId" class="bs-select form-control input-small" data-style="blue">
-                                    <option value="all">All</option>                    
+                                    <option value="all">Tất cả</option>                    
                                     <c:forEach var="category" items="${categories}">
                                         <option value="${category.categoryId}">${category.categoryName}</option>
                                     </c:forEach>
@@ -56,9 +56,9 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input required="true" name="key" type="text" placeholder="Search" class="form-control">
+                                    <input required="true" name="key" type="text" placeholder="Tìm kiếm" class="form-control">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="submit">Search</button>
+                                        <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
                                     </span>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                 <!-- BEGIN SALE PRODUCT -->
                 <c:if test="${not empty data}">
                     <div class="row">
-                        <h2>New Arrivals</h2>
+                        <h2>Sản Phẩm Mới</h2>
                         <div class="owl-carousel owl-carousel4">
                             <c:forEach var="item" items="${data}">     
                                 <div>
@@ -83,7 +83,7 @@
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${item.productID}"/>
                                         </c:url>
-                                        <a href="${viewDetail}" class="btn btn-default add2cart">View Detail</a>
+                                        <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi tiết</a>
                                         <div class="sticker sticker-new"></div>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                 </c:if>
                 <div class="row margin-bottom-40 " style="margin-top:50px">
                     <!-- BEGIN CONTENT -->
-                    <h2>HOT ITEMS</h2>
+                    <h2>Sản Phẩm Nổi Bật</h2>
                     <div class="owl-carousel owl-carousel3">
                         <c:set var="seasonItems" value="${requestScope.SEASONDATA}"/>
                         <c:if test="${not empty seasonItems}">
@@ -102,11 +102,11 @@
                                     <div class="pi-img-wrapper">
                                         <img src="${seasonItem.image}" class="imgCrop3">
                                     </div>
-                                    <h3>${seasonItem.name}name</h3>
+                                    <h3>${seasonItem.name}</h3>
                                     <c:url var="viewDetail2" value = "ViewProductDetailServlet">
                                         <c:param name="productID" value="${seasonItem.productID}"/>
                                     </c:url>
-                                    <a href="${viewDetail2}" class="btn btn-default add2cart">View Detail</a>
+                                    <a href="${viewDetail2}" class="btn btn-default add2cart">Xem Chi tiết</a>
                                 </div>
 
                             </c:forEach>

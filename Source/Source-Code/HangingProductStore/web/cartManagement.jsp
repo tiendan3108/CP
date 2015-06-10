@@ -29,7 +29,7 @@
         <div class="row margin-bottom-40">
             <!-- BEGIN CONTENT -->
             <div class="col-md-12 col-sm-12">
-                <h1>Shopping cart</h1>
+                <h1>Giỏ Hàng</h1>
                 <div class="goods-page">
                     <div class="goods-data clearfix">
                         <c:set var="items" value="${requestScope.DATA}"/>
@@ -37,10 +37,10 @@
                             <div class="table-wrapper-responsive">
                                 <table summary="Shopping cart">
                                     <tr>
-                                        <th style="width: 20%">No</th>
-                                        <th style="width: 20%">Name</th>
-                                        <th style="width: 20%">Brand</th>                               
-                                        <th style="width: 20%">Serial Number</th>
+                                        <th style="width: 20%">Sồ thứ tự</th>
+                                        <th style="width: 20%">Tên</th>
+                                        <th style="width: 20%">Nhãn hiệu</th>                               
+                                        <th style="width: 20%">Số Serial</th>
                                     </tr>
                                     <c:forEach var="item" items="${items}" varStatus="counter">
                                         <tr>
@@ -62,9 +62,9 @@
                             Your shopping cart is empty!
                         </c:if>
                     </div>
-                    <a href="HomeServlet" class="btn btn-default">Continue shopping <i class="fa fa-shopping-cart"></i></a>
+                    <a href="HomeServlet" class="btn btn-default">Tiếp tục đặt hàng <i class="fa fa-shopping-cart"></i></a>
                         <c:if test="${not empty items}">
-                        <a class="btn btn-primary">Complete Order <i class="fa fa-check"></i></a>
+                        <a class="btn btn-primary">Hoàn tất đặt hàng <i class="fa fa-check"></i></a>
                         </c:if>
 
                 </div>

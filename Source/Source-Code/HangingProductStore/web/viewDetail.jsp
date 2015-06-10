@@ -44,7 +44,7 @@
                         <div class="modal-body">
                             <h4>${mess}</h4>
                             <div class="modal-footer">
-                                <a style="background-color: #408cc2" href="ViewCartServlet" class="btn btn-default">Go to Shopping Cart</a>
+                                <a style="background-color: #408cc2" href="ViewCartServlet" class="btn btn-default">Xem giỏ hàng</a>
                                 <button class="btn btn-primary" type="button" data-dismiss="modal">OK<i class="fa fa-check"></i></button>
                             </div>
                         </div>
@@ -96,20 +96,20 @@
                                 </div>
                                 <div class="product-page-options">
                                     <div class="pull-left">
-                                        <label style="font-size: 20px;" class="control-label">Brand: ${item.brand}</label>
+                                        <label style="font-size: 20px;" class="control-label">Nhãn hiệu: ${item.brand}</label>
                                     </div>
 
                                 </div>
                                 <div class="product-page-options">
                                     <div class="pull-left">
-                                        <label style="font-size: 20px;" class="control-label">Serial Number: ${item.serialNumber}</label>
+                                        <label style="font-size: 20px;" class="control-label">Số Serial: ${item.serialNumber}</label>
                                     </div>
                                 </div>                             
                                 <div class="product-page-cart">
                                     <div class="product-quantity">
 
                                     </div>
-                                    <a class="btn btn-primary" href="AddToCartServlet?productId=${item.productID}">Add to cart</a>
+                                    <a class="btn btn-primary" href="AddToCartServlet?productId=${item.productID}">Thêm vào giỏ hàng</a>
                                 </div>
                             </div>
                         </div>
