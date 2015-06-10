@@ -573,4 +573,57 @@ public class ProductDAO {
         }
         return 0;
     }
+public List<ProductDTO> getProductBySeason(int seasonId) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ProductDTO> products = new ArrayList<ProductDTO>();
+
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT TOP 15 * "
+                    + "FROM Product, Product_Season, Category "
+                    + "WHERE Product.ProductID = Product_Season.ProductID "
+                    + "And Product.CategoryID = Category.CategoryID "
+                    + "And Product_Season.SeasonID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, seasonId);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int productStatusID = rs.getInt("ProductStatusID");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int categoryID = rs.getInt("CategoryID");
+                int orderID = rs.getInt("OrderID");
+                int parentCategoryID = rs.getInt("ParentID");
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+                products.add(product);
+            }
+            return products;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
 }
