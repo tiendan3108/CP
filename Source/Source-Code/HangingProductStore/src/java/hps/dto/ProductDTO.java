@@ -19,7 +19,7 @@ public class ProductDTO {
     private String brand;
     private String description;
     private String image;
-    private int status;
+    private int productStatusID;
     private float sellingPrice;
     private int parentCategoryID;
     private int orderID;
@@ -32,21 +32,20 @@ public class ProductDTO {
     }
 
     //danqt
-
-    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, int status) {
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, int productStatusID) {
         this.productID = productID;
         this.name = productName;
         this.receivedDate = receivedDate;
         this.consignmentID = consignmentID;
         this.consignedPrice = price;
-        this.status = status;
+        this.productStatusID = productStatusID;
     }
 
     //ban cu anh huon DanqtDAO
     public ProductDTO(int productID, String name, int status, String description, float price, String image, String purchasedDate, int categoryID, int parentCategoryID, String brand, String serialNumber) {
         this.productID = productID;
         this.name = name;
-        this.status = status;
+        this.productStatusID = status;
         this.description = description;
         this.sellingPrice = price;
         this.image = image;
@@ -60,7 +59,7 @@ public class ProductDTO {
      HoangNH     
      */
 
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int status, float sellingPrice, int parentCategoryID, int orderID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, int orderID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -69,14 +68,14 @@ public class ProductDTO {
         this.brand = brand;
         this.description = description;
         this.image = image;
-        this.status = status;
+        this.productStatusID = productStatusID;
         this.sellingPrice = sellingPrice;
         this.parentCategoryID = parentCategoryID;
         this.orderID = orderID;
     }
 
     // constructor all tham so moi
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int status, float sellingPrice, int parentCategoryID, String consignmentID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -85,13 +84,13 @@ public class ProductDTO {
         this.brand = brand;
         this.description = description;
         this.image = image;
-        this.status = status;
+        this.productStatusID = productStatusID;
         this.sellingPrice = sellingPrice;
         this.parentCategoryID = parentCategoryID;
         this.consignmentID = consignmentID;
     }
 
-    public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int status) {
+    public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.purchasedDate = purchasedDate;
@@ -99,7 +98,7 @@ public class ProductDTO {
         this.brand = brand;
         this.description = description;
         this.image = image;
-        this.status = status;
+        this.productStatusID = productStatusID;
     }
 
     public int getProductID() {
@@ -166,14 +165,6 @@ public class ProductDTO {
         this.image = image;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public float getSellingPrice() {
         return sellingPrice;
     }
@@ -232,6 +223,20 @@ public class ProductDTO {
      */
     public void setConsignedPrice(Float consignedPrice) {
         this.consignedPrice = consignedPrice;
+    }
+
+    /**
+     * @return the productStatusID
+     */
+    public int getProductStatusID() {
+        return productStatusID;
+    }
+
+    /**
+     * @param productStatusID the productStatusID to set
+     */
+    public void setProductStatusID(int productStatusID) {
+        this.productStatusID = productStatusID;
     }
 
 }

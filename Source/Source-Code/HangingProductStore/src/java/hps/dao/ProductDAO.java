@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author HoangNHSE61007
  */
-public class productDAO {
+public class ProductDAO {
 
     public List<ProductDTO> getNewData() {
         Connection con = null;
@@ -42,16 +42,16 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -64,7 +64,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -90,15 +90,15 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 int orderID = rs.getInt("OrderID");
-                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
             }
             return product;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -111,7 +111,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -142,16 +142,16 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -164,7 +164,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -203,16 +203,16 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int categoryID = rs.getInt("CategoryID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -225,7 +225,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -255,7 +255,7 @@ public class productDAO {
             }
             return total;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -268,7 +268,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;
@@ -304,16 +304,16 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -326,7 +326,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -354,7 +354,7 @@ public class productDAO {
             }
             return total;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -367,7 +367,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;
@@ -404,16 +404,16 @@ public class productDAO {
                 String brand = rs.getString("Brand");
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int categoryID = rs.getInt("CategoryID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -426,7 +426,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -454,7 +454,7 @@ public class productDAO {
             }
             return total;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -467,7 +467,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;
@@ -505,16 +505,16 @@ public class productDAO {
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
                 int categoryID = rs.getInt("CategoryID");
-                int status = rs.getInt("Status");
+                int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
                 int orderID = rs.getInt("OrderID");
-                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, status, sellingPrice, parentCategoryID, orderID);
+                ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
             return products;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -527,7 +527,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -555,7 +555,7 @@ public class productDAO {
             }
             return total;
         } catch (SQLException ex) {
-            Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -568,7 +568,7 @@ public class productDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(productDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return 0;
