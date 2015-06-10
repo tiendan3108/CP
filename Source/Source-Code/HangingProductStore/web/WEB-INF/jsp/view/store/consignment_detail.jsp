@@ -27,7 +27,7 @@
                 </div>
             </c:if>
 
-            <h1>${consignment.product.name}&nbsp;<small>from</small> ${consignment.name}</h1>
+            <h1>${consignment.product.name}&nbsp;<small>từ khách hàng</small> ${consignment.name}</h1>
 
             <!-- BEGIN PAGE CONTENT-->
             <div class="row margin-bottom-25">
@@ -40,7 +40,7 @@
                             <div class="item active">
                                 <img alt="" src="./assets/product/1.jpg">
                                 <div class="carousel-caption">
-                                    <p>Excepturi sint occaecati cupiditate non provident</p>
+                                    <p>Mặt trước như mới</p>
                                 </div>
                             </div>
                         </div>
@@ -60,40 +60,52 @@
                 <div class="col-lg-8 col-md-8">
                     <table class="table">
                         <tr>
-                            <td width="100px">Product Name</td>
+                            <th width="120px">Tên Sản Phẩm</th>
                             <td>${consignment.product.name}</td>
                         </tr>
                         <tr>
-                            <td>Description</td>
+                            <th>Mô Tả</th>
                             <td>${consignment.product.description}</td>
                         </tr>
                         <tr>
-                            <td>Request Date</td>
-                            <td></td>
+                            <th>Ngày Gửi</th>
+                            <td>${consignment.createdDate}</td>
                         </tr>
                         <tr>
-                            <td>Price</td>
-                            <td><fmt:formatNumber type="currency" currencySymbol="$" value="${consignment.maxPrice}" /></td>
+                            <th>Giá</th>
+                            <td><fmt:formatNumber type="currency" currencySymbol="VNĐ" value="${consignment.maxPrice}" maxFractionDigits="0" /></td>
                         </tr>
                         <tr>
-                            <td>Delivery Date</td>
+                            <th>Ngày Giao</th>
                             <td>${consignment.fromDate} - ${consignment.toDate}</td>
                         </tr>
                         <tr>
-                            <td>Appointment</td>
-                            <td>${consignment.receivedDate}</td>
+                            <th>Trạng Thái</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${consignment.consignmentStatusID == 1}">
+                                        Chờ xử lý
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 2}">
+                                        Đã từ chối
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 3}">
+                                        Đã chấp nhận
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 4}">
+                                        Hoàng thành
+                                    </c:when>
+                                </c:choose>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2">
                                 <a class="btn btn-primary"
                                    data-toggle="modal"
-                                   href="#appointmentModal">Make Appointment</a>
-                                <a class="btn btn-primary"
-                                   data-toggle="modal"
-                                   href="#acceptingModal">Accept</a>
+                                   href="#acceptingModal">Chấp Nhận</a>
                                 <a class="btn btn-info"
                                    data-toggle="modal"
-                                   href="#refusingModal">Refuse</a>
+                                   href="#refusingModal">Từ Chối</a>
                             </td>
                         </tr>
                     </table>
@@ -104,13 +116,13 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="well">
-                        <h4 class="form-section">Contact: ${consignment.name}</h4>
+                        <h4 class="form-section">${consignment.name}</h4>
                         <address>
                             <strong>${consignment.address}</strong><br>
                             <abbr title="Phone">P:</abbr> ${consignment.phone}</address>
                         <address>
                             <strong>Email</strong><br>
-                            <a href="mailto:#">${consignment.email}</a>
+                            <a href="mailto:${consignment.email}">${consignment.email}</a>
                         </address>
                     </div>
                 </div>
@@ -125,14 +137,15 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4>Consignment Appointment</h4>
+                    <h4>Hẹn Ngày Lấy</h4>
                 </div>
                 <div class="modal-body">
-                    <p>${consignment.name} is free from ${consignment.fromDate} to ${consignment.toDate}.</p>
+                    <p>${consignment.name} có thể giao hàng từ
+                        ${consignment.fromDate} đến ${consignment.toDate}.</p>
                     <form class="form-horizontal">
                         <div class="form-body">
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Appointment Date</label>
+                                <label class="col-md-3 control-label">Ngày Lấy Hàng</label>
                                 <div class="col-md-9">
                                     <input class="form-control" type="date" value="">
                                 </div>
@@ -147,8 +160,8 @@
                         <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
-                        <button class="btn btn-primary" type="submit" name="accept">Make</button>
-                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" name="accept">Đặt Lịch Hẹn</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Đóng</button>
                     </form>
                 </div>
             </div>
@@ -162,13 +175,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"></button>
-                    <h4>Consignment Accepting</h4>
+                    <h4>Chấp Nhận Ký Gửi</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-body">
                             <div class="form-group">
-                                <label class="col-md-3 control-label">Consign Price</label>
+                                <label class="col-md-3 control-label">Giá</label>
                                 <div class="col-md-9">
                                     <input class="form-control" type="number" value="${consignment.maxPrice}"
                                            <c:if test="${not empty consignment.maxPrice}">disabled=""</c:if>>
@@ -184,8 +197,8 @@
                         <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
-                        <button class="btn btn-primary" type="submit" name="accept">Accept</button>
-                        <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" name="accept">Chấp Nhận</button>
+                        <button type="button" class="btn default" data-dismiss="modal">Đóng</button>
                     </form>
                 </div>
             </div>
@@ -199,18 +212,18 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal"></button>
-                    <h4>Consignment Refusing</h4>
+                    <h4>Từ Chối Ký Gửi</h4>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to refuse this consignment?
+                    Bạn muốn từ chối ký gửi?
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
                         <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
                     <form action="${current}" method="post">
-                        <button class="btn btn-primary" type="submit" name="refuse">Refuse</button>
-                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit" name="refuse">Từ Chối</button>
+                        <button class="btn default" type="button" data-dismiss="modal">Đóng</button>
                     </form>
                 </div>
             </div>

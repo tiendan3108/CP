@@ -21,7 +21,7 @@
         </div>
         <!-- END SIDEBAR -->
         <div class="col-md-9">
-            <h1>Request List</h1>
+            <h1>Danh Sách Chờ Ký Gửi</h1>
             <form class="form-horizontal" role="form" action="consignment">
                 <div class="form-body">
                     <div class="form-group">
@@ -40,22 +40,22 @@
                 <thead>
                     <tr role="row" class="heading">
                         <th>
-                            No.
+                            Stt.
                         </th>
                         <th>
-                            Product
+                            Tên Sản Phẩm
                         </th>
                         <th>
-                            Request Date
+                            Ngày Gửi
                         </th>
                         <th>
-                            Price
+                            Giá
                         </th>
                         <th>
-                            Delivery Date
+                            Ngày Giao
                         </th>
                         <th>
-                            Actions
+                            Chi Tiết
                         </th>
                     </tr>
                 </thead>
@@ -64,10 +64,10 @@
 
                         <tr>
                             <c:if test="${empty param.searchValue}">
-                                <td colspan="6">There is no request.</td>
+                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
                             </c:if>
                             <c:if test="${not empty param.searchValue}">
-                                <td colspan="6">There is no request with product name like "${param.searchValue}".</td>
+                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.searchValue}".</td>
                             </c:if>
                         </tr>
                     </c:if>
@@ -78,6 +78,7 @@
                                 ${c.product.name}
                             </td>
                             <td>
+                                ${c.createdDate}
                                 <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
                             </td>
                             <td>
@@ -91,7 +92,7 @@
                                     <c:param name="id" value="${c.consigmentID}"/>
                                 </c:url>
                                 <a href="${detailUrl}" 
-                                   class="btn btn-primary">View</a>
+                                   class="btn btn-primary">Xem</a>
                             </td>
                         </tr>
                     </c:forEach>
