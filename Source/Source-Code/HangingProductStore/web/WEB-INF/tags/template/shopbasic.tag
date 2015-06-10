@@ -18,7 +18,7 @@
         <link href="assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
         <link href="assets/frontend/layout/css/custom.css" rel="stylesheet">
-        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" type="text/css" href="font-awesome-4.3.0/css/font-awesome.min.css">
         <!-- Theme styles END -->        
         <jsp:invoke fragment="extraHeadContent" />
     </jsp:attribute>
