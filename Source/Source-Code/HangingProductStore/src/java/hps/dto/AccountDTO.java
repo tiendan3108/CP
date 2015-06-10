@@ -9,66 +9,73 @@ package hps.dto;
  *
  * @author Tien Dan
  */
-public class UsersDTO {
-    private String userID;
+public class AccountDTO {
+    //default attributes for account table
+    private String accountID;
     private String password;
+    private String status;
     private String fullName;
     private String address;
     private String phone;
     private String email;
-    private String creditCardNumber;
-    private String creditCardOwner;
+    private String paypalAccount;
     private String role;
-    //danqt
+    
+    //danqt - begin
     private float consignedPrice;
-
-    public UsersDTO() {
+    
+    //danqt - end
+    
+    //constructor with no parameter
+    public AccountDTO() {
     }
-
-    public UsersDTO(String fullName, String address, String phone, String email, String cardNumber, String cardOwner)
-    {
-        this.fullName = fullName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.creditCardNumber = cardNumber;
-        this.creditCardOwner = cardOwner;
-    }
-    //danqt
-    public UsersDTO(String fullName, String address, String phone, String email, String cardNumber, String cardOwner, float consignedPrice)
-    {
-        this.fullName = fullName;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.creditCardNumber = cardNumber;
-        this.creditCardOwner = cardOwner;
-        this.consignedPrice = consignedPrice;
-    }
-    public UsersDTO(String userID, String password, String fullName, String address, String phone, String email, String creditCardNumber, String creditCardOwner, String role) {
-        this.userID = userID;
+    //constructor with default parameters from account table
+    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role) {
+        this.accountID = accountID;
         this.password = password;
+        this.status = status;
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.creditCardNumber = creditCardNumber;
-        this.creditCardOwner = creditCardOwner;
+        this.paypalAccount = paypalAccount;
         this.role = role;
     }
-
+    // danqt - begin
+    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role, float consignedPrice) {
+        this.accountID = accountID;
+        this.password = password;
+        this.status = status;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+        this.role = role;
+        this.consignedPrice = consignedPrice;
+    }
+    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount, float consignedPrice)
+    {
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+        this.consignedPrice = consignedPrice;
+    }
+    // danqt - end
     /**
-     * @return the userID
+     * @return the accountID
      */
-    public String getUserID() {
-        return userID;
+    public String getAccountID() {
+        return accountID;
     }
 
     /**
-     * @param userID the userID to set
+     * @param accountID the accountID to set
      */
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setAccountID(String accountID) {
+        this.accountID = accountID;
     }
 
     /**
@@ -83,6 +90,20 @@ public class UsersDTO {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     /**
@@ -142,31 +163,17 @@ public class UsersDTO {
     }
 
     /**
-     * @return the creditCardNumber
+     * @return the paypalAccount
      */
-    public String getCreditCardNumber() {
-        return creditCardNumber;
+    public String getPaypalAccount() {
+        return paypalAccount;
     }
 
     /**
-     * @param creditCardNumber the creditCardNumber to set
+     * @param paypalAccount the paypalAccount to set
      */
-    public void setCreditCardNumber(String creditCardNumber) {
-        this.creditCardNumber = creditCardNumber;
-    }
-
-    /**
-     * @return the creditCardOwner
-     */
-    public String getCreditCardOwner() {
-        return creditCardOwner;
-    }
-
-    /**
-     * @param creditCardOwner the creditCardOnwer to set
-     */
-    public void setCreditCardOwner(String creditCardOwner) {
-        this.creditCardOwner = creditCardOwner;
+    public void setPaypalAccount(String paypalAccount) {
+        this.paypalAccount = paypalAccount;
     }
 
     /**

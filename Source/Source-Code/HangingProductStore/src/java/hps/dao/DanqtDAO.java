@@ -31,13 +31,13 @@ public class DanqtDAO {
         List<ProductDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT p.ProductID, p.ProductName, c.ReceivedDate, c.ConsignmentID, c.ReturnedPrice, p.Status"
+            String query = "SELECT p.ProductID, p.ProductName, c.ReceivedDate, c.ConsignmentID, c.ReturnedPrice, p.ProductStatusID"
                     + " FROM Product p ,Consignment c"
-                    + " WHERE c.StoreOwnerID = ? AND p.Status != ? AND p.ProductID = c.ProductID"
-                    + " ORDER BY p.Status";
+                    + " WHERE c.StoreOwnerID = ? AND p.ProductStatusID != ? AND p.ProductID = c.ProductID"
+                    + " ORDER BY p.ProductStatusID";
             stm = conn.prepareStatement(query);
-            stm.setString(2, "" + GlobalVariables.NOT_AVAILABLE);
-            stm.setString(1, storeOwnerID);
+            stm.setInt(1,Integer.parseInt(storeOwnerID));
+            stm.setInt(2, 0);
             rs = stm.executeQuery();
             String productName, receivedDate, consignmentID;
             float price;
@@ -49,7 +49,7 @@ public class DanqtDAO {
                 receivedDate = rs.getString("ReceivedDate");
                 consignmentID = rs.getString("ConsignmentID");
                 price = Float.parseFloat(rs.getString("ReturnedPrice"));
-                status = Integer.parseInt(rs.getString("Status"));
+                status = Integer.parseInt(rs.getString("ProductStatusID"));
                 product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
                 result.add(product);
             }
