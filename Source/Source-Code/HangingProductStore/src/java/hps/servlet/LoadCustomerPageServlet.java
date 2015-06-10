@@ -6,9 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
-import hps.dao.ProductDAO;
-import hps.dto.ProductDTO;
-import hps.dto.UsersDTO;
+import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -48,7 +46,7 @@ public class LoadCustomerPageServlet extends HttpServlet {
                 String temp_productID = request.getParameter("productID");
                 DanqtDAO dao = new DanqtDAO();
                 int productID = Integer.parseInt(temp_productID);
-                UsersDTO customer = dao.getCustomerInforByProductID(productID);
+                AccountDTO customer = dao.getCustomerInforByProductID(productID);
                 request.setAttribute("customer", customer);
                 url = GlobalVariables.ORDERED_PAGE;
             }

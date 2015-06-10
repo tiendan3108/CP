@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
-import hps.dto.UsersDTO;
+import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,8 +47,8 @@ public class LoadPaymentPageServlet extends HttpServlet {
             } else {
                 String consignmentID = request.getParameter("consignmentID");
                 DanqtDAO dao = new DanqtDAO();
-                UsersDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
-                UsersDTO consignee = dao.getConsigneeInforByConsignmentID(consignmentID);
+                AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
+                AccountDTO consignee = dao.getConsigneeInforByConsignmentID(consignmentID);
                 float mount = dao.getConsignmentPrice(consignmentID);
                 request.setAttribute("consignor", consignor);
                 request.setAttribute("consignee", consignee);

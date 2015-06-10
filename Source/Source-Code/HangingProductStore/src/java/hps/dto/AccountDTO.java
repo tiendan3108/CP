@@ -63,6 +63,14 @@ public class AccountDTO {
         this.paypalAccount = paypalAccount;
         this.consignedPrice = consignedPrice;
     }
+    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount)
+    {
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+    }
     // danqt - end
     /**
      * @return the accountID

@@ -5,11 +5,10 @@
  */
 package hps.dao;
 
+import hps.dto.AccountDTO;
 import java.util.List;
 import hps.dto.ProductDTO;
-import hps.dto.UsersDTO;
 import hps.ultils.DBUltilities;
-import hps.ultils.GlobalVariables;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,7 +35,7 @@ public class DanqtDAO {
                     + " WHERE c.StoreOwnerID = ? AND p.ProductStatusID != ? AND p.ProductID = c.ProductID"
                     + " ORDER BY p.ProductStatusID";
             stm = conn.prepareStatement(query);
-            stm.setInt(1,Integer.parseInt(storeOwnerID));
+            stm.setInt(1, Integer.parseInt(storeOwnerID));
             stm.setInt(2, 0);
             rs = stm.executeQuery();
             String productName, receivedDate, consignmentID;
@@ -74,18 +73,18 @@ public class DanqtDAO {
         }
     }
 
-    public boolean payConsignor(String productID) {
+    public boolean payConsignor(int productID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
         int result;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET Status = ? WHERE ProductID = ? AND Status = ?";
+            String query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = ? AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
-            stm.setString(1, "" + GlobalVariables.COMPLETED);
-            stm.setString(2, productID);
-            stm.setString(3, "" + GlobalVariables.SOLD);
+            stm.setInt(1, 7);
+            stm.setInt(2, productID);
+            stm.setInt(3, 5);
             result = stm.executeUpdate();
             return result > 0;
         } catch (SQLException e) {
@@ -108,7 +107,7 @@ public class DanqtDAO {
         }
     }
 
-    public boolean cancelProduct(String productID) // trả về true nếu thành công
+    public boolean cancelProduct(int productID) // trả về true nếu thành công
     // trả về false nếu không thành công
     {
         Connection conn = null;
@@ -117,10 +116,11 @@ public class DanqtDAO {
         int resultUpdateProduct;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET Status = ? WHERE ProductID = ?";
+            String query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = ? and ProductStatusID = ?";
             stmUpdateProduct = conn.prepareStatement(query);
-            stmUpdateProduct.setInt(1, GlobalVariables.CANCEL);
-            stmUpdateProduct.setInt(2, Integer.parseInt(productID));
+            stmUpdateProduct.setInt(1, 6);
+            stmUpdateProduct.setInt(2, productID);
+            stmUpdateProduct.setInt(2, 7);
             resultUpdateProduct = stmUpdateProduct.executeUpdate();
             if (resultUpdateProduct > 0) {
                 return true;
@@ -161,7 +161,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
             String query = "";
             if (!searchType.equals("")) {
-                query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.Status "
+                query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.ProductStatusID "
                         + "FROM Product p ,Consignment c "
                         + "WHERE ? LIKE ? AND c.StoreOwnerID = ? AND p.ProductID = c.ProductID";
                 stm = conn.prepareStatement(query);
@@ -170,10 +170,10 @@ public class DanqtDAO {
                 stm.setInt(3, Integer.parseInt(storeOwnerID));
                 rs = stm.executeQuery();
             } else {
-                query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.Status "
+                query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.ProductStatusID "
                         + "FROM Product p ,Consignment c "
                         + "WHERE p.ProductID = c.ProductID AND (p.ProductName LIKE ? OR c.ReceivedDate LIKE ? "
-                        + "OR c.ConsignmentID LIKE ? OR p.Status LIKE ? ) AND c.StoreOwnerID = ?";
+                        + "OR c.ConsignmentID LIKE ? OR p.ProductStatusID LIKE ? ) AND c.StoreOwnerID = ?";
                 stm = conn.prepareStatement(query);
                 stm.setString(1, "%" + keywords + "%");
                 stm.setString(2, "%" + keywords + "%");
@@ -222,13 +222,13 @@ public class DanqtDAO {
             case "Order ID":
                 return "c.ConsignmentID";
             case "Status":
-                return "p.Status";
+                return "p.ProductStatusID";
             default:
                 return "";
         }
     }
 
-    public UsersDTO getConsignorInforByConsignmentID(String consignmentID) {
+    public AccountDTO getConsignorInforByConsignmentID(String consignmentID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -239,15 +239,14 @@ public class DanqtDAO {
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String fullName, address, phone, email, creditCardNumber, creditCardOnwer;
+                String fullName, address, phone, email, paypalAccount;
                 fullName = rs.getString("FullName");
                 address = rs.getString("Address");
                 phone = rs.getString("Phone");
                 email = rs.getString("Email");
-                creditCardNumber = rs.getString("CardNumber");
-                creditCardOnwer = rs.getString("CardOwner");
+                paypalAccount = rs.getString("PaypalAccount");
                 float consignedPrice = rs.getFloat("ReturnedPrice");
-                return new UsersDTO(fullName, address, phone, email, creditCardNumber, creditCardOnwer, consignedPrice);
+                return new AccountDTO(fullName, address, phone, email, paypalAccount, consignedPrice);
             }
             return null;
         } catch (SQLException e) {
@@ -270,7 +269,7 @@ public class DanqtDAO {
         }
     }
 
-    public UsersDTO getConsigneeInforByConsignmentID(String id) {
+    public AccountDTO getConsigneeInforByConsignmentID(String id) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -283,14 +282,13 @@ public class DanqtDAO {
             stm.setString(1, id);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String fullName, address, phone, email, creditCardNumber, creditCardOnwer;
+                String fullName, address, phone, email, paypalAccount;
                 fullName = rs.getString("FullName");
                 address = rs.getString("Address");
                 phone = rs.getString("Phone");
                 email = rs.getString("Email");
-                creditCardNumber = rs.getString("CardNumber");
-                creditCardOnwer = rs.getString("CardOwner");
-                return new UsersDTO(fullName, address, phone, email, creditCardNumber, creditCardOnwer);
+                paypalAccount = rs.getString("PaypalAccount");
+                return new AccountDTO(fullName, address, phone, email, paypalAccount);
             }
             return null;
         } catch (SQLException e) {
@@ -347,7 +345,7 @@ public class DanqtDAO {
         }
     }
 
-    public UsersDTO getCustomerInforByProductID(int id) {
+    public AccountDTO getCustomerInforByProductID(int id) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -362,9 +360,8 @@ public class DanqtDAO {
                 String Address = rs.getString("Address");
                 String Phone = rs.getString("Phone");
                 String Email = rs.getString("Email");
-                String CardNumber = rs.getString("CardNumber");
-                String CardOwner = rs.getString("CardOwner");
-                return new UsersDTO(fullName, Address, Phone, Email, CardNumber, CardOwner);
+                String paypalAccount = rs.getString("CardNumber");
+                return new AccountDTO(fullName, Address, Phone, Email, paypalAccount);
             }
             return null;
         } catch (SQLException e) {

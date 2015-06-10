@@ -23,15 +23,16 @@ public class ProductDTO {
     private float sellingPrice;
     private int parentCategoryID;
     private int orderID;
-    //danqt
+    //danqt - begin
     private String consignmentID;// for store owner management page
     private String receivedDate;
     private Float consignedPrice;
+    //danqt - end
 
     public ProductDTO() {
     }
 
-    //danqt
+    //danqt - begin
     public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, int productStatusID) {
         this.productID = productID;
         this.name = productName;
@@ -40,6 +41,7 @@ public class ProductDTO {
         this.consignedPrice = price;
         this.productStatusID = productStatusID;
     }
+    //danqt - end
 
     //ban cu anh huon DanqtDAO
     public ProductDTO(int productID, String name, int status, String description, float price, String image, String purchasedDate, int categoryID, int parentCategoryID, String brand, String serialNumber) {

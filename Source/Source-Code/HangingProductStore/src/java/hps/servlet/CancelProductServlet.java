@@ -44,7 +44,7 @@ public class CancelProductServlet extends HttpServlet {
             } else {
                 String productID = request.getParameter("productID");
                 DanqtDAO dao = new DanqtDAO();
-                dao.cancelProduct(productID);
+                dao.cancelProduct(Integer.parseInt(productID));
                 url = GlobalVariables.SUCCESS_ACTION_PAGE;
             }
             request.getRequestDispatcher(url).forward(request, response);
