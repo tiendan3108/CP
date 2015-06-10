@@ -2,3 +2,4 @@
 Bổ sung trạng thái Accepted, sau khi nhận được request Consignee chấp nhận cho ký gửi (trước khi nhập sản phẩm)
 Bổ sung trạng thái Refused, sau khi nhận được request Consignee từ chối cho ký gửi (trước khi nhập sản phẩm)
 2. Cập nhật physical DB như hình "PhysicalDB.png".
+3. Thêm đường dẫn sau vào navigation để trỏ tới trang consignment request: http://localhost:8084/HangingProductStore/consignment
