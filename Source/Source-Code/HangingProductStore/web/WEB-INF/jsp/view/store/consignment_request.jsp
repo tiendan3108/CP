@@ -1,5 +1,5 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
-<template:shopbasic htmlTitle="Consignment Request" bodyTitle="Consignment Request">
+<template:shopbasic htmlTitle="Consignment Request" bodyTitle="">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->

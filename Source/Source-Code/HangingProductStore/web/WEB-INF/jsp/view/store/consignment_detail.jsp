@@ -1,5 +1,4 @@
-<template:shopbasic htmlTitle="${consignment.product.name}"
-                     bodyTitle="${consignment.product.name}">
+<template:shopbasic htmlTitle="${consignment.product.name}" bodyTitle="">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->
