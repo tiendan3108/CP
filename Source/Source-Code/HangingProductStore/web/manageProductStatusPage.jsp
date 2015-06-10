@@ -1,55 +1,91 @@
-<%-- 
-    Document   : manageProductStatus
-    Created on : May 31, 2015, 10:30:13 AM
-    Author     : Tien Dan
---%>
-
-<template:shopbasic htmlTitle="Manage Product Status" bodyTitle="">
-    <jsp:attribute name="extraHeadContent">
-        <!-- Nơi để khai báo page level css, theme, style -->
-    </jsp:attribute>        
-    <jsp:attribute name="extraBottomContent">
-        <!-- Nơi để khai báo page level javascript -->
-    </jsp:attribute>
-    <jsp:attribute name="extraNavigationContent">
-        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
+<%--@elvariable id="c" type="hps.dtl.Consignment"--%>
+<template:storebasic htmlTitle="Manage Product Status" bodyTitle="Manage Product Status">
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40 ">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-4">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                <li class="list-group-item clearfix dropdown">
+                    <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                    <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="./consignment?search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                        </li>
+                        <li class="list-group-item clearfix active">
+                            <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                        </li>
+                    </ul>
+                    <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                    <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                        </li>
+                    </ul>
+                    <a><i class="fa fa-angle-right"></i>Thống kê</a>
+                    <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Thanh toán</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </jsp:attribute>
-    <jsp:body>
-        <div id="searchDiv" class="col-md-9 col-sm-7">
-            <form action="SearchProductStatusServlet" method="POST">
-                <input type="text" name="txtKeywords" value="">
-                <select name="typeSearch" >
-                    <option>All</option>
-                    <option>Product Name</option>
-                    <option>Received Date</option>
-                    <option>Order ID</option>
-                    <option>Status</option>
-                </select>
-                <button class="btn btn-primary" name="action" type="submit" value="searchStatus">Search</button>
-            </form>
         </div>
-        <div id="searchResult" class="col-md-9 col-sm-7">
-            <table border="1">
+        <!-- END SIDEBAR -->
+        <div class="col-md-9">
+            <h4>Product List</h4>
+            <div class="content-search margin-bottom-20"> 
+                    <form action="SearchProductStatusServlet" method="POST">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name="parentId" class="bs-select form-control input-small" data-style="blue">
+                                    <option>Tất cả</option>
+                                    <option>Tên sản phẩm</option>
+                                    <option>Ngày nhận hàng</option>
+                                    <option>Mã kí gửi</option>
+                                    <option>Trạng thái</option>
+                                </select>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <input required="true" name="key" type="text" placeholder="Search" class="form-control">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">Tìm Kiếm</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                 <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>Product Name</th>
-                        <th>Received Date</th>
-                        <th>Order ID</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th></th>
+                    <tr role="row" class="heading">
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Ngày nhận
+                        </th>
+                        <th>
+                            Mã kí gửi
+                        </th>
+                        <th>
+                            Giá kí gửi
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,18 +103,18 @@
                                     <c:choose>
                                         <c:when test="${status==2}">
                                             <form action="LoadPaymentPageServlet" method="GET">
-                                                <button class="btn btn-info" type="submit">Sold</button>
+                                                <button class="btn btn-info" type="submit">Đã bán</button>
                                                 <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                             </form>
                                         </c:when>
                                         <c:when test="${status==1}">
                                             <form action="LoadCustomerPageServlet" method="GET">
-                                                <button class="btn btn-info" type="submit">Ordered</button>
+                                                <button class="btn btn-info" type="submit">Đã được đặt</button>
                                                 <input name="productID" type="hidden" value="${item.productID}">
                                             </form>
                                         </c:when>
                                         <c:when test="${status==3}">
-                                            <a href="ViewProductDetailServlet?productID=${item.productID}" class="label-primary">On web</a>
+                                            <a href="ViewProductDetailServlet?productID=${item.productID}" class="label-primary">Trên web</a>
                                         </c:when>
                                         <c:when test="${status==4}">
                                             <label class="label-danger">Owned</label>
@@ -115,5 +151,6 @@
                 </tbody>
             </table>
         </div>
-    </jsp:body>
-</template:shopbasic>
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+</template:storebasic>

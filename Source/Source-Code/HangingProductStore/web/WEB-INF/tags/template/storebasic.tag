@@ -29,6 +29,7 @@
     </jsp:attribute>
     <jsp:attribute name="bottomContent">
         <jsp:invoke fragment="extraBottomContent" />
+        <script src="assets/frontend/layout/scripts/layout.js" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
                 $("#nofi").click(function () {
