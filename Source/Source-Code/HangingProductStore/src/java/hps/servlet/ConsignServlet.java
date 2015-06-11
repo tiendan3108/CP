@@ -9,7 +9,7 @@ import hps.dao.CategoryDAO;
 import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
-import hps.dto.MemberDTO;
+import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.StoreOwnerDTO;
 import java.io.IOException;
@@ -79,28 +79,49 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("PRODUCT", product);
 
                 double basicPrice = 0;
-                if (productName.contains("Gucci")) {
+                if (productName.toLowerCase().contains("gucci")) {
                     basicPrice = 50;
+                    if (productName.toLowerCase().contains("t-shirt")){
+                        basicPrice = 48;
+                    }
+                    else if (productName.toLowerCase().contains("pant")){
+                        basicPrice = 49;
+                    }
                 }
-                else if (productName.contains("PT")) {
+                else if (productName.toLowerCase().contains("pt")) {
                     basicPrice = 30;
+                    if (productName.toLowerCase().contains("t-shirt")){
+                        basicPrice = 32;
+                    }
+                    else if (productName.toLowerCase().contains("pant")){
+                        basicPrice = 34;
+                    }
                 }
-                else if (productName.contains("CK")){
+                else if (productName.toLowerCase().contains("ck")){
+                    basicPrice = 35.5;
+                    if (productName.toLowerCase().contains("t-shirt")){
+                        basicPrice = 36;
+                    }
+                    else if (productName.toLowerCase().contains("pant")){
+                        basicPrice = 37;
+                    }
+                }
+                else if (productName.toLowerCase().contains("jordan")){
                     basicPrice = 35.5;
                 }
 
                 session.setAttribute("BASICPRICE", basicPrice);
                 DuchcDAO dDAO = new DuchcDAO();
-                List<StoreOwnerDTO> list = dDAO.getStoreOwnerByCategory(categoryID);
+                List<StoreOwnerDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");
 
                 url = STEP2;
             } else if (action.equals("tostep3")) {
-                String store = request.getParameter("rdStore");
+                String storeOwnerID = request.getParameter("rdStore");
                 HttpSession session = request.getSession();
-                session.setAttribute("STORE", store);
+                session.setAttribute("STORE", storeOwnerID);
                 url = STEP3;
             } else if (action.equals("complete")) {
                 String fullName = request.getParameter("txtFullName");
@@ -115,29 +136,40 @@ public class ConsignServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
                 if (product.getImage() == null) {
-                    product.setImage("CCC");
+                    product.setImage("./assets/image/nike_air_jordan_4_retro_2013110110_0.jpg");
                 }
 
                 DuchcDAO dao = new DuchcDAO();
                 int productID = dao.addProduct(product);
                 int memberID = -1;
                 if (session.getAttribute("MEMBER") != null) {
-                    memberID = ((MemberDTO) session.getAttribute("MEMBER")).getMemberID();
+                    memberID = Integer.parseInt(((AccountDTO) session.getAttribute("MEMBER")).getAccountID());
                 }
-                int storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
+                int storeOwnerID = 0; 
+                if(session.getAttribute("STORE") != null){
+                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
+                }
+                
                 double maxPrice = 0;
+                //get store de lay fomula va nam cua store
+                StoreOwnerDTO store = dao.getStoreOwnerByID(storeOwnerID);
                 if(session.getAttribute("BASICPRICE") != null){
                     maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
+                    
+                    maxPrice = (maxPrice * 60/100) * (1 + store.getFormula()/100);
+                    
                 }
 
                 String consigmentID = dao.generateConsignmentID(product.getName(), fullName);
                 ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                         address, phone, email, cardNumber, cardOwner, fromDate, toDate, "NOT AVAILABLE", 10, maxPrice);
                 boolean result = dao.addConsigment(consignment);
-                request.setAttribute("trackId", consigmentID);
+                session.setAttribute("storeName", store.getName());
+                session.setAttribute("trackId", consigmentID);
                 session.removeAttribute("PRODUCT");
                 session.removeAttribute("BASICPRICE");
                 session.removeAttribute("STORE");
+                session.removeAttribute("STORELIST");
                 session.removeAttribute("FCATE");
                 session.removeAttribute("CATEGORY");
                 url = COMPLETED;

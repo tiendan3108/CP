@@ -9,7 +9,6 @@ import hps.dto.ProductDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StoreOwnerDTO;
 import hps.ultils.DBUltilities;
-import hps.ultils.GlobalVariables;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -152,7 +151,7 @@ public class DuchcDAO {
                 stm.setString(7, product.getImage());
             }
 
-            stm.setInt(8, GlobalVariables.NOT_AVAILABLE);
+            stm.setInt(8, 0);
 
             int result = stm.executeUpdate();
             if (result > 0) {
@@ -161,14 +160,6 @@ public class DuchcDAO {
                     int id = rs.getInt(1);
                     return id;
                 }
-//                query = "SELECT TOP 1 ProductID AS ProductID FROM Product ORDER BY ProductID DESC";
-//                stm = con.prepareStatement(query);
-//                rs = stm.executeQuery();
-//                if(rs.next()){
-//                    int id = rs.getInt(1);
-//                    return id;
-//                }
-
             }
             return -1;
         } catch (SQLException ex) {
@@ -193,7 +184,7 @@ public class DuchcDAO {
     }
 
     //duchc _ Lay tat ca store owner dua tren categoryID ma actor chon trong consign_step1
-    public List<StoreOwnerDTO> getStoreOwnerByCategory(int categoryID) {
+    public List<StoreOwnerDTO> getListStoreOwnerByCategory(int categoryID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -239,8 +230,56 @@ public class DuchcDAO {
         }
         return null;
     }
+    
+    public StoreOwnerDTO getStoreOwnerByID(int storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
+            String query = "SELECT     s.StoreOwnerID, a.FullName, a.Address, s.Formular\n"
+                    + "FROM         dbo.Account AS a INNER JOIN\n"
+                    + "                      dbo.StoreOwner AS s ON a.AccountID = s.AccountID\n"
+                    + "WHERE     (s.StoreOwnerID = ?)";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, storeOwnerID);
+            rs = stm.executeQuery();
+            StoreOwnerDTO store = new StoreOwnerDTO();
+            if (rs.next()) {
+                
+                store.setStoreOwnerID(rs.getInt("StoreOwnerID"));
+                store.setName(rs.getString("FullName"));
+                store.setAddress(rs.getString("Address"));
+                store.setFormula(rs.getDouble("Formular"));
+                
+            }
+            return store;
+        } catch (SQLException ex) {
+            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-    public static String generateConsignmentID(String productName, String consignorName) {
+        }
+        return null;
+    }
+    
+    
+
+    public String generateConsignmentID(String productName, String consignorName) {
 
         //String sql = "SELECT COUNT(*) as Number FROM Consignment WHERE ReceivedDate = GETDATE()";
         Connection con = null;

@@ -10,7 +10,7 @@
     Author     : Robingios
 --%>
 
-<template:consignbasic htmlTitle="Consign" bodyTitle="">
+<template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
     </jsp:attribute>        
@@ -18,7 +18,7 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <li id="nofi">
+<!--        <li id="nofi">
             <a href="#">
                 <i class="icon-bell"></i>
                 <span class="badge badge-default">3</span>           
@@ -29,7 +29,7 @@
                 <li style="margin-left: -40px"><a href="#">notification 3</a></li>
                 <li style="margin-left: -40px"><a href="#">notification 4</a></li>
             </ul>
-        </li>
+        </li>-->
     </jsp:attribute>
     <jsp:body>
 
@@ -52,8 +52,8 @@
                                             <a id="ltap1" class="step" >
                                                 <span class="number">
                                                     1 </span>
-                                                <span class="desc" style="font-size:125%">
-                                                    <i class="fa fa-check"></i> Product's info </span>
+                                                <span class="desc">
+                                                    <i class="fa fa-check"></i> Kiểm tra sản phẩm </span>
                                             </a>
                                         </li>
                                         <li class="done">
@@ -61,15 +61,15 @@
                                                 <span class="number">
                                                     2 </span>
                                                 <span class="desc" >
-                                                    <i class="fa fa-check"></i> <b style="font-size:125%"> Choose store </b> </span>
+                                                    <i class="fa fa-check"></i> Chọn cửa hàng </span>
                                             </a>
                                         </li>
                                         <li class="done">
                                             <a id="ltap3" class="step">
                                                 <span class="number">
                                                     3 </span>
-                                                <span class="desc" style="font-size:125%">
-                                                    <i class="fa fa-check"></i> Personal info </span>
+                                                <span class="desc">
+                                                    <i class="fa fa-check"></i> Thông tin chi tiết </span>
                                             </a>
                                         </li>
 
@@ -80,12 +80,12 @@
                                     </div> -->
                                     <hr/>
                                     <div class="tab-content" style="text-align: center" >
-                                        <h3>Your consign request has been sent!</h3>
-                                        <h3>Store Owner will contact you later.</h3>
+                                        <h3>Yêu cầu ký gửi của bạn đã được gửi!</h3>
+                                        <h3><b>${sessionScope.storeName}</b> sẽ liên lạc với bạn ngay khi có thể.</h3>
                                         <c:if test="${empty sessionScope.MEMBER}">
-                                            <h3>Your product's code is <b>[${requestScope.trackId}]</b>. Use this to track your product's status.</h3>
+                                            <h3>Mã ký gửi của bạn là <b>[${sessionScope.trackId}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái sản phẩm ký gửi.</h3>
                                         </c:if>
-                                            <h3>Click <a href="">Here</a> to check your product's status.</h3>
+                                            <h3>Nhấn vào <a href="trackProductStatus_guest.jsp">đây</a> để kiểm tra.</h3>
                                         
                                     </div>
                                 </div>
@@ -118,7 +118,7 @@
 
 
     </jsp:body>
-</template:consignbasic>
+</template:consign>
 <script type="text/javascript">
     var RecaptchaOptions = {
         theme: 'custom',

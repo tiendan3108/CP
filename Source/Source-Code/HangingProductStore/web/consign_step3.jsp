@@ -4,7 +4,7 @@
     Author     : Robingios
 --%>
 
-<template:consignbasic htmlTitle="Consign" bodyTitle="">
+<template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
     </jsp:attribute>        
@@ -12,7 +12,7 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <li id="nofi">
+<!--        <li id="nofi">
             <a href="#">
                 <i class="icon-bell"></i>
                 <span class="badge badge-default">3</span>           
@@ -23,7 +23,7 @@
                 <li style="margin-left: -40px"><a href="#">notification 3</a></li>
                 <li style="margin-left: -40px"><a href="#">notification 4</a></li>
             </ul>
-        </li>
+        </li>-->
     </jsp:attribute>
     <jsp:body>
 
@@ -34,7 +34,7 @@
         <!-- BEGIN DIV STEP3 -->
         <form id='form3' action="ConsignServlet" method="POST" onsubmit="return validation()">
             <div id="divStep3" class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 col-sm-12">
                     <div class="portlet box " id="form_wizard_1">
 
                         <div class="portlet-body form">
@@ -47,24 +47,24 @@
                                                 <a id="ltap1" class="step">
                                                     <span class="number">
                                                         1 </span>
-                                                    <span class="desc" style="font-size:125%">
-                                                        <i class="fa fa-check"></i> Product's info </span>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
                                                 </a>
                                             </li>
                                             <li class="done">
                                                 <a id="ltap2" class="step">
                                                     <span class="number">
                                                         2 </span>
-                                                    <span class="desc" style="font-size:125%">
-                                                        <i class="fa fa-check"></i> Choose store </span>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Chọn cửa hàng</span>
                                                 </a>
                                             </li>
                                             <li class="active">
                                                 <a id="ltap3"  class="step active">
                                                     <span class="number">
                                                         3 </span>
-                                                    <span class="desc" style="font-size:125%">
-                                                        <i class="fa fa-check"></i> <b>Personal info</b>  </span>
+                                                    <span class="desc" >
+                                                        <i class="fa fa-check"></i><b> Thông tin sản phẩm</b></span>
                                                 </a>
                                             </li>
 
@@ -77,24 +77,24 @@
                                             <div>
                                                 <div class="row">
 
-                                                    <div class="col-sm-6">
+                                                    <div class="col-md-6 col-sm-6">
                                                         <div class="form-horizontal">
                                                             <div class="form-group">
-                                                                <label for="txtFullName" class="col-sm-4 control-label">Full name<span class="required">*</span></label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.name}">
+                                                                <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
+                                                                <div class="col-md-8 col-sm-8">
+                                                                    <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.name}">d
 
                                                                     <p class="help-block" id="erFullName"> </p>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="control-label col-sm-4">Delivery date<span class="required">*</span></label>
-                                                                <div class="col-sm-8">
+                                                                <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
+                                                                <div class="col-md-8 col-sm-8">
                                                                     <div class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
                                                                         <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
                                                                         <span class="input-group-addon">
-                                                                            to </span>
+                                                                            đến </span>
                                                                         <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
                                                                     </div>
 
@@ -105,8 +105,8 @@
 
 
                                                             <div class="form-group">
-                                                                <label for="txtAddress" class="col-sm-4 control-label"> Address </label>
-                                                                <div class="col-sm-8">
+                                                                <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                                                <div class="col-md-8 col-sm-8">
                                                                     <textarea id="txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" >${member.address}</textarea>
                                                                     <span class="help-block" id="erAddress">
                                                                     </span>
@@ -118,27 +118,27 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-6">
+                                                    <div class="col-md-6 col-sm-6">
                                                         <div class="form-horizontal">
 
                                                             <div class="form-group">
-                                                                <label for="" class="col-sm-4 control-label"> Contact by </label>
+                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Contact by </label>
 
-                                                                <div class="radio-list col-sm-8">
+                                                                <div class="radio-list col-md-8 col-sm-8">
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Phone </label>
+                                                                        <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
                                                                     <label class="radio-inline">
                                                                         <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Both </label>
+                                                                        <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
                                                                 </div>
 
                                                             </div>
 
 
                                                             <div class="form-group" id="divPhone">
-                                                                <label for="txtPhone" class="col-sm-4 control-label"> Phone<span class="required">*</span> </label>
-                                                                <div class="col-sm-8">
+                                                                <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại<span class="required">*</span> </label>
+                                                                <div class="col-md-8 col-sm-8">
                                                                     <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
                                                                     <p class="help-block" id="erPhone"></p>
 
@@ -146,39 +146,31 @@
                                                             </div>
 
                                                             <div class="form-group" id="divEmail" style="display: none;">
-                                                                <label for="txtEmail" class="col-sm-4 control-label">Email<span class="required">*</span></label>
-                                                                <div class="col-sm-8">
+                                                                <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email<span class="required">*</span></label>
+                                                                <div class="col-md-8 col-sm-8">
                                                                     <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
                                                                     <p class="help-block" id="erEmail"></p>
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label for="" class="col-sm-4 control-label"> Payment method </label>
+                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
 
-                                                                <div class="radio-list col-sm-8">
+                                                                <div class="radio-list col-md-8 col-sm-8">
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Direct </label>
+                                                                        <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
                                                                     <label class="radio-inline">
-                                                                        <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Credit card </label>
+                                                                        <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
                                                                 </div>
 
                                                             </div>
 
                                                             <div id="divCCNumber" class="form-group" style="display: none" >
-                                                                <label for="txtCardNumber" class="col-sm-4 control-label"> Card number<span class="required">*</span></label>
-                                                                <div class="col-sm-8">
+                                                                <label for="txtCardNumber" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                <div class="col-md-8 col-sm-8">
                                                                     <input type="text" id="txtCardNumber" name="txtCardNumber" class="form-control"   placeholder="" value="${member.cardNumber}"/>
 
                                                                     <p class="help-block" id="erCardNumber"></p>
-                                                                </div>
-                                                            </div>
-
-                                                            <div id="divCCOwner" class="form-group" style="display: none">
-                                                                <label for="txtCardOwner" class="col-sm-4 control-label">Card owner<span class="required">*</span></label>
-                                                                <div class="col-sm-8">
-                                                                    <input type="text" id="txtCardOwner" name="txtCardOwner"  class="form-control" id="txtCreaditCardOwner" placeholder="" value="${member.cardOwner}">
-                                                                    <p class="help-block" id="erCardOwner"></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -197,12 +189,12 @@
                                          padding-left: 5px;
                                          ">
                                         <div class="row">
-                                            <div class="col-sm-4"> 
-                                                <button  name="btnAction" type="submit" value="backstep2" class=" btn-block btn-lg btn btn-primary"><i class="m-icon-big-swapleft m-icon-white"></i>BACK</button>
+                                            <div class="col-md-4 col-sm-4"> 
+                                                <button  name="btnAction" type="submit" value="backstep2" class=" btn-block btn-lg btn btn-primary"><i class="m-icon-big-swapleft m-icon-white"></i> TRỞ VỀ</button>
                                             </div>
-                                            <div class="col-sm-4"> </div>
-                                            <div class="col-sm-4">
-                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn blue" >CONSIGN <i class="m-icon-big-swapup m-icon-white"></i></button>
+                                            <div class="col-md-4 col-sm-4"> </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <i class="m-icon-big-swapup m-icon-white"></i></button>
                                             </div>
 
                                         </div>
@@ -222,7 +214,7 @@
 
 
     </jsp:body>
-</template:consignbasic>
+</template:consign>
 <script type="text/javascript">
     var RecaptchaOptions = {
         theme: 'custom',
@@ -232,17 +224,17 @@
 
 
     $('input:radio[name="rdContact"]').change(function () {
-        if ($(this).val() == "Phone") {
+        if ($(this).val() == "phone") {
             $("#divPhone").show();
             $("#divEmail").hide();
             $("#divEmail").val() == "";
         }
-        else if ($(this).val() == "Email") {
+        else if ($(this).val() == "email") {
             $("#divPhone").hide();
             $("#divPhone").val() == "";
             $("#divEmail").show();
         }
-        else if ($(this).val() == "Both") {
+        else {
             $("#divPhone").show();
             $("#divEmail").show();
         }
@@ -252,11 +244,9 @@
     $('input:radio[name="rdPayment"]').change(function () {
         if ($(this).val() == "cc") {
             $("#divCCNumber").show();
-            $("#divCCOwner").show();
         }
         else {
             $("#divCCNumber").hide();
-            $("#divCCOwner").hide();
 
         }
     });
@@ -269,7 +259,7 @@
         var dateError = "";
         
         if($('#txtFullName').val().trim().length < 5 || $('#txtFullName').val().trim().length > 50){
-            $('#erFullName').html("<font color='red'>Required 5-50 characters</font>");
+            $('#erFullName').html("<font color='red'>Yêu cầu 5-50 ký tự</font>");
             check = false;
         }
         else{
@@ -298,7 +288,7 @@
         var contact = $('input:radio[name="rdContact"]:checked').val();
         if(contact == "phone"){
             if($('#txtPhone').val().trim().length == 0){
-                $('#erPhone').html("<font color='red'>Phone is required</font>");
+                $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
                 check = false;
             }
             else{
@@ -307,7 +297,7 @@
         }
         else if(contact == "email"){
             if($('#txtEmail').val().trim().length == 0){
-                $('#erEmail').html("<font color='red'>Email is required</font>");
+                $('#erEmail').html("<font color='red'>Xin nhập email</font>");
                 check = false;
             }
             else{
@@ -316,14 +306,14 @@
         }
         else{
             if($('#txtPhone').val().trim().length == 0){
-                $('#erPhone').html("<font color='red'>Phone is required</font>");
+                $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
                 check = false;
             }
             else{
                 $('#erPhone').html("");
             }
             if($('#txtEmail').val().trim().length == 0){
-                $('#erEmail').html("<font color='red'>Email is required</font>");
+                $('#erEmail').html("<font color='red'>Xin nhập email</font>");
                 check = false;
             }
             else{
@@ -334,18 +324,11 @@
         var payment = $('input:radio[name="rdPayment"]:checked').val();
         if(payment == "cc"){
             if($('#txtCardNumber').val().trim().length == 0){
-                $('#erCardNumber').html("<font color='red'>Card number is required</font>");
+                $('#erCardNumber').html("<font color='red'>Xin nhập mã thẻ</font>");
                 check = false;
             }
             else{
                 $('#erCardNumber').html("");
-            }
-            if($('#txtCardOwner').val().trim().length < 5 || $('#txtCardOwner').val().trim().length > 50){
-                $('#erCardOwner').html("<font color='red'>Required 5-50 characters</font>");
-                check = false;
-            }
-            else{
-                $('#erCardOwner').html("");
             }
         }
         return check;
