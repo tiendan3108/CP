@@ -94,9 +94,9 @@ public class JavaUltilities {
                 message.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
             }
 
-            message.setSubject(subject);
+            message.setSubject(subject,"utf-8");
             //message.setText(body);
-            message.setContent(body, "text/html");
+            message.setContent(body, "text/html; charset=utf-8");
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
