@@ -17,8 +17,7 @@
         <link href="assets/frontend/pages/css/style-layer-slider.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
-        <link href="assets/frontend/layout/css/custom.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="font-awesome-4.3.0/css/font-awesome.min.css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
         <!-- Theme styles END -->        
         <jsp:invoke fragment="extraHeadContent" />
     </jsp:attribute>
@@ -88,6 +87,26 @@
                 return parser.href;
             }
         </script>
+        <script type="text/javascript">
+            $('input:radio[name="rdConfirm"]').change(function () {
+                if ($(this).val() == "email") {
+                    $("#oEmail").show();
+                    $("#oPhone").hide();
+                    $("#both").hide();
+                }
+                else if ($(this).val() == "phone") {
+                    $("#oPhone").show();
+                    $("#oEmail").hide();
+                    $("#both").hide();
+                }
+                else if ($(this).val() == "both") {
+                    $("#both").show();
+                    $("#oEmail").hide();
+                    $("#oPhone").hide();
+                }
+
+            });
+        </script>
         <!-- END PAGE LEVEL JAVASCRIPTS -->
 
         <jsp:invoke fragment="extraBottomContent" />
@@ -101,23 +120,20 @@
                         <h1 class="text-center">Đăng Nhập</h1>
                     </div>
                     <div class="modal-body">
-                        <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
-                            <div class="form-group">
-                                <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
-                            </div>
-                            <div class="form-group">
-                                <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
-                                <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">                       
-                        <div class="col-md-12">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Hủy</button>
-                        </div>	
+                        <div class="row">
+                            <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
+                                <div class="form-group">
+                                    <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                                </div>
+                                <div class="form-group">
+                                    <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                    <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,26 +148,23 @@
                             <h1 class="text-center">Đăng Nhập</h1>
                         </div>
                         <div class="modal-body">
-                            <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
-                                <div class="form-group">
-                                    <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
-                                </div>
-                                <div class="form-group">
-                                    <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
-                                </div>
-                                <div>
-                                    <h5 style="color:red">${err}</h5>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
-                                    <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="col-md-12">
-                                <button class="btn" data-dismiss="modal" aria-hidden="true">Hủy</button>
-                            </div>	
+                            <div class="row">
+                                <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
+                                    <div class="form-group">
+                                        <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                                    </div>
+                                    <div class="form-group">
+                                        <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                                    </div>
+                                    <div>
+                                        <h5 style="color:red">${err}</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                        <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,7 +176,7 @@
             </c:if>
             <c:if test="${not empty account}">
             <li><a>${account.fullName}</a></li> 
-                </c:if>        
+        </c:if>        
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>

@@ -54,7 +54,7 @@
         <div id="nav">
             <div class="contain">
                 <div class="row" >
-                    <div class="col-md-2 col-sm-4">
+                    <div style="padding: 0px" class="col-md-2 col-sm-4">
                         <ul><li><a href="HomeServlet"><img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Home</a></li></ul>
                     </div>
                     <div class="col-md-10 col-sm-8">
