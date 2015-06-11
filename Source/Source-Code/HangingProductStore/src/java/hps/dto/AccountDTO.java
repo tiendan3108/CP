@@ -10,7 +10,9 @@ package hps.dto;
  * @author Tien Dan
  */
 public class AccountDTO {
+
     //default attributes for account table
+
     private String accountID;
     private String password;
     private String status;
@@ -20,17 +22,19 @@ public class AccountDTO {
     private String email;
     private String paypalAccount;
     private String role;
-    
+    private int roleID;
+    private float formula;
+
     //danqt - begin
     private float consignedPrice;
-    
+
     //danqt - end
-    
     //constructor with no parameter
     public AccountDTO() {
     }
-    //constructor with default parameters from account table
-    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role) {
+    //constructor all parameter
+
+    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role, int roleID, float formula) {
         this.accountID = accountID;
         this.password = password;
         this.status = status;
@@ -40,7 +44,10 @@ public class AccountDTO {
         this.email = email;
         this.paypalAccount = paypalAccount;
         this.role = role;
+        this.roleID = roleID;
+        this.formula = formula;
     }
+
     // danqt - begin
     public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role, float consignedPrice) {
         this.accountID = accountID;
@@ -54,8 +61,8 @@ public class AccountDTO {
         this.role = role;
         this.consignedPrice = consignedPrice;
     }
-    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount, float consignedPrice)
-    {
+
+    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount, float consignedPrice) {
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
@@ -63,15 +70,17 @@ public class AccountDTO {
         this.paypalAccount = paypalAccount;
         this.consignedPrice = consignedPrice;
     }
-    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount)
-    {
+
+    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount) {
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.paypalAccount = paypalAccount;
     }
+
     // danqt - end
+
     /**
      * @return the accountID
      */
@@ -211,5 +220,33 @@ public class AccountDTO {
     public void setConsignedPrice(float consignedPrice) {
         this.consignedPrice = consignedPrice;
     }
-    
+
+    /**
+     * @return the roleID
+     */
+    public int getRoleID() {
+        return roleID;
+    }
+
+    /**
+     * @param roleID the roleID to set
+     */
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    /**
+     * @return the formula
+     */
+    public float getFormula() {
+        return formula;
+    }
+
+    /**
+     * @param formula the formula to set
+     */
+    public void setFormula(float formula) {
+        this.formula = formula;
+    }
+
 }
