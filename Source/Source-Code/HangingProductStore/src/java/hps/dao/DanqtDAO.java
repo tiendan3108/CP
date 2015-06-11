@@ -188,7 +188,7 @@ public class DanqtDAO {
                 receivedDate = rs.getString("ReceivedDate");
                 consignmentID = rs.getString("ConsignmentID");
                 price = Float.parseFloat(rs.getString("ReturnedPrice"));
-                status = Integer.parseInt(rs.getString("Status"));
+                status = Integer.parseInt(rs.getString("ProductStatusID"));
                 product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
                 result.add(product);
             }
@@ -215,13 +215,13 @@ public class DanqtDAO {
 
     private String getType(String type) {
         switch (type) {
-            case "Product Name":
+            case "Tên sản phẩm":
                 return "p.ProductName";
-            case "Received Date":
+            case "Ngày nhận hàng":
                 return "c.ReceivedDate";
-            case "Order ID":
+            case "Mã kí gửi":
                 return "c.ConsignmentID";
-            case "Status":
+            case "Trạng thái":
                 return "p.ProductStatusID";
             default:
                 return "";
