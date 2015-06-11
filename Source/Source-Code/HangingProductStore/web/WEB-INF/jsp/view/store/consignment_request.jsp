@@ -126,7 +126,7 @@
                                     <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
                                 </td>
                                 <td>
-                                    <fmt:formatNumber type="currency" currencySymbol="$" value="${c.maxPrice}" />
+                                    <fmt:formatNumber type="currency" currencySymbol="VNĐ" value="${c.maxPrice}" maxFractionDigits="0" />
                                 </td>
                                 <td>
                                     ${c.fromDate} - ${c.toDate}

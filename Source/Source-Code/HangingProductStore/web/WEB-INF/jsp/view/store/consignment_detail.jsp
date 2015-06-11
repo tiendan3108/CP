@@ -124,11 +124,11 @@
                                 <c:choose>
                                     <c:when test="${consignment.consignmentStatusID == 1}">
                                         <button type="button" class="btn btn-primary"
-                                           data-toggle="modal"
-                                           data-target="#acceptingModal">Chấp Nhận</button>
+                                                data-toggle="modal"
+                                                data-target="#acceptingModal">Chấp Nhận</button>
                                         <button type="button" class="btn btn-info"
-                                           data-toggle="modal"
-                                           data-target="#refusingModal">Từ Chối</button>
+                                                data-toggle="modal"
+                                                data-target="#refusingModal">Từ Chối</button>
                                     </c:when>
                                     <c:when test="${consignment.consignmentStatusID == 2}">
                                         Đã từ chối
@@ -212,22 +212,10 @@
                     <h4>Chấp Nhận Ký Gửi</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">Giá</label>
-                                <div class="col-md-9">
-                                    <input class="form-control" type="number" value="${consignment.maxPrice}"
-                                           <c:if test="${not empty consignment.maxPrice}">disabled=""</c:if>>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-action right">
-                            </div>
-                        </form>
-                        <p>Sau khi chấp nhận, sản phẩm này sẽ được dời vào mục Hàng Kí Gửi.</p>
-                    </div>
-                    <div class="modal-footer">
+                    <p>Bạn muốn chấp nhận cho ký gửi?</p>
+                    <p>Sau khi chấp nhận, sản phẩm này sẽ được dời vào mục Hàng Kí Gửi.</p>
+                </div>
+                <div class="modal-footer">
                     <c:url var="current" value="consignment">
                         <c:param name="id" value="${consignment.consigmentID}"/>
                     </c:url>
@@ -250,8 +238,8 @@
                     <h4>Từ Chối Ký Gửi</h4>
                 </div>
                 <div class="modal-body">
-                    Bạn muốn từ chối ký gửi?
-                    <p>Sau khi từ chối sẽ phẩm sẽ được loại khỏi danh sách Yêu Cầu Kí Gửi.</p>
+                    <p>Bạn muốn từ chối ký gửi?</p>
+                    <p>Sau khi từ chối sẽ phẩm sẽ được loại khỏi danh sách.</p>
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">

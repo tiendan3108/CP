@@ -1,11 +1,15 @@
 package hps.servlet;
 
+import com.twilio.sdk.TwilioRestException;
 import hps.dao.ConsignmentDAO;
 import hps.dto.Alert;
 import hps.dto.ConsignmentDTO;
+import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,6 +37,7 @@ public class ConsignmentServlet extends HttpServlet {
     private static final String CONSIGNMENT_DETAIL = "/consignment_detail";
 
     private ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+    private JavaUltilities notification = new JavaUltilities();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -127,6 +132,12 @@ public class ConsignmentServlet extends HttpServlet {
                 String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
                     consignmentDAO.makeConsignmentAsStatus(consignmentId, 3);
+//                    try {
+//                        notification.sendSMS("Yêu cầu ký gửi " + consignmentId + " đã được chấp nhận", "+84917533644");
+//                    } catch (TwilioRestException ex) {
+//                        Logger.getLogger(ConsignmentServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Hàng Kí Gửi.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
