@@ -22,7 +22,7 @@ public class ProductDTO {
     private int productStatusID;
     private float sellingPrice;
     private int parentCategoryID;
-    private int orderID;
+    private String orderID;
     //danqt - begin
     private String consignmentID;// for store owner management page
     private String receivedDate;
@@ -70,7 +70,7 @@ public class ProductDTO {
      HoangNH     
      */
 
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, int orderID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String orderID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -86,7 +86,7 @@ public class ProductDTO {
     }
 
     // constructor all tham so moi
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID,String orderID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -99,6 +99,7 @@ public class ProductDTO {
         this.sellingPrice = sellingPrice;
         this.parentCategoryID = parentCategoryID;
         this.consignmentID = consignmentID;
+        this.orderID = orderID;
     }
 
     public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID) {
@@ -200,11 +201,11 @@ public class ProductDTO {
         this.consignmentID = consignmentID;
     }
 
-    public int getOrderID() {
+    public String getOrderID() {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
 
