@@ -3,15 +3,18 @@
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->
         <div class="sidebar col-md-3 col-sm-5">
-            <ul class="list-group margin-bottom-25 sidebar-menu">
-                <li class="list-group-item clearfix dropdown active open">
+            <ul class="list-group margin-bottom-25 sidebar-menu active open">
+                <li class="list-group-item clearfix dropdown">
                     <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     <ul class="dropdown-menu">
                         <li class="list-group-item clearfix">
                             <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
                         </li>
-                        <li class="list-group-item clearfix active">
+                        <li class="list-group-item clearfix">
                             <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <a href="./consignment?accepted"><i class="fa fa-angle-right"></i> Yêu cầu đã duyệt</a>
                         </li>
                     </ul>
                 </li>
@@ -116,32 +119,44 @@
                                     <c:when test="${consignment.consignmentStatusID == 4}">
                                         Hoàng thành
                                     </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 5}">
+                                        Đã Nhận Hàng
+                                    </c:when>
                                 </c:choose>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="2">
-                                <c:choose>
-                                    <c:when test="${consignment.consignmentStatusID == 1}">
+                        <c:choose>
+                            <c:when test="${consignment.consignmentStatusID == 1}">
+                                <tr>
+                                    <td colspan="2">
                                         <button type="button" class="btn btn-primary"
                                                 data-toggle="modal"
                                                 data-target="#acceptingModal">Chấp Nhận</button>
                                         <button type="button" class="btn btn-info"
                                                 data-toggle="modal"
                                                 data-target="#refusingModal">Từ Chối</button>
-                                    </c:when>
-                                    <c:when test="${consignment.consignmentStatusID == 2}">
-                                        Đã từ chối
-                                    </c:when>
-                                    <c:when test="${consignment.consignmentStatusID == 3}">
-                                        Đã chấp nhận
-                                    </c:when>
-                                    <c:when test="${consignment.consignmentStatusID == 4}">
-                                        Hoàng thành
-                                    </c:when>
-                                </c:choose>
-                            </td>
-                        </tr>
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${consignment.consignmentStatusID == 2}">
+                                Đã từ chối
+                            </c:when>
+                            <c:when test="${consignment.consignmentStatusID == 3}">
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="button" class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#importingModal">Nhận Hàng</button>
+                                        <button type="button" class="btn btn-info"
+                                                data-toggle="modal"
+                                                data-target="#refusingModal">Từ Chối</button>
+                                    </td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${consignment.consignmentStatusID == 4}">
+                                Hoàng thành
+                            </c:when>
+                        </c:choose>
                     </table>
 
                 </div>
@@ -213,7 +228,6 @@
                 </div>
                 <div class="modal-body">
                     <p>Bạn muốn chấp nhận cho ký gửi?</p>
-                    <p>Sau khi chấp nhận, sản phẩm này sẽ được dời vào mục Hàng Kí Gửi.</p>
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
@@ -261,20 +275,28 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal"></button>
-                    <h4>Product Importing</h4>
+                    <h4>Nhận Hàng</h4>
                 </div>
-                <div class="modal-body">
-                    Are you sure you want to import this product?
-                </div>
-                <div class="modal-footer">
-                    <c:url var="current" value="consignment">
-                        <c:param name="id" value="${consignment.consigmentID}"/>
-                    </c:url>
-                    <form action="${current}" method="post">
-                        <button class="btn btn-primary" type="submit" name="import">Import</button>
-                        <button class="btn default" type="button" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
+                <c:url var="current" value="consignment">
+                    <c:param name="id" value="${consignment.consigmentID}"/>
+                </c:url>
+                <form class="form-horizontal" role="form" action="${current}" method="post">
+                    <div class="modal-body">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">Giá Ký Gửi (VNĐ)</label>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" name="price" min="0" max="${consignment.maxPrice}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="productId" value="${consignment.productID}">
+                        <button class="btn btn-primary" type="submit" name="import">Nhận Hàng</button>
+                        <button class="btn default" type="button" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

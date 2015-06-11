@@ -4,6 +4,7 @@ import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.DBUltilities;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,7 +56,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> getWaitingConsignmentByStore(int storeOwnerId) {
+    public List<ConsignmentDTO> getConsignmentByStoreAndStatus(int storeOwnerId, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -63,9 +64,10 @@ public class ConsignmentDAO {
         try {
             con = DBUltilities.makeConnection();
             String sql = "SELECT * FROM Consignment"
-                    + " WHERE ConsignmentStatusID = 1 AND StoreOwnerID = ?";
+                    + " WHERE ConsignmentStatusID = ? AND StoreOwnerID = ?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, storeOwnerId);
+            stm.setInt(1, status);
+            stm.setInt(2, storeOwnerId);
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -94,7 +96,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> findWaitingConsignmentByProductName(int storeOwnerId, String productName) {
+    public List<ConsignmentDTO> findConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -103,10 +105,11 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE C.ConsignmentStatusID = 1 AND C.StoreOwnerID = ? AND P.ProductName LIKE ?";
+                    + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, storeOwnerId);
-            stm.setString(2, "%" + productName + "%");
+            stm.setInt(1, status);
+            stm.setInt(2, storeOwnerId);
+            stm.setString(3, "%" + productName + "%");
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -135,7 +138,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<String> listWaitingConsignmentByProductName(int storeOwnerId, String productName) {
+    public List<String> listConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -144,10 +147,11 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE C.ConsignmentStatusID = 1 AND C.StoreOwnerID = ? AND P.ProductName LIKE ?";
+                    + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, storeOwnerId);
-            stm.setString(2, "%" + productName + "%");
+            stm.setInt(1, status);
+            stm.setInt(2, storeOwnerId);
+            stm.setString(3, "%" + productName + "%");
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -237,6 +241,40 @@ public class ConsignmentDAO {
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setString(2, consignmentID);
+
+            int result = stm.executeUpdate();
+            while (result > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    public boolean makeConsignmentAsReceived(String consignmentID, double returnPrice) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Consignment"
+                    + " SET ReturnedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = 5"
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setDouble(1, returnPrice);
+            stm.setDate(2, new Date(System.currentTimeMillis()));
+            stm.setString(3, consignmentID);
 
             int result = stm.executeUpdate();
             while (result > 0) {

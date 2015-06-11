@@ -626,4 +626,38 @@ public List<ProductDTO> getProductBySeason(int seasonId) {
         }
         return null;
     }
+
+    public boolean makeProductAsStatus(int productId, int status) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Product" +
+                         " SET ProductStatusID = ?" +
+                         " WHERE ProductID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, status);
+            stm.setInt(2, productId);
+
+            int result = stm.executeUpdate();
+            while (result > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
 }

@@ -34,10 +34,10 @@
                             <li class="list-group-item clearfix">
                                 <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
                             </li>
-                            <li class="list-group-item clearfix active">
+                            <li class="list-group-item clearfix">
                                 <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
                             </li>
-                            <li class="list-group-item clearfix">
+                            <li class="list-group-item clearfix active">
                                 <a href="./consignment?accepted"><i class="fa fa-angle-right"></i> Yêu cầu đã duyệt</a>
                             </li>
                         </ul>
@@ -68,7 +68,7 @@
             </div>
             <!-- END SIDEBAR -->
             <div class="col-md-9">
-                <h1>Yêu Cầu Kí Gửi</h1>
+                <h1>Yêu Cầu Đã Duyệt</h1>
                 <form class="form-horizontal" role="form" action="consignment">
                     <div class="form-body">
                         <div class="form-group">
@@ -111,10 +111,10 @@
 
                             <tr>
                                 <c:if test="${empty param.searchValue}">
-                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
+                                    <td colspan="6">Danh sách trống.</td>
                                 </c:if>
                                 <c:if test="${not empty param.searchValue}">
-                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.searchValue}".</td>
+                                    <td colspan="6">Không có yêu cầu nào đã duyệt với tên sản phẩm tương tự "${param.searchValue}".</td>
                                 </c:if>
                             </tr>
                         </c:if>

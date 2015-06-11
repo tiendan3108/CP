@@ -2,6 +2,7 @@ package hps.servlet;
 
 import com.twilio.sdk.TwilioRestException;
 import hps.dao.ConsignmentDAO;
+import hps.dao.ProductDAO;
 import hps.dto.Alert;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.JavaUltilities;
@@ -32,11 +33,19 @@ public class ConsignmentServlet extends HttpServlet {
     private static final String CONSIGNMENT_SEARCH = "/consignment_search";
     private static final String CONSIGNMENT = "/consignment";
     private static final String CONSIGNMENT_REQUEST = "/consignment_request";
+    private static final String CONSIGNMENT_ACCEPTED = "/consignment_accepted";
     private static final String CONSIGNMENT_IMPORTED = "/consignment_imported";
     private static final String CONSIGNMENT_SOLD = "/consignment_sold";
     private static final String CONSIGNMENT_DETAIL = "/consignment_detail";
+    
+    private static final int REQUEST_WAITING = 1;
+    private static final int REQUEST_REFUSED = 2;
+    private static final int REQUEST_ACCEPTED = 3;
+    
+    private static final int PRODUCT_AVAILABLE = 2;
 
     private ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+    private ProductDAO productDAO = new ProductDAO();
     private JavaUltilities notification = new JavaUltilities();
 
     /**
@@ -62,7 +71,7 @@ public class ConsignmentServlet extends HttpServlet {
 
             } else if (request.getParameter("search") != null) {
                 if (request.getParameter("term") != null) {
-                    List<String> list = consignmentDAO.listWaitingConsignmentByProductName(STORE_ID, request.getParameter("term"));
+                    List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(STORE_ID, request.getParameter("term"), REQUEST_WAITING);
                     
                     /* Return data format: ["a", "b", "c"] */
                     PrintWriter writer = response.getWriter();                    
@@ -80,7 +89,7 @@ public class ConsignmentServlet extends HttpServlet {
                     userPath = CONSIGNMENT_REQUEST;
 
                     String searchValue = request.getParameter("searchValue");
-                    List<ConsignmentDTO> consignments = consignmentDAO.findWaitingConsignmentByProductName(STORE_ID, searchValue);
+                    List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductNameAndStatus(STORE_ID, searchValue, REQUEST_WAITING);
                     request.setAttribute("consignments", consignments);
                 }
             } else if (request.getParameter("advand-search") != null) {
@@ -96,9 +105,14 @@ public class ConsignmentServlet extends HttpServlet {
 
 //                List<Consignment> consignments = consignmentBLO.getConsigmentsSold(STORE_ID);
 //                request.setAttribute("consignments", consignments);
-            } else /*if (request.getParameter("request") != null)*/ {
+            } else if (request.getParameter("request") != null) {
                 userPath = CONSIGNMENT_REQUEST;
-                List<ConsignmentDTO> consignments = consignmentDAO.getWaitingConsignmentByStore(STORE_ID);
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(STORE_ID, REQUEST_WAITING);
+                request.setAttribute("consignments", consignments);
+            
+            } else if (request.getParameter("accepted") != null) {
+                userPath = CONSIGNMENT_ACCEPTED;
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(STORE_ID, REQUEST_ACCEPTED);
                 request.setAttribute("consignments", consignments);
             }
         } else if (userPath.equals("/consignor")) {
@@ -131,22 +145,29 @@ public class ConsignmentServlet extends HttpServlet {
             if (request.getParameter("id") != null) {
                 String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
-                    consignmentDAO.makeConsignmentAsStatus(consignmentId, 3);
+                    consignmentDAO.makeConsignmentAsStatus(consignmentId, REQUEST_ACCEPTED);
 //                    try {
 //                        notification.sendSMS("Yêu cầu ký gửi " + consignmentId + " đã được chấp nhận", "+84917533644");
 //                    } catch (TwilioRestException ex) {
 //                        Logger.getLogger(ConsignmentServlet.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
                     
-                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Hàng Kí Gửi.");
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Yêu Cầu Đã Duyệt.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
-                    consignmentDAO.makeConsignmentAsStatus(consignmentId, 2);
+                    consignmentDAO.makeConsignmentAsStatus(consignmentId, REQUEST_REFUSED);
+                    
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã từ chối!", "Sản phẩm đã được loại bỏ.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("import") != null) {
-
-                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
+                    double price = Double.parseDouble(request.getParameter("price"));
+                    int productId = Integer.parseInt(request.getParameter("productId"));
+                    
+                    consignmentDAO.makeConsignmentAsReceived(consignmentId, price);
+                    
+                    productDAO.makeProductAsStatus(productId, PRODUCT_AVAILABLE);
+                    
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã Nhận Hàng!", "Sản phẩm đã được dời qua Hàng Kí Gửi.");
                     request.setAttribute("alert", alert);
                 }
 
