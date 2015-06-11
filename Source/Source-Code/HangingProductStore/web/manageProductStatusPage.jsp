@@ -84,8 +84,6 @@
                         <th>
                             Trạng thái
                         </th>
-                        <th>
-                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,51 +97,43 @@
                                 <td>${item.consignmentID}</td>
                                 <td>${item.consignedPrice} USD</td>
                                 <td>
-                                    <c:set var="status" value="${item.status}"/>
+                                    <c:set var="status" value="${item.productStatusID}"/>
                                     <c:choose>
-                                        <c:when test="${status==2}">
-                                            <form action="LoadPaymentPageServlet" method="GET">
-                                                <button class="btn btn-info" type="submit">Đã bán</button>
+                                        <c:when test="${status==5}">
+                                            <form action="LoadPaymentPageServlet" method="POST">
+                                                <button style="width: 150px" class="btn btn-info" type="submit">Đã bán</button>
                                                 <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                             </form>
                                         </c:when>
-                                        <c:when test="${status==1}">
-                                            <form action="LoadCustomerPageServlet" method="GET">
-                                                <button class="btn btn-info" type="submit">Đã được đặt</button>
+                                        <c:when test="${status==4}">
+                                            <form action="LoadCustomerPageServlet" method="POST">
+                                                <button style="width: 150px" class="btn btn-info" type="submit">Đã được đặt</button>
                                                 <input name="productID" type="hidden" value="${item.productID}">
                                             </form>
                                         </c:when>
                                         <c:when test="${status==3}">
-                                            <a href="ViewProductDetailServlet?productID=${item.productID}" class="label-primary">Trên web</a>
+                                            <form action="ViewProductDetailServlet" method="POST">
+                                                <button style="width: 150px" class="btn btn-info" type="submit">Trên web</button>
+                                                <input name="productID" type="hidden" value="${item.productID}">
+                                            </form>
                                         </c:when>
-                                        <c:when test="${status==4}">
-                                            <label class="label-danger">Owned</label>
-                                        </c:when>
-                                        <c:when test="${status==5}">
-                                            <label class="label-danger">Out of Date</label>
+                                        <c:when test="${status==2}">
+                                            <form action="LoadPublishPageServlet" method="POST">
+                                                <button style="width: 150px" class="btn btn-default" type="submit">Chờ duyệt</button>
+                                                <input name="productID" type="hidden" value="${item.productID}">
+                                            </form>
                                         </c:when>
                                         <c:when test="${status==6}">
-                                            <label class="label-danger">Cancel by Consignor</label>
+                                            <form action="LoadCancelProductPageServlet" method="POST">
+                                                <button style="width: 150px" class="btn btn-warning" type="submit">Đăng kí hủy</button>
+                                                <input name="productID" type="hidden" value="${item.productID}">
+                                            </form>
                                         </c:when>
                                         <c:when test="${status==7}">
-                                            <label class="label-danger">Returned</label>
-                                        </c:when>
-                                        <c:when test="${status==8}">
-                                            <label class="label-danger">Completed</label>
-                                        </c:when>
-                                        <c:when test="${status==8}">
-                                            <label class="label-danger">Cancel by Consignor</label>
+                                                <button style="width: 150px" class="btn btn-default"  disabled="true">Hoàn tất</button>
+                                                <input name="productID" type="hidden" value="${item.productID}">
                                         </c:when>
                                     </c:choose>
-                                </td>
-                                <td>
-                                    <c:if test="${status==3}">
-                                        <form action="LoadCancelProductPageServlet" method="POST">
-                                            <button class="btn btn-warning" name="action" type="submit" value="cancel">Cancel</button>
-                                            <input name="consignmentID" type="hidden" value="${item.consignmentID}">
-                                            <input name="productID" type="hidden" value="${item.productID}">
-                                        </form>
-                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

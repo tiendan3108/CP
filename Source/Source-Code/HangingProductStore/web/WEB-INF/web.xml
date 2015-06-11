@@ -35,6 +35,14 @@
         <servlet-name>LoadCustomerPageServlet</servlet-name>
         <servlet-class>hps.servlet.LoadCustomerPageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PublishOnWebServlet</servlet-name>
+        <servlet-class>hps.servlet.PublishOnWebServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadPublishPageServlet</servlet-name>
+        <servlet-class>hps.servlet.LoadPublishPageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoadManageProductPageServlet</servlet-name>
         <url-pattern>/LoadManageProductPageServlet</url-pattern>
@@ -58,6 +66,14 @@
     <servlet-mapping>
         <servlet-name>LoadCustomerPageServlet</servlet-name>
         <url-pattern>/LoadCustomerPageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PublishOnWebServlet</servlet-name>
+        <url-pattern>/PublishOnWebServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPublishPageServlet</servlet-name>
+        <url-pattern>/LoadPublishPageServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

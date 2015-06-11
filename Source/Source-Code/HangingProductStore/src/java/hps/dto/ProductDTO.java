@@ -41,6 +41,15 @@ public class ProductDTO {
         this.consignedPrice = price;
         this.productStatusID = productStatusID;
     }
+    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, String image) {
+        this.productID = productID;
+        this.name = productName;
+        this.serialNumber = serialNumber;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+        this.image = image;
+    }
     //danqt - end
 
     //ban cu anh huon DanqtDAO

@@ -20,11 +20,13 @@ public class GlobalVariables {
     public static final String PAYMENT_PAGE = "paymentPage.jsp";
     public static final String CANCEL_PAGE = "cancelProductPage.jsp";
     public static final String ORDERED_PAGE = "viewOrderedCustomerPage.jsp";
+    public static final String SESSION_TIME_OUT_PAGE = "errorPage.jsp";
+    public static final String SUCCESS_ACTION_PAGE = "successPage.jsp";
+    public static final String PUBLISH_PAGE = "publishOnWebPage.jsp";
     
     public static final String SEARCH_PRODUCT_STATUS_SERVLET = "SearchProductStatusServlet";
     public static final String CANCEL_PRODUCT_SERVLET = "CancelProductServlet";
     public static final String MANAGERMENT_SERVLET = "LoadManageProductPageServlet";
     public static final String LOAD_PAYMENT_SERVLET = "LoadPaymentPageServlet";
-    public static final String SESSION_TIME_OUT_PAGE = "errorPage.jsp";
-    public static final String SUCCESS_ACTION_PAGE = "successPage.jsp";
+    
 }

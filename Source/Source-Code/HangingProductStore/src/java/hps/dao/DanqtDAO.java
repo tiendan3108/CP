@@ -383,4 +383,88 @@ public class DanqtDAO {
             }
         }
     }
+
+    public AccountDTO checkLogin(String username, String password) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+            String query = "SELECT * from Account WHERE AccountID = ? and Password = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, username);
+            stm.setString(2, password);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String AccountID = rs.getString("AccountID");
+                String Password = rs.getString("Password");
+                String Status = rs.getString("Status");
+                String FullName = rs.getString("FullName");
+                String Address = rs.getString("Address");
+                String Phone = rs.getString("Phone");
+                String Email = rs.getString("Email");
+                String PaypalAccount = rs.getString("PaypalAccount");
+                String Role = rs.getString("Role");
+                return new AccountDTO(AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role);
+            }
+            return null;
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean publishOnWeb(ProductDTO product) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        int result = 0;
+        try {
+            conn = DBUltilities.makeConnection();
+            String query = "UPDATE Product SET "
+                    + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, Image = ?, ProductStatusID = 3 "
+                    + "WHERE ProductID = ? AND ProductStatusID = 2";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, product.getName());
+            stm.setString(2, product.getSerialNumber());
+            stm.setInt(3, product.getCategoryID());
+            stm.setString(4, product.getBrand());
+            stm.setString(5, product.getDescription());
+            stm.setString(6, product.getImage());
+            stm.setInt(7, product.getProductID());
+            result = stm.executeUpdate();
+            if (result > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
