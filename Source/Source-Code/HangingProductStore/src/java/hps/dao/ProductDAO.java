@@ -45,7 +45,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -93,7 +93,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
             }
             return product;
@@ -145,7 +145,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -206,7 +206,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int categoryID = rs.getInt("CategoryID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -307,7 +307,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -407,7 +407,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int categoryID = rs.getInt("CategoryID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -508,7 +508,7 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
             }
@@ -573,7 +573,8 @@ public class ProductDAO {
         }
         return 0;
     }
-public List<ProductDTO> getProductBySeason(int seasonId) {
+
+    public List<ProductDTO> getProductBySeason(int seasonId) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -601,7 +602,7 @@ public List<ProductDTO> getProductBySeason(int seasonId) {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int categoryID = rs.getInt("CategoryID");
-                int orderID = rs.getInt("OrderID");
+                String orderID = rs.getString("OrderID");
                 int parentCategoryID = rs.getInt("ParentID");
                 ProductDTO product = new ProductDTO(id, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
                 products.add(product);
@@ -627,14 +628,43 @@ public List<ProductDTO> getProductBySeason(int seasonId) {
         return null;
     }
 
+    public boolean updateStatusToOrdered(int productId, String orderId) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "update Product set ProductStatusID = ?, OrderID = ? where ProductID=?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, 4);
+            stm.setString(2, orderId);
+            stm.setInt(3, productId);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public boolean makeProductAsStatus(int productId, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "UPDATE Product" +
-                         " SET ProductStatusID = ?" +
-                         " WHERE ProductID = ?";
+            String sql = "UPDATE Product"
+                    + " SET ProductStatusID = ?"
+                    + " WHERE ProductID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setInt(2, productId);
@@ -659,5 +689,4 @@ public List<ProductDTO> getProductBySeason(int seasonId) {
         }
         return false;
     }
-
 }
