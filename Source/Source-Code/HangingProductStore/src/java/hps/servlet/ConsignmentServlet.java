@@ -4,6 +4,7 @@ import hps.dao.ConsignmentDAO;
 import hps.dto.Alert;
 import hps.dto.ConsignmentDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,14 +54,30 @@ public class ConsignmentServlet extends HttpServlet {
                 String id = request.getParameter("id");
                 ConsignmentDTO consignment = consignmentDAO.getConsignment(id);
                 request.setAttribute("consignment", consignment);
-                
+
             } else if (request.getParameter("search") != null) {
-                userPath = CONSIGNMENT_REQUEST;
-                
-                String searchValue = request.getParameter("searchValue");
-                List<ConsignmentDTO> consignments = consignmentDAO.findWaitingConsignmentByProductName(STORE_ID, searchValue);
-                request.setAttribute("consignments", consignments);
-                
+                if (request.getParameter("term") != null) {
+                    List<String> list = consignmentDAO.listWaitingConsignmentByProductName(STORE_ID, request.getParameter("term"));
+                    
+                    /* Return data format: ["a", "b", "c"] */
+                    PrintWriter writer = response.getWriter();                    
+                    writer.print("[");
+                    for (int i = 0; i < list.size(); i++) {
+                        writer.print("\"" + list.get(i) + "\"");
+                        if (i < list.size() - 1) {
+                            writer.print(",");
+                        }
+                    }
+                    writer.print("]");
+                    
+                    return;
+                } else {
+                    userPath = CONSIGNMENT_REQUEST;
+
+                    String searchValue = request.getParameter("searchValue");
+                    List<ConsignmentDTO> consignments = consignmentDAO.findWaitingConsignmentByProductName(STORE_ID, searchValue);
+                    request.setAttribute("consignments", consignments);
+                }
             } else if (request.getParameter("advand-search") != null) {
                 userPath = CONSIGNMENT_SEARCH;
 
@@ -110,14 +127,14 @@ public class ConsignmentServlet extends HttpServlet {
                 String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
                     consignmentDAO.makeConsignmentAsStatus(consignmentId, 3);
-                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Accepted Successful!", "");
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Hàng Kí Gửi.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
                     consignmentDAO.makeConsignmentAsStatus(consignmentId, 2);
-                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Refused Successful!", "");
+                    Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã từ chối!", "Sản phẩm đã được loại bỏ.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("import") != null) {
-                    
+
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Imported Successful!", "The product was moved to Imported List.");
                     request.setAttribute("alert", alert);
                 }

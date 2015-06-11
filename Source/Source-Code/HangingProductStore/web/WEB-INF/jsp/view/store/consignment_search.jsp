@@ -1,24 +1,45 @@
-<template:storebasic htmlTitle="Consignment Search" bodyTitle="Consignment Search">
+<template:shopbasic htmlTitle="Consignment Search" bodyTitle="Consignment Search">
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
-        <!-- BEGIN SIDEBAR -->
-        <div class="sidebar col-md-3 col-sm-4">
-            <ul class="list-group margin-bottom-25 sidebar-menu">
-                <li class="list-group-item clearfix active">
-                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
-                </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
-                </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
-                </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
-                </li>
-            </ul>
-        </div>
-        <!-- END SIDEBAR -->
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix dropdown active open">
+                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                        <ul class="dropdown-menu">
+                            <li class="list-group-item clearfix active">
+                                <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                        <ul class="dropdown-menu">
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a><i class="fa fa-angle-right"></i>Thống kê</a>
+                        <ul class="dropdown-menu">
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Thanh toán</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- END SIDEBAR -->
         <div class="col-md-9">
             <h4>Advance Search</h4>
             <form class="form-horizontal" role="form">
@@ -102,4 +123,4 @@
         </div>
     </div>
     <!-- END SIDEBAR & CONTENT -->
-</template:storebasic>
+</template:shopbasic>

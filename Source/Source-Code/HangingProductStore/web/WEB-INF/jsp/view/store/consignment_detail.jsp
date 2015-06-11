@@ -2,19 +2,40 @@
     <!-- BEGIN SIDEBAR & CONTENT -->
     <div class="row margin-bottom-40 ">
         <!-- BEGIN SIDEBAR -->
-        <div class="sidebar col-md-3 col-sm-4">
+        <div class="sidebar col-md-3 col-sm-5">
             <ul class="list-group margin-bottom-25 sidebar-menu">
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?search"><i class="fa fa-angle-right"></i> Search</a>
+                <li class="list-group-item clearfix dropdown active open">
+                    <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                    <ul class="dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                        </li>
+                        <li class="list-group-item clearfix active">
+                            <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?request"><i class="fa fa-angle-right"></i> Request List</a>
+                <li class="list-group-item clearfix dropdown">
+                    <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                    <ul class="dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?imported"><i class="fa fa-angle-right"></i> Imported List</a>
-                </li>
-                <li class="list-group-item clearfix">
-                    <a href="./consignment?sold"><i class="fa fa-angle-right"></i> Sold List</a>
+                <li class="list-group-item clearfix dropdown">
+                    <a><i class="fa fa-angle-right"></i>Thống kê</a>
+                    <ul class="dropdown-menu">
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
+                        </li>
+                        <li class="list-group-item clearfix">
+                            <a href="#"><i class="fa fa-angle-right"></i>Thanh toán</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -100,12 +121,25 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <a class="btn btn-primary"
-                                   data-toggle="modal"
-                                   href="#acceptingModal">Chấp Nhận</a>
-                                <a class="btn btn-info"
-                                   data-toggle="modal"
-                                   href="#refusingModal">Từ Chối</a>
+                                <c:choose>
+                                    <c:when test="${consignment.consignmentStatusID == 1}">
+                                        <a class="btn btn-primary"
+                                           data-toggle="modal"
+                                           href="#acceptingModal">Chấp Nhận</a>
+                                        <a class="btn btn-info"
+                                           data-toggle="modal"
+                                           href="#refusingModal">Từ Chối</a>
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 2}">
+                                        Đã từ chối
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 3}">
+                                        Đã chấp nhận
+                                    </c:when>
+                                    <c:when test="${consignment.consignmentStatusID == 4}">
+                                        Hoàng thành
+                                    </c:when>
+                                </c:choose>
                             </td>
                         </tr>
                     </table>
@@ -191,6 +225,7 @@
                             <div class="form-action right">
                             </div>
                         </form>
+                        <p>Sau khi chấp nhận, sản phẩm này sẽ được dời vào mục Hàng Kí Gửi.</p>
                     </div>
                     <div class="modal-footer">
                     <c:url var="current" value="consignment">
@@ -216,6 +251,7 @@
                 </div>
                 <div class="modal-body">
                     Bạn muốn từ chối ký gửi?
+                    <p>Sau khi từ chối sẽ phẩm sẽ được loại khỏi danh sách Yêu Cầu Kí Gửi.</p>
                 </div>
                 <div class="modal-footer">
                     <c:url var="current" value="consignment">
