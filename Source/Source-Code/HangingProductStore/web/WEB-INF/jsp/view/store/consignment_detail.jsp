@@ -5,10 +5,10 @@
         <div class="sidebar col-md-3 col-sm-5">
             <ul class="list-group margin-bottom-25 sidebar-menu">
                 <li class="list-group-item clearfix dropdown active open">
-                    <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                    <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     <ul class="dropdown-menu">
                         <li class="list-group-item clearfix">
-                            <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                            <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
                         </li>
                         <li class="list-group-item clearfix active">
                             <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
@@ -123,12 +123,12 @@
                             <td colspan="2">
                                 <c:choose>
                                     <c:when test="${consignment.consignmentStatusID == 1}">
-                                        <a class="btn btn-primary"
+                                        <button type="button" class="btn btn-primary"
                                            data-toggle="modal"
-                                           href="#acceptingModal">Chấp Nhận</a>
-                                        <a class="btn btn-info"
+                                           data-target="#acceptingModal">Chấp Nhận</button>
+                                        <button type="button" class="btn btn-info"
                                            data-toggle="modal"
-                                           href="#refusingModal">Từ Chối</a>
+                                           data-target="#refusingModal">Từ Chối</button>
                                     </c:when>
                                     <c:when test="${consignment.consignmentStatusID == 2}">
                                         Đã từ chối

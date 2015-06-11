@@ -29,10 +29,10 @@
             <div class="sidebar col-md-3 col-sm-5">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix dropdown active open">
-                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                         <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
-                                <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                                <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
                             </li>
                             <li class="list-group-item clearfix active">
                                 <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
@@ -73,7 +73,7 @@
                                 <div class="input-group">
                                     <input id="searchInput" class="form-control" type="text" name="searchValue" value="${param.searchValue}">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success" type="submit" name="search">Search</button>
+                                        <button class="btn btn-success" type="submit" name="search">Tìm</button>
                                     </span>
                                 </div>
                             </div>
