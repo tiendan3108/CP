@@ -4,11 +4,11 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40 ">
             <!-- BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-4">
+            <div class="sidebar col-md-3 col-sm-5">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix dropdown">
                         <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
-                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
                                 <a href="./consignment?search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
                             </li>
@@ -16,8 +16,10 @@
                                 <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
                         <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
-                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
                                 <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
                             </li>
@@ -25,8 +27,10 @@
                                 <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
                         <a><i class="fa fa-angle-right"></i>Thống kê</a>
-                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                        <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
                                 <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
                             </li>
