@@ -47,7 +47,7 @@
                             <h4>${mess}</h4>
                             <div class="modal-footer">
                                 <a style="background-color: #408cc2" href="ViewCartServlet" class="btn btn-default">Xem giỏ hàng</a>
-                                <button class="btn btn-primary" type="button" data-dismiss="modal">OKc<i class="fa fa-check"></i></button>
+                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK<i class="fa fa-check"></i></button>
                             </div>
                         </div>
                     </div>

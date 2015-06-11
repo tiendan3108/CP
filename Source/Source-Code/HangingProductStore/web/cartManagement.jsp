@@ -66,7 +66,7 @@
                     </div>
                     <a href="HomeServlet" class="btn btn-default">Tiếp tục đặt hàng <i class="fa fa-shopping-cart"></i></a>
                         <c:if test="${not empty items}">
-                        <a class="btn btn-primary">Hoàn tất đặt hàng <i class="fa fa-check"></i></a>
+                        <a href="ConfirmOrderServlet" class="btn btn-primary">Hoàn tất đặt hàng <i class="fa fa-check"></i></a>
                         </c:if>
 
                 </div>
