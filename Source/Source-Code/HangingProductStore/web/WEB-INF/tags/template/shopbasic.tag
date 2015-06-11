@@ -55,7 +55,8 @@
 
                     })
                 });
-                $(".removeColapse").removeClass("collapsed");
+                var modalObj = $('#loginModal2').modal(); // initialize
+                modalObj.modal('show');
 
             });
         </script>
@@ -91,10 +92,78 @@
 
         <jsp:invoke fragment="extraBottomContent" />
     </jsp:attribute>
-    <jsp:attribute name="navigationContent">      
-        <li><a href="shop-account.html">My Account</a></li>      
-        <li><a href="ViewCartServlet">Shopping Cart</a></li>  
-        <li><a href="shop-wishlist.html">Consign</a></li>
+    <jsp:attribute name="navigationContent">
+        <div id="loginModal" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h1 class="text-center">Đăng Nhập</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
+                            <div class="form-group">
+                                <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                            </div>
+                            <div class="form-group">
+                                <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">                       
+                        <div class="col-md-12">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true">Hủy</button>
+                        </div>	
+                    </div>
+                </div>
+            </div>
+        </div>
+        <c:set var="err" value="${requestScope.ERR}"/>
+        <c:if test="${not empty err}">
+            <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1 class="text-center">Đăng Nhập</h1>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form col-md-12 center-block" action="LoginServlet" method="POST">
+                                <div class="form-group">
+                                    <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                                </div>
+                                <div class="form-group">
+                                    <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                                </div>
+                                <div>
+                                    <h5 style="color:red">${err}</h5>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                    <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-md-12">
+                                <button class="btn" data-dismiss="modal" aria-hidden="true">Hủy</button>
+                            </div>	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
+        <c:set var="account" value="${sessionScope.ACCOUNT}"/>
+        <c:if test="${empty account}">
+            <li><a data-toggle="modal" data-target="#loginModal">Đăng Nhập</a></li> 
+            </c:if>
+            <c:if test="${not empty account}">
+            <li><a>${account.fullName}</a></li> 
+                </c:if>        
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>

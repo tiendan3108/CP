@@ -19,6 +19,8 @@
         </script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
+        <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+        <li><a href="ConsignServlet">Kí Gửi</a></li>
         <li id="nofi">
             <a href="#">
                 <i class="icon-bell"></i>
@@ -45,7 +47,7 @@
                             <h4>${mess}</h4>
                             <div class="modal-footer">
                                 <a style="background-color: #408cc2" href="ViewCartServlet" class="btn btn-default">Xem giỏ hàng</a>
-                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK<i class="fa fa-check"></i></button>
+                                <button class="btn btn-primary" type="button" data-dismiss="modal">OKc<i class="fa fa-check"></i></button>
                             </div>
                         </div>
                     </div>
