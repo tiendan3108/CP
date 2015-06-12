@@ -36,18 +36,19 @@
     <body class="ecommerce">
         <div id="top">
             <div class="contain">
-                <div style="float: left;line-height: 70px">
-                    Hanging Product Store  
+                <div class="row">
+                    <div class="col-md-8" style="line-height: 70px">
+                        Hanging Product Store  
+                    </div>
+                    <div style="line-height: 10px;margin-top: 10px; font-size: 12px;color: whitesmoke" class="col-md-4">
+                        <p><i style="color: white" class="fa fa-phone"></i>
+                            090966668888</p>
+                        <p><i style="color: white" class="fa fa-map-marker"></i>
+                            123 Quang Trung, 12 District, Ho Chi Minh c.</p>
+                        <p><i style="color: white" class="fa fa-envelope"></i>
+                            hangingproductstorevn@gmail.com</p>
+                    </div>
                 </div>
-                <div style="line-height: 10px;margin-top: 10px; font-size: 12px;color: whitesmoke; margin-left: 10px" class="col-md-8">
-                    <p><i style="color: white" class="fa fa-phone"></i>
-                        090966668888</p>
-                    <p><i style="color: white" class="fa fa-map-marker"></i>
-                        123 Quang Trung, 12 District, Ho Chi Minh c.</p>
-                    <p><i style="color: white" class="fa fa-envelope"></i>
-                        hangingproductstorevn@gmail.com</p>
-                </div>
-
             </div>          
         </div>
         <!-- Header BEGIN -->
@@ -84,7 +85,13 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-6 col-sm-12">
                         <p class="footerTitle">Hanging Product Store</p>
-                        <p class="grey-text text-lighten-4">Information here.</p>
+                        <p style="margin-top: 10px" class="grey-text text-lighten-4">
+                            <i style="padding-left: 30px" class="fa fa-phone"></i>&nbsp;&nbsp;090966668888 <br/>
+                            <i style="padding-left: 30px" class="fa fa-map-marker"></i>
+                            &nbsp;123 Quang Trung, 12 District, Ho Chi Minh c. <br/>
+                            <i style="padding-left: 30px" class="fa fa-envelope"></i>
+                            &nbsp;&nbsp;hangingproductstorevn@gmail.com<br/>
+                        </p>
                     </div>
                     <div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-12">
                         <p class="footerTitle">Follow Us</p>
