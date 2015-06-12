@@ -10,6 +10,7 @@ import hps.dto.ProductDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StoreOwnerDTO;
 import hps.ultils.DBUltilities;
+import hps.ultils.GlobalVariables;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -480,6 +481,26 @@ public class DuchcDAO {
                 account.setEmail(rs.getString("Email"));
                 account.setPaypalAccount(rs.getString("PaypalAccount"));
                 account.setRole(rs.getString("Role"));
+                
+                if(account.getRole() == GlobalVariables.MEMBER){
+                    query = "SELECT MemberID FROM Member WHERE (AccountID = ?) ";
+                    stm = con.prepareStatement(query);
+                    stm.setString(1, account.getAccountID());
+                    rs = stm.executeQuery();
+                    if(rs.next()){
+                        account.setRoleID(rs.getInt("MemberID"));
+                    }
+                }
+                else if(account.getRole() == GlobalVariables.STORE_OWNER){
+                    query = "SELECT StoreOwnerID, Formula FROM StoreOwner WHERE (AccountID = ?) ";
+                    stm = con.prepareStatement(query);
+                    stm.setString(1, account.getAccountID());
+                    rs = stm.executeQuery();
+                    if(rs.next()){
+                        account.setRoleID(rs.getInt("StoreOwnerID"));
+                        account.setFormula(rs.getFloat("Formula"));
+                    }
+                }
                 return account;
             }
             return null;
@@ -503,4 +524,6 @@ public class DuchcDAO {
         }
         return null;
     }
+    
+    
 }

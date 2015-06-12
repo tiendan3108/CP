@@ -149,7 +149,7 @@ public class ConsignServlet extends HttpServlet {
                     //get memberID if session MEMBER is not null
                     int memberID = -1;
                     if (session.getAttribute("MEMBER") != null) {
-                        memberID = Integer.parseInt(((AccountDTO) session.getAttribute("MEMBER")).getAccountID());
+                        memberID = ((AccountDTO) session.getAttribute("MEMBER")).getRoleID();
                     }
                     //get storeOwnerID from step2
                     int storeOwnerID = 0;
