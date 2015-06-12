@@ -76,7 +76,7 @@
                                 <div class="tab-content ">
                                     <c:if test="${basicPrice <= 0}">
                                         <div class="alert alert-warning" style="text-align: center">
-                                            <strong>We could not find your product. Store owner will check and price your product later.</strong>
+                                            <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
                                         </div>    
                                     </c:if>
                                     <div>
@@ -154,6 +154,9 @@
                                                     </tbody>
                                                 </table>
                                             </form>
+                                        </c:if>
+                                        <c:if test="${empty data}">
+                                            <h1>Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h1>
                                         </c:if>
 
                                     </div>

@@ -172,7 +172,7 @@
 
                                                                     <p class="help-block" id="erPaypalAccount"></p>
                                                                 </div>
-                                                            /div>
+                                                            </div>
                                                         </div>
                                                     </div>
 
