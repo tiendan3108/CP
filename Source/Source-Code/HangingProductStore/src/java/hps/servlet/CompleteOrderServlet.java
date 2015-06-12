@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,19 +49,6 @@ public class CompleteOrderServlet extends HttpServlet {
             String phone = request.getParameter("phone");
             String orderID = lib.randomString(10);
             int customerID = 5;
-            //System.out.println(email);
-            if (phone != null) {
-                phone = "+84" + phone.substring(1);
-//                try {
-//                    lib.sendSMS("Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + ". Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy", phone);
-//                } catch (TwilioRestException ex) {
-//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-            }
-            if (email != null) {
-//                String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
-//                lib.sendEmail(email, "Xác nhận đơn hàng", body);
-            }
             HttpSession session = request.getSession();
             if (session != null) {
                 AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
@@ -69,22 +57,44 @@ public class CompleteOrderServlet extends HttpServlet {
                 } else {
                     customerID = 5;
                 }
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                rd.forward(request, response);
             }
             OrderDAO orderDao = new OrderDAO();
-            orderDao.insertOrder(orderID, customerID, email, phone);
             ProductDAO productDao = new ProductDAO();
+            //insert order
+            orderDao.insertOrder(orderID, customerID, email, phone);
             List<Integer> itemIDs = new ArrayList<Integer>();
-            if (session != null) {
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    itemIDs = cart.getItems();
-                    for (int i = 0; i < itemIDs.size(); i++) {
-                        int productID = itemIDs.get(i);
-                        productDao.updateStatusToOrdered(productID, orderID);
-                    }
+            //update product status
+            Cart cart = (Cart) session.getAttribute("CART");
+            if (cart != null) {
+                itemIDs = cart.getItems();
+                for (int i = 0; i < itemIDs.size(); i++) {
+                    int productID = itemIDs.get(i);
+                    productDao.updateStatusToOrdered(productID, orderID);
                 }
+                session.removeAttribute("CART");
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                rd.forward(request, response);
+            }
+            //send sms
+            if (phone != null) {
+                phone = "+84" + phone.substring(1);
+//                try {
+//                    lib.sendSMS("Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + ". Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy", phone);
+//                } catch (TwilioRestException ex) {
+//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+            }
+            //send email
+            if (email != null) {
+//                String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
+//                lib.sendEmail(email, "Xác nhận đơn hàng", body);
             }
         }
+        response.sendRedirect("completeOrder.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

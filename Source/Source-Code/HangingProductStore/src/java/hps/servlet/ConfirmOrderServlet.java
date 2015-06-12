@@ -47,6 +47,14 @@ public class ConfirmOrderServlet extends HttpServlet {
                 if (cart != null) {
                     itemIDs = cart.getItems();
                 }
+                if (cart == null) {
+                    RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                    rd.forward(request, response);
+                }
+            }
+            if (session == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                rd.forward(request, response);
             }
             if (itemIDs.size() > 0) {
                 List<ProductDTO> items = new ArrayList<ProductDTO>();
