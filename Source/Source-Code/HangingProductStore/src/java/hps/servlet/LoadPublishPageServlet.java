@@ -6,6 +6,7 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
+import hps.dao.DanqtDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
@@ -54,7 +55,7 @@ public class LoadPublishPageServlet extends HttpServlet {
                 } else {
                     productID = (int) request.getAttribute("productID");
                 }
-                ProductDAO dao = new ProductDAO();
+                DanqtDAO dao = new DanqtDAO();
                 CategoryDAO cateDao = new CategoryDAO();
                 List<CategoryDTO> parentCategories = cateDao.getParentCategory();
                 ProductDTO product = dao.getProductByID(productID);

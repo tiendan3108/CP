@@ -36,21 +36,25 @@ public class DanqtDAO {
                     + " ORDER BY p.ProductStatusID";
             stm = conn.prepareStatement(query);
             stm.setInt(1, storeOwnerID);
-            stm.setInt(2, 0);
+            stm.setInt(2, 1);
             rs = stm.executeQuery();
             String productName, receivedDate, consignmentID;
             float price;
             int status, productID;
             ProductDTO product;
             while (rs.next()) {
-                productID = Integer.parseInt(rs.getString("ProductID"));
-                productName = rs.getString("ProductName");
-                receivedDate = rs.getString("ReceivedDate");
-                consignmentID = rs.getString("ConsignmentID");
-                price = Float.parseFloat(rs.getString("ReturnedPrice"));
-                status = Integer.parseInt(rs.getString("ProductStatusID"));
-                product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
-                result.add(product);
+                try {
+                    productID = Integer.parseInt(rs.getString("ProductID"));
+                    productName = rs.getString("ProductName");
+                    receivedDate = rs.getString("ReceivedDate");
+                    consignmentID = rs.getString("ConsignmentID");
+                    price = Float.parseFloat(rs.getString("ReturnedPrice"));
+                    status = Integer.parseInt(rs.getString("ProductStatusID"));
+                    product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
+                    result.add(product);
+                } catch (NumberFormatException e) {
+                    Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
             return result;
         } catch (SQLException e) {
@@ -147,7 +151,7 @@ public class DanqtDAO {
         }
     }
 
-    public List<ProductDTO> searchProduct(String keywords, String type, String storeOwnerID) {
+    public List<ProductDTO> searchProduct(String keywords, String type, int storeOwnerID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -167,7 +171,7 @@ public class DanqtDAO {
                 stm = conn.prepareStatement(query);
                 stm.setString(1, searchType);
                 stm.setString(2, "%" + keywords + "%");
-                stm.setInt(3, Integer.parseInt(storeOwnerID));
+                stm.setInt(3, storeOwnerID);
                 rs = stm.executeQuery();
             } else {
                 query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.ProductStatusID "
@@ -179,7 +183,7 @@ public class DanqtDAO {
                 stm.setString(2, "%" + keywords + "%");
                 stm.setString(3, "%" + keywords + "%");
                 stm.setString(4, "%" + keywords + "%");
-                stm.setInt(5, Integer.parseInt(storeOwnerID));
+                stm.setInt(5, storeOwnerID);
                 rs = stm.executeQuery();
             }
             while (rs.next()) {
@@ -527,5 +531,54 @@ public class DanqtDAO {
                 Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public ProductDTO getProductByID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from Product,Category "
+                    + "Where Product.CategoryID = Category.CategoryID "
+                    + "and ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int productStatusID = rs.getInt("ProductStatusID");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int parentCategoryID = rs.getInt("ParentID");
+                String orderID = rs.getString("OrderID");
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 }
