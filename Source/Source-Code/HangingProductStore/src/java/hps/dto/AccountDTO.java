@@ -82,9 +82,23 @@ public class AccountDTO {
         this.email = email;
         this.paypalAccount = paypalAccount;
     }
-
     // danqt - end
 
+    //danqt - accountDTO for errof in DAnqtDAO
+
+    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role) {
+        this.accountID = accountID;
+        this.password = password;
+        this.status = status;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+        this.role = role;
+    }
+    
+    
 
 //duchc account contructor for login as member
     public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role, int roleID) {

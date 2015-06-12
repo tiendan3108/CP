@@ -265,7 +265,7 @@ public class DuchcDAO {
                 store.setRoleID(rs.getInt("StoreOwnerID"));
                 store.setFullName(rs.getString("FullName"));
                 store.setAddress(rs.getString("Address"));
-                store.setFormula(rs.getDouble("Formula"));
+                store.setFormula(rs.getFloat("Formula"));
                 return store;
             }
             return null;
