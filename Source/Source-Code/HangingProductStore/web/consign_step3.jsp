@@ -12,18 +12,18 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-<!--        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-            </ul>
-        </li>-->
+        <!--        <li id="nofi">
+                    <a href="#">
+                        <i class="icon-bell"></i>
+                        <span class="badge badge-default">3</span>           
+                    </a>
+                    <ul class="fallback">
+                        <li style="margin-left: -40px"><a href="#">notification 1</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
+                    </ul>
+                </li>-->
     </jsp:attribute>
     <jsp:body>
 
@@ -122,57 +122,190 @@
                                                         <div class="form-horizontal">
 
                                                             <div class="form-group">
-                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Contact by </label>
+                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Liên lạc </label>
 
                                                                 <div class="radio-list col-md-8 col-sm-8">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-                                                                </div>
 
+                                                                    <c:if test="${empty member}">
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
+
+                                                                    </c:if>
+                                                                    <c:if test="${not empty member}">
+                                                                        <c:if test="${not empty member.phone and empty member.email}">
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
+                                                                            </c:if>
+                                                                            <c:if test="${not empty member.email and empty member.phone}">
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email" checked> Email </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
+                                                                            </c:if>
+                                                                            <c:if test="${not empty member.email and not empty member.phone}">
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both" checked> Cả 2 </label>
+                                                                            </c:if>
+
+                                                                    </c:if>
+                                                                </div>
                                                             </div>
 
-
-                                                            <div class="form-group" id="divPhone">
-                                                                <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại<span class="required">*</span> </label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                    <p class="help-block" id="erPhone"></p>
-
+                                                            <c:if test="${empty member}">
+                                                                <div class="form-group" id="divEmail" style="display: none;">
+                                                                    <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                    <div class="col-md-6 col-sm-7">
+                                                                        <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                        <p class="help-block" id="erEmail"></p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="form-group" id="divEmail" style="display: none;">
-                                                                <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email<span class="required">*</span></label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                    <p class="help-block" id="erEmail"></p>
+                                                                <div class="form-group" id="divPhone">
+                                                                    <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                    <div class="col-md-5 col-sm-6">
+                                                                        <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                        <p class="help-block" id="erPhone"></p>
+
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                            </c:if>
+
+                                                            <c:if test="${not empty member}">
+                                                                <c:if test="${not empty member.phone and empty member.email}">
+                                                                    <div class="form-group" id="divEmail">
+                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                        <div class="col-md-6 col-sm-7">
+                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                            <p class="help-block" id="erEmail"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group" id="divPhone" style="display: none;">
+                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                        <div class="col-md-5 col-sm-6">
+                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                            <p class="help-block" id="erPhone"></p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                                <c:if test="${not empty member.email and empty member.phone}">
+
+                                                                    <div class="form-group" id="divEmail"  style="display: none;">
+                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                        <div class="col-md-6 col-sm-7">
+                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                            <p class="help-block" id="erEmail"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group" id="divPhone">
+                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                        <div class="col-md-5 col-sm-6">
+                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                            <p class="help-block" id="erPhone"></p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                                <c:if test="${not empty member.phone and not empty member.email}">
+
+                                                                    <div class="form-group" id="divEmail">
+                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                        <div class="col-md-6 col-sm-7">
+                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                            <p class="help-block" id="erEmail"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group" id="divPhone">
+                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                        <div class="col-md-5 col-sm-6">
+                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                            <p class="help-block" id="erPhone"></p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                            </c:if>
 
                                                             <div class="form-group">
                                                                 <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
 
                                                                 <div class="radio-list col-md-8 col-sm-8">
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                                    <label class="radio-inline">
-                                                                        <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+                                                                    <c:if test="${empty member}">
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                                        <label class="radio-inline">
+                                                                            <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty member}">
+                                                                            <c:if test="${not empty member.paypalAccount}">
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdPayment" id="optionsRadios7" value="direct"> Tiền mặt </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdPayment" id="optionsRadios8" value="cc" checked> Tài khoản paypal </label>
+
+                                                                        </c:if>
+                                                                        <c:if test="${empty member.paypalAccount}">
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+                                                                            </c:if>
+                                                                        </c:if>
+
                                                                 </div>
 
                                                             </div>
+                                                            <c:if test="${empty member}">
+                                                                <div id="divCCNumber" class="form-group" style="display: none" >
+                                                                    <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                    <div class="col-md-6 col-sm-7">
+                                                                        <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
-                                                            <div id="divCCNumber" class="form-group" style="display: none" >
-                                                                <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
+                                                                        <p class="help-block" id="erPaypalAccount"></p>
+                                                                    </div>
+                                                                </div>    
+                                                            </c:if>
+                                                            <c:if test="${not empty member}">
+                                                                <c:if test="${empty member.paypalAccount}">
+                                                                    <div id="divCCNumber" class="form-group" style="display: none" >
+                                                                        <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                        <div class="col-md-6 col-sm-7">
+                                                                            <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
-                                                                    <p class="help-block" id="erPaypalAccount"></p>
-                                                                </div>
-                                                            </div>
+                                                                            <p class="help-block" id="erPaypalAccount"></p>
+                                                                        </div>
+                                                                    </div>    
+                                                                </c:if>
+                                                                <c:if test="${not empty member.paypalAccount}">
+                                                                    <div id="divCCNumber" class="form-group">
+                                                                        <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                        <div class="col-md-6 col-sm-7">
+                                                                            <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
+
+                                                                            <p class="help-block" id="erPaypalAccount"></p>
+                                                                        </div>
+                                                                    </div>    
+                                                                </c:if>
+                                                            </c:if>
+
+
                                                         </div>
                                                     </div>
 
@@ -190,11 +323,11 @@
                                          ">
                                         <div class="row">
                                             <div class="col-md-4 col-sm-4"> 
-                                                <button  name="btnAction" type="submit" value="backstep2" class=" btn-block btn-lg btn btn-primary"><i class="m-icon-big-swapleft m-icon-white"></i> TRỞ VỀ</button>
+                                                <button  name="btnAction" type="submit" value="backstep2" class=" btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</button>
                                             </div>
                                             <div class="col-md-4 col-sm-4"> </div>
                                             <div class="col-md-4 col-sm-4">
-                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <i class="m-icon-big-swapup m-icon-white"></i></button>
+                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
                                             </div>
 
                                         </div>
@@ -250,84 +383,84 @@
 
         }
     });
-    
-    function validation(){
-        if(jQuery("#form3").context.activeElement.value == 'backstep2'){
+
+    function validation() {
+        if (jQuery("#form3").context.activeElement.value == 'backstep2') {
             return true;
         }
         var check = true;
         var dateError = "";
-        
-        if($('#txtFullName').val().trim().length < 5 || $('#txtFullName').val().trim().length > 50){
+
+        if ($('#txtFullName').val().trim().length < 5 || $('#txtFullName').val().trim().length > 50) {
             $('#erFullName').html("<font color='red'>Yêu cầu 5-50 ký tự</font>");
             check = false;
         }
-        else{
+        else {
             $('#erFullName').html("");
         }
-        
+
         var fromDate = $('#txtFromDate').val().trim();
         var toDate = $('#txtToDate').val().trim();
-        if(fromDate.length == 0 ){
-            dateError += "<font color='red'>From date is required</font> ";
+        if (fromDate.length == 0) {
+            dateError += '<font color="red">Xin chọn "từ ngày"</font> ';
         }
-        if(toDate.length == 0 ){
-            if(dateError.length > 0){
-                dateError += "<font color='red'>and To date is required</font>";
-            }else{
-                dateError += "<font color='red'>To date is required</font>";
-            }   
+        if (toDate.length == 0) {
+            if (dateError.length > 0) {
+                dateError += '<font color="red">và "ngày cuối"</font>';
+            } else {
+                dateError += '<font color="red">Xin chọn "đến ngày"</font>';
+            }
         }
-        if(dateError.length > 0){
+        if (dateError.length > 0) {
             $('#erDate').html(dateError);
             check = false;
-        }else{
+        } else {
             $('#erDate').html("");
         }
-        
+
         var contact = $('input:radio[name="rdContact"]:checked').val();
-        if(contact == "phone"){
-            if($('#txtPhone').val().trim().length == 0){
+        if (contact == "phone") {
+            if ($('#txtPhone').val().trim().length == 0) {
                 $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
                 check = false;
             }
-            else{
+            else {
                 $('#erPhone').html("");
             }
         }
-        else if(contact == "email"){
-            if($('#txtEmail').val().trim().length == 0){
+        else if (contact == "email") {
+            if ($('#txtEmail').val().trim().length == 0) {
                 $('#erEmail').html("<font color='red'>Xin nhập email</font>");
                 check = false;
             }
-            else{
+            else {
                 $('#erEmail').html("");
             }
         }
-        else{
-            if($('#txtPhone').val().trim().length == 0){
+        else {
+            if ($('#txtPhone').val().trim().length == 0) {
                 $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
                 check = false;
             }
-            else{
+            else {
                 $('#erPhone').html("");
             }
-            if($('#txtEmail').val().trim().length == 0){
+            if ($('#txtEmail').val().trim().length == 0) {
                 $('#erEmail').html("<font color='red'>Xin nhập email</font>");
                 check = false;
             }
-            else{
+            else {
                 $('#erEmail').html("");
             }
         }
-        
+
         var payment = $('input:radio[name="rdPayment"]:checked').val();
-        if(payment == "cc"){
-            if($('#txtPaypalAccount').val().trim().length == 0){
-                $('#erPaypalAccount').html("<font color='red'>Xin nhập mã thẻ</font>");
+        if (payment == "cc") {
+            if ($('#txtPaypalAccount').val().trim().length == 0) {
+                $('#erPaypalAccount').html("<font color='red'>Xin nhập tài khoản</font>");
                 check = false;
             }
-            else{
+            else {
                 $('#erPaypalAccount').html("");
             }
         }

@@ -172,7 +172,7 @@
                                 <form id="form2"  action="ConsignServlet" method="POST">
                                     <div class="row">
                                         <div class="col-sm-4"> 
-                                            <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
+                                            <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
                                         </div>
                                         <!--                                    <div class="col-sm-4"> </div>
                                                                             <div class="col-sm-4">

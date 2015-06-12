@@ -9,6 +9,7 @@ import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StoreOwnerDTO;
+import hps.ultils.AmazonService;
 import hps.ultils.DBUltilities;
 import hps.ultils.GlobalVariables;
 import java.sql.Connection;
@@ -455,7 +456,7 @@ public class DuchcDAO {
     public boolean cancelProductStatus(int consignmentID) {
         return false;
     }
-
+    
     public AccountDTO login(String username, String password) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -523,6 +524,46 @@ public class DuchcDAO {
 
         }
         return null;
+    }
+    
+    public float getBasicPrice(String productName, String brand, int categoryID){
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String englishName = "";
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "SELECT EnglishName FROM Category WHERE (CategoryID = ?)";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, categoryID);
+            rs = stm.executeQuery();
+            
+            if (rs.next()) {
+                englishName = rs.getString("EnglishName");
+            }
+            AmazonService amazon = new AmazonService();
+            float basicPrice = amazon.getPrice(productName, brand, englishName);
+            
+            return basicPrice;
+        } catch (SQLException ex) {
+            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return -1;
     }
     
     
