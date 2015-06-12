@@ -126,7 +126,7 @@
             <c:set var="similarProducts" value="${requestScope.SIMILARPRODUCT}"/>
             <div class="row margin-bottom-40" style="margin-top: 500px">
                 <div class="col-md-12 col-sm-12">
-                    <h2>Similar Products</h2>
+                    <h2>Sản phẩm tương tự</h2>
                     <div class="owl-carousel owl-carousel4">
                         <c:if test="${not empty similarProducts}">
                             <c:forEach var="productItem" items="${similarProducts}">
@@ -140,7 +140,7 @@
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${productItem.productID}"/>
                                         </c:url>
-                                        <a href="${viewDetail}" class="btn btn-default add2cart">View Details</a>
+                                        <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi Tiết</a>
                                         <div class="sticker sticker-new"></div>
                                     </div>
                                 </div>
