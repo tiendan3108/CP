@@ -46,6 +46,7 @@ public class ProductDTO {
         this.consignedPrice = price;
         this.productStatusID = productStatusID;
     }
+
     public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, String image) {
         this.productID = productID;
         this.name = productName;
@@ -91,7 +92,7 @@ public class ProductDTO {
     }
 
     // constructor all tham so moi
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID,String orderID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID, String orderID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -107,17 +108,6 @@ public class ProductDTO {
         this.orderID = orderID;
     }
 
-    public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID) {
-        this.name = name;
-        this.serialNumber = serialNumber;
-        this.purchasedDate = purchasedDate;
-        this.categoryID = categoryID;
-        this.brand = brand;
-        this.description = description;
-        this.image = image;
-        this.productStatusID = productStatusID;
-    }
-
 //duchc product constuctor for add new product
     public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID) {
         this.name = name;
@@ -129,9 +119,8 @@ public class ProductDTO {
         this.image = image;
         this.productStatusID = productStatusID;
     }
-    
-    //duchc product constructor for get information of tracking product status
 
+    //duchc product constructor for get information of tracking product status
     public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String categoryName, String brand, String description, String image, int productStatusID, String status) {
         this.productID = productID;
         this.name = name;
@@ -284,7 +273,7 @@ public class ProductDTO {
         this.productStatusID = productStatusID;
     }
 
-public String getStatus() {
+    public String getStatus() {
         return status;
     }
 

@@ -31,8 +31,6 @@ public class AccountDTO {
     //danqt - end
 
 //duchc - begin
-    private int roleID; // id of member or storeowner base on role. If role is member, roleID is memberID. If storeowner, this is storeownerID
-    private double formula; // this will be used if role is storeowner
     //duchc - end
 
     //constructor with no parameter
@@ -270,20 +268,6 @@ public class AccountDTO {
         this.formula = formula;
     }
 
-public int getRoleID() {
-        return roleID;
-    }
 
-    public void setRoleID(int roleID) {
-        this.roleID = roleID;
-    }
-
-    public double getFormula() {
-        return formula;
-    }
-
-    public void setFormula(double formula) {
-        this.formula = formula;
-    }
 
 }
