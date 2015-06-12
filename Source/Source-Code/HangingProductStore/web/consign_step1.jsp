@@ -87,7 +87,7 @@
 
                                                         <div class="form-group">
                                                             <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số </label>
-                                                            <div class="col-md-4 col-sm-6">
+                                                            <div class="col-md-5 col-sm-6">
                                                                 <input id="txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                                 <p class="help-block" id="erSerialNumber"> </p>
                                                             </div>
@@ -95,7 +95,7 @@
 
                                                         <div class="form-group">
                                                             <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                            <div class="col-md-4 col-sm-6">
+                                                            <div class="col-md-5 col-sm-6">
                                                                 <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                                     <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                     <span class="input-group-btn">
@@ -111,7 +111,7 @@
 
                                                         <div class="form-group">
                                                             <label class="control-label col-md-4 col-sm-4">Loại <font color="red">*</font></label>
-                                                            <div class="col-md-4 col-sm-6">
+                                                            <div class="col-md-5 col-sm-6">
                                                                 <select id="txtCategory" name="txtCategory"  class="form-control" >
                                                                     <option value='' disabled selected style='display:none;'>Chọn...</option>
 
@@ -143,7 +143,7 @@
 
                                                         <div class="form-group">
                                                             <label class="control-label col-md-4 col-sm-4">Hãng</label>
-                                                            <div class="col-md-4 col-sm-6">
+                                                            <div class="col-md-5 col-sm-6">
                                                                 <input id="txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
 
                                                                 <span class="help-block" id="erBrand">
