@@ -12,6 +12,7 @@ import hps.dto.ConsignmentDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.StoreOwnerDTO;
+import hps.ultils.AmazonService;
 import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -84,6 +85,8 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("PRODUCT", product);
 
                 double basicPrice = 0;
+//                AmazonService amazon = new AmazonService();
+                
                 if (productName.toLowerCase().contains("gucci")) {
                     basicPrice = 50;
                     if (productName.toLowerCase().contains("t-shirt")) {
