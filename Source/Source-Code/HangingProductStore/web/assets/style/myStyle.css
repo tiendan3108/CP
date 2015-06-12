@@ -1,6 +1,6 @@
 /* General CSS */
 #wrapper{
-    min-height:600px;
+    min-height:400px;
     margin:auto;
     width: 80%
 }
@@ -126,7 +126,7 @@ footer.page-footer .footer-copyright {
     text-decoration: none;
     color:white; 
 }
-.link a:hover, a:visited{
+.link5 a:hover, a:visited{
     text-decoration: none;
     color:white;
 }
