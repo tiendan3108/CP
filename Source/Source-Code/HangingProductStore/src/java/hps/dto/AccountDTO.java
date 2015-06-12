@@ -29,6 +29,12 @@ public class AccountDTO {
     private float consignedPrice;
 
     //danqt - end
+
+//duchc - begin
+    private int roleID; // id of member or storeowner base on role. If role is member, roleID is memberID. If storeowner, this is storeownerID
+    private double formula; // this will be used if role is storeowner
+    //duchc - end
+
     //constructor with no parameter
     public AccountDTO() {
     }
@@ -80,6 +86,21 @@ public class AccountDTO {
     }
 
     // danqt - end
+
+
+//duchc account contructor for login as member
+    public AccountDTO(String accountID, String password, String status, String fullName, String address, String phone, String email, String paypalAccount, String role, int roleID) {
+        this.accountID = accountID;
+        this.password = password;
+        this.status = status;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+        this.role = role;
+        this.roleID = roleID;
+    }
 
     /**
      * @return the accountID
@@ -246,6 +267,22 @@ public class AccountDTO {
      * @param formula the formula to set
      */
     public void setFormula(float formula) {
+        this.formula = formula;
+    }
+
+public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    public double getFormula() {
+        return formula;
+    }
+
+    public void setFormula(double formula) {
         this.formula = formula;
     }
 

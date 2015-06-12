@@ -35,6 +35,11 @@ public class ConsignmentDTO {
     
     private ProductDTO product;
 
+ //duchc - begin 
+    private double minPrice;
+    private String storeOwnerName; // to show name on track product status
+    // duchc - end
+
     public ConsignmentDTO() {
     }
 
@@ -52,8 +57,8 @@ public class ConsignmentDTO {
         this.maxPrice = maxPrice;
     }
     
-    //duchc - contructor dùng cho Consign Servlet
-    public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String cardNumber, String cardOwner, String fromDate, String toDate, String status, int period, double maxPrice) {
+    // duchc Consignment new constructor for consign step 11/6/2015
+    public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String paypalAccount, String fromDate, String toDate, int period, double minPrice, double maxPrice, String createdDate, int consignmentStatusID) {
         this.consigmentID = consigmentID;
         this.productID = productID;
         this.memberID = memberID;
@@ -62,10 +67,14 @@ public class ConsignmentDTO {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.paypalAccount = paypalAccount;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.period = period;
+        this.minPrice = minPrice;
         this.maxPrice = maxPrice;
+        this.createdDate = createdDate;
+        this.consignmentStatusID = consignmentStatusID;
     }
 
     public String getConsigmentID() {
@@ -242,5 +251,21 @@ public class ConsignmentDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+ public String getStoreOwnerName() {
+        return storeOwnerName;
+    }
+
+    public void setStoreOwnerName(String storeOwnerName) {
+        this.storeOwnerName = storeOwnerName;
     }
 }

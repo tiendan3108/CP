@@ -82,7 +82,7 @@
                                                             <div class="form-group">
                                                                 <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
                                                                 <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.name}">d
+                                                                    <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.fullName}">
 
                                                                     <p class="help-block" id="erFullName"> </p>
                                                                 </div>
@@ -166,13 +166,13 @@
                                                             </div>
 
                                                             <div id="divCCNumber" class="form-group" style="display: none" >
-                                                                <label for="txtCardNumber" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
                                                                 <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtCardNumber" name="txtCardNumber" class="form-control"   placeholder="" value="${member.cardNumber}"/>
+                                                                    <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
-                                                                    <p class="help-block" id="erCardNumber"></p>
+                                                                    <p class="help-block" id="erPaypalAccount"></p>
                                                                 </div>
-                                                            </div>
+                                                            /div>
                                                         </div>
                                                     </div>
 
@@ -323,12 +323,12 @@
         
         var payment = $('input:radio[name="rdPayment"]:checked').val();
         if(payment == "cc"){
-            if($('#txtCardNumber').val().trim().length == 0){
-                $('#erCardNumber').html("<font color='red'>Xin nhập mã thẻ</font>");
+            if($('#txtPaypalAccount').val().trim().length == 0){
+                $('#erPaypalAccount').html("<font color='red'>Xin nhập mã thẻ</font>");
                 check = false;
             }
             else{
-                $('#erCardNumber').html("");
+                $('#erPaypalAccount').html("");
             }
         }
         return check;

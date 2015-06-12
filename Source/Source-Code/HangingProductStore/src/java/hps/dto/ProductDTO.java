@@ -29,6 +29,11 @@ public class ProductDTO {
     private Float consignedPrice;
     //danqt - end
 
+//duchc - begin
+    private String status; // for showing product status
+    private String categoryName; // for showing category Name
+    //duchc - end
+
     public ProductDTO() {
     }
 
@@ -111,6 +116,34 @@ public class ProductDTO {
         this.description = description;
         this.image = image;
         this.productStatusID = productStatusID;
+    }
+
+//duchc product constuctor for add new product
+    public ProductDTO(String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID) {
+        this.name = name;
+        this.serialNumber = serialNumber;
+        this.purchasedDate = purchasedDate;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+        this.image = image;
+        this.productStatusID = productStatusID;
+    }
+    
+    //duchc product constructor for get information of tracking product status
+
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String categoryName, String brand, String description, String image, int productStatusID, String status) {
+        this.productID = productID;
+        this.name = name;
+        this.serialNumber = serialNumber;
+        this.purchasedDate = purchasedDate;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+        this.image = image;
+        this.productStatusID = productStatusID;
+        this.status = status;
+        this.categoryName = categoryName;
     }
 
     public int getProductID() {
@@ -249,6 +282,22 @@ public class ProductDTO {
      */
     public void setProductStatusID(int productStatusID) {
         this.productStatusID = productStatusID;
+    }
+
+public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
 }

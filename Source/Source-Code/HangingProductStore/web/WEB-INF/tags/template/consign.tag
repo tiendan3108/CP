@@ -16,16 +16,16 @@
 <%@include file="/WEB-INF/jsp/base.jspf" %>
 <template:main htmlTitle="${htmlTitle}" bodyTitle="${bodyTitle}">
     <jsp:attribute name="headContent">
-        
+
         <!-- Theme styles START -->
         <link href="assets/style/myStyle.css" rel="stylesheet">
 
- <!-- Xài bootstrap template đẹp hơn -->
+        <!-- Xài bootstrap template đẹp hơn -->
         <!--        <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>-->
-        
+
         <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
         <!-- Theme styles END -->  
-        
+
         <!-- BEGIN PAGE LEVEL STYLES -->
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
 
@@ -44,8 +44,8 @@
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
 
         <!-- END PAGE LEVEL SCRIPTS -->
-        
-        
+
+
         <jsp:invoke fragment="extraHeadContent" />
     </jsp:attribute>
     <jsp:attribute name="bottomContent">
@@ -53,8 +53,8 @@
         <script type="text/javascript" src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-        
-        
+
+
         <script type="text/javascript" src="assets/global/plugins/select2/select2.min.js"></script>
 
 
@@ -117,23 +117,24 @@
         </script>
 
         <jsp:invoke fragment="extraBottomContent" />
-                
+
     </jsp:attribute>
     <jsp:attribute name="navigationContent">      
-        
-         <c:if test="${not empty MEMBER}">
-            <li><a href="shop-account.html">Tài khoản</a></li>
-            <li><a href="shop-wishlist.html">Danh sách yêu cầu</a></li>
+        <c:set var="member" value="${sessionScope.MEMBER}"/>
+        <c:if test="${empty member}">
+            <li><a data-toggle="modal"  data-target="#loginModal2">Đăng nhập</a></li>            
+            </c:if>
+        <c:if test="${not empty member}">
+            <li><a href="#">Đăng xuất</a></li>         
             </c:if>
         <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>
 
-        <c:if test="${empty MEMBER}">
-            <li><a href="LoginServlet">Đăng nhập</a></li>            
-            </c:if>
-            <c:if test="${not empty MEMBER}">
-            <li><a href="LoginServlet">Đăng xuất</a></li>            
-            </c:if>
-            <c:if test="${not empty MEMBER}">
+        
+
+        <c:if test="${not empty member}">
+            <li>Chào, <b>${MEMBER.fullName}</b></li>            
+               
+            
             <li id="nofi">
                 <a href="#">
                     <i class="icon-bell"></i>
@@ -147,7 +148,37 @@
                 </ul>
             </li>  
         </c:if>
-        
+            <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1 class="text-center">Đăng Nhập</h1>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <div class="row">
+                                <form class="form col-md-12 center-block" action="ConsignServlet" method="POST">
+                                    <div class="form-group">
+                                        <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                                    </div>
+                                    <div class="form-group">
+                                        <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                                        <input type="hidden" name="backlink" value="${backlink}"/>
+                                    </div>
+                                    <div>
+                                        <h5 style="color:red">${err}</h5>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" name="btnAction" value="login" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                        <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>
