@@ -175,7 +175,8 @@
             <li><a data-toggle="modal" data-target="#loginModal">Đăng Nhập</a></li> 
             </c:if>
             <c:if test="${not empty account}">
-            <li><a>${account.fullName}</a></li> 
+            <li><a href="LogoutServlet">Đăng Xuất</a></li> 
+            <li><a>${account.fullName}</a></li>           
         </c:if>        
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
