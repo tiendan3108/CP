@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class DanqtDAO {
 
-    public List<ProductDTO> getProductStatus(String storeOwnerID) {
+    public List<ProductDTO> getProductStatus(int storeOwnerID) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
@@ -35,7 +35,7 @@ public class DanqtDAO {
                     + " WHERE c.StoreOwnerID = ? AND p.ProductStatusID != ? AND p.ProductID = c.ProductID"
                     + " ORDER BY p.ProductStatusID";
             stm = conn.prepareStatement(query);
-            stm.setInt(1, Integer.parseInt(storeOwnerID));
+            stm.setInt(1, storeOwnerID);
             stm.setInt(2, 0);
             rs = stm.executeQuery();
             String productName, receivedDate, consignmentID;
@@ -384,50 +384,49 @@ public class DanqtDAO {
         }
     }
 
-    public AccountDTO checkLogin(String username, String password) {
-        Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement stm = null;
-        try {
-            conn = DBUltilities.makeConnection();
-            String query = "SELECT * from Account WHERE AccountID = ? and Password = ?";
-            stm = conn.prepareStatement(query);
-            stm.setString(1, username);
-            stm.setString(2, password);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                String AccountID = rs.getString("AccountID");
-                String Password = rs.getString("Password");
-                String Status = rs.getString("Status");
-                String FullName = rs.getString("FullName");
-                String Address = rs.getString("Address");
-                String Phone = rs.getString("Phone");
-                String Email = rs.getString("Email");
-                String PaypalAccount = rs.getString("PaypalAccount");
-                String Role = rs.getString("Role");
-                return new AccountDTO(AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role);
-            }
-            return null;
-        } catch (SQLException e) {
-            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-            return null;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
+//    public AccountDTO checkLogin(String username, String password) {
+//        Connection conn = null;
+//        ResultSet rs = null;
+//        PreparedStatement stm = null;
+//        try {
+//            conn = DBUltilities.makeConnection();
+//            String query = "SELECT * from Account WHERE AccountID = ? and Password = ?";
+//            stm = conn.prepareStatement(query);
+//            stm.setString(1, username);
+//            stm.setString(2, password);
+//            rs = stm.executeQuery();
+//            while (rs.next()) {
+//                String AccountID = rs.getString("AccountID");
+//                String Password = rs.getString("Password");
+//                String Status = rs.getString("Status");
+//                String FullName = rs.getString("FullName");
+//                String Address = rs.getString("Address");
+//                String Phone = rs.getString("Phone");
+//                String Email = rs.getString("Email");
+//                String PaypalAccount = rs.getString("PaypalAccount");
+//                String Role = rs.getString("Role");
+//                return new AccountDTO(AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role);
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+//            return null;
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
     public boolean publishOnWeb(ProductDTO product) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -435,7 +434,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
             String query = "UPDATE Product SET "
-                    + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, Image = ?, ProductStatusID = 3 "
+                    + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, ProductStatusID = 3 "
                     + "WHERE ProductID = ? AND ProductStatusID = 2";
             stm = conn.prepareStatement(query);
             stm.setString(1, product.getName());
@@ -443,8 +442,7 @@ public class DanqtDAO {
             stm.setInt(3, product.getCategoryID());
             stm.setString(4, product.getBrand());
             stm.setString(5, product.getDescription());
-            stm.setString(6, product.getImage());
-            stm.setInt(7, product.getProductID());
+            stm.setInt(6, product.getProductID());
             result = stm.executeUpdate();
             if (result > 0) {
                 return true;
@@ -464,6 +462,69 @@ public class DanqtDAO {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public int getCategoryIDByCategoryNameAndParentCategoryName(String parentCat, String childCat) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "SELECT CategoryID FROM Category WHERE CategoryName = ? AND ParentID = (SELECT CategoryID FROM Category WHERE CategoryName = ?)";
+            stm = con.prepareStatement(query);
+            stm.setString(1, childCat);
+            stm.setString(2, parentCat);
+            System.out.println(stm.toString());
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("CategoryID");
+            }
+            return -1;
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean updateProductImage(String image, int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "UPDATE Product SET Image = ? WHERE ProductID = ?";
+            stm = con.prepareStatement(query);
+            stm.setString(1, "assets/image/" + image);
+            stm.setInt(2, productID);
+            return (stm.executeUpdate() > 0);
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

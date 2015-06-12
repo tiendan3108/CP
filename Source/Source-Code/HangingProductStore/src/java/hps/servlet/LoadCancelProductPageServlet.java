@@ -39,9 +39,9 @@ public class LoadCancelProductPageServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            String ID = (String) session.getAttribute("ID");
+            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
-            if (ID == null) {
+            if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String temp_productID = request.getParameter("productID");

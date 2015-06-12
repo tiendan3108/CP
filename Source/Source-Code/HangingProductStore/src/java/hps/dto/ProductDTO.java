@@ -56,6 +56,15 @@ public class ProductDTO {
         this.description = description;
         this.image = image;
     }
+    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description)
+    {
+        this.productID = productID;
+        this.name = productName;
+        this.serialNumber = serialNumber;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+    }
     //danqt - end
 
     //ban cu anh huon DanqtDAO
@@ -272,6 +281,7 @@ public class ProductDTO {
     public void setProductStatusID(int productStatusID) {
         this.productStatusID = productStatusID;
     }
+
 
     public String getStatus() {
         return status;

@@ -6,21 +6,28 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
-import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
  * @author Tien Dan
  */
-public class LoadCustomerPageServlet extends HttpServlet {
+public class UploadImageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,20 +43,41 @@ public class LoadCustomerPageServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
-            String url = "";
-            if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-            } else {
-                String temp_productID = request.getParameter("productID");
-                DanqtDAO dao = new DanqtDAO();
-                int productID = Integer.parseInt(temp_productID);
-                AccountDTO customer = dao.getCustomerInforByProductID(productID);
-                request.setAttribute("customer", customer);
-                url = GlobalVariables.ORDERED_PAGE;
+            List<FileItem> items = null;
+            String temp_productID = "";
+            String filename = "";
+            int productID;
+            try {
+                items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+            } catch (FileUploadException e) {
+                Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, e);
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    switch (item.getFieldName()) {
+                        case "productID":
+                            temp_productID = item.getString();
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    String path = request.getServletContext().getRealPath("/") + "\\assets\\image";
+                    filename = FilenameUtils.getName(item.getName()); // Get filename.
+                    File file = new File(path, filename); // Define destination file.
+                    try {
+                        item.write(file); // Write to destination file.
+                    } catch (Exception ex) {
+                        Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            productID = Integer.parseInt(temp_productID);
+            DanqtDAO dao = new DanqtDAO();
+            dao.updateProductImage(filename, productID);
+            request.setAttribute("productID", productID);
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PUBLISH_PAGE_SERVLET);
+            rd.forward(request, response);
         }
     }
 

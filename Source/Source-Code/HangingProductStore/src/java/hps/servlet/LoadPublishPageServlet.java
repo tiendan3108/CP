@@ -5,11 +5,15 @@
  */
 package hps.servlet;
 
+import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
+import hps.dto.AccountDTO;
+import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,16 +41,29 @@ public class LoadPublishPageServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            String ID = (String) session.getAttribute("ID");
+            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
-            if (ID==null) {
+            if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-            }else{
+            } else {
                 String temp_productID = request.getParameter("productID");
-                int productID = Integer.parseInt(temp_productID);
+                int productID;
+                if (temp_productID != null) {
+                    productID = Integer.parseInt(temp_productID);
+
+                } else {
+                    productID = (int) request.getAttribute("productID");
+                }
                 ProductDAO dao = new ProductDAO();
+                CategoryDAO cateDao = new CategoryDAO();
+                List<CategoryDTO> parentCategories = cateDao.getParentCategory();
                 ProductDTO product = dao.getProductByID(productID);
+                String categoryName = cateDao.getCategoryName(product.getCategoryID());
+                List<CategoryDTO> sameLevelCat = cateDao.getCatSameLevel(product.getParentCategoryID());
+                request.setAttribute("productCat", categoryName);
+                request.setAttribute("sameLevelCat", sameLevelCat);
                 request.setAttribute("product", product);
+                request.setAttribute("parentCat", parentCategories);
                 url = GlobalVariables.PUBLISH_PAGE;
             }
             request.getRequestDispatcher(url).forward(request, response);

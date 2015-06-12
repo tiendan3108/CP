@@ -6,6 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
+import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
@@ -41,15 +42,13 @@ public class LoadManageProductPageServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DanqtDAO dao = new DanqtDAO();
-            String url = "";
             HttpSession session = request.getSession(false);
-            String ID = "1";
-            session.setAttribute("ID", ID);
-            String storeOwnerID = (String) session.getAttribute("ID");
-            if (storeOwnerID == null) {
+            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            String url = "";
+            if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                List<ProductDTO> result = dao.getProductStatus(storeOwnerID);
+                List<ProductDTO> result = dao.getProductStatus(user.getRoleID());
                 request.setAttribute("result", result);
                 url = GlobalVariables.MANAGERMENT_PAGE;
             }

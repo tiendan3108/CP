@@ -6,6 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
+import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
@@ -35,35 +36,28 @@ public class PublishOnWebServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
+            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
-            String ID = (String) session.getAttribute("ID");
-            if (ID == null) {
+            if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String action = request.getParameter("btnAction");
-                if (action.equals("cancel")) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET;
-                } else if (action.equals("publish")) {
-                    String temp_productID = request.getParameter("productID");
-                    int productID = Integer.parseInt(temp_productID);
-                    String productName = request.getParameter("txtProductName");
-                    String serialNumber = request.getParameter("txtSerialNumber");
-                    String temp_category = request.getParameter("txtCategory");
-                    int category = 7;
-                    String brand = request.getParameter("txtBrand");
-                    String description = request.getParameter("txtDescription");
-                    String image = "assets/image/GA400-4B_xlarge.png";
-                    // how to get image?
-                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, category, brand, description, image);
-                    DanqtDAO dao = new DanqtDAO();
-                    boolean flag = dao.publishOnWeb(product);
-                    if (flag) {
-                        url = GlobalVariables.SUCCESS_ACTION_PAGE;
-                    } else {
-                        url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                    }
+                String temp_productID = request.getParameter("productID");
+                int productID = Integer.parseInt(temp_productID);
+                String productName = request.getParameter("productName");
+                String serialNumber = request.getParameter("serialNumber");
+                String parentCat = request.getParameter("parentCat");
+                String childCat = request.getParameter("childCat");
+                String brand = request.getParameter("brand");
+                String description = request.getParameter("description");
+                DanqtDAO dao = new DanqtDAO();
+                int categoryID = dao.getCategoryIDByCategoryNameAndParentCategoryName(parentCat, childCat);
+                ProductDTO product = new ProductDTO(productID, productName, serialNumber, categoryID, brand, description);
+                boolean flag = dao.publishOnWeb(product);
+                if (flag) {
+                    url = GlobalVariables.SUCCESS_ACTION_PAGE;
+                } else {
+                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                 }
             }
             request.getRequestDispatcher(url).forward(request, response);
