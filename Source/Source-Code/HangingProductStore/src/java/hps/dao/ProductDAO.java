@@ -7,6 +7,7 @@ package hps.dao;
 
 import hps.dto.ProductDTO;
 import hps.ultils.DBUltilities;
+import hps.ultils.ProductStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +36,7 @@ public class ProductDAO {
                     + "And Product.ProductStatusID = ? "
                     + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
-            stm.setInt(1, 3);
+            stm.setInt(1, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
@@ -88,7 +89,7 @@ public class ProductDAO {
                     + "and Product.ProductStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
@@ -142,7 +143,7 @@ public class ProductDAO {
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             stm.setInt(2, productID);
-            stm.setInt(3, 3);
+            stm.setInt(3, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -205,9 +206,9 @@ public class ProductDAO {
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
             stm.setInt(2, parentCategoryID);
-            stm.setInt(3, 3);
+            stm.setInt(3, ProductStatus.ON_WEB);
             stm.setInt(4, next);
-            stm.setInt(5, 3);
+            stm.setInt(5, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -264,7 +265,7 @@ public class ProductDAO {
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
             stm.setInt(2, parentCategoryID);
-            stm.setInt(3, 3);
+            stm.setInt(3, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -312,9 +313,9 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             stm.setInt(3, next);
-            stm.setInt(4, 3);
+            stm.setInt(4, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -369,7 +370,7 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -417,7 +418,7 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, parentCategoryID);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             stm.setInt(3, next);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -473,7 +474,7 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, parentcategoryID);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -521,7 +522,7 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             stm.setInt(3, next);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -578,7 +579,7 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, name);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -621,7 +622,7 @@ public class ProductDAO {
                     + "And Product.ProductStatusID = ? ";
             stm = con.prepareStatement(query);
             stm.setInt(1, seasonId);
-            stm.setInt(2, 3);
+            stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -667,7 +668,7 @@ public class ProductDAO {
             con = DBUltilities.makeConnection();
             String sql = "update Product set ProductStatusID = ?, OrderID = ? where ProductID=?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, 4);
+            stm.setInt(1, ProductStatus.ORDERED);
             stm.setString(2, orderId);
             stm.setInt(3, productId);
             stm.executeUpdate();
