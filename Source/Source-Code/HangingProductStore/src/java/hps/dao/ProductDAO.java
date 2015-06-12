@@ -30,8 +30,12 @@ public class ProductDAO {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select top 8 * from Product,Category Where Product.CategoryID = Category.CategoryID order by Product.ProductID desc";
+            String query = "select top 8 * from Product,Category "
+                    + "Where Product.CategoryID = Category.CategoryID "
+                    + "And Product.ProductStatusID = ? "
+                    + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
+            stm.setInt(1, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
@@ -78,9 +82,13 @@ public class ProductDAO {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select * from Product,Category Where Product.CategoryID = Category.CategoryID and ProductID = ?";
+            String query = "select * from Product,Category "
+                    + "Where Product.CategoryID = Category.CategoryID "
+                    + "and ProductID = ? "
+                    + "and Product.ProductStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
+            stm.setInt(2, 3);
             rs = stm.executeQuery();
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
@@ -129,10 +137,12 @@ public class ProductDAO {
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "and Product.CategoryID = ? "
                     + "and Product.ProductID != ? "
+                    + "and Product.ProductStatusID = ? "
                     + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             stm.setInt(2, productID);
+            stm.setInt(3, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -185,15 +195,19 @@ public class ProductDAO {
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductName like ? "
                     + "And Category.ParentID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
-                    + "   FROM Product "
+                    + "   FROM Product a"
+                    + "   Where a.ProductStatusID = ?"
                     + "   ORDER BY ProductID ASC) "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
             stm.setInt(2, parentCategoryID);
-            stm.setInt(3, next);
+            stm.setInt(3, 3);
+            stm.setInt(4, next);
+            stm.setInt(5, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -245,10 +259,12 @@ public class ProductDAO {
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductName like ? "
                     + "And Category.ParentID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
             stm.setInt(2, parentCategoryID);
+            stm.setInt(3, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -287,14 +303,18 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.CategoryID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
-                    + "   FROM Product "
+                    + "   FROM Product a "
+                    + "   Where a.ProductStatusID = ? "
                     + "   ORDER BY ProductID ASC) "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
-            stm.setInt(2, next);
+            stm.setInt(2, 3);
+            stm.setInt(3, next);
+            stm.setInt(4, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -345,9 +365,11 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.CategoryID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
+            stm.setInt(2, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -387,6 +409,7 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Category.ParentID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
                     + "   FROM Product "
@@ -394,7 +417,8 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, parentCategoryID);
-            stm.setInt(2, next);
+            stm.setInt(2, 3);
+            stm.setInt(3, next);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -445,9 +469,11 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Category.ParentID = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, parentcategoryID);
+            stm.setInt(2, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -487,6 +513,7 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductName like ? "
+                    + "And Product.ProductStatusID = ? "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
                     + "   FROM Product "
@@ -494,7 +521,8 @@ public class ProductDAO {
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, "%" + name + "%");
-            stm.setInt(2, next);
+            stm.setInt(2, 3);
+            stm.setInt(3, next);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -546,9 +574,11 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductName like ? "
+                    + "And Product.ProductStatusID = ? "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, name);
+            stm.setInt(2, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -587,9 +617,11 @@ public class ProductDAO {
                     + "FROM Product, Product_Season, Category "
                     + "WHERE Product.ProductID = Product_Season.ProductID "
                     + "And Product.CategoryID = Category.CategoryID "
-                    + "And Product_Season.SeasonID = ? ";
+                    + "And Product_Season.SeasonID = ? "
+                    + "And Product.ProductStatusID = ? ";
             stm = con.prepareStatement(query);
             stm.setInt(1, seasonId);
+            stm.setInt(2, 3);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
