@@ -610,4 +610,35 @@ public class DanqtDAO {
         }
         return null;
     }
+
+    public boolean completeOrderedProduct(String consignmentID) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        int result = 0;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
+
+            query = "UPDATE Product SET ProductStatusID = 5 WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND ProductStatusID = 4";
+            stm = conn.prepareCall(query);
+            stm.setString(1, consignmentID);
+            result = stm.executeUpdate();
+            return (result > 0);
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

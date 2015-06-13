@@ -2,28 +2,29 @@
 <template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40 ">
-            <!-- BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-5">
+        <div class="sidebar col-md-3 col-sm-5">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix dropdown">
-                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                         <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
-                                <a href="./consignment?search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                                <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
                             </li>
-                            <li class="list-group-item clearfix active">
+                            <li class="list-group-item clearfix">
                                 <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href="./consignment?accepted"><i class="fa fa-angle-right"></i> Yêu cầu đã duyệt</a>
                             </li>
                         </ul>
                     </li>
-                    <li class="list-group-item clearfix dropdown">
+                    <li class="list-group-item clearfix dropdown active open">
                         <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
                         <ul class="dropdown-menu">
                             <li class="list-group-item clearfix">
                                 <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
                             </li>
-                            <li class="list-group-item clearfix">
+                            <li class="list-group-item clearfix active">
                                 <a href="LoadManageProductPageServlet"><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
                             </li>
                         </ul>
