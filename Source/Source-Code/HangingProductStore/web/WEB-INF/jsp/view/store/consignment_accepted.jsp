@@ -14,7 +14,7 @@
         <script>
             $(function () {
                 $("#searchInput").autocomplete({
-                    source: "consignment?search",
+                    source: "consignment?search&accepted",
                     minLength: 2,
                     select: function (event, ui) {
                     }

@@ -75,8 +75,14 @@ public class ConsignmentServlet extends HttpServlet {
 
             } else if (request.getParameter("search") != null) {
                 if (request.getParameter("term") != null) {
-                    List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), REQUEST_WAITING);
+                    List<String> list;
+                    int status = REQUEST_WAITING;
+                    if (request.getParameter("accepted") != null) {
+                        status = REQUEST_ACCEPTED;
+                    }
+                    list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), status);
 
+                    
                     /* Return data format: ["a", "b", "c"] */
                     String json = new Gson().toJson(list);
                     response.setContentType("application/json;charset=UTF-8");
