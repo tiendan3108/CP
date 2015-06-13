@@ -9,6 +9,7 @@ import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.Cart;
+import hps.dto.OrderDTO;
 import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,57 +45,68 @@ public class CompleteOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String url;
             JavaUltilities lib = new JavaUltilities();
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
             String orderID = lib.randomString(10);
             int customerID = 5;
+            OrderDAO orderDao = new OrderDAO();
+            ProductDAO productDao = new ProductDAO();
             HttpSession session = request.getSession();
             if (session != null) {
                 AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
-                if (account != null) {
-                    customerID = account.getRoleID();
-                } else {
-                    customerID = 5;
-                }
-            } else {
-                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
-                rd.forward(request, response);
-            }
-            OrderDAO orderDao = new OrderDAO();
-            ProductDAO productDao = new ProductDAO();
-            //insert order
-            orderDao.insertOrder(orderID, customerID, email, phone);
-            List<Integer> itemIDs = new ArrayList<Integer>();
-            //update product status
-            Cart cart = (Cart) session.getAttribute("CART");
-            if (cart != null) {
-                itemIDs = cart.getItems();
-                for (int i = 0; i < itemIDs.size(); i++) {
-                    int productID = itemIDs.get(i);
-                    productDao.updateStatusToOrdered(productID, orderID);
-                }
-                session.removeAttribute("CART");
-            } else {
-                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
-                rd.forward(request, response);
-            }
-            //send sms
-            if (phone != null) {
-                phone = "+84" + phone.substring(1);
+                Cart cart = (Cart) session.getAttribute("CART");
+                if (cart != null) {
+                    if (account != null) {
+                        customerID = account.getRoleID();
+                        String fullname = account.getFullName();
+                        String address = account.getAddress();
+                        OrderDTO order = new OrderDTO();
+                        order.setOrderID(orderID);
+                        order.setCustomerID(customerID);
+                        order.setEmail(email);
+                        order.setPhone(phone);
+                        order.setAddress(address);
+                        order.setFullName(fullname);
+                        orderDao.insertOrderWithMemberInfo(order);
+                    } else {
+                        customerID = 5;
+                        orderDao.insertOrder(orderID, customerID, email, phone);
+                    }
+                    List<Integer> itemIDs = new ArrayList<Integer>();
+                    //update product status              
+                    itemIDs = cart.getItems();
+                    for (int i = 0; i < itemIDs.size(); i++) {
+                        int productID = itemIDs.get(i);
+                        productDao.updateStatusToOrdered(productID, orderID);
+                    }
+                    session.removeAttribute("CART");
+                    //send sms
+                    if (phone != null) {
+                        phone = "+84" + phone.substring(1);
 //                try {
 //                    lib.sendSMS("Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + ". Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy", phone);
 //                } catch (TwilioRestException ex) {
 //                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
 //                }
-            }
-            //send email
-            if (email != null) {
+                    }
+                    //send email
+                    if (email != null) {
 //                String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
 //                lib.sendEmail(email, "Xác nhận đơn hàng", body);
+                    }
+                    url = "completeOrder.jsp";
+                } else {
+                    url = "HomeServlet";
+                }
+            } else {
+                url = "HomeServlet";
+
             }
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
-        response.sendRedirect("completeOrder.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

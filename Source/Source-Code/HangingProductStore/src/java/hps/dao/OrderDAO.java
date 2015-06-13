@@ -5,6 +5,7 @@
  */
 package hps.dao;
 
+import hps.dto.OrderDTO;
 import hps.ultils.DBUltilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +36,41 @@ public class OrderDAO {
             stm.setDate(3, new java.sql.Date(date.getTime()));
             stm.setString(4, email);
             stm.setString(5, phone);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean insertOrderWithMemberInfo(OrderDTO order) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        Date date = new Date();
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?)";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, order.getOrderID());
+            stm.setInt(2, order.getCustomerID());
+            stm.setDate(3, new java.sql.Date(date.getTime()));
+            stm.setString(4, order.getEmail());
+            stm.setString(5, order.getFullName());
+            stm.setString(6, order.getAddress());
+            stm.setString(7, order.getPhone());
+            stm.setFloat(8, order.getTotalPrice());
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
