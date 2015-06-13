@@ -12,254 +12,232 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <!--        <li id="nofi">
-                    <a href="#">
-                        <i class="icon-bell"></i>
-                        <span class="badge badge-default">3</span>           
-                    </a>
-                    <ul class="fallback">
-                        <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                    </ul>
-                </li>-->
+
     </jsp:attribute>
     <jsp:body>
+        <div class="row margin-bottom-40">
+
+            <!-- BEGIN PAGE CONTENT-->
 
 
-        <!-- BEGIN PAGE CONTENT-->
+            <!-- BEGIN DIV STEP3 -->
+            <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
+                <div id="divStep3" class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="portlet box " id="form_wizard_1">
+
+                            <div class="portlet-body form">
+                                <div class="form-horizontal" id="submit_form">
+                                    <div class="form-wizard">
+                                        <div class="form-body">
+                                            <ul class="nav nav-pills nav-justified steps" >
+
+                                                <li class="done">
+                                                    <a id="ltap1" class="step">
+                                                        <span class="number">
+                                                            1 </span>
+                                                        <span class="desc">
+                                                            <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
+                                                    </a>
+                                                </li>
+                                                <li class="done">
+                                                    <a id="ltap2" class="step">
+                                                        <span class="number">
+                                                            2 </span>
+                                                        <span class="desc">
+                                                            <i class="fa fa-check"></i> Chọn cửa hàng</span>
+                                                    </a>
+                                                </li>
+                                                <li class="active">
+                                                    <a id="ltap3"  class="step active">
+                                                        <span class="number">
+                                                            3 </span>
+                                                        <span class="desc" >
+                                                            <i class="fa fa-check"></i><b> Thông tin chi tiết</b></span>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
 
 
-        <!-- BEGIN DIV STEP3 -->
-        <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
-            <div id="divStep3" class="row">
-                <div class="col-md-12 col-sm-12">
-                    <div class="portlet box " id="form_wizard_1">
+                                            <c:set var="member" value="${sessionScope.ACCOUNT}"/>
+                                            <div class="tab-content">
 
-                        <div class="portlet-body form">
-                            <div class="form-horizontal" id="submit_form">
-                                <div class="form-wizard">
-                                    <div class="form-body">
-                                        <ul class="nav nav-pills nav-justified steps" >
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-horizontal">
 
-                                            <li class="done">
-                                                <a id="ltap1" class="step">
-                                                    <span class="number">
-                                                        1 </span>
-                                                    <span class="desc">
-                                                        <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
-                                                </a>
-                                            </li>
-                                            <li class="done">
-                                                <a id="ltap2" class="step">
-                                                    <span class="number">
-                                                        2 </span>
-                                                    <span class="desc">
-                                                        <i class="fa fa-check"></i> Chọn cửa hàng</span>
-                                                </a>
-                                            </li>
-                                            <li class="active">
-                                                <a id="ltap3"  class="step active">
-                                                    <span class="number">
-                                                        3 </span>
-                                                    <span class="desc" >
-                                                        <i class="fa fa-check"></i><b> Thông tin sản phẩm</b></span>
-                                                </a>
-                                            </li>
+                                                                <div class="form-group">
+                                                                    <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
+                                                                    <div class="col-md-8 col-sm-8">
+                                                                        <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.fullName}">
 
-                                        </ul>
-
-                                        
-                                        <c:set var="member" value="${sessionScope.ACCOUNT}"/>
-                                        <div class="tab-content">
-
-                                            <div>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-horizontal">
-
-                                                            <div class="form-group">
-                                                                <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <input type="text" id="txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="" value="${member.fullName}">
-
-                                                                    <p class="help-block" id="erFullName"> </p>
+                                                                        <p class="help-block" id="erFullName"> </p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="form-group">
-                                                                <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <textarea id="txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" >${member.address}</textarea>
-                                                                    <span class="help-block" id="erAddress">
-                                                                    </span>
+                                                                <div class="form-group">
+                                                                    <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                                                    <div class="col-md-8 col-sm-8">
+                                                                        <textarea id="txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" >${member.address}</textarea>
+                                                                        <span class="help-block" id="erAddress">
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="form-group">
-                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Liên lạc </label>
+                                                                <div class="form-group">
+                                                                    <label for="" class="col-md-4 col-sm-4 control-label"> Liên lạc </label>
 
-                                                                <div class="radio-list col-md-8 col-sm-8">
+                                                                    <div class="radio-list col-md-8 col-sm-8">
 
-                                                                    <c:if test="${empty member}">
-                                                                        <label class="radio-inline">
-                                                                            <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
-                                                                        <label class="radio-inline">
-                                                                            <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                        <label class="radio-inline">
-                                                                            <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-
-                                                                    </c:if>
-                                                                    <c:if test="${not empty member}">
-                                                                        <c:if test="${not empty member.phone and empty member.email}">
+                                                                        <c:if test="${empty member}">
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-                                                                            </c:if>
-                                                                            <c:if test="${not empty member.email and empty member.phone}">
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email" checked> Email </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-                                                                            </c:if>
-                                                                            <c:if test="${not empty member.email and not empty member.phone}">
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both" checked> Cả 2 </label>
-                                                                            </c:if>
 
-                                                                    </c:if>
-                                                                </div>
-                                                            </div>
-
-                                                            <c:if test="${empty member}">
-                                                                <div class="form-group" id="divEmail" style="display: none;">
-                                                                    <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                    <div class="col-md-8 col-sm-8">
-                                                                        <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                        <p class="help-block" id="erEmail"></p>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group" id="divPhone">
-                                                                    <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                    <div class="col-md-4 col-sm-6">
-                                                                        <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                        <p class="help-block" id="erPhone"></p>
-
-                                                                    </div>
-                                                                </div>
-                                                            </c:if>
-
-                                                            <c:if test="${not empty member}">
-                                                                <c:if test="${not empty member.phone and empty member.email}">
-                                                                    <div class="form-group" id="divEmail">
-                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-8 col-sm-8">
-                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                            <p class="help-block" id="erEmail"></p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group" id="divPhone" style="display: none;">
-                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-4 col-sm-6">
-                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                            <p class="help-block" id="erPhone"></p>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-                                                                <c:if test="${not empty member.email and empty member.phone}">
-
-                                                                    <div class="form-group" id="divEmail"  style="display: none;">
-                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-8 col-sm-8">
-                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                            <p class="help-block" id="erEmail"></p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group" id="divPhone">
-                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-4 col-sm-6">
-                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                            <p class="help-block" id="erPhone"></p>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-                                                                <c:if test="${not empty member.phone and not empty member.email}">
-
-                                                                    <div class="form-group" id="divEmail">
-                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-8 col-sm-8">
-                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                            <p class="help-block" id="erEmail"></p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group" id="divPhone">
-                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-4 col-sm-6">
-                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                            <p class="help-block" id="erPhone"></p>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-                                                            </c:if>
-
-                                                            <div class="form-group">
-                                                                <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
-
-                                                                <div class="radio-list col-md-8 col-sm-8">
-                                                                    <c:if test="${empty member}">
-                                                                        <label class="radio-inline">
-                                                                            <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                                        <label class="radio-inline">
-                                                                            <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
                                                                         </c:if>
                                                                         <c:if test="${not empty member}">
-                                                                            <c:if test="${not empty member.paypalAccount}">
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdPayment" id="optionsRadios7" value="direct"> Tiền mặt </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdPayment" id="optionsRadios8" value="cc" checked> Tài khoản paypal </label>
+                                                                            <c:if test="${not empty member.phone and empty member.email}">
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty member.email and empty member.phone}">
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email" checked> Email </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty member.email and not empty member.phone}">
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both" checked> Cả 2 </label>
+                                                                                </c:if>
 
                                                                         </c:if>
-                                                                        <c:if test="${empty member.paypalAccount}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <c:if test="${empty member}">
+                                                                    <div class="form-group" id="divEmail" style="display: none;">
+                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                            <p class="help-block" id="erEmail"></p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group" id="divPhone">
+                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                        <div class="col-md-4 col-sm-6">
+                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                            <p class="help-block" id="erPhone"></p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+
+                                                                <c:if test="${not empty member}">
+                                                                    <c:if test="${not empty member.phone and empty member.email}">
+                                                                        <div class="form-group" id="divEmail">
+                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                            <div class="col-md-8 col-sm-8">
+                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                                <p class="help-block" id="erEmail"></p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group" id="divPhone" style="display: none;">
+                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                            <div class="col-md-4 col-sm-6">
+                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                                <p class="help-block" id="erPhone"></p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty member.email and empty member.phone}">
+
+                                                                        <div class="form-group" id="divEmail"  style="display: none;">
+                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                            <div class="col-md-8 col-sm-8">
+                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                                <p class="help-block" id="erEmail"></p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group" id="divPhone">
+                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                            <div class="col-md-4 col-sm-6">
+                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                                <p class="help-block" id="erPhone"></p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty member.phone and not empty member.email}">
+
+                                                                        <div class="form-group" id="divEmail">
+                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
+                                                                            <div class="col-md-8 col-sm-8">
+                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                                <p class="help-block" id="erEmail"></p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group" id="divPhone">
+                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                            <div class="col-md-4 col-sm-6">
+                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                                <p class="help-block" id="erPhone"></p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:if>
+                                                                </c:if>
+
+                                                                <div class="form-group">
+                                                                    <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
+
+                                                                    <div class="radio-list col-md-8 col-sm-8">
+                                                                        <c:if test="${empty member}">
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
                                                                             </c:if>
-                                                                        </c:if>
+                                                                            <c:if test="${not empty member}">
+                                                                                <c:if test="${not empty member.paypalAccount}">
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdPayment" id="optionsRadios7" value="direct"> Tiền mặt </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdPayment" id="optionsRadios8" value="cc" checked> Tài khoản paypal </label>
+
+                                                                            </c:if>
+                                                                            <c:if test="${empty member.paypalAccount}">
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+                                                                                </c:if>
+                                                                            </c:if>
+
+                                                                    </div>
 
                                                                 </div>
-
-                                                            </div>
-                                                            <c:if test="${empty member}">
-                                                                <div id="divCCNumber" class="form-group" style="display: none" >
-                                                                    <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                    <div class="col-md-8 col-sm-8">
-                                                                        <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
-
-                                                                        <p class="help-block" id="erPaypalAccount"></p>
-                                                                    </div>
-                                                                </div>    
-                                                            </c:if>
-                                                            <c:if test="${not empty member}">
-                                                                <c:if test="${empty member.paypalAccount}">
+                                                                <c:if test="${empty member}">
                                                                     <div id="divCCNumber" class="form-group" style="display: none" >
                                                                         <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
                                                                         <div class="col-md-8 col-sm-8">
@@ -269,91 +247,103 @@
                                                                         </div>
                                                                     </div>    
                                                                 </c:if>
-                                                                <c:if test="${not empty member.paypalAccount}">
-                                                                    <div id="divCCNumber" class="form-group">
-                                                                        <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                        <div class="col-md-8 col-sm-8">
-                                                                            <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
+                                                                <c:if test="${not empty member}">
+                                                                    <c:if test="${empty member.paypalAccount}">
+                                                                        <div id="divCCNumber" class="form-group" style="display: none" >
+                                                                            <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                            <div class="col-md-8 col-sm-8">
+                                                                                <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
-                                                                            <p class="help-block" id="erPaypalAccount"></p>
-                                                                        </div>
-                                                                    </div>    
+                                                                                <p class="help-block" id="erPaypalAccount"></p>
+                                                                            </div>
+                                                                        </div>    
+                                                                    </c:if>
+                                                                    <c:if test="${not empty member.paypalAccount}">
+                                                                        <div id="divCCNumber" class="form-group">
+                                                                            <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                            <div class="col-md-8 col-sm-8">
+                                                                                <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
+
+                                                                                <p class="help-block" id="erPaypalAccount"></p>
+                                                                            </div>
+                                                                        </div>    
+                                                                    </c:if>
                                                                 </c:if>
-                                                            </c:if>
 
 
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-horizontal">
-
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm <font color="red">*</font></label>
-                                                                <div class="col-md-8 col-sm-8" align="center">
-                                                                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                        <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                                                                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
-                                                                        </div>
-                                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
-                                                                        </div>
-                                                                        <div >
-                                                                            <span class="btn btn-info btn-file">
-                                                                                <span class="fileinput-new btn " >
-                                                                                    CHỌN ẢNH </span>
-                                                                                <span class="fileinput-exists btn">
-                                                                                    THAY ẢNH </span>
-                                                                                <input  type="file" id="txtImage" name="txtImage" id="txtImage" />
-                                                                            </span>
-                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                                XÓA </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="help-block" id="erImage">
-
-                                                                    </span>
-                                                                </div>
                                                             </div>
-
-                                                            <div class="form-group">
-                                                                <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <div  class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
-                                                                        <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
-                                                                        <span class="input-group-addon">
-                                                                            đến </span>
-                                                                        <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
-                                                                    </div>
-
-                                                                    <span class="help-block" id="erDate">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-
                                                         </div>
-                                                    </div>
 
-                                                </div>													
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <div class="form-horizontal">
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm <font color="red">*</font></label>
+                                                                    <div class="col-md-8 col-sm-8" align="center">
+                                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                            <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                                                <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                                            </div>
+                                                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                                            </div>
+                                                                            <div >
+                                                                                <span class="btn btn-info btn-file">
+                                                                                    <span class="fileinput-new btn " >
+                                                                                        CHỌN ẢNH </span>
+                                                                                    <span class="fileinput-exists btn">
+                                                                                        THAY ẢNH </span>
+                                                                                    <input  type="file" id="txtImage" name="txtImage" id="txtImage" />
+                                                                                </span>
+                                                                                <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                    XÓA </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span class="help-block" id="erImage">
+
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
+                                                                    <div class="col-md-8 col-sm-8">
+                                                                        <div  class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
+                                                                            <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
+                                                                            <span class="input-group-addon">
+                                                                                đến </span>
+                                                                            <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
+                                                                        </div>
+
+                                                                        <span class="help-block" id="erDate">
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>													
+
+                                                </div>
 
                                             </div>
-
                                         </div>
-                                    </div>
-                                    <div class="form-actions" style="
-                                         padding-top: 30px;
-                                         padding-bottom: 5px;
-                                         padding-right: 5px;
-                                         padding-left: 5px;
-                                         ">
-                                        <div class="row">
-                                            <div class="col-md-4 col-sm-4"> 
-                                                <button  name="btnAction" type="submit" value="backstep2" class=" btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</button>
-                                            </div>
-                                            <div class="col-md-4 col-sm-4"> </div>
-                                            <div class="col-md-4 col-sm-4">
-                                                <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
-                                            </div>
+                                        <div class="form-actions" style="
+                                             padding-top: 30px;
+                                             padding-bottom: 5px;
+                                             padding-right: 5px;
+                                             padding-left: 5px;
+                                             ">
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4"> 
+                                                    <a  href="ConsignServlet?btnAction=backstep2" class=" btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</a>
+                                                </div>
+                                                <div class="col-md-4 col-sm-4"> </div>
+                                                <div class="col-md-4 col-sm-4">
+                                                    <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -361,15 +351,14 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- END DIV STEP3 -->
-        </form>
+                <!-- END DIV STEP3 -->
+            </form>
 
 
 
 
 
-
+        </div>
     </jsp:body>
 </template:consign>
 <script type="text/javascript">
@@ -488,11 +477,11 @@
                 $('#erPaypalAccount').html("");
             }
         }
-        
-        if($('#txtImage').val() == ""){
+
+        if ($('#txtImage').val() == "") {
             $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
-                check = false;
-        }else{
+            check = false;
+        } else {
             $('#erImage').html("");
         }
         return check;

@@ -18,29 +18,18 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-<!--        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-            </ul>
-        </li>-->
+
     </jsp:attribute>
     <jsp:body>
+        <div class="row margin-bottom-40">
+
+            <!-- BEGIN PAGE CONTENT-->
 
 
-        <!-- BEGIN PAGE CONTENT-->
+            <!-- BEGIN DIV STEP2 -->
 
+            <div id="divStep2" class="row" >
 
-        <!-- BEGIN DIV STEP2 -->
-        
-        <div id="divStep2" class="row" >
-            
                 <div class="portlet box " id="form_wizard_1">
 
                     <div class="portlet-body form">
@@ -78,15 +67,15 @@
                                             <div class="progress-bar progress-bar-success">
                                             </div>
                                     </div> -->
-                                    <hr/>
+
                                     <div class="tab-content" style="text-align: center" >
                                         <h3>Yêu cầu ký gửi của bạn đã được gửi!</h3>
                                         <h3><b>${sessionScope.storeName}</b> sẽ liên lạc với bạn ngay khi có thể.</h3>
                                         <c:if test="${empty sessionScope.MEMBER}">
                                             <h3>Mã ký gửi của bạn là <b>[${sessionScope.trackId}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái hàng ký gửi.</h3>
                                         </c:if>
-                                            <h3>Nhấn vào <a href="trackProductStatus_guest.jsp">đây</a> để kiểm tra.</h3>
-                                        
+                                        <h3>Nhấn vào <a href="trackProductStatus_guest.jsp">đây</a> để kiểm tra.</h3>
+
                                     </div>
                                 </div>
                                 <div class="form-action" style="
@@ -97,11 +86,11 @@
                                      ">
                                     <div class="row">
                                         <div class="col-sm-4"> 
-                                            
+
                                         </div>
                                         <div class="col-sm-4"> </div>
                                         <div class="col-sm-4">
-                                            
+
                                         </div>
 
                                     </div>
@@ -111,12 +100,12 @@
                     </div>
                 </div>
             </div>
-        
-</form>
-        <!-- END DIV STEP2 -->
 
 
+            <!-- END DIV STEP2 -->
 
+
+        </div>
     </jsp:body>
 </template:consign>
 <script type="text/javascript">

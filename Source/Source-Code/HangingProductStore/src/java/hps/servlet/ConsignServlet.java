@@ -87,33 +87,33 @@ public class ConsignServlet extends HttpServlet {
 
                 double basicPrice = 0;
                 DuchcDAO dDAO = new DuchcDAO();
-//                //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
-//                basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
+                //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
+                basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
 
-                if (productName.toLowerCase().contains("gucci")) {
-                    basicPrice = 50;
-                    if (productName.toLowerCase().contains("t-shirt")) {
-                        basicPrice = 48;
-                    } else if (productName.toLowerCase().contains("pant")) {
-                        basicPrice = 49;
-                    }
-                } else if (productName.toLowerCase().contains("pt")) {
-                    basicPrice = 30;
-                    if (productName.toLowerCase().contains("t-shirt")) {
-                        basicPrice = 32;
-                    } else if (productName.toLowerCase().contains("pant")) {
-                        basicPrice = 34;
-                    }
-                } else if (productName.toLowerCase().contains("ck")) {
-                    basicPrice = 35.5;
-                    if (productName.toLowerCase().contains("t-shirt")) {
-                        basicPrice = 36;
-                    } else if (productName.toLowerCase().contains("pant")) {
-                        basicPrice = 37;
-                    }
-                } else if (productName.toLowerCase().contains("jordan")) {
-                    basicPrice = 35.5;
-                }
+//                if (productName.toLowerCase().contains("gucci")) {
+//                    basicPrice = 50;
+//                    if (productName.toLowerCase().contains("t-shirt")) {
+//                        basicPrice = 48;
+//                    } else if (productName.toLowerCase().contains("pant")) {
+//                        basicPrice = 49;
+//                    }
+//                } else if (productName.toLowerCase().contains("pt")) {
+//                    basicPrice = 30;
+//                    if (productName.toLowerCase().contains("t-shirt")) {
+//                        basicPrice = 32;
+//                    } else if (productName.toLowerCase().contains("pant")) {
+//                        basicPrice = 34;
+//                    }
+//                } else if (productName.toLowerCase().contains("ck")) {
+//                    basicPrice = 35.5;
+//                    if (productName.toLowerCase().contains("t-shirt")) {
+//                        basicPrice = 36;
+//                    } else if (productName.toLowerCase().contains("pant")) {
+//                        basicPrice = 37;
+//                    }
+//                } else if (productName.toLowerCase().contains("jordan")) {
+//                    basicPrice = 35.5;
+//                }
 
                 session.setAttribute("BASICPRICE", basicPrice);
 

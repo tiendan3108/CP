@@ -12,185 +12,173 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <!--        <li id="nofi">
-                    <a href="#">
-                        <i class="icon-bell"></i>
-                        <span class="badge badge-default">3</span>           
-                    </a>
-                    <ul class="fallback">
-                        <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                    </ul>
-                </li>-->
+
     </jsp:attribute>
     <jsp:body>
+        <div class="row margin-bottom-40">
+
+            <!-- BEGIN PAGE CONTENT-->
 
 
-        <!-- BEGIN PAGE CONTENT-->
+            <!-- BEGIN DIV STEP2 -->
 
+            <div id="divStep2" class="row" >
 
-        <!-- BEGIN DIV STEP2 -->
+                <div class="portlet box" id="form_wizard_1">
 
-        <div id="divStep2" class="row" >
+                    <div class="portlet-body form">
+                        <div  class="form-horizontal" id="submit_form">
+                            <div class="form-wizard">
+                                <div class="form-body">
+                                    <ul class="nav nav-pills nav-justified steps">
+                                        <li class="done">
+                                            <a id="ltap1"  class="step" >
+                                                <span class="number">
+                                                    1 </span>
+                                                <span class="desc">
+                                                    <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            <a id="ltap2" class="step">
+                                                <span class="number">
+                                                    2 </span>
+                                                <span class="desc" >
+                                                    <i class="fa fa-check"></i><b> Chọn cửa hàng</b></span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a id="ltap3" class="step">
+                                                <span class="number">
+                                                    3 </span>
+                                                <span class="desc">
+                                                    <i class="fa fa-check"></i> Thông tin chi tiết</span>
+                                            </a>
+                                        </li>
 
-            <div class="portlet box" id="form_wizard_1">
+                                    </ul>
 
-                <div class="portlet-body form">
-                    <div  class="form-horizontal" id="submit_form">
-                        <div class="form-wizard">
-                            <div class="form-body">
-                                <ul class="nav nav-pills nav-justified steps">
-                                    <li class="done">
-                                        <a id="ltap1"  class="step" >
-                                            <span class="number">
-                                                1 </span>
-                                            <span class="desc">
-                                                <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
-                                        </a>
-                                    </li>
-                                    <li class="active">
-                                        <a id="ltap2" class="step">
-                                            <span class="number">
-                                                2 </span>
-                                            <span class="desc" >
-                                                <i class="fa fa-check"></i><b> Chọn cửa hàng</b></span>
-                                        </a>
-                                    </li>
-                                    <li >
-                                        <a id="ltap3" class="step">
-                                            <span class="number">
-                                                3 </span>
-                                            <span class="desc">
-                                                <i class="fa fa-check"></i> Thông tin chi tiết</span>
-                                        </a>
-                                    </li>
-
-                                </ul>
-
-                                <hr/>
-                                <c:set var="data" value="${sessionScope.STORELIST}"/>
-                                <c:set var="basicPrice" value="${sessionScope.BASICPRICE}"/>
-                                <c:set var="store" value="${sessionScope.STORE}"/>
-                                <div class="tab-content ">
-                                    <c:if test="${basicPrice <= 0}">
-                                        <div class="alert alert-warning" style="text-align: center">
-                                            <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
-                                        </div>    
-                                    </c:if>
-                                    <div>
+                                    <c:set var="data" value="${sessionScope.STORELIST}"/>
+                                    <c:set var="basicPrice" value="${sessionScope.BASICPRICE}"/>
+                                    <c:set var="store" value="${sessionScope.STORE}"/>
+                                    <div class="tab-content ">
+                                        <c:if test="${basicPrice <= 0}">
+                                            <div class="alert alert-warning" style="text-align: center">
+                                                <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                            </div>    
+                                        </c:if>
+                                        <div>
 
 
 
-                                        <c:if test="${not empty data}">
-                                            <form id="form2"  action="ConsignServlet" method="POST">
-                                                <table class="table table-striped table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>STT</th>
-                                                            <th>
-                                                                Tên cửa hàng
-                                                            </th>
-                                                            <th>
-                                                                Địa chỉ
-                                                            </th>
-                                                            <!--                                                            <th>
-                                                                                                                            Reliability
-                                                                                                                        </th>-->
-                                                            <c:if test="${basicPrice != 0}">
-                                                                <th>
-                                                                    Giá
-                                                                </th>
-                                                            </c:if>
-                                                            <th style="text-align:center">
-
-                                                            </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach var="item" items="${data}" varStatus="count">
-                                                            <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
-
+                                            <c:if test="${not empty data}">
+                                                <form id="form2"  action="ConsignServlet" method="POST">
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
                                                             <tr>
-                                                                <td><c:out value="${count.count}" /></td>
-                                                                <td>
-                                                                    ${item.name}
-                                                                </td>
-                                                                <td>
-                                                                    ${item.address}
-                                                                </td>
-
-                                                                <!--                                                                <td>
-                                                                                                                                    
-                                                                                                                                </td>-->
-                                                                <c:if test="${basicPrice > 0}">
-                                                                    <td>
-                                                                        <fmt:formatNumber 
-                                                                            value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
-                                                                            maxFractionDigits="1"/> ~ <fmt:formatNumber 
-                                                                            value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
-                                                                            maxFractionDigits="1"/>
-                                                                    </td>
+                                                                <th>STT</th>
+                                                                <th>
+                                                                    Tên cửa hàng
+                                                                </th>
+                                                                <th>
+                                                                    Địa chỉ
+                                                                </th>
+                                                                <!--                                                            <th>
+                                                                                                                                Reliability
+                                                                                                                            </th>-->
+                                                                <c:if test="${basicPrice != 0}">
+                                                                    <th>
+                                                                        Giá
+                                                                    </th>
                                                                 </c:if>
-                                                                <td align="center">
-                                                                    <c:if test="${not empty store}">
-                                                                        <c:if test="${store == item.storeOwnerID}">
-                                                                            <input checked="checked"  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                <th style="text-align:center">
+
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <c:forEach var="item" items="${data}" varStatus="count">
+                                                                <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
+
+                                                                <tr>
+                                                                    <td><c:out value="${count.count}" /></td>
+                                                                    <td>
+                                                                        ${item.name}
+                                                                    </td>
+                                                                    <td>
+                                                                        ${item.address}
+                                                                    </td>
+
+                                                                    <!--                                                                <td>
+                                                                                                                                        
+                                                                                                                                    </td>-->
+                                                                    <c:if test="${basicPrice > 0}">
+                                                                        <td>
+                                                                            <fmt:formatNumber 
+                                                                                value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
+                                                                                maxFractionDigits="1"/> ~ <fmt:formatNumber 
+                                                                                value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
+                                                                                maxFractionDigits="1"/>
+                                                                        </td>
+                                                                    </c:if>
+                                                                    <td align="center">
+                                                                        <c:if test="${not empty store}">
+                                                                            <c:if test="${store == item.storeOwnerID}">
+                                                                                <input checked="checked"  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                            </c:if>
+                                                                            <c:if test="${store != item.storeOwnerID}">
+                                                                                <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                            </c:if>
                                                                         </c:if>
-                                                                        <c:if test="${store != item.storeOwnerID}">
+                                                                        <c:if test="${empty store}">
                                                                             <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
                                                                         </c:if>
-                                                                    </c:if>
-                                                                    <c:if test="${empty store}">
-                                                                        <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
-                                                                    </c:if>
-                                                                        
-                                                                </td>
-                                                            </tr>
 
-                                                        </c:forEach>
-                                                    <input type="hidden" name="btnAction" value="tostep3"/>
-                                                    </tbody>
-                                                </table>
-                                            </form>
-                                        </c:if>
-                                        <c:if test="${empty data}">
-                                            <h1>Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h1>
-                                        </c:if>
+                                                                    </td>
+                                                                </tr>
 
-                                    </div>
+                                                            </c:forEach>
+                                                        <input type="hidden" name="btnAction" value="tostep3"/>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </c:if>
+                                            <c:if test="${empty data}">
+                                                <h1>Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h1>
+                                            </c:if>
 
-                                </div>
-                            </div>
-                            <div class="form-actions" style="
-                                 padding-top: 5px;
-                                 padding-bottom: 5px;
-                                 padding-right: 5px;
-                                 padding-left: 5px;
-                                 ">
-                                <form id="form2"  action="ConsignServlet" method="POST">
-                                    <div class="row">
-                                        <div class="col-sm-4"> 
-                                            <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
                                         </div>
-                                        <!--                                    <div class="col-sm-4"> </div>
-                                                                            <div class="col-sm-4">
-                                                                                <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT   <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> <i class="m-icon-big-swapright m-icon-white"></i> 
-                                                                            </div>-->
 
                                     </div>
-                                </form>
+                                </div>
+                                <div class="form-actions" style="
+                                     padding-top: 5px;
+                                     padding-bottom: 5px;
+                                     padding-right: 5px;
+                                     padding-left: 5px;
+                                     ">
+                                    <form id="form2"  action="ConsignServlet" method="POST">
+                                        <div class="row">
+                                            <div class="col-sm-4"> 
+                                                <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
+                                            </div>
+                                            <!--                                    <div class="col-sm-4"> </div>
+                                                                                <div class="col-sm-4">
+                                                                                    <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-primary" >NEXT   <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> <i class="m-icon-big-swapright m-icon-white"></i> 
+                                                                                </div>-->
+
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- END DIV STEP2 -->
+
+
         </div>
-        <!-- END DIV STEP2 -->
-
-
-
     </jsp:body>
 </template:consign>
 <script type="text/javascript">

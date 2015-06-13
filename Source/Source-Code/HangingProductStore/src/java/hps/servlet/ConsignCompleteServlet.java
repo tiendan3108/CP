@@ -38,8 +38,10 @@ import org.apache.commons.io.FilenameUtils;
 @WebServlet(name = "ConsignCompleteServlet", urlPatterns = {"/ConsignCompleteServlet"})
 @MultipartConfig()
 public class ConsignCompleteServlet extends HttpServlet {
-private static final String SAVE_DIR = "assets\\image";
-private static final String COMPLETED = "consign_success.jsp";
+
+    private static final String SAVE_DIR = "assets\\image";
+    private static final String COMPLETED = "consign_success.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,8 +69,13 @@ private static final String COMPLETED = "consign_success.jsp";
                 String rdContact = "";
                 String rdPayment = "";
 
+                JavaUltilities ulti = new JavaUltilities();
+                //tạo ID cho consigment và dùng cho product Image thêm đa dạng
+                String consigmentID = ulti.randomString(10);
+
                 List<FileItem> items = null;
                 String imagePath = "";
+
                 try {
                     items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 } catch (FileUploadException e) {
@@ -114,14 +121,13 @@ private static final String COMPLETED = "consign_success.jsp";
                             fileSaveDir.mkdir();
                         }
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                        File file = new File(path, filename); // Define destination file.
+                        File file = new File(path, consigmentID + filename); // Define destination file.
                         try {
                             item.write(file); // Write to destination file.
                         } catch (Exception ex) {
                             Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        System.out.println("Image link: " + path + File.separator + filename);
-                        imagePath = "./assets/image/" + filename;
+                        imagePath = "./assets/image/" + consigmentID + filename;
                     }
                 }
 
@@ -159,10 +165,6 @@ private static final String COMPLETED = "consign_success.jsp";
                     minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
 
                 }
-
-                JavaUltilities ulti = new JavaUltilities();
-                //tạo ID cho consigment
-                String consigmentID = ulti.randomString(10);
 
                 ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                         address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
