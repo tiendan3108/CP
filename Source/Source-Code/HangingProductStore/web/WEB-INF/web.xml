@@ -17,6 +17,10 @@
         <servlet-name>LoadPaymentPageServlet</servlet-name>
         <servlet-class>hps.servlet.LoadPaymentPageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadCompleteOrder</servlet-name>
+        <servlet-class>hps.servlet.LoadCompleteOrder</servlet-class>
+    </servlet>
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
@@ -90,6 +94,10 @@
     <servlet-mapping>
         <servlet-name>UploadImageServlet</servlet-name>
         <url-pattern>/UploadImageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadCompleteOrder</servlet-name>
+        <url-pattern>/LoadCompleteOrder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
