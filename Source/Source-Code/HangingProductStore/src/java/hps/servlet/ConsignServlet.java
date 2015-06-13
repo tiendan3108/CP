@@ -13,6 +13,7 @@ import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.StoreOwnerDTO;
 import hps.ultils.AmazonService;
+import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -52,7 +53,7 @@ public class ConsignServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("btnAction");
-            
+
             if (action == null) {
                 action = "consign";
             }
@@ -87,7 +88,7 @@ public class ConsignServlet extends HttpServlet {
 
                 double basicPrice = 0;
 //                AmazonService amazon = new AmazonService();
-                
+
                 if (productName.toLowerCase().contains("gucci")) {
                     basicPrice = 50;
                     if (productName.toLowerCase().contains("t-shirt")) {
@@ -152,8 +153,8 @@ public class ConsignServlet extends HttpServlet {
 
                     //get memberID if session MEMBER is not null
                     int memberID = -1;
-                    if (session.getAttribute("MEMBER") != null) {
-                        memberID = ((AccountDTO) session.getAttribute("MEMBER")).getRoleID();
+                    if (session.getAttribute("ACCOUNT") != null) {
+                        memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
                     }
                     //get storeOwnerID from step2
                     int storeOwnerID = 0;
@@ -171,7 +172,7 @@ public class ConsignServlet extends HttpServlet {
                         minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
 
                     }
-                    
+
                     JavaUltilities ulti = new JavaUltilities();
                     //tạo ID cho consigment
                     String consigmentID = ulti.randomString(10);
@@ -205,19 +206,38 @@ public class ConsignServlet extends HttpServlet {
             } else if (action.equals("backstep2")) {
                 url = STEP2;
                 request.setAttribute("backlink", url);
-            }
-            else if(action.equals("login")){
+            } else if (action.equals("login")) {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 String backlink = request.getParameter("backlink");
                 DuchcDAO dao = new DuchcDAO();
                 AccountDTO account = dao.login(username, password);
-                if(account != null){
+                if (account != null) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("MEMBER", account);
-                }else{
-                    request.setAttribute("err", "Tên đăng nhập hoặc mật khẩu không hợp lệ.");
+                    session.setAttribute("ACCOUNT", account);
+                    if (account.getRole().equals(GlobalVariables.STORE_OWNER)) {
+                        backlink = "consignment";
+                        session.removeAttribute("PRODUCT");
+                        session.removeAttribute("BASICPRICE");
+                        session.removeAttribute("STORE");
+                        session.removeAttribute("STORELIST");
+                        session.removeAttribute("FCATE");
+                        session.removeAttribute("CATEGORY");
+                    } else {
+                        request.setAttribute("backlink", backlink);
+                    }
+                } else {
+                    request.setAttribute("err", "Tên hoặc mật khẩu không hợp lệ");
+                    request.setAttribute("username", username);
+                    request.setAttribute("password", password);
+                    request.setAttribute("backlink", backlink);
                 }
+                url = backlink;
+            } else if (action.equals("logout")) {
+                String backlink = request.getParameter("backlink");
+                HttpSession session = request.getSession();
+                session.removeAttribute("ACCOUNT");
+                request.setAttribute("backlink", backlink);
                 url = backlink;
             }
 
