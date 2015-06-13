@@ -181,7 +181,7 @@ public class ConsignmentDAO {
     public void populateProduct(ConsignmentDTO consignment) {
         ProductDAO dao = new ProductDAO();
 
-        ProductDTO product = dao.getProductByID(consignment.getProductID());
+        ProductDTO product = dao.getProductByIDNoStatus(consignment.getProductID());
         consignment.setProduct(product);
     }
 

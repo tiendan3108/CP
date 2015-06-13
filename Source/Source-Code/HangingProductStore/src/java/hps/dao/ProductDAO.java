@@ -689,6 +689,55 @@ public class ProductDAO {
             }
         }
     }
+    
+    public ProductDTO getProductByIDNoStatus(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from Product,Category "
+                    + "Where Product.CategoryID = Category.CategoryID "
+                    + "and ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int productStatusID = rs.getInt("ProductStatusID");
+                float sellingPrice = rs.getFloat("SellingPrice");;
+                int parentCategoryID = rs.getInt("ParentID");
+                String orderID = rs.getString("OrderID");
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
 
     public boolean makeProductAsStatus(int productId, int status) {
         Connection con = null;

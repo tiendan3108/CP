@@ -62,9 +62,9 @@
                         <!-- Carousel items -->
                         <div class="carousel-inner">
                             <div class="item active">
-                                <img alt="" src="./assets/product/1.jpg">
+                                <img alt="" src="${consignment.product.image}">
                                 <div class="carousel-caption">
-                                    <p>Mặt trước như mới</p>
+                                    <p></p>
                                 </div>
                             </div>
                         </div>
