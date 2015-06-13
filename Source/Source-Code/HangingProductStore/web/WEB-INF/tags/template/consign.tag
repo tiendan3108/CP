@@ -112,29 +112,44 @@
 
                 ComponentsPickers.init();
 
+            });
 
+
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                if($("#txtErr").html() != ""){
+                    $("#loginModal2").modal("show");
+                }
             });
         </script>
-
         <jsp:invoke fragment="extraBottomContent" />
 
     </jsp:attribute>
     <jsp:attribute name="navigationContent">      
-        <c:set var="member" value="${sessionScope.MEMBER}"/>
+        <c:set var="member" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${empty member}">
-            <li><a data-toggle="modal"  data-target="#loginModal2">Đăng nhập</a></li>            
+            <li><a data-toggle="modal" data-target="#loginModal2">Đăng nhập</a></li>            
             </c:if>
-        <c:if test="${not empty member}">
-            <li><a href="#">Đăng xuất</a></li>         
-            </c:if>
+            <c:if test="${not empty member}">
+            <li>
+                <c:url value="/ConsignServlet" var="logoutUrl">
+                    <c:param name="btnAction" value="logout" />
+                    <c:param name="backlink" value="${requestScope.backlink}" />
+                </c:url>
+                <a href="${logoutUrl}">Thoát</a>
+            </li>         
+        </c:if>
+
+        <li><a href="ViewCartServlet">Giỏ hàng</a></li>
         <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>
 
-        
+
 
         <c:if test="${not empty member}">
-            <li>Chào, <b>${MEMBER.fullName}</b></li>            
-               
-            
+            <li>Chào, <b>${member.fullName}</b></li>            
+
+
             <li id="nofi">
                 <a href="#">
                     <i class="icon-bell"></i>
@@ -148,6 +163,8 @@
                 </ul>
             </li>  
         </c:if>
+
+        <c:if test="${empty member}">
             <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -156,18 +173,18 @@
                             <h1 class="text-center">Đăng Nhập</h1>
                         </div>
                         <div class="modal-body">
-                            
+
                             <div class="row">
                                 <form class="form col-md-12 center-block" action="ConsignServlet" method="POST">
                                     <div class="form-group">
-                                        <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập">
+                                        <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập" value="${username}"/>
                                     </div>
                                     <div class="form-group">
-                                        <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu">
+                                        <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu" value="${password}"/>
                                         <input type="hidden" name="backlink" value="${backlink}"/>
                                     </div>
                                     <div>
-                                        <h5 style="color:red">${err}</h5>
+                                        <h5 id="txtErr" style="color:red">${err}</h5>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" name="btnAction" value="login" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
@@ -179,6 +196,7 @@
                     </div>
                 </div>
             </div>
+        </c:if>
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>

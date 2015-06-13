@@ -71,7 +71,7 @@
                                         </ul>
 
                                         <hr/>
-                                        <c:set var="member" value="${sessionScope.MEMBER}"/>
+                                        <c:set var="member" value="${sessionScope.ACCOUNT}"/>
                                         <div class="tab-content">
 
                                             <div>
@@ -168,7 +168,7 @@
                                                             <c:if test="${empty member}">
                                                                 <div class="form-group" id="divEmail" style="display: none;">
                                                                     <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                    <div class="col-md-6 col-sm-7">
+                                                                    <div class="col-md-8 col-sm-8">
                                                                         <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
                                                                         <p class="help-block" id="erEmail"></p>
                                                                     </div>
@@ -176,7 +176,7 @@
 
                                                                 <div class="form-group" id="divPhone">
                                                                     <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                    <div class="col-md-5 col-sm-6">
+                                                                    <div class="col-md-4 col-sm-6">
                                                                         <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
                                                                         <p class="help-block" id="erPhone"></p>
 
@@ -188,7 +188,7 @@
                                                                 <c:if test="${not empty member.phone and empty member.email}">
                                                                     <div class="form-group" id="divEmail">
                                                                         <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-6 col-sm-7">
+                                                                        <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
                                                                             <p class="help-block" id="erEmail"></p>
                                                                         </div>
@@ -196,7 +196,7 @@
 
                                                                     <div class="form-group" id="divPhone" style="display: none;">
                                                                         <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-5 col-sm-6">
+                                                                        <div class="col-md-4 col-sm-6">
                                                                             <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
                                                                             <p class="help-block" id="erPhone"></p>
 
@@ -207,7 +207,7 @@
 
                                                                     <div class="form-group" id="divEmail"  style="display: none;">
                                                                         <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-6 col-sm-7">
+                                                                        <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
                                                                             <p class="help-block" id="erEmail"></p>
                                                                         </div>
@@ -215,7 +215,7 @@
 
                                                                     <div class="form-group" id="divPhone">
                                                                         <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-5 col-sm-6">
+                                                                        <div class="col-md-4 col-sm-6">
                                                                             <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
                                                                             <p class="help-block" id="erPhone"></p>
 
@@ -226,7 +226,7 @@
 
                                                                     <div class="form-group" id="divEmail">
                                                                         <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-6 col-sm-7">
+                                                                        <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
                                                                             <p class="help-block" id="erEmail"></p>
                                                                         </div>
@@ -234,7 +234,7 @@
 
                                                                     <div class="form-group" id="divPhone">
                                                                         <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-5 col-sm-6">
+                                                                        <div class="col-md-4 col-sm-6">
                                                                             <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
                                                                             <p class="help-block" id="erPhone"></p>
 
@@ -275,7 +275,7 @@
                                                             <c:if test="${empty member}">
                                                                 <div id="divCCNumber" class="form-group" style="display: none" >
                                                                     <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                    <div class="col-md-6 col-sm-7">
+                                                                    <div class="col-md-8 col-sm-8">
                                                                         <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
                                                                         <p class="help-block" id="erPaypalAccount"></p>
@@ -286,7 +286,7 @@
                                                                 <c:if test="${empty member.paypalAccount}">
                                                                     <div id="divCCNumber" class="form-group" style="display: none" >
                                                                         <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                        <div class="col-md-6 col-sm-7">
+                                                                        <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
                                                                             <p class="help-block" id="erPaypalAccount"></p>
@@ -296,7 +296,7 @@
                                                                 <c:if test="${not empty member.paypalAccount}">
                                                                     <div id="divCCNumber" class="form-group">
                                                                         <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                        <div class="col-md-6 col-sm-7">
+                                                                        <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 
                                                                             <p class="help-block" id="erPaypalAccount"></p>
