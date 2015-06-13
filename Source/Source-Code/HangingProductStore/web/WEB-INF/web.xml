@@ -2,22 +2,6 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <display-name>Hanging Product Store</display-name>
     <servlet>
-        <servlet-name>LoadManageProductPageServlet</servlet-name>
-        <servlet-class>hps.servlet.LoadManageProductPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchProductStatusServlet</servlet-name>
-        <servlet-class>hps.servlet.SearchProductStatusServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CancelProductServlet</servlet-name>
-        <servlet-class>hps.servlet.CancelProductServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoadPaymentPageServlet</servlet-name>
-        <servlet-class>hps.servlet.LoadPaymentPageServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>LoadCompleteOrder</servlet-name>
         <servlet-class>hps.servlet.LoadCompleteOrder</servlet-class>
     </servlet>
@@ -31,70 +15,6 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
-    <servlet>
-        <servlet-name>LoadCancelProductPageServlet</servlet-name>
-        <servlet-class>hps.servlet.LoadCancelProductPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoadCustomerPageServlet</servlet-name>
-        <servlet-class>hps.servlet.LoadCustomerPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PublishOnWebServlet</servlet-name>
-        <servlet-class>hps.servlet.PublishOnWebServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoadPublishPageServlet</servlet-name>
-        <servlet-class>hps.servlet.LoadPublishPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GetChildCategoryServlet</servlet-name>
-        <servlet-class>hps.servlet.GetChildCategoryServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UploadImageServlet</servlet-name>
-        <servlet-class>hps.servlet.UploadImageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoadManageProductPageServlet</servlet-name>
-        <url-pattern>/LoadManageProductPageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchProductStatusServlet</servlet-name>
-        <url-pattern>/SearchProductStatusServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CancelProductServlet</servlet-name>
-        <url-pattern>/CancelProductServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoadPaymentPageServlet</servlet-name>
-        <url-pattern>/LoadPaymentPageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoadCancelProductPageServlet</servlet-name>
-        <url-pattern>/LoadCancelProductPageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoadCustomerPageServlet</servlet-name>
-        <url-pattern>/LoadCustomerPageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PublishOnWebServlet</servlet-name>
-        <url-pattern>/PublishOnWebServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoadPublishPageServlet</servlet-name>
-        <url-pattern>/LoadPublishPageServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GetChildCategoryServlet</servlet-name>
-        <url-pattern>/GetChildCategoryServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UploadImageServlet</servlet-name>
-        <url-pattern>/UploadImageServlet</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoadCompleteOrder</servlet-name>
         <url-pattern>/LoadCompleteOrder</url-pattern>

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "ManageProductStatusServlet", urlPatterns = {"/ManageProductStatusServlet"})
+@WebServlet(name = "LoadManageProductPageServlet", urlPatterns = {"/LoadManageProductPageServlet"})
 public class LoadManageProductPageServlet extends HttpServlet {
 
     /**

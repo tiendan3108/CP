@@ -6,7 +6,8 @@
     </jsp:attribute>
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="sidebar col-md-3 col-sm-5">
+        <div class="row margin-bottom-40">
+            <div class="sidebar col-md-3 col-sm-5">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix dropdown">
                         <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
@@ -87,6 +88,7 @@
                 </form>
             </div>
         </div>
-        <!-- END SIDEBAR & CONTENT -->
-    </jsp:body>
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+</jsp:body>
 </template:shopbasic>

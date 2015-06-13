@@ -5,7 +5,6 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
 import hps.ultils.GlobalVariables;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +27,7 @@ import org.apache.commons.io.FilenameUtils;
  *
  * @author Tien Dan
  */
+@WebServlet(name = "UploadImageServlet", urlPatterns = {"/UploadImageServlet"})
 public class UploadImageServlet extends HttpServlet {
 
     /**

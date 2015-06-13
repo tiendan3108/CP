@@ -11,6 +11,7 @@ import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
+@WebServlet(name = "LoadCompleteOrder", urlPatterns = {"/LoadCompleteOrder"})
 public class LoadCompleteOrder extends HttpServlet {
 
     /**
@@ -48,9 +50,10 @@ public class LoadCompleteOrder extends HttpServlet {
                     url = GlobalVariables.MANAGERMENT_SERVLET;
                 } else {
                     String consignmentID = request.getParameter("consignmentID");
+                    float price = Float.parseFloat(request.getParameter("sellingPrice"));
                     DanqtDAO dao = new DanqtDAO();
-                    if (dao.completeOrderedProduct(consignmentID)) {
-                        url = GlobalVariables.MANAGERMENT_SERVLET;
+                    if (dao.completeOrderedProduct(consignmentID, price)) {
+                        url = GlobalVariables.SUCCESS_ACTION_PAGE;
                     } else {
                         url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                     }

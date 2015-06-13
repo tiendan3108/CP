@@ -12,6 +12,7 @@ import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
+@WebServlet(name = "LoadCustomerPageServlet", urlPatterns = {"/LoadCustomerPageServlet"})
 public class LoadCustomerPageServlet extends HttpServlet {
 
     /**
@@ -49,7 +51,9 @@ public class LoadCustomerPageServlet extends HttpServlet {
                 int productID = Integer.parseInt(temp_productID);
                 AccountDTO customer = dao.getCustomerInforByProductID(productID);
                 ProductDTO product = dao.getProductByID(productID);
+                String consignmentID = dao.getConsignmentIDByProductID(productID);
                 request.setAttribute("customer", customer);
+                request.setAttribute("consignmentID", consignmentID);
                 request.setAttribute("product", product);
                 url = GlobalVariables.ORDERED_PAGE;
             }
