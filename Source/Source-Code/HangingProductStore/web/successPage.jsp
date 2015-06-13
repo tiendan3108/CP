@@ -26,7 +26,7 @@
         </li>
     </jsp:attribute>
     <jsp:body>
-        Your action has been completed
-        Click <a href="LoadManageProductPageServlet">here</a> to return to management page
+        Thực hiện thao tác thành công.
+        Click <a class="label-info" href="LoadManageProductPageServlet">vào đây</a> để trở về trang quản lý
     </jsp:body>
 </template:shopbasic>
