@@ -1,5 +1,6 @@
 package hps.servlet;
 
+import com.google.gson.Gson;
 import com.twilio.sdk.TwilioRestException;
 import hps.dao.ConsignmentDAO;
 import hps.dao.ProductDAO;
@@ -77,15 +78,19 @@ public class ConsignmentServlet extends HttpServlet {
                     List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), REQUEST_WAITING);
 
                     /* Return data format: ["a", "b", "c"] */
-                    PrintWriter writer = response.getWriter();
-                    writer.print("[");
-                    for (int i = 0; i < list.size(); i++) {
-                        writer.print("\"" + list.get(i) + "\"");
-                        if (i < list.size() - 1) {
-                            writer.print(",");
-                        }
-                    }
-                    writer.print("]");
+                    String json = new Gson().toJson(list);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(json);
+                    
+//                    PrintWriter writer = response.getWriter();
+//                    writer.print("[");
+//                    for (int i = 0; i < list.size(); i++) {
+//                        writer.print("\"" + list.get(i) + "\"");
+//                        if (i < list.size() - 1) {
+//                            writer.print(",");
+//                        }
+//                    }
+//                    writer.print("]");
 
                     return;
                 } else {
