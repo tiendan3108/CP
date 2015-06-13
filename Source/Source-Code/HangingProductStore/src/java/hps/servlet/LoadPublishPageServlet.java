@@ -7,7 +7,6 @@ package hps.servlet;
 
 import hps.dao.CategoryDAO;
 import hps.dao.DanqtDAO;
-import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
@@ -39,6 +38,7 @@ public class LoadPublishPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
@@ -53,14 +53,16 @@ public class LoadPublishPageServlet extends HttpServlet {
                     productID = Integer.parseInt(temp_productID);
 
                 } else {
-                    productID = (int) request.getAttribute("productID");
+                    productID = Integer.parseInt((String) request.getAttribute("productID"));
                 }
+                String imageName = (String) request.getAttribute("fileName");
                 DanqtDAO dao = new DanqtDAO();
                 CategoryDAO cateDao = new CategoryDAO();
                 List<CategoryDTO> parentCategories = cateDao.getParentCategory();
                 ProductDTO product = dao.getProductByID(productID);
                 String categoryName = cateDao.getCategoryName(product.getCategoryID());
                 List<CategoryDTO> sameLevelCat = cateDao.getCatSameLevel(product.getParentCategoryID());
+                request.setAttribute("imageName", imageName);
                 request.setAttribute("productCat", categoryName);
                 request.setAttribute("sameLevelCat", sameLevelCat);
                 request.setAttribute("product", product);

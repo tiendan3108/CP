@@ -6,6 +6,7 @@
 package hps.servlet;
 
 import hps.dao.DanqtDAO;
+import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,18 +35,24 @@ public class CancelProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            String storeOwnerID = (String) session.getAttribute("ID");
+            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
-            if (storeOwnerID == null) {
+            if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String productID = request.getParameter("productID");
-                DanqtDAO dao = new DanqtDAO();
-                dao.cancelProduct(Integer.parseInt(productID));
-                url = GlobalVariables.SUCCESS_ACTION_PAGE;
+                String action = request.getParameter("btnAction");
+                if (action.equals("back")) {
+                    url = GlobalVariables.MANAGERMENT_SERVLET;
+                } else {
+                    int productID = Integer.parseInt(request.getParameter("productID"));
+                    DanqtDAO dao = new DanqtDAO();
+                    dao.cancelProduct(productID);
+                    url = GlobalVariables.SUCCESS_ACTION_PAGE;
+                }
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

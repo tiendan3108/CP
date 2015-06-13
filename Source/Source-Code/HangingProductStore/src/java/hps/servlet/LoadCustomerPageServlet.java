@@ -7,6 +7,7 @@ package hps.servlet;
 
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
+import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,6 +35,7 @@ public class LoadCustomerPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
@@ -46,7 +48,9 @@ public class LoadCustomerPageServlet extends HttpServlet {
                 DanqtDAO dao = new DanqtDAO();
                 int productID = Integer.parseInt(temp_productID);
                 AccountDTO customer = dao.getCustomerInforByProductID(productID);
+                ProductDTO product = dao.getProductByID(productID);
                 request.setAttribute("customer", customer);
+                request.setAttribute("product", product);
                 url = GlobalVariables.ORDERED_PAGE;
             }
             request.getRequestDispatcher(url).forward(request, response);

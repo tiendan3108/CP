@@ -13,7 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,18 +46,14 @@ public class DanqtDAO {
             int status, productID;
             ProductDTO product;
             while (rs.next()) {
-                try {
-                    productID = Integer.parseInt(rs.getString("ProductID"));
-                    productName = rs.getString("ProductName");
-                    receivedDate = rs.getString("ReceivedDate");
-                    consignmentID = rs.getString("ConsignmentID");
-                    price = Float.parseFloat(rs.getString("ReturnedPrice"));
-                    status = Integer.parseInt(rs.getString("ProductStatusID"));
-                    product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
-                    result.add(product);
-                } catch (NumberFormatException e) {
-                    Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-                }
+                productID = Integer.parseInt(rs.getString("ProductID"));
+                productName = rs.getString("ProductName");
+                receivedDate = rs.getString("ReceivedDate");
+                consignmentID = rs.getString("ConsignmentID");
+                price = rs.getFloat("ReturnedPrice");
+                status = rs.getInt("ProductStatusID");
+                product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
+                result.add(product);
             }
             return result;
         } catch (SQLException e) {
@@ -80,17 +79,31 @@ public class DanqtDAO {
     public boolean payConsignor(int productID) {
         Connection conn = null;
         ResultSet rs = null;
-        PreparedStatement stm = null;
-        int result;
+        PreparedStatement stm1 = null, stm = null;
+        int result1 = 0, result2 = 0;
+        String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = ? AND ProductStatusID = ?";
+            conn.setAutoCommit(false);
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = ? AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, 7);
             stm.setInt(2, productID);
             stm.setInt(3, 5);
-            result = stm.executeUpdate();
-            return result > 0;
+            result1 = stm.executeUpdate();
+
+            query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ProductID = ?";
+            stm1 = conn.prepareStatement(query);
+            stm1.setInt(1, 4);
+            stm1.setInt(2, productID);
+            result2 = stm1.executeUpdate();
+
+            if (result1 > 0 && result2 > 0) {
+                conn.commit();
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
@@ -98,6 +111,9 @@ public class DanqtDAO {
             try {
                 if (rs != null) {
                     rs.close();
+                }
+                if (stm1 != null) {
+                    stm1.close();
                 }
                 if (stm != null) {
                     stm.close();
@@ -117,16 +133,25 @@ public class DanqtDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmUpdateProduct = null;
-        int resultUpdateProduct;
+        PreparedStatement stmUpdateConsignment = null;
+        int resultUpdateProduct, resultUpdateConsignment;
+        String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = ? and ProductStatusID = ?";
+            conn.setAutoCommit(false);
+
+            query = "UPDATE Product SET ProductStatusID = 7 WHERE ProductID = ? AND ProductStatusID = 6";
             stmUpdateProduct = conn.prepareStatement(query);
-            stmUpdateProduct.setInt(1, 6);
-            stmUpdateProduct.setInt(2, productID);
-            stmUpdateProduct.setInt(2, 7);
+            stmUpdateProduct.setInt(1, productID);
             resultUpdateProduct = stmUpdateProduct.executeUpdate();
-            if (resultUpdateProduct > 0) {
+
+            query = "UPDATE Consignment SET ConsignmentStatusID = 4 WHERE ProductID = ?";
+            stmUpdateConsignment = conn.prepareStatement(query);
+            stmUpdateConsignment.setInt(1, productID);
+            resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
+
+            if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
+                conn.commit();
                 return true;
             } else {
                 return false;
@@ -141,6 +166,9 @@ public class DanqtDAO {
                 }
                 if (stmUpdateProduct != null) {
                     stmUpdateProduct.close();
+                }
+                if (stmUpdateConsignment != null) {
+                    stmUpdateConsignment.close();
                 }
                 if (conn != null) {
                     conn.close();
@@ -167,7 +195,7 @@ public class DanqtDAO {
             if (!searchType.equals("")) {
                 query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.ProductStatusID "
                         + "FROM Product p ,Consignment c "
-                        + "WHERE ? LIKE ? AND c.StoreOwnerID = ? AND p.ProductID = c.ProductID";
+                        + "WHERE ? LIKE ? AND c.StoreOwnerID = ? AND p.ProductID = c.ProductID ORDER BY p.ProductStatusID";
                 stm = conn.prepareStatement(query);
                 stm.setString(1, searchType);
                 stm.setString(2, "%" + keywords + "%");
@@ -177,7 +205,7 @@ public class DanqtDAO {
                 query = "SELECT p.ProductID,p.ProductName,c.ReceivedDate,c.ConsignmentID,c.ReturnedPrice,p.ProductStatusID "
                         + "FROM Product p ,Consignment c "
                         + "WHERE p.ProductID = c.ProductID AND (p.ProductName LIKE ? OR c.ReceivedDate LIKE ? "
-                        + "OR c.ConsignmentID LIKE ? OR p.ProductStatusID LIKE ? ) AND c.StoreOwnerID = ?";
+                        + "OR c.ConsignmentID LIKE ? OR p.ProductStatusID LIKE ? ) AND c.StoreOwnerID = ? ORDER BY p.ProductStatusID";
                 stm = conn.prepareStatement(query);
                 stm.setString(1, "%" + keywords + "%");
                 stm.setString(2, "%" + keywords + "%");
@@ -191,8 +219,8 @@ public class DanqtDAO {
                 productName = rs.getString("ProductName");
                 receivedDate = rs.getString("ReceivedDate");
                 consignmentID = rs.getString("ConsignmentID");
-                price = Float.parseFloat(rs.getString("ReturnedPrice"));
-                status = Integer.parseInt(rs.getString("ProductStatusID"));
+                price = rs.getFloat("ReturnedPrice");
+                status = rs.getInt("ProductStatusID");
                 product = new ProductDTO(productID, productName, receivedDate, consignmentID, price, status);
                 result.add(product);
             }
@@ -236,6 +264,8 @@ public class DanqtDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
+        String fullName = "", address = "", phone = "", email = "", paypalAccount = "";
+        float consignedPrice = 0;
         try {
             conn = DBUltilities.makeConnection();
             String query = "SELECT * FROM Consignment WHERE ConsignmentID = ?";
@@ -243,95 +273,17 @@ public class DanqtDAO {
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String fullName, address, phone, email, paypalAccount;
                 fullName = rs.getString("FullName");
                 address = rs.getString("Address");
                 phone = rs.getString("Phone");
                 email = rs.getString("Email");
-                paypalAccount = rs.getString("PaypalAccount");
-                float consignedPrice = rs.getFloat("ReturnedPrice");
-                return new AccountDTO(fullName, address, phone, email, paypalAccount, consignedPrice);
+                consignedPrice = rs.getFloat("ReturnedPrice");
+                return new AccountDTO(fullName, address, phone, email, consignedPrice);
             }
             return null;
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
             return null;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public AccountDTO getConsigneeInforByConsignmentID(String id) {
-        Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement stm = null;
-        try {
-            conn = DBUltilities.makeConnection();
-            String query = "SELECT * FROM Account a WHERE a.AccountID = "
-                    + "(SELECT s.AccountID FROM StoreOwner s WHERE s.StoreOwnerID = "
-                    + "(SELECT c.StoreOwnerID FROM Consignment c WHERE c.ConsignmentID = ?))";
-            stm = conn.prepareStatement(query);
-            stm.setString(1, id);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                String fullName, address, phone, email, paypalAccount;
-                fullName = rs.getString("FullName");
-                address = rs.getString("Address");
-                phone = rs.getString("Phone");
-                email = rs.getString("Email");
-                paypalAccount = rs.getString("PaypalAccount");
-                return new AccountDTO(fullName, address, phone, email, paypalAccount);
-            }
-            return null;
-        } catch (SQLException e) {
-            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-            return null;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
-    public float getConsignmentPrice(String consignmentID) {
-        Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement stm = null;
-        try {
-            conn = DBUltilities.makeConnection();
-            String query = "SELECT * from Consignment WHERE ConsignmentID = ?";
-            stm = conn.prepareStatement(query);
-            stm.setString(1, consignmentID);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getFloat("ReturnedPrice");
-            }
-            return -1;
-        } catch (SQLException e) {
-            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-            return -1;
         } finally {
             try {
                 if (rs != null) {
@@ -353,19 +305,23 @@ public class DanqtDAO {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
+        String fullName = "", Address = "", Phone = "", Email = "", Date = "";
+        float returnPrice = 0, sellingPrice = 0;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT * from [Order] c WHERE c.OrderID = (SELECT p.OrderID FROM Product p WHERE ProductID = ?)";
+            String query = "SELECT c.Date, c.FullName, c.Address, c.Phone, c.Email, p.SellingPrice, co.ReturnedPrice from [Order] c, Product p, Consignment co WHERE c.OrderID = (SELECT p.OrderID FROM Product p WHERE ProductID = ?) AND c.OrderID = p.OrderID AND co.ProductID = p.ProductID";
             stm = conn.prepareStatement(query);
             stm.setInt(1, id);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String fullName = rs.getString("FullName");
-                String Address = rs.getString("Address");
-                String Phone = rs.getString("Phone");
-                String Email = rs.getString("Email");
-                String paypalAccount = rs.getString("CardNumber");
-                return new AccountDTO(fullName, Address, Phone, Email, paypalAccount);
+                fullName = rs.getString("FullName");
+                Address = rs.getString("Address");
+                Phone = rs.getString("Phone");
+                Email = rs.getString("Email");
+                returnPrice = rs.getFloat("ReturnedPrice");
+                sellingPrice = rs.getFloat("SellingPrice");
+                Date = rs.getString("Date");
+                return new AccountDTO(fullName, Address, Phone, Email, returnPrice, sellingPrice, Date);
             }
             return null;
         } catch (SQLException e) {
@@ -388,67 +344,56 @@ public class DanqtDAO {
         }
     }
 
-//    public AccountDTO checkLogin(String username, String password) {
-//        Connection conn = null;
-//        ResultSet rs = null;
-//        PreparedStatement stm = null;
-//        try {
-//            conn = DBUltilities.makeConnection();
-//            String query = "SELECT * from Account WHERE AccountID = ? and Password = ?";
-//            stm = conn.prepareStatement(query);
-//            stm.setString(1, username);
-//            stm.setString(2, password);
-//            rs = stm.executeQuery();
-//            while (rs.next()) {
-//                String AccountID = rs.getString("AccountID");
-//                String Password = rs.getString("Password");
-//                String Status = rs.getString("Status");
-//                String FullName = rs.getString("FullName");
-//                String Address = rs.getString("Address");
-//                String Phone = rs.getString("Phone");
-//                String Email = rs.getString("Email");
-//                String PaypalAccount = rs.getString("PaypalAccount");
-//                String Role = rs.getString("Role");
-//                return new AccountDTO(AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role);
-//            }
-//            return null;
-//        } catch (SQLException e) {
-//            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-//            return null;
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (conn != null) {
-//                    conn.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
     public boolean publishOnWeb(ProductDTO product) {
         Connection conn = null;
-        PreparedStatement stm = null;
-        int result = 0;
+        PreparedStatement stmProduct = null;
+        PreparedStatement stmConsignment = null;
+        int resultProduct = 0;
+        int resultConsignment = 0;
+        String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET "
-                    + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, ProductStatusID = 3 "
-                    + "WHERE ProductID = ? AND ProductStatusID = 2";
-            stm = conn.prepareStatement(query);
-            stm.setString(1, product.getName());
-            stm.setString(2, product.getSerialNumber());
-            stm.setInt(3, product.getCategoryID());
-            stm.setString(4, product.getBrand());
-            stm.setString(5, product.getDescription());
-            stm.setInt(6, product.getProductID());
-            result = stm.executeUpdate();
-            if (result > 0) {
+            conn.setAutoCommit(false);
+
+            if (product.getImage() == null) {
+                query = "UPDATE Product SET "
+                        + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, ProductStatusID = 3, SellingPrice = ? "
+                        + "WHERE ProductID = ? AND ProductStatusID = 2";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setString(1, product.getName());
+                stmProduct.setString(2, product.getSerialNumber());
+                stmProduct.setInt(3, product.getCategoryID());
+                stmProduct.setString(4, product.getBrand());
+                stmProduct.setString(5, product.getDescription());
+                stmProduct.setInt(7, product.getProductID());
+                stmProduct.setFloat(6, product.getSellingPrice());
+            } else {
+                query = "UPDATE Product SET "
+                        + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, Description = ?, Image = ?, ProductStatusID = 3, SellingPrice = ?  "
+                        + "WHERE ProductID = ? AND ProductStatusID = 2";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setString(1, product.getName());
+                stmProduct.setString(2, product.getSerialNumber());
+                stmProduct.setInt(3, product.getCategoryID());
+                stmProduct.setString(4, product.getBrand());
+                stmProduct.setString(5, product.getDescription());
+                stmProduct.setString(6, product.getImage());
+                stmProduct.setFloat(7, product.getSellingPrice());
+                stmProduct.setInt(8, product.getProductID());
+            }
+            resultProduct = stmProduct.executeUpdate();
+
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String raiseWebDate = sdf.format(tempDate);
+
+            query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
+            stmConsignment = conn.prepareStatement(query);
+            stmConsignment.setString(1, raiseWebDate);
+            stmConsignment.setInt(2, product.getProductID());
+            resultConsignment = stmConsignment.executeUpdate();
+            if (resultProduct > 0 && resultConsignment > 0) {
+                conn.commit();
                 return true;
             } else {
                 return false;
@@ -458,8 +403,11 @@ public class DanqtDAO {
             return false;
         } finally {
             try {
-                if (stm != null) {
-                    stm.close();
+                if (stmProduct != null) {
+                    stmProduct.close();
+                }
+                if (stmConsignment != null) {
+                    stmConsignment.close();
                 }
                 if (conn != null) {
                     conn.close();
@@ -539,8 +487,7 @@ public class DanqtDAO {
         ResultSet rs = null;
         ProductDTO product = new ProductDTO();
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "select * from Product,Category "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "and ProductID = ? ";
@@ -560,6 +507,88 @@ public class DanqtDAO {
                 int parentCategoryID = rs.getInt("ParentID");
                 String orderID = rs.getString("OrderID");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public ProductDTO getProductByConsignmentID(String consignmentID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "SELECT p.ProductID, p.ProductName, c.ReturnedPrice, c.ReceivedDate FROM Product p, Consignment c WHERE p.ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND p.ProductID = c.ProductID";
+            stm = con.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int productID = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                Float returnedPrice = rs.getFloat("ReturnedPrice");
+                String receivedDate = rs.getString("ReceivedDate");
+                product = new ProductDTO(productID, productName, receivedDate, consignmentID, returnedPrice, receivedDate);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public ProductDTO getCancelProductInforByConsignmentID(String consignmentID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        int productID = -1;
+        String productName, receivedDate, cancelDate;
+        float returnedPrice = -1;
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "SELECT p.ProductID, p.ProductName, c.ReturnedPrice, c.ReceivedDate, c.CancelDate FROM Product p, Consignment c WHERE p.ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND p.ProductID = c.ProductID";
+            stm = con.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                productID = rs.getInt("ProductID");
+                productName = rs.getString("ProductName");
+                returnedPrice = rs.getFloat("ReturnedPrice");
+                receivedDate = rs.getString("ReceivedDate");
+                cancelDate = rs.getString("CancelDate");
+                product = new ProductDTO(productID, productName, receivedDate, consignmentID, returnedPrice, cancelDate);
             }
             return product;
         } catch (SQLException ex) {

@@ -36,6 +36,7 @@ public class LoadCancelProductPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
@@ -47,10 +48,9 @@ public class LoadCancelProductPageServlet extends HttpServlet {
                 String temp_productID = request.getParameter("productID");
                 int productID = Integer.parseInt(temp_productID);
                 String consignmentID = request.getParameter("consignmentID");
-                DanqtDAO ddao = new DanqtDAO();
-                ProductDAO pdao = new ProductDAO();
-                ProductDTO product = pdao.getProductByID(productID);
-                AccountDTO consignor = ddao.getConsignorInforByConsignmentID(consignmentID);
+                DanqtDAO dao = new DanqtDAO();
+                AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
+                ProductDTO product = dao.getCancelProductInforByConsignmentID(consignmentID);
                 request.setAttribute("product", product);
                 request.setAttribute("consignor", consignor);
                 request.setAttribute("productID", productID);

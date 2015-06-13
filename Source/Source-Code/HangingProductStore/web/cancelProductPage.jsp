@@ -1,55 +1,84 @@
-<%-- 
-    Document   : manageProductStatus
-    Created on : May 31, 2015, 10:30:13 AM
-    Author     : Tien Dan
---%>
-
-<template:shopbasic htmlTitle="Manage Product Status - Review Cancel" bodyTitle="">
-    <jsp:attribute name="extraHeadContent">
-        <!-- Nơi để khai báo page level css, theme, style -->
-    </jsp:attribute>        
+<%--@elvariable id="c" type="hps.dtl.Consignment"--%>
+<template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
     <jsp:attribute name="extraBottomContent">
-        <!-- Nơi để khai báo page level javascript -->
-    </jsp:attribute>
-    <jsp:attribute name="extraNavigationContent">
-        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-            </ul>
-        </li>
+        <link href="assets/global/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+        <link href="assets/global/plugins/carousel-owl-carousel/owl-carousel/owl.carousel.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:body>
-        <div>
-            <div>
-                <c:set var="product" value="${requestScope.product}"></c:set>
-                <c:set var="consignor" value="${requestScope.consignor}"></c:set>
-                Product Information </br>
-                <li>Product Name : <input type="text" readonly="readonly" value="${product.name}"></li>
-                <li>Brand : <input type="text" readonly="readonly" value="${product.brand}"></li>
-                <li>Description : <input type="text" readonly="readonly" value="${product.description}"></li>
-                <li>Consigned Price : <input type="text" readonly="readonly" value="${consignor.consignedPrice}"></li>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40 ">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-4">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix dropdown">
+                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu kí gửi</a>
+                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                            <li class="list-group-item clearfix">
+                                <a href="./consignment?search"><i class="fa fa-angle-right"></i> Tìm kiếm nâng cao</a>
+                            </li>
+                            <li class="list-group-item clearfix active">
+                                <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
+                            </li>
+                        </ul>
+                        <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href="LoadManageProductPageServlet"><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                            </li>
+                        </ul>
+                        <a><i class="fa fa-angle-right"></i>Thống kê</a>
+                        <ul class="list-group margin-bottom-25 dropdown-menu">
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
+                            </li>
+                            <li class="list-group-item clearfix">
+                                <a href="#"><i class="fa fa-angle-right"></i>Thanh toán</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
-            <div>
-                Consignor Information </br>
-                <li>Full Name : <input type="text" readonly="readonly" value="${consignor.fullName}"></li>
-                <li>Address : <input type="text" readonly="readonly" value="${consignor.address}"></li>
-                <li>Email : <input type="text" readonly="readonly" value="${consignor.email}"></li>
-                <li>Phone : <input type="text" readonly="readonly" value="${consignor.phone}"></li>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <c:set var="consignor" value="${requestScope.consignor}"></c:set>
+            <c:set var="product" value="${requestScope.product}"></c:set>
+                <div class="col-md-9">
+                    <h4>Thông tin hủy kí gửi</h4>
+                    </br></br>
+                    <div class="col-sm-6">
+                        <h5>Thông tin người kí gửi</h5>
+                        </br>
+                        <li>Họ tên : ${consignor.fullName}</li>
+                    <li>Địa chỉ : ${consignor.address}</li>
+                    <li>Số điện thoại : ${consignor.phone}</li>
+                    <li>Email : ${consignor.email}</li>
+                </div>
+                <div class="col-sm-6">
+                    <h5>Thông tin hàng kí gửi</h5>
+                    </br>
+                    <li>Tên sản phẩm : ${product.name}</li>
+                    <li>Mã hàng kí gửi : ${product.consignmentID}</li>
+                    <li>Giá kí gửi : ${product.consignedPrice}</li>
+                    <li>Ngày kí gửi : ${product.receivedDate}</li>
+                    <li>Ngày hủy kí gửi : ${product.cancelDate}</li>
+                </div>
             </div>
-            <form action="CancelProductServlet" method="POST">
-                <input type="hidden" name="productID" value="${requestScope.productID}">
-                <button class="btn btn-warning" name="action" type="submit" value="cancel" onclick="return confirm('Are you sure to cancel this consignment?')">Cancel Consignment</button>
-            </form>
-            <form action="LoadManageProductPageServlet" method="POST">
-                <button class="btn btn-defaul" name="action" type="submit" value="back">Back</button>
-            </form>
+            <div class="col-md-8" style="height: 100px"></div>
+            <div class="col-md-11" id="divPaymentForm">
+                <form action="CancelProductServlet" method="POST">
+                    <input type="hidden" name="productID" value="${product.productID}"/>
+                    <div class="col-sm-4">
+                        <button class="btn btn-info" name="btnAction" value="back" type="submit" style="width: 205px">Trở lại</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-warning" name="btnAction" value="cancel" type="submit" style="width: 205px">Hoàn tất hủy kí gửi</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <!-- END SIDEBAR & CONTENT -->
     </jsp:body>
 </template:shopbasic>

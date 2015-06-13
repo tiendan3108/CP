@@ -41,12 +41,12 @@ public class UploadImageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             List<FileItem> items = null;
-            String temp_productID = "";
+            String productID = "";
             String filename = "";
-            int productID;
             try {
                 items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
             } catch (FileUploadException e) {
@@ -56,7 +56,7 @@ public class UploadImageServlet extends HttpServlet {
                 if (item.isFormField()) {
                     switch (item.getFieldName()) {
                         case "productID":
-                            temp_productID = item.getString();
+                            productID = item.getString();
                             break;
                         default:
                             break;
@@ -72,10 +72,11 @@ public class UploadImageServlet extends HttpServlet {
                     }
                 }
             }
-            productID = Integer.parseInt(temp_productID);
-            DanqtDAO dao = new DanqtDAO();
-            dao.updateProductImage(filename, productID);
+            //productID = Integer.parseInt(temp_productID);
+            //DanqtDAO dao = new DanqtDAO();
+            //dao.updateProductImage(filename, productID);
             request.setAttribute("productID", productID);
+            request.setAttribute("fileName", filename);
             RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.LOAD_PUBLISH_PAGE_SERVLET);
             rd.forward(request, response);
         }

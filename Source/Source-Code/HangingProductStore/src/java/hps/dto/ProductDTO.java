@@ -26,6 +26,7 @@ public class ProductDTO {
     //danqt - begin
     private String consignmentID;// for store owner management page
     private String receivedDate;
+    private String cancelDate;
     private Float consignedPrice;
     //danqt - end
 
@@ -47,7 +48,17 @@ public class ProductDTO {
         this.productStatusID = productStatusID;
     }
 
-    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, String image) {
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, String cancelDate) {
+        this.productID = productID;
+        this.name = productName;
+        this.receivedDate = receivedDate;
+        this.consignmentID = consignmentID;
+        this.consignedPrice = price;
+        this.cancelDate = cancelDate;
+        
+    }
+
+    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, String image, float price) {
         this.productID = productID;
         this.name = productName;
         this.serialNumber = serialNumber;
@@ -55,15 +66,17 @@ public class ProductDTO {
         this.brand = brand;
         this.description = description;
         this.image = image;
+        this.sellingPrice = price;
     }
-    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description)
-    {
+
+    public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, float price) {
         this.productID = productID;
         this.name = productName;
         this.serialNumber = serialNumber;
         this.categoryID = categoryID;
         this.brand = brand;
         this.description = description;
+        this.sellingPrice = price;
     }
     //danqt - end
 
@@ -282,7 +295,6 @@ public class ProductDTO {
         this.productStatusID = productStatusID;
     }
 
-
     public String getStatus() {
         return status;
     }
@@ -297,6 +309,20 @@ public class ProductDTO {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    /**
+     * @return the cancelDate
+     */
+    public String getCancelDate() {
+        return cancelDate;
+    }
+
+    /**
+     * @param cancelDate the cancelDate to set
+     */
+    public void setCancelDate(String cancelDate) {
+        this.cancelDate = cancelDate;
     }
 
 }

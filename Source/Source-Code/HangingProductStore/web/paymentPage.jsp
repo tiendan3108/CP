@@ -1,9 +1,3 @@
-<%-- 
-    Document   : publishOnWebPage
-    Created on : Jun 10, 2015, 11:36:50 PM
-    Author     : Tien Dan
---%>
-
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
     <jsp:attribute name="extraBottomContent">
@@ -49,8 +43,43 @@
             </div>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
-            <div class="col-md-9">
-                <h4>Thông tin chuyển khoản</h4>
+            <c:set var="consignor" value="${requestScope.consignor}"></c:set>
+            <c:set var="product" value="${requestScope.product}"></c:set>
+                <div class="col-md-9">
+                    <h4>Thông tin thanh toán</h4>
+                    </br></br>
+                    <div class="col-sm-6">
+                        <h5>Thông tin người kí gửi</h5>
+                        </br>
+                        <li>Họ tên : ${consignor.fullName}</li>
+                    <li>Địa chỉ : ${consignor.address}</li>
+                    <li>Số điện thoại : ${consignor.phone}</li>
+                    <li>Email : ${consignor.email}</li>
+                    <li>Tài khoản Paypal : ${consignor.paypalAccount}</li>
+                </div>
+                <div class="col-sm-6">
+                    <h5>Thông tin hàng kí gửi</h5>
+                    </br>
+                    <li>Tên sản phẩm : ${product.name}</li>
+                    <li>Mã hàng kí gửi : ${product.consignmentID}</li>
+                    <li>Giá kí gửi : ${product.consignedPrice}</li>
+                    <li>Ngày kí gửi : ${product.receivedDate}</li>
+                </div>
+            </div>
+            <div class="col-md-8" style="height: 100px"></div>
+            <div class="col-md-11" id="divPaymentForm">
+                <form action="PaymentServlet" method="POST">
+                    <input type="hidden" name="productID" value="${product.productID}"/>
+                    <div class="col-sm-4">
+                        <button class="btn btn-warning" name="btnAction" value="cancel" type="submit" style="width: 205px">Trở lại</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-info" name="btnAction" value="pay" type="submit" style="width: 205px">Đã thanh toán TT</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-info" name="btnAction" value="paypal" type="submit" style="width: 205px">Thanh toán qua Paypal</button>
+                    </div>
+                </form>
             </div>
         </div>
         <!-- END SIDEBAR & CONTENT -->

@@ -8,7 +8,6 @@ package hps.servlet;
 import com.google.gson.Gson;
 import hps.dao.CategoryDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,11 +41,12 @@ public class GetChildCategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String parentCategoryName = request.getParameter("parentCategory");
         CategoryDAO dao = new CategoryDAO();
         List<String> result = dao.getChildCategory(parentCategoryName);
         String json = new Gson().toJson(result);
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(json);
     }
 

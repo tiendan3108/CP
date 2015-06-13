@@ -70,6 +70,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
+                                                                <label class="col-sm-4 control-label">Giá bán </label>
+                                                                <div class="col-sm-8">
+                                                                    <input id="priceField" type="text" class="form-control" maxlength="50" value=""/>
+                                                                    <p class="help-block" id="erProductName">  </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <label for="txtSerial" class="col-sm-4 control-label"> Số seri </label>
                                                                 <div class="col-sm-8">
                                                                     <input id="serialNumberField" type="text" class="form-control" value="${product.serialNumber}"/>
@@ -129,15 +136,26 @@
                                                                 <div class="col-md-9">
                                                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                         <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                                                                            <img name="productImage" id="productImg" src='${product.image}' style="width: 100%; height: 100%"/>
+                                                                            <img name="productImage" id="productImg" src="<c:choose>
+                                                                                     <c:when test="${requestScope.fileName!=null}">./assets/image/${requestScope.fileName}</c:when>
+                                                                                     <c:otherwise>${product.image}</c:otherwise>
+                                                                                 </c:choose>" style="width: 100%; height: 100%"/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
                                                                         <div>
                                                                             <form action="UploadImageServlet" method="POST"enctype="multipart/form-data">
+                                                                                <input id="txtProductName2" type="hidden" name="productName" value="">
+                                                                                <input id="txtSerialNumber2" type="hidden" name="serialNumber" value="">
+                                                                                <input id="txtParentCategory2" type="hidden" name="parentCat" value="">
+                                                                                <input id="txtChildCategory2" type="hidden" name="childCat" value="">
+                                                                                <input id="txtBrand2" type="hidden" name="brand" value="">
+                                                                                <input id="txtDescription2" type="hidden" name="description" value="">
+                                                                                <input id="txtPrice2" type="hidden" name="price" value="">
                                                                                 <input type="hidden" name="productID" value="${product.productID}"/>
+                                                                                <input type="hidden" name="price" value="${product.productID}"/>
                                                                                 <input type="file" id="txtImage" name="txtImage" onchange="readURL(this);"/>
-                                                                                <input type="submit" name="btnUpload" value="Upload" style="height: 21px; width: 85px"/>
+                                                                                <input type="submit" name="btnUpload" value="Upload" onclick="loadData2()"style="height: 21px; width: 85px"/>
                                                                             </form>
                                                                         </div>
                                                                     </div>
@@ -153,6 +171,7 @@
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-sm-5">
+                                                    <input type="hidden" name="imageName" value="${requestScope.imageName}"/>
                                                     <input type="hidden" name="productID" value="${product.productID}"/>
                                                     <input id="txtProductName" type="hidden" name="productName" value="">
                                                     <input id="txtSerialNumber" type="hidden" name="serialNumber" value="">
@@ -160,6 +179,7 @@
                                                     <input id="txtChildCategory" type="hidden" name="childCat" value="">
                                                     <input id="txtBrand" type="hidden" name="brand" value="">
                                                     <input id="txtDescription" type="hidden" name="description" value="">
+                                                    <input id="txtPrice" type="hidden" name="price" value="">
                                                     <button  name="btnAction" value="cancel" type="submit" class="btn-block btn-lg btn btn-info" >Trở lại <i class="m-icon-big-swapleft m-icon-white"></i></button>
                                                 </div>
                                                 <div class="col-sm-5">
@@ -194,12 +214,25 @@
     function loadData()
     {
         document.getElementById("txtProductName").value = document.getElementById("productNameField").value;
+        document.getElementById("txtPrice").value = document.getElementById("priceField").value;
         document.getElementById("txtSerialNumber").value = document.getElementById("serialNumberField").value;
         document.getElementById("txtParentCategory").value = document.getElementById("parentCategoryField").value;
         document.getElementById("txtChildCategory").value = document.getElementById("childCategoryField").value;
         document.getElementById("txtBrand").value = document.getElementById("brandField").value;
         document.getElementById("txtDescription").value = document.getElementById("descriptionField").value;
-    };
+    }
+    ;
+    function loadData2()
+    {
+        document.getElementById("txtProductName2").value = document.getElementById("productNameField").value;
+        document.getElementById("txtPrice2").value = document.getElementById("priceField").value;
+        document.getElementById("txtSerialNumber2").value = document.getElementById("serialNumberField").value;
+        document.getElementById("txtParentCategory2").value = document.getElementById("parentCategoryField").value;
+        document.getElementById("txtChildCategory2").value = document.getElementById("childCategoryField").value;
+        document.getElementById("txtBrand2").value = document.getElementById("brandField").value;
+        document.getElementById("txtDescription2").value = document.getElementById("descriptionField").value;
+    }
+    ;
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();

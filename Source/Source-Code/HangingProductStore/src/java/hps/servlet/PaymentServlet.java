@@ -7,13 +7,9 @@ package hps.servlet;
 
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
-import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-public class PublishOnWebServlet extends HttpServlet {
+public class PaymentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,6 +36,7 @@ public class PublishOnWebServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
@@ -47,49 +44,24 @@ public class PublishOnWebServlet extends HttpServlet {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String action = request.getParameter("btnAction");
-                String imageName = request.getParameter("imageName");
-                if (action.equals("cancel")) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET;
-                    String path = request.getServletContext().getRealPath("/") + "\\assets\\image\\" + imageName;
-                    File imageFile = new File(path);
-                    try {
-                        imageFile.delete();
-                    } catch (SecurityException e) {
-                        Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-                    }
-                } else {
-                    ProductDTO product;
-                    String serialNumber = "", description = "";
-                    float price = 0;
-                    String temp_productID = request.getParameter("productID");
-                    int productID = Integer.parseInt(temp_productID);
-                    String productName = request.getParameter("productName");
-                    serialNumber = request.getParameter("serialNumber");
-                    String parentCat = request.getParameter("parentCat");
-                    String childCat = request.getParameter("childCat");
-                    String brand = request.getParameter("brand");
-                    description = request.getParameter("description");
-                    String image = "assets/image/" + imageName;
-                    String temp_price = request.getParameter("price");
-                    if (temp_price != null) {
-                        price = Float.parseFloat(temp_price);
-                    }
-                    DanqtDAO dao = new DanqtDAO();
-                    int categoryID = dao.getCategoryIDByCategoryNameAndParentCategoryName(parentCat, childCat);
-                    if (imageName.equals("")) {
-                        product = new ProductDTO(productID, productName, serialNumber, categoryID, brand, description, price);
-                    } else {
-                        product = new ProductDTO(productID, productName, serialNumber, categoryID, brand, description, image, price);
-                    }
-                    boolean flag = dao.publishOnWeb(product);
-                    if (flag) {
-                        url = GlobalVariables.SUCCESS_ACTION_PAGE;
-                    } else {
-                        url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                    }
+                switch (action) {
+                    case "cancel":
+                        url = GlobalVariables.MANAGERMENT_SERVLET;
+                        break;
+                    case "pay":
+                        int productID = Integer.parseInt(request.getParameter("productID"));
+                        DanqtDAO dao = new DanqtDAO();
+                        if (dao.payConsignor(productID)) {
+                            url = GlobalVariables.SUCCESS_ACTION_PAGE;
+                        } else {
+                            url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                        }
+                        break;
+                    case "paypal":
+                        break;
                 }
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

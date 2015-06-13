@@ -27,6 +27,8 @@ public class AccountDTO {
 
     //danqt - begin
     private float consignedPrice;
+    private float sellingPrice;
+    private String orderedDate;
 
     //danqt - end
 
@@ -66,13 +68,21 @@ public class AccountDTO {
         this.consignedPrice = consignedPrice;
     }
 
-    public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount, float consignedPrice) {
+    public AccountDTO(String fullName, String address, String phone, String email, float consignedPrice) {
         this.fullName = fullName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.paypalAccount = paypalAccount;
         this.consignedPrice = consignedPrice;
+    }
+    public AccountDTO(String fullName, String address, String phone, String email, float consignedPrice, float sellingPrice, String orderedDate) {
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.consignedPrice = consignedPrice;
+        this.sellingPrice = sellingPrice;
+        this.orderedDate = orderedDate;
     }
 
     public AccountDTO(String fullName, String address, String phone, String email, String paypalAccount) {
@@ -280,6 +290,34 @@ public class AccountDTO {
      */
     public void setFormula(float formula) {
         this.formula = formula;
+    }
+
+    /**
+     * @return the sellingPrice
+     */
+    public float getSellingPrice() {
+        return sellingPrice;
+    }
+
+    /**
+     * @param sellingPrice the sellingPrice to set
+     */
+    public void setSellingPrice(float sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    /**
+     * @return the orderedDate
+     */
+    public String getOrderedDate() {
+        return orderedDate;
+    }
+
+    /**
+     * @param orderedDate the orderedDate to set
+     */
+    public void setOrderedDate(String orderedDate) {
+        this.orderedDate = orderedDate;
     }
 
 

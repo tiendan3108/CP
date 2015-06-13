@@ -106,7 +106,7 @@
                                         <c:choose>
                                             <c:when test="${status==5}">
                                                 <form action="LoadPaymentPageServlet" method="POST">
-                                                    <button style="width: 150px" class="btn btn-info" type="submit">Đã bán</button>
+                                                    <button style="width: 150px" class="btn btn-warning" type="submit">Đã bán</button>
                                                     <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                                 </form>
                                             </c:when>
@@ -132,6 +132,7 @@
                                                 <form action="LoadCancelProductPageServlet" method="POST">
                                                     <button style="width: 150px" class="btn btn-warning" type="submit">Đăng kí hủy</button>
                                                     <input name="productID" type="hidden" value="${item.productID}">
+                                                    <input name="consignmentID" type="hidden" value="${item.consignmentID}">
                                                 </form>
                                             </c:when>
                                             <c:when test="${status==7}">
