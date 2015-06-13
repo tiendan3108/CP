@@ -56,13 +56,36 @@
             <div class="contain">
                 <div class="row" >
                     <div style="padding: 0px" class="col-md-3 col-sm-4">
-                        <ul>
-                            <li style="float: left">
-                                <a href="HomeServlet">
-                                    <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
-                                </a>
-                            </li>
-                        </ul>
+                        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
+                        <c:if test="${not empty acc}">
+                            <c:if test="${acc.role == 'member'}">
+                                <ul>
+                                    <li style="float: left">
+                                        <a href="HomeServlet">
+                                            <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
+                                        </a>
+                                    </li>
+                                </ul>
+                            </c:if>
+                            <c:if test="${acc.role == 'storeOwner'}">
+                                <ul>
+                                    <li style="float: left">
+                                        <a href="./consignment">
+                                            <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
+                                        </a>
+                                    </li>
+                                </ul>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty acc}">
+                            <ul>
+                                <li style="float: left">
+                                    <a href="HomeServlet">
+                                        <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
+                                    </a>
+                                </li>
+                            </ul>
+                        </c:if>           
                     </div>
                     <div class="col-md-9 col-sm-8">
                         <!-- Top-bar-menu BEGIN -->
