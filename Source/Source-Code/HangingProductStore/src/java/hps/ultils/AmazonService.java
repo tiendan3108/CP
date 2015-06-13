@@ -66,4 +66,17 @@ public class AmazonService {
         }
         return price;
     }
+    
+    public static void main(String[] args) {
+        AmazonService amazon = new AmazonService();
+        String keyword = "Native Miller";
+        String brand = "";
+        String category = "Shoes";
+        
+        float price = amazon.getPrice(keyword, brand, category);
+        System.out.println("Keyword : " + keyword);
+        System.out.println("Brand   : " + brand);
+        System.out.println("Category: " + category);
+        System.out.println("Price   : " + price);
+    }
 }

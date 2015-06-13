@@ -76,9 +76,9 @@
 
                                             <div>
                                                 <div class="row">
-
                                                     <div class="col-md-6 col-sm-6">
                                                         <div class="form-horizontal">
+
                                                             <div class="form-group">
                                                                 <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
                                                                 <div class="col-md-8 col-sm-8">
@@ -89,22 +89,6 @@
                                                             </div>
 
                                                             <div class="form-group">
-                                                                <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
-                                                                <div class="col-md-8 col-sm-8">
-                                                                    <div class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
-                                                                        <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
-                                                                        <span class="input-group-addon">
-                                                                            đến </span>
-                                                                        <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
-                                                                    </div>
-
-                                                                    <span class="help-block" id="erDate">
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="form-group">
                                                                 <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
                                                                 <div class="col-md-8 col-sm-8">
                                                                     <textarea id="txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" >${member.address}</textarea>
@@ -112,14 +96,6 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-
-
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <div class="form-horizontal">
 
                                                             <div class="form-group">
                                                                 <label for="" class="col-md-4 col-sm-4 control-label"> Liên lạc </label>
@@ -309,6 +285,54 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div class="form-horizontal">
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm <font color="red">*</font></label>
+                                                                <div class="col-md-8 col-sm-8" align="center">
+                                                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                        <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                                        </div>
+                                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                                        </div>
+                                                                        <div >
+                                                                            <span class="btn btn-info btn-file">
+                                                                                <span class="fileinput-new btn " >
+                                                                                    CHỌN ẢNH </span>
+                                                                                <span class="fileinput-exists btn">
+                                                                                    THAY ẢNH </span>
+                                                                                <input  type="file" id="txtImage" name="txtImage" id="txtImage" />
+                                                                            </span>
+                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                XÓA </a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <span class="help-block" id="erImage">
+
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
+                                                                <div class="col-md-8 col-sm-8">
+                                                                    <div  class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
+                                                                        <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
+                                                                        <span class="input-group-addon">
+                                                                            đến </span>
+                                                                        <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
+                                                                    </div>
+
+                                                                    <span class="help-block" id="erDate">
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
                                                 </div>													
 
                                             </div>
@@ -316,7 +340,7 @@
                                         </div>
                                     </div>
                                     <div class="form-actions" style="
-                                         padding-top: 5px;
+                                         padding-top: 30px;
                                          padding-bottom: 5px;
                                          padding-right: 5px;
                                          padding-left: 5px;

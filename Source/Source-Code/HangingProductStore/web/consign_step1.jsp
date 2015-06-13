@@ -93,18 +93,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                            <div class="col-md-5 col-sm-6">
-                                                                <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
-                                                                    <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
-                                                                    <span class="input-group-btn">
-                                                                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                    </span>
-                                                                </div>
-                                                                <span class="help-block" id="erDate"> </span>
-                                                            </div>
-                                                        </div>
 
                                                         <c:set var="fCate" value="${sessionScope.FCATE}" />
                                                         <c:set var="category" value="${sessionScope.CATEGORY}" />
@@ -153,6 +141,25 @@
 
 
 
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="form-horizontal">
+
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
+                                                            <div class="col-md-5 col-sm-6">
+                                                                <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
+                                                                    <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                    </span>
+                                                                </div>
+                                                                <span class="help-block" id="erDate"> </span>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="form-group">
                                                             <label  class="col-md-4 col-sm-4 control-label"> Mô tả </label>
                                                             <div class="col-md-8 col-sm-8">
@@ -163,40 +170,6 @@
                                                         </div>
 
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="form-horizontal">
-
-                                                        <div class="form-group">
-                                                            <label class="control-label col-md-3 col-sm-4">Ảnh sản phẩm </label>
-                                                            <div class="col-md-9 col-sm-8">
-                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                    <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                                                                        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
-                                                                    </div>
-                                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
-                                                                    </div>
-                                                                    <div >
-                                                                        <span class="btn btn-info btn-file">
-                                                                            <span class="fileinput-new btn " >
-                                                                                CHỌN ẢNH </span>
-                                                                            <span class="fileinput-exists btn">
-                                                                                THAY ẢNH </span>
-                                                                            <input  type="file" id="txtImage" name="txtImage" id="txtImage" value="${product.image}">
-                                                                        </span>
-                                                                        <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                            XÓA </a>
-                                                                    </div>
-                                                                </div>
-                                                                <span class="help-block" id="erImage">
-                                                                    Xin cung cấp hình ảnh thực của sản phẩm
-                                                                </span>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
 
                                                 </div> 
                                             </div>

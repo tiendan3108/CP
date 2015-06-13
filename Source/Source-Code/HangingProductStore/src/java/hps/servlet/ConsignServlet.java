@@ -79,15 +79,16 @@ public class ConsignServlet extends HttpServlet {
                 String brand = request.getParameter("txtBrand");
                 String date = request.getParameter("txtDate");
                 String description = request.getParameter("txtDescription");
-                String image = request.getParameter("txtImage");
 
-                ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, image, 1);
+                ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
                 HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT", product);
 
                 double basicPrice = 0;
-//                AmazonService amazon = new AmazonService();
+                DuchcDAO dDAO = new DuchcDAO();
+//                //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
+//                basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
 
                 if (productName.toLowerCase().contains("gucci")) {
                     basicPrice = 50;
@@ -115,7 +116,7 @@ public class ConsignServlet extends HttpServlet {
                 }
 
                 session.setAttribute("BASICPRICE", basicPrice);
-                DuchcDAO dDAO = new DuchcDAO();
+
                 List<StoreOwnerDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 
                 session.setAttribute("STORELIST", list);
@@ -140,8 +141,10 @@ public class ConsignServlet extends HttpServlet {
                     String phone = request.getParameter("txtPhone");
                     String email = request.getParameter("txtEmail");
                     String paypalAccount = request.getParameter("txtPaypalAccount");
+                    String image = request.getParameter("txtImage");
 
                     ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
+                    product.setImage(image);
                     //code cứng do chưa up được ảnh
                     if (product.getImage() == null) {
                         product.setImage("./assets/image/nike_air_jordan_4_retro_2013110110_0.jpg");
@@ -216,13 +219,14 @@ public class ConsignServlet extends HttpServlet {
                     HttpSession session = request.getSession();
                     session.setAttribute("ACCOUNT", account);
                     if (account.getRole().equals(GlobalVariables.STORE_OWNER)) {
-                        backlink = "consignment";
                         session.removeAttribute("PRODUCT");
                         session.removeAttribute("BASICPRICE");
                         session.removeAttribute("STORE");
                         session.removeAttribute("STORELIST");
                         session.removeAttribute("FCATE");
                         session.removeAttribute("CATEGORY");
+                        response.sendRedirect(request.getContextPath() + "/consignment");
+                        return;
                     } else {
                         request.setAttribute("backlink", backlink);
                     }
