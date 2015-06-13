@@ -50,7 +50,8 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("ACCOUNT", account);
                 if(account.getRole().equals(GlobalVariables.STORE_OWNER)){
-                    url = "consignment";
+                    response.sendRedirect(request.getContextPath() + "/consignment");
+                    return;
                 }else{
                     url = "HomeServlet";
                 }

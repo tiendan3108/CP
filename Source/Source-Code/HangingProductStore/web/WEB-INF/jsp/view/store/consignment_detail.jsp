@@ -25,7 +25,7 @@
                             <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
                         </li>
                         <li class="list-group-item clearfix">
-                            <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                                <a href="LoadManageProductPageServlet"><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
                         </li>
                     </ul>
                 </li>

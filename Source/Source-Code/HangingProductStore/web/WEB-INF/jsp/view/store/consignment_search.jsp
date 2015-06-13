@@ -13,6 +13,9 @@
                             <li class="list-group-item clearfix">
                                 <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
                             </li>
+                            <li class="list-group-item clearfix">
+                                <a href="./consignment?accepted"><i class="fa fa-angle-right"></i> Yêu cầu đã duyệt</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="list-group-item clearfix dropdown">
@@ -22,7 +25,7 @@
                                 <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
                             </li>
                             <li class="list-group-item clearfix">
-                                <a href=""><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
+                                <a href="LoadManageProductPageServlet"><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
                             </li>
                         </ul>
                     </li>
