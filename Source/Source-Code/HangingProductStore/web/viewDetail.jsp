@@ -19,20 +19,29 @@
         </script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
-        <li><a href="ConsignServlet">Kí Gửi</a></li>
-        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-            </ul>
-        </li>
+        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
+        <c:if test="${not empty acc}">
+            <c:if test="${acc.role == 'member'}">
+                <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+                <li><a href="ConsignServlet">Kí Gửi</a></li>
+                <li id="nofi">
+                    <a href="#">
+                        <i class="icon-bell"></i>
+                        <span class="badge badge-default">3</span>           
+                    </a>
+                    <ul class="fallback">
+                        <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
+                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
+                    </ul>
+                </li>
+            </c:if>
+        </c:if>
+        <c:if test="${empty acc}">
+            <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+            <li><a href="ConsignServlet">Kí Gửi</a></li>
+            </c:if>
     </jsp:attribute>
     <jsp:body> 
         <c:set var="mess" value="${requestScope.MESSAGE}"/>
