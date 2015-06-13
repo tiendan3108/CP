@@ -3,6 +3,7 @@ package hps.servlet;
 import com.twilio.sdk.TwilioRestException;
 import hps.dao.ConsignmentDAO;
 import hps.dao.ProductDAO;
+import hps.dto.AccountDTO;
 import hps.dto.Alert;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
@@ -24,13 +25,11 @@ import javax.servlet.http.HttpSession;
  * @author Phuc Tran
  */
 @WebServlet(name = "ConsignmentServlet",
-        urlPatterns = {
-            "/consignment",
-            "/consignor"})
+        urlPatterns = {"/consignment"})
 public class ConsignmentServlet extends HttpServlet {
 
     private static final String STORE_VIEW = "WEB-INF/jsp/view/store";
-    private static final int STORE_ID = 1;
+//    private static final int STORE_ID = 1;
     private static final String CONSIGNMENT_SEARCH = "/consignment_search";
     private static final String CONSIGNMENT = "/consignment";
     private static final String CONSIGNMENT_REQUEST = "/consignment_request";
@@ -59,13 +58,10 @@ public class ConsignmentServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-//        HttpSession session = request.getSession(false);
-//        String storeOwnerID = (String) session.getAttribute("ID");
-//        int storeId = Integer.parseInt(storeOwnerID);
-//        if (storeOwnerID == null) {
-//            response.sendRedirect(GlobalVariables.SESSION_TIME_OUT_PAGE);
-//        }
+
+        HttpSession session = request.getSession(false);
+        AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+        int storeId = user.getRoleID();
 
         String userPath = request.getServletPath();
         if (userPath.equals(CONSIGNMENT)) {
@@ -78,7 +74,7 @@ public class ConsignmentServlet extends HttpServlet {
 
             } else if (request.getParameter("search") != null) {
                 if (request.getParameter("term") != null) {
-                    List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(STORE_ID, request.getParameter("term"), REQUEST_WAITING);
+                    List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), REQUEST_WAITING);
 
                     /* Return data format: ["a", "b", "c"] */
                     PrintWriter writer = response.getWriter();
@@ -96,7 +92,7 @@ public class ConsignmentServlet extends HttpServlet {
                     userPath = CONSIGNMENT_REQUEST;
 
                     String searchValue = request.getParameter("searchValue");
-                    List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductNameAndStatus(STORE_ID, searchValue, REQUEST_WAITING);
+                    List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductNameAndStatus(storeId, searchValue, REQUEST_WAITING);
                     request.setAttribute("consignments", consignments);
                 }
             } else if (request.getParameter("advand-search") != null) {
@@ -112,20 +108,16 @@ public class ConsignmentServlet extends HttpServlet {
 
 //                List<Consignment> consignments = consignmentBLO.getConsigmentsSold(STORE_ID);
 //                request.setAttribute("consignments", consignments);
-
             } else if (request.getParameter("accepted") != null) {
                 userPath = CONSIGNMENT_ACCEPTED;
-                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(STORE_ID, REQUEST_ACCEPTED);
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(storeId, REQUEST_ACCEPTED);
                 request.setAttribute("consignments", consignments);
-                
+
             } else /*if (request.getParameter("request") != null)*/ {
                 userPath = CONSIGNMENT_REQUEST;
-                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(STORE_ID, REQUEST_WAITING);
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(storeId, REQUEST_WAITING);
                 request.setAttribute("consignments", consignments);
             }
-        } else if (userPath.equals("/consignor")) {
-//            List<Customer> consignors = consignmentBLO.getConsignorsByStore(STORE_ID);
-//            request.setAttribute("consignors", consignors);
         }
 
         String url = STORE_VIEW + userPath + ".jsp";
