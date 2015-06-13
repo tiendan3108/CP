@@ -8,29 +8,29 @@ package hps.servlet;
 import hps.dao.CategoryDAO;
 import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
-import hps.dto.ConsignmentDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.StoreOwnerDTO;
-import hps.ultils.AmazonService;
 import hps.ultils.GlobalVariables;
-import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author duchc
  */
 @WebServlet(name = "ConsignServlet", urlPatterns = {"/ConsignServlet"})
+@MultipartConfig()
 public class ConsignServlet extends HttpServlet {
 
     private static final String STEP1 = "consign_step1.jsp";
@@ -130,72 +130,82 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("STORE", storeOwnerID);
                 url = STEP3;
                 request.setAttribute("backlink", url);
-            } else if (action.equals("complete")) {
-                HttpSession session = request.getSession();
-                if (session.getAttribute("storeName") == null || session.getAttribute("trackId") == null) {
+            } 
+//            else if (action.equals("complete")) {
+//                HttpSession session = request.getSession();
+//                if (session.getAttribute("storeName") == null || session.getAttribute("trackId") == null) {
 
-                    String fullName = request.getParameter("txtFullName");
-                    String fromDate = request.getParameter("txtFromDate");
-                    String toDate = request.getParameter("txtToDate");
-                    String address = request.getParameter("txtAddress");
-                    String phone = request.getParameter("txtPhone");
-                    String email = request.getParameter("txtEmail");
-                    String paypalAccount = request.getParameter("txtPaypalAccount");
-                    String image = request.getParameter("txtImage");
-
-                    ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
-                    product.setImage(image);
-                    //code cứng do chưa up được ảnh
-                    if (product.getImage() == null) {
-                        product.setImage("./assets/image/nike_air_jordan_4_retro_2013110110_0.jpg");
-                    }
-
-                    DuchcDAO dao = new DuchcDAO();
-                    //Add new product and get id of it
-                    int productID = dao.addProduct(product);
-
-                    //get memberID if session MEMBER is not null
-                    int memberID = -1;
-                    if (session.getAttribute("ACCOUNT") != null) {
-                        memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
-                    }
-                    //get storeOwnerID from step2
-                    int storeOwnerID = 0;
-
-                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-
-                    double maxPrice = 0;
-                    double minPrice = 0;
-                    //get store de lay fomula va nam cua store
-                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
-                    if (session.getAttribute("BASICPRICE") != null) {
-                        maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-
-                        maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
-                        minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
-
-                    }
-
-                    JavaUltilities ulti = new JavaUltilities();
-                    //tạo ID cho consigment
-                    String consigmentID = ulti.randomString(10);
-
-                    ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
-                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
-                    boolean result = dao.addConsigment(consignment);
-                    session.setAttribute("storeName", store.getFullName());
-                    session.setAttribute("trackId", consigmentID);
-                    session.removeAttribute("PRODUCT");
-                    session.removeAttribute("BASICPRICE");
-                    session.removeAttribute("STORE");
-                    session.removeAttribute("STORELIST");
-                    session.removeAttribute("FCATE");
-                    session.removeAttribute("CATEGORY");
-                }
-                url = COMPLETED;
-                request.setAttribute("backlink", url);
-
-            } else if (action.equals("backstep1")) {
+//                    String fullName = request.getParameter("txtFullName");
+//                    String fromDate = request.getParameter("txtFromDate");
+//                    String toDate = request.getParameter("txtToDate");
+//                    String address = request.getParameter("txtAddress");
+//                    String phone = request.getParameter("txtPhone");
+//                    String email = request.getParameter("txtEmail");
+//                    String paypalAccount = request.getParameter("txtPaypalAccount");
+//                    String image = request.getParameter("txtImage");
+//
+//                    ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
+//                    product.setImage(image);
+//                    //code cứng do chưa up được ảnh
+//                    if (product.getImage() == null) {
+//                        //product.setImage("./assets/image/nike_air_jordan_4_retro_2013110110_0.jpg");
+//                    }
+//
+//                    DuchcDAO dao = new DuchcDAO();
+//
+//                    //Add new product and get id of it
+//                    int productID = dao.addProduct(product);
+//
+//                    //upload image - begin
+//                    
+//
+//                    //upload image - end
+////                    filename = "./assets/image/" + filename;
+////                    dao.updateProductImage(productID, filename);
+//                    
+//                    //get memberID if session MEMBER is not null
+//                    int memberID = -1;
+//                    if (session.getAttribute("ACCOUNT") != null) {
+//                        memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
+//                    }
+//                    //get storeOwnerID from step2
+//                    int storeOwnerID = 0;
+//
+//                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
+//
+//                    double maxPrice = 0;
+//                    double minPrice = 0;
+//                    //get store de lay fomula va nam cua store
+//                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
+//                    if (session.getAttribute("BASICPRICE") != null) {
+//                        maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
+//
+//                        maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
+//                        minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
+//
+//                    }
+//
+//                    JavaUltilities ulti = new JavaUltilities();
+//                    //tạo ID cho consigment
+//                    String consigmentID = ulti.randomString(10);
+//
+//                    ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
+//                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
+//                    boolean result = dao.addConsigment(consignment);
+//                    session.setAttribute("storeName", store.getFullName());
+//                    session.setAttribute("trackId", consigmentID);
+//                    session.removeAttribute("PRODUCT");
+//                    session.removeAttribute("BASICPRICE");
+//                    session.removeAttribute("STORE");
+//                    session.removeAttribute("STORELIST");
+//                    session.removeAttribute("FCATE");
+//                    session.removeAttribute("CATEGORY");
+                    
+//                }
+//                url = COMPLETED;
+//                request.setAttribute("backlink", url);
+//            } 
+            else if (action.equals("backstep1")) {
                 HttpSession session = request.getSession();
                 if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
                     CategoryDAO cateDao = new CategoryDAO();
@@ -248,6 +258,17 @@ public class ConsignServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }
+    }
+
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

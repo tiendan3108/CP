@@ -566,5 +566,40 @@ public class DuchcDAO {
         return -1;
     }
     
+    public void updateProductImage(int productID, String imageLink){
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            String englishName = "";
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "UPDATE Product SET Image = ? WHERE (ProductID = ?)";
+            stm = con.prepareStatement(query);
+            stm.setString(1, imageLink);
+            stm.setInt(2, productID);
+            int result = stm.executeUpdate();
+            
+            //return result > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //return false;
+    }
+    
     
 }

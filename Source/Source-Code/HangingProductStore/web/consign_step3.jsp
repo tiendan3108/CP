@@ -32,7 +32,7 @@
 
 
         <!-- BEGIN DIV STEP3 -->
-        <form id='form3' action="ConsignServlet" method="POST" onsubmit="return validation()">
+        <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
             <div id="divStep3" class="row">
                 <div class="col-md-12 col-sm-12">
                     <div class="portlet box " id="form_wizard_1">
@@ -70,7 +70,7 @@
 
                                         </ul>
 
-                                        <hr/>
+                                        
                                         <c:set var="member" value="${sessionScope.ACCOUNT}"/>
                                         <div class="tab-content">
 
@@ -487,6 +487,13 @@
             else {
                 $('#erPaypalAccount').html("");
             }
+        }
+        
+        if($('#txtImage').val() == ""){
+            $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
+                check = false;
+        }else{
+            $('#erImage').html("");
         }
         return check;
     }

@@ -118,7 +118,7 @@
         </script>
         <script type="text/javascript">
             $(function () {
-                if($("#txtErr").html() != ""){
+                if ($("#txtErr").html() != "") {
                     $("#loginModal2").modal("show");
                 }
             });
@@ -140,9 +140,9 @@
                 <a href="${logoutUrl}">Thoát</a>
             </li>         
         </c:if>
-
-        <li><a href="ViewCartServlet">Giỏ hàng</a></li>
         <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>
+        <li><a href="ViewCartServlet">Giỏ hàng</a></li>
+        <li><a href="ConsignServlet">Ký gửi</a></li>
 
 
 
