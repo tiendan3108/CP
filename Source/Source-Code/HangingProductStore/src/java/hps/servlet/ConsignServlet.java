@@ -30,7 +30,6 @@ import javax.servlet.http.Part;
  * @author duchc
  */
 @WebServlet(name = "ConsignServlet", urlPatterns = {"/ConsignServlet"})
-@MultipartConfig()
 public class ConsignServlet extends HttpServlet {
 
     private static final String STEP1 = "consign_step1.jsp";
@@ -73,12 +72,14 @@ public class ConsignServlet extends HttpServlet {
                 url = STEP1;
                 request.setAttribute("backlink", url);
             } else if (action.equals("tostep2")) {
-                String productName = request.getParameter("txtProductName");
+                String productName = new String(request.getParameter("txtProductName").getBytes("iso-8859-1"), "utf-8");
                 String serialNumber = request.getParameter("txtSerialNumber");
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
-                String brand = request.getParameter("txtBrand");
+                String brand = new String(request.getParameter("txtBrand").getBytes("iso-8859-1"), "utf-8");
                 String date = request.getParameter("txtDate");
-                String description = request.getParameter("txtDescription");
+                //String description = request.getParameter("txtDescription");
+                String description = new String(request.getParameter("txtDescription").getBytes("iso-8859-1"), "utf-8");
+                
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 

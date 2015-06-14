@@ -85,7 +85,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     if (item.isFormField()) {
                         switch (item.getFieldName()) {
                             case "txtFullName":
-                                fullName = item.getString();
+                                fullName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
                             case "txtFromDate":
                                 fromDate = item.getString();
@@ -94,7 +94,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 toDate = item.getString();
                                 break;
                             case "txtAddress":
-                                address = item.getString();
+                                address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
                             case "txtPhone":
                                 phone = item.getString();
@@ -188,6 +188,8 @@ public class ConsignCompleteServlet extends HttpServlet {
              String fileName = extractFileName(part);
              part.write(savePath + File.separator + fileName);
              }*/
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 

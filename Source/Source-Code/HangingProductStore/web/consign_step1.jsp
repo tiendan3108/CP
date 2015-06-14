@@ -3,7 +3,7 @@
     Created on : May 30, 2015, 9:34:04 PM
     Author     : Robingios
 --%>
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %> 
 <template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
