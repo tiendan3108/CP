@@ -86,7 +86,7 @@ public class CompleteOrderServlet extends HttpServlet {
                     if (phone != null) {
                         phone = "+84" + phone.substring(1);
 //                try {
-//                    lib.sendSMS("Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + ". Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy", phone);
+//                    lib.sendSMS("Ban da dat hang thanh cong, ma don hang cua ban la " + orderID + ". Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy", phone);
 //                } catch (TwilioRestException ex) {
 //                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
 //                }
