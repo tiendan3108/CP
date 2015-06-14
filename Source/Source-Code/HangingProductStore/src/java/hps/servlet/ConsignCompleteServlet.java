@@ -127,14 +127,14 @@ public class ConsignCompleteServlet extends HttpServlet {
                         } catch (Exception ex) {
                             Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        imagePath = "./assets/image/" + consigmentID + filename;
+                        imagePath = "assets/image/" + consigmentID + filename;
                     }
                 }
 
                 ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
                 //code cứng do chưa up được ảnh
                 if (product.getImage() == null) {
-                    product.setImage("./assets/image/");
+                    product.setImage("assets/image/");
                 }
 
                 DuchcDAO dao = new DuchcDAO();
@@ -179,7 +179,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 session.removeAttribute("CATEGORY");
 
             }
-            request.setAttribute("backlink", COMPLETED);
+            
             RequestDispatcher rd = request.getRequestDispatcher(COMPLETED);
             rd.forward(request, response);
             /* 

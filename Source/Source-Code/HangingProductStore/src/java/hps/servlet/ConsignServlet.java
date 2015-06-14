@@ -5,6 +5,7 @@
  */
 package hps.servlet;
 
+import com.google.gson.Gson;
 import hps.dao.CategoryDAO;
 import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
@@ -36,6 +37,7 @@ public class ConsignServlet extends HttpServlet {
     private static final String STEP2 = "consign_step2.jsp";
     private static final String STEP3 = "consign_step3.jsp";
     private static final String COMPLETED = "consign_success.jsp";
+    private static final String HOME = "HomeServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,14 +53,14 @@ public class ConsignServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            HttpSession session = request.getSession();
             String action = request.getParameter("btnAction");
-
             if (action == null) {
                 action = "consign";
             }
             String url = "";
             if (action.equals("consign")) {
-                HttpSession session = request.getSession();
+
                 session.removeAttribute("storeName");
                 session.removeAttribute("trackId");
 
@@ -72,6 +74,7 @@ public class ConsignServlet extends HttpServlet {
                 url = STEP1;
                 request.setAttribute("backlink", url);
             } else if (action.equals("tostep2")) {
+
                 String productName = new String(request.getParameter("txtProductName").getBytes("iso-8859-1"), "utf-8");
                 String serialNumber = request.getParameter("txtSerialNumber");
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
@@ -79,11 +82,9 @@ public class ConsignServlet extends HttpServlet {
                 String date = request.getParameter("txtDate");
                 //String description = request.getParameter("txtDescription");
                 String description = new String(request.getParameter("txtDescription").getBytes("iso-8859-1"), "utf-8");
-                
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
-                HttpSession session = request.getSession();
                 session.setAttribute("PRODUCT", product);
 
                 double basicPrice = 0;
@@ -115,7 +116,6 @@ public class ConsignServlet extends HttpServlet {
 //                } else if (productName.toLowerCase().contains("jordan")) {
 //                    basicPrice = 35.5;
 //                }
-
                 session.setAttribute("BASICPRICE", basicPrice);
 
                 List<StoreOwnerDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
@@ -127,87 +127,12 @@ public class ConsignServlet extends HttpServlet {
                 request.setAttribute("backlink", url);
             } else if (action.equals("tostep3")) {
                 String storeOwnerID = request.getParameter("rdStore");
-                HttpSession session = request.getSession();
+
                 session.setAttribute("STORE", storeOwnerID);
                 url = STEP3;
                 request.setAttribute("backlink", url);
-            } 
-//            else if (action.equals("complete")) {
-//                HttpSession session = request.getSession();
-//                if (session.getAttribute("storeName") == null || session.getAttribute("trackId") == null) {
+            } else if (action.equals("backstep1")) {
 
-//                    String fullName = request.getParameter("txtFullName");
-//                    String fromDate = request.getParameter("txtFromDate");
-//                    String toDate = request.getParameter("txtToDate");
-//                    String address = request.getParameter("txtAddress");
-//                    String phone = request.getParameter("txtPhone");
-//                    String email = request.getParameter("txtEmail");
-//                    String paypalAccount = request.getParameter("txtPaypalAccount");
-//                    String image = request.getParameter("txtImage");
-//
-//                    ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
-//                    product.setImage(image);
-//                    //code cứng do chưa up được ảnh
-//                    if (product.getImage() == null) {
-//                        //product.setImage("./assets/image/nike_air_jordan_4_retro_2013110110_0.jpg");
-//                    }
-//
-//                    DuchcDAO dao = new DuchcDAO();
-//
-//                    //Add new product and get id of it
-//                    int productID = dao.addProduct(product);
-//
-//                    //upload image - begin
-//                    
-//
-//                    //upload image - end
-////                    filename = "./assets/image/" + filename;
-////                    dao.updateProductImage(productID, filename);
-//                    
-//                    //get memberID if session MEMBER is not null
-//                    int memberID = -1;
-//                    if (session.getAttribute("ACCOUNT") != null) {
-//                        memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
-//                    }
-//                    //get storeOwnerID from step2
-//                    int storeOwnerID = 0;
-//
-//                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-//
-//                    double maxPrice = 0;
-//                    double minPrice = 0;
-//                    //get store de lay fomula va nam cua store
-//                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
-//                    if (session.getAttribute("BASICPRICE") != null) {
-//                        maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-//
-//                        maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
-//                        minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
-//
-//                    }
-//
-//                    JavaUltilities ulti = new JavaUltilities();
-//                    //tạo ID cho consigment
-//                    String consigmentID = ulti.randomString(10);
-//
-//                    ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
-//                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
-//                    boolean result = dao.addConsigment(consignment);
-//                    session.setAttribute("storeName", store.getFullName());
-//                    session.setAttribute("trackId", consigmentID);
-//                    session.removeAttribute("PRODUCT");
-//                    session.removeAttribute("BASICPRICE");
-//                    session.removeAttribute("STORE");
-//                    session.removeAttribute("STORELIST");
-//                    session.removeAttribute("FCATE");
-//                    session.removeAttribute("CATEGORY");
-                    
-//                }
-//                url = COMPLETED;
-//                request.setAttribute("backlink", url);
-//            } 
-            else if (action.equals("backstep1")) {
-                HttpSession session = request.getSession();
                 if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
                     CategoryDAO cateDao = new CategoryDAO();
                     List<CategoryDTO> parentCategories = cateDao.getParentCategory();
@@ -227,7 +152,7 @@ public class ConsignServlet extends HttpServlet {
                 DuchcDAO dao = new DuchcDAO();
                 AccountDTO account = dao.login(username, password);
                 if (account != null) {
-                    HttpSession session = request.getSession();
+
                     session.setAttribute("ACCOUNT", account);
                     if (account.getRole().equals(GlobalVariables.STORE_OWNER)) {
                         session.removeAttribute("PRODUCT");
@@ -248,12 +173,28 @@ public class ConsignServlet extends HttpServlet {
                     request.setAttribute("backlink", backlink);
                 }
                 url = backlink;
+                if (backlink == "") {
+                    url = HOME;
+                }
             } else if (action.equals("logout")) {
                 String backlink = request.getParameter("backlink");
-                HttpSession session = request.getSession();
+
                 session.removeAttribute("ACCOUNT");
                 request.setAttribute("backlink", backlink);
-                url = backlink;
+                url = HOME;
+                session.removeAttribute("PRODUCT");
+                session.removeAttribute("BASICPRICE");
+                session.removeAttribute("STORE");
+                session.removeAttribute("STORELIST");
+                session.removeAttribute("FCATE");
+                session.removeAttribute("CATEGORY");
+            } else if (action.equals("getBrand")) {
+                //int categoryID = Integer.parseInt(request.getParameter("categotyID"));
+                List<String> list = DuchcDAO.getBrandByCategoryID(7);
+                String json = new Gson().toJson(list);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(json);
+                return;
             }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);

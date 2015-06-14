@@ -580,7 +580,6 @@ public class DuchcDAO {
             stm.setInt(2, productID);
             int result = stm.executeUpdate();
             
-            //return result > 0;
         } catch (SQLException ex) {
             Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -598,7 +597,36 @@ public class DuchcDAO {
                 Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //return false;
+    }
+    
+    public static List<String> getBrandByCategoryID(int categoryID){
+        List<String> list = null;
+        if(categoryID == 7 || categoryID == 14){
+            list.add("Casio");
+            list.add("Citizen");
+            list.add("Fortis");
+            list.add("Fossil");
+            list.add("Gucci");
+            list.add("Hamilton");
+            list.add("Hublot");
+            list.add("LG");
+            list.add("Luminox");
+            list.add("Motorola");
+            list.add("Movado");
+            list.add("NIXON");
+            list.add("Omega");
+            list.add("Rolex");
+            list.add("Samsung");
+            list.add("Seiko");  
+            list.add("Timex");
+            list.add("Timex");
+            list.add("Timex");
+            list.add("Timex");
+            list.add("Tissot");
+            list.add("Tommy Hilfiger");
+            
+        }
+        return list;
     }
     
     
