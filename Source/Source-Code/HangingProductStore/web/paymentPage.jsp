@@ -61,7 +61,9 @@
                     <li>Địa chỉ : ${consignor.address}</li>
                     <li>Số điện thoại : ${consignor.phone}</li>
                     <li>Email : ${consignor.email}</li>
-                    <li>Tài khoản Paypal : ${consignor.paypalAccount}</li>
+                        <c:if test="${consignor.paypalAccount!=null}">
+                        <li>Tài khoản Paypal : ${consignor.paypalAccount}</li>
+                        </c:if>
                 </div>
                 <div class="col-sm-6">
                     <h5>Thông tin hàng kí gửi</h5>
@@ -82,9 +84,11 @@
                     <div class="col-sm-4">
                         <button class="btn btn-info" name="btnAction" value="pay" type="submit" style="width: 205px">Đã thanh toán TT</button>
                     </div>
-                    <div class="col-sm-4">
-                        <button class="btn btn-info" name="btnAction" value="paypal" type="submit" style="width: 205px">Thanh toán qua Paypal</button>
-                    </div>
+                    <c:if test="${consignor.paypalAccount!=null}">
+                        <div class="col-sm-4">
+                            <button class="btn btn-info" name="btnAction" value="paypal" type="submit" style="width: 205px">Thanh toán qua Paypal</button>
+                        </div>
+                    </c:if>
                 </form>
             </div>
         </div>

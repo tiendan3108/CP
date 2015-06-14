@@ -161,7 +161,7 @@
                                                                                 <input type="hidden" name="productID" value="${product.productID}"/>
                                                                                 <input type="hidden" name="price" value="${product.productID}"/>
                                                                                 <input type="file" id="txtImage" name="txtImage" onchange="readURL(this);"/>
-                                                                                <input type="submit" name="btnUpload" value="Upload" onclick="loadData2()"style="height: 21px; width: 85px"/>
+                                                                                <button  name="btnUpload" value="Upload" type="submit" onclick="loadData2()" style="height: 21px; width: 85px">Thay đổi ảnh <i class="m-icon-big-swapright m-icon-white"></i></button>
                                                                             </form>
                                                                         </div>
                                                                     </div>
