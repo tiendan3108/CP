@@ -86,7 +86,7 @@
                                                                 <!--                                                            <th>
                                                                                                                                 Reliability
                                                                                                                             </th>-->
-                                                                <c:if test="${basicPrice != 0}">
+                                                                <c:if test="${basicPrice > 0}">
                                                                     <th>
                                                                         Giá
                                                                     </th>
@@ -144,7 +144,7 @@
                                                 </form>
                                             </c:if>
                                             <c:if test="${empty data}">
-                                                <h1>Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h1>
+                                                <h2 align="center">Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h2>
                                             </c:if>
 
                                         </div>

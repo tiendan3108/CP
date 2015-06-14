@@ -14,6 +14,13 @@
 <%@attribute name="extraBottomContent" fragment="true" required="false"%>
 <%@attribute name="extraNavigationContent" fragment="true" required="false"%>
 <%@include file="/WEB-INF/jsp/base.jspf" %>
+
+<c:if test="${not empty sessionScope.ACCOUNT}">
+    <c:if test="${sessionScope.ACCOUNT.role == 'storeOwner'}">
+        <c:redirect url="./consignment"/>
+    </c:if>    
+</c:if>
+
 <template:main htmlTitle="${htmlTitle}" bodyTitle="${bodyTitle}">
     <jsp:attribute name="headContent">
 
@@ -137,19 +144,19 @@
                     <c:param name="btnAction" value="logout" />
                     <c:param name="backlink" value="${requestScope.backlink}" />
                 </c:url>
-                <a href="${logoutUrl}">Thoát</a>
+                <a href="${logoutUrl}">Đăng xuất</a>
             </li>         
         </c:if>
-        <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>
+
+        <c:if test="${not empty member}">
+            <li> <b>${member.fullName}</b></li>            
+            </c:if>
+        <!--        <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>-->
         <li><a href="ViewCartServlet">Giỏ hàng</a></li>
         <li><a href="ConsignServlet">Ký gửi</a></li>
 
 
-
         <c:if test="${not empty member}">
-            <li>Chào, <b>${member.fullName}</b></li>            
-
-
             <li id="nofi">
                 <a href="#">
                     <i class="icon-bell"></i>

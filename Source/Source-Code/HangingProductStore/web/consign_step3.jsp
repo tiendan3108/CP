@@ -21,45 +21,45 @@
 
 
             <!-- BEGIN DIV STEP3 -->
-            <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
-                <div id="divStep3" class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="portlet box " id="form_wizard_1">
 
-                            <div class="portlet-body form">
-                                <div class="form-horizontal" id="submit_form">
-                                    <div class="form-wizard">
-                                        <div class="form-body">
-                                            <ul class="nav nav-pills nav-justified steps" >
+            <div id="divStep3" class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="portlet box " id="form_wizard_1">
 
-                                                <li class="done">
-                                                    <a id="ltap1" class="step">
-                                                        <span class="number">
-                                                            1 </span>
-                                                        <span class="desc">
-                                                            <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
-                                                    </a>
-                                                </li>
-                                                <li class="done">
-                                                    <a id="ltap2" class="step">
-                                                        <span class="number">
-                                                            2 </span>
-                                                        <span class="desc">
-                                                            <i class="fa fa-check"></i> Chọn cửa hàng</span>
-                                                    </a>
-                                                </li>
-                                                <li class="active">
-                                                    <a id="ltap3"  class="step active">
-                                                        <span class="number">
-                                                            3 </span>
-                                                        <span class="desc" >
-                                                            <i class="fa fa-check"></i><b> Thông tin chi tiết</b></span>
-                                                    </a>
-                                                </li>
+                        <div class="portlet-body form">
+                            <div class="form-horizontal" id="submit_form">
+                                <div class="form-wizard">
+                                    <div class="form-body">
+                                        <ul class="nav nav-pills nav-justified steps" >
 
-                                            </ul>
+                                            <li class="done">
+                                                <a id="ltap1" class="step">
+                                                    <span class="number">
+                                                        1 </span>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
+                                                </a>
+                                            </li>
+                                            <li class="done">
+                                                <a id="ltap2" class="step">
+                                                    <span class="number">
+                                                        2 </span>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Chọn cửa hàng</span>
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a id="ltap3"  class="step active">
+                                                    <span class="number">
+                                                        3 </span>
+                                                    <span class="desc" >
+                                                        <i class="fa fa-check"></i><b> Thông tin chi tiết</b></span>
+                                                </a>
+                                            </li>
 
+                                        </ul>
 
+                                        <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
                                             <c:set var="member" value="${sessionScope.ACCOUNT}"/>
                                             <div class="tab-content">
 
@@ -327,23 +327,27 @@
                                                 </div>
 
                                             </div>
-                                        </div>
-                                        <div class="form-actions" style="
-                                             padding-top: 30px;
-                                             padding-bottom: 5px;
-                                             padding-right: 5px;
-                                             padding-left: 5px;
-                                             ">
-                                            <div class="row">
-                                                <div class="col-md-4 col-sm-4"> 
-                                                    <a  href="ConsignServlet?btnAction=backstep2" class=" btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</a>
-                                                </div>
-                                                <div class="col-md-4 col-sm-4"> </div>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <button name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
-                                                </div>
 
+                                        </form>                              
+
+                                    </div>
+                                    <div class="form-actions" style="
+                                         padding-top: 30px;
+                                         padding-bottom: 5px;
+                                         padding-right: 5px;
+                                         padding-left: 5px;
+                                         ">
+                                        <div class="row">
+                                            <form action="ConsignServlet" method="POST">
+                                                <div class="col-md-4 col-sm-4"> 
+                                                    <button  name="btnAction" value="backstep2" class=" btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</button>
+                                                </div>
+                                            </form>
+                                            <div class="col-md-4 col-sm-4"> </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <button id="btnComplete" name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -351,11 +355,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- END DIV STEP3 -->
-            </form>
-
-
-
+            </div>
+            <!-- END DIV STEP3 -->
 
 
         </div>
@@ -367,7 +368,9 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
-
+    $("#btnComplete").click(function () {
+        $("#form3").submit();
+    });
 
     $('input:radio[name="rdContact"]').change(function () {
         if ($(this).val() == "phone") {

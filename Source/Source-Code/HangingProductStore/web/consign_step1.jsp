@@ -117,7 +117,7 @@
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4 col-sm-4">Hãng</label>
                                                                 <div class="col-md-5 col-sm-6">
-                                                                    <input id="txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+                                                                    <input id="txtBrand" name="txtBrand" type="text" class="form-control ui-autocomplete-input" autocomplete="autocomplete" maxlength="50" value="${product.brand}"/>
 
                                                                     <span class="help-block" id="erBrand">
                                                                     </span>
@@ -200,7 +200,7 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
-
+    
     function validation() {
         var check = true;
         if ($('#txtProductName').val().trim().length < 5 || $('#txtProductName').val().trim().length > 50) {
