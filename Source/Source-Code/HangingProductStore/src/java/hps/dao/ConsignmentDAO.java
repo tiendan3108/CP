@@ -296,4 +296,49 @@ public class ConsignmentDAO {
         }
         return false;
     }
+
+    public ConsignmentDTO getByProductID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ConsignmentDTO result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT *"
+                    + " FROM Consignment "
+                    + " WHERE ProductID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String consignmentID = rs.getString("ConsignmentID");
+                int period = rs.getInt("Period");
+                String receiveDate = rs.getString("ReceivedDate");
+                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
+                result = new ConsignmentDTO();
+                result.setPeriod(period);
+                result.setReceivedDate(receiveDate);
+                result.setConsignmentStatusID(consignmentStatusID);
+                result.setConsigmentID(consignmentID);
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
 }
