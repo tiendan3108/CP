@@ -2,9 +2,20 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee                               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <display-name>Hanging Product Store</display-name>
     <servlet>
-        <servlet-name>LoadCompleteOrder</servlet-name>
-        <servlet-class>hps.servlet.LoadCompleteOrder</servlet-class>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <!-- Register resources and providers under com.vogella.jersey.first package. -->
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>hps.mobile</param-value>
+        </init-param>
+       
+        <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/Service/*</url-pattern>
+    </servlet-mapping>
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
@@ -15,10 +26,6 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
-    <servlet-mapping>
-        <servlet-name>LoadCompleteOrder</servlet-name>
-        <url-pattern>/LoadCompleteOrder</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -27,4 +34,5 @@
     <welcome-file-list>
         <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
+       
 </web-app>
