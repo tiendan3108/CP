@@ -65,6 +65,7 @@ public class ProductServlet extends HttpServlet {
                 if (sparentCategoryId.equals("all")) {
                     products = dao.getProductByName(key, page);
                     totalProduct = dao.getSizeProductByName(key);
+                    System.out.println(totalProduct);
                 } else {
                     try {
                         parentId = Integer.parseInt(sparentCategoryId);
@@ -74,7 +75,7 @@ public class ProductServlet extends HttpServlet {
                     }
                     if (key != null) {
                         products = dao.getProductByParentCategoryAndName(parentId, key, page);
-                        totalProduct = dao.getSizeProductByParentCategoryAndName(parentId, key);
+                        totalProduct = dao.getSizeProductByParentCategoryAndName(parentId, key);                        
                     } else {
                         products = dao.getProductByParentCategory(parentId, page);
                         totalProduct = dao.getSizeProductByParentCategory(parentId);
