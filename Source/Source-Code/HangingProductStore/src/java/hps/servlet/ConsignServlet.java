@@ -54,6 +54,7 @@ public class ConsignServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
+            request.setCharacterEncoding("UTF8");
             String action = request.getParameter("btnAction");
             if (action == null) {
                 action = "consign";
@@ -75,13 +76,13 @@ public class ConsignServlet extends HttpServlet {
                 request.setAttribute("backlink", url);
             } else if (action.equals("tostep2")) {
 
-                String productName = new String(request.getParameter("txtProductName").getBytes("iso-8859-1"), "utf-8");
+                String productName = request.getParameter("txtProductName");
                 String serialNumber = request.getParameter("txtSerialNumber");
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
-                String brand = new String(request.getParameter("txtBrand").getBytes("iso-8859-1"), "utf-8");
+                String brand = request.getParameter("txtBrand");
                 String date = request.getParameter("txtDate");
                 //String description = request.getParameter("txtDescription");
-                String description = new String(request.getParameter("txtDescription").getBytes("iso-8859-1"), "utf-8");
+                String description = request.getParameter("txtDescription");
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
@@ -189,28 +190,18 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("FCATE");
                 session.removeAttribute("CATEGORY");
             } else if (action.equals("getBrand")) {
-                //int categoryID = Integer.parseInt(request.getParameter("categotyID"));
-                List<String> list = DuchcDAO.getBrandByCategoryID(7);
+                String term = request.getParameter("term");
+                List<String> list = DuchcDAO.getBrandByCategoryID(term);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
                 return;
+
             }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }
-    }
-
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -226,6 +217,8 @@ public class ConsignServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
+        //int categoryID = Integer.parseInt(request.getParameter("categotyID"));
     }
 
     /**

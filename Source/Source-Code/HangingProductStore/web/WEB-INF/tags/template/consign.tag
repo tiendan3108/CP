@@ -35,6 +35,7 @@
 
         <!-- BEGIN PAGE LEVEL STYLES -->
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
+        <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
 
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"/>
@@ -98,9 +99,6 @@
         <script type="text/javascript" src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
         <script type="text/javascript" src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 
-        <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
-        <script src="assets/admin/layout2/scripts/layout.js" type="text/javascript"></script>
-        <script src="assets/admin/layout2/scripts/demo.js" type="text/javascript"></script>
         <script src="assets/admin/pages/scripts/components-form-tools.js"></script>
         <script src="assets/admin/pages/scripts/components-pickers.js"></script>
 
@@ -108,7 +106,7 @@
         <script>
             jQuery(document).ready(function () {
                 // initiate layout and plugins
-                Metronic.init(); // init metronic core components
+                
                 Layout.init(); // init current layout
                 Demo.init(); // init demo features
 

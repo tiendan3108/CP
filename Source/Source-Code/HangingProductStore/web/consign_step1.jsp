@@ -7,9 +7,17 @@
 <template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <style>
+            .ui-autocomplete-loading {
+                background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+            }
+        </style>
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
 
@@ -117,7 +125,7 @@
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4 col-sm-4">Hãng</label>
                                                                 <div class="col-md-5 col-sm-6">
-                                                                    <input id="txtBrand" name="txtBrand" type="text" class="form-control ui-autocomplete-input" autocomplete="autocomplete" maxlength="50" value="${product.brand}"/>
+                                                                    <input id="txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
 
                                                                     <span class="help-block" id="erBrand">
                                                                     </span>
@@ -194,13 +202,23 @@
         </div>
     </jsp:body>
 </template:consign>
+
 <script type="text/javascript">
     var RecaptchaOptions = {
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
 
-    
+    $(function () {
+        $("#txtBrand").autocomplete({
+            source: "ConsignServlet?btnAction=getBrand",
+            minLength: 2,
+            select: function (event, ui) {
+            }
+        });
+
+    });
+
     function validation() {
         var check = true;
         if ($('#txtProductName').val().trim().length < 5 || $('#txtProductName').val().trim().length > 50) {

@@ -456,7 +456,7 @@ public class DuchcDAO {
     public boolean cancelProductStatus(int consignmentID) {
         return false;
     }
-    
+
     public AccountDTO login(String username, String password) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -482,22 +482,21 @@ public class DuchcDAO {
                 account.setEmail(rs.getString("Email"));
                 account.setPaypalAccount(rs.getString("PaypalAccount"));
                 account.setRole(rs.getString("Role"));
-                
-                if(account.getRole() == GlobalVariables.MEMBER){
+
+                if (account.getRole() == GlobalVariables.MEMBER) {
                     query = "SELECT MemberID FROM Member WHERE (AccountID = ?) ";
                     stm = con.prepareStatement(query);
                     stm.setString(1, account.getAccountID());
                     rs = stm.executeQuery();
-                    if(rs.next()){
+                    if (rs.next()) {
                         account.setRoleID(rs.getInt("MemberID"));
                     }
-                }
-                else if(account.getRole() == GlobalVariables.STORE_OWNER){
+                } else if (account.getRole() == GlobalVariables.STORE_OWNER) {
                     query = "SELECT StoreOwnerID, Formula FROM StoreOwner WHERE (AccountID = ?) ";
                     stm = con.prepareStatement(query);
                     stm.setString(1, account.getAccountID());
                     rs = stm.executeQuery();
-                    if(rs.next()){
+                    if (rs.next()) {
                         account.setRoleID(rs.getInt("StoreOwnerID"));
                         account.setFormula(rs.getFloat("Formula"));
                     }
@@ -525,8 +524,8 @@ public class DuchcDAO {
         }
         return null;
     }
-    
-    public float getBasicPrice(String productName, String brand, int categoryID){
+
+    public float getBasicPrice(String productName, String brand, int categoryID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -538,13 +537,13 @@ public class DuchcDAO {
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             rs = stm.executeQuery();
-            
+
             if (rs.next()) {
                 englishName = rs.getString("EnglishName");
             }
             AmazonService amazon = new AmazonService();
             float basicPrice = amazon.getPrice(productName, brand, englishName);
-            
+
             return basicPrice;
         } catch (SQLException ex) {
             Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -565,8 +564,8 @@ public class DuchcDAO {
         }
         return -1;
     }
-    
-    public void updateProductImage(int productID, String imageLink){
+
+    public void updateProductImage(int productID, String imageLink) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -579,7 +578,7 @@ public class DuchcDAO {
             stm.setString(1, imageLink);
             stm.setInt(2, productID);
             int result = stm.executeUpdate();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -598,36 +597,36 @@ public class DuchcDAO {
             }
         }
     }
-    
-    public static List<String> getBrandByCategoryID(int categoryID){
-        List<String> list = null;
-        if(categoryID == 7 || categoryID == 14){
-            list.add("Casio");
-            list.add("Citizen");
-            list.add("Fortis");
-            list.add("Fossil");
-            list.add("Gucci");
-            list.add("Hamilton");
-            list.add("Hublot");
-            list.add("LG");
-            list.add("Luminox");
-            list.add("Motorola");
-            list.add("Movado");
-            list.add("NIXON");
-            list.add("Omega");
-            list.add("Rolex");
-            list.add("Samsung");
-            list.add("Seiko");  
-            list.add("Timex");
-            list.add("Timex");
-            list.add("Timex");
-            list.add("Timex");
-            list.add("Tissot");
-            list.add("Tommy Hilfiger");
-            
+
+    public static List<String> getBrandByCategoryID(String temp) {
+        List<String> list = new ArrayList<String>();
+        list.add("Casio");
+        list.add("Citizen");
+        list.add("Fortis");
+        list.add("Fossil");
+        list.add("Gucci");
+        list.add("Hamilton");
+        list.add("Hublot");
+        list.add("LG");
+        list.add("Luminox");
+        list.add("Motorola");
+        list.add("Movado");
+        list.add("NIXON");
+        list.add("Omega");
+        list.add("Rolex");
+        list.add("Samsung");
+        list.add("Seiko");
+        list.add("Timex");
+        list.add("Tissot");
+        list.add("Tommy Hilfiger");
+        
+        List<String> result = new ArrayList<String>();;
+        for (String value : list){
+            if(value.toLowerCase().contains(temp)){
+                result.add(value);
+            }
         }
-        return list;
+        return result;
     }
-    
-    
+
 }
