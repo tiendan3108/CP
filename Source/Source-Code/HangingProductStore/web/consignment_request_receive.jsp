@@ -241,7 +241,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
                         <h2 class="modal-title" id="r_name"></h2>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2">Email: <b><span  id="r_email"></span></b></div>
+                            <div class="col-lg-2 col-md-2">ĐT: <b><span  id="r_phone"></span></b></div>
+                            <div class="col-lg-4 col-md-4">Địa chỉ: <span  id="r_address"></span></div>
+                            
+                        </div>
+
                     </div>
                     <div class="modal-body">
                         <!-- BEGIN PAGE CONTENT-->
@@ -376,7 +385,9 @@
             $("#r_image").attr("src", data.product.image);
             $("#r_description").html(data.product.description);
             $("#r_createdDate").html(data.createdDate);
-            
+            $("#r_email").html(data.email);
+            $("#r_phone").html(data.phone);
+            $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
             if (data.consignmentStatusID == 1) {
                 $("#r_status").html("<b><font color='red'>Đang chờ xử lý</font></b>");
@@ -387,8 +398,8 @@
                 $("#r_price").show();
                 $("#r_price").html(data.minPrice.toFixed(1) + "  ~  " + data.maxPrice.toFixed(1));
                 $("#ar_price").hide();
-                
-            }else{
+
+            } else {
                 $("#r_status").html("<b><font color='blue'>Chấp nhận yêu cầu</font></b>");
                 $("#ar_ActionValue").val(data.consigmentID);
                 $("#r_ActionValue").val("");
@@ -427,15 +438,15 @@
                 $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name
             }
         }
-        if($("#ar_searchInput").val() != ""){
+        if ($("#ar_searchInput").val() != "") {
             $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name
         }
     });
-    
-    function er_validation(){
+
+    function er_validation() {
         var minPrice = $("#ar_minPrice").val();
         var maxPrice = $("#ar_maxPrice").val();
-        if(minPrice == "" || maxPrice == ""){
+        if (minPrice == "" || maxPrice == "") {
             alert("Xin nhập giá.");
             return false;
         }
