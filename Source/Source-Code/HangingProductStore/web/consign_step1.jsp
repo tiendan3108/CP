@@ -213,7 +213,7 @@
     $(function () {
         $("#txtBrand").autocomplete({
             source: "ConsignServlet?btnAction=getBrand",
-            minLength: 2,
+            minLength: 1,
             select: function (event, ui) {
             }
         });
