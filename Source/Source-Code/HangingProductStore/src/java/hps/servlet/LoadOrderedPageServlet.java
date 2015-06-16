@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadCustomerPageServlet", urlPatterns = {"/LoadCustomerPageServlet"})
-public class LoadCustomerPageServlet extends HttpServlet {
+@WebServlet(name = "LoadOrderedPageServlet", urlPatterns = {"/LoadOrderedPageServlet"})
+public class LoadOrderedPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

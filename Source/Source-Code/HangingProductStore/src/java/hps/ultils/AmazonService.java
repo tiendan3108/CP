@@ -36,7 +36,7 @@ public class AmazonService {
 
     public static void main(String[] args) {
         AmazonService test = new AmazonService();
-        test.getProduct("Casio MT-G", "Casio", "Watches");
+        test.getProduct("Raymond Weil Men's 7737-STC-00659", "Raymond", "Watches");
     }
 
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
@@ -84,7 +84,20 @@ public class AmazonService {
             nNode = source.item(0);
             items = nNode.getChildNodes();
             //start first node
-            for (int i = 4; i < 9; i++) {
+            NodeList TotalResultsContent = doc.getElementsByTagName("TotalResults");
+            Node TotalResults = TotalResultsContent.item(0);
+            int maxLoop = 0, quantity;
+            try {
+                quantity = Integer.parseInt(TotalResults.getTextContent());
+            } catch (Exception e) {
+                return null;
+            }
+            if (quantity <= 4) {
+                maxLoop = 4 + quantity;
+            } else {
+                maxLoop = 9;
+            }
+            for (int i = 4; i < maxLoop; i++) {
                 item = items.item(i);
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
