@@ -166,7 +166,7 @@ public class ConsignServlet extends HttpServlet {
                         session.removeAttribute("STORELIST");
                         session.removeAttribute("FCATE");
                         session.removeAttribute("CATEGORY");
-                        response.sendRedirect(request.getContextPath() + "/consignment");
+                        response.sendRedirect(request.getContextPath() + "/ConsignmentRequestReceive");
                         return;
                     } else {
                         request.setAttribute("backlink", backlink);

@@ -188,7 +188,7 @@ public class ConsignmentDAO {
     }
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
-         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String consignmentID = rs.getString("ConsignmentID");
         int productID = rs.getInt("ProductID");
         Integer memberID = rs.getInt("MemberID");
@@ -207,6 +207,9 @@ public class ConsignmentDAO {
         float returnPrice = rs.getFloat("ReturnedPrice");
         String receiveDate = rs.getString("ReceivedDate");
         String createdDate = rs.getString("CreatedDate");
+        if (createdDate != null) {
+            createdDate = df.format(rs.getDate("CreatedDate"));
+        }
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
 
         ConsignmentDTO consignment = new ConsignmentDTO();
@@ -285,6 +288,48 @@ public class ConsignmentDAO {
             while (result > 0) {
                 return true;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    public boolean updateConsignmentAsReceived(String consignmentID, double minPrice, double maxPrice, int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Consignment"
+                    + " SET MinPrice = ?, MaxPrice = ?, ReceivedDate = ?, ConsignmentStatusID = 5"
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setDouble(1, minPrice);
+            stm.setDouble(2, maxPrice);
+            stm.setDate(3, new Date(System.currentTimeMillis()));
+            stm.setString(4, consignmentID);
+
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                sql = "UPDATE Product SET ProductStatusID = 2 WHERE ProductID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setDouble(1, productID);
+                result = stm.executeUpdate();
+                if(result > 0){
+                    return true;
+                }
+            }
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

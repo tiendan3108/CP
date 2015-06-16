@@ -207,7 +207,7 @@ public class DuchcDAO {
                     + "                     FROM         dbo.Account AS a INNER JOIN\n"
                     + "                                           dbo.StoreOwner AS s ON a.AccountID = s.AccountID INNER JOIN\n"
                     + "                                           dbo.StoreOwner_Category AS c ON s.StoreOwnerID = c.StoreOwnerID\n"
-                    + "                     WHERE     (c.CategoryID = ?)";
+                    + "                     WHERE     (c.CategoryID = ?) ORDER BY Formula DESC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             rs = stm.executeQuery();
@@ -535,11 +535,11 @@ public class DuchcDAO {
             AmazonService amazon = new AmazonService();
             //basicPrice = amazon.getPrice(productName, brand, englishName);
 
-//            List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
-//            for(AmazonProduct product : list){
-//                basicPrice += product.getPrice();
-//            }
-//            basicPrice = (basicPrice/list.size());
+            List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
+            for(AmazonProduct product : list){
+                basicPrice += product.getPrice();
+            }
+            basicPrice = (basicPrice/list.size());
 
             return basicPrice;
         } catch (SQLException ex) {
@@ -596,6 +596,9 @@ public class DuchcDAO {
 
     public static List<String> getBrand(String temp) {
         List<String> list = new ArrayList<String>();
+        list.add("Adidas");
+        list.add("Altra");
+        list.add("Asic");
         list.add("Casio");
         list.add("Citizen");
         list.add("Fortis");
@@ -603,16 +606,26 @@ public class DuchcDAO {
         list.add("Gucci");
         list.add("Hamilton");
         list.add("Hublot");
+        list.add("Jordan");
+        list.add("Kenneth");
         list.add("LG");
         list.add("Luminox");
+        list.add("Maurice");
         list.add("Motorola");
         list.add("Movado");
+        list.add("New Balance");
+        list.add("NIKE");
         list.add("NIXON");
         list.add("Omega");
+        list.add("Pearl");
         list.add("Raymond");
+        list.add("Reebok");
         list.add("Rolex");
+        list.add("Salomon");
         list.add("Samsung");
         list.add("Seiko");
+        list.add("SO&CO");
+        list.add("Stuhrling");
         list.add("Timex");
         list.add("Tissot");
         list.add("Tommy Hilfiger");
