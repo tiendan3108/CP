@@ -67,64 +67,9 @@
                     </div>
                 </div>
             </div>  
-            <h4 style="margin-top: 20px">Chúng tôi sẽ liên lạc với bạn qua: </h4>
+            <h4 style="margin-top: 20px">Vui lòng nhập thông tin để chúng tôi liên lạc với bạn: </h4>
             <div class="content-form-page col-md-12 col-sm-12"> 
-                <div class="radio-inline col-md-12 col-sm-12 col-lg-12">
-                    <label class="radio-inline">
-                        <input type="radio" name="rdConfirm" id="optionsRadios7" value="email" checked> Email
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="rdConfirm" id="optionsRadios8" value="phone"> Điện thoại
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="rdConfirm" id="optionsRadios8" value="both"> Cả 2
-                    </label>
-                </div>
                 <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-                <div id ="oEmail" class="col-md-12">
-                    <form class="form-horizontal form-without-legend" action="CompleteOrderServlet" method="POST">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label" for="email1">Email <span class="require">*</span></label>
-                            <c:if test="${not empty acc}">
-                                <div class="col-lg-4">
-                                    <input value="${acc.email}" name="email" required="true" type="text" id="email1" class="form-control">
-                                </div>
-                            </c:if>
-                            <c:if test="${empty acc}">
-                                <div class="col-lg-4">
-                                    <input name="email" required="true" type="text" id="email1" class="form-control">
-                                </div>
-                            </c:if>                          
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8 col-md-offset-2 padding-left-0 padding-top-20">
-                                <button class="btn btn-primary" type="submit">Xác Nhận</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div id ="oPhone" class="col-md-12" style="display: none">
-                    <form class="form-horizontal form-without-legend" action="CompleteOrderServlet">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label" for="first-name">Sồ điện thoại <span class="require">*</span></label>
-                            <c:if test="${not empty acc}">
-                                <div class="col-lg-4">
-                                    <input value="${acc.phone}" name="phone" required="true" type="text" id="first-name" class="form-control">
-                                </div>
-                            </c:if>
-                            <c:if test="${empty acc}">
-                                <div class="col-lg-4">
-                                    <input name="phone" required="true" type="text" id="first-name" class="form-control">
-                                </div>
-                            </c:if>                      
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-8 col-md-offset-2 padding-left-0 padding-top-20">
-                                <button class="btn btn-primary" type="submit">Xác Nhận</button>
-                            </div>
-                        </div>                    
-                    </form>
-                </div>
                 <div id ="both" class="col-md-12" style="display: none">
                     <form class="form-horizontal form-without-legend" action="CompleteOrderServlet">
                         <c:if test="${not empty acc}">
