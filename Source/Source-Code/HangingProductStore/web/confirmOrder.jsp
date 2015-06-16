@@ -67,10 +67,9 @@
                     </div>
                 </div>
             </div>  
-            <h4 style="margin-top: 20px">Vui lòng nhập thông tin để chúng tôi liên lạc với bạn: </h4>
-            <div class="content-form-page col-md-12 col-sm-12"> 
+            <h4 style="margin-top: 20px">Vui lòng nhập thông tin để chúng tôi liên lạc với bạn:</h4>
                 <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-                <div id ="both" class="col-md-12" style="display: none">
+                <div class="col-md-12">
                     <form class="form-horizontal form-without-legend" action="CompleteOrderServlet">
                         <c:if test="${not empty acc}">
                             <div class="form-group">

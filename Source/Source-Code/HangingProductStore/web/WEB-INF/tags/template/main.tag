@@ -44,7 +44,7 @@
                         <p><i style="color: white" class="fa fa-phone"></i>
                             090966668888</p>
                         <p><i style="color: white" class="fa fa-map-marker"></i>
-                            123 Quang Trung, 12 District, Ho Chi Minh c.</p>
+                            123 Quang Trung, 12 District, HCM c.</p>
                         <p><i style="color: white" class="fa fa-envelope"></i>
                             hangingproductstorevn@gmail.com</p>
                     </div>

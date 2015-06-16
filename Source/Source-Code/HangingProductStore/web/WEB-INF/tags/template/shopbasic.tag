@@ -87,26 +87,6 @@
                 return parser.href;
             }
         </script>
-        <script type="text/javascript">
-            $('input:radio[name="rdConfirm"]').change(function () {
-                if ($(this).val() == "email") {
-                    $("#oEmail").show();
-                    $("#oPhone").hide();
-                    $("#both").hide();
-                }
-                else if ($(this).val() == "phone") {
-                    $("#oPhone").show();
-                    $("#oEmail").hide();
-                    $("#both").hide();
-                }
-                else if ($(this).val() == "both") {
-                    $("#both").show();
-                    $("#oEmail").hide();
-                    $("#oPhone").hide();
-                }
-
-            });
-        </script>
         <!-- END PAGE LEVEL JAVASCRIPTS -->
 
         <jsp:invoke fragment="extraBottomContent" />
