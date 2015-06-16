@@ -97,11 +97,11 @@
 
                                                                         <c:if test="${empty member}">
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
+                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
                                                                             <label class="radio-inline">
                                                                                 <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
                                                                             <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both" checked> Cả 2 </label>
+                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both" > Cả 2 </label>
 
                                                                         </c:if>
                                                                         <c:if test="${not empty member}">
@@ -135,7 +135,7 @@
                                                                 </div>
 
                                                                 <c:if test="${empty member}">
-                                                                    <div class="form-group" id="divEmail">
+                                                                    <div class="form-group" id="divEmail" style="display: none;">
                                                                         <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
                                                                         <div class="col-md-8 col-sm-8">
                                                                             <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">

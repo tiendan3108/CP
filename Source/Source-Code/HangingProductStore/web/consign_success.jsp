@@ -74,7 +74,7 @@
                                         <c:if test="${empty sessionScope.MEMBER}">
                                             <h3>Mã ký gửi của bạn là <b>[${sessionScope.trackId}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái hàng ký gửi.</h3>
                                         </c:if>
-                                        <h3>Nhấn vào <a href="trackProductStatus_guest.jsp">đây</a> để kiểm tra.</h3>
+                                        <h3>Nhấn vào <a href="TrackProductStatus">đây</a> để kiểm tra.</h3>
 
                                     </div>
                                 </div>
