@@ -24,12 +24,28 @@ public class MobileService {
     @Path("/login")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ProductDetail> login(String input) {
+    public String login(String input) {
         Gson gson = new Gson();
         Account account;
         account = gson.fromJson(input, Account.class);
         ProductDetailDAO dao = new ProductDetailDAO();
         int memberID = dao.checkLogin(account.getAccountID(), account.getPassword());
+        if (memberID > 0) {
+            //return dao.getData(memberID);
+            return account.getAccountID();
+        }
+        return null;
+    }
+
+    @Path("/getData")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<ProductDetail> getData(String input) {
+        Gson gson = new Gson();
+        Account account;
+        account = gson.fromJson(input, Account.class);
+        ProductDetailDAO dao = new ProductDetailDAO();
+        int memberID = dao.getMemberID(account.getAccountID());
         if (memberID > 0) {
             return dao.getData(memberID);
         }
@@ -39,26 +55,27 @@ public class MobileService {
     @Path("/updateData")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public void updateData(String input) {
+    public String updateData(String input) {
         Gson gson = new Gson();
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
-        System.out.println(product.getMinPrice());
         ProductDetailDAO dao = new ProductDetailDAO();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String newDate = df.format(date);
         dao.updateConsignment(product.getProductID(), newDate, product.getMinPrice(), product.getMaxPrice());
+        return "ok";
     }
 
     @Path("/cancelConsignment")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public void cancleConsignment(String input) {
+    public String cancleConsignment(String input) {
         Gson gson = new Gson();
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
         dao.cancelConsignment(product.getProductID());
+        return "ok";
     }
 }

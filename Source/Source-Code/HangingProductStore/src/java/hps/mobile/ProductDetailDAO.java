@@ -7,9 +7,6 @@ package hps.mobile;
 
 import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
-import hps.dto.AccountDTO;
-import hps.mobile.ProductDetail;
-import hps.dto.ProductDTO;
 import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
 import hps.ultils.GlobalVariables;
@@ -69,7 +66,41 @@ public class ProductDetailDAO {
         }
         return 0;
     }
-
+    public int getMemberID(String accountID){
+         Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from StoreOwner "
+                    + "Where AccountID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setString(1, accountID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int memberID = rs.getInt("StoreOwnerID"); 
+                return memberID;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
+    }
     public List<ProductDetail> getData(int memberID) {
         Connection con = null;
         PreparedStatement stm = null;
