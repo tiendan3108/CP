@@ -6,6 +6,7 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
+import hps.dao.AccountDAO;
 import hps.dao.CategoryDAO;
 import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
@@ -53,8 +54,9 @@ public class ConsignServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF8");
+            HttpSession session = request.getSession();
+            
             String action = request.getParameter("btnAction");
             if (action == null) {
                 action = "consign";
@@ -150,10 +152,12 @@ public class ConsignServlet extends HttpServlet {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 String backlink = request.getParameter("backlink");
-                DuchcDAO dao = new DuchcDAO();
-                AccountDTO account = dao.login(username, password);
+                AccountDAO dao = new AccountDAO();
+                AccountDTO account = dao.checkLogin(username, password);
                 if (account != null) {
-
+                    AccountDTO temp = dao.getRoleInfo(account.getRole(), account.getAccountID());
+                    account.setRoleID(temp.getRoleID());
+                    account.setFormula(temp.getFormula());
                     session.setAttribute("ACCOUNT", account);
                     if (account.getRole().equals(GlobalVariables.STORE_OWNER)) {
                         session.removeAttribute("PRODUCT");
@@ -191,7 +195,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("CATEGORY");
             } else if (action.equals("getBrand")) {
                 String term = request.getParameter("term");
-                List<String> list = DuchcDAO.getBrandByCategoryID(term);
+                List<String> list = DuchcDAO.getBrand(term);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);

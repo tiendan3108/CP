@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -186,6 +188,7 @@ public class ConsignmentDAO {
     }
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
+         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String consignmentID = rs.getString("ConsignmentID");
         int productID = rs.getInt("ProductID");
         Integer memberID = rs.getInt("MemberID");
@@ -195,10 +198,11 @@ public class ConsignmentDAO {
         String phone = rs.getString("Phone");
         String email = rs.getString("Email");
         String paypalAccount = rs.getString("PaypalAccount");
-        String fromDate = rs.getString("FromDate");
-        String toDate = rs.getString("ToDate");
+        String fromDate = df.format(rs.getDate("FromDate"));
+        String toDate = df.format(rs.getDate("ToDate"));
         String raiseWebDate = rs.getString("RaiseWebDate");
         int period = rs.getInt("Period");
+        float minPrice = rs.getFloat("MinPrice");
         float maxPrice = rs.getFloat("MaxPrice");
         float returnPrice = rs.getFloat("ReturnedPrice");
         String receiveDate = rs.getString("ReceivedDate");
@@ -221,6 +225,7 @@ public class ConsignmentDAO {
         consignment.setToDate(toDate);
         consignment.setRaiseWebDate(raiseWebDate);
         consignment.setPeriod(period);
+        consignment.setMinPrice(minPrice);
         consignment.setMaxPrice(maxPrice);
         consignment.setReturnPrice(returnPrice);
         consignment.setReceivedDate(receiveDate);

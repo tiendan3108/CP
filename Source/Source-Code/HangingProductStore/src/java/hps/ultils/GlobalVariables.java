@@ -35,5 +35,11 @@ public class GlobalVariables {
     public static final String MANAGERMENT_SERVLET = "LoadManageProductPageServlet";
     public static final String LOAD_PAYMENT_SERVLET = "LoadPaymentPageServlet";
     public static final String LOAD_PUBLISH_PAGE_SERVLET = "LoadPublishPageServlet";
+    
+    public static final int CONSIGNMENT_WAITING = 1;
+    public static final int CONSIGNMENT_REFUSE = 2;
+    public static final int CONSIGNMENT_ACCEPTED = 3;
+    public static final int CONSIGNMENT_COMPLETED = 4;
+    public static final int CONSIGNMENT_RECEIVED = 5;
 
 }

@@ -143,12 +143,13 @@
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
                                                                 <div class="col-md-5 col-sm-6">
-                                                                    <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
+<!--                                                                    <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                                         <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                         <span class="input-group-btn">
                                                                             <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                                                         </span>
-                                                                    </div>
+                                                                    </div>-->
+                                                                    <input id="txtDate" type="text" class="form-control" name="txtDate" value="${product.purchasedDate}">
                                                                     <span class="help-block" id="erDate"> </span>
                                                                 </div>
                                                             </div>
@@ -184,7 +185,7 @@
                                             </div>
 
                                             <div class="col-md-4 col-sm-4">
-                                                <button  name="btnAction" value="tostep2" type="submit" class="btn-block btn-lg btn btn-primary" >BƯỚC KẾ <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> <!--<i class="m-icon-big-swapright m-icon-white"></i> -->
+                                                <button  name="btnAction" value="tostep2" type="submit" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button> <!--<i class="m-icon-big-swapright m-icon-white"></i> -->
                                             </div>
 
                                         </div>
@@ -216,6 +217,7 @@
             select: function (event, ui) {
             }
         });
+        $('#txtDate').datepicker();
 
     });
 

@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import hps.ultils.AmazonProduct;
 
 /**
  *
@@ -38,8 +39,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // add Consigment Values
             String query = "INSERT INTO Product(ProductName, SerialNumber, PurchasedDate, CategoryID, Brand, Description, "
                     + " Image, ProductStatusID)\n"
@@ -59,7 +59,6 @@ public class DuchcDAO {
             }
 
             stm.setInt(4, product.getCategoryID());
-
             if (product.getBrand().equals("")) {
                 stm.setNull(5, java.sql.Types.VARCHAR);
             } else {
@@ -114,8 +113,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // add Consigment Values
             String query = "INSERT INTO Consignment(ConsignmentID, ProductID, MemberID, StoreOwnerID, FullName, Address,"
                     + " Phone, Email, PaypalAccount,\n"
@@ -203,8 +201,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
             String query = "SELECT     c.StoreOwnerID, a.FullName, a.Address, s.Formula\n"
                     + "                     FROM         dbo.Account AS a INNER JOIN\n"
@@ -251,8 +248,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
             String query = "SELECT     s.StoreOwnerID, a.FullName, a.Address, s.Formula\n"
                     + "FROM         dbo.Account AS a INNER JOIN\n"
@@ -299,8 +295,7 @@ public class DuchcDAO {
         ResultSet rs = null;
         String name = "";
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "SELECT COUNT(*) as Number FROM Consignment WHERE CreatedDate = GETDATE()";
             stm = con.prepareStatement(query);
             rs = stm.executeQuery();
@@ -341,8 +336,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
             String query = "SELECT      PERCENT c.ConsignmentID, c.ProductID, c.MemberID, c.StoreOwnerID, a.FullName AS StoreOwnerName, c.FullName, c.Address, c.Phone, c.Email, c.PaypalAccount, c.FromDate, c.ToDate, \n"
                     + "                      c.RaiseWebDate, c.Period, c.MinPrice, c.MaxPrice, c.CreatedDate, c.ConsignmentStatusID, cs.ConsignmentStatusName\n"
@@ -355,7 +349,6 @@ public class DuchcDAO {
             stm = con.prepareStatement(query);
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
-
             if (rs.next()) {
                 ConsignmentDTO consignment = new ConsignmentDTO();
                 consignment.setConsigmentID(rs.getString("ConsignmentID"));
@@ -406,8 +399,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
             String query = "SELECT      PERCENT c.ConsignmentID, c.ProductID, c.StoreOwnerID, a.FullName AS StoreOwnerName, c.FullName, c.Address, c.Phone, c.Email, c.PaypalAccount, c.FromDate, c.ToDate, \n"
                     + "                      c.RaiseWebDate, c.Period, c.MinPrice, c.MaxPrice, c.CreatedDate, c.ConsignmentStatusID, cs.ConsignmentStatusName\n"
@@ -462,8 +454,7 @@ public class DuchcDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "SELECT     AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role\n"
                     + "FROM dbo.Account"
                     + " WHERE (AccountID = ?) AND (Password = ?)";
@@ -529,10 +520,10 @@ public class DuchcDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        float basicPrice = -1;
         try {
             String englishName = "";
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "SELECT EnglishName FROM Category WHERE (CategoryID = ?)";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
@@ -542,7 +533,13 @@ public class DuchcDAO {
                 englishName = rs.getString("EnglishName");
             }
             AmazonService amazon = new AmazonService();
-            float basicPrice = amazon.getPrice(productName, brand, englishName);
+            //basicPrice = amazon.getPrice(productName, brand, englishName);
+
+//            List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
+//            for(AmazonProduct product : list){
+//                basicPrice += product.getPrice();
+//            }
+//            basicPrice = (basicPrice/list.size());
 
             return basicPrice;
         } catch (SQLException ex) {
@@ -571,8 +568,7 @@ public class DuchcDAO {
         ResultSet rs = null;
         try {
             String englishName = "";
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "UPDATE Product SET Image = ? WHERE (ProductID = ?)";
             stm = con.prepareStatement(query);
             stm.setString(1, imageLink);
@@ -598,7 +594,7 @@ public class DuchcDAO {
         }
     }
 
-    public static List<String> getBrandByCategoryID(String temp) {
+    public static List<String> getBrand(String temp) {
         List<String> list = new ArrayList<String>();
         list.add("Casio");
         list.add("Citizen");
@@ -613,16 +609,17 @@ public class DuchcDAO {
         list.add("Movado");
         list.add("NIXON");
         list.add("Omega");
+        list.add("Raymond");
         list.add("Rolex");
         list.add("Samsung");
         list.add("Seiko");
         list.add("Timex");
         list.add("Tissot");
         list.add("Tommy Hilfiger");
-        
+
         List<String> result = new ArrayList<String>();;
-        for (String value : list){
-            if(value.toLowerCase().contains(temp)){
+        for (String value : list) {
+            if (value.toLowerCase().contains(temp.toLowerCase())) {
                 result.add(value);
             }
         }

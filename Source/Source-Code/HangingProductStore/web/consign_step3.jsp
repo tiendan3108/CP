@@ -7,9 +7,13 @@
 <template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
+        <!--        Sử dụng google map api-->
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+        
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
+
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
 
@@ -318,6 +322,9 @@
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                                <div class="form-group">
+                                                                    <div id="map-canvas"></div>
+                                                                </div>
 
                                                             </div>
                                                         </div>
@@ -367,6 +374,10 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
+
+    $(function () {
+        initialize();
+    });
 
     $("#btnComplete").click(function () {
         $("#form3").submit();
@@ -488,6 +499,16 @@
             $('#erImage').html("");
         }
         return check;
+    }
+
+
+    // This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+
+    function initialize() {
+
+        
     }
 
 </script>
