@@ -4,12 +4,17 @@
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                var modalObj = $('#messModal').modal(); // initialize
+                modalObj.modal('show');
+            });
+        </script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
         <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${not empty acc}">
-            <c:if test="${acc.role == 'member'}">
-                <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+            <c:if test="${acc.role == 'member'}"> 
                 <li><a href="ConsignServlet">Kí Gửi</a></li>
                 <li id="nofi">
                     <a href="#">
@@ -40,13 +45,30 @@
                 </li>
             </c:if>
         </c:if>
-        <c:if test="${empty acc}">
-            <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+        <c:if test="${empty acc}"> 
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
 
     </jsp:attribute>
-    <jsp:body>      
+    <jsp:body>
+        <c:set var="mess" value="${requestScope.ERROR}"/>
+        <c:if test="${not empty mess}">
+            <div class="modal face" id="messModal">   
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Message:</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>${mess}</h4>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="button" data-dismiss="modal">OK<i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
         <c:set var="categories" value="${requestScope.CATEGORY}"/>
         <div class="row margin-bottom-40" style="z-index: 5">          
             <div class="sidebar col-md-3 col-sm-4">   
