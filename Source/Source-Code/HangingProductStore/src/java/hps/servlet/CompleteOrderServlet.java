@@ -5,12 +5,14 @@
  */
 package hps.servlet;
 
+import com.twilio.sdk.TwilioRestException;
 import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.Cart;
 import hps.dto.OrderDTO;
 import hps.ultils.JavaUltilities;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -45,10 +47,14 @@ public class CompleteOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String url;
+            String url = "completeOrder.jsp";;
             JavaUltilities lib = new JavaUltilities();
+            String sproductID = request.getParameter("productID");
+            int productID = Integer.parseInt(sproductID);
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
+            String fullname = request.getParameter("name");
+            String address = request.getParameter("address");
             String orderID = lib.randomString(10);
             int customerID = 5;
             OrderDAO orderDao = new OrderDAO();
@@ -56,56 +62,46 @@ public class CompleteOrderServlet extends HttpServlet {
             HttpSession session = request.getSession();
             if (session != null) {
                 AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    if (account != null) {
-                        customerID = account.getRoleID();
-                        String fullname = account.getFullName();
-                        String address = account.getAddress();
-                        OrderDTO order = new OrderDTO();
-                        order.setOrderID(orderID);
-                        order.setCustomerID(customerID);
-                        order.setEmail(email);
-                        order.setPhone(phone);
-                        order.setAddress(address);
-                        order.setFullName(fullname);
-                        orderDao.insertOrderWithMemberInfo(order);
-                    } else {
-                        customerID = 5;
-                        orderDao.insertOrder(orderID, customerID, email, phone);
-                    }
-                    List<Integer> itemIDs = new ArrayList<Integer>();
-                    //update product status              
-                    itemIDs = cart.getItems();
-                    for (int i = 0; i < itemIDs.size(); i++) {
-                        int productID = itemIDs.get(i);
-                        productDao.updateStatusToOrdered(productID, orderID);
-                    }
-                    session.removeAttribute("CART");
-                    //send sms
-                    if (phone != null) {
-                        phone = "+84" + phone.substring(1);
-//                try {
-//                    lib.sendSMS("Ban da dat hang thanh cong, ma don hang cua ban la " + orderID + ". Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy", phone);
-//                } catch (TwilioRestException ex) {
-//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-                    }
-                    //send email
-                    if (email != null) {
-//                String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
-//                lib.sendEmail(email, "Xác nhận đơn hàng", body);
-                    }
-                    url = "completeOrder.jsp";
+                if (account != null) {
+                    customerID = account.getRoleID();
                 } else {
-                    url = "HomeServlet";
+                    customerID = 5;
                 }
-            } else {
-                url = "HomeServlet";
+            }
+            if (productDao.checkProduct(productID)) {
+                OrderDTO order = new OrderDTO();
+                order.setOrderID(orderID);
+                order.setCustomerID(customerID);
+                order.setEmail(email);
+                order.setPhone(phone);
+                order.setAddress(address);
+                order.setFullName(fullname);
+                orderDao.insertOrderWithMemberInfo(order);
 
+                //update product status                                  
+                productDao.updateStatusToOrdered(productID, orderID);
+                //send sms
+                if (!phone.isEmpty()) {
+                    phone = "+84" + phone.substring(1);
+                    try {
+                        lib.sendSMS("Ban da dat hang thanh cong, ma don hang cua ban la " + orderID + ". Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy", phone);
+                        System.out.println("send roi" + phone);
+                    } catch (TwilioRestException ex) {
+                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                //send email
+                if (!email.isEmpty()) {
+                    String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
+                    lib.sendEmail(email, "Xác nhận đơn hàng", body);
+                }
+            }else{
+                url = "HomeServlet";
+                request.setAttribute("ERROR", MessageString.orderFail);
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+
         }
     }
 

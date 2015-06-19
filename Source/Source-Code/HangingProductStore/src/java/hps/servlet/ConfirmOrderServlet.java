@@ -40,30 +40,18 @@ public class ConfirmOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession(false);
-            List<Integer> itemIDs = new ArrayList<Integer>();
-            if (session != null) {
-                Cart cart = (Cart) session.getAttribute("CART");
-                if (cart != null) {
-                    itemIDs = cart.getItems();
-                }
-                if (cart == null) {
-                    RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
-                    rd.forward(request, response);
-                }
+            String sproductId = request.getParameter("productId");
+            int productID;
+            try{
+                productID = Integer.parseInt(sproductId);
+            }catch(NumberFormatException e){
+                productID = 0;
+                e.printStackTrace();
             }
-            if (session == null) {
-                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
-                rd.forward(request, response);
-            }
-            if (itemIDs.size() > 0) {
-                List<ProductDTO> items = new ArrayList<ProductDTO>();
+            if (productID > 0) {
                 ProductDAO dao = new ProductDAO();
-                for (int i = 0; i < itemIDs.size(); i++) {
-                    ProductDTO item = dao.getProductByID(itemIDs.get(i));
-                    items.add(item);
-                }
-                request.setAttribute("DATA", items);
+                ProductDTO product = dao.getProductByID(productID);
+                request.setAttribute("DATA", product);
             }
             RequestDispatcher rd = request.getRequestDispatcher("confirmOrder.jsp");
             rd.forward(request, response);

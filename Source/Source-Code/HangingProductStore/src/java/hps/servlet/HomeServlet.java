@@ -75,7 +75,6 @@ public class HomeServlet extends HttpServlet {
             }
             ProductDAO productDao = new ProductDAO();
             List<ProductDTO> data = productDao.getNewData();
-            System.out.println(data.get(1).getBrand());
             List<ProductDTO> seasonItems = productDao.getProductBySeason(season);
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();
