@@ -40,7 +40,7 @@
         <div class="row margin-bottom-40">
             <div class="col-md-12 col-sm-12">
                 <h4>Bạn đã đặt hàng thành công, vui lòng kiểm tra mail hoặc tin nhắn để biết thêm thông tin.</h4>
-                <a class="btn btn-primary" href="">Trở về trang chủ.</a>
+                <a class="btn btn-primary" href="HomeServlet">Trở về trang chủ.</a>
             </div>
         </div>
     </jsp:body>

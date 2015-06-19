@@ -9,14 +9,11 @@ import com.twilio.sdk.TwilioRestException;
 import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
-import hps.dto.Cart;
 import hps.dto.OrderDTO;
 import hps.ultils.JavaUltilities;
 import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -47,7 +44,6 @@ public class CompleteOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String url = "completeOrder.jsp";;
             JavaUltilities lib = new JavaUltilities();
             String sproductID = request.getParameter("productID");
             int productID = Integer.parseInt(sproductID);
@@ -95,12 +91,13 @@ public class CompleteOrderServlet extends HttpServlet {
                     String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
                     lib.sendEmail(email, "Xác nhận đơn hàng", body);
                 }
-            }else{
-                url = "HomeServlet";
+                RequestDispatcher rd = request.getRequestDispatcher("completeOrder.jsp");
+                rd.forward(request, response);
+            } else {
                 request.setAttribute("ERROR", MessageString.orderFail);
+                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                rd.forward(request, response);
             }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
 
         }
     }
