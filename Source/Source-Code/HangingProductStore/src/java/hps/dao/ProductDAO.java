@@ -37,11 +37,12 @@ public class ProductDAO {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select top 8 * from Product,Category,Consignment "
+            String query = "select top 12 * from Product,Category,Consignment "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductID = Consignment.ProductID "
                     + "And Product.ProductStatusID = ? "
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
+                    + "And Product.ProductID not in (select ProductID from Product_Season) "
                     + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
             stm.setInt(1, ProductStatus.ON_WEB);
@@ -807,6 +808,42 @@ public class ProductDAO {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+    public boolean checkProduct(int productID){
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from Product "
+                    + "Where ProductID = ? "
+                    + "and Product.ProductStatusID = ?";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            stm.setInt(2, ProductStatus.ON_WEB);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+               return  true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;

@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class OrderDAO {
 
-    public boolean insertOrder(String orderID, int customerID, String email, String phone) {
+    public boolean insertOrder(String orderID, int customerID, String email, String phone,String fullname,String address) {
         Connection con = null;
         PreparedStatement stm = null;
         Date date = new Date();
