@@ -9,18 +9,38 @@ import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import sun.awt.AppContext;
 
 /**
  *
@@ -39,14 +59,17 @@ public class JavaUltilities {
     static Random rnd = new Random();
 
     public static void main(String[] args) {
-        String body = "<table >";
-        body += "<tr><th>MONHANG</th><th>MON HANG</th></tr>";
-        body += "<tr><td>123</td><td>234</td></tr>";
-        body += "<tr><td>123</td><td>234</td></tr>";
-        body += "</table>";
         JavaUltilities a = new JavaUltilities();
-        a.sendEmail("HoangNHSE61007@fpt.edu.vn", "Test CSS", body);
+//        String body = "<table >";
+//        body += "<tr><th>MONHANG</th><th>MON HANG</th></tr>";
+//        body += "<tr><td>123</td><td>234</td></tr>";
+//        body += "<tr><td>123</td><td>234</td></tr>";
+//        body += "</table>";     
+//        a.sendEmail("HoangNHSE61007@fpt.edu.vn", "Test CSS", body);
+        //System.out.println(a.encodeImage("././web/assets/image/tag1.jpg"));
+       a.reduceQulityImage("././web/assets/image/adidas-supercolor.jpg", "././web/assets/image/adidas-supercolor1.jpg");
     }
+
     public String randomString(int len) {
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
@@ -94,7 +117,7 @@ public class JavaUltilities {
                 message.addRecipient(javax.mail.Message.RecipientType.TO, toAddress[i]);
             }
 
-            message.setSubject(subject,"utf-8");
+            message.setSubject(subject, "utf-8");
             //message.setText(body);
             message.setContent(body, "text/html; charset=utf-8");
             Transport transport = session.getTransport("smtp");
@@ -106,5 +129,65 @@ public class JavaUltilities {
         } catch (MessagingException me) {
             me.printStackTrace();
         }
+    }
+
+    public String encodeImage(String filePath) {
+        File image = new File(filePath);
+        try {
+            FileInputStream imageInFile = new FileInputStream(image);
+            byte imageData[] = new byte[(int) image.length()];
+            imageInFile.read(imageData);
+            String imageDataString = Base64.encodeBase64String(imageData);
+            return imageDataString;
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void reduceQulityImage(String inputFile, String outputFile) {
+
+        try {
+            float quality = 0.3f;
+
+            Iterator iter = ImageIO.getImageWritersByFormatName("jpeg");
+
+            ImageWriter writer = (ImageWriter) iter.next();
+
+            ImageWriteParam iwp = writer.getDefaultWriteParam();
+
+            iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+
+            iwp.setCompressionQuality(quality);
+            File file = new File(outputFile);
+            FileImageOutputStream output = new FileImageOutputStream(file);
+            writer.setOutput(output);
+            FileInputStream inputStream = new FileInputStream(inputFile);
+            BufferedImage originalImage = ImageIO.read(inputStream);
+
+            IIOImage image = new IIOImage(originalImage, null, null);
+            writer.write(null, image, iwp);
+            writer.dispose();
+
+            System.out.println("DONE");
+        } catch (IOException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    public String formatDateString(String dateString){
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyy");
+            Date date = df.parse(dateString);
+            String result = df2.format(date);
+            return result;
+        } catch (ParseException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
