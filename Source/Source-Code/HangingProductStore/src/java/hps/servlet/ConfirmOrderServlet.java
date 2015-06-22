@@ -8,6 +8,7 @@ package hps.servlet;
 import hps.dao.ProductDAO;
 import hps.dto.Cart;
 import hps.dto.ProductDTO;
+import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class ConfirmOrderServlet extends HttpServlet {
                 ProductDTO product = dao.getProductByID(productID);
                 request.setAttribute("DATA", product);
             }
-            RequestDispatcher rd = request.getRequestDispatcher("confirmOrder.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.CONFIRM_ORDER_PAGE);
             rd.forward(request, response);
         }
     }

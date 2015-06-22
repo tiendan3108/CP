@@ -10,6 +10,7 @@ import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.OrderDTO;
+import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
 import hps.ultils.MessageString;
 import java.io.IOException;
@@ -80,7 +81,7 @@ public class CompleteOrderServlet extends HttpServlet {
                 if (!phone.isEmpty()) {
                     phone = "+84" + phone.substring(1);
                     try {
-                        lib.sendSMS("Ban da dat hang thanh cong, ma don hang cua ban la " + orderID + ". Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy", phone);
+                        lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
                         System.out.println("send roi" + phone);
                     } catch (TwilioRestException ex) {
                         Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,14 +89,14 @@ public class CompleteOrderServlet extends HttpServlet {
                 }
                 //send email
                 if (!email.isEmpty()) {
-                    String body = "<h3>Chúc Mưng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
-                    lib.sendEmail(email, "Xác nhận đơn hàng", body);
+                    String body = MessageString.orderSuccessEmail(orderID);
+                    lib.sendEmail(email, MessageString.confirmOrder, body);
                 }
-                RequestDispatcher rd = request.getRequestDispatcher("completeOrder.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.COMPLETE_ODER_PAGE);
                 rd.forward(request, response);
             } else {
                 request.setAttribute("ERROR", MessageString.orderFail);
-                RequestDispatcher rd = request.getRequestDispatcher("HomeServlet");
+                RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.HOME_SERVLET);
                 rd.forward(request, response);
             }
 

@@ -11,6 +11,7 @@ import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
+import hps.ultils.GlobalVariables;
 import hps.ultils.Season;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -83,7 +84,7 @@ public class HomeServlet extends HttpServlet {
             request.setAttribute("CATEGORY", parentCategories);
             request.setAttribute("ALLCATE", category);
             request.setAttribute("SEASONDATA", seasonItems);
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.HOME_PAGE);
             rd.forward(request, response);
         } catch (ParseException ex) {
             Logger.getLogger(HomeServlet.class.getName()).log(Level.SEVERE, null, ex);

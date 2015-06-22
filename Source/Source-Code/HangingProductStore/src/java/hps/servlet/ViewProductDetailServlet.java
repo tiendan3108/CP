@@ -9,6 +9,7 @@ import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
+import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -60,7 +61,7 @@ public class ViewProductDetailServlet extends HttpServlet {
             }
             request.setAttribute("CATEGORY", parentCategories);
             request.setAttribute("ALLCATE", category);
-            RequestDispatcher rd = request.getRequestDispatcher("viewDetail.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.VIEW_DETAIL_PAGE);
             rd.forward(request, response);
         }
     }

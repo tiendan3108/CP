@@ -5,6 +5,7 @@
  */
 package hps.servlet;
 
+import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -38,7 +39,7 @@ public class LogoutServlet extends HttpServlet {
             if(session != null){
                 session.removeAttribute("ACCOUNT");
             }
-            response.sendRedirect("HomeServlet");
+            response.sendRedirect(GlobalVariables.HOME_SERVLET);
         }
     }
 

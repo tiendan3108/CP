@@ -9,6 +9,7 @@ import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
+import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class ProductServlet extends HttpServlet {
             request.setAttribute("DATA", products);
             request.setAttribute("NUMPAGE", numPage);
             request.setAttribute("PAGE", page);
-            RequestDispatcher rd = request.getRequestDispatcher("product.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.PRODUCT_PAGE);
             rd.forward(request, response);
         }
     }
