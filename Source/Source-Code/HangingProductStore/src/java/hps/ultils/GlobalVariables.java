@@ -41,5 +41,25 @@ public class GlobalVariables {
     public static final int CONSIGNMENT_ACCEPTED = 3;
     public static final int CONSIGNMENT_COMPLETED = 4;
     public static final int CONSIGNMENT_RECEIVED = 5;
+    
+    /*
+    Servlet and jsp
+         HoangNH  
+    */
+    //servlet
+    public static final String LOGIN_SERVLET = "LoginServlet";
+    public static final String LOGOUT_SERVLET = "LogoutServlet";
+    public static final String HOME_SERVLET = "HomeServlet";
+    public static final String VIEW_DETAIL_SERVLET = "ViewProductDetailServlet";
+    public static final String PRODUCT_SERVLET = "ProductServlet";
+    public static final String CONFIRM_ODER_SERVLET = "ConfirmOrderServlet";
+    public static final String COMPLETE_ODER_SERVLET = "CompleteOrderServlet";
+    //jsp
+    public static final String HOME_PAGE = "home.jsp";
+    public static final String VIEW_DETAIL_PAGE = "viewDetail.jsp";
+    public static final String PRODUCT_PAGE = "product.jsp";
+    public static final String CONFIRM_ORDER_PAGE = "confirmOrder.jsp";
+    public static final String COMPLETE_ODER_PAGE = "completeOrder.jsp";
+    
 
 }

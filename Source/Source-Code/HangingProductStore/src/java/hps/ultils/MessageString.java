@@ -10,5 +10,17 @@ package hps.ultils;
  * @author HoangNHSE61007
  */
 public class MessageString {
+
     public static final String orderFail = "Đặt hàng không thành công. Món hàng của bạn đã được người khác đặt trước, xin vui lòng đặt món hàng khác.";
+    public static final String confirmOrder = "Xác nhận đơn hàng";
+
+    public static final String orderSuccessSMS(String orderID) {
+        return "Ban da dat hang thanh cong, ma don hang cua ban la " 
+                + orderID + ". Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy";
+    }
+
+    public static final String orderSuccessEmail(String orderID) {
+        return "<h3>Chúc Mừng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là " 
+                + orderID + "<br/>" + "Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
+    }
 }
