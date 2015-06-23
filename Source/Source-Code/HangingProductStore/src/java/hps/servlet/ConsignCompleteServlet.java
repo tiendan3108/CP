@@ -169,6 +169,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                 ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                         address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
                 boolean result = dao.addConsigment(consignment);
+                
+                JavaUltilities java = new JavaUltilities();
+                java.sendSMS("Bạn đã ký gửi thành công sản phẩm. Mãsố của bạn là: " + consigmentID, "+84917533644");
                 session.setAttribute("storeName", store.getFullName());
                 session.setAttribute("trackId", consigmentID);
                 session.removeAttribute("PRODUCT");

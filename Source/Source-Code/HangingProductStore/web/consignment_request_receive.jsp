@@ -33,6 +33,7 @@
 
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs nav-justified" role="tablist" id="myTab">
+
                             <li role="presentation" class="active"><a href="#tab_request" aria-controls="home" role="tab" data-toggle="tab">Yêu Cầu Kí Gửi</a></li>
                             <li role="presentation"><a href="#tab_accept_request" aria-controls="profile" role="tab" data-toggle="tab">Yêu cầu đã duyệt</a></li>
                         </ul>
@@ -41,7 +42,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab_request">
 
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive">
+                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
                                         <div class="form-group">
                                             <div class="col-md-6 col-sm-6">
@@ -135,7 +136,7 @@
 
                             <div role="tabpanel" class="tab-pane fade" id="tab_accept_request">
 
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive">
+                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
                                         <div class="form-group">
                                             <div class="col-md-6 col-sm-6">
@@ -236,7 +237,7 @@
 
         <!--BEGIN MODAL -->
         <!-- Large modal -->
-        <div id="modalRequest" class="modal face bs-example-modal-lg">
+        <div id="modalRequest" class="modal fade bs-example-modal-lg">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -245,10 +246,10 @@
 
                         <h2 class="modal-title" id="r_name"></h2>
                         <div class="row">
-                            <div class="col-lg-2 col-md-2">Email: <b><span  id="r_email"></span></b></div>
+                            <div class="col-lg-3 col-md-3">Email: <b><span  id="r_email"></span></b></div>
                             <div class="col-lg-2 col-md-2">ĐT: <b><span  id="r_phone"></span></b></div>
                             <div class="col-lg-4 col-md-4">Địa chỉ: <span  id="r_address"></span></div>
-                            
+
                         </div>
 
                     </div>
@@ -432,11 +433,14 @@
             select: function (event, ui) {
             }
         });
-        if ($("#r_message").html() != "" || $("#ar_message").html() != "") {
-            $("#btnMessage").click();
-            if ($("#ar_message").html() != "") {
-                $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name
-            }
+//        if ($("#r_message").html() != "" || $("#ar_message").html() != "") {
+//            $("#btnMessage").click();
+//            if ($("#ar_message").html() != "") {
+//                $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name
+//            }
+//        }
+        if ($("#ar_message").html() != "") {
+            $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name
         }
         if ($("#ar_searchInput").val() != "") {
             $('#myTab a[href="#tab_accept_request"]').tab('show'); // Select tab by name

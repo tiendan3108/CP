@@ -103,8 +103,10 @@ public class ConsignmentServlet extends HttpServlet {
                     userPath = CONSIGNMENT_REQUEST;
 
                     String searchValue = request.getParameter("searchValue");
-                    List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductNameAndStatus(storeId, searchValue, REQUEST_WAITING);
-                    request.setAttribute("consignments", consignments);
+                    
+                    //List<ConsignmentDTO> consignments = consignmentDAO.findConsignmentByProductNameAndStatus(storeId, searchValue, REQUEST_WAITING);
+                    
+                    //request.setAttribute("consignments", consignments);
                 }
             } else if (request.getParameter("advand-search") != null) {
                 userPath = CONSIGNMENT_SEARCH;
@@ -174,7 +176,7 @@ public class ConsignmentServlet extends HttpServlet {
                     double price = Double.parseDouble(request.getParameter("price"));
                     int productId = Integer.parseInt(request.getParameter("productId"));
 
-                    consignmentDAO.makeConsignmentAsReceived(consignmentId, price);
+//                    consignmentDAO.makeConsignmentAsReceived(consignmentId, price);
 
                     productDAO.makeProductAsStatus(productId, PRODUCT_AVAILABLE);
 
