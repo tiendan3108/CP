@@ -517,6 +517,7 @@ public class DuchcDAO {
     }
 
     public float getBasicPrice(String productName, String brand, int categoryID) {
+        System.out.println("dang vao");
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;

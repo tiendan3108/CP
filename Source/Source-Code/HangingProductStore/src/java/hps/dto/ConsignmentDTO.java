@@ -5,12 +5,14 @@
  */
 package hps.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Tien Dan
  * modify Cong Duc
  */
-public class ConsignmentDTO {
+public class ConsignmentDTO implements Serializable{
     private String consigmentID;
     private int productID;
     private int memberID;

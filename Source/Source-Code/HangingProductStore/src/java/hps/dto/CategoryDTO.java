@@ -5,13 +5,14 @@
  */
 package hps.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author HoangNHSE61007
  */
-public class CategoryDTO {
+public class CategoryDTO implements Serializable{
 
     private int categoryId;
     private String categoryName;

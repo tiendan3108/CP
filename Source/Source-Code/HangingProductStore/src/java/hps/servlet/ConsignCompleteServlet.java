@@ -171,7 +171,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                 boolean result = dao.addConsigment(consignment);
                 
                 JavaUltilities java = new JavaUltilities();
-                java.sendSMS("Bạn đã ký gửi thành công sản phẩm. Mãsố của bạn là: " + consigmentID, "+84917533644");
+                java.sendSMS("Bạn đã ký gửi thành công sản phẩm. Mãsố của bạn là: " + consigmentID, "+841689191917");
+                
                 session.setAttribute("storeName", store.getFullName());
                 session.setAttribute("trackId", consigmentID);
                 session.removeAttribute("PRODUCT");

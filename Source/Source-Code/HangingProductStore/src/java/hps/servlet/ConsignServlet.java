@@ -94,6 +94,7 @@ public class ConsignServlet extends HttpServlet {
                 DuchcDAO dDAO = new DuchcDAO();
                 //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
                 basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
+                System.out.println("get roi");
 
 //                if (productName.toLowerCase().contains("gucci")) {
 //                    basicPrice = 50;
