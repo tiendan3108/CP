@@ -98,6 +98,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "txtPhone":
                                 phone = item.getString();
+                                if (phone.length() > 0) {
+                                    phone = "+84" + phone.substring(1);
+                                }
                                 break;
                             case "txtEmail":
                                 email = item.getString();
@@ -145,7 +148,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 dao.updateProductImage(productID, imagePath);
 
                 //get memberID if session MEMBER is not null
-                int memberID = -1;
+                int memberID = 5;
                 if (session.getAttribute("ACCOUNT") != null) {
                     memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
                 }
@@ -169,10 +172,15 @@ public class ConsignCompleteServlet extends HttpServlet {
                 ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                         address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
                 boolean result = dao.addConsigment(consignment);
-                
+
                 JavaUltilities java = new JavaUltilities();
-                java.sendSMS("Bạn đã ký gửi thành công sản phẩm. Mãsố của bạn là: " + consigmentID, "+841689191917");
-                
+                if (phone.length() > 0) {
+                    java.sendSMS("Ban da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + ".", phone);
+                }
+                if (email.length() > 0){
+                    java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID);
+                }
+
                 session.setAttribute("storeName", store.getFullName());
                 session.setAttribute("trackId", consigmentID);
                 session.removeAttribute("PRODUCT");
@@ -183,7 +191,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 session.removeAttribute("CATEGORY");
 
             }
-            
+
             RequestDispatcher rd = request.getRequestDispatcher(COMPLETED);
             rd.forward(request, response);
             /* 
@@ -192,7 +200,7 @@ public class ConsignCompleteServlet extends HttpServlet {
              String fileName = extractFileName(part);
              part.write(savePath + File.separator + fileName);
              }*/
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
