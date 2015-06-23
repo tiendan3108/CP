@@ -9,13 +9,13 @@ import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
+import hps.dao.DanqtDAO;
+import hps.dto.ProductDTO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +40,6 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import sun.awt.AppContext;
 
 /**
  *
@@ -183,7 +182,8 @@ public class JavaUltilities {
         }
 
     }
-    public String formatDateString(String dateString){
+
+    public String formatDateString(String dateString) {
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyy");
@@ -194,5 +194,17 @@ public class JavaUltilities {
             Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static File getFileUpload(String path, String fileName, int productID) {
+        DanqtDAO dao = new DanqtDAO();
+        String consignmentID = dao.getConsignmentIDByProductID(productID);
+        ProductDTO product = dao.getProductByID(productID);
+        File image = new File(path + product.getImage());
+        try {
+            image.deleteOnExit();
+        } catch (Exception e) {
+        }
+        return new File(path, consignmentID + fileName);
     }
 }

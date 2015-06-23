@@ -5,10 +5,15 @@
  */
 package hps.servlet;
 
+import com.google.gson.Gson;
+import hps.dao.CategoryDAO;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
+import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
+import hps.dto.SeasonDTO;
 import hps.ultils.GlobalVariables;
+import hps.ultils.ProductStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -24,7 +29,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadManageProductPageServlet", urlPatterns = {"/LoadManageProductPageServlet"})
+@WebServlet(name = "ManageProductServlet", urlPatterns = {"/ManageProduct"})
 public class LoadManageProductPageServlet extends HttpServlet {
 
     /**
@@ -43,14 +48,39 @@ public class LoadManageProductPageServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             DanqtDAO dao = new DanqtDAO();
+            CategoryDAO catDao = new CategoryDAO();
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                List<ProductDTO> result = dao.getProductStatus(user.getRoleID());
-                request.setAttribute("result", result);
+                List<ProductDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
+                List<ProductDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
+                List<ProductDTO> ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED);
+                List<ProductDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
+                List<ProductDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
+                List<ProductDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
+                List<CategoryDTO> parentCat = catDao.getParentCategory();
+                List<CategoryDTO> allCat = catDao.getAllCategory();
+                List<SeasonDTO> season = dao.getSeason();
+                Object currentTab = request.getAttribute("currentTab");
+                String tab = "";
+                if (currentTab != null) {
+                    tab = (String) currentTab;
+                } else {
+                    tab = "available";
+                }
+                request.setAttribute("available", available);
+                request.setAttribute("onWeb", onWeb);
+                request.setAttribute("ordered", ordered);
+                request.setAttribute("sold", sold);
+                request.setAttribute("completed", completed);
+                request.setAttribute("canceled", canceled);
+                request.setAttribute("currentTab", tab);
+                request.setAttribute("parentCat", parentCat);
+                request.setAttribute("allCat", allCat);
+                request.setAttribute("season", season);
                 url = GlobalVariables.MANAGERMENT_PAGE;
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);

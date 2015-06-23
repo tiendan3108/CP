@@ -64,7 +64,7 @@ public class UploadImageServlet extends HttpServlet {
                     }
                 } else {
                     String path = request.getServletContext().getRealPath("/") + "\\assets\\image";
-                    filename = FilenameUtils.getName(item.getName()); // Get filename.
+                    filename = FilenameUtils.getName(item.getName())+ path.hashCode(); // Get filename.
                     File file = new File(path, filename); // Define destination file.
                     try {
                         item.write(file); // Write to destination file.

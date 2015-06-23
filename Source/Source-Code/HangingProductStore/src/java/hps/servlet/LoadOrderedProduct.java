@@ -5,26 +5,25 @@
  */
 package hps.servlet;
 
+import com.google.gson.Gson;
 import hps.dao.DanqtDAO;
-import hps.dto.AccountDTO;
-import hps.dto.ProductDTO;
-import hps.ultils.GlobalVariables;
+import hps.dto.ConsignmentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadPaymentPageServlet", urlPatterns = {"/LoadPaymentPageServlet"})
-public class LoadPaymentPageServlet extends HttpServlet {
+@WebServlet(name = "LoadOrderedProduct", urlPatterns = {"/LoadOrderedProduct"})
+public class LoadOrderedProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,25 +37,8 @@ public class LoadPaymentPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
-            String url = "";
-            if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-            } else {
-                String consignmentID = request.getParameter("consignmentID");
-                DanqtDAO dao = new DanqtDAO();
-                AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
-                ProductDTO product = dao.getProductByConsignmentID(consignmentID);
-                request.setAttribute("consignor", consignor);
-                request.setAttribute("product", product);
-                url = GlobalVariables.PAYMENT_PAGE;
-            }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
         }
     }
 
@@ -72,7 +54,17 @@ public class LoadPaymentPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String tmp_productID = request.getParameter("productID");
+        try {
+            int productID = Integer.parseInt(tmp_productID);
+            DanqtDAO dao = new DanqtDAO();
+            ConsignmentDTO infor = dao.getInforForOrderedPage(productID);
+            String json = new Gson().toJson(infor);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(json);
+        } catch (NumberFormatException e) {
+            Logger.getLogger(LoadAvailableProduct.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**

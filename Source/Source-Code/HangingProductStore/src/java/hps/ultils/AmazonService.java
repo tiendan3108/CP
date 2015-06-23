@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -36,7 +37,7 @@ public class AmazonService {
 
     public static void main(String[] args) {
         AmazonService test = new AmazonService();
-        test.getProduct("Raymond Weil Men's 7737-STC-00659", "Raymond", "Watches");
+        test.getProduct("rayban 3025", "Rayban", "FashionMen");
     }
 
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
@@ -89,15 +90,13 @@ public class AmazonService {
             int maxLoop = 0, quantity;
             try {
                 quantity = Integer.parseInt(TotalResults.getTextContent());
-            } catch (Exception e) {
+            } catch (DOMException | NumberFormatException e) {
                 return null;
             }
-            if (quantity <= 4) {
-                maxLoop = 4 + quantity;
-            } else {
-                maxLoop = 9;
+            if (quantity >= 5) {
+                quantity = 5;
             }
-            for (int i = 4; i < maxLoop; i++) {
+            for (int i = 4; i < (4 + quantity);) {
                 item = items.item(i);
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
@@ -108,9 +107,12 @@ public class AmazonService {
                 lowestNewPriceContent = lowestNewPriceNode.getChildNodes();
                 priceNode = lowestNewPriceContent.item(0);
                 currencyNode = lowestNewPriceContent.item(1);
-                price = Float.parseFloat(priceNode.getTextContent()) / 100;
-                Currency = currencyNode.getTextContent();
-                temp_result.add(new AmazonProduct(price, ASIN, Currency));
+                if (lowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
+                    price = Float.parseFloat(priceNode.getTextContent()) / 100;
+                    Currency = currencyNode.getTextContent();
+                    temp_result.add(new AmazonProduct(price, ASIN, Currency));
+                    i++;
+                }
             }
             for (AmazonProduct temp_product : temp_result) {
                 product = getProductDetail(temp_product);
@@ -129,7 +131,7 @@ public class AmazonService {
         SignedRequestsHelper helper;
         try {
             helper = SignedRequestsHelper.getInstance(ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, ASS_TAG);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
             return null;
         }

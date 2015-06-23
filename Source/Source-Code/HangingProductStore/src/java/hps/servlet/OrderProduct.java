@@ -7,13 +7,10 @@ package hps.servlet;
 
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
-import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
-import java.io.File;
+import hps.ultils.ProductStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "PublishOnWebServlet", urlPatterns = {"/PublishOnWebServlet"})
-public class PublishOnWebServlet extends HttpServlet {
+@WebServlet(name = "OrderProduct", urlPatterns = {"/OrderProduct"})
+public class OrderProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,56 +37,30 @@ public class PublishOnWebServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            String action = request.getParameter("btnAction");
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String action = request.getParameter("btnAction");
-                String imageName = request.getParameter("imageName");
-                if (action.equals("cancel")) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET;
-                    String path = request.getServletContext().getRealPath("/") + "\\assets\\image\\" + imageName;
-                    File imageFile = new File(path);
-                    try {
-                        imageFile.delete();
-                    } catch (SecurityException e) {
-                        Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
-                    }
+                String tmp_productID = request.getParameter("txtProductID");
+                int productID = Integer.parseInt(tmp_productID);
+                int status = 0;
+                float sellingPrice = 0;
+                if (action.equals("notOrder")) {
+                    status = ProductStatus.ON_WEB;
                 } else {
-                    ProductDTO product;
-                    String serialNumber = "", description = "";
-                    float price = 0;
-                    String temp_productID = request.getParameter("productID");
-                    int productID = Integer.parseInt(temp_productID);
-                    String productName = request.getParameter("productName");
-                    serialNumber = request.getParameter("serialNumber");
-                    String parentCat = request.getParameter("parentCat");
-                    String childCat = request.getParameter("childCat");
-                    String brand = request.getParameter("brand");
-                    description = request.getParameter("description");
-                    String image = "assets/image/" + imageName;
-                    String temp_price = request.getParameter("price");
-                    if (!temp_price.equals("")) {
-                        price = Float.parseFloat(temp_price);
-                    }
-                    DanqtDAO dao = new DanqtDAO();
-                    int categoryID = dao.getCategoryIDByCategoryNameAndParentCategoryName(parentCat, childCat);
-                    if (imageName.equals("")) {
-                        product = new ProductDTO(productID, productName, serialNumber, categoryID, brand, description, price);
-                    } else {
-                        product = new ProductDTO(productID, productName, serialNumber, categoryID, brand, description, image, price);
-                    }
-                    boolean flag = dao.publishOnWeb(product);
-                    if (flag) {
-                        url = GlobalVariables.SUCCESS_ACTION_PAGE;
-                    } else {
-                        url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                    }
+                    String temp_sellingPrice = request.getParameter("txtSellingPrice");
+                    sellingPrice = Float.parseFloat(temp_sellingPrice);
+                    status = ProductStatus.SOLD;
                 }
+                DanqtDAO dao = new DanqtDAO();
+                dao.OrderProduct(productID, status, sellingPrice);
+                url = GlobalVariables.MANAGERMENT_SERVLET;
+                request.setAttribute("currentTab", "ordered");
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

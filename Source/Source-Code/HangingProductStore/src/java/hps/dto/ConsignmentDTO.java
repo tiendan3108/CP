@@ -56,7 +56,15 @@ public class ConsignmentDTO {
         this.period = period;
         this.maxPrice = maxPrice;
     }
-    
+    //danqt - begin
+    public ConsignmentDTO(String fullName, String phone, String address, String email)
+    {
+        this.name = fullName;
+        this.phone = phone;
+        this.address = address;
+        this.email = email;
+    }
+    //danqt - end
     // duchc Consignment new constructor for consign step 11/6/2015
     public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String paypalAccount, String fromDate, String toDate, int period, double minPrice, double maxPrice, String createdDate, int consignmentStatusID) {
         this.consigmentID = consigmentID;

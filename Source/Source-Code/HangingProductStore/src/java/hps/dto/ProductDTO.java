@@ -27,7 +27,9 @@ public class ProductDTO {
     private String consignmentID;// for store owner management page
     private String receivedDate;
     private String cancelDate;
-    private Float consignedPrice;
+    private float consignedPrice;
+    private float minPrice;
+    private float maxPrice;
     //danqt - end
 
 //duchc - begin
@@ -39,7 +41,26 @@ public class ProductDTO {
     }
 
     //danqt - begin
-    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, int productStatusID) {
+    public ProductDTO(String productName, String receivedDate, String consignmentID, float minPrice, float maxPrice, String cancelDate) {
+        this.name = productName;
+        this.receivedDate = receivedDate;
+        this.consignmentID = consignmentID;
+        this.cancelDate = cancelDate;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+    }
+
+    public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image) {
+        this.productID = productID;
+        this.name = productName;
+        this.serialNumber = serialNumber;
+        this.brand = brand;
+        this.categoryID = categoryID;
+        this.description = description;
+        this.image = image;
+    }
+
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, int productStatusID) {
         this.productID = productID;
         this.name = productName;
         this.receivedDate = receivedDate;
@@ -48,14 +69,14 @@ public class ProductDTO {
         this.productStatusID = productStatusID;
     }
 
-    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, Float price, String cancelDate) {
+    public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, String cancelDate) {
         this.productID = productID;
         this.name = productName;
         this.receivedDate = receivedDate;
         this.consignmentID = consignmentID;
         this.consignedPrice = price;
         this.cancelDate = cancelDate;
-        
+
     }
 
     public ProductDTO(int productID, String productName, String serialNumber, int categoryID, String brand, String description, String image, float price) {
@@ -81,18 +102,15 @@ public class ProductDTO {
     //danqt - end
 
     //ban cu anh huon DanqtDAO
-    public ProductDTO(int productID, String name, int status, String description, float price, String image, String purchasedDate, int categoryID, int parentCategoryID, String brand, String serialNumber) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image) {
         this.productID = productID;
         this.name = name;
-        this.productStatusID = status;
-        this.description = description;
-        this.sellingPrice = price;
-        this.image = image;
+        this.serialNumber = serialNumber;
         this.purchasedDate = purchasedDate;
         this.categoryID = categoryID;
-        this.parentCategoryID = parentCategoryID;
         this.brand = brand;
-        this.serialNumber = serialNumber;
+        this.description = description;
+        this.image = image;
     }
     /*
      HoangNH     
@@ -278,7 +296,7 @@ public class ProductDTO {
      * @param consignedPrice the consignedPrice to set
      */
     public void setConsignedPrice(Float consignedPrice) {
-        this.consignedPrice = consignedPrice;
+        this.setConsignedPrice((float) consignedPrice);
     }
 
     /**
@@ -323,6 +341,48 @@ public class ProductDTO {
      */
     public void setCancelDate(String cancelDate) {
         this.cancelDate = cancelDate;
+    }
+
+    /**
+     * @return the minPrice
+     */
+    public Float getMinPrice() {
+        return minPrice;
+    }
+
+    /**
+     * @param minPrice the minPrice to set
+     */
+    public void setMinPrice(Float minPrice) {
+        this.setMinPrice((float) minPrice);
+    }
+
+    /**
+     * @param consignedPrice the consignedPrice to set
+     */
+    public void setConsignedPrice(float consignedPrice) {
+        this.consignedPrice = consignedPrice;
+    }
+
+    /**
+     * @param minPrice the minPrice to set
+     */
+    public void setMinPrice(float minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    /**
+     * @return the maxPrice
+     */
+    public float getMaxPrice() {
+        return maxPrice;
+    }
+
+    /**
+     * @param maxPrice the maxPrice to set
+     */
+    public void setMaxPrice(float maxPrice) {
+        this.maxPrice = maxPrice;
     }
 
 }

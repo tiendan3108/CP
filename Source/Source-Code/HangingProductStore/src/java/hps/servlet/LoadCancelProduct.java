@@ -5,10 +5,11 @@
  */
 package hps.servlet;
 
+import com.google.gson.Gson;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
+import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
-import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,14 +17,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadOrderedPageServlet", urlPatterns = {"/LoadOrderedPageServlet"})
-public class LoadOrderedPageServlet extends HttpServlet {
+@WebServlet(name = "LoadCancelProduct", urlPatterns = {"/LoadCancelProduct"})
+public class LoadCancelProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,27 +37,8 @@ public class LoadOrderedPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
-            String url = "";
-            if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-            } else {
-                String temp_productID = request.getParameter("productID");
-                DanqtDAO dao = new DanqtDAO();
-                int productID = Integer.parseInt(temp_productID);
-                AccountDTO customer = dao.getCustomerInforByProductID(productID);
-                ProductDTO product = dao.getProductByID(productID);
-                String consignmentID = dao.getConsignmentIDByProductID(productID);
-                request.setAttribute("customer", customer);
-                request.setAttribute("consignmentID", consignmentID);
-                request.setAttribute("product", product);
-                url = GlobalVariables.ORDERED_PAGE;
-            }
-            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
@@ -73,7 +54,12 @@ public class LoadOrderedPageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String consignmentID = request.getParameter("consignmentID");
+        DanqtDAO dao = new DanqtDAO();
+        ConsignmentDTO infor = dao.getInforForCancelPage(consignmentID);
+        String json = new Gson().toJson(infor);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(json);
     }
 
     /**

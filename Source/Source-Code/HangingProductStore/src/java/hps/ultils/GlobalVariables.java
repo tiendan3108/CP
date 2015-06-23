@@ -32,7 +32,7 @@ public class GlobalVariables {
 
     public static final String SEARCH_PRODUCT_STATUS_SERVLET = "SearchProductStatusServlet";
     public static final String CANCEL_PRODUCT_SERVLET = "CancelProductServlet";
-    public static final String MANAGERMENT_SERVLET = "LoadManageProductPageServlet";
+    public static final String MANAGERMENT_SERVLET = "ManageProduct";
     public static final String LOAD_PAYMENT_SERVLET = "LoadPaymentPageServlet";
     public static final String LOAD_PUBLISH_PAGE_SERVLET = "LoadPublishPageServlet";
     

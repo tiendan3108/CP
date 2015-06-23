@@ -173,19 +173,22 @@ public class CategoryDAO {
         }
     }
 
-    public List<String> getChildCategory(String parentCategoryName) {
+    public List<CategoryDTO> getChildCategory(String parentCategoryName) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        List<String> result = new ArrayList<>();
+        List<CategoryDTO> result = new ArrayList<>();
         try {
             con = DBUltilities.makeConnection();
-            String query = "SELECT CategoryName FROM Category WHERE ParentID = (SELECT CategoryID FROM Category WHERE CategoryName = ?)";
+            String query = "SELECT CategoryName, CategoryID FROM Category WHERE ParentID = (SELECT CategoryID FROM Category WHERE CategoryName = ?)";
             stm = con.prepareStatement(query);
             stm.setString(1, parentCategoryName);
             rs = stm.executeQuery();
             while (rs.next()) {
-                result.add(rs.getString("CategoryName"));
+                CategoryDTO cat = new CategoryDTO();
+                cat.setCategoryName(rs.getString("CategoryName"));
+                cat.setCategoryId(rs.getInt("CategoryID"));
+                result.add(cat);
             }
             return result;
         } catch (SQLException ex) {
