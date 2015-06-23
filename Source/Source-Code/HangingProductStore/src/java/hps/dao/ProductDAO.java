@@ -29,6 +29,10 @@ public class ProductDAO {
     private Date date = new Date();
     private String newDate = df.format(date);
 
+    /**
+     *
+     * @author HoangNHSE61007 get new product not set season
+     */
     public List<ProductDTO> getNewData() {
         Connection con = null;
         PreparedStatement stm = null;
@@ -85,6 +89,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get new product information by productID
+     */
     public ProductDTO getProductByID(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -136,6 +144,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product same category
+     */
     public List<ProductDTO> getSimilarProduct(int categoryID, int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -194,6 +206,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product by category and name for 1 page
+     */
     public List<ProductDTO> getProductByParentCategoryAndName(int parentCategoryID, String name, int page) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -264,6 +280,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get number of product by category and name
+     */
     public int getSizeProductByParentCategoryAndName(int parentCategoryID, String name) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -313,6 +333,10 @@ public class ProductDAO {
         return 0;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product by category
+     */
     public List<ProductDTO> getProductByCategory(int categoryID, int page) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -381,6 +405,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get number of product by category
+     */
     public int getSizeProductByCategory(int categoryID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -427,6 +455,10 @@ public class ProductDAO {
         return 0;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product by parent category
+     */
     public List<ProductDTO> getProductByParentCategory(int parentCategoryID, int page) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -488,6 +520,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get number of product by parent category
+     */
     public int getSizeProductByParentCategory(int parentcategoryID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -531,6 +567,10 @@ public class ProductDAO {
         return 0;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product by name
+     */
     public List<ProductDTO> getProductByName(String name, int page) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -600,6 +640,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get number of product by name
+     */
     public int getSizeProductByName(String name) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -646,6 +690,10 @@ public class ProductDAO {
         return 0;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 get product by season
+     */
     public List<ProductDTO> getProductBySeason(int seasonId) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -702,6 +750,10 @@ public class ProductDAO {
         return null;
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 update product status to ordered
+     */
     public boolean updateStatusToOrdered(int productId, String orderId) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -812,7 +864,12 @@ public class ProductDAO {
         }
         return false;
     }
-    public boolean checkProduct(int productID){
+
+    /**
+     *
+     * @author HoangNHSE61007 check if product is on web
+     */
+    public boolean checkProduct(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -827,7 +884,7 @@ public class ProductDAO {
             stm.setInt(2, ProductStatus.ON_WEB);
             rs = stm.executeQuery();
             if (rs.next()) {
-               return  true;
+                return true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -22,7 +22,11 @@ import java.util.logging.Logger;
  */
 public class OrderDAO {
 
-    public boolean insertOrder(String orderID, int customerID, String email, String phone,String fullname,String address) {
+    /**
+     *
+     * @author HoangNHSE61007 insert order
+     */
+    public boolean insertOrder(String orderID, int customerID, String email, String phone, String fullname, String address) {
         Connection con = null;
         PreparedStatement stm = null;
         Date date = new Date();
@@ -55,6 +59,10 @@ public class OrderDAO {
         }
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 insert order
+     */
     public boolean insertOrderWithMemberInfo(OrderDTO order) {
         Connection con = null;
         PreparedStatement stm = null;
