@@ -8,6 +8,7 @@ package hps.servlet;
 import hps.dao.AccountDAO;
 import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -53,12 +54,12 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/ConsignmentRequestReceive");
                     return;
                 }else{
-                    url = "HomeServlet";
+                    url = GlobalVariables.HOME_SERVLET;
                 }
             }
             else{
-                request.setAttribute("ERR", "Tên đăng nhập hoặc mật khẩu không đúng");
-                url = "HomeServlet";
+                request.setAttribute("ERR", MessageString.loginFail);
+                url = GlobalVariables.HOME_SERVLET;
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
