@@ -96,8 +96,9 @@ public class AmazonService {
             if (quantity >= 5) {
                 quantity = 5;
             }
+            int j = 4;
             for (int i = 4; i < (4 + quantity);) {
-                item = items.item(i);
+                item = items.item(j);
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
                 ASIN = ASINNode.getTextContent();
@@ -112,7 +113,9 @@ public class AmazonService {
                     Currency = currencyNode.getTextContent();
                     temp_result.add(new AmazonProduct(price, ASIN, Currency));
                     i++;
+                    j++;
                 }
+                j++;
             }
             for (AmazonProduct temp_product : temp_result) {
                 product = getProductDetail(temp_product);

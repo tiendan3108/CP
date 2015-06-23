@@ -54,6 +54,7 @@ public class LoadCancelProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String consignmentID = request.getParameter("consignmentID");
         DanqtDAO dao = new DanqtDAO();
         ConsignmentDTO infor = dao.getInforForCancelPage(consignmentID);

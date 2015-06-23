@@ -54,8 +54,9 @@ public class LoadOrderedProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String tmp_productID = request.getParameter("productID");
         try {
+            request.setCharacterEncoding("UTF-8");
+            String tmp_productID = request.getParameter("productID");
             int productID = Integer.parseInt(tmp_productID);
             DanqtDAO dao = new DanqtDAO();
             ConsignmentDTO infor = dao.getInforForOrderedPage(productID);
