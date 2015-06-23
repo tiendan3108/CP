@@ -59,15 +59,20 @@ public class JavaUltilities {
     static Random rnd = new Random();
 
     public static void main(String[] args) {
-        JavaUltilities a = new JavaUltilities();
+        try {
+            JavaUltilities a = new JavaUltilities();
 //        String body = "<table >";
 //        body += "<tr><th>MONHANG</th><th>MON HANG</th></tr>";
 //        body += "<tr><td>123</td><td>234</td></tr>";
 //        body += "<tr><td>123</td><td>234</td></tr>";
 //        body += "</table>";     
 //        a.sendEmail("HoangNHSE61007@fpt.edu.vn", "Test CSS", body);
-        //System.out.println(a.encodeImage("././web/assets/image/tag1.jpg"));
-       a.reduceQulityImage("././web/assets/image/adidas-supercolor.jpg", "././web/assets/image/adidas-supercolor1.jpg");
+            //System.out.println(a.encodeImage("././web/assets/image/tag1.jpg"));
+            //a.reduceQulityImage("././web/assets/image/adidas-supercolor.jpg", "././web/assets/image/adidas-supercolor1.jpg");
+            a.sendSMS("test abc", "+841689191917");
+        } catch (TwilioRestException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String randomString(int len) {
