@@ -93,12 +93,12 @@ public class AmazonService {
             } catch (DOMException | NumberFormatException e) {
                 return null;
             }
-            if (quantity >= 5) {
-                quantity = 5;
+            if (quantity >= 10) {
+                quantity = 10;
             }
-            int j = 4;
-            for (int i = 4; i < (4 + quantity);) {
-                item = items.item(j);
+            int i = 4;
+            for (int j = 0; j < quantity; j++) {
+                item = items.item(i);
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
                 ASIN = ASINNode.getTextContent();
@@ -108,14 +108,12 @@ public class AmazonService {
                 lowestNewPriceContent = lowestNewPriceNode.getChildNodes();
                 priceNode = lowestNewPriceContent.item(0);
                 currencyNode = lowestNewPriceContent.item(1);
+                i++;
                 if (lowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
                     price = Float.parseFloat(priceNode.getTextContent()) / 100;
                     Currency = currencyNode.getTextContent();
                     temp_result.add(new AmazonProduct(price, ASIN, Currency));
-                    i++;
-                    j++;
                 }
-                j++;
             }
             for (AmazonProduct temp_product : temp_result) {
                 product = getProductDetail(temp_product);
