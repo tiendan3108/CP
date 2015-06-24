@@ -146,8 +146,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("CONSIGNMENT_REQUEST", c_request);
                 request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
 
-                request.setAttribute("ar_message", "Đã nhận hàng từ khách.");
-                //request.setAttribute("r_searchValue", searchValue);
             }
             else if(action.equals("ar_refuse")){
                 String consignmentID = request.getParameter("ar_consignmentID");
@@ -159,8 +157,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("CONSIGNMENT_REQUEST", c_request);
                 request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
                 
-                request.setAttribute("ar_message", "Đã từ chối hàng ký gửi.");
-                //request.setAttribute("r_searchValue", searchValue);
+            }
+            if(action.contains("ar_")){
+                request.setAttribute("currentTab", "accepted");
+            }else{
+                request.setAttribute("currentTab", "request");
             }
             
             RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);
