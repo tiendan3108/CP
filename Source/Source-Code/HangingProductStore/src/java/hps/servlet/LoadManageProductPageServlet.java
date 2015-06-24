@@ -5,12 +5,11 @@
  */
 package hps.servlet;
 
-import com.google.gson.Gson;
 import hps.dao.CategoryDAO;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
-import hps.dto.ProductDTO;
+import hps.dto.ConsignmentDTO;
 import hps.dto.SeasonDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.ProductStatus;
@@ -55,12 +54,12 @@ public class LoadManageProductPageServlet extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                List<ProductDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
-                List<ProductDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
-                List<ProductDTO> ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED);
-                List<ProductDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
-                List<ProductDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
-                List<ProductDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
+                List<ConsignmentDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
+                List<ConsignmentDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
+                List<ConsignmentDTO> ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED);
+                List<ConsignmentDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
+                List<ConsignmentDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
+                List<ConsignmentDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
                 List<CategoryDTO> parentCat = catDao.getParentCategory();
                 List<CategoryDTO> allCat = catDao.getAllCategory();
                 List<SeasonDTO> season = dao.getSeason();

@@ -9,10 +9,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author Tien Dan
- * modify Cong Duc
+ * @author Tien Dan modify Cong Duc
  */
-public class ConsignmentDTO implements Serializable{
+public class ConsignmentDTO implements Serializable {
+
     private String consigmentID;
     private int productID;
     private int memberID;
@@ -22,29 +22,52 @@ public class ConsignmentDTO implements Serializable{
     private String phone;
     private String email;
     private String paypalAccount;
-    private String cardNumber;
-    private String cardOwner;
     private String fromDate;
     private String toDate;
     private String raiseWebDate;
     private int period;
     private double maxPrice;
+    private double minPrice;
     private double returnPrice;
     private String receivedDate;
     private String createdDate;
     private int consignmentStatusID;
     private String status;
-    
+
     private ProductDTO product;
 
- //duchc - begin 
-    private double minPrice;
+     //duchc - begin 
     private String storeOwnerName; // to show name on track product status
     // duchc - end
 
+    // No Argument Constructor
     public ConsignmentDTO() {
     }
-
+    
+    // danqt
+    public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String paypalAccount, String fromDate, String toDate, String raiseWebDate, int period, double maxPrice, double minPrice, double returnPrice, String receivedDate, String createdDate, int consignmentStatusID, ProductDTO product) {
+        this.consigmentID = consigmentID;
+        this.productID = productID;
+        this.memberID = memberID;
+        this.storeOwnerID = storeOwnerID;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.paypalAccount = paypalAccount;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.raiseWebDate = raiseWebDate;
+        this.period = period;
+        this.maxPrice = maxPrice;
+        this.minPrice = minPrice;
+        this.returnPrice = returnPrice;
+        this.receivedDate = receivedDate;
+        this.createdDate = createdDate;
+        this.consignmentStatusID = consignmentStatusID;
+        this.product = product;
+    }
+    
     public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String cardNumber, String cardOwner, String fromDate, String status, int period, double maxPrice) {
         this.consigmentID = consigmentID;
         this.productID = productID;
@@ -58,16 +81,19 @@ public class ConsignmentDTO implements Serializable{
         this.period = period;
         this.maxPrice = maxPrice;
     }
+
     //danqt - begin
-    public ConsignmentDTO(String fullName, String phone, String address, String email)
-    {
+
+    public ConsignmentDTO(String fullName, String phone, String address, String email) {
         this.name = fullName;
         this.phone = phone;
         this.address = address;
         this.email = email;
     }
+
     //danqt - end
     // duchc Consignment new constructor for consign step 11/6/2015
+
     public ConsignmentDTO(String consigmentID, int productID, int memberID, int storeOwnerID, String name, String address, String phone, String email, String paypalAccount, String fromDate, String toDate, int period, double minPrice, double maxPrice, String createdDate, int consignmentStatusID) {
         this.consigmentID = consigmentID;
         this.productID = productID;
@@ -159,22 +185,6 @@ public class ConsignmentDTO implements Serializable{
         this.paypalAccount = paypalAccount;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public String getCardOwner() {
-        return cardOwner;
-    }
-
-    public void setCardOwner(String cardOwner) {
-        this.cardOwner = cardOwner;
-    }
-
     public String getFromDate() {
         return fromDate;
     }
@@ -229,7 +239,7 @@ public class ConsignmentDTO implements Serializable{
 
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
-    }    
+    }
 
     public ProductDTO getProduct() {
         return product;
@@ -263,7 +273,7 @@ public class ConsignmentDTO implements Serializable{
         this.status = status;
     }
 
-public double getMinPrice() {
+    public double getMinPrice() {
         return minPrice;
     }
 
@@ -271,7 +281,7 @@ public double getMinPrice() {
         this.minPrice = minPrice;
     }
 
- public String getStoreOwnerName() {
+    public String getStoreOwnerName() {
         return storeOwnerName;
     }
 

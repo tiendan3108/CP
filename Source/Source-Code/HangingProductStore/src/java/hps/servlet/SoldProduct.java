@@ -5,16 +5,11 @@
  */
 package hps.servlet;
 
-import com.twilio.sdk.TwilioRestException;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
-import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
-import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,49 +40,14 @@ public class SoldProduct extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
-            String action = request.getParameter("btnAction");
             String url = "";
-            boolean flagPaypal = true;// ko co tk paypal
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
                 String tmp_returnPrice = request.getParameter("txtReturnPrice");
-                String productName = request.getParameter("txtProductName");
-                String subject = "[HPS] Hàng gửi mã " + consignmentID;
                 float returnPrice = Float.parseFloat(tmp_returnPrice);
                 DanqtDAO dao = new DanqtDAO();
-                AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
-                JavaUltilities ultil = new JavaUltilities();
-                String message = "";
-                if (consignor.getPaypalAccount() == null && consignor.getPhone() != null) {
-                    message = "Sản phẩm " + productName + " với mã kí gửi " + consignmentID + " đã được bán với giá " + tmp_returnPrice + " VND."
-                            + "Vui lòng tới cửa hàng " + user.getFullName() + " để nhận tiền";
-                }
-                if (consignor.getPaypalAccount() == null && consignor.getPhone() == null && consignor.getEmail() != null) {
-                    message = "Xin chào " + consignor.getFullName() + "<br>Sản phẩm " + productName + " với mã kí gửi " + consignmentID + " đã được bán với giá " + tmp_returnPrice + " VND.</br>"
-                            + "Vui lòng tới cửa hàng " + user.getFullName() + " để nhận tiền" + "</br> Trân trọng</br>" + user.getFullName();
-                }
-                if (consignor.getPaypalAccount() != null && consignor.getPhone() != null) {
-                    flagPaypal = false;
-                    message = "Sản phẩm " + productName + " với mã kí gửi " + consignmentID + " đã được bán với giá " + tmp_returnPrice + " VND."
-                            + "Chúng tôi đã chuyển tiền vào tài khoản Paypal: " + consignor.getPaypalAccount() + ".";
-                }
-                if (consignor.getPaypalAccount() != null && consignor.getPhone() == null && consignor.getEmail() != null) {
-                    flagPaypal = false;
-                    message = "Xin chào " + consignor.getFullName() + "<br>Sản phẩm " + productName + " với mã kí gửi " + consignmentID + " đã được bán với giá " + tmp_returnPrice + " VND.</br>"
-                            + "Chúng tôi đã chuyển tiền vào tài khoản Paypal: " + consignor.getPaypalAccount() + "." + "</br> Trân trọng</br>" + user.getFullName();
-                }
-                if (consignor.getPhone() != null) {
-                    try {
-                        ultil.sendSMS(message, "+84" + consignor.getPhone().substring(1, consignor.getPhone().length()));
-                    } catch (TwilioRestException ex) {
-                        Logger.getLogger(SoldProduct.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (consignor.getEmail() != null) {
-                    ultil.sendEmail(consignor.getEmail(), subject, message);
-                }
                 dao.soldProduct(consignmentID, returnPrice);
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "sold");

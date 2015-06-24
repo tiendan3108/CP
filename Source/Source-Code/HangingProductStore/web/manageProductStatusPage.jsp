@@ -1,42 +1,37 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
-    <jsp:attribute name="extraHeadContent">
-        <!-- Nơi để khai báo page level css, theme, style -->
-    </jsp:attribute>
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-            <input type="hidden" id="currentTab" value="${requestScope.currentTab}">
+        <div class="row">
             <!--BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-5">
-                <ul class="list-group margin-bottom-25 sidebar-menu">
-                    <li class="list-group-item clearfix dropdown">
+            <div class="col-md-3 col-sm-4">
+                <ul class="tabs">
+                    <li>
                         <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     </li>
-                    <li class="list-group-item clearfix dropdown active open">
-                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                    <li>
+                        <a href="ManageProduct" class="active"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                        <ul class="tab-links">
+                            <li><a class="active" href="#available"><i class="fa fa-angle-right"></i>Sản phẩm chờ duyệt</a></li>
+                            <li><a href="#onWeb"><i class="fa fa-angle-right"></i>Sản phẩm đang trên web</a></li>
+                            <li><a href="#ordered"><i class="fa fa-angle-right"></i>Sản phẩm đã được đặt mua</a></li>
+                            <li><a href="#sold"><i class="fa fa-angle-right"></i>Sản phẩm đã được bán</a></li>
+                            <li><a href="#canceled"><i class="fa fa-angle-right"></i>Sản phẩm đăng kí hủy kỉ gửi</a></li>
+                            <li><a href="#completed"><i class="fa fa-angle-right"></i>Sản phẩm đã hoàn tất thanh toán</a></li>
+                        </ul>
                     </li>
-                    <li class="list-group-item clearfix dropdown">
+                    <li>
                         <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
                     </li>
                 </ul>
             </div>
             <!-- END SIDEBAR -->
+            <!-- BEGIN RIGHT CONTENT -->
             <div class="col-md-9">
+                <!-- BEGIN TAB -->
                 <div class="tabs row">
-                    <h4>Quản lý hàng kí gửi</h4>
-                    <!-- BEGIN TAB LINK -->
-                    <ul class="tab-links">
-                        <li id="availableTab" class="active col-sm-2"><a href="#available">Sản phẩm chờ duyệt</a></li>
-                        <li id="onWebTab" class="col-sm-2"><a href="#onWeb">Sản phẩm đang trên web</a></li>
-                        <li id="orderedTab" class="col-sm-2"><a href="#ordered">Sản phẩm đã được đặt mua</a></li>
-                        <li id="soldTab" class="col-sm-2"><a href="#sold">Sản phẩm đã được bán</a></li>
-                        <li id="canceledTab" class="col-sm-2"><a href="#canceled">Sản phẩm đăng kí hủy kỉ gửi</a></li>
-                        <li id="completedTab" class="col-sm-2"><a href="#completed">Sản phẩm đã hoàn tất thanh toán</a></li>
-                    </ul>                
-                    <!-- END TAB LINK -->
                     <!-- BEGIN TAB CONTENT -->
-                    <div class="tab-content">
+                    <div class="tab-content col-md-12">
                         <!-- BEGIN AVAILABLE TAB -->
                         <div id="available" class="tab active">
                             <c:set var="available" value="${requestScope.available}"></c:set>
@@ -47,6 +42,7 @@
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
+                                                <th>Tên khách hàng</th>
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
@@ -57,10 +53,11 @@
                                             <c:forEach var="item" items="${available}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
                                                     <td><font size="4">${item.name}</font></td>
                                                     <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
+                                                    <td><font size="4">${item.consigmentID}</font></td>
+                                                    <td><font size="4">${item.minPrice}</font>~<font size="4">${item.maxPrice}</font></td>
                                                     <td style="width: 70px"><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -74,7 +71,7 @@
                         </div>
                         <!-- END AVAILABLE TAB -->
                         <!-- BEGIN ONWEB TAB -->
-                        <div id="onWeb" class="tab">
+                        <div id="onWeb" class="tab col-md-12">
                             <c:set var="onWeb" value="${requestScope.onWeb}"></c:set>
                             <c:choose>
                                 <c:when test="${onWeb!=null}">
@@ -83,21 +80,19 @@
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày nhận</th>
+                                                <th>Ngày đăng lên web</th>
+                                                <th>Thời gian kí gửi</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${onWeb}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
+                                                    <td><font size="4">${item.raiseWebDate}</font></td>
+                                                    <td><font size="4">${item.period}</font></td>
+                                                    <td><font size="4">${item.consigmentID}</font></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -110,7 +105,7 @@
                         </div>
                         <!-- END ONWEB TAB -->
                         <!-- BEGIN ORDERED TAB -->
-                        <div id="ordered" class="tab">
+                        <div id="ordered" class="tab col-md-12">
                             <c:set var="ordered" value="${requestScope.ordered}"></c:set>
                             <c:choose>
                                 <c:when test="${ordered!=null}">
@@ -119,9 +114,9 @@
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày nhận</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi</th>
+                                                <th>Ngày đặt hàng</th>
+                                                <th>Mã đặt hàng</th>
+                                                <th>SĐT liên hệ</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -129,10 +124,10 @@
                                             <c:forEach var="item" items="${ordered}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
+                                                    <td><font size="4">${item.product.orderDate}</font></td>
+                                                    <td><font size="4">${item.product.orderID}</font></td>
+                                                    <td><font size="4">${item.product.customerPhone}</font></td>
                                                     <td style="width: 70px"><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -146,7 +141,7 @@
                         </div>
                         <!-- END ORDERED TAB -->
                         <!-- BEGIN SOLD TAB -->
-                        <div id="sold" class="tab">
+                        <div id="sold" class="tab col-md-12">
                             <c:set var="sold" value="${requestScope.sold}"></c:set>
                             <c:choose>
                                 <c:when test="${sold!=null}">
@@ -157,7 +152,7 @@
                                                 <th>Tên sản phẩm</th>
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi</th>
+                                                <th>Giá bán</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -165,10 +160,10 @@
                                             <c:forEach var="item" items="${sold}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
                                                     <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
+                                                    <td><font size="4">${item.consigmentID}</font></td>
+                                                    <td><font size="4">${item.product.sellingPrice}</font></td>
                                                     <td style="width: 70px"><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -182,7 +177,7 @@
                         </div>
                         <!-- END SOLD TAB -->
                         <!-- BEGIN COMPLETED TAB -->
-                        <div id="completed" class="tab">
+                        <div id="completed" class="tab col-md-12">
                             <c:set var="completed" value="${requestScope.completed}"></c:set>
                             <c:choose>
                                 <c:when test="${completed!=null}">
@@ -193,18 +188,17 @@
                                                 <th>Tên sản phẩm</th>
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi</th>
-                                                <th></th>
+                                                <th>Giá trả khách hàng</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${completed}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
                                                     <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
+                                                    <td><font size="4">${item.consigmentID}</font></td>
+                                                    <td><font size="4">${item.returnPrice}</font></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -217,7 +211,7 @@
                         </div>
                         <!-- END COMPLETED TAB -->
                         <!-- BEGIN CANCELED TAB -->
-                        <div id="canceled" class="tab">
+                        <div id="canceled" class="tab col-md-12">
                             <c:set var="canceled" value="${requestScope.canceled}"></c:set>
                             <c:choose>
                                 <c:when test="${canceled!=null}">
@@ -226,9 +220,10 @@
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày nhận</th>
+                                                <th>Ngày hủy</th>
+                                                <th>Ngày kí gửi</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi</th>
+                                                <th>TT liên lạc</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -236,11 +231,18 @@
                                             <c:forEach var="item" items="${canceled}" varStatus="counter">
                                                 <tr>
                                                     <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
+                                                    <td><font size="4">${item.product.name}</font></td>
+                                                    <td><font size="4"></font></td>
                                                     <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consignmentID}</font></td>
-                                                    <td><font size="4">${item.consignedPrice}</font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consignmentID}">Xem</button></td>
+                                                    <td><font size="4">${item.consigmentID}</font></td>
+                                                    <td><font size="4">
+                                                        <c:if test="${item.phone!=null}">
+                                                            ${item.phone}
+                                                        </c:if>
+                                                        <c:if test="${item.phone==null && item.email!=null}">
+                                                            ${item.email}
+                                                        </c:if></font></td>
+                                                    <td style="width: 70px"><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -253,7 +255,13 @@
                         </div>
                         <!-- END CANCELED TAB -->
                     </div>
+                    <!-- END TAB CONTENT -->
                 </div>
+                <!-- END TAB -->
+                <!-- END TAB CONTENT -->
+            </div>
+            <!-- END RIGHT CONTENT -->                                            
+            <div id="modal">
                 <!-- SOLD MODAL BEGIN-->
                 <div class="modal fade bs-example-modal-lg" id="soldModal">
                     <div class="modal-dialog modal-lg">
@@ -285,7 +293,6 @@
                                 </div>
                                 <div class="modal-footer">
                                     </br></br>
-                                    <input type="hidden" name="txtProductName" id="sold_name" value="">
                                     <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value="">
                                     <input class="btn default" type="submit" name="btnAction" value="Trả tiền">
                                     <input class="btn default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -347,7 +354,8 @@
                                     <label class="control-label">Giá bán :</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;"> VND
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="hidden" name="txtProductID" id="confirmOrder_ID" value="">
+                                    <input type="hidden" name="txtProductID" id="order_ProductID" value="">
+                                    <input type="hidden" name="txtConsignmentID" id="order_ConsignmentID" value="">
                                     <button class="btn default" name="btnAction" type="submit" value="order">Đồng ý</button>
                                     <input class="btn default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -460,16 +468,16 @@
                                                             </c:forEach>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-horizontal">
                                                     <div class="form-group">
                                                         <label  class="col-sm-4 control-label">Mô tả </label>
                                                         <div class="col-sm-8">
                                                             <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-horizontal">
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm</label>
                                                         <div class="col-md-8 col-sm-8" align="center">
@@ -500,19 +508,21 @@
                     </form>
                 </div>
                 <!-- AVAILABLE MODAL END-->
-                <!-- END TAB CONTENT -->
             </div>
         </div>
+        <input type="hidden" id="currentTab" value="${requestScope.currentTab}">
         <!-- END SIDEBAR & CONTENT -->
     </jsp:body>
 </template:shopbasic>
 <script>
     //script switch tab
     $(document).ready(function () {
-        $('.tabs .tab-links a').on('click', function (e) {
+        $('.tab-links a').on('click', function (e) {
             var currentAttrValue = $(this).attr('href');
-            $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
-            $(this).parent('li').addClass('active').siblings().removeClass('active');
+            console.log(currentAttrValue);
+            $('div' + currentAttrValue).fadeIn(400).siblings().hide();
+            $(this).addClass('active');
+            $(this).parent('li').siblings().children('a').removeClass('active');
             e.preventDefault();
         });
     });
@@ -520,7 +530,8 @@
         var currentTab = $('#currentTab').val();
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).fadeIn(400).siblings().hide();
-        $('li#' + currentLi).addClass('active').siblings().removeClass('active');
+        $("[href='#" + currentTab + "']").addClass('active');
+        $("[href='#" + currentTab + "']").parent('li').siblings().children('a').removeClass('active');
     });
     //start cancel modal
     $(document).on("click", ".cancelModal", function () {
@@ -584,7 +595,8 @@
             $("#ordered_productName").text(product.name);
             $("#ordered_orderDate").text(response.receivedDate);
             $("#order_ID").val(productID);
-            $("#confirmOrder_ID").val(productID);
+            $("#order_ProductID").val(productID);
+            $("#order_ConsignmentID").val(response.consigmentID);
         });
         $('#orderedModal').modal('show');
     });

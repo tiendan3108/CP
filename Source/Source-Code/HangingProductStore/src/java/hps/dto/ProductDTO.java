@@ -30,6 +30,8 @@ public class ProductDTO {
     private float consignedPrice;
     private float minPrice;
     private float maxPrice;
+    private String orderDate;
+    private String customerPhone;
     //danqt - end
 
 //duchc - begin
@@ -41,6 +43,21 @@ public class ProductDTO {
     }
 
     //danqt - begin
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, String orderID, String orderDate, String customerPhone) {
+        this.productID = productID;
+        this.name = name;
+        this.serialNumber = serialNumber;
+        this.purchasedDate = purchasedDate;
+        this.categoryID = categoryID;
+        this.brand = brand;
+        this.description = description;
+        this.image = image;
+        this.productStatusID = productStatusID;
+        this.sellingPrice = sellingPrice;
+        this.orderID = orderID;
+        this.orderDate = orderDate;
+        this.customerPhone = customerPhone;
+    }
     public ProductDTO(String productName, String receivedDate, String consignmentID, float minPrice, float maxPrice, String cancelDate) {
         this.name = productName;
         this.receivedDate = receivedDate;
@@ -383,6 +400,34 @@ public class ProductDTO {
      */
     public void setMaxPrice(float maxPrice) {
         this.maxPrice = maxPrice;
+    }
+
+    /**
+     * @return the orderDate
+     */
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    /**
+     * @param orderDate the orderDate to set
+     */
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    /**
+     * @return the customerPhone
+     */
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    /**
+     * @param customerPhone the customerPhone to set
+     */
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 
 }

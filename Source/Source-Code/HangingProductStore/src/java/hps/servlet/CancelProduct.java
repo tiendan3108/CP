@@ -62,6 +62,7 @@ public class CancelProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.sendRedirect(GlobalVariables.SESSION_TIME_OUT_PAGE);
     }
 
     /**
@@ -79,7 +80,7 @@ public class CancelProduct extends HttpServlet {
         AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
         String action = request.getParameter("btnAction");
         String consignmentID = request.getParameter("txtConsignmentID");
-        String url = "", message = "", subject = "[HPS] Hủy bỏ kí gửi mã " + consignmentID;
+        String url = "", message = "", subject = "[HPS] Huy bo ki gui ma " + consignmentID;
         int status = 0;
         Date tempDate = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -98,20 +99,20 @@ public class CancelProduct extends HttpServlet {
             if (action.equals("cancel")) {//agree cancel product
                 status = ProductStatus.COMPLETED;
                 if (flag) {
-                    message = "Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công."
-                            + " Vui lòng đến nhận lại hàng trong 3 ngày kể từ ngày " + toDay;
+                    message = "Mon hang voi ma ki gui " + consignmentID + " cua ban da duoc huy thanh cong."
+                            + " Vui long den nhan lai hang trong 3 ngay ke tu ngay " + toDay;
                 } else {
                     message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công.</br>"
-                            + " Vui lòng đến nhận lại hàng trong 3 ngày kể từ ngày " + toDay + "</br> Trân trọng</br>" + user.getFullName();
+                            + " Vui lòng đến nhận lại hàng trong 3 ngày kể từ ngày " + toDay + "</br> Trân trọng</br> HPS System";
                 }
             } else {//not agree cancel product
                 status = ProductStatus.ON_WEB;
                 if (flag) {
-                    message = "Món hàng với mã kí gửi " + consignmentID + " của bạn hủy không thành công."
-                            + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết";
+                    message = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy khong thanh cong."
+                            + " Vui long lien he voi chu cua hang " + user.getFullName() + " de biet them chi tiet";
                 } else {
                     message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn không được hủy thành công.</br>"
-                            + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br>" + user.getFullName();
+                            + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
                 }
             }
             //update database

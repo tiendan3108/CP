@@ -176,64 +176,41 @@ footer.page-footer .footer-copyright {
         height:56px;
     }
 }
-div#divPaymentForm{
-    padding-left: 200px;
-    float:right;
+
+table#management_table td{
+    height: 30px;
 }
-.tabs {
-    width:100%;
-    display:inline-block;
+.tabs{
+    font-size:14px;
 }
-.tab-links:after {
-    display:block;
-    clear:both;
-    content:'';
+.tabs ul{
+    list-style-type: none;
+}
+.tabs li{
+    list-style-type: none;
+}
+.tabs a{
+    text-transform: uppercase;
+    color: black;
+    font-weight: 400;
 }
 
-.tab-links li {
-    float:left;
-    list-style:none;
-    width: 16.2%;
-    padding-left: 3px;
-    padding-right: 3px;
-}
-
-.tab-links a {
+.tab-content {
     padding:9px 15px;
     display:inline-block;
     border-radius:3px 3px 0px 0px;
     background:#7FB5DA;
     font-size:14px;
-    font-weight:600;
     color:#4c4c4c;
     transition:all linear 0.15s;
-    width: 100%;
-    min-height: 75px;
 }
-.tab-links a:hover {
-    background:#a7cce5;
-    text-decoration:none;
-}
-
-li.active a, li.active a:hover {
-    background:#fff;
-    color:#4c4c4c;
-}
-
-.tab-content {
-    padding:15px;
-    border-radius:3px;
-    box-shadow:-1px 1px 1px rgba(0,0,0,0.15);
-    background:#fff;
-}
-
 .tab {
-    display:none;
+    display: none;
 }
-
 .tab.active {
     display:block;
 }
-table#management_table td{
-    height: 30px;
+a.active
+{
+    color:red;
 }
