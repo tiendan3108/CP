@@ -111,7 +111,7 @@ public class ProductDetailDAO {
             con = db.makeConnection();
             String query = "select * from Product, Consignment "
                     + "Where Product.ProductID = Consignment.ProductID "
-                    + "And Consignment.MemberID = ? "
+                    + "And Consignment.StoreOwnerID = ? "
                     + "And Consignment.ConsignmentStatusID = ? "
                     + "order by Consignment.ToDate asc";
             stm = con.prepareStatement(query);
