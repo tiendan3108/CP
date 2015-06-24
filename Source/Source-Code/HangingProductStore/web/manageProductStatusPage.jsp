@@ -1,5 +1,8 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
+    <jsp:attribute name="extraHeadContent">
+        <!-- Nơi để khai báo page level css, theme, style -->
+    </jsp:attribute>
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
@@ -8,56 +11,28 @@
             <div class="sidebar col-md-3 col-sm-5">
                 <ul class="list-group margin-bottom-25 sidebar-menu">
                     <li class="list-group-item clearfix dropdown">
-                        <a><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item clearfix">
-                                <a href="./consignment?advand-search"><i class="fa fa-angle-right"></i> Tìm kiếm</a>
-                            </li>
-                            <li class="list-group-item clearfix">
-                                <a href="./consignment?request"><i class="fa fa-angle-right"></i> Yêu cầu kí gửi</a>
-                            </li>
-                            <li class="list-group-item clearfix">
-                                <a href="./consignment?accepted"><i class="fa fa-angle-right"></i> Yêu cầu đã duyệt</a>
-                            </li>
-                        </ul>
+                        <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     </li>
                     <li class="list-group-item clearfix dropdown active open">
-                        <a><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i>Tìm kiếm nâng cao</a>
-                            </li>
-                            <li class="list-group-item clearfix active">
-                                <a href="LoadManageProductPageServlet"><i class="fa fa-angle-right"></i>Hàng kí gửi</a>
-                            </li>
-                        </ul>
+                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
                     </li>
                     <li class="list-group-item clearfix dropdown">
-                        <a><i class="fa fa-angle-right"></i>Thống kê</a>
-                        <ul class="dropdown-menu">
-                            <li class="list-group-item clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i>Bán hàng</a>
-                            </li>
-                            <li class="list-group-item clearfix">
-                                <a href="#"><i class="fa fa-angle-right"></i>Thanh toán</a>
-                            </li>
-                        </ul>
+                        <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
                     </li>
                 </ul>
             </div>
             <!-- END SIDEBAR -->
             <div class="col-md-9">
-                <h4>Quản lý hàng kí gửi</h4>
-                </br>
-                <div class="tabs">
+                <div class="tabs row">
+                    <h4>Quản lý hàng kí gửi</h4>
                     <!-- BEGIN TAB LINK -->
                     <ul class="tab-links">
-                        <li id="availableTab" class="active"><a href="#available">Sản phẩm chờ duyệt</a></li>
-                        <li id="onWebTab"><a href="#onWeb">Sản phẩm đang trên web</a></li>
-                        <li id="orderedTab"><a href="#ordered">Sản phẩm đã được đặt mua</a></li>
-                        <li id="soldTab"><a href="#sold">Sản phẩm đã được bán</a></li>
-                        <li id="canceledTab"><a href="#canceled">Sản phẩm đăng kí hủy kỉ gửi</a></li>
-                        <li id="completedTab"><a href="#completed">Sản phẩm đã hoàn tất thanh toán</a></li>
+                        <li id="availableTab" class="active col-sm-2"><a href="#available">Sản phẩm chờ duyệt</a></li>
+                        <li id="onWebTab" class="col-sm-2"><a href="#onWeb">Sản phẩm đang trên web</a></li>
+                        <li id="orderedTab" class="col-sm-2"><a href="#ordered">Sản phẩm đã được đặt mua</a></li>
+                        <li id="soldTab" class="col-sm-2"><a href="#sold">Sản phẩm đã được bán</a></li>
+                        <li id="canceledTab" class="col-sm-2"><a href="#canceled">Sản phẩm đăng kí hủy kỉ gửi</a></li>
+                        <li id="completedTab" class="col-sm-2"><a href="#completed">Sản phẩm đã hoàn tất thanh toán</a></li>
                     </ul>                
                     <!-- END TAB LINK -->
                     <!-- BEGIN TAB CONTENT -->
@@ -75,6 +50,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -110,6 +86,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -145,6 +122,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -180,6 +158,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -215,6 +194,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -249,6 +229,7 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -274,9 +255,9 @@
                     </div>
                 </div>
                 <!-- SOLD MODAL BEGIN-->
-                <div class="modal fade" id="soldModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content modal-manage">
+                <div class="modal fade bs-example-modal-lg" id="soldModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
                             <form action="SoldProduct" method="POST">
                                 <div class="modal-header">
                                     <h4>Thông tin sản phẩm</h4>        
@@ -315,28 +296,30 @@
                 </div>
                 <!-- SOLD MODAL END-->
                 <!-- ORDERED MODAL BEGIN-->
-                <div class="modal fade" id="orderedModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content modal-manage">
+                <div class="modal fade bs-example-modal-lg" id="orderedModal">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <h4>Thông tin đặt hàng</h4>        
                             </div>
                             <div class="modal-body">
-                                <div class="col-sm-6">
-                                    <h5>Thông tin người đặt</h5>
-                                    </br>
-                                    <li>Họ tên : <label id="ordered_fullName"></label></li>
-                                    <li>Địa chỉ : <label id="ordered_address"></label></li>
-                                    <li>Số điện thoại : <label id="ordered_phone"></label></li>
-                                    <li>Email : <label id="ordered_email"></label></li>
-                                </div>
-                                <div class="col-sm-6">
-                                    <h5>Thông tin sản phẩm</h5>
-                                    </br>
-                                    <li>Tên sản phẩm : <label id="ordered_productName"></label></li>
-                                    <li>Mã đơn hàng : <label id="ordered_orderID"></label></li>
-                                    <li>Giá sản phẩm : <label id="ordered_minPrice"></label> ~ <label id="ordered_maxPrice"></label></li>
-                                    <li>Ngày đặt mua : <label id="ordered_orderDate"></label></li>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h5>Thông tin người đặt</h5>
+                                        </br>
+                                        <li>Họ tên : <label id="ordered_fullName"></label></li>
+                                        <li>Địa chỉ : <label id="ordered_address"></label></li>
+                                        <li>Số điện thoại : <label id="ordered_phone"></label></li>
+                                        <li>Email : <label id="ordered_email"></label></li>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5>Thông tin sản phẩm</h5>
+                                        </br>
+                                        <li>Tên sản phẩm : <label id="ordered_productName"></label></li>
+                                        <li>Mã đơn hàng : <label id="ordered_orderID"></label></li>
+                                        <li>Giá sản phẩm : <label id="ordered_minPrice"></label> ~ <label id="ordered_maxPrice"></label></li>
+                                        <li>Ngày đặt mua : <label id="ordered_orderDate"></label></li>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -353,8 +336,8 @@
                 </div>
                 <!-- ORDERED MODAL END-->
                 <!-- CONFIRM ORDERED MODAL BEGIN-->
-                <div class="modal fade" id="confirmOrderedModal">
-                    <div class="modal-dialog">
+                <div class="modal fade bs-example-modal-lg" id="confirmOrderedModal">
+                    <div class="modal-dialog modal-lg">
                         <form action="OrderProduct" method="POST">
                             <div class="modal-content modal-manage">
                                 <div class="modal-header">
@@ -374,8 +357,8 @@
                 </div>
                 <!-- CONFIRM ORDERED MODAL END-->
                 <!-- CANCEL MODAL BEGIN-->
-                <div class="modal fade" id="cancelModal">
-                    <div class="modal-dialog">
+                <div class="modal fade bs-example-modal-lg" id="cancelModal">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content modal-manage">
                             <div class="modal-header">
                                 <h4>Thông tin hủy kí gửi</h4>        
@@ -413,9 +396,9 @@
                 </div>
                 <!-- CANCEL MODAL END-->
                 <!-- AVAILABLE MODAL BEGIN-->
-                <div class="modal fade" id="availableModal">
+                <div class="modal fade bs-example-modal-lg" id="availableModal">
                     <form action="PublishProduct" method="POST" enctype="multipart/form-data">
-                        <div class="modal-dialog">
+                        <div class="modal-dialog modal-lg">
                             <div class="modal-content modal-manage">
                                 <div class="modal-header">
                                     <h4>Thông tin sản phẩm</h4>        
@@ -466,19 +449,9 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-sm-4">Hãng</label>
                                                         <div class="col-sm-8">
-                                                            <input id="avai_Brand" type="text" class="form-control" maxlength="50" name="txtBrand"/>
+                                                            <input id="avai_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
                                                         </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label  class="col-sm-4 control-label">Mô tả </label>
-                                                        <div class="col-sm-8">
-                                                            <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-horizontal">
                                                     <div class="form-group">
                                                         <label  class="col-sm-4 control-label">Mùa </label>
                                                         <div class="col-sm-8">
@@ -487,16 +460,26 @@
                                                             </c:forEach>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label  class="col-sm-4 control-label">Mô tả </label>
+                                                        <div class="col-sm-8">
+                                                            <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm</label>
                                                         <div class="col-md-8 col-sm-8" align="center">
                                                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 250px; height: 250px;">
-                                                                    <img src="" id="avai_Image" style="width: 240px;height: 240px"/>
+                                                                <div class="fileinput-new thumbnail">
+                                                                    <img src="" id="avai_Image"/>
                                                                 </div>
                                                                 <div >
-                                                                    <span class="btn btn-info btn-file" style="width: 250px">
-                                                                        <input type="file" name="txtImage" style="width: 250px" onchange="readURL(this);"/>
+                                                                    <span class="btn btn-info btn-file" style="width: 100%">
+                                                                        <input type="file" name="txtImage" onchange="readURL(this);" style="max-width: "/>
                                                                     </span>
                                                                 </div>
                                                             </div>

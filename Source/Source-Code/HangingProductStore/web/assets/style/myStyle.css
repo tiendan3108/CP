@@ -191,11 +191,11 @@ div#divPaymentForm{
 }
 
 .tab-links li {
-    margin:0px 5px;
     float:left;
     list-style:none;
-    height: 50px;
-    width: 115px;
+    width: 16.2%;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .tab-links a {
@@ -207,8 +207,8 @@ div#divPaymentForm{
     font-weight:600;
     color:#4c4c4c;
     transition:all linear 0.15s;
-    width: 110px;
-    height: 70px;
+    width: 100%;
+    min-height: 75px;
 }
 .tab-links a:hover {
     background:#a7cce5;
@@ -236,7 +236,4 @@ li.active a, li.active a:hover {
 }
 table#management_table td{
     height: 30px;
-}
-.modal-manage {
-    min-width: 850px;
 }

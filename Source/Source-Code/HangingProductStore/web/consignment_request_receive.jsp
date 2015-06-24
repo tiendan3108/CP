@@ -27,7 +27,22 @@
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
-            <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
+            <!--BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    <li class="list-group-item clearfix dropdown active">
+                        <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                    </li>
+                    <li class="list-group-item clearfix dropdown">
+                        <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END SIDEBAR -->
+            <div class="col-md-9">
                 <div class="row">
                     <div role="tabpanel">
 
