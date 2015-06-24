@@ -28,8 +28,8 @@
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
             <!--BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-5">
-                <ul class="list-group margin-bottom-25 sidebar-menu">
+            <div class="sidebar col-md-3 col-sm-4">
+                <ul class="list-group sidebar-menu">
                     <li class="list-group-item clearfix dropdown active">
                         <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     </li>
@@ -42,8 +42,9 @@
                 </ul>
             </div>
             <!-- END SIDEBAR -->
-            <div class="col-md-9">
-                <div class="row">
+            
+            <div class="col-md-9 col-sm-8">
+                
                     <div role="tabpanel">
 
                         <!-- Nav tabs -->
@@ -135,7 +136,7 @@
                                                     </c:url>
                                                     <a href="${detailUrl}" 
                                                        class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
-                                                    <button type="button" class="btn btn-primary btn-xs" name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalRequest" name="requestDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -229,7 +230,7 @@
                                                     </c:url>
                                                     <a href="${detailUrl}" 
                                                        class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
-                                                    <button type="button" class="btn btn-primary btn-xs" name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalRequest" name="requestDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -243,130 +244,132 @@
                         </div>
 
                     </div>
-                </div>
+                
 
+
+                <!--BEGIN MODAL -->
+                <!-- Large modal -->
+                <div id="modalRequest" class="modal fade bs-example-modal-lg" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+                                <h2 class="modal-title" id="r_name"></h2>
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-3">Email: <b><span id="r_email"></span></b></div>
+                                    <div class="col-lg-3 col-md-3">ĐT: <b><span id="r_phone"></span></b></div>
+                                    <div class="col-lg-5 col-md-5">Địa chỉ: <span id="r_address"></span></div>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-body">
+                                <!-- BEGIN PAGE CONTENT-->
+                                <div class="row margin-bottom-25">
+                                    <!-- BEGIN CAROUSEL -->
+                                    <div class="col-lg-4 col-md-4 front-carousel">
+
+                                        <div class="carousel slide" id="myCarousel">
+                                            <!-- Carousel items -->
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+                                                    <img id="r_image" alt="">
+                                                    <div class="carousel-caption">
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Carousel nav -->
+                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <!-- END CAROUSEL -->
+
+                                    <!-- BEGIN PRODUCT DESCRIPTION -->
+                                    <div class="col-lg-8 col-md-8">
+
+
+                                        <table style="font-size: 110%" class="table table-striped table-hover" >
+                                            <tr>
+                                                <th width="30%">Tên sản phẩm</th>
+                                                <td id='r_productName'></td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Mô tả</th>
+                                                <td id='r_description'></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngày ký gửi</th>
+                                                <td id='r_createdDate'></td>
+                                            </tr>
+                                            <tr >
+                                                <th>Giá</th>
+                                                <td id="r_price"></td>
+                                                <td id="ar_price" style="display: none;">
+                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngày hẹn</th>
+                                                <td id='r_fromDateToDate'></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Trạng thái</th>
+                                                <td id='r_status'>
+
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                    <!-- END PRODUCT DESCRIPTION -->
+                                </div>
+
+                            </div>
+
+                            <div id="r_footer" class="modal-footer">
+                                <form action="ConsignmentRequestReceive" method="POST">
+                                    <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
+                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                    <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
+                                    <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                </form>
+
+                            </div>
+                            <div id="ar_footer" class="modal-footer" style="display: none;">
+                                <form action="ConsignmentRequestReceive" method="POST" onsubmit="return er_validation()">
+                                    <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
+                                    <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                    <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                    <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
+                                    <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
+                                    <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
+                                    <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END MODAL -->
 
             </div>
         </div>
         <!-- END SIDEBAR & CONTENT -->
 
-        <!--BEGIN MODAL -->
-        <!-- Large modal -->
-        <div id="modalRequest" class="modal fade bs-example-modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
-                        <h2 class="modal-title" id="r_name"></h2>
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3">Email: <b><span  id="r_email"></span></b></div>
-                            <div class="col-lg-2 col-md-2">ĐT: <b><span  id="r_phone"></span></b></div>
-                            <div class="col-lg-4 col-md-4">Địa chỉ: <span  id="r_address"></span></div>
-
-                        </div>
-
-                    </div>
-                    <div class="modal-body">
-                        <!-- BEGIN PAGE CONTENT-->
-                        <div class="row margin-bottom-25">
-                            <!-- BEGIN CAROUSEL -->
-                            <div class="col-lg-4 col-md-4 front-carousel">
-
-                                <div class="carousel slide" id="myCarousel">
-                                    <!-- Carousel items -->
-                                    <div class="carousel-inner">
-                                        <div class="item active">
-                                            <img id="r_image" alt="">
-                                            <div class="carousel-caption">
-                                                <p></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Carousel nav -->
-                                    <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                        <i class="fa fa-angle-left"></i>
-                                    </a>
-                                    <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                        <i class="fa fa-angle-right"></i>
-                                    </a>
-                                </div>
-
-                            </div>
-                            <!-- END CAROUSEL -->
-
-                            <!-- BEGIN PRODUCT DESCRIPTION -->
-                            <div class="col-lg-8 col-md-8">
-
-
-                                <table style="font-size: 110%" class="table table-striped table-hover" >
-                                    <tr>
-                                        <th width="30%">Tên sản phẩm</th>
-                                        <td id='r_productName'></td>
-                                    </tr>
-                                    <tr>
-                                        <th width="30%">Mô tả</th>
-                                        <td id='r_description'></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ngày ký gửi</th>
-                                        <td id='r_createdDate'></td>
-                                    </tr>
-                                    <tr >
-                                        <th>Giá</th>
-                                        <td id="r_price"></td>
-                                        <td id="ar_price" style="display: none;">
-                                            <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ngày hẹn</th>
-                                        <td id='r_fromDateToDate'></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Trạng thái</th>
-                                        <td id='r_status'>
-
-
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-                            </div>
-                            <!-- END PRODUCT DESCRIPTION -->
-                        </div>
-
-                    </div>
-
-                    <div id="r_footer" class="modal-footer">
-                        <form action="ConsignmentRequestReceive" method="POST">
-                            <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
-                            <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                            <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
-                            <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
-                        </form>
-
-                    </div>
-                    <div id="ar_footer" class="modal-footer" style="display: none;">
-                        <form action="ConsignmentRequestReceive" method="POST" onsubmit="return er_validation()">
-                            <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
-                            <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                            <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
-                            <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
-                            <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
-                            <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
-                            <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- END MODAL -->
-
-        <div id="modalMessage" class="modal fade">
+        <div id="modalMessage" style="display: none">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -385,7 +388,7 @@
         </div><!-- /.modal -->
 
 
-        <button type="button" id="btnRequestDetails" data-toggle="modal" data-target="#modalRequest" style="display: none;" >Mở details</button>
+        <!--        <button type="button" id="btnRequestDetails" data-toggle="modal" data-target="#modalRequest" style="display: none;" >Mở details</button>-->
         <button type="button" id="btnMessage" data-toggle="modal" data-target="#modalMessage" style="display: none;">Mở message</button>
     </jsp:body>
 </template:shopbasic>
@@ -429,7 +432,7 @@
                 $("#ar_inputProductID").val(data.product.productID);
             }
 
-            $('#btnRequestDetails').click();
+//            $('#btnRequestDetails').click();
 
         });
     });
