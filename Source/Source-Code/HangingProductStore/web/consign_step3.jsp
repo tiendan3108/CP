@@ -9,7 +9,7 @@
         <!-- Nơi để khai báo page level css, theme, style -->
         <!--        Sử dụng google map api-->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-        
+
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
@@ -90,127 +90,24 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group">
-                                                                    <label for="" class="col-md-4 col-sm-4 control-label"> Liên lạc </label>
 
-                                                                    <div class="radio-list col-md-8 col-sm-8">
+                                                                <div class="form-group" id="divPhone">
+                                                                    <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                                    <div class="col-md-4 col-sm-6">
+                                                                        <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
+                                                                        <p class="help-block" id="erPhone"></p>
 
-                                                                        <c:if test="${empty member}">
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdContact" id="optionsRadios6" value="both" > Cả 2 </label>
-
-                                                                        </c:if>
-                                                                        <c:if test="${not empty member}">
-                                                                            <c:if test="${not empty member.phone and empty member.email}">
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone" checked> Điện thoại </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-                                                                                </c:if>
-                                                                                <c:if test="${not empty member.email and empty member.phone}">
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email" checked> Email </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both"> Cả 2 </label>
-                                                                                </c:if>
-                                                                                <c:if test="${not empty member.email and not empty member.phone}">
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios4" value="phone"> Điện thoại </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios5" value="email"> Email </label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdContact" id="optionsRadios6" value="both" checked> Cả 2 </label>
-                                                                                </c:if>
-
-                                                                        </c:if>
+                                                                    </div>
+                                                                </div>
+                                                                        
+                                                                <div class="form-group" id="divEmail">
+                                                                    <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email </label>
+                                                                    <div class="col-md-8 col-sm-8">
+                                                                        <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
+                                                                        <p class="help-block" id="erEmail"></p>
                                                                     </div>
                                                                 </div>
 
-                                                                <c:if test="${empty member}">
-                                                                    <div class="form-group" id="divEmail" style="display: none;">
-                                                                        <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                        <div class="col-md-8 col-sm-8">
-                                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                            <p class="help-block" id="erEmail"></p>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="form-group" id="divPhone">
-                                                                        <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                        <div class="col-md-4 col-sm-6">
-                                                                            <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                            <p class="help-block" id="erPhone"></p>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-
-                                                                <c:if test="${not empty member}">
-                                                                    <c:if test="${not empty member.phone and empty member.email}">
-                                                                        <div class="form-group" id="divEmail">
-                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                            <div class="col-md-8 col-sm-8">
-                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                                <p class="help-block" id="erEmail"></p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group" id="divPhone" style="display: none;">
-                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                            <div class="col-md-4 col-sm-6">
-                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                                <p class="help-block" id="erPhone"></p>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </c:if>
-                                                                    <c:if test="${not empty member.email and empty member.phone}">
-
-                                                                        <div class="form-group" id="divEmail"  style="display: none;">
-                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                            <div class="col-md-8 col-sm-8">
-                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                                <p class="help-block" id="erEmail"></p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group" id="divPhone">
-                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                            <div class="col-md-4 col-sm-6">
-                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                                <p class="help-block" id="erPhone"></p>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </c:if>
-                                                                    <c:if test="${not empty member.phone and not empty member.email}">
-
-                                                                        <div class="form-group" id="divEmail">
-                                                                            <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email <font color="red">*</font></label>
-                                                                            <div class="col-md-8 col-sm-8">
-                                                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" value="${member.email}">
-                                                                                <p class="help-block" id="erEmail"></p>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <div class="form-group" id="divPhone">
-                                                                            <label for="txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
-                                                                            <div class="col-md-4 col-sm-6">
-                                                                                <input type="text" id="txtPhone" name="txtPhone" class="form-control"   placeholder="" value="${member.phone}" />
-                                                                                <p class="help-block" id="erPhone"></p>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </c:if>
-                                                                </c:if>
 
                                                                 <div class="form-group">
                                                                     <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
@@ -282,7 +179,7 @@
                                                             <div class="form-horizontal">
 
                                                                 <div class="form-group">
-                                                                    <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm <font color="red">*</font></label>
+                                                                    <label class="control-label col-md-4 col-sm-4">Hình ảnh <font color="red">*</font></label>
                                                                     <div class="col-md-8 col-sm-8" align="center">
                                                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                             <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
@@ -383,23 +280,23 @@
         $("#form3").submit();
     });
 
-    $('input:radio[name="rdContact"]').change(function () {
-        if ($(this).val() == "phone") {
-            $("#divPhone").show();
-            $("#divEmail").hide();
-            $("#divEmail").val() == "";
-        }
-        else if ($(this).val() == "email") {
-            $("#divPhone").hide();
-            $("#divPhone").val() == "";
-            $("#divEmail").show();
-        }
-        else {
-            $("#divPhone").show();
-            $("#divEmail").show();
-        }
-
-    });
+//    $('input:radio[name="rdContact"]').change(function () {
+//        if ($(this).val() == "phone") {
+//            $("#divPhone").show();
+//            $("#divEmail").hide();
+//            $("#divEmail").val() == "";
+//        }
+//        else if ($(this).val() == "email") {
+//            $("#divPhone").hide();
+//            $("#divPhone").val() == "";
+//            $("#divEmail").show();
+//        }
+//        else {
+//            $("#divPhone").show();
+//            $("#divEmail").show();
+//        }
+//
+//    });
 
     $('input:radio[name="rdPayment"]').change(function () {
         if ($(this).val() == "cc") {
@@ -445,40 +342,12 @@
             $('#erDate').html("");
         }
 
-        var contact = $('input:radio[name="rdContact"]:checked').val();
-        if (contact == "phone") {
-            if ($('#txtPhone').val().trim().length == 0) {
-                $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
-                check = false;
-            }
-            else {
-                $('#erPhone').html("");
-            }
-        }
-        else if (contact == "email") {
-            if ($('#txtEmail').val().trim().length == 0) {
-                $('#erEmail').html("<font color='red'>Xin nhập email</font>");
-                check = false;
-            }
-            else {
-                $('#erEmail').html("");
-            }
+        if ($('#txtPhone').val().trim().length <10) {
+            $('#erPhone').html("<font color='red'>Xin nhập số điện thoại ít nhất 10 chữ số</font>");
+            check = false;
         }
         else {
-            if ($('#txtPhone').val().trim().length == 0) {
-                $('#erPhone').html("<font color='red'>Xin nhập số điện thoại</font>");
-                check = false;
-            }
-            else {
-                $('#erPhone').html("");
-            }
-            if ($('#txtEmail').val().trim().length == 0) {
-                $('#erEmail').html("<font color='red'>Xin nhập email</font>");
-                check = false;
-            }
-            else {
-                $('#erEmail').html("");
-            }
+            $('#erPhone').html("");
         }
 
         var payment = $('input:radio[name="rdPayment"]:checked').val();
@@ -508,7 +377,7 @@
 
     function initialize() {
 
-        
+
     }
 
 </script>

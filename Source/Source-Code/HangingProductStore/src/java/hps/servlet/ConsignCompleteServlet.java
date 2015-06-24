@@ -100,6 +100,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 phone = item.getString();
                                 if (phone.length() > 0) {
                                     phone = "+84" + phone.substring(1);
+                                    
+                                    System.out.println(phone);
                                 }
                                 break;
                             case "txtEmail":
