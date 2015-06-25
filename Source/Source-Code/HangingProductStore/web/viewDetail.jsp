@@ -38,8 +38,8 @@
         <c:if test="${empty acc}">
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
-    </jsp:attribute>
-    <jsp:body>             
+        </jsp:attribute>
+        <jsp:body>             
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
             <!-- BEGIN SIDEBAR -->
@@ -84,20 +84,27 @@
                                 </div>
                                 <div class="product-page-options">
                                     <div class="pull-left">
-                                        <label style="font-size: 20px;" class="control-label">Nhãn hiệu: ${item.brand}</label>
+                                        <label style="font-size: 14px;" class="control-label">Nhãn hiệu: ${item.brand}</label>
                                     </div>
-
+                                    <div class="pull-left">
+                                        <label style="font-size: 14px;" class="control-label">Số Serial: ${item.serialNumber}</label>
+                                    </div>
                                 </div>
+                                <c:set var="store" value="${requestScope.STOREINFO}"/>
+                                <c:if test="${not empty store}">
+                                    <div class="description">
+                                        <p><label style="font-size: 14px;" class="control-label">Thông tin liên hệ</label></p>
+                                        <p>Tên chủ cửa hàng: ${store.fullName}</p>
+                                        <p>Email: ${store.email}</p> 
+                                        <p>Số điện thoại: ${store.phone}</p> 
+                                        <p>Địa chỉ: ${store.address}</p> 
+                                    </div>  
+                                </c:if>
+
                                 <div class="product-page-options">
                                     <div class="pull-left">
-                                        <label style="font-size: 20px;" class="control-label">Số Serial: ${item.serialNumber}</label>
+                                        <a class="btn btn-primary" href="ConfirmOrderServlet?productId=${item.productID}">Đặt hàng</a>
                                     </div>
-                                </div>                             
-                                <div class="product-page-cart">
-                                    <div class="product-quantity">
-
-                                    </div>
-                                    <a class="btn btn-primary" href="ConfirmOrderServlet?productId=${item.productID}">Đặt hàng</a>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +128,7 @@
                                         <div class="pi-img-wrapper">
                                             <img src='${productItem.image}' class="imgCrop3">
                                         </div>
-                                        <h3>${productItem.name}</h3>
+                                        <h3 style="color: black">${productItem.name}</h3>
 
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${productItem.productID}"/>

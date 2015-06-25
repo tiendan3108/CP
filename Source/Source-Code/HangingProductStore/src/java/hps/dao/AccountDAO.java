@@ -146,4 +146,55 @@ public class AccountDAO {
         }
         return null;
     }
+
+    public AccountDTO getInfoByProductID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        AccountDTO account = new AccountDTO();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select a.[Address], a.Email, a.Phone, a.FullName "
+                    + "from Product p, Consignment c, StoreOwner s, Account a "
+                    + "where p.ProductID = c.ProductID "
+                    + "and c.StoreOwnerID = s.StoreOwnerID "
+                    + "and s.AccountID = a.AccountID "
+                    + "and p.ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String fullName = rs.getString("FullName");
+                String address = rs.getString("Address");
+                String phone = rs.getString("Phone");
+                String email = rs.getString("Email");
+                account.setFullName(fullName);
+                account.setAddress(address);
+                account.setPhone(phone);
+                account.setEmail(email);
+                return account;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
 }

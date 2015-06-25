@@ -127,7 +127,7 @@
                                         <div class="pi-img-wrapper">
                                             <img src='${item.image}' class="imgCrop">
                                         </div>
-                                        <h3>${item.name}</h3>
+                                            <h3 style="color: black">${item.name}</h3>
 
                                         <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${item.productID}"/>
@@ -151,7 +151,7 @@
                                     <div class="pi-img-wrapper">
                                         <img src="${seasonItem.image}" class="imgCrop3">
                                     </div>
-                                    <h3>${seasonItem.name}</h3>
+                                        <h3 style="color: black">${seasonItem.name}</h3>
                                     <c:url var="viewDetail2" value = "ViewProductDetailServlet">
                                         <c:param name="productID" value="${seasonItem.productID}"/>
                                     </c:url>

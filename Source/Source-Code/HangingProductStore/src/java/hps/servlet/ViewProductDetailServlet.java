@@ -5,8 +5,10 @@
  */
 package hps.servlet;
 
+import hps.dao.AccountDAO;
 import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
+import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
@@ -53,17 +55,20 @@ public class ViewProductDetailServlet extends HttpServlet {
             CategoryDAO cateDao = new CategoryDAO();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();
             List<CategoryDTO> category = cateDao.getAllCategory();
+            AccountDAO accountDAO = new AccountDAO();
+            AccountDTO storeInfo = accountDAO.getInfoByProductID(productID);
             if (product != null) {
                 int categoryID = product.getCategoryID();
                 List<ProductDTO> similarProducts = dao.getSimilarProduct(categoryID, productID);
                 request.setAttribute("PRODUCT", product);
                 request.setAttribute("SIMILARPRODUCT", similarProducts);
+                request.setAttribute("STOREINFO", storeInfo);
             }
             request.setAttribute("CATEGORY", parentCategories);
             request.setAttribute("ALLCATE", category);
             RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.VIEW_DETAIL_PAGE);
             rd.forward(request, response);
-        }
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
