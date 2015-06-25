@@ -25,7 +25,7 @@
     <jsp:attribute name="headContent">
 
         <!-- Theme styles START -->
-        <link href="assets/style/myStyle.css" rel="stylesheet">
+        <link href="assets/style/myStyle-old.css" rel="stylesheet">
 
         <!-- Xài bootstrap template đẹp hơn -->
         <!--        <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>-->

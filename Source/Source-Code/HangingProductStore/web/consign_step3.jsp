@@ -8,12 +8,12 @@
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
         <!--        Sử dụng google map api-->
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-
+<!--        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>-->
+<!--        <link href="assets/style/googleMapStyle.css" rel="stylesheet">-->
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
-
+<!--        <script src="assets/style/googleMap.js" type="text/javascript"></script>-->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
 
@@ -83,8 +83,8 @@
 
                                                                 <div class="form-group">
                                                                     <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
-                                                                    <div class="col-md-8 col-sm-8">
-                                                                        <textarea id="txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="6" placeholder="" >${member.address}</textarea>
+                                                                    <div id="map-canvas" class="col-md-8 col-sm-8">
+                                                                        <textarea id="pac-input" name="txtAddress" class="form-control" maxlength="225" rows="3" placeholder="" >${member.address}</textarea>
                                                                         <span class="help-block" id="erAddress">
                                                                         </span>
                                                                     </div>
@@ -99,7 +99,7 @@
 
                                                                     </div>
                                                                 </div>
-                                                                        
+
                                                                 <div class="form-group" id="divEmail">
                                                                     <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email </label>
                                                                     <div class="col-md-8 col-sm-8">
@@ -342,7 +342,7 @@
             $('#erDate').html("");
         }
 
-        if ($('#txtPhone').val().trim().length <10) {
+        if ($('#txtPhone').val().trim().length < 10) {
             $('#erPhone').html("<font color='red'>Xin nhập số điện thoại ít nhất 10 chữ số</font>");
             check = false;
         }
