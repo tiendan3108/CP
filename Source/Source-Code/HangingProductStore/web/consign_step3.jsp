@@ -7,13 +7,13 @@
 <template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
-        <!--        Sử dụng google map api-->
-<!--        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>-->
-<!--        <link href="assets/style/googleMapStyle.css" rel="stylesheet">-->
+
+
+
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
-<!--        <script src="assets/style/googleMap.js" type="text/javascript"></script>-->
+
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
 
@@ -81,10 +81,10 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group">
+                                                                <div class="form-group" id="locationField">
                                                                     <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
-                                                                    <div id="map-canvas" class="col-md-8 col-sm-8">
-                                                                        <textarea id="pac-input" name="txtAddress" class="form-control" maxlength="225" rows="3" placeholder="" >${member.address}</textarea>
+                                                                    <div  class="col-md-8 col-sm-8">
+                                                                        <textarea id="addressInput" name="txtAddress" class="form-control" maxlength="225" rows="3"  placeholder="" >${member.address}</textarea>
                                                                         <span class="help-block" id="erAddress">
                                                                         </span>
                                                                     </div>
@@ -272,10 +272,6 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
-    $(function () {
-        initialize();
-    });
-
     $("#btnComplete").click(function () {
         $("#form3").submit();
     });
@@ -375,9 +371,75 @@
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
 
-    function initialize() {
+</script>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
 
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
 
+    function initialize_googleMap() {
+        // Create the autocomplete object, restricting the search
+        // to geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+                /** @type {HTMLInputElement} */(document.getElementById('addressInput')),
+                {types: ['geocode']});
+        // When the user selects an address from the dropdown,
+        // populate the address fields in the form.
+//        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+//            fillInAddress();
+//        });
     }
+
+    // [START region_fillform]
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+    // [END region_fillform]
+
+    // [START region_geolocation]
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = new google.maps.LatLng(
+                        position.coords.latitude, position.coords.longitude);
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+    // [END region_geolocation]
 
 </script>

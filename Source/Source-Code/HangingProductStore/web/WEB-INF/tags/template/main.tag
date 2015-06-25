@@ -33,7 +33,7 @@
     <!-- Head END -->
 
     <!-- Body BEGIN -->
-    <body class="ecommerce">
+    <body class="ecommerce" onload="initialize_googleMap()">
         <div id="top">
             <div class="contain">
                 <div class="row">
