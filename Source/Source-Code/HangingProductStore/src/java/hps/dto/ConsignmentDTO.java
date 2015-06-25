@@ -31,6 +31,7 @@ public class ConsignmentDTO implements Serializable {
     private double returnPrice;
     private String receivedDate;
     private String createdDate;
+    
     private int consignmentStatusID;
     private String status;
 
@@ -38,6 +39,7 @@ public class ConsignmentDTO implements Serializable {
 
      //duchc - begin 
     private String storeOwnerName; // to show name on track product status
+    private String cancelDate; // add on 25/6/2015
     // duchc - end
 
     // No Argument Constructor
@@ -255,6 +257,14 @@ public class ConsignmentDTO implements Serializable {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getCancelDate() {
+        return cancelDate;
+    }
+
+    public void setCancelDate(String cancelDate) {
+        this.cancelDate = cancelDate;
     }
 
     public int getConsignmentStatusID() {

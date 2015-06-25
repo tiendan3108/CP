@@ -103,7 +103,7 @@
                                                                 <tr>
                                                                     <td><c:out value="${count.count}" /></td>
                                                                     <td>
-                                                                        ${item.name}
+                                                                        ${item.fullName}
                                                                     </td>
                                                                     <td>
                                                                         ${item.address}
@@ -124,14 +124,14 @@
                                                                     <td align="center">
                                                                         <c:if test="${not empty store}">
                                                                             <c:if test="${store == item.storeOwnerID}">
-                                                                                <input checked="checked"  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                                <input checked="checked"  name="rdStore" value="${item.roleID}" type="radio"/>
                                                                             </c:if>
                                                                             <c:if test="${store != item.storeOwnerID}">
-                                                                                <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                                <input  name="rdStore" value="${item.roleID}" type="radio"/>
                                                                             </c:if>
                                                                         </c:if>
                                                                         <c:if test="${empty store}">
-                                                                            <input  name="rdStore" value="${item.storeOwnerID}" type="radio"/>
+                                                                            <input  name="rdStore" value="${item.roleID}" type="radio"/>
                                                                         </c:if>
 
                                                                     </td>

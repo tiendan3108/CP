@@ -810,6 +810,11 @@ public class ProductDAO {
                 int parentCategoryID = rs.getInt("ParentID");
                 String orderID = rs.getString("OrderID");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+                String sellDate = rs.getString("SellDate");
+                if (sellDate != null) {
+                    sellDate = df.format(rs.getDate("SellDate"));
+                    product.setSellDate(sellDate);
+                }
             }
             return product;
         } catch (SQLException ex) {

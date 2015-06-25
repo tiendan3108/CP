@@ -8,7 +8,6 @@ package hps.dao;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.dto.ConsignmentDTO;
-import hps.dto.StoreOwnerDTO;
 import hps.ultils.AmazonService;
 import hps.ultils.DBUltilities;
 import hps.ultils.GlobalVariables;
@@ -196,7 +195,7 @@ public class DuchcDAO {
     }
 
     //duchc _get all store owners based on categoryID actor choose in consign_step1
-    public List<StoreOwnerDTO> getListStoreOwnerByCategory(int categoryID) {
+    public List<AccountDTO> getListStoreOwnerByCategory(int categoryID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -211,13 +210,13 @@ public class DuchcDAO {
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             rs = stm.executeQuery();
-            List<StoreOwnerDTO> list = new ArrayList<StoreOwnerDTO>();
+            List<AccountDTO> list = new ArrayList<AccountDTO>();
             while (rs.next()) {
-                StoreOwnerDTO store = new StoreOwnerDTO();
-                store.setStoreOwnerID(rs.getInt("StoreOwnerID"));
-                store.setName(rs.getString("FullName"));
+                AccountDTO store = new AccountDTO();
+                store.setRoleID(rs.getInt("StoreOwnerID"));
+                store.setFullName(rs.getString("FullName"));
                 store.setAddress(rs.getString("Address"));
-                store.setFormula(rs.getDouble("Formula"));
+                store.setFormula(rs.getFloat("Formula"));
                 list.add(store);
             }
             return list;
@@ -537,10 +536,10 @@ public class DuchcDAO {
             //basicPrice = amazon.getPrice(productName, brand, englishName);
 
             List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
-            for(AmazonProduct product : list){
+            for (AmazonProduct product : list) {
                 basicPrice += product.getPrice();
             }
-            basicPrice = (basicPrice/list.size());
+            basicPrice = (basicPrice / list.size());
 
             return basicPrice;
         } catch (SQLException ex) {
@@ -595,46 +594,40 @@ public class DuchcDAO {
         }
     }
 
-    public static List<String> getBrand(String temp) {
-        List<String> list = new ArrayList<String>();
-        list.add("Adidas");
-        list.add("Altra");
-        list.add("Asic");
-        list.add("Casio");
-        list.add("Citizen");
-        list.add("Fortis");
-        list.add("Fossil");
-        list.add("Gucci");
-        list.add("Hamilton");
-        list.add("Hublot");
-        list.add("Jordan");
-        list.add("Kenneth");
-        list.add("LG");
-        list.add("Luminox");
-        list.add("Maurice");
-        list.add("Motorola");
-        list.add("Movado");
-        list.add("New Balance");
-        list.add("NIKE");
-        list.add("NIXON");
-        list.add("Omega");
-        list.add("Pearl");
-        list.add("Raymond");
-        list.add("Reebok");
-        list.add("Rolex");
-        list.add("Salomon");
-        list.add("Samsung");
-        list.add("Seiko");
-        list.add("SO&CO");
-        list.add("Stuhrling");
-        list.add("Timex");
-        list.add("Tissot");
-        list.add("Tommy Hilfiger");
+    public static List<String> getBrand(String brandName) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<String> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT BrandName "
+                    + " FROM Brand "
+                    + " WHERE BrandName LIKE ? "
+                    + " ORDER BY BrandName ASC";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, "%" + brandName + "%");
 
-        List<String> result = new ArrayList<String>();;
-        for (String value : list) {
-            if (value.toLowerCase().contains(temp.toLowerCase())) {
-                result.add(value);
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                result.add(rs.getString("BrandName"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return result;

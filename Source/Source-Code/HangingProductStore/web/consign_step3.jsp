@@ -208,7 +208,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
                                                                     <div class="col-md-8 col-sm-8">
-                                                                        <div  class="input-group  date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy" data-date-start-date="0d">
+                                                                        <div  class="input-group  date-picker input-daterange">
                                                                             <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
                                                                             <span class="input-group-addon">
                                                                                 đến </span>
@@ -271,6 +271,11 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
+
+    $(function () {
+        $('#txtFromDate').datepicker();
+        $('#txtToDate').datepicker();
+    });
 
     $("#btnComplete").click(function () {
         $("#form3").submit();
@@ -374,7 +379,7 @@
 </script>
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
 <script>
     // This example displays an address form, using the autocomplete feature
     // of the Google Places API to help users fill in the information.

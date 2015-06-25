@@ -18,6 +18,7 @@
         <!-- Nơi để khai báo page level javascript -->
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
 
@@ -142,7 +143,7 @@
 
                                                             <div class="form-group">
                                                                 <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                                <div class="col-md-5 col-sm-6">
+                                                                <div class="col-md-4 col-sm-5">
 <!--                                                                    <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                                         <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                         <span class="input-group-btn">

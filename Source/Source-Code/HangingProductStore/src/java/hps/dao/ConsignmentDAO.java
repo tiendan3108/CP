@@ -230,7 +230,7 @@ public class ConsignmentDAO {
         List<String> result = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT *"
+            String sql = "SELECT P.ProductName"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
                     + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
                     + " ORDER BY C.CreatedDate DESC";
@@ -443,14 +443,24 @@ public class ConsignmentDAO {
         String fromDate = df.format(rs.getDate("FromDate"));
         String toDate = df.format(rs.getDate("ToDate"));
         String raiseWebDate = rs.getString("RaiseWebDate");
+        if (raiseWebDate != null) {
+            raiseWebDate = df.format(rs.getDate("RaiseWebDate"));
+        }
         int period = rs.getInt("Period");
         float minPrice = rs.getFloat("MinPrice");
         float maxPrice = rs.getFloat("MaxPrice");
         float returnPrice = rs.getFloat("ReturnedPrice");
         String receiveDate = rs.getString("ReceivedDate");
+        if (receiveDate != null) {
+            receiveDate = df.format(rs.getDate("ReceivedDate"));
+        }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
             createdDate = df.format(rs.getDate("CreatedDate"));
+        }
+        String cancelDate = rs.getString("CancelDate");
+        if (cancelDate != null) {
+            cancelDate = df.format(rs.getDate("CancelDate"));
         }
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
 

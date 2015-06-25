@@ -37,6 +37,7 @@ public class ProductDTO {
 //duchc - begin
     private String status; // for showing product status
     private String categoryName; // for showing category Name
+    private String sellDate; // add on 25/6/2015
     //duchc - end
 
     public ProductDTO() {
@@ -430,4 +431,12 @@ public class ProductDTO {
         this.customerPhone = customerPhone;
     }
 
+    public String getSellDate() {
+        return sellDate;
+    }
+
+    public void setSellDate(String sellDate) {
+        this.sellDate = sellDate;
+    }
+    
 }

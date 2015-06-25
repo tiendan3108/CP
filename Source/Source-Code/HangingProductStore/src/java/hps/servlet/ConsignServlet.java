@@ -12,7 +12,6 @@ import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
-import hps.dto.StoreOwnerDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,35 +93,11 @@ public class ConsignServlet extends HttpServlet {
                 DuchcDAO dDAO = new DuchcDAO();
                 //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
                 basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
-                System.out.println("get roi");
-
-//                if (productName.toLowerCase().contains("gucci")) {
-//                    basicPrice = 50;
-//                    if (productName.toLowerCase().contains("t-shirt")) {
-//                        basicPrice = 48;
-//                    } else if (productName.toLowerCase().contains("pant")) {
-//                        basicPrice = 49;
-//                    }
-//                } else if (productName.toLowerCase().contains("pt")) {
-//                    basicPrice = 30;
-//                    if (productName.toLowerCase().contains("t-shirt")) {
-//                        basicPrice = 32;
-//                    } else if (productName.toLowerCase().contains("pant")) {
-//                        basicPrice = 34;
-//                    }
-//                } else if (productName.toLowerCase().contains("ck")) {
-//                    basicPrice = 35.5;
-//                    if (productName.toLowerCase().contains("t-shirt")) {
-//                        basicPrice = 36;
-//                    } else if (productName.toLowerCase().contains("pant")) {
-//                        basicPrice = 37;
-//                    }
-//                } else if (productName.toLowerCase().contains("jordan")) {
-//                    basicPrice = 35.5;
-//                }
+                
+                
                 session.setAttribute("BASICPRICE", basicPrice);
 
-                List<StoreOwnerDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
+                List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");

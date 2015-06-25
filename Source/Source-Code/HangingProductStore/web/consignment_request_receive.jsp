@@ -261,9 +261,9 @@
 
                                 <h2 class="modal-title" id="r_name"></h2>
                                 <div class="row">
-                                    <div class="col-lg-3 col-md-3">Email: <b><span id="r_email"></span></b></div>
-                                    <div class="col-lg-3 col-md-3">ĐT: <b><span id="r_phone"></span></b></div>
-                                    <div class="col-lg-5 col-md-5">Địa chỉ: <span id="r_address"></span></div>
+                                    <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
+                                    <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
+                                    <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
 
                                 </div>
 
