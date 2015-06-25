@@ -415,7 +415,6 @@ Header and header elements
 .product-item .add2cart {
 	float: right;
 	color: #a8aeb3;
-	border: 1px #ededed solid;
 	padding: 3px 6px;
 }
 .product-item .add2cart:hover {
@@ -882,7 +881,6 @@ Header and header elements
 	border-top: 1px solid #f4f4f4;
 	border-bottom: 1px solid #f4f4f4;
 	padding: 20px 0;
-	margin-bottom: 20px;
 	width: 100%;
 	overflow: hidden;
 }
@@ -894,9 +892,6 @@ Header and header elements
 }
 .product-page-options label {
 	font-weight: normal;
-	text-transform: uppercase;
-	color: #8e9ca8;
-	font-family: "PT Sans Narrow", sans-serif;
 	float: left;
 	margin-right: 10px;
 	padding-top: 2px;
