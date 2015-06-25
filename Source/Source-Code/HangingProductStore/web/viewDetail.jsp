@@ -110,7 +110,7 @@
 
             <!-- BEGIN SIMILAR PRODUCTS -->
             <c:set var="similarProducts" value="${requestScope.SIMILARPRODUCT}"/>
-            <div class="row margin-bottom-40" style="margin-top: 500px">
+            <div class="row margin-bottom-40" style="margin-top: 600px">
                 <div class="col-md-12 col-sm-12">
                     <h2>Sản phẩm tương tự</h2>
                     <div class="owl-carousel owl-carousel4">
