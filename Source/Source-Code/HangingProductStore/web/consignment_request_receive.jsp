@@ -137,7 +137,7 @@
                                                 </c:url>
                                                 <a href="${detailUrl}" 
                                                    class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalRequest"
+                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
                                                         name="requestDetails" value="${c.consigmentID}">Xem</button>
 
                                             </td>
@@ -232,9 +232,10 @@
                                                 </c:url>
                                                 <a href="${detailUrl}" 
                                                    class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
-                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalRequest"
+                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
                                                         name="requestDetails" value="${c.consigmentID}">Xem</button>
 
+                                                <!--btn btn-primary btn-xs-->
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -317,7 +318,13 @@
                                                 <th>Giá</th>
                                                 <td id="r_price"></td>
                                                 <td id="ar_price" style="display: none;">
-                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>
+                                                    <div class="input-group">
+                                                        <input type="text" id="ar_minPrice" class="form-control" >
+                                                        <span class="input-group-addon">
+                                                            ~ </span>
+                                                        <input type="text" id="ar_maxPrice" class="form-control" >    
+                                                    </div>  
+<!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
                                                 </td>
                                             </tr>
                                             <tr>
@@ -451,7 +458,7 @@
     });
 
     function ar_validation() {
-        if(jQuery("#ar_form").context.activeElement.value != "ar_refuse"){
+        if (jQuery("#ar_form").context.activeElement.value != "ar_refuse") {
             var minPrice = $("#ar_minPrice").val();
             var maxPrice = $("#ar_maxPrice").val();
             if (minPrice == "" || maxPrice == "") {

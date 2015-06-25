@@ -5,12 +5,14 @@
  */
 package hps.servlet;
 
+import com.google.gson.Gson;
 import hps.dao.ConsignmentDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +32,7 @@ public class TrackProductStatusServlet extends HttpServlet {
     private static final String STORE_OWNER_PAGE = "ConsignmentRequestReceive";
     private static final String GUEST_PAGE = "trackProductStatus_Guest.jsp";
     private static final String MEMBER_PAGE = "trackProductStatus_Member.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,26 +48,66 @@ public class TrackProductStatusServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
-            if (session.getAttribute("ACCOUNT") != null) {
-                if (((AccountDTO) session.getAttribute("ACCOUNT")).getRole() == GlobalVariables.STORE_OWNER) {
+            AccountDTO member = (AccountDTO) session.getAttribute("ACCOUNT");
+            if (member != null) {
+                if (member.getRole().equals(GlobalVariables.STORE_OWNER)) {
                     response.sendRedirect(STORE_OWNER_PAGE);
                     return;
                 }
             }
-            
+
             String action = request.getParameter("btnAction");
             String url = "";
-            if(action == null){
-                response.sendRedirect(GUEST_PAGE);
-                return;
-            }else if(action.equals("search")){
+
+            if (member == null) {
+                if (action == null) {
+                    response.sendRedirect(GUEST_PAGE);
+                    return;
+                }
+            }
+
+            if (member != null) {
+                if (action == null) {
+                    action = "m_search";
+                }
+            }
+
+            if (action.equals("search")) {
                 String searchValue = request.getParameter("searchValue");
                 ConsignmentDAO dao = new ConsignmentDAO();
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 request.setAttribute("CONSIGNMENT", consignment);
+            } else if (action.equals("cancel")) {
+
+            } else if (action.equals("m_search")) {
+                String searchValue = request.getParameter("searchValue");
+                if (searchValue == null) {
+                    searchValue = "";
+                }
+                ConsignmentDAO dao = new ConsignmentDAO();
+                List<ConsignmentDTO> list = dao.getConsignmentByMemberAndProductName(member.getRoleID(), searchValue);
+                request.setAttribute("CONSIGNMENT", list);
+            } else if (action.equals("m_cancel")) {
+
+            } else if (action.equals("m_details")) {
+
+            } else if (action.equals("m_searchName")) {
+                String term = request.getParameter("term");
+                
+                ConsignmentDAO dao = new ConsignmentDAO();
+                List<String> list = dao.autoCompleteConsignmentByMemberAndProductName(member.getRoleID(), term);
+                String json = new Gson().toJson(list);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(json);
+                return;
+            }
+
+            if (action.contains("m_")) {
+                url = MEMBER_PAGE;
+            } else {
                 url = GUEST_PAGE;
             }
-            
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

@@ -75,12 +75,12 @@ public class ConsignmentServlet extends HttpServlet {
 
             } else if (request.getParameter("search") != null) {
                 if (request.getParameter("term") != null) {
-                    List<String> list;
+                    List<String> list = null;
                     int status = REQUEST_WAITING;
                     if (request.getParameter("accepted") != null) {
                         status = REQUEST_ACCEPTED;
                     }
-                    list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), status);
+                    //list = consignmentDAO.listConsignmentByProductNameAndStatus(storeId, request.getParameter("term"), status);
 
                     
                     /* Return data format: ["a", "b", "c"] */

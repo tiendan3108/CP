@@ -139,18 +139,20 @@ public class ConsignmentDAO {
         return result;
     }
     
-    public List<ConsignmentDTO> getConsignmentByMember(int MemberID) {
+    public List<ConsignmentDTO> getConsignmentByMemberAndProductName(int MemberID, String productName) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<ConsignmentDTO> result = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT * FROM Consignment"
-                    + " WHERE MemberID = ?"
-                    + " ORDER BY CreatedDate DESC";
+            String sql = "SELECT *"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
+                    + " WHERE C.MemberID = ? AND P.ProductName LIKE ?"
+                    + " ORDER BY C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, MemberID);
+            stm.setString(2, "%" + productName + "%");
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -178,6 +180,47 @@ public class ConsignmentDAO {
         }
         return result;
     }
+    
+    public List<String> autoCompleteConsignmentByMemberAndProductName(int memberId, String productName) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<String> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT P.ProductName"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
+                    + " WHERE C.MemberID = ? AND P.ProductName LIKE ?"
+                    + " ORDER BY P.ProductName ASC";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, memberId);
+            stm.setString(2, "%" + productName + "%");
+
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                result.add(rs.getString("ProductName"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+    
     
 
     public List<ConsignmentDTO> findConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
@@ -223,7 +266,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<String> listConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
+    public List<String> autoCompleteConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -233,7 +276,7 @@ public class ConsignmentDAO {
             String sql = "SELECT P.ProductName"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
                     + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
-                    + " ORDER BY C.CreatedDate DESC";
+                    + " ORDER BY P.ProductName ASC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setInt(2, storeOwnerId);

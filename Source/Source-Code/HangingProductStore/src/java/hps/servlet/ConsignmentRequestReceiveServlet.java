@@ -84,7 +84,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             else if (action.equals("r_searchName")) {
                 String term = request.getParameter("term");
                 
-                List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_WAITING);
+                List<String> list = consignmentDAO.autoCompleteConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_WAITING);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
@@ -98,9 +98,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
                 request.setAttribute("CONSIGNMENT_REQUEST", c_request);
                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
-                
-                request.setAttribute("r_message", "Đã chấp nhận yêu cầu ký gửi.");
-                //request.setAttribute("r_searchValue", searchValue);
             }
             else if(action.equals("r_refuse")){
                 String consignmentID = request.getParameter("r_consignmentID");
@@ -111,9 +108,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
                 request.setAttribute("CONSIGNMENT_REQUEST", c_request);
                 request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
-                
-                request.setAttribute("r_message", "Đã xóa yêu cầu ký gửi.");
-                //request.setAttribute("r_searchValue", searchValue);
             }
             else if(action.equals("ar_search")){
                 String searchValue = request.getParameter("ar_searchValue");
@@ -128,7 +122,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             else if (action.equals("ar_searchName")) {
                 String term = request.getParameter("term");
                 
-                List<String> list = consignmentDAO.listConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<String> list = consignmentDAO.autoCompleteConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_ACCEPTED);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);

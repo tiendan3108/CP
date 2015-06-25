@@ -208,7 +208,7 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
                                                                     <div class="col-md-8 col-sm-8">
-                                                                        <div  class="input-group  date-picker input-daterange">
+                                                                        <div  class="input-group  date-picker input-daterange" data-date-format="mm/dd/yyyy" data-date-start-date="0d" >
                                                                             <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
                                                                             <span class="input-group-addon">
                                                                                 đến </span>
