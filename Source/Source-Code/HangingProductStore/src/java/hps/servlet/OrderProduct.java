@@ -82,7 +82,7 @@ public class OrderProduct extends HttpServlet {
                                 + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
                         ultil.sendEmail(consignor.getEmail(), "[HPS] Hàng kí gửi", message);
                     }
-                    dao.OrderProduct(productID, status, sellingPrice);
+                    dao.orderProduct(productID, status, sellingPrice);
                     url = GlobalVariables.MANAGERMENT_SERVLET;
                     request.setAttribute("currentTab", "ordered");
                 }

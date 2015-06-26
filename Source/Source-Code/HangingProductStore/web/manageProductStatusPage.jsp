@@ -1,35 +1,40 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý hàng kí gửi" bodyTitle="">
+    <jsp:attribute name="extraHeadContent">
+        <!-- Nơi để khai báo page level css, theme, style -->
+    </jsp:attribute>
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row">
+        <div class="row margin-bottom-40">
             <!--BEGIN SIDEBAR -->
-            <div class="col-md-3 col-sm-4">
-                <ul class="tabs">
-                    <li>
+            <div class="sidebar col-md-3 col-sm-4">
+                <ul class="list-group sidebar-menu">
+                    <li class="list-group-item clearfix dropdown">
                         <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                     </li>
-                    <li>
-                        <a href="ManageProduct" class="active"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
-                        <ul class="tab-links">
-                            <li><a class="active" href="#available"><i class="fa fa-angle-right"></i>Sản phẩm chờ duyệt</a></li>
-                            <li><a href="#onWeb"><i class="fa fa-angle-right"></i>Sản phẩm đang trên web</a></li>
-                            <li><a href="#ordered"><i class="fa fa-angle-right"></i>Sản phẩm đã được đặt mua</a></li>
-                            <li><a href="#sold"><i class="fa fa-angle-right"></i>Sản phẩm đã được bán</a></li>
-                            <li><a href="#canceled"><i class="fa fa-angle-right"></i>Sản phẩm đăng kí hủy kỉ gửi</a></li>
-                            <li><a href="#completed"><i class="fa fa-angle-right"></i>Sản phẩm đã hoàn tất thanh toán</a></li>
-                        </ul>
+                    <li class="list-group-item clearfix dropdown active">
+                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
                     </li>
-                    <li>
+                    <li class="list-group-item clearfix dropdown">
                         <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
                     </li>
                 </ul>
             </div>
             <!-- END SIDEBAR -->
             <!-- BEGIN RIGHT CONTENT -->
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-8">
                 <!-- BEGIN TAB -->
                 <div class="tabs row">
+                    <!-- BEGIN TAB LINK -->
+                    <ul class=" nav nav-tabs nav-justified" id="myTab">
+                        <li id="availableTab" class="active"><a href="#available">Sản phẩm chờ duyệt</a></li>
+                        <li id="onWebTab"><a href="#onWeb">Sản phẩm đang trên web</a></li>
+                        <li id="orderedTab"><a href="#ordered">Sản phẩm đã được đặt mua</a></li>
+                        <li id="soldTab"><a href="#sold">Sản phẩm đã được bán</a></li>
+                        <li id="canceledTab"><a href="#canceled">Sản phẩm đăng kí hủy kỉ gửi</a></li>
+                        <li id="completedTab"><a href="#completed">Sản phẩm đã hoàn tất thanh toán</a></li>
+                    </ul>             
+                    <!-- END TAB LINK -->
                     <!-- BEGIN TAB CONTENT -->
                     <div class="tab-content col-md-12">
                         <!-- BEGIN AVAILABLE TAB -->
@@ -37,7 +42,7 @@
                             <c:set var="available" value="${requestScope.available}"></c:set>
                             <c:choose>
                                 <c:when test="${available!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="management_table">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -46,19 +51,19 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá kí gửi</th>
-                                                <th></th>
+                                                <th>Chi Tiết<th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${available}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4">${item.name}</font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consigmentID}</font></td>
-                                                    <td><font size="4">${item.minPrice}</font>~<font size="4">${item.maxPrice}</font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  >${item.name}</font></td>
+                                                    <td><font  >${item.receivedDate}</font></td>
+                                                    <td><font  >${item.consigmentID}</font></td>
+                                                    <td><font  >${item.minPrice}</font>~<font  >${item.maxPrice}</font></td>
+                                                    <td  ><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -75,7 +80,7 @@
                             <c:set var="onWeb" value="${requestScope.onWeb}"></c:set>
                             <c:choose>
                                 <c:when test="${onWeb!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -88,11 +93,11 @@
                                         <tbody>
                                             <c:forEach var="item" items="${onWeb}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4">${item.raiseWebDate}</font></td>
-                                                    <td><font size="4">${item.period}</font></td>
-                                                    <td><font size="4">${item.consigmentID}</font></td>
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  >${item.raiseWebDate}</font></td>
+                                                    <td><font  >${item.period}</font></td>
+                                                    <td><font  >${item.consigmentID}</font></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -109,7 +114,7 @@
                             <c:set var="ordered" value="${requestScope.ordered}"></c:set>
                             <c:choose>
                                 <c:when test="${ordered!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -117,18 +122,18 @@
                                                 <th>Ngày đặt hàng</th>
                                                 <th>Mã đặt hàng</th>
                                                 <th>SĐT liên hệ</th>
-                                                <th></th>
+                                                <th>Chi Tiết<th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${ordered}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4">${item.product.orderDate}</font></td>
-                                                    <td><font size="4">${item.product.orderID}</font></td>
-                                                    <td><font size="4">${item.product.customerPhone}</font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  >${item.product.orderDate}</font></td>
+                                                    <td><font  >${item.product.orderID}</font></td>
+                                                    <td><font  >${item.product.customerPhone}</font></td>
+                                                    <td  ><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -145,7 +150,7 @@
                             <c:set var="sold" value="${requestScope.sold}"></c:set>
                             <c:choose>
                                 <c:when test="${sold!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -153,18 +158,18 @@
                                                 <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Giá bán</th>
-                                                <th></th>
+                                                <th>Chi Tiết<th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${sold}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consigmentID}</font></td>
-                                                    <td><font size="4">${item.product.sellingPrice}</font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  >${item.receivedDate}</font></td>
+                                                    <td><font  >${item.consigmentID}</font></td>
+                                                    <td><font  >${item.product.sellingPrice}</font></td>
+                                                    <td  ><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -181,7 +186,7 @@
                             <c:set var="completed" value="${requestScope.completed}"></c:set>
                             <c:choose>
                                 <c:when test="${completed!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -194,11 +199,11 @@
                                         <tbody>
                                             <c:forEach var="item" items="${completed}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consigmentID}</font></td>
-                                                    <td><font size="4">${item.returnPrice}</font></td>
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  >${item.receivedDate}</font></td>
+                                                    <td><font  >${item.consigmentID}</font></td>
+                                                    <td><font  >${item.returnPrice}</font></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -215,7 +220,7 @@
                             <c:set var="canceled" value="${requestScope.canceled}"></c:set>
                             <c:choose>
                                 <c:when test="${canceled!=null}">
-                                    <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
@@ -224,25 +229,25 @@
                                                 <th>Ngày kí gửi</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>TT liên lạc</th>
-                                                <th></th>
+                                                <th>Chi Tiết<th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach var="item" items="${canceled}" varStatus="counter">
                                                 <tr>
-                                                    <td style="text-align: center"><font size="4">${counter.count}</font></td>
-                                                    <td><font size="4">${item.product.name}</font></td>
-                                                    <td><font size="4"></font></td>
-                                                    <td><font size="4">${item.receivedDate}</font></td>
-                                                    <td><font size="4">${item.consigmentID}</font></td>
-                                                    <td><font size="4">
+                                                    <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                    <td><font  >${item.product.name}</font></td>
+                                                    <td><font  ></font></td>
+                                                    <td><font  >${item.receivedDate}</font></td>
+                                                    <td><font  >${item.consigmentID}</font></td>
+                                                    <td><font  >
                                                         <c:if test="${item.phone!=null}">
                                                             ${item.phone}
                                                         </c:if>
                                                         <c:if test="${item.phone==null && item.email!=null}">
                                                             ${item.email}
                                                         </c:if></font></td>
-                                                    <td style="width: 70px"><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                                    <td  ><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -332,6 +337,7 @@
                             <div class="modal-footer">
                                 <form action="OrderProduct" method="POST">
                                     </br></br>
+                                    <input type="hidden" name="txtOrderID" id="ordered_orderID" value="">
                                     <input type="hidden" name="txtProductID" id="order_ID" value="">
                                     <input class="btn default confirmOrderedModal" type="button" data-togle="modal" value="Đồng ý bán">
                                     <button class="btn default" name="btnAction" type="submit" value="notOrder">Không đồng ý bán</button>
@@ -517,12 +523,10 @@
 <script>
     //script switch tab
     $(document).ready(function () {
-        $('.tab-links a').on('click', function (e) {
+        $('.tabs .nav-justified a').on('click', function (e) {
             var currentAttrValue = $(this).attr('href');
-            console.log(currentAttrValue);
-            $('div' + currentAttrValue).fadeIn(400).siblings().hide();
-            $(this).addClass('active');
-            $(this).parent('li').siblings().children('a').removeClass('active');
+            $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
+            $(this).parent('li').addClass('active').siblings().removeClass('active');
             e.preventDefault();
         });
     });
@@ -530,8 +534,7 @@
         var currentTab = $('#currentTab').val();
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).fadeIn(400).siblings().hide();
-        $("[href='#" + currentTab + "']").addClass('active');
-        $("[href='#" + currentTab + "']").parent('li').siblings().children('a').removeClass('active');
+        $('li#' + currentLi).addClass('active').siblings().removeClass('active');
     });
     //start cancel modal
     $(document).on("click", ".cancelModal", function () {
@@ -596,6 +599,7 @@
             $("#ordered_orderDate").text(response.receivedDate);
             $("#order_ID").val(productID);
             $("#order_ProductID").val(productID);
+            $("#ordered_orderID").val(productID);
             $("#order_ConsignmentID").val(response.consigmentID);
         });
         $('#orderedModal').modal('show');

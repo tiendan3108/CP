@@ -5,11 +5,13 @@
  */
 package hps.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Tien Dan
  */
-public class AccountDTO {
+public class AccountDTO implements Serializable{
 
     //default attributes for account table
 
