@@ -98,13 +98,14 @@
                         <!-- BEGIN PAGE CONTENT-->
                         <div class="row margin-bottom-25">
                             <!-- BEGIN CAROUSEL -->
-                            <h3> <small> Từ khách hàng </small> ${c.name}</h3>
+                            <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
                             <div class="row">
                                 <div class="col-lg-2 col-md-2">Email: <b><span  id="r_email">${c.email}</span></b></div>
                                 <div class="col-lg-2 col-md-2">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
-                                <div class="col-lg-4 col-md-4">Địa chỉ: <span  id="r_address">${c.address}</span></div>
+                                <div class="col-lg-6 col-md-6">Địa chỉ: <span  id="r_address">${c.address}</span></div>
 
                             </div>
+                                <br/>
                             <div class="col-lg-4 col-md-4 front-carousel">
 
                                 <div class="carousel slide" id="myCarousel">
@@ -141,17 +142,22 @@
                                         <td id='r_description'>${c.product.description}</td>
                                     </tr>
                                     <tr>
+                                        <th>Cửa hàng ký gửi</th>
+                                        <td id='r_createdDate'><b>${c.storeOwner.fullName}</b></td>
+                                    </tr>
+                                    <tr>
                                         <th>Ngày ký gửi</th>
                                         <td id='r_createdDate'>${c.createdDate}</td>
                                     </tr>
+                                    
                                     <tr >
                                         <th>Giá</th>
-                                        <td id="r_price"><fmt:formatNumber 
+                                        <td id="r_price"><fmt:formatNumber type="number"
                                                 value="${c.minPrice}" 
-                                                maxFractionDigits="1"/>
-                                            ~ <fmt:formatNumber 
+                                                maxFractionDigits="0"/>
+                                            ~ <fmt:formatNumber type="number"
                                                 value="${c.maxPrice}" 
-                                                maxFractionDigits="1"/></td>
+                                                maxFractionDigits="0"/></td>
                                     </tr>
                                     <tr>
                                         <th>Ngày hẹn</th>
@@ -164,19 +170,19 @@
                                         <td id='r_status'> <b>
                                                 <c:choose>
                                                     <c:when test="${c.consignmentStatusID == 1}">
-                                                        Chờ xử lý
+                                                        <font color="green"> Chờ xử lý</font>
                                                     </c:when>
                                                     <c:when test="${c.consignmentStatusID == 2}">
-                                                        Đã từ chối
+                                                        <font color="red">Đã từ chối</font>
                                                     </c:when>
                                                     <c:when test="${c.consignmentStatusID == 3}">
-                                                        Đã chấp nhận
+                                                        <font color="blue">Đã chấp nhận</font>
                                                     </c:when>
                                                     <c:when test="${c.consignmentStatusID == 4}">
-                                                        Hoàng thành
+                                                        <font color="blue">Hoàng thành</font>
                                                     </c:when>
                                                     <c:when test="${c.consignmentStatusID == 5}">
-                                                        Đã Nhận Hàng
+                                                        <font color="blue">Đã Nhận Hàng</font>
                                                     </c:when>
                                                 </c:choose></b>
                                         </td>

@@ -89,13 +89,13 @@ public class ConsignServlet extends HttpServlet {
 
                 session.setAttribute("PRODUCT", product);
 
-                double basicPrice = 0;
+                
                 DuchcDAO dDAO = new DuchcDAO();
                 //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
-                basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
+                double basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
                 
                 
-                session.setAttribute("BASICPRICE", basicPrice);
+                session.setAttribute("BASICPRICE", (int)(basicPrice * GlobalVariables.VND_CURRENCY));
 
                 List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 

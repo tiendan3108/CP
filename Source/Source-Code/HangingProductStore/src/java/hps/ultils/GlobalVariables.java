@@ -60,6 +60,7 @@ public class GlobalVariables {
     public static final String PRODUCT_PAGE = "product.jsp";
     public static final String CONFIRM_ORDER_PAGE = "confirmOrder.jsp";
     public static final String COMPLETE_ODER_PAGE = "completeOrder.jsp";
+    public static final int VND_CURRENCY = 22000;
     
 
 }

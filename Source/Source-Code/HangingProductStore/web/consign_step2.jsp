@@ -114,11 +114,11 @@
                                                                                                                                     </td>-->
                                                                     <c:if test="${basicPrice > 0}">
                                                                         <td>
-                                                                            <fmt:formatNumber 
+                                                                            <fmt:formatNumber type="number"
                                                                                 value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
-                                                                                maxFractionDigits="1"/> ~ <fmt:formatNumber 
+                                                                                maxFractionDigits="0" /> ~ <fmt:formatNumber 
                                                                                 value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
-                                                                                maxFractionDigits="1"/>
+                                                                                maxFractionDigits="0" />
                                                                         </td>
                                                                     </c:if>
                                                                     <td align="center">
