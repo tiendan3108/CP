@@ -1,5 +1,6 @@
 package hps.dao;
 
+import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.DBUltilities;
@@ -37,6 +38,7 @@ public class ConsignmentDAO {
             while (rs.next()) {
                 result = getConsignment(rs);
                 populateProduct(result);
+                populateStoreOwner(result);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,6 +161,7 @@ public class ConsignmentDAO {
             while (rs.next()) {
                 ConsignmentDTO consignment = getConsignment(rs);
                 populateProduct(consignment);
+                populateStoreOwner(consignment);
                 result.add(consignment);
             }
         } catch (SQLException ex) {
@@ -470,6 +473,13 @@ public class ConsignmentDAO {
 
         ProductDTO product = dao.getProductByIDNoStatus(consignment.getProductID());
         consignment.setProduct(product);
+    }
+    
+    //used for getting storeOwner info from consignment table and insert into ConsignmentDTO
+    public void populateStoreOwner(ConsignmentDTO consignment) {
+        DuchcDAO dao = new DuchcDAO();
+        AccountDTO storeOwner = dao.getStoreOwnerByID(consignment.getStoreOwnerID());
+        consignment.setStoreOwner(storeOwner);
     }
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {

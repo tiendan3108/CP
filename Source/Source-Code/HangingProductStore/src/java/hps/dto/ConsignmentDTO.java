@@ -38,7 +38,7 @@ public class ConsignmentDTO implements Serializable {
     private ProductDTO product;
 
      //duchc - begin 
-    private String storeOwnerName; // to show name on track product status
+    private AccountDTO storeOwner;
     private String cancelDate; // add on 25/6/2015
     // duchc - end
 
@@ -291,11 +291,13 @@ public class ConsignmentDTO implements Serializable {
         this.minPrice = minPrice;
     }
 
-    public String getStoreOwnerName() {
-        return storeOwnerName;
+    public AccountDTO getStoreOwner() {
+        return storeOwner;
     }
 
-    public void setStoreOwnerName(String storeOwnerName) {
-        this.storeOwnerName = storeOwnerName;
+    public void setStoreOwner(AccountDTO storeOwner) {
+        this.storeOwner = storeOwner;
     }
+
+    
 }
