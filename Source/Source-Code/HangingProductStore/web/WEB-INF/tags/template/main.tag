@@ -70,7 +70,7 @@
                             <c:if test="${acc.role == 'storeOwner'}">
                                 <ul>
                                     <li style="float: left">
-                                        <a href="./consignment">
+                                        <a href="./ConsignmentRequestReceive">
                                             <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
                                         </a>
                                     </li>
