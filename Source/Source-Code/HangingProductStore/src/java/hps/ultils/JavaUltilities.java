@@ -196,15 +196,16 @@ public class JavaUltilities {
         return null;
     }
 
-    public static File getFileUpload(String path, String fileName, int productID) {
+    public static String getFileUpload(String path, String fileName, int productID) {
         DanqtDAO dao = new DanqtDAO();
         String consignmentID = dao.getConsignmentIDByProductID(productID);
         ProductDTO product = dao.getProductByID(productID);
         File image = new File(path + product.getImage());
         try {
             image.deleteOnExit();
+            return consignmentID+fileName;
         } catch (Exception e) {
         }
-        return new File(path, consignmentID + fileName);
+        return null;
     }
 }

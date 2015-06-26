@@ -81,7 +81,7 @@ public class DanqtDAO {
                 if (productStatus == ProductStatus.ORDERED) {
                     query = "SELECT p.ProductID, p.ProductName, p.SerialNumber, p.PurchasedDate, p.CategoryID, p.Brand, "
                             + "p.Description, p.Image, p.ProductStatusID, p.SellingPrice, p.OrderID, o.Date, o.Phone FROM Product p, [Order] o "
-                            + "WHERE p.ProductID = ? AND p.OrderID = o.OrderID";
+                            + "WHERE p.ProductID = ? AND p.OrderID = o.OrderID AND o.OrderStatusID = 1";
                 } else {
                     query = "SELECT p.ProductID, p.ProductName, p.SerialNumber, p.PurchasedDate, p.CategoryID, p.Brand, "
                             + "p.Description, p.Image, p.ProductStatusID, p.SellingPrice, p.OrderID FROM Product p "

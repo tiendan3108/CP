@@ -102,7 +102,7 @@ public class AmazonService {
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
                 ASIN = ASINNode.getTextContent();
-                offerSummaryNode = itemContent.item(1);
+                offerSummaryNode = itemContent.item(2);
                 offerSummaryContent = offerSummaryNode.getChildNodes();
                 lowestNewPriceNode = offerSummaryContent.item(0);
                 lowestNewPriceContent = lowestNewPriceNode.getChildNodes();

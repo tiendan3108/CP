@@ -39,7 +39,7 @@
                 </li>
             </c:if>
             <c:if test="${acc.role == 'storeOwner'}">
-                <li><a href="./consignment">Quản li</a></li> 
+                <li><a href="ConsignmentRequestReceive">Quản lý</a></li> 
                 <li id="nofi">
                     <a href="#">
                         <i class="icon-bell"></i>

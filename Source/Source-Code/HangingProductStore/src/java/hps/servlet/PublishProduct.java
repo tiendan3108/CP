@@ -96,12 +96,14 @@ public class PublishProduct extends HttpServlet {
                                 break;
                         }
                     } else {
-                        String path = request.getServletContext().getRealPath("/") + "\\assets\\image";
+                        String path = request.getServletContext().getRealPath("/");
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
                         if (filename == null || filename.equals("")) {
                         } else {
+                            filename = JavaUltilities.getFileUpload(path, filename, productID);
                             image = "\\assets\\image\\" + filename;
-                            File file = JavaUltilities.getFileUpload(path, filename, productID); // Define destination file.
+                            System.out.println(path + image);
+                            File file = new File(path + image); // Define destination file.
                             try {
                                 item.write(file); // Write to destination file.
                             } catch (Exception ex) {
@@ -112,7 +114,7 @@ public class PublishProduct extends HttpServlet {
                 }
                 DanqtDAO dao = new DanqtDAO();
                 ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image);
-                dao.publishOnWeb(product,season);
+                dao.publishOnWeb(product, season);
                 url = GlobalVariables.MANAGERMENT_SERVLET;
             }
             response.sendRedirect(url);

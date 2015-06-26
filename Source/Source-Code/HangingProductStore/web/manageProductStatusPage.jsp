@@ -412,6 +412,7 @@
                 <!-- AVAILABLE MODAL BEGIN-->
                 <div class="modal fade bs-example-modal-lg" id="availableModal">
                     <form action="PublishProduct" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content modal-manage">
                                 <div class="modal-header">
@@ -505,7 +506,6 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                                     <button class="btn default" type="submit">Duyệt</button>
                                     <input class="btn default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
