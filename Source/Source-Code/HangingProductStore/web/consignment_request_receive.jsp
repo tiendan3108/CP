@@ -46,13 +46,15 @@
             <div class="col-md-9 col-sm-8">
                 <input type="hidden" id="currentTab" value="${currentTab}"/>
                 <!-- START UPDATE -->
-                <div class="tabs row">
+                <div class="tabs row tab-style-1">
 
                     <!-- Nav tabs -->
                     <ul class=" nav nav-tabs nav-justified" id="myTab">
 
-                        <li id="requestTab"  class="active"><a href="#request">Yêu Cầu Kí Gửi</a></li>
-                        <li id="acceptedTab"><a href="#accepted">Yêu cầu đã duyệt</a></li>
+                        <li id="requestTab"  class="active"><a href="#request"><b>Yêu cầu chưa duyệt</b></a></li>
+                        <li id="acceptedTab"><a href="#accepted"><b>Yêu cầu đã duyệt</b></a></li>
+                        <li id="refuseTab"><a href="#refuse"><b>Yêu cầu đã từ chối</b></a></li>
+                        <li id="cancelTab"><a href="#cancel"><b>Yêu cầu đã hủy</b></a></li>
                     </ul>
 
                     <!-- Tab panes -->
@@ -82,6 +84,9 @@
                                         <th>
                                             Tên Sản Phẩm
                                         </th>
+                                        <!--                                        <th>
+                                                                                    Mã ký gửi
+                                                                                </th>-->
                                         <th>
                                             Ngày Gửi
                                         </th>
@@ -97,7 +102,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:if test="${empty CONSIGNMENT_REQUEST}">
+                                    <c:if test="${empty REQUEST}">
 
                                         <tr>
                                             <c:if test="${empty param.r_searchValue}">
@@ -108,18 +113,21 @@
                                             </c:if>
                                         </tr>
                                     </c:if>
-                                    <c:forEach var="c" items="${CONSIGNMENT_REQUEST}" varStatus="counter">
+                                    <c:forEach var="c" items="${REQUEST}" varStatus="counter">
                                         <tr>
                                             <td>${counter.count}</td>
                                             <td>
                                                 ${c.product.name}
                                             </td>
+                                            <!--                                            <td>
+                                            ${c.consigmentID}
+                                        </td>-->
                                             <td>
                                                 ${c.createdDate}
-                                                <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
+
                                             </td>
                                             <td>
-                                                <%--   <fmt:formatNumber type="currency" currencySymbol="VNĐ" value="${c.maxPrice}" maxFractionDigits="0" /> --%>
+
                                                 <fmt:formatNumber 
                                                     value="${c.minPrice}" 
                                                     maxFractionDigits="1"/>
@@ -132,11 +140,7 @@
                                                 ${c.fromDate} - ${c.toDate}
                                             </td>
                                             <td align="center">
-                                                <%--<c:url var="detailUrl" value="ConsignmentRequestReceive">
-                                                    <c:param name="id" value="${c.consigmentID}"/>
-                                                </c:url>
-                                                <a href="${detailUrl}" 
-                                                   class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
+
                                                 <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
                                                         name="requestDetails" value="${c.consigmentID}">Xem</button>
 
@@ -177,6 +181,9 @@
                                         <th>
                                             Tên Sản Phẩm
                                         </th>
+                                        <!--                                        <th>
+                                                                                    Mã ký gửi
+                                                                                </th>-->
                                         <th>
                                             Ngày Gửi
                                         </th>
@@ -192,7 +199,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:if test="${empty CONSIGNMENT_ACCEPT}">
+                                    <c:if test="${empty ACCEPT}">
 
                                         <tr>
                                             <c:if test="${empty param.ar_searchValue}">
@@ -203,18 +210,21 @@
                                             </c:if>
                                         </tr>
                                     </c:if>
-                                    <c:forEach var="c" items="${CONSIGNMENT_ACCEPT}" varStatus="counter">
+                                    <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
                                         <tr>
                                             <td>${counter.count}</td>
                                             <td>
                                                 ${c.product.name}
                                             </td>
+                                            <!--                                            <td>
+                                            ${c.consigmentID}
+                                        </td>-->
                                             <td>
                                                 ${c.createdDate}
-                                                <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
+
                                             </td>
                                             <td>
-                                                <%--   <fmt:formatNumber type="currency" currencySymbol="VNĐ" value="${c.maxPrice}" maxFractionDigits="0" /> --%>
+
                                                 <fmt:formatNumber 
                                                     value="${c.minPrice}" 
                                                     maxFractionDigits="1"/>
@@ -227,21 +237,163 @@
                                                 ${c.fromDate} - ${c.toDate}
                                             </td>
                                             <td align="center">
-                                                <%--<c:url var="detailUrl" value="ConsignmentRequestReceive">
-                                                    <c:param name="id" value="${c.consigmentID}"/>
-                                                </c:url>
-                                                <a href="${detailUrl}" 
-                                                   class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
+
                                                 <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
                                                         name="requestDetails" value="${c.consigmentID}">Xem</button>
 
-                                                <!--btn btn-primary btn-xs-->
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
 
+                        </div>
+
+                        <div class="tab" id="refuse">
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                <thead>
+                                    <tr role="row" class="heading">
+                                        <th>
+                                            Stt.
+                                        </th>
+                                        <th>
+                                            Tên Sản Phẩm
+                                        </th>
+                                        <!--                                        <th>
+                                                                                    Mã ký gửi
+                                                                                </th>-->
+                                        <th>
+                                            Ngày Gửi
+                                        </th>
+                                        <th>
+                                            Giá
+                                        </th>
+                                        <th>
+                                            Ngày hẹn
+                                        </th>
+                                        <th>
+                                            Chi Tiết
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:if test="${empty REFUSE}">
+
+                                        <tr>
+
+                                            <td colspan="6">Không có yêu cầu nào </td>
+
+                                        </tr>
+                                    </c:if>
+                                    <c:forEach var="c" items="${REFUSE}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>
+                                                ${c.product.name}
+                                            </td>
+                                            <!--                                            <td>
+                                            ${c.consigmentID}
+                                        </td>-->
+                                            <td>
+                                                ${c.createdDate}
+
+                                            </td>
+                                            <td>
+
+                                                <fmt:formatNumber 
+                                                    value="${c.minPrice}" 
+                                                    maxFractionDigits="1"/>
+                                                ~ <fmt:formatNumber 
+                                                    value="${c.maxPrice}" 
+                                                    maxFractionDigits="1"/>
+                                            </td>
+                                            <td>
+
+                                                ${c.fromDate} - ${c.toDate}
+                                            </td>
+                                            <td align="center">
+
+                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
+
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab" id="cancel">
+                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                <thead>
+                                    <tr role="row" class="heading">
+                                        <th>
+                                            Stt.
+                                        </th>
+                                        <th>
+                                            Tên Sản Phẩm
+                                        </th>
+                                        <!--                                        <th>
+                                                                                    Mã ký gửi
+                                                                                </th>-->
+                                        <th>
+                                            Ngày Gửi
+                                        </th>
+                                        <th>
+                                            Giá
+                                        </th>
+                                        <th>
+                                            Ngày hẹn
+                                        </th>
+                                        <th>
+                                            Chi Tiết
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:if test="${empty CANCEL}">
+
+                                        <tr>
+
+                                            <td colspan="6">Không có yêu cầu nào </td>
+
+                                        </tr>
+                                    </c:if>
+                                    <c:forEach var="c" items="${CANCEL}" varStatus="counter">
+                                        <tr>
+                                            <td>${counter.count}</td>
+                                            <td>
+                                                ${c.product.name}
+                                            </td>
+                                            <!--                                            <td>
+                                            ${c.consigmentID}
+                                        </td>-->
+                                            <td>
+                                                ${c.createdDate}
+
+                                            </td>
+                                            <td>
+
+                                                <fmt:formatNumber 
+                                                    value="${c.minPrice}" 
+                                                    maxFractionDigits="1"/>
+                                                ~ <fmt:formatNumber 
+                                                    value="${c.maxPrice}" 
+                                                    maxFractionDigits="1"/>
+                                            </td>
+                                            <td>
+
+                                                ${c.fromDate} - ${c.toDate}
+                                            </td>
+                                            <td align="center">
+
+                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
+
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
                         </div>
 
 
@@ -324,7 +476,7 @@
                                                             ~ </span>
                                                         <input type="text" id="ar_maxPrice" class="form-control" >    
                                                     </div>  
-<!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
+                                                    <!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
                                                 </td>
                                             </tr>
                                             <tr>
@@ -346,27 +498,28 @@
                                 </div>
 
                             </div>
+                            <div class="modal-footer">
+                                <div id="r_footer" >
+                                    <form action="ConsignmentRequestReceive" method="POST">
+                                        <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
+                                        <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                        <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
+                                        <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                    </form>
 
-                            <div id="r_footer" class="modal-footer">
-                                <form action="ConsignmentRequestReceive" method="POST">
-                                    <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
-                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                                    <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
-                                    <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
-                                </form>
+                                </div>
+                                <div id="ar_footer" style="display: none;">
+                                    <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
+                                        <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
+                                        <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                        <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                        <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
+                                        <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
+                                        <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
+                                        <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
+                                    </form>
 
-                            </div>
-                            <div id="ar_footer" class="modal-footer" style="display: none;">
-                                <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
-                                    <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
-                                    <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                                    <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
-                                    <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
-                                    <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
-                                    <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
-                                    <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
-                                </form>
-
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -383,7 +536,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.tabs .nav-justified a').on('click', function (e) {
+        $('.tabs .nav-tabs a').on('click', function (e) {
             var currentAttrValue = $(this).attr('href');
             $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
             $(this).parent('li').addClass('active').siblings().removeClass('active');
@@ -428,28 +581,40 @@
             $("#r_phone").html(data.phone);
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-            if (data.consignmentStatusID == 1) {
-                $("#r_status").html("<b><font color='red'>Đang chờ xử lý</font></b>");
-                $("#r_ActionValue").val(data.consigmentID);
-                $("#ar_ActionValue").val("");
-                $("#r_footer").show();
-                $("#ar_footer").hide();
-                $("#r_price").show();
-                $("#r_price").html(data.minPrice.toFixed(1) + "  ~  " + data.maxPrice.toFixed(1));
-                $("#ar_price").hide();
-
-            } else {
-                $("#r_status").html("<b><font color='blue'>Chấp nhận yêu cầu</font></b>");
-                $("#ar_ActionValue").val(data.consigmentID);
-                $("#r_ActionValue").val("");
-                $("#ar_footer").show();
+            if (data.product.productStatusID == 6) {
+                $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
                 $("#r_footer").hide();
-                $("#r_price").html("");
-                $("#r_price").hide();
-                $("#ar_price").show();
-                $("#ar_minPrice").val(data.minPrice.toFixed(1));
-                $("#ar_maxPrice").val(data.maxPrice.toFixed(1));
-                $("#ar_inputProductID").val(data.product.productID);
+                $("#ar_footer").hide();
+            }
+            else {
+                if (data.consignmentStatusID == 1) {
+                    $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+                    $("#r_ActionValue").val(data.consigmentID);
+                    $("#ar_ActionValue").val("");
+                    $("#r_footer").show();
+                    $("#ar_footer").hide();
+                    $("#r_price").show();
+                    $("#r_price").html(data.minPrice.toFixed(1) + "  ~  " + data.maxPrice.toFixed(1));
+                    $("#ar_price").hide();
+
+                } else if (data.consignmentStatusID == 3) {
+                    $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                    $("#ar_ActionValue").val(data.consigmentID);
+                    $("#r_ActionValue").val("");
+                    $("#ar_footer").show();
+                    $("#r_footer").hide();
+                    $("#r_price").html("");
+                    $("#r_price").hide();
+                    $("#ar_price").show();
+                    $("#ar_minPrice").val(data.minPrice.toFixed(1));
+                    $("#ar_maxPrice").val(data.maxPrice.toFixed(1));
+                    $("#ar_inputProductID").val(data.product.productID);
+                }
+                else {
+                    $("#r_status").html("<b><font color='blue'>ĐÃ TỪ CHỐI</font></b>");
+                    $("#r_footer").hide();
+                    $("#ar_footer").hide();
+                }
             }
 
 //            $('#btnRequestDetails').click();

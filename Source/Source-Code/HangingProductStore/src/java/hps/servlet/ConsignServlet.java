@@ -171,7 +171,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("CATEGORY");
             } else if (action.equals("getBrand")) {
                 String term = request.getParameter("term");
-                List<String> list = DuchcDAO.getBrand(term);
+                List<String> list = DuchcDAO.autoCompleteBrandName(term);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);

@@ -35,7 +35,7 @@ public class ConsignmentDAO {
             stm.setString(1, consignmentID);
 
             rs = stm.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 result = getConsignment(rs);
                 populateProduct(result);
                 populateStoreOwner(result);
@@ -60,7 +60,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> getConsignmentByStoreAndStatus(int storeOwnerId, int status) {
+    public List<ConsignmentDTO> getConsignmentByStoreOwnerIDAndStatus(int storeOwnerId, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -100,8 +100,8 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
-    public List<ConsignmentDTO> getConsignmentByStore(int storeOwnerId) {
+
+    public List<ConsignmentDTO> getConsignmentByStoreOwnerID(int storeOwnerId) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -140,8 +140,8 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
-    public List<ConsignmentDTO> getConsignmentByMemberAndProductName(int MemberID, String productName) {
+
+    public List<ConsignmentDTO> getConsignmentByMemberIDAndProductName(int MemberID, String productName) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -183,8 +183,8 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
-    public List<String> autoCompleteConsignmentByMemberAndProductName(int memberId, String productName) {
+
+    public List<String> autoCompleteConsignmentByMemberIDAndProductName(int memberId, String productName) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -223,10 +223,8 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
-    
 
-    public List<ConsignmentDTO> findConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
+    public List<ConsignmentDTO> findConsignmentByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -236,10 +234,11 @@ public class ConsignmentDAO {
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
                     + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
+                    + " AND P.ProductStatusID <> 6 "
                     + " ORDER BY C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
-            stm.setInt(2, storeOwnerId);
+            stm.setInt(2, storeOwnerID);
             stm.setString(3, "%" + productName + "%");
 
             rs = stm.executeQuery();
@@ -269,7 +268,48 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<String> autoCompleteConsignmentByProductNameAndStatus(int storeOwnerId, String productName, int status) {
+    public List<ConsignmentDTO> getCanceledConsignmentByStoreOwnerID(int storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ConsignmentDTO> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT *"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
+                    + " WHERE C.ConsignmentStatusID = 1 AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
+                    + " ORDER BY C.CancelDate DESC";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, storeOwnerID);
+
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                ConsignmentDTO consignment = getConsignment(rs);
+                populateProduct(consignment);
+                result.add(consignment);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+
+    public List<String> autoCompleteConsignmentByStoreOwnerIDAndProductNameAndStatus(int storeOwnerId, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -310,9 +350,8 @@ public class ConsignmentDAO {
         return result;
     }
 
-    
-
-    public boolean makeConsignmentAsStatus(String consignmentID, int status) {
+    //Update Consignment Status except Received
+    public boolean updateConsignmentStatus(String consignmentID, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -345,41 +384,9 @@ public class ConsignmentDAO {
         return false;
     }
 
-//    public boolean makeConsignmentAsReceived(String consignmentID, double returnPrice) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            String sql = "UPDATE Consignment"
-//                    + " SET ReturnedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = 5"
-//                    + " WHERE ConsignmentID = ?";
-//            stm = con.prepareStatement(sql);
-//            stm.setDouble(1, returnPrice);
-//            stm.setDate(2, new Date(System.currentTimeMillis()));
-//            stm.setString(3, consignmentID);
-//
-//            int result = stm.executeUpdate();
-//            while (result > 0) {
-//                return true;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return false;
-//    }
-
-    public boolean updateConsignmentAsReceived(String consignmentID, double minPrice, double maxPrice, int productID) {
+    // update Consigment Status AS Received and Product Status AS Available
+    public boolean updateConsignmentStatusAsReceived(String consignmentID,
+            double minPrice, double maxPrice, int productID) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -399,7 +406,7 @@ public class ConsignmentDAO {
                 stm = con.prepareStatement(sql);
                 stm.setDouble(1, productID);
                 result = stm.executeUpdate();
-                if(result > 0){
+                if (result > 0) {
                     return true;
                 }
             }
@@ -421,38 +428,30 @@ public class ConsignmentDAO {
         return false;
     }
 
-    public ConsignmentDTO getByProductID(int productID) {
+    public boolean cancelConsignmentInProduct(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
-        ResultSet rs = null;
-        ConsignmentDTO result = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT *"
-                    + " FROM Consignment "
-                    + " WHERE ProductID = ?";
+            String sql = "UPDATE Product SET ProductStatusID = 6 WHERE ProductID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, productID);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                String consignmentID = rs.getString("ConsignmentID");
-                int period = rs.getInt("Period");
-                String receiveDate = rs.getString("ReceivedDate");
-                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
-                result = new ConsignmentDTO();
-                result.setPeriod(period);
-                result.setReceivedDate(receiveDate);
-                result.setConsignmentStatusID(consignmentStatusID);
-                result.setConsigmentID(consignmentID);
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                sql = "UPDATE Consignment SET CancelDate = GETDATE() WHERE ProductID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, productID);
+                result = stm.executeUpdate();
+                if(result >0){
+                    return true;
+                }
             }
-            return result;
+
+            return false;
         } catch (SQLException ex) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
-                }
                 if (stm != null) {
                     stm.close();
                 }
@@ -463,10 +462,53 @@ public class ConsignmentDAO {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return result;
+        return false;
     }
-    
-    
+
+//    public ConsignmentDTO getConsignmentByProductID(int productID) {
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        ResultSet rs = null;
+//        ConsignmentDTO result = null;
+//        try {
+//            con = DBUltilities.makeConnection();
+//            String sql = "SELECT *"
+//                    + " FROM Consignment "
+//                    + " WHERE ProductID = ?";
+//            stm = con.prepareStatement(sql);
+//            stm.setInt(1, productID);
+//            rs = stm.executeQuery();
+//            if (rs.next()) {
+//                String consignmentID = rs.getString("ConsignmentID");
+//                int period = rs.getInt("Period");
+//                String receiveDate = rs.getString("ReceivedDate");
+//                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
+//                result = new ConsignmentDTO();
+//                result.setPeriod(period);
+//                result.setReceivedDate(receiveDate);
+//                result.setConsignmentStatusID(consignmentStatusID);
+//                result.setConsigmentID(consignmentID);
+//            }
+//            return result;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        return result;
+//    }
     //used for getting product info from consignment table and insert into ConsignmentDTO
     public void populateProduct(ConsignmentDTO consignment) {
         ProductDAO dao = new ProductDAO();
@@ -474,7 +516,7 @@ public class ConsignmentDAO {
         ProductDTO product = dao.getProductByIDNoStatus(consignment.getProductID());
         consignment.setProduct(product);
     }
-    
+
     //used for getting storeOwner info from consignment table and insert into ConsignmentDTO
     public void populateStoreOwner(ConsignmentDTO consignment) {
         DuchcDAO dao = new DuchcDAO();

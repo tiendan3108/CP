@@ -789,8 +789,7 @@ public class ProductDAO {
         ResultSet rs = null;
         ProductDTO product = new ProductDTO();
         try {
-            DBUltilities db = new DBUltilities();
-            con = db.makeConnection();
+            con = DBUltilities.makeConnection();
             String query = "select * from Product,Category "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "and ProductID = ? ";
@@ -806,7 +805,7 @@ public class ProductDAO {
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
                 int productStatusID = rs.getInt("ProductStatusID");
-                float sellingPrice = rs.getFloat("SellingPrice");;
+                float sellingPrice = rs.getFloat("SellingPrice");
                 int parentCategoryID = rs.getInt("ParentID");
                 String orderID = rs.getString("OrderID");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);

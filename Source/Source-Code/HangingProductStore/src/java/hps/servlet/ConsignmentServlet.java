@@ -123,12 +123,12 @@ public class ConsignmentServlet extends HttpServlet {
 //                request.setAttribute("consignments", consignments);
             } else if (request.getParameter("accepted") != null) {
                 userPath = CONSIGNMENT_ACCEPTED;
-                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(storeId, REQUEST_ACCEPTED);
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreOwnerIDAndStatus(storeId, REQUEST_ACCEPTED);
                 request.setAttribute("consignments", consignments);
 
             } else /*if (request.getParameter("request") != null)*/ {
                 userPath = CONSIGNMENT_REQUEST;
-                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreAndStatus(storeId, REQUEST_WAITING);
+                List<ConsignmentDTO> consignments = consignmentDAO.getConsignmentByStoreOwnerIDAndStatus(storeId, REQUEST_WAITING);
                 request.setAttribute("consignments", consignments);
             }
         }
@@ -158,7 +158,7 @@ public class ConsignmentServlet extends HttpServlet {
             if (request.getParameter("id") != null) {
                 String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
-                    consignmentDAO.makeConsignmentAsStatus(consignmentId, REQUEST_ACCEPTED);
+                    consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_ACCEPTED);
 //                    try {
 //                        notification.sendSMS("Yêu cầu ký gửi " + consignmentId + " đã được chấp nhận", "+84917533644");
 //                    } catch (TwilioRestException ex) {
@@ -168,7 +168,7 @@ public class ConsignmentServlet extends HttpServlet {
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Yêu Cầu Đã Duyệt.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
-                    consignmentDAO.makeConsignmentAsStatus(consignmentId, REQUEST_REFUSED);
+                    consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_REFUSED);
 
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã từ chối!", "Sản phẩm đã được loại bỏ.");
                     request.setAttribute("alert", alert);

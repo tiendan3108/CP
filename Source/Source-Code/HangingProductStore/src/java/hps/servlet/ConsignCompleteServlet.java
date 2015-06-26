@@ -100,7 +100,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 phone = item.getString();
                                 if (phone.length() > 0) {
                                     phone = "+84" + phone.substring(1);
-                                    
+
                                     System.out.println(phone);
                                 }
                                 break;
@@ -137,17 +137,15 @@ public class ConsignCompleteServlet extends HttpServlet {
                 }
 
                 ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
-                //code cứng do chưa up được ảnh
-                if (product.getImage() == null) {
-                    product.setImage("assets/image/");
-                }
+                
+                product.setImage(imagePath);
 
                 DuchcDAO dao = new DuchcDAO();
 
                 //Add new product and get id of it
                 int productID = dao.addProduct(product);
 
-                dao.updateProductImage(productID, imagePath);
+//                dao.updateProductImage(productID, imagePath); //Du
 
                 //get memberID if session MEMBER is not null
                 int memberID = 5;
@@ -165,7 +163,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                 AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
                 if (session.getAttribute("BASICPRICE") != null) {
                     maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-
                     maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
                     minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
 
@@ -179,7 +176,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 if (phone.length() > 0) {
                     java.sendSMS("Ban da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + ".", phone);
                 }
-                if (email.length() > 0){
+                if (email.length() > 0) {
                     java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID);
                 }
 

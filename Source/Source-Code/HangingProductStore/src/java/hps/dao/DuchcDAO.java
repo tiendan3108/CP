@@ -202,7 +202,7 @@ public class DuchcDAO {
         try {
             con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
-            String query = "SELECT     c.StoreOwnerID, a.FullName, a.Address, s.Formula\n"
+            String query = "SELECT     c.StoreOwnerID, a.FullName, a.Address, a.Phone, a.Email , s.Formula\n"
                     + "                     FROM         dbo.Account AS a INNER JOIN\n"
                     + "                                           dbo.StoreOwner AS s ON a.AccountID = s.AccountID INNER JOIN\n"
                     + "                                           dbo.StoreOwner_Category AS c ON s.StoreOwnerID = c.StoreOwnerID\n"
@@ -216,6 +216,8 @@ public class DuchcDAO {
                 store.setRoleID(rs.getInt("StoreOwnerID"));
                 store.setFullName(rs.getString("FullName"));
                 store.setAddress(rs.getString("Address"));
+                store.setPhone(rs.getString("Phone"));
+                store.setEmail(rs.getString("Email"));
                 store.setFormula(rs.getFloat("Formula"));
                 list.add(store);
             }
@@ -241,7 +243,7 @@ public class DuchcDAO {
         return null;
     }
 
-    // get store owner for calculating
+    // get store owner Information
     public AccountDTO getStoreOwnerByID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -289,234 +291,7 @@ public class DuchcDAO {
         return null;
     }
 
-    // duchc
-    public String generateConsignmentID(String productName, String consignorName) {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        String name = "";
-        try {
-            con = DBUltilities.makeConnection();
-            String query = "SELECT COUNT(*) as Number FROM Consignment WHERE CreatedDate = GETDATE()";
-            stm = con.prepareStatement(query);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                String count = String.format("%02d", rs.getInt("Number"));
-                name += productName.substring(0, 1);
-                name += consignorName.substring(0, 1);
-                name += count;
-                Calendar now = Calendar.getInstance();
-                name += String.format("%02d", now.get(Calendar.DAY_OF_MONTH));
-                name += String.format("%02d", now.get(Calendar.MONTH));
-                name += String.format("%02d", (now.get(Calendar.YEAR) % 100));
-            }
-            return name;
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        return null;
-    }
-
-//    public ConsignmentDTO getConsigmentbyID(String consignmentID) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
-//            String query = "SELECT      PERCENT c.ConsignmentID, c.ProductID, c.MemberID, c.StoreOwnerID, a.FullName AS StoreOwnerName, c.FullName, c.Address, c.Phone, c.Email, c.PaypalAccount, c.FromDate, c.ToDate, \n"
-//                    + "                      c.RaiseWebDate, c.Period, c.MinPrice, c.MaxPrice, c.CreatedDate, c.ConsignmentStatusID, cs.ConsignmentStatusName\n"
-//                    + "FROM         dbo.Consignment AS c INNER JOIN\n"
-//                    + "                      dbo.ConsignmentStatus AS cs ON c.ConsignmentStatusID = cs.ConsignmentStatusID INNER JOIN\n"
-//                    + "                      dbo.StoreOwner AS s ON c.StoreOwnerID = s.StoreOwnerID INNER JOIN\n"
-//                    + "                      dbo.Account AS a ON s.AccountID = a.AccountID\n"
-//                    + "ORDER BY c.CreatedDate\n"
-//                    + " WHERE (c.ConsignmentID = ?)";
-//            stm = con.prepareStatement(query);
-//            stm.setString(1, consignmentID);
-//            rs = stm.executeQuery();
-//            if (rs.next()) {
-//                ConsignmentDTO consignment = new ConsignmentDTO();
-//                consignment.setConsigmentID(rs.getString("ConsignmentID"));
-//                consignment.setProductID(rs.getInt("ProductID"));
-//                consignment.setMemberID(rs.getInt("MemberID"));
-//                consignment.setStoreOwnerID(rs.getInt("StoreOwnerID"));
-//                consignment.setStoreOwnerID(rs.getInt("StoreOwnerID"));
-//                consignment.setStoreOwnerName(rs.getString("StoreOwnerName"));
-//                consignment.setName(rs.getString("FullName"));
-//                consignment.setAddress(rs.getString("Address"));
-//                consignment.setPhone(rs.getString("Phone"));
-//                consignment.setEmail(rs.getString("Email"));
-//                consignment.setPaypalAccount(rs.getString("PayapalAccount"));
-//                consignment.setFromDate(rs.getString("FromDate"));
-//                consignment.setToDate(rs.getString("ToDate"));
-//                consignment.setRaiseWebDate(rs.getString("RaiseWebDate"));
-//                consignment.setMinPrice(rs.getDouble("MinPrice"));
-//                consignment.setMaxPrice(rs.getDouble("MaxPrice"));
-//                consignment.setCreatedDate(rs.getString("CreatedDate"));
-//                consignment.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
-//                consignment.setStatus(rs.getString("ConsignmentStatusName"));
-//                return consignment;
-//            }
-//            return null;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
-//        return null;
-//    }
-
-    public List<ConsignmentDTO> getListConsigmentbyMemberID(int MemberID) {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            con = DBUltilities.makeConnection();
-            // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
-            String query = "SELECT      PERCENT c.ConsignmentID, c.ProductID, c.StoreOwnerID, a.FullName AS StoreOwnerName, c.FullName, c.Address, c.Phone, c.Email, c.PaypalAccount, c.FromDate, c.ToDate, \n"
-                    + "                      c.RaiseWebDate, c.Period, c.MinPrice, c.MaxPrice, c.CreatedDate, c.ConsignmentStatusID, cs.ConsignmentStatusName\n"
-                    + "FROM         dbo.Consignment AS c INNER JOIN\n"
-                    + "                      dbo.ConsignmentStatus AS cs ON c.ConsignmentStatusID = cs.ConsignmentStatusID INNER JOIN\n"
-                    + "                      dbo.StoreOwner AS s ON c.StoreOwnerID = s.StoreOwnerID INNER JOIN\n"
-                    + "                      dbo.Account AS a ON s.AccountID = a.AccountID\n"
-                    + "ORDER BY c.CreatedDate\n"
-                    + " WHERE (c.MemberID = ?)";
-            stm = con.prepareStatement(query);
-            stm.setInt(1, MemberID);
-            rs = stm.executeQuery();
-            List<ConsignmentDTO> list = new ArrayList<ConsignmentDTO>();
-            while (rs.next()) {
-                ConsignmentDTO consigment = new ConsignmentDTO();
-                consigment.setConsigmentID(rs.getString("ConsignmentID"));
-                consigment.setProductID(rs.getInt("ProductID"));
-                consigment.setStoreOwnerID(rs.getInt("ProductID"));
-                consigment.setProductID(rs.getInt("ProductID"));
-            }
-//            return store;
-        } catch (SQLException ex) {
-            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return null;
-    }
-
-    public ProductDTO getProductbyID() {
-        return null;
-    }
-
-    public boolean cancelProductStatus(int consignmentID) {
-        return false;
-    }
-
-    public AccountDTO login(String username, String password) {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            con = DBUltilities.makeConnection();
-            String query = "SELECT     AccountID, Password, Status, FullName, Address, Phone, Email, PaypalAccount, Role\n"
-                    + "FROM dbo.Account"
-                    + " WHERE (AccountID = ?) AND (Password = ?)";
-            stm = con.prepareStatement(query);
-            stm.setString(1, username);
-            stm.setString(2, password);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                AccountDTO account = new AccountDTO();
-                account.setAccountID(rs.getString("AccountID"));
-                account.setPassword(rs.getString("Password"));
-                account.setStatus(rs.getString("Status"));
-                account.setFullName(rs.getString("FullName"));
-                account.setAddress(rs.getString("Address"));
-                account.setPhone(rs.getString("Phone"));
-                account.setEmail(rs.getString("Email"));
-                account.setPaypalAccount(rs.getString("PaypalAccount"));
-                account.setRole(rs.getString("Role"));
-
-                if (account.getRole() == GlobalVariables.MEMBER) {
-                    query = "SELECT MemberID FROM Member WHERE (AccountID = ?) ";
-                    stm = con.prepareStatement(query);
-                    stm.setString(1, account.getAccountID());
-                    rs = stm.executeQuery();
-                    if (rs.next()) {
-                        account.setRoleID(rs.getInt("MemberID"));
-                    }
-                } else if (account.getRole() == GlobalVariables.STORE_OWNER) {
-                    query = "SELECT StoreOwnerID, Formula FROM StoreOwner WHERE (AccountID = ?) ";
-                    stm = con.prepareStatement(query);
-                    stm.setString(1, account.getAccountID());
-                    rs = stm.executeQuery();
-                    if (rs.next()) {
-                        account.setRoleID(rs.getInt("StoreOwnerID"));
-                        account.setFormula(rs.getFloat("Formula"));
-                    }
-                }
-                return account;
-            }
-            return null;
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        return null;
-    }
-
+    //get basic price from amazon service by calculate every amazon product we get
     public float getBasicPrice(String productName, String brand, int categoryID) {
         System.out.println("dang vao");
         Connection con = null;
@@ -563,7 +338,7 @@ public class DuchcDAO {
         }
         return -1;
     }
-
+    //
     public void updateProductImage(int productID, String imageLink) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -595,8 +370,8 @@ public class DuchcDAO {
             }
         }
     }
-
-    public static List<String> getBrand(String brandName) {
+    //autocompleteBrandName
+    public static List<String> autoCompleteBrandName(String brandName) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -633,6 +408,63 @@ public class DuchcDAO {
             }
         }
         return result;
+    }
+    
+    /**
+     *
+     * @DucHC getProduct FullInfo, copy from productDAO
+     */
+    public ProductDTO getProductByID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "select * from Product, ProductStatus "
+                    + "Where Product.ProductStatusID = ProductStatus.ProductStatusID "
+                    + "and ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int productStatusID = rs.getInt("ProductStatusID");
+                float sellingPrice = rs.getFloat("SellingPrice");
+                String orderID = rs.getString("OrderID");
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, 0, orderID);
+                String sellDate = rs.getString("SellDate");
+                if (sellDate != null) {
+                    sellDate = df.format(rs.getDate("SellDate"));
+                    product.setSellDate(sellDate);
+                }
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 
 }

@@ -78,6 +78,12 @@ public class TrackProductStatusServlet extends HttpServlet {
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 request.setAttribute("CONSIGNMENT", consignment);
             } else if (action.equals("cancel")) {
+                int actionValue = Integer.parseInt(request.getParameter("actionValue"));
+                String searchValue = request.getParameter("searchValue");
+                ConsignmentDAO dao = new ConsignmentDAO();
+                dao.cancelConsignmentInProduct(actionValue);
+                ConsignmentDTO consignment = dao.getConsignment(searchValue);
+                request.setAttribute("CONSIGNMENT", consignment);
 
             } else if (action.equals("m_search")) {
                 String searchValue = request.getParameter("searchValue");
@@ -85,7 +91,7 @@ public class TrackProductStatusServlet extends HttpServlet {
                     searchValue = "";
                 }
                 ConsignmentDAO dao = new ConsignmentDAO();
-                List<ConsignmentDTO> list = dao.getConsignmentByMemberAndProductName(member.getRoleID(), searchValue);
+                List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
             } else if (action.equals("m_cancel")) {
 
@@ -93,9 +99,9 @@ public class TrackProductStatusServlet extends HttpServlet {
 
             } else if (action.equals("m_searchName")) {
                 String term = request.getParameter("term");
-                
+
                 ConsignmentDAO dao = new ConsignmentDAO();
-                List<String> list = dao.autoCompleteConsignmentByMemberAndProductName(member.getRoleID(), term);
+                List<String> list = dao.autoCompleteConsignmentByMemberIDAndProductName(member.getRoleID(), term);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);

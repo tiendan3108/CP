@@ -68,10 +68,15 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 if(searchValue == null){
                     searchValue = "";
                 }
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                
+                request.setAttribute("REQUEST", c_request);
+                request.setAttribute("ACCEPT", c_accept);
+                request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
                 
             }else if(action.equals("requestdetails")){
                 String consignmentID = request.getParameter("id");
@@ -84,7 +89,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             else if (action.equals("r_searchName")) {
                 String term = request.getParameter("term");
                 
-                List<String> list = consignmentDAO.autoCompleteConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_WAITING);
+                List<String> list = consignmentDAO.autoCompleteConsignmentByStoreOwnerIDAndProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_WAITING);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
@@ -92,37 +97,50 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             }
             else if(action.equals("r_accept")){
                 String consignmentID = request.getParameter("r_consignmentID");
-                consignmentDAO.makeConsignmentAsStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED);
                 String searchValue= request.getParameter("r_searchValue");
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-               request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                
+                request.setAttribute("REQUEST", c_request);
+               request.setAttribute("ACCEPT", c_accept);
+               request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
             }
             else if(action.equals("r_refuse")){
                 String consignmentID = request.getParameter("r_consignmentID");
-                consignmentDAO.makeConsignmentAsStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
                 
                 String searchValue= request.getParameter("r_searchValue");
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                request.setAttribute("REQUEST", c_request);
+                request.setAttribute("ACCEPT", c_accept);
+                request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
             }
             else if(action.equals("ar_search")){
                 String searchValue = request.getParameter("ar_searchValue");
                 if(searchValue == null){
                     searchValue = "";
                 }
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                request.setAttribute("REQUEST", c_request);
+                request.setAttribute("ACCEPT", c_accept);
+                request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
             }
             else if (action.equals("ar_searchName")) {
                 String term = request.getParameter("term");
                 
-                List<String> list = consignmentDAO.autoCompleteConsignmentByProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<String> list = consignmentDAO.autoCompleteConsignmentByStoreOwnerIDAndProductNameAndStatus(storeOwner.getRoleID(), term, GlobalVariables.CONSIGNMENT_ACCEPTED);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
@@ -133,23 +151,30 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 double maxPrice = Double.parseDouble(request.getParameter("ar_maxPrice"));
                 double minPrice = Double.parseDouble(request.getParameter("ar_minPrice"));
                 int productID = Integer.parseInt(request.getParameter("ar_productID"));
-                consignmentDAO.updateConsignmentAsReceived(consignmentID, minPrice, maxPrice, productID);
+                consignmentDAO.updateConsignmentStatusAsReceived(consignmentID, minPrice, maxPrice, productID);
                 String searchValue = request.getParameter("ar_searchValue");
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
-
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                request.setAttribute("REQUEST", c_request);
+                request.setAttribute("ACCEPT", c_accept);
+                request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
             }
             else if(action.equals("ar_refuse")){
                 String consignmentID = request.getParameter("ar_consignmentID");
-                consignmentDAO.makeConsignmentAsStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
                 
                 String searchValue= request.getParameter("ar_searchValue");
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
-                request.setAttribute("CONSIGNMENT_REQUEST", c_request);
-                request.setAttribute("CONSIGNMENT_ACCEPT", c_accept);
+                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                request.setAttribute("REQUEST", c_request);
+                request.setAttribute("ACCEPT", c_accept);
+                request.setAttribute("REFUSE", c_refuse);
+                request.setAttribute("CANCEL", c_cancel);
                 
             }
             if(action.contains("ar_")){
