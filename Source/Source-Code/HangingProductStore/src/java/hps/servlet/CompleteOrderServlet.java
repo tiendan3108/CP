@@ -73,8 +73,9 @@ public class CompleteOrderServlet extends HttpServlet {
                 order.setPhone(phone);
                 order.setAddress(address);
                 order.setFullName(fullname);
+                //insert order
                 orderDao.insertOrderWithMemberInfo(order);
-
+                System.out.println("abc");
                 //update product status                                  
                 productDao.updateStatusToOrdered(productID, orderID);
                 //send sms

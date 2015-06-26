@@ -7,6 +7,7 @@ package hps.dao;
 
 import hps.dto.OrderDTO;
 import hps.ultils.DBUltilities;
+import hps.ultils.OrderStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -69,7 +70,7 @@ public class OrderDAO {
         Date date = new Date();
         try {
             con = DBUltilities.makeConnection();
-            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?)";
+            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setString(1, order.getOrderID());
             stm.setInt(2, order.getCustomerID());
@@ -79,6 +80,7 @@ public class OrderDAO {
             stm.setString(6, order.getAddress());
             stm.setString(7, order.getPhone());
             stm.setFloat(8, order.getTotalPrice());
+            stm.setInt(9, OrderStatus.WAITING);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
