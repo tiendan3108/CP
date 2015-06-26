@@ -16,4 +16,6 @@ public class ConsignmentStatus {
     public static final int ACCEPTED = 3;
     public static final int COMPLETED = 4;
     public static final int RECEIVED = 5;
+    public static final int EXPIRED = 6;
+    public static final int CANCEL = 7;
 }
