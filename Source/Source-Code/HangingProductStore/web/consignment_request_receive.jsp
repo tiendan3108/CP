@@ -259,15 +259,13 @@
                                         <th>
                                             Tên Sản Phẩm
                                         </th>
-                                        <!--                                        <th>
-                                                                                    Mã ký gửi
-                                                                                </th>-->
+                                        <th>
+                                            Mã ký gửi
+                                        </th>
                                         <th>
                                             Ngày Gửi
                                         </th>
-                                        <th>
-                                            Giá
-                                        </th>
+                                        
                                         <th>
                                             Ngày hẹn
                                         </th>
@@ -291,22 +289,14 @@
                                             <td>
                                                 ${c.product.name}
                                             </td>
-                                            <!--                                            <td>
-                                            ${c.consigmentID}
-                                        </td>-->
+                                            <td>
+                                                ${c.consigmentID}
+                                            </td>
                                             <td>
                                                 ${c.createdDate}
 
                                             </td>
-                                            <td>
-
-                                                <fmt:formatNumber 
-                                                    value="${c.minPrice}" 
-                                                    maxFractionDigits="1"/>
-                                                ~ <fmt:formatNumber 
-                                                    value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/>
-                                            </td>
+                                            
                                             <td>
 
                                                 ${c.fromDate} - ${c.toDate}
@@ -332,17 +322,15 @@
                                         <th>
                                             Tên Sản Phẩm
                                         </th>
-                                        <!--                                        <th>
-                                                                                    Mã ký gửi
-                                                                                </th>-->
+                                        <th>
+                                            Mã ký gửi
+                                        </th>
                                         <th>
                                             Ngày Gửi
                                         </th>
+
                                         <th>
-                                            Giá
-                                        </th>
-                                        <th>
-                                            Ngày hẹn
+                                            Ngày hủy
                                         </th>
                                         <th>
                                             Chi Tiết
@@ -364,25 +352,17 @@
                                             <td>
                                                 ${c.product.name}
                                             </td>
-                                            <!--                                            <td>
-                                            ${c.consigmentID}
-                                        </td>-->
+                                            <td>
+                                                ${c.consigmentID}
+                                            </td>
                                             <td>
                                                 ${c.createdDate}
 
                                             </td>
+
                                             <td>
 
-                                                <fmt:formatNumber 
-                                                    value="${c.minPrice}" 
-                                                    maxFractionDigits="1"/>
-                                                ~ <fmt:formatNumber 
-                                                    value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/>
-                                            </td>
-                                            <td>
-
-                                                ${c.fromDate} - ${c.toDate}
+                                                ${c.cancelDate}
                                             </td>
                                             <td align="center">
 
@@ -594,7 +574,7 @@
                     $("#r_footer").show();
                     $("#ar_footer").hide();
                     $("#r_price").show();
-                    $("#r_price").html(data.minPrice.toFixed(1) + "  ~  " + data.maxPrice.toFixed(1));
+                    $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0));
                     $("#ar_price").hide();
 
                 } else if (data.consignmentStatusID == 3) {
@@ -606,8 +586,8 @@
                     $("#r_price").html("");
                     $("#r_price").hide();
                     $("#ar_price").show();
-                    $("#ar_minPrice").val(data.minPrice.toFixed(1));
-                    $("#ar_maxPrice").val(data.maxPrice.toFixed(1));
+                    $("#ar_minPrice").val(data.minPrice.toFixed(0));
+                    $("#ar_maxPrice").val(data.maxPrice.toFixed(0));
                     $("#ar_inputProductID").val(data.product.productID);
                 }
                 else {

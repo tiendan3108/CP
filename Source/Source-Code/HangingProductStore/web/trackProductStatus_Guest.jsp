@@ -59,11 +59,13 @@
                         <!-- BEGIN CAROUSEL -->
                         <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
                         <div class="row">
-                            <div class="col-lg-2 col-md-2">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
-                            <div class="col-lg-2 col-md-2">Email: <b><span  id="r_email">${c.email}</span></b></div>
-                            <div class="col-lg-6 col-md-6">Địa chỉ: <span  id="r_address">${c.address}</span></div>
+                            <div class="col-lg-3 col-md-3">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
+                            <div class="col-lg-5 col-md-5">Email: <b><span  id="r_email">${c.email}</span></b></div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-lg-offset-3">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
+                            
                         <br/>
                         <div class="col-lg-4 col-md-4 front-carousel">
 

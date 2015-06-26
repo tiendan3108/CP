@@ -580,6 +580,7 @@ public class ConsignmentDAO {
         consignment.setReturnPrice(returnPrice);
         consignment.setReceivedDate(receiveDate);
         consignment.setCreatedDate(createdDate);
+        consignment.setCancelDate(cancelDate);
         consignment.setConsignmentStatusID(consignmentStatusID);
 
         return consignment;
