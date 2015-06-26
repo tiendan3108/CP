@@ -549,7 +549,6 @@
 
     $('button[name="requestDetails"]').click(function () {
         var id = $(this).val();
-        $("#r_id").val(id);
         $.get('ConsignmentRequestReceive', {btnAction: 'requestdetails', id: id}, function (data) {
 
             $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
@@ -591,7 +590,7 @@
                     $("#ar_inputProductID").val(data.product.productID);
                 }
                 else {
-                    $("#r_status").html("<b><font color='blue'>ĐÃ TỪ CHỐI</font></b>");
+                    $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
                     $("#r_footer").hide();
                     $("#ar_footer").hide();
                 }

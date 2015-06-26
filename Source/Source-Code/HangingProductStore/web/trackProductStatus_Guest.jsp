@@ -15,7 +15,7 @@
 
 
 
-    <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
+    
     <li><a href="ConsignServlet">Kí Gửi</a></li>
 
 
@@ -136,30 +136,30 @@
                                                 <c:otherwise>
                                                     <c:choose>
                                                         <c:when test="${c.consignmentStatusID == 1}">
-                                                            <font color="blue">CHỜ XỬ LÝ</font>
+                                                            <font color="green">CHỜ XỬ LÝ</font>
                                                         </c:when>
                                                         <c:when test="${c.consignmentStatusID == 2}">
                                                             <font color="red">ĐÃ TỪ CHỐI</font>
                                                         </c:when>
                                                         <c:when test="${c.consignmentStatusID == 3}">
-                                                            <font color="green">ĐÃ CHẤP NHẬN</font>
+                                                            <font color="blue">ĐÃ CHẤP NHẬN</font>
                                                         </c:when>
                                                         <c:when test="${c.consignmentStatusID == 4}">
-                                                            <font color="green">HOÀN THÀNH</font>
+                                                            <font color="blue">HOÀN THÀNH</font>
                                                         </c:when>
                                                         <c:when test="${c.consignmentStatusID == 5}">
                                                             <c:choose>
                                                                 <c:when test="${c.product.productStatusID == 2}">
-                                                                    <font color="green">ĐÃ NHẬP HÀNG</font>
+                                                                    <font color="blue">ĐÃ NHẬP HÀNG</font>
                                                                 </c:when>
                                                                 <c:when test="${c.product.productStatusID == 3}">
-                                                                    <font color="green">ĐANG TRÊN WEB</font>
+                                                                    <font color="blue">ĐANG TRÊN WEB</font>
                                                                 </c:when>
                                                                 <c:when test="${c.product.productStatusID == 4}">
-                                                                    <font color="green">ĐÃ ĐƯỢC ĐẶT</font>
+                                                                    <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
                                                                 </c:when>
                                                                 <c:when test="${c.product.productStatusID == 5}">
-                                                                    <font color="green">ĐÃ BÁN</font>
+                                                                    <font color="blue">ĐÃ BÁN</font>
                                                                 </c:when>
                                                             </c:choose>
                                                         </c:when>

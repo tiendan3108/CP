@@ -61,7 +61,8 @@ public class TrackProductStatusServlet extends HttpServlet {
 
             if (member == null) {
                 if (action == null) {
-                    response.sendRedirect(GUEST_PAGE);
+                    RequestDispatcher rd = request.getRequestDispatcher(GUEST_PAGE);
+                    rd.forward(request, response);
                     return;
                 }
             }
@@ -94,6 +95,12 @@ public class TrackProductStatusServlet extends HttpServlet {
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
             } else if (action.equals("m_cancel")) {
+                int actionValue = Integer.parseInt(request.getParameter("actionValue"));
+                String searchValue = request.getParameter("searchValue");
+                ConsignmentDAO dao = new ConsignmentDAO();
+                dao.cancelConsignmentInProduct(actionValue);
+                List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
+                request.setAttribute("CONSIGNMENT", list);
 
             } else if (action.equals("m_details")) {
 
@@ -103,6 +110,14 @@ public class TrackProductStatusServlet extends HttpServlet {
                 ConsignmentDAO dao = new ConsignmentDAO();
                 List<String> list = dao.autoCompleteConsignmentByMemberIDAndProductName(member.getRoleID(), term);
                 String json = new Gson().toJson(list);
+                response.setContentType("application/json;charset=UTF-8");
+                response.getWriter().write(json);
+                return;
+            } else if (action.equals("requestdetails")) {
+                String consignmentID = request.getParameter("id");
+                ConsignmentDAO dao = new ConsignmentDAO();
+                ConsignmentDTO consignment = dao.getConsignment(consignmentID);
+                String json = new Gson().toJson(consignment);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
                 return;

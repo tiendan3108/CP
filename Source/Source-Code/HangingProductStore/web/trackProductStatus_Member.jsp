@@ -27,14 +27,14 @@
             <!--BEGIN SIDEBAR -->
             <div class="sidebar col-md-3 col-sm-4">
                 <ul class="list-group sidebar-menu">
+                    <li class="list-group-item clearfix dropdown">
+                        <a href="#"><i class="fa fa-angle-right"></i>Cá nhân</a>
+                    </li>
                     <li class="list-group-item clearfix dropdown active">
-                        <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
+                        <a href="TrackProductProduct"><i class="fa fa-angle-right"></i>Ký gửi</a>
                     </li>
                     <li class="list-group-item clearfix dropdown">
-                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
-                    </li>
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
+                        <a href="#"><i class="fa fa-angle-right"></i>Mua bán</a>
                     </li>
                 </ul>
             </div>
@@ -75,6 +75,9 @@
                                 Ngày hẹn
                             </th>
                             <th>
+                                Trạng thái
+                            </th>
+                            <th>
                                 Chi Tiết
                             </th>
                         </tr>
@@ -99,10 +102,10 @@
                                 </td>
                                 <td>
                                     ${c.createdDate}
-                                    <%--<fmt:formatDate type="date" dateStyle="long" value="${c.requestDate}"/>--%>
+
                                 </td>
                                 <td>
-                                    <%--   <fmt:formatNumber type="currency" currencySymbol="VNĐ" value="${c.maxPrice}" maxFractionDigits="0" /> --%>
+
                                     <fmt:formatNumber 
                                         value="${c.minPrice}" 
                                         maxFractionDigits="1"/>
@@ -114,12 +117,49 @@
 
                                     ${c.fromDate} - ${c.toDate}
                                 </td>
+                                <td>
+                                    <b>
+                                        <c:choose>
+                                            <c:when test="${c.product.productStatusID == 6}">
+                                                <font color="red">ĐÃ HỦY</font>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:choose>
+                                                    <c:when test="${c.consignmentStatusID == 1}">
+                                                        <font color="green">CHỜ XỬ LÝ</font>
+                                                    </c:when>
+                                                    <c:when test="${c.consignmentStatusID == 2}">
+                                                        <font color="red">ĐÃ TỪ CHỐI</font>
+                                                    </c:when>
+                                                    <c:when test="${c.consignmentStatusID == 3}">
+                                                        <font color="blue">ĐÃ CHẤP NHẬN</font>
+                                                    </c:when>
+                                                    <c:when test="${c.consignmentStatusID == 4}">
+                                                        <font color="blue">HOÀN THÀNH</font>
+                                                    </c:when>
+                                                    <c:when test="${c.consignmentStatusID == 5}">
+                                                        <c:choose>
+                                                            <c:when test="${c.product.productStatusID == 2}">
+                                                                <font color="blue">ĐÃ NHẬP HÀNG</font>
+                                                            </c:when>
+                                                            <c:when test="${c.product.productStatusID == 3}">
+                                                                <font color="blue">ĐANG TRÊN WEB</font>
+                                                            </c:when>
+                                                            <c:when test="${c.product.productStatusID == 4}">
+                                                                <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
+                                                            </c:when>
+                                                            <c:when test="${c.product.productStatusID == 5}">
+                                                                <font color="blue">ĐÃ BÁN</font>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </b>
+                                </td>
                                 <td align="center">
-                                    <%--<c:url var="detailUrl" value="ConsignmentRequestReceive">
-                                        <c:param name="id" value="${c.consigmentID}"/>
-                                    </c:url>
-                                    <a href="${detailUrl}" 
-                                       class="btn btn-primary btn-xs"><b>Xem</b></a> --%>
+
                                     <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
                                             name="requestDetails" value="${c.consigmentID}">Xem</button>
 
@@ -201,9 +241,6 @@
                                             <tr >
                                                 <th>Giá</th>
                                                 <td id="r_price"></td>
-                                                <td id="ar_price" style="display: none;">
-                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>
-                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>Ngày hẹn</th>
@@ -225,14 +262,16 @@
 
                             </div>
 
-                            <div id="r_footer" class="modal-footer">
-                                <form action="TrackProductStatus" method="POST">
-                                    <button type="submit" name="btnAction" value="m_cancel" class="btn btn-lg btn-primary">Hủy ký gửi</button>
-                                    <!--                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>-->
-                                    <input id="r_ActionValue" type="hidden" name="m_consignmentID"/>
-                                    <input type="hidden" name="m_searchValue" value="${param.m_searchValue}"/>
-                                </form>
-
+                            <div  class="modal-footer">
+                                <div id="r_footer">
+                                    <form action="TrackProductStatus" method="POST">
+                                        <button type="submit" name="btnAction" value="m_cancel" class="btn btn-lg btn-primary">HỦY KÝ GỬI</button>
+                                        <!--                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>-->
+                                        <input id="r_ActionValue" type="hidden" name="actionValue"/>
+                                        <input type="hidden" name="searchValue" value="${param.searchValue}"/>
+                                    </form>
+                                </div>
+                                    
                             </div>
 
                         </div>
@@ -256,5 +295,68 @@
             }
         });
 
+    });
+
+    function loadDetails(id) {
+        $.get('TrackProductStatus', {btnAction: 'requestdetails', id: id}, function (data) {
+            $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
+            $("#r_productName").html("<b>" + data.product.name + "</b>");
+            $("#r_image").attr("src", data.product.image);
+            $("#r_description").html(data.product.description);
+            $("#r_createdDate").html(data.createdDate);
+            $("#r_email").html(data.email);
+            $("#r_phone").html(data.phone);
+            $("#r_address").html(data.address);
+            $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+            $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0));
+            $("#r_ActionValue").val(data.product.productID);
+            if (data.product.productStatusID == 6) {
+                $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
+                $("#r_footer").hide();
+            }
+            else {
+                if (data.consignmentStatusID == 1) {
+                    $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+                    $("#r_footer").show();
+
+                } else if (data.consignmentStatusID == 3) {
+                    $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                    $("#r_footer").show();
+                }
+                else if (data.consignmentStatusID == 2) {
+                    $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
+                    $("#r_footer").hide();
+                }
+                else if (data.consignmentStatusID == 4) {
+                    $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                    $("#r_footer").hide();
+                }
+                else if (data.consignmentStatusID == 5) {
+                    if (data.product.productStatusID == 2) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                        $("#r_footer").show();
+                    }
+                    else if (data.product.productStatusID == 3) {
+                        $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                        $("#r_footer").show();
+                    }
+                    else if (data.product.productStatusID == 4) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                        $("#r_footer").hide();
+                    }
+                    else if (data.product.productStatusID == 5) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                        $("#r_footer").hide();
+                    }
+
+                }
+            }
+
+        });
+    }
+
+    $('button[name="requestDetails"]').click(function () {
+        var id = $(this).val();
+        loadDetails(id);
     });
 </script>
