@@ -69,7 +69,7 @@
                                 Ngày Gửi
                             </th>
                             <th>
-                                Giá
+                                Giá (VND)
                             </th>
                             <th>
                                 Ngày hẹn
@@ -109,7 +109,7 @@
                                     <fmt:formatNumber 
                                         value="${c.minPrice}" 
                                         maxFractionDigits="1"/>
-                                    ~ <fmt:formatNumber 
+                                    &nbsp;~&nbsp; <fmt:formatNumber 
                                         value="${c.maxPrice}" 
                                         maxFractionDigits="1"/>
                                 </td>
@@ -308,7 +308,7 @@
             $("#r_phone").html(data.phone);
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-            $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0));
+            $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
             $("#r_ActionValue").val(data.product.productID);
             if (data.product.productStatusID == 6) {
                 $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");

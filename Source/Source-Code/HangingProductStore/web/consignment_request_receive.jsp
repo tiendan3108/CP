@@ -91,7 +91,7 @@
                                             Ngày Gửi
                                         </th>
                                         <th>
-                                            Giá
+                                            Giá (VND)
                                         </th>
                                         <th>
                                             Ngày hẹn
@@ -131,9 +131,11 @@
                                                 <fmt:formatNumber 
                                                     value="${c.minPrice}" 
                                                     maxFractionDigits="1"/>
-                                                ~ <fmt:formatNumber 
+                                                &nbsp; ~ &nbsp;
+                                                <fmt:formatNumber 
                                                     value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/>
+                                                    maxFractionDigits="1"/> 
+
                                             </td>
                                             <td>
 
@@ -188,7 +190,7 @@
                                             Ngày Gửi
                                         </th>
                                         <th>
-                                            Giá
+                                            Giá (VND)
                                         </th>
                                         <th>
                                             Ngày hẹn
@@ -228,7 +230,8 @@
                                                 <fmt:formatNumber 
                                                     value="${c.minPrice}" 
                                                     maxFractionDigits="1"/>
-                                                ~ <fmt:formatNumber 
+                                                &nbsp; ~ &nbsp; 
+                                                <fmt:formatNumber 
                                                     value="${c.maxPrice}" 
                                                     maxFractionDigits="1"/>
                                             </td>
@@ -265,7 +268,7 @@
                                         <th>
                                             Ngày Gửi
                                         </th>
-                                        
+
                                         <th>
                                             Ngày hẹn
                                         </th>
@@ -296,7 +299,7 @@
                                                 ${c.createdDate}
 
                                             </td>
-                                            
+
                                             <td>
 
                                                 ${c.fromDate} - ${c.toDate}
@@ -447,7 +450,7 @@
                                                 <td id='r_createdDate'></td>
                                             </tr>
                                             <tr >
-                                                <th>Giá</th>
+                                                <th>Giá (VND)</th>
                                                 <td id="r_price"></td>
                                                 <td id="ar_price" style="display: none;">
                                                     <div class="input-group">
@@ -573,7 +576,7 @@
                     $("#r_footer").show();
                     $("#ar_footer").hide();
                     $("#r_price").show();
-                    $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0));
+                    $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
                     $("#ar_price").hide();
 
                 } else if (data.consignmentStatusID == 3) {

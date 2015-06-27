@@ -88,7 +88,7 @@
                                                                                                                             </th>-->
                                                                 <c:if test="${basicPrice > 0}">
                                                                     <th>
-                                                                        Giá
+                                                                        Giá (VND)
                                                                     </th>
                                                                 </c:if>
                                                                 <th style="text-align:center">
@@ -116,7 +116,7 @@
                                                                         <td>
                                                                             <fmt:formatNumber type="number"
                                                                                 value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
-                                                                                maxFractionDigits="0" /> ~ <fmt:formatNumber 
+                                                                                maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 
                                                                                 value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
                                                                                 maxFractionDigits="0" />
                                                                         </td>

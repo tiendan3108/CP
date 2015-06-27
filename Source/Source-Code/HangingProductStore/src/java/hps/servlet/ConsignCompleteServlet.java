@@ -40,6 +40,7 @@ import org.apache.commons.io.FilenameUtils;
 public class ConsignCompleteServlet extends HttpServlet {
 
     private static final String SAVE_DIR = "assets\\image";
+    private static final String STEP3 = "consign_step3.jsp";
     private static final String COMPLETED = "consign_success.jsp";
 
     /**
@@ -137,57 +138,73 @@ public class ConsignCompleteServlet extends HttpServlet {
                 }
 
                 ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
-                
+
                 product.setImage(imagePath);
 
                 DuchcDAO dao = new DuchcDAO();
 
                 //Add new product and get id of it
                 int productID = dao.addProduct(product);
+                if (productID > 0) {
+                    //get memberID if session MEMBER is not null
+                    int memberID = 5;
+                    if (session.getAttribute("ACCOUNT") != null) {
+                        memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
+                    }
+                    //get storeOwnerID from step2
+                    int storeOwnerID = 0;
 
-//                dao.updateProductImage(productID, imagePath); //Du
+                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
 
-                //get memberID if session MEMBER is not null
-                int memberID = 5;
-                if (session.getAttribute("ACCOUNT") != null) {
-                    memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
+                    double maxPrice = 0;
+                    double minPrice = 0;
+                    //get store de lay fomula va nam cua store
+                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
+                    if (session.getAttribute("BASICPRICE") != null) {
+                        maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
+                        maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
+                        minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
+
+                    }
+
+                    ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
+                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
+                    boolean result = dao.addConsigment(consignment);
+                    if (result) {
+                        JavaUltilities java = new JavaUltilities();
+                        if (phone.length() > 0) {
+                            try {
+                                String msg = "Cam on " + fullName + "da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + "."
+                                        + store.getFullName() + " se xem xet yeu cau cua ban.";
+                                java.sendSMS(msg, phone);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (email.length() > 0) {
+                            try {
+                                java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID + ".");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        session.setAttribute("storeName", store.getFullName());
+                        session.setAttribute("trackId", consigmentID);
+                        session.removeAttribute("PRODUCT");
+                        session.removeAttribute("BASICPRICE");
+                        session.removeAttribute("STORE");
+                        session.removeAttribute("STORELIST");
+                        session.removeAttribute("FCATE");
+                        session.removeAttribute("CATEGORY");
+                    } else {
+                        url = STEP3;
+                    }
+
+                } else {
+                    url = STEP3;
                 }
-                //get storeOwnerID from step2
-                int storeOwnerID = 0;
-
-                storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-
-                double maxPrice = 0;
-                double minPrice = 0;
-                //get store de lay fomula va nam cua store
-                AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
-                if (session.getAttribute("BASICPRICE") != null) {
-                    maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-                    maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
-                    minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
-
-                }
-
-                ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
-                        address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
-                boolean result = dao.addConsigment(consignment);
-
-                JavaUltilities java = new JavaUltilities();
-                if (phone.length() > 0) {
-                    java.sendSMS("Ban da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + ".", phone);
-                }
-                if (email.length() > 0) {
-                    java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID);
-                }
-
-                session.setAttribute("storeName", store.getFullName());
-                session.setAttribute("trackId", consigmentID);
-                session.removeAttribute("PRODUCT");
-                session.removeAttribute("BASICPRICE");
-                session.removeAttribute("STORE");
-                session.removeAttribute("STORELIST");
-                session.removeAttribute("FCATE");
-                session.removeAttribute("CATEGORY");
 
             }
 

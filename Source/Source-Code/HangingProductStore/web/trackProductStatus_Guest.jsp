@@ -116,9 +116,11 @@
                                     <td id="r_price"><fmt:formatNumber type="number"
                                                       value="${c.minPrice}" 
                                                       maxFractionDigits="0"/>
-                                        ~ <fmt:formatNumber type="number"
+                                        &nbsp;~&nbsp; <fmt:formatNumber type="number"
                                                           value="${c.maxPrice}" 
-                                                          maxFractionDigits="0"/></td>
+                                                          maxFractionDigits="0"/>
+                                        &nbsp;VND
+                                    </td> 
                                 </tr>
                                 <tr>
                                     <th>Ngày hẹn</th>

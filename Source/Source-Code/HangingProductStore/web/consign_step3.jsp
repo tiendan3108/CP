@@ -273,8 +273,13 @@
     };
 
     $(function () {
-        $('#txtFromDate').datepicker();
-        $('#txtToDate').datepicker();
+//        $('#txtFromDate').datepicker();
+//        $('#txtToDate').datepicker();
+           if($('#txtPhone').val() != ""){
+               var phone = $('#txtPhone').val();
+               phone = "0" + phone.substring(3);
+               $('#txtPhone').val(phone);
+           }
     });
 
     $("#btnComplete").click(function () {
