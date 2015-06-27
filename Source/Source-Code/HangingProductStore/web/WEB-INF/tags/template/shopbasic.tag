@@ -159,7 +159,6 @@
             <li><a href="LogoutServlet">Đăng Xuất</a></li> 
             <li><a href="TrackProductStatus">${account.fullName}</a></li>           
             </c:if>  
-        <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>
