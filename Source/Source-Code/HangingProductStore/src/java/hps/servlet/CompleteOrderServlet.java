@@ -50,6 +50,9 @@ public class CompleteOrderServlet extends HttpServlet {
             int productID = Integer.parseInt(sproductID);
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
+            if(!phone.isEmpty()){
+                phone = "+84" + phone.substring(1);
+            }           
             String fullname = request.getParameter("name");
             String address = request.getParameter("address");
             String orderID = lib.randomString(10);
@@ -79,8 +82,7 @@ public class CompleteOrderServlet extends HttpServlet {
                 //update product status                                  
                 productDao.updateStatusToOrdered(productID, orderID);
                 //send sms
-                if (!phone.isEmpty()) {
-                    phone = "+84" + phone.substring(1);
+                if (!phone.isEmpty()) {                   
                     try {
                         lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
                         System.out.println("send roi" + phone);
