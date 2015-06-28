@@ -178,6 +178,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                         + store.getFullName() + " se xem xet yeu cau cua ban.";
                                 java.sendSMS(msg, phone);
                             } catch (Exception e) {
+                                System.out.println("Loi khi gui tin nhan sms!");
                                 e.printStackTrace();
                             }
                         }
@@ -185,6 +186,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             try {
                                 java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID + ".");
                             } catch (Exception e) {
+                                System.out.println("Loi khi gui email!");
                                 e.printStackTrace();
                             }
 

@@ -123,10 +123,10 @@
                                                                     </c:if>
                                                                     <td align="center">
                                                                         <c:if test="${not empty store}">
-                                                                            <c:if test="${store == item.storeOwnerID}">
+                                                                            <c:if test="${store == item.roleID}">
                                                                                 <input checked="checked"  name="rdStore" value="${item.roleID}" type="radio"/>
                                                                             </c:if>
-                                                                            <c:if test="${store != item.storeOwnerID}">
+                                                                            <c:if test="${store != item.roleID}">
                                                                                 <input  name="rdStore" value="${item.roleID}" type="radio"/>
                                                                             </c:if>
                                                                         </c:if>

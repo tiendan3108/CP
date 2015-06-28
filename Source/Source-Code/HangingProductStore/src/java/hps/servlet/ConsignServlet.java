@@ -55,7 +55,7 @@ public class ConsignServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             request.setCharacterEncoding("UTF8");
             HttpSession session = request.getSession();
-            
+
             String action = request.getParameter("btnAction");
             if (action == null) {
                 action = "consign";
@@ -89,13 +89,18 @@ public class ConsignServlet extends HttpServlet {
 
                 session.setAttribute("PRODUCT", product);
 
-                
                 DuchcDAO dDAO = new DuchcDAO();
+                double basicPrice = 0;
                 //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
-                double basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
-                
-                
-                session.setAttribute("BASICPRICE", (int)(basicPrice * GlobalVariables.VND_CURRENCY));
+                //Bi loi khi ko co mang phai try catch
+                try {
+                    basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
+                } catch (Exception e) {
+                    System.out.println("Loi khi get price!");
+                    e.printStackTrace();
+                }
+
+                session.setAttribute("BASICPRICE", (int) (basicPrice * GlobalVariables.VND_CURRENCY));
 
                 List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 

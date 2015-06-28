@@ -206,10 +206,7 @@
 </template:consign>
 
 <script type="text/javascript">
-    var RecaptchaOptions = {
-        theme: 'custom',
-        custom_theme_widget: 'recaptcha_widget'
-    };
+    
 
     $(function () {
         $("#txtBrand").autocomplete({

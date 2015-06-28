@@ -24,6 +24,9 @@
         <script src="js/jquery-ui.min.js"></script>
 
     </jsp:attribute>
+        <jsp:attribute name="extraNavigationContent">
+
+    </jsp:attribute>
     <jsp:body>
         <!-- BEGIN SIDEBAR & CONTENT -->
         <div class="row margin-bottom-40">
