@@ -20,6 +20,7 @@
         <link href="assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link href="assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
         <!-- Global styles END --> 
 
         <!-- Page level plugin styles START -->
@@ -33,7 +34,13 @@
     <!-- Head END -->
 
     <!-- Body BEGIN -->
-    <body class="ecommerce" onload="initialize_googleMap()">
+    <body style="font-family: 'Open Sans', Arial, sans-serif;
+          font-size: 13px;
+          font-style: normal;
+          font-variant: normal;
+          font-weight: 400;
+          font-stretch: normal;
+          line-height: normal;" class="ecommerce" onload="initialize_googleMap()">
         <div id="top">
             <div class="contain">
                 <div class="row">
