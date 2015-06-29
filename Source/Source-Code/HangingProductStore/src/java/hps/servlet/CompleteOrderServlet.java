@@ -78,14 +78,12 @@ public class CompleteOrderServlet extends HttpServlet {
                 order.setFullName(fullname);
                 //insert order
                 orderDao.insertOrderWithMemberInfo(order);
-                System.out.println("abc");
                 //update product status                                  
                 productDao.updateStatusToOrdered(productID, orderID);
                 //send sms
-                if (!phone.isEmpty()) {                   
+                if (!phone.isEmpty()) {     
                     try {
                         lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
-                        System.out.println("send roi" + phone);
                     } catch (TwilioRestException ex) {
                         Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
