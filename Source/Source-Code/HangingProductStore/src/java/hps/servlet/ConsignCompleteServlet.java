@@ -79,7 +79,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 try {
                     items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 } catch (FileUploadException e) {
-                    Logger.getLogger(ConsignServlet.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
                 for (FileItem item : items) {
                     if (item.isFormField()) {
@@ -136,7 +136,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        imagePath = "assets/image/" + filename;
+                        imagePath = "assets\\image\\" + filename;
                     }
                 }
 

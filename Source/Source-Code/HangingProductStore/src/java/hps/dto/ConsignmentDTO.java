@@ -37,6 +37,10 @@ public class ConsignmentDTO implements Serializable {
 
     private ProductDTO product;
 
+    //danqt - begin
+    private float expiredFee;
+    private int expiredDays;
+    //danqt - end
      //duchc - begin 
     private AccountDTO storeOwner;
     private String cancelDate; // add on 25/6/2015
@@ -297,6 +301,34 @@ public class ConsignmentDTO implements Serializable {
 
     public void setStoreOwner(AccountDTO storeOwner) {
         this.storeOwner = storeOwner;
+    }
+
+    /**
+     * @return the expiredFee
+     */
+    public float getExpiredFee() {
+        return expiredFee;
+    }
+
+    /**
+     * @param expiredFee the expiredFee to set
+     */
+    public void setExpiredFee(float expiredFee) {
+        this.expiredFee = expiredFee;
+    }
+
+    /**
+     * @return the expiredDays
+     */
+    public int getExpiredDays() {
+        return expiredDays;
+    }
+
+    /**
+     * @param expiredDays the expiredDays to set
+     */
+    public void setExpiredDays(int expiredDays) {
+        this.expiredDays = expiredDays;
     }
 
     

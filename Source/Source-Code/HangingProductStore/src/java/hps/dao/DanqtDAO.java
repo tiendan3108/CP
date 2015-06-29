@@ -52,7 +52,7 @@ public class DanqtDAO {
         int categoryID = 0, productStatusID = 0;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?)";
+            String query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) ORDER BY ReceivedDate";
             stmC = conn.prepareStatement(query);
             stmC.setInt(1, storeOwnerID);
             stmC.setInt(2, productStatus);
@@ -923,34 +923,38 @@ public class DanqtDAO {
     }
 
     //remind consignor their consignment is out of date
-
     public void remindConsignor() {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String query = null, consignmentID = null, Phone = null, Email = null;
-        List<ConsignmentDTO> result = new ArrayList<>();
-        ConsignmentDTO item = null;
+        String query = null;
+        List<String> consignmentList = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String today = sdf.format(tempDate);
-            query = "SELECT c.ConsignmentID, c.Phone, c.Email FROM Consignment c, Product p WHERE "
+            query = "SELECT c.ConsignmentID FROM Consignment c, Product p WHERE "
                     + "DATEDIFF(day,[ReceivedDate],?) > Period AND p.ProductID = c.ProductID AND "
                     + "p.ProductStatusID > 1 AND p.ProductStatusID < 6";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
             rs = stm.executeQuery();
             while (rs.next()) {
-                consignmentID = rs.getString("ConsignmentID");
-                Phone = convertPhone(rs.getString("Phone"));
-                Email = rs.getString("Email");
-                item = new ConsignmentDTO();
-                item.setConsigmentID(consignmentID);
-                item.setPhone(Phone);
-                item.setEmail(Email);
-                result.add(item);
+                consignmentList.add(rs.getString("ConsignmentID"));
+            }
+            for (String consignmentID : consignmentList) {
+                query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
+                stm = conn.prepareStatement(query);
+                stm.setInt(1, ConsignmentStatus.EXPIRED);
+                stm.setString(2, consignmentID);
+                stm.executeUpdate();
+                query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
+                        + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                stm = conn.prepareStatement(query);
+                stm.setInt(1, ProductStatus.NOT_AVAILABLE);
+                stm.setString(2, consignmentID);
+                stm.executeUpdate();
             }
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -995,7 +999,7 @@ public class DanqtDAO {
             String query = "SELECT DISTINCT c.* FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND "
                     + "c.ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND "
                     + "(lower(c.ConsignmentID) LIKE ? OR lower(p.ProductName) LIKE ? OR lower(c.FullName) LIKE ? OR "
-                    + "lower(c.Phone) LIKE ? OR lower(p.OrderID) = ?) AND c.ProductID = p.ProductID";
+                    + "lower(c.Phone) LIKE ? OR lower(p.OrderID) = ?) AND c.ProductID = p.ProductID ORDER BY c.ReceivedDate";
             stmC = conn.prepareStatement(query);
             stmC.setInt(1, storeOwnerID);
             stmC.setInt(2, productStatus);
@@ -1084,6 +1088,265 @@ public class DanqtDAO {
                 }
                 if (stmP != null) {
                     stmP.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    //return product and receive fee
+    public void ExtendProduct(String consignmentID, float expiredFee) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+
+            String query = "UPDATE Consignment SET ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ConsignmentStatus.EXPIRED);
+            stm.setFloat(2, expiredFee);
+            stm.setString(3, consignmentID);
+            stm.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.NOT_AVAILABLE);
+            stm.setString(2, consignmentID);
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    //extend consignment period
+    public void ExtendProduct(String consignmentID, int period) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+
+            String query = "UPDATE Consignment SET Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            stm.setInt(2, period);
+            stm.setString(3, consignmentID);
+            stm.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.ON_WEB);
+            stm.setString(2, consignmentID);
+            stm.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public ConsignmentDTO getInforForExpiredPage(String consignmentID) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ConsignmentDTO result = new ConsignmentDTO();
+        ProductDTO product = new ProductDTO();
+        try {
+            conn = DBUltilities.makeConnection();
+
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String today = sdf.format(tempDate);
+
+            String query = "SELECT c.*, p.ProductName, DATEDIFF(day,c.ReceivedDate,?) AS DiffDate "
+                    + "FROM Consignment c, Product p WHERE ConsignmentID = ? AND c.ProductID = p.ProductID";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, today);
+            stm.setString(2, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int diffDate = rs.getInt("DiffDate");
+                String fullName = rs.getString("FullName");
+                String email = rs.getString("Email");
+                String address = rs.getString("Address");
+                String phone = convertPhone(rs.getString("Phone"));
+                String receivedDate = convertDate(rs.getString("ReceivedDate"));
+                float maxPrice = rs.getFloat("MaxPrice");
+                float minPrice = rs.getFloat("MinPrice");
+                String productName = rs.getString("ProductName");
+                int period = rs.getInt("Period");
+                result.setName(fullName);
+                result.setEmail(email);
+                result.setAddress(address);
+                result.setPhone(phone);
+                result.setReceivedDate(receivedDate);
+                result.setMaxPrice(maxPrice);
+                result.setMinPrice(minPrice);
+                result.setPeriod(period);
+                product.setName(productName);
+                result.setProduct(product);
+                result.setExpiredDays(diffDate - period);
+                result.setExpiredFee((diffDate - period) / period * minPrice);
+            }
+            return result;
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<ConsignmentDTO> getExpiredProduct(int roleID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        List<ConsignmentDTO> result = new ArrayList<>();
+        ProductDTO product = null;
+        ConsignmentDTO item = null;
+        try {
+            conn = DBUltilities.makeConnection();
+            String query = "SELECT c.*, p.ProductName FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND "
+                    + "c.ConsignmentStatusID = ? AND c.ProductID = p.ProductID";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, roleID);
+            stm.setInt(2, ConsignmentStatus.EXPIRED);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int productID = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String consignmentID = rs.getString("ConsignmentID");
+                String receivedDate = convertDate(rs.getString("ReceivedDate"));
+                float minPrice = rs.getFloat("MinPrice");
+                float maxPrice = rs.getFloat("MaxPrice");
+                String fullName = rs.getString("FullName");
+                item = new ConsignmentDTO();
+                item.setProductID(productID);
+                item.setConsigmentID(consignmentID);
+                item.setReceivedDate(receivedDate);
+                item.setMaxPrice(maxPrice);
+                item.setMinPrice(minPrice);
+                item.setName(fullName);
+                product = new ProductDTO();
+                product.setName(productName);
+                item.setProduct(product);
+                result.add(item);
+            }
+            return result;
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<ConsignmentDTO> getExpiredProduct(int roleID, String keywork) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        List<ConsignmentDTO> result = new ArrayList<>();
+        ProductDTO product = null;
+        ConsignmentDTO item = null;
+        keywork = keywork.toLowerCase();
+        try {
+            conn = DBUltilities.makeConnection();
+            String query = "SELECT c.*, p.ProductName FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND "
+                    + "c.ConsignmentStatusID = ? AND c.ProductID = p.ProductID AND ( lower(c.ConsignmentID) LIKE ? "
+                    + "OR lower(p.ProductName) LIKE ? OR lower(c.FullName) LIKE ? OR lower(c.Phone) LIKE ? OR "
+                    + "lower(p.OrderID) = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, roleID);
+            stm.setInt(2, ConsignmentStatus.EXPIRED);
+            stm.setString(3, "%" + keywork + "%");
+            stm.setString(4, "%" + keywork + "%");
+            stm.setString(5, "%" + keywork + "%");
+            stm.setString(6, "%" + keywork + "%");
+            stm.setString(7, "%" + keywork + "%");
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int productID = rs.getInt("ProductID");
+                String productName = rs.getString("ProductName");
+                String consignmentID = rs.getString("ConsignmentID");
+                String receivedDate = convertDate(rs.getString("ReceivedDate"));
+                float minPrice = rs.getFloat("MinPrice");
+                float maxPrice = rs.getFloat("MaxPrice");
+                String fullName = rs.getString("FullName");
+                item = new ConsignmentDTO();
+                item.setProductID(productID);
+                item.setConsigmentID(consignmentID);
+                item.setReceivedDate(receivedDate);
+                item.setMaxPrice(maxPrice);
+                item.setMinPrice(minPrice);
+                item.setName(fullName);
+                product = new ProductDTO();
+                product.setName(productName);
+                item.setProduct(product);
+                result.add(item);
+            }
+            if (result.isEmpty()) {
+                return null;
+            }
+            return result;
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
                 }
                 if (conn != null) {
                     conn.close();

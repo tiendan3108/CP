@@ -85,6 +85,7 @@ public class JavaUltilities {
         }
         return sb.toString();
     }
+
     /**
      *
      * @author HoangNHSE61007 send SMS
@@ -100,6 +101,7 @@ public class JavaUltilities {
         Message message = messageFactory.create(params);
         System.out.println(message.getSid());
     }
+
     /**
      *
      * @author HoangNHSE61007 send Email
@@ -144,6 +146,7 @@ public class JavaUltilities {
             me.printStackTrace();
         }
     }
+
     /**
      *
      * @author HoangNHSE61007 encode Image for mobile service
@@ -164,6 +167,7 @@ public class JavaUltilities {
         }
         return null;
     }
+
     /**
      *
      * @author HoangNHSE61007 reduce image Qulity
@@ -198,6 +202,7 @@ public class JavaUltilities {
         }
 
     }
+
     /**
      *
      * @author format date from yyyy-MM-dd to dd-MM-yyyy
@@ -215,16 +220,15 @@ public class JavaUltilities {
         return null;
     }
 
-    public static String getFileUpload(String path, String fileName, int productID) {
+    public static void deleteProductImage(String path, int productID) {
         DanqtDAO dao = new DanqtDAO();
-        String consignmentID = dao.getConsignmentIDByProductID(productID);
         ProductDTO product = dao.getProductByID(productID);
-        File image = new File(path + product.getImage());
+        File image = new File(path + "\\" + product.getImage());
         try {
-            image.deleteOnExit();
-            return consignmentID + fileName;
+            image.delete();
+            System.out.println("deleted file " + path + "\\" + product.getImage());
         } catch (Exception e) {
+            System.out.println("can not delete file " + path + "\\" + product.getImage());
         }
-        return null;
     }
 }

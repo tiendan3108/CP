@@ -10,8 +10,13 @@ import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +65,11 @@ public class PublishProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
+                DanqtDAO dao = new DanqtDAO();
                 try {
                     items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 } catch (FileUploadException e) {
-                    Logger.getLogger(ConsignServlet.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, e);
                 }
                 for (FileItem item : items) {
                     if (item.isFormField()) {
@@ -96,26 +102,34 @@ public class PublishProduct extends HttpServlet {
                         }
                     } else {
                         String path = request.getServletContext().getRealPath("/");
+                        String basePath = path.substring(0, path.length() - 9) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                        String basePath = path.substring(0, path.length() - 9) + "web\\assets\\image";
-                        if (filename == null || filename.equals("")) {
-                        } else {
-                            filename = JavaUltilities.getFileUpload(path, filename, productID);
-                            JavaUltilities.getFileUpload(basePath, filename, productID);
+                        if (!filename.equals("")) {
+                            JavaUltilities.deleteProductImage(path, productID);//delete deployment file
+                            JavaUltilities.deleteProductImage(basePath, productID);// delete base file
+                            String consignmentID = dao.getConsignmentIDByProductID(productID);
+                            filename = consignmentID + filename;
                             image = "assets\\image\\" + filename;
                             File file1 = new File(path + "\\" + image); // deployment place
-                            File file2 = new File(basePath + "\\" + filename);//base place
-                            // base place
+                            File file2 = new File(basePath + "\\" + image);//base place
                             try {
-                                item.write(file1); // Write to deployment place
-                                item.write(file2); // Write to base place
-                            } catch (Exception ex) {
+                                InputStream in = item.getInputStream();
+                                OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
+                                OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
+                                for (int b; (b = in.read()) != -1;) {
+                                    opsDeployment.write(b);
+                                    opsBase.write(b);
+                                }
+                                opsDeployment.close();
+                                opsBase.close();
+                                in.close();
+                            } catch (IOException ex) {
+                                System.out.println("can not write file");
                                 Logger.getLogger(PublishProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
                 }
-                DanqtDAO dao = new DanqtDAO();
                 ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image);
                 dao.publishOnWeb(product, season);
                 url = GlobalVariables.MANAGERMENT_SERVLET;

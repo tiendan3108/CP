@@ -61,6 +61,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 List<ConsignmentDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
                 List<ConsignmentDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
                 List<ConsignmentDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
+                List<ConsignmentDTO> expired = dao.getExpiredProduct(user.getRoleID());
                 List<CategoryDTO> parentCat = catDao.getParentCategory();
                 List<CategoryDTO> allCat = catDao.getAllCategory();
                 List<SeasonDTO> season = dao.getSeason();
@@ -78,6 +79,10 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 }
                 if (keywork != null) {
                     switch (tab) {
+                        case "expired":
+                            expired = dao.getExpiredProduct(user.getRoleID(),keywork);
+                            request.setAttribute("keywork7", keywork);
+                            break;
                         case "available":
                             available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE, keywork);
                             request.setAttribute("keywork1", keywork);
@@ -111,6 +116,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 request.setAttribute("sold", sold);
                 request.setAttribute("completed", completed);
                 request.setAttribute("canceled", canceled);
+                request.setAttribute("expired", expired);
                 request.setAttribute("currentTab", tab);
                 request.setAttribute("parentCat", parentCat);
                 request.setAttribute("allCat", allCat);

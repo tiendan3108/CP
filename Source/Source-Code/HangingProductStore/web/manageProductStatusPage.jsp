@@ -49,14 +49,74 @@
                         <ul class=" nav nav-tabs nav-justified" id="myTab" style="font-weight: 700">
                             <li id="availableTab" class="active"><a href="#available">Chờ duyệt</a></li>
                             <li id="onWebTab"><a href="#onWeb">Trên web</a></li>
-                            <li id="orderedTab"><a href="#ordered">Đươc đặt</a></li>
+                            <li id="orderedTab"><a href="#ordered">Đã được đặt</a></li>
                             <li id="soldTab"><a href="#sold">Đã bán</a></li>
-                            <li id="canceledTab"><a href="#canceled">Hủy kí gửi</a></li>
-                            <li id="completedTab"><a href="#completed">Hoàn tất</a></li>
-                        </ul>             
+                        </ul>
+                        <ul class=" nav nav-tabs nav-justified" style="font-weight: 700">
+                            <li id="canceledTab"><a href="#canceled">Đăng kí hủy kí gửi</a></li>
+                            <li id="completedTab"><a href="#completed">Hoàn tất thanh toán</a></li>
+                            <li id="expiredTab"><a href="#expired">Hết hạn kí gửi</a></li>
+                        </ul>
                         <!-- END TAB LINK -->
                         <!-- BEGIN TAB CONTENT -->
                         <div class="tab-content col-md-12">
+                            <!-- BEGIN EXPIRED TAB -->
+                            <div id="expired" class="tab">
+                                <c:set var="expired" value="${requestScope.expired}">
+                                </c:set>
+                                <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="input-group">
+                                                    <input type="hidden" name="txtCurrentTab" value="expired">
+                                                    <input class="form-control" type="text" name="txtKeywork" value="${keywork7}">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-success" type="submit">Tìm</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <c:choose>
+                                    <c:when test="${expired == null && requestScope.keywork7 != null}">
+                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork7}</font>.
+                                    </c:when>
+                                    <c:when test="${expired!=null}">
+                                        <table class="table table-striped table-bordered table-hover"id="availableTable">
+                                            <thead>
+                                                <tr role="row" class="heading">
+                                                    <th>STT</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Tên khách hàng</th>
+                                                    <th>Ngày nhận</th>
+                                                    <th>Mã kí gửi</th>
+                                                    <th>Giá kí gửi</th>
+                                                    <th>Chi Tiết</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="item" items="${expired}" varStatus="counter">
+                                                    <tr>
+                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
+                                                        <td><font>${item.product.name}</font></td>
+                                                        <td><font>${item.name}</font></td>
+                                                        <td><font>${item.receivedDate}</font></td>
+                                                        <td><font>${item.consigmentID}</font></td>
+                                                        <td><font>${item.minPrice}</font>~<font  >${item.maxPrice}</font></td>
+                                                        <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </c:when>
+                                    <c:otherwise>
+                                        Danh sách hiện thời trống
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <!-- END EXPIRED TAB -->
                             <!-- BEGIN AVAILABLE TAB -->
                             <div id="available" class="tab active">
                                 <c:set var="available" value="${requestScope.available}">
@@ -484,7 +544,7 @@
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-content modal-manage">
                                     <div class="modal-header">
-                                        <h4>Vui lòng nhập giá</h4>        
+                                        <h4>Thông tin giá bán</h4>        
                                     </div>
                                     <div class="modal-body">
                                         <label class="control-label">Giá bán :</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;"> VND
@@ -644,6 +704,86 @@
                         </form>
                     </div>
                     <!-- AVAILABLE MODAL END-->
+                    <!-- EXPIRED MODAL BEGIN-->
+                    <div class="modal fade bs-example-modal-lg" id="expiredModal">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content modal-manage">
+                                <div class="modal-header">
+                                    <h4>Thông tin sản phẩm</h4>        
+                                </div>
+                                <div class="modal-body">
+                                    <div class="col-sm-6">
+                                        <h5>Thông tin người kí gửi</h5>
+                                        </br>
+                                        <li>Họ tên : <label id="expired_fullName"></label></li>
+                                        <li>Địa chỉ : <label id="expired_address"></label></li>
+                                        <li>Số điện thoại : <label id="expired_phone"></label></li>
+                                        <li>Email : <label id="expired_email"></label></li>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h5>Thông tin hàng kí gửi</h5>
+                                        </br>
+                                        <li>Tên sản phẩm : <label id="expired_productName"></label></li>
+                                        <li>Mã hàng kí gửi : <label id="expired_consignmentID"></label></li>
+                                        <li>Ngày kí gửi : <label id="expired_consignedDate"></label></li>
+                                        <li>Thời gian kí gửi : <label id="expired_period"></label></li>
+                                        <li>Số ngày quá hạn: <label id="expired_days"></label></li>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        </br></br>
+                                        <input class="btn btn-info confirmExtendModal" type="button" data-togle="modal" value="Gia hạn">
+                                        <input class="btn btn-info confirmReceiveModal" type="button" data-togle="modal" value="Nhận hàng">
+                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- EXPIRED MODAL END-->
+                    <!-- CONFIRM EXTEND MODAL BEGIN-->
+                    <div class="modal fade bs-example-modal-lg" id="confirmExtendModal">
+                        <div class="modal-dialog modal-lg">
+                            <form action="ExtendProduct" method="POST">
+                                <div class="modal-content modal-manage">
+                                    <div class="modal-header">
+                                        <h4>Thời hạn kí gửi</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="control-label">Số ngày :</label><input type="text" name="txtPeriod" value ="" style="width: 300px;"> ngày
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="txtConsignmentID" id="expired_extendConsignmentID" value="">
+                                        <button class="btn btn-info" name="btnAction" type="submit" value="extend">Gia hạn</button>
+                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- CONFIRM EXTEND MODAL END-->
+                    <!-- CONFIRM RECEIVE MODAL BEGIN-->
+                    <div class="modal fade bs-example-modal-lg" id="confirmReceiveModal">
+                        <div class="modal-dialog modal-lg">
+                            <form action="ExtendProduct" method="POST">
+                                <div class="modal-content modal-manage">
+                                    <div class="modal-header">
+                                        <h4>Thông tin tiền phạt</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="control-label">Tiền phạt :</label><input type="text" id="expired_fee" value="" name="txtExpiredFee"> VND
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
+                                        <button class="btn btn-info" name="btnAction" type="submit" value="receive">Đồng ý</button>
+                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- CONFIRM RECEIVE MODAL END-->
                 </div>
             </div>
         </div>
@@ -656,6 +796,7 @@
         $('.tabs .nav-justified a').on('click', function (e) {
             var currentAttrValue = $(this).attr('href');
             $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
+            $(this).parent('li').parent('ul').siblings().children('li').removeClass('active');
             $(this).parent('li').addClass('active').siblings().removeClass('active');
             $('.search-box').val('');
             e.preventDefault();
@@ -665,6 +806,7 @@
         var currentTab = $('#currentTab').val();
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).fadeIn(400).siblings().hide();
+        $('li#' + currentLi).parent('ul').siblings().children('li').removeClass('active');
         $('li#' + currentLi).addClass('active').siblings().removeClass('active');
     });
     //start cancel modal
@@ -760,4 +902,28 @@
         $('#soldModal').modal('show');
     });
     //end sold modal
+    //start expired modal
+    $(document).on("click", ".expiredModal", function () {
+        var consignmentID = $(this).data('id');
+        $.get('LoadExpiredProduct', {consignmentID: consignmentID}, function (response) {
+            $("#expired_fullName").text(response.name);
+            $("#expired_address").text(response.address);
+            $("#expired_phone").text(response.phone);
+            $("#expired_email").text(response.email);
+            $("#expired_productName").text(response.product.name);
+            $("#expired_consignmentID").text(consignmentID);
+            $("#expired_consignedDate").text(response.receivedDate);
+            $("#expired_period").text(response.period);
+            $("#expired_days").text(response.expiredDays);
+            $("#expired_fee").val(response.expiredFee);
+        });
+        $('#expiredModal').modal('show');
+    });
+    $(document).on("click", ".confirmExtendModal", function () {
+        $('#confirmExtendModal').modal('show');
+    });
+    $(document).on("click", ".confirmReceiveModal", function () {
+        $('#confirmReceiveModal').modal('show');
+    });
+    //end expired modal
 </script>
