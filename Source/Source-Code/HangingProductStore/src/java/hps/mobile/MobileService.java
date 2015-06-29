@@ -62,15 +62,16 @@ public class MobileService {
                 String fromDate = productItem.getFromDate();
                 String formatToDate = lib.formatDateString(toDate);
                 String formatFromDate = lib.formatDateString(fromDate);
-                String path = "";
-                try {
-                    path = java.net.URLDecoder.decode(getClass().getResource("/../../").getPath(), "UTF-8");
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(MobileService.class.getName()).log(Level.SEVERE, null, ex);
+                if (imagePath != null) {
+                    String path = "";
+                    try {
+                        path = java.net.URLDecoder.decode(getClass().getResource("/../../").getPath(), "UTF-8");
+                    } catch (UnsupportedEncodingException ex) {
+                        Logger.getLogger(MobileService.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    String imageCode = lib.encodeImage(path + imagePath);
+                    productItem.setImage(imageCode);
                 }
-
-                String imageCode = lib.encodeImage(path + imagePath);
-                productItem.setImage(imageCode);
                 productItem.setToDate(formatToDate);
                 productItem.setFromDate(formatFromDate);
                 data.set(i, productItem);
