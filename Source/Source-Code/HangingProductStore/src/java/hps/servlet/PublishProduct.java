@@ -97,13 +97,18 @@ public class PublishProduct extends HttpServlet {
                     } else {
                         String path = request.getServletContext().getRealPath("/");
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
+                        String basePath = path.substring(0, path.length() - 9) + "web\\assets\\image";
                         if (filename == null || filename.equals("")) {
                         } else {
                             filename = JavaUltilities.getFileUpload(path, filename, productID);
+                            JavaUltilities.getFileUpload(basePath, filename, productID);
                             image = "assets\\image\\" + filename;
-                            File file = new File(path + "\\" + image); // Define destination file.
+                            File file1 = new File(path + "\\" + image); // deployment place
+                            File file2 = new File(basePath + "\\" + filename);//base place
+                            // base place
                             try {
-                                item.write(file); // Write to destination file.
+                                item.write(file1); // Write to deployment place
+                                item.write(file2); // Write to base place
                             } catch (Exception ex) {
                                 Logger.getLogger(PublishProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
