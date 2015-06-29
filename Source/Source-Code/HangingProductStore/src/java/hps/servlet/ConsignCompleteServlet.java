@@ -179,7 +179,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                         JavaUltilities java = new JavaUltilities();
                         if (phone.length() > 0) {
                             try {
-                                String msg = "Cam on " + fullName + "da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + "."
+                                String msg = "Cam on " + fullName + " da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + ". "
                                         + store.getFullName() + " se xem xet yeu cau cua ban.";
                                 java.sendSMS(msg, phone);
                             } catch (Exception e) {
