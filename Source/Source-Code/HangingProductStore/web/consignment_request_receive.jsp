@@ -24,499 +24,500 @@
         <script src="js/jquery-ui.min.js"></script>
 
     </jsp:attribute>
-        <jsp:attribute name="extraNavigationContent">
+    <jsp:attribute name="extraNavigationContent">
 
     </jsp:attribute>
     <jsp:body>
-        <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-            <!--BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-4">
-                <ul class="list-group sidebar-menu">
-                    <li class="list-group-item clearfix dropdown active">
-                        <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
-                    </li>
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
-                    </li>
-                    <li class="list-group-item clearfix dropdown">
-                        <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- END SIDEBAR -->
-
-            <div class="col-md-9 col-sm-8">
-                <input type="hidden" id="currentTab" value="${currentTab}"/>
-                <!-- START UPDATE -->
-                <div class="tabs row tab-style-1">
-
-                    <!-- Nav tabs -->
-                    <ul class=" nav nav-tabs nav-justified" id="myTab">
-
-                        <li id="requestTab"  class="active"><a href="#request"><b>Yêu cầu chưa duyệt</b></a></li>
-                        <li id="acceptedTab"><a href="#accepted"><b>Yêu cầu đã duyệt</b></a></li>
-                        <li id="refuseTab"><a href="#refuse"><b>Yêu cầu đã từ chối</b></a></li>
-                        <li id="cancelTab"><a href="#cancel"><b>Yêu cầu đã hủy</b></a></li>
+        <div id="wrapper_manage">
+            <!-- BEGIN SIDEBAR & CONTENT -->
+            <div class="row margin-bottom-40">
+                <!--BEGIN SIDEBAR -->
+                <div class="sidebar col-md-3 col-sm-4">
+                    <ul class="list-group sidebar-menu">
+                        <li class="list-group-item clearfix dropdown active">
+                            <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
+                        </li>
+                        <li class="list-group-item clearfix dropdown">
+                            <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
+                        </li>
+                        <li class="list-group-item clearfix dropdown">
+                            <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
+                        </li>
                     </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab active" id="request">
-
-                            <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                <div class="form-body">
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="input-group">
-                                                <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-success" type="submit" name="btnAction" value="r_search">Tìm</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th>
-                                            Stt.
-                                        </th>
-                                        <th>
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <!--                                        <th>
-                                                                                    Mã ký gửi
-                                                                                </th>-->
-                                        <th>
-                                            Ngày Gửi
-                                        </th>
-                                        <th>
-                                            Giá (VND)
-                                        </th>
-                                        <th>
-                                            Ngày hẹn
-                                        </th>
-                                        <th>
-                                            Chi Tiết
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:if test="${empty REQUEST}">
-
-                                        <tr>
-                                            <c:if test="${empty param.r_searchValue}">
-                                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
-                                            </c:if>
-                                            <c:if test="${not empty param.r_searchValue}">
-                                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.r_searchValue}".</td>
-                                            </c:if>
-                                        </tr>
-                                    </c:if>
-                                    <c:forEach var="c" items="${REQUEST}" varStatus="counter">
-                                        <tr>
-                                            <td>${counter.count}</td>
-                                            <td>
-                                                ${c.product.name}
-                                            </td>
-                                            <!--                                            <td>
-                                            ${c.consigmentID}
-                                        </td>-->
-                                            <td>
-                                                ${c.createdDate}
-
-                                            </td>
-                                            <td>
-
-                                                <fmt:formatNumber 
-                                                    value="${c.minPrice}" 
-                                                    maxFractionDigits="1"/>
-                                                &nbsp; ~ &nbsp;
-                                                <fmt:formatNumber 
-                                                    value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/> 
-
-                                            </td>
-                                            <td>
-
-                                                ${c.fromDate} - ${c.toDate}
-                                            </td>
-                                            <td align="center">
-
-                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
-
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-
-                        </div>
-
-
-
-
-
-                        <div class="tab" id="accepted">
-
-                            <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                <div class="form-body">
-                                    <div class="form-group">
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="input-group">
-                                                <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-success" type="submit" name="btnAction" value="ar_search">Tìm</button>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th>
-                                            Stt.
-                                        </th>
-                                        <th>
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <!--                                        <th>
-                                                                                    Mã ký gửi
-                                                                                </th>-->
-                                        <th>
-                                            Ngày Gửi
-                                        </th>
-                                        <th>
-                                            Giá (VND)
-                                        </th>
-                                        <th>
-                                            Ngày hẹn
-                                        </th>
-                                        <th>
-                                            Chi Tiết
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:if test="${empty ACCEPT}">
-
-                                        <tr>
-                                            <c:if test="${empty param.ar_searchValue}">
-                                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
-                                            </c:if>
-                                            <c:if test="${not empty param.ar_searchValue}">
-                                                <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.ar_searchValue}".</td>
-                                            </c:if>
-                                        </tr>
-                                    </c:if>
-                                    <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
-                                        <tr>
-                                            <td>${counter.count}</td>
-                                            <td>
-                                                ${c.product.name}
-                                            </td>
-                                            <!--                                            <td>
-                                            ${c.consigmentID}
-                                        </td>-->
-                                            <td>
-                                                ${c.createdDate}
-
-                                            </td>
-                                            <td>
-
-                                                <fmt:formatNumber 
-                                                    value="${c.minPrice}" 
-                                                    maxFractionDigits="1"/>
-                                                &nbsp; ~ &nbsp; 
-                                                <fmt:formatNumber 
-                                                    value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/>
-                                            </td>
-                                            <td>
-
-                                                ${c.fromDate} - ${c.toDate}
-                                            </td>
-                                            <td align="center">
-
-                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
-
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-
-                        </div>
-
-                        <div class="tab" id="refuse">
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th>
-                                            Stt.
-                                        </th>
-                                        <th>
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <th>
-                                            Mã ký gửi
-                                        </th>
-                                        <th>
-                                            Ngày Gửi
-                                        </th>
-
-                                        <th>
-                                            Ngày hẹn
-                                        </th>
-                                        <th>
-                                            Chi Tiết
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:if test="${empty REFUSE}">
-
-                                        <tr>
-
-                                            <td colspan="6">Không có yêu cầu nào </td>
-
-                                        </tr>
-                                    </c:if>
-                                    <c:forEach var="c" items="${REFUSE}" varStatus="counter">
-                                        <tr>
-                                            <td>${counter.count}</td>
-                                            <td>
-                                                ${c.product.name}
-                                            </td>
-                                            <td>
-                                                ${c.consigmentID}
-                                            </td>
-                                            <td>
-                                                ${c.createdDate}
-
-                                            </td>
-
-                                            <td>
-
-                                                ${c.fromDate} - ${c.toDate}
-                                            </td>
-                                            <td align="center">
-
-                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
-
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab" id="cancel">
-                            <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th>
-                                            Stt.
-                                        </th>
-                                        <th>
-                                            Tên Sản Phẩm
-                                        </th>
-                                        <th>
-                                            Mã ký gửi
-                                        </th>
-                                        <th>
-                                            Ngày Gửi
-                                        </th>
-
-                                        <th>
-                                            Ngày hủy
-                                        </th>
-                                        <th>
-                                            Chi Tiết
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:if test="${empty CANCEL}">
-
-                                        <tr>
-
-                                            <td colspan="6">Không có yêu cầu nào </td>
-
-                                        </tr>
-                                    </c:if>
-                                    <c:forEach var="c" items="${CANCEL}" varStatus="counter">
-                                        <tr>
-                                            <td>${counter.count}</td>
-                                            <td>
-                                                ${c.product.name}
-                                            </td>
-                                            <td>
-                                                ${c.consigmentID}
-                                            </td>
-                                            <td>
-                                                ${c.createdDate}
-
-                                            </td>
-
-                                            <td>
-
-                                                ${c.cancelDate}
-                                            </td>
-                                            <td align="center">
-
-                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                        name="requestDetails" value="${c.consigmentID}">Xem</button>
-
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                    </div>
-
                 </div>
+                <!-- END SIDEBAR -->
 
+                <div class="col-md-9 col-sm-8">
+                    <input type="hidden" id="currentTab" value="${currentTab}"/>
+                    <!-- START UPDATE -->
+                    <div class="tabs row tab-style-1">
 
+                        <!-- Nav tabs -->
+                        <ul class=" nav nav-tabs nav-justified" id="myTab">
 
-                <!--BEGIN MODAL -->
-                <!-- Large modal -->
-                <div id="modalRequest" class="modal fade bs-example-modal-lg" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <li id="requestTab"  class="active"><a href="#request"><b>Yêu cầu chưa duyệt</b></a></li>
+                            <li id="acceptedTab"><a href="#accepted"><b>Yêu cầu đã duyệt</b></a></li>
+                            <li id="refuseTab"><a href="#refuse"><b>Yêu cầu đã từ chối</b></a></li>
+                            <li id="cancelTab"><a href="#cancel"><b>Yêu cầu đã hủy</b></a></li>
+                        </ul>
 
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab active" id="request">
 
-                                <h2 class="modal-title" id="r_name"></h2>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
-                                    <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
-                                    <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
-
-                                </div>
-
-                            </div>
-                            <div class="modal-body">
-                                <!-- BEGIN PAGE CONTENT-->
-                                <div class="row margin-bottom-25">
-                                    <!-- BEGIN CAROUSEL -->
-                                    <div class="col-lg-4 col-md-4 front-carousel">
-
-                                        <div class="carousel slide" id="myCarousel">
-                                            <!-- Carousel items -->
-                                            <div class="carousel-inner">
-                                                <div class="item active">
-                                                    <img id="r_image" alt="">
-                                                    <div class="carousel-caption">
-                                                        <p></p>
-                                                    </div>
+                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="input-group">
+                                                    <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-success" type="submit" name="btnAction" value="r_search">Tìm</button>
+                                                    </span>
                                                 </div>
                                             </div>
-                                            <!-- Carousel nav -->
-                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                                <i class="fa fa-angle-left"></i>
-                                            </a>
-                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
                                         </div>
-
                                     </div>
-                                    <!-- END CAROUSEL -->
+                                </form>
+                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                Stt.
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <!--                                        <th>
+                                                                                        Mã ký gửi
+                                                                                    </th>-->
+                                            <th>
+                                                Ngày Gửi
+                                            </th>
+                                            <th>
+                                                Giá (VND)
+                                            </th>
+                                            <th>
+                                                Ngày hẹn
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:if test="${empty REQUEST}">
 
-                                    <!-- BEGIN PRODUCT DESCRIPTION -->
-                                    <div class="col-lg-8 col-md-8">
+                                            <tr>
+                                                <c:if test="${empty param.r_searchValue}">
+                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
+                                                </c:if>
+                                                <c:if test="${not empty param.r_searchValue}">
+                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.r_searchValue}".</td>
+                                                </c:if>
+                                            </tr>
+                                        </c:if>
+                                        <c:forEach var="c" items="${REQUEST}" varStatus="counter">
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <!--                                            <td>
+                                                ${c.consigmentID}
+                                            </td>-->
+                                                <td>
+                                                    ${c.createdDate}
 
+                                                </td>
+                                                <td>
 
-                                        <table style="font-size: 110%" class="table table-striped table-hover" >
-                                            <tr>
-                                                <th width="30%">Tên sản phẩm</th>
-                                                <td id='r_productName'></td>
-                                            </tr>
-                                            <tr>
-                                                <th width="30%">Mô tả</th>
-                                                <td id='r_description'></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Ngày ký gửi</th>
-                                                <td id='r_createdDate'></td>
-                                            </tr>
-                                            <tr >
-                                                <th>Giá (VND)</th>
-                                                <td id="r_price"></td>
-                                                <td id="ar_price" style="display: none;">
-                                                    <div class="input-group">
-                                                        <input type="text" id="ar_minPrice" class="form-control" >
-                                                        <span class="input-group-addon">
-                                                            ~ </span>
-                                                        <input type="text" id="ar_maxPrice" class="form-control" >    
-                                                    </div>  
-                                                    <!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
+                                                    <fmt:formatNumber 
+                                                        value="${c.minPrice}" 
+                                                        maxFractionDigits="1"/>
+                                                    &nbsp; ~ &nbsp;
+                                                    <fmt:formatNumber 
+                                                        value="${c.maxPrice}" 
+                                                        maxFractionDigits="1"/> 
+
+                                                </td>
+                                                <td>
+
+                                                    ${c.fromDate} - ${c.toDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <th>Ngày hẹn</th>
-                                                <td id='r_fromDateToDate'></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Trạng thái</th>
-                                                <td id='r_status'>
-
-
-                                                </td>
-                                            </tr>
-
-                                        </table>
-
-                                    </div>
-                                    <!-- END PRODUCT DESCRIPTION -->
-                                </div>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
 
                             </div>
-                            <div class="modal-footer">
-                                <div id="r_footer" >
-                                    <form action="ConsignmentRequestReceive" method="POST">
-                                        <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
-                                        <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                                        <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
-                                        <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
-                                    </form>
+
+
+
+
+
+                            <div class="tab" id="accepted">
+
+                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="input-group">
+                                                    <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-success" type="submit" name="btnAction" value="ar_search">Tìm</button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                Stt.
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <!--                                        <th>
+                                                                                        Mã ký gửi
+                                                                                    </th>-->
+                                            <th>
+                                                Ngày Gửi
+                                            </th>
+                                            <th>
+                                                Giá (VND)
+                                            </th>
+                                            <th>
+                                                Ngày hẹn
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:if test="${empty ACCEPT}">
+
+                                            <tr>
+                                                <c:if test="${empty param.ar_searchValue}">
+                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
+                                                </c:if>
+                                                <c:if test="${not empty param.ar_searchValue}">
+                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.ar_searchValue}".</td>
+                                                </c:if>
+                                            </tr>
+                                        </c:if>
+                                        <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <!--                                            <td>
+                                                ${c.consigmentID}
+                                            </td>-->
+                                                <td>
+                                                    ${c.createdDate}
+
+                                                </td>
+                                                <td>
+
+                                                    <fmt:formatNumber 
+                                                        value="${c.minPrice}" 
+                                                        maxFractionDigits="1"/>
+                                                    &nbsp; ~ &nbsp; 
+                                                    <fmt:formatNumber 
+                                                        value="${c.maxPrice}" 
+                                                        maxFractionDigits="1"/>
+                                                </td>
+                                                <td>
+
+                                                    ${c.fromDate} - ${c.toDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="tab" id="refuse">
+                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                Stt.
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày Gửi
+                                            </th>
+
+                                            <th>
+                                                Ngày hẹn
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:if test="${empty REFUSE}">
+
+                                            <tr>
+
+                                                <td colspan="6">Không có yêu cầu nào </td>
+
+                                            </tr>
+                                        </c:if>
+                                        <c:forEach var="c" items="${REFUSE}" varStatus="counter">
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.createdDate}
+
+                                                </td>
+
+                                                <td>
+
+                                                    ${c.fromDate} - ${c.toDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab" id="cancel">
+                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                Stt.
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày Gửi
+                                            </th>
+
+                                            <th>
+                                                Ngày hủy
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:if test="${empty CANCEL}">
+
+                                            <tr>
+
+                                                <td colspan="6">Không có yêu cầu nào </td>
+
+                                            </tr>
+                                        </c:if>
+                                        <c:forEach var="c" items="${CANCEL}" varStatus="counter">
+                                            <tr>
+                                                <td>${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.createdDate}
+
+                                                </td>
+
+                                                <td>
+
+                                                    ${c.cancelDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
+                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!--BEGIN MODAL -->
+                    <!-- Large modal -->
+                    <div id="modalRequest" class="modal fade bs-example-modal-lg" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+                                    <h2 class="modal-title" id="r_name"></h2>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
+                                        <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
+                                        <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
+
+                                    </div>
 
                                 </div>
-                                <div id="ar_footer" style="display: none;">
-                                    <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
-                                        <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
-                                        <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
-                                        <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
-                                        <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
-                                        <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
-                                        <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
-                                        <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
-                                    </form>
+                                <div class="modal-body">
+                                    <!-- BEGIN PAGE CONTENT-->
+                                    <div class="row margin-bottom-25">
+                                        <!-- BEGIN CAROUSEL -->
+                                        <div class="col-lg-4 col-md-4 front-carousel">
 
+                                            <div class="carousel slide" id="myCarousel">
+                                                <!-- Carousel items -->
+                                                <div class="carousel-inner">
+                                                    <div class="item active">
+                                                        <img id="r_image" alt="">
+                                                        <div class="carousel-caption">
+                                                            <p></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Carousel nav -->
+                                                <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                                <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <!-- END CAROUSEL -->
+
+                                        <!-- BEGIN PRODUCT DESCRIPTION -->
+                                        <div class="col-lg-8 col-md-8">
+
+
+                                            <table style="font-size: 110%" class="table table-striped table-hover" >
+                                                <tr>
+                                                    <th width="30%">Tên sản phẩm</th>
+                                                    <td id='r_productName'></td>
+                                                </tr>
+                                                <tr>
+                                                    <th width="30%">Mô tả</th>
+                                                    <td id='r_description'></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ngày ký gửi</th>
+                                                    <td id='r_createdDate'></td>
+                                                </tr>
+                                                <tr >
+                                                    <th>Giá (VND)</th>
+                                                    <td id="r_price"></td>
+                                                    <td id="ar_price" style="display: none;">
+                                                        <div class="input-group">
+                                                            <input type="text" id="ar_minPrice" class="form-control" >
+                                                            <span class="input-group-addon">
+                                                                ~ </span>
+                                                            <input type="text" id="ar_maxPrice" class="form-control" >    
+                                                        </div>  
+                                                        <!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ngày hẹn</th>
+                                                    <td id='r_fromDateToDate'></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Trạng thái</th>
+                                                    <td id='r_status'>
+
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+                                        <!-- END PRODUCT DESCRIPTION -->
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div id="r_footer" >
+                                        <form action="ConsignmentRequestReceive" method="POST">
+                                            <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
+                                            <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                            <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
+                                            <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                        </form>
+
+                                    </div>
+                                    <div id="ar_footer" style="display: none;">
+                                        <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
+                                            <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
+                                            <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                            <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                            <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
+                                            <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
+                                            <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
+                                            <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
+                                        </form>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- END MODAL -->
+
                 </div>
-                <!-- END MODAL -->
-
             </div>
+            <!-- END SIDEBAR & CONTENT -->
+
         </div>
-        <!-- END SIDEBAR & CONTENT -->
-
-
     </jsp:body>
 </template:shopbasic>
 

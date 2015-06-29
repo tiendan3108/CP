@@ -46,33 +46,31 @@ public class OrderProduct extends HttpServlet {
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
             String action = request.getParameter("btnAction");
-            String url = "";
+            String url = "", consignmentID = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String tmp_productID = request.getParameter("txtProductID");
+                DanqtDAO dao = new DanqtDAO();
                 int productID = Integer.parseInt(tmp_productID);
-                String consignmentID = request.getParameter("txtConsignmentID");
+                AccountDTO consignor = dao.getCustomerInforByProductID(productID);
+                JavaUltilities ultil = new JavaUltilities();
+                String message = "";
                 int status = 0;
                 float sellingPrice = 0;
                 if (action.equals("notOrder")) {
                     status = ProductStatus.ON_WEB;
                 } else {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
+                    consignmentID = request.getParameter("txtConsignmentID");
                     sellingPrice = Float.parseFloat(temp_sellingPrice);
                     status = ProductStatus.SOLD;
-                }
-                //change db and send sms, email
-                {
-                    DanqtDAO dao = new DanqtDAO();
-                    AccountDTO consignor = dao.getCustomerInforByProductID(productID);
-                    JavaUltilities ultil = new JavaUltilities();
-                    String message = "";
+                    //send sms
                     if (consignor.getPhone() != null) {
                         message = "Hang ki gui voi ma " + consignmentID + " cua ban da duoc ban. Vui long lien he voi"
                                 + " chu cua hang " + user.getFullName() + " de biet them chi tiet.";
                         try {
-                            ultil.sendSMS(message, "+84" + consignor.getPhone().substring(1, consignor.getPhone().length()));
+                            ultil.sendSMS(message, consignor.getPhone());
                         } catch (TwilioRestException ex) {
                             Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -82,10 +80,11 @@ public class OrderProduct extends HttpServlet {
                                 + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
                         ultil.sendEmail(consignor.getEmail(), "[HPS] Hàng kí gửi", message);
                     }
-                    dao.orderProduct(productID, status, sellingPrice);
-                    url = GlobalVariables.MANAGERMENT_SERVLET;
-                    request.setAttribute("currentTab", "ordered");
                 }
+                //change db
+                dao.orderProduct(productID, status, sellingPrice);
+                url = GlobalVariables.MANAGERMENT_SERVLET;
+                request.setAttribute("currentTab", "ordered");
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

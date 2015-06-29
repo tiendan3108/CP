@@ -15,8 +15,6 @@
         <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${not empty acc}">
             <c:if test="${acc.role == 'member'}">
-                <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
-                <li><a href="ConsignServlet">Kí Gửi</a></li>
                 <li id="nofi">
                     <a href="#">
                         <i class="icon-bell"></i>
@@ -31,10 +29,6 @@
                 </li>
             </c:if>
         </c:if>
-        <c:if test="${empty acc}">
-            <li><a href="ViewCartServlet">Giỏ Hàng</a></li>  
-            <li><a href="ConsignServlet">Kí Gửi</a></li>
-            </c:if>
         </jsp:attribute>
         <jsp:body>      
         <div class="row margin-bottom-40">

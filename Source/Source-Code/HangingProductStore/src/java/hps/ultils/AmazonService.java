@@ -35,37 +35,35 @@ public class AmazonService {
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
     public static final String ASS_TAG = "danqt-20";// account given by amazon so we can send request.
 
-    public static void main(String[] args) {
-        AmazonService test = new AmazonService();
-        test.getProduct("rayban 3025", "Rayban", "FashionMen");
-    }
-
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
-
-        SignedRequestsHelper helper;
-        try {
-            helper = SignedRequestsHelper.getInstance(ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, ASS_TAG);
-        } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
-            return null;
-        }
-
-        String requestUrl = null;
         List<AmazonProduct> result = new ArrayList<>();
+        try {
+            SignedRequestsHelper helper;
+            try {
+                helper = SignedRequestsHelper.getInstance(ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, ASS_TAG);
+            } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
+                return null;
+            }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("Service", "AWSECommerceService");//ok
-        params.put("Operation", "ItemSearch");
-        params.put("Keywords", keywords);
-        params.put("ResponseGroup", "Offers");
-        params.put("Condition", "New");
-        params.put("MerchantId", "All");
-        params.put("SearchIndex", type);
-        params.put("Brand", brand);
+            String requestUrl = null;
 
-        requestUrl = helper.sign(params);
-        System.out.println(requestUrl);
-        result = fetchProduct(requestUrl);
-        return result;
+            Map<String, String> params = new HashMap<>();
+            params.put("Service", "AWSECommerceService");//ok
+            params.put("Operation", "ItemSearch");
+            params.put("Keywords", keywords);
+            params.put("ResponseGroup", "Offers");
+            params.put("Condition", "New");
+            params.put("MerchantId", "All");
+            params.put("SearchIndex", type);
+            params.put("Brand", brand);
+
+            requestUrl = helper.sign(params);
+            System.out.println(requestUrl);
+            result = fetchProduct(requestUrl);
+            return result;
+        } catch (Exception e) {
+            return result;
+        }
     }
 
     private List<AmazonProduct> fetchProduct(String requestUrl) {
@@ -78,7 +76,7 @@ public class AmazonService {
             Document doc = db.parse(requestUrl);
             doc.getDocumentElement().normalize();
             NodeList source, items, itemContent, offerSummaryContent, lowestNewPriceContent;
-            Node nNode, item, ASINNode, offerSummaryNode, lowestNewPriceNode, priceNode, currencyNode;
+            Node nNode, item, ASINNode, offerSummaryNode, lowestNewPriceNode, priceNode, currencyNode, parentASINNode;
             String ASIN, Currency;
             Float price;
             source = doc.getElementsByTagName("Items");
@@ -102,7 +100,12 @@ public class AmazonService {
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
                 ASIN = ASINNode.getTextContent();
-                offerSummaryNode = itemContent.item(2);
+                parentASINNode = itemContent.item(1);
+                if (parentASINNode.getNodeName().equals("OfferSummary")) {
+                    offerSummaryNode = itemContent.item(1);
+                } else {
+                    offerSummaryNode = itemContent.item(2);
+                }
                 offerSummaryContent = offerSummaryNode.getChildNodes();
                 lowestNewPriceNode = offerSummaryContent.item(0);
                 lowestNewPriceContent = lowestNewPriceNode.getChildNodes();

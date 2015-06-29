@@ -120,7 +120,7 @@ public class CancelProduct extends HttpServlet {
             //send confirm information
             if (flag) {//send SMS
                 try {
-                    ultil.sendSMS(message, "+84" + consignor.getPhone().substring(1, consignor.getPhone().length()));
+                    ultil.sendSMS(message,consignor.getPhone());
                 } catch (TwilioRestException ex) {
                     url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                     Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);

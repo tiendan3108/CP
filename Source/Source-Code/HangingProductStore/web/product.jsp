@@ -11,8 +11,7 @@
     <jsp:attribute name="extraBottomContent">
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
-    <jsp:attribute name="extraNavigationContent">  
-        <li><a href="ConsignServlet">Kí Gửi</a></li>
+    <jsp:attribute name="extraNavigationContent">
         <li id="nofi">
             <a href="#">
                 <i class="icon-bell"></i>

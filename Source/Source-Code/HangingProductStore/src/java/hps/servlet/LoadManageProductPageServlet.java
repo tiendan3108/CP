@@ -54,6 +54,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
+
                 List<ConsignmentDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
                 List<ConsignmentDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
                 List<ConsignmentDTO> ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED);
@@ -63,6 +64,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 List<CategoryDTO> parentCat = catDao.getParentCategory();
                 List<CategoryDTO> allCat = catDao.getAllCategory();
                 List<SeasonDTO> season = dao.getSeason();
+
                 Object currentTab = request.getAttribute("currentTab");
                 String tab = "";
                 if (currentTab != null) {
@@ -70,6 +72,39 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 } else {
                     tab = "available";
                 }
+                String keywork = request.getParameter("txtKeywork");
+                if (keywork != null) {
+                    tab = request.getParameter("txtCurrentTab");
+                }
+                if (keywork != null) {
+                    switch (tab) {
+                        case "available":
+                            available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE, keywork);
+                            request.setAttribute("keywork1", keywork);
+                            break;
+                        case "onWeb":
+                            onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB, keywork);
+                            request.setAttribute("keywork2", keywork);
+                            break;
+                        case "ordered":
+                            ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED, keywork);
+                            request.setAttribute("keywork3", keywork);
+                            break;
+                        case "sold":
+                            sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD, keywork);
+                            request.setAttribute("keywork4", keywork);
+                            break;
+                        case "completed":
+                            completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED, keywork);
+                            request.setAttribute("keywork5", keywork);
+                            break;
+                        case "canceled":
+                            canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL, keywork);
+                            request.setAttribute("keywork6", keywork);
+                            break;
+                    }
+                }
+
                 request.setAttribute("available", available);
                 request.setAttribute("onWeb", onWeb);
                 request.setAttribute("ordered", ordered);

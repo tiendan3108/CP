@@ -131,7 +131,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                         try {
                             item.write(file); // Write to destination file.
                         } catch (Exception ex) {
-                            Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         imagePath = "assets/image/" + consigmentID + filename;
                     }

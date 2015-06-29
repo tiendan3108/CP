@@ -67,7 +67,6 @@ public class PublishProduct extends HttpServlet {
                 }
                 for (FileItem item : items) {
                     if (item.isFormField()) {
-                        System.out.println(item.getFieldName());
                         switch (item.getFieldName()) {
                             case "txtProductName":
                                 productName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -101,13 +100,12 @@ public class PublishProduct extends HttpServlet {
                         if (filename == null || filename.equals("")) {
                         } else {
                             filename = JavaUltilities.getFileUpload(path, filename, productID);
-                            image = "\\assets\\image\\" + filename;
-                            System.out.println(path + image);
-                            File file = new File(path + image); // Define destination file.
+                            image = "assets\\image\\" + filename;
+                            File file = new File(path + "\\" + image); // Define destination file.
                             try {
                                 item.write(file); // Write to destination file.
                             } catch (Exception ex) {
-                                Logger.getLogger(UploadImageServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(PublishProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     }
