@@ -291,7 +291,7 @@
     $(function () {
 //        $('#txtFromDate').datepicker();
 //        $('#txtToDate').datepicker();
-        if ($('#txtPhone').val() != "") {
+        if ($('#txtPhone').val().contains("+84")) {
             var phone = $('#txtPhone').val();
             phone = "0" + phone.substring(3);
             $('#txtPhone').val(phone);

@@ -12,21 +12,7 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <li id="nofi">
-                <a href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default">3</span>           
-                </a>
-                <ul class="fallback">
-                    <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                </ul>
-            </li>
-        </c:if>
+        
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper">
@@ -129,6 +115,7 @@
                                                                                                                                         </td>-->
                                                                         <c:if test="${basicPrice > 0}">
                                                                             <td>
+                                                                                
                                                                                 <fmt:formatNumber type="number"
                                                                                                   value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 

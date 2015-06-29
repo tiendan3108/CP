@@ -313,10 +313,14 @@ public class DuchcDAO {
             //basicPrice = amazon.getPrice(productName, brand, englishName);
 
             List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
-            for (AmazonProduct product : list) {
-                basicPrice += product.getPrice();
+            if (list != null) {
+                for (AmazonProduct product : list) {
+                    basicPrice += product.getPrice();
+                }
+                basicPrice = (basicPrice / list.size());
+            }else{
+                System.out.println("amazon list is null");
             }
-            basicPrice = (basicPrice / list.size());
 
             return basicPrice;
         } catch (SQLException ex) {
@@ -338,7 +342,9 @@ public class DuchcDAO {
         }
         return -1;
     }
+
     //
+
     public void updateProductImage(int productID, String imageLink) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -370,7 +376,9 @@ public class DuchcDAO {
             }
         }
     }
+
     //autocompleteBrandName
+
     public static List<String> autoCompleteBrandName(String brandName) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -409,7 +417,7 @@ public class DuchcDAO {
         }
         return result;
     }
-    
+
     /**
      *
      * @DucHC getProduct FullInfo, copy from productDAO

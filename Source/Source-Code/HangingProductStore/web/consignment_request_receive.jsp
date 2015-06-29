@@ -564,7 +564,7 @@
             $("#r_description").html(data.product.description);
             $("#r_createdDate").html(data.createdDate);
             $("#r_email").html(data.email);
-            $("#r_phone").html(data.phone);
+            $("#r_phone").html( "0" + data.phone.substring(3));
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
             if (data.product.productStatusID == 6) {

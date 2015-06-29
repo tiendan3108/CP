@@ -67,7 +67,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String phone = null;
                 String email = null;
                 String paypalAccount = null;
-                String rdContact = "";
                 String rdPayment = "";
 
                 JavaUltilities ulti = new JavaUltilities();
@@ -101,8 +100,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 phone = item.getString();
                                 if (phone.length() > 0) {
                                     phone = "+84" + phone.substring(1);
-
-                                    System.out.println(phone);
                                 }
                                 break;
                             case "txtEmail":
@@ -111,9 +108,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                             case "txtPaypalAccount":
                                 paypalAccount = item.getString();
                                 break;
-                            case "rdContact":
-                                rdContact = item.getString();
-                                break;
                             case "rdPayment":
                                 rdPayment = item.getString();
                                 break;
@@ -121,19 +115,28 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                         }
                     } else {
-                        String path = request.getServletContext().getRealPath("") + File.separator + SAVE_DIR; //specify your path here
-                        File fileSaveDir = new File(path);
-                        if (!fileSaveDir.exists()) {
-                            fileSaveDir.mkdir();
-                        }
-                        String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                        File file = new File(path, consigmentID + filename); // Define destination file.
+                        String projectPath = request.getServletContext().getRealPath("/") ; // web
+                        String basePath = projectPath.substring(0, projectPath.length() - 9)+ "web\\assets\\image";;// base path
+                        String deploymentPath = projectPath+"\\assets\\image";
+                        
+//                        File fileSaveDir = new File(path);
+//                        System.out.println("File path father: " + fileSaveDir.getParent());
+//                        if (!fileSaveDir.exists()) {
+//                            fileSaveDir.mkdir();
+//                        }
+                        String filename = consigmentID + FilenameUtils.getName(item.getName()); // Get filename.
+                        //web path
+                        File file = new File(basePath + "\\" +  filename); // base file
+                        // project path
+                        File file2 = new File(deploymentPath + "\\" + filename);//deployment file
                         try {
-                            item.write(file); // Write to destination file.
+                            item.write(file); // Write to base place
+                            item.write(file2);// write to deployment place
                         } catch (Exception ex) {
+                            System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        imagePath = "assets/image/" + consigmentID + filename;
+                        imagePath = "assets/image/" + filename;
                     }
                 }
 
@@ -161,9 +164,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                     //get store de lay fomula va nam cua store
                     AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
                     if (session.getAttribute("BASICPRICE") != null) {
-                        maxPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-                        maxPrice = (maxPrice * 60 / 100) * (1 + store.getFormula() / 100);
-                        minPrice = (maxPrice * 60 / 100) * (1 - store.getFormula() / 100);
+                        double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
+                        maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
+                        minPrice = Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
+                        System.out.println("MaxPrice: " + maxPrice);
+                        System.out.println("MinPrice: " + minPrice);
 
                     }
 
