@@ -34,8 +34,8 @@
                 </li>
             </c:if>
         </c:if>
-        </jsp:attribute>
-        <jsp:body>  
+    </jsp:attribute>
+    <jsp:body>  
         <div id="wrapper">
             <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row margin-bottom-40">
@@ -97,12 +97,14 @@
                                             <p>Địa chỉ: ${store.address}</p> 
                                         </div>  
                                     </c:if>
-
-                                    <div class="product-page-options">
-                                        <div class="pull-left">
-                                            <a class="btn btn-primary" href="ConfirmOrderServlet?productId=${item.productID}">Đặt hàng</a>
+                                    <c:set var="account" value="${sessionScope.ACCOUNT}"/>
+                                    <c:if test="${empty account || account.role == 'member'}">
+                                        <div class="product-page-options">
+                                            <div class="pull-left">
+                                                <a class="btn btn-primary" href="ConfirmOrderServlet?productId=${item.productID}">Đặt hàng</a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -113,32 +115,34 @@
                 <!-- END SIDEBAR & CONTENT -->
 
                 <!-- BEGIN SIMILAR PRODUCTS -->
-                <c:set var="similarProducts" value="${requestScope.SIMILARPRODUCT}"/>
-                <div class="row margin-bottom-40" style="margin-top: 600px">
-                    <div class="col-md-12 col-sm-12">
-                        <h2>Sản phẩm tương tự</h2>
-                        <div class="owl-carousel owl-carousel4">
-                            <c:if test="${not empty similarProducts}">
-                                <c:forEach var="productItem" items="${similarProducts}">
-                                    <div>
-                                        <div class="product-item">
-                                            <div class="pi-img-wrapper">
-                                                <img src='${productItem.image}' class="imgCrop3">
-                                            </div>
-                                            <h3 style="color: black">${productItem.name}</h3>
+                <c:if test="${empty account || account.role == 'member'}">
+                    <c:set var="similarProducts" value="${requestScope.SIMILARPRODUCT}"/>
+                    <div class="row margin-bottom-40" style="margin-top: 600px">
+                        <div class="col-md-12 col-sm-12">
+                            <h2>Sản phẩm tương tự</h2>
+                            <div class="owl-carousel owl-carousel4">
+                                <c:if test="${not empty similarProducts}">
+                                    <c:forEach var="productItem" items="${similarProducts}">
+                                        <div>
+                                            <div class="product-item">
+                                                <div class="pi-img-wrapper">
+                                                    <img src='${productItem.image}' class="imgCrop3">
+                                                </div>
+                                                <h3 style="color: black">${productItem.name}</h3>
 
-                                            <c:url var="viewDetail" value = "ViewProductDetailServlet">
-                                                <c:param name="productID" value="${productItem.productID}"/>
-                                            </c:url>
-                                            <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi Tiết</a>
-                                            <div class="sticker sticker-new"></div>
+                                                <c:url var="viewDetail" value = "ViewProductDetailServlet">
+                                                    <c:param name="productID" value="${productItem.productID}"/>
+                                                </c:url>
+                                                <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi Tiết</a>
+                                                <div class="sticker sticker-new"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:forEach>
-                            </c:if>                   
+                                    </c:forEach>
+                                </c:if>                   
+                            </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
                 <!-- END SIMILAR PRODUCTS -->
             </div>
         </div>
