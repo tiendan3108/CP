@@ -317,8 +317,11 @@ public class DuchcDAO {
                 for (AmazonProduct product : list) {
                     basicPrice += product.getPrice();
                 }
-                basicPrice = (basicPrice / list.size());
-            }else{
+                if (list.size() > 1) {
+                    basicPrice = (basicPrice / list.size());
+                }
+
+            } else {
                 System.out.println("amazon list is null");
             }
 
@@ -344,7 +347,6 @@ public class DuchcDAO {
     }
 
     //
-
     public void updateProductImage(int productID, String imageLink) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -378,7 +380,6 @@ public class DuchcDAO {
     }
 
     //autocompleteBrandName
-
     public static List<String> autoCompleteBrandName(String brandName) {
         Connection con = null;
         PreparedStatement stm = null;

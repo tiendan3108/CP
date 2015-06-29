@@ -129,15 +129,14 @@
                 ComponentsPickers.init();
 
             });
-
-
-        </script>
-        <script type="text/javascript">
-            $(function () {
-                if ($("#txtErr").html() != "") {
+            
+                if ($("#txtErr").html() != "") {;
                     $("#loginModal2").modal("show");
                 }
-            });
+            
+        </script>
+        <script type="text/javascript">
+
         </script>
         <jsp:invoke fragment="extraBottomContent" />
     </jsp:attribute>

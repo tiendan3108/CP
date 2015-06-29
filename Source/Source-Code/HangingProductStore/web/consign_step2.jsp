@@ -14,7 +14,9 @@
     <jsp:attribute name="extraNavigationContent">
         
     </jsp:attribute>
+        
     <jsp:body>
+        
         <div id="wrapper">
             <div class="row margin-bottom-40">
 
@@ -73,6 +75,7 @@
 
 
                                                 <c:if test="${not empty data}">
+                                                    
                                                     <form id="form2"  action="ConsignServlet" method="POST">
                                                         <table class="table table-striped table-hover">
                                                             <thead>
@@ -97,7 +100,9 @@
                                                                     </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody>
+                                                            <tbody>                                                                 
+                                                                 
+                                                                 
                                                                 <c:forEach var="item" items="${data}" varStatus="count">
                                                                     <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
 
@@ -115,11 +120,12 @@
                                                                                                                                         </td>-->
                                                                         <c:if test="${basicPrice > 0}">
                                                                             <td>
-                                                                                
+                                                                                <fmt:parseNumber var="minPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 - item.formula/100) / 1000}" />
+                                                                                <fmt:parseNumber var="maxPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 + item.formula/100) / 1000}" />
                                                                                 <fmt:formatNumber type="number"
-                                                                                                  value="${(basicPrice * 60/100) * ( 1 - item.formula/100)}" 
+                                                                                                  value="${minPrice * 1000}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 
-                                                                                                  value="${(basicPrice * 60/100)* (1 + item.formula/100) }" 
+                                                                                                  value="${maxPrice * 1000}" 
                                                                                                   maxFractionDigits="0" />
                                                                             </td>
                                                                         </c:if>
