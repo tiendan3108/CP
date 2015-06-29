@@ -104,9 +104,20 @@
 
         <!-- END PAGE LEVEL SCRIPTS -->
         <script>
+            $(document).ready(function () {
+                $("#nofi").click(function () {
+                    $("#nav ul li ul.fallback").css("display", "block");
+                    $('html').click(function (event) {
+                        if ($(event.target).parents('#nofi').length == 0) {
+                            $("#nav ul li ul.fallback").css("display", "none");
+                            $(this).unbind(event);
+                        }
+                    })
+                });
+            });
             jQuery(document).ready(function () {
                 // initiate layout and plugins
-                
+
                 Layout.init(); // init current layout
                 Demo.init(); // init demo features
 
@@ -129,46 +140,8 @@
             });
         </script>
         <jsp:invoke fragment="extraBottomContent" />
-
     </jsp:attribute>
-    <jsp:attribute name="navigationContent">      
-        <c:set var="member" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${empty member}">
-            <li><a data-toggle="modal" data-target="#loginModal2">Đăng nhập</a></li>            
-            </c:if>
-            <c:if test="${not empty member}">
-            <li>
-                <c:url value="/ConsignServlet" var="logoutUrl">
-                    <c:param name="btnAction" value="logout" />
-                    <c:param name="backlink" value="${requestScope.backlink}" />
-                </c:url>
-                <a href="${logoutUrl}">Đăng xuất</a>
-            </li>         
-        </c:if>
-
-        <c:if test="${not empty member}">
-            <li> <b>${member.fullName}</b></li>            
-            </c:if>
-        <!--        <li><a href="TrackProductStatusServlet">Kiểm tra hàng ký gửi</a></li>-->
-        <li><a href="ViewCartServlet">Giỏ hàng</a></li>
-        <li><a href="ConsignServlet">Ký gửi</a></li>
-
-
-        <c:if test="${not empty member}">
-            <li id="nofi">
-                <a href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default">3</span>           
-                </a>
-                <ul class="fallback">
-                    <li style="margin-left: -40px"><a href="#">thông báo 1</a></li>
-                    <li style="margin-left: -40px"><a href="#">thông báo 2</a></li>
-                    <li style="margin-left: -40px"><a href="#">thông báo 3</a></li>
-                    <li style="margin-left: -40px"><a href="#">thông báo 4</a></li>
-                </ul>
-            </li>  
-        </c:if>
-
+    <jsp:attribute name="navigationContent">
         <c:if test="${empty member}">
             <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
@@ -178,7 +151,6 @@
                             <h1 class="text-center">Đăng Nhập</h1>
                         </div>
                         <div class="modal-body">
-
                             <div class="row">
                                 <form class="form col-md-12 center-block" action="ConsignServlet" method="POST">
                                     <div class="form-group">
@@ -201,6 +173,23 @@
                     </div>
                 </div>
             </div>
+        </c:if>
+        <c:set var="account" value="${sessionScope.ACCOUNT}"/>
+        <c:if test="${empty account}">
+            <li><a data-toggle="modal" data-target="#loginModal2">Đăng Nhập</a></li>
+            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="ConsignServlet">Kí Gửi</a></li>
+            </c:if>
+            <c:if test="${not empty account && account.role == 'member'}">
+            <li><a href="LogoutServlet">Đăng Xuất</a></li>
+            <li><a href="#">${account.fullName}</a></li>
+            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="ConsignServlet">Kí Gửi</a></li>
+            </c:if>
+            <c:if test="${not empty account && account.role == 'storeOwner'}">
+            <li><a href="LogoutServlet">Đăng Xuất</a></li>
+            <li><a href="#">${account.fullName}</a></li>
+            <li><a href="ConsignmentRequestReceive">Quản lý</a></li>
         </c:if>
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>

@@ -152,13 +152,21 @@
         </c:if>
         <c:set var="account" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${empty account}">
-            <li><a data-toggle="modal" data-target="#loginModal">Đăng Nhập</a></li> 
-            <li><a href="TrackProductStatus">Kiểm tra</a></li> 
-            </c:if>
-            <c:if test="${not empty account}">
+            <li><a data-toggle="modal" data-target="#loginModal">Đăng Nhập</a></li>
+            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="ConsignServlet">Kí Gửi</a></li>
+        </c:if>
+        <c:if test="${not empty account && account.role == 'member'}">
             <li><a href="LogoutServlet">Đăng Xuất</a></li> 
-            <li><a href="TrackProductStatus">${account.fullName}</a></li>           
-            </c:if>  
+            <li><a href="#">${account.fullName}</a></li>
+            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="ConsignServlet">Kí Gửi</a></li>
+        </c:if>
+        <c:if test="${not empty account && account.role == 'storeOwner'}">
+            <li><a href="LogoutServlet">Đăng Xuất</a></li>
+            <li><a href="#">${account.fullName}</a></li>
+            <li><a href="ConsignmentRequestReceive">Quản lý</a></li>
+        </c:if>
         <jsp:invoke fragment="extraNavigationContent" />
     </jsp:attribute>
     <jsp:body>
