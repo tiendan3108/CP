@@ -166,14 +166,44 @@ public class ProductDetailDAO {
                     + "Set ReceivedDate = ?, "
                     + "MaxPrice = ?, "
                     + "MinPrice = ?, "
-                    + "ConsignmentStatusId = ? "
-                    + "where ProductId = ?";
+                    + "ConsignmentStatusID = ? "
+                    + "where ProductID = ?";
             stm = con.prepareStatement(query);
             stm.setString(1, receivedDate);
             stm.setFloat(2, maxPrice);
             stm.setFloat(3, minPrice);
             stm.setInt(4, ConsignmentStatus.RECEIVED);
             stm.setInt(5, productID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+    public boolean receiveProduct(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "update Product "
+                    + "Set ProductStatusID = ? "
+                    + "where ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, ProductStatus.AVAILABLE);
+            stm.setInt(2, productID);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {

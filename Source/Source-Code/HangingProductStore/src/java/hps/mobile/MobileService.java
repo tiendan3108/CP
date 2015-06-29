@@ -94,6 +94,7 @@ public class MobileService {
         Date date = new Date();
         String newDate = df.format(date);
         dao.updateConsignment(product.getProductID(), newDate, product.getMinPrice(), product.getMaxPrice());
+        dao.receiveProduct(product.getProductID());
         return "ok";
     }
 
