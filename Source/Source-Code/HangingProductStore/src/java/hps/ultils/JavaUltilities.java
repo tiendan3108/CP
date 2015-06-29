@@ -74,6 +74,10 @@ public class JavaUltilities {
         }
     }
 
+    /**
+     *
+     * @author HoangNHSE61007 Create random String
+     */
     public String randomString(int len) {
         StringBuilder sb = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
@@ -81,7 +85,10 @@ public class JavaUltilities {
         }
         return sb.toString();
     }
-
+    /**
+     *
+     * @author HoangNHSE61007 send SMS
+     */
     public void sendSMS(String content, String to) throws TwilioRestException {
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -93,7 +100,10 @@ public class JavaUltilities {
         Message message = messageFactory.create(params);
         System.out.println(message.getSid());
     }
-
+    /**
+     *
+     * @author HoangNHSE61007 send Email
+     */
     public void sendEmail(String to, String subject, String body) {
         String from = USER_NAME;
         String pass = PASSWORD;
@@ -134,7 +144,10 @@ public class JavaUltilities {
             me.printStackTrace();
         }
     }
-
+    /**
+     *
+     * @author HoangNHSE61007 encode Image for mobile service
+     */
     public String encodeImage(String filePath) {
         File image = new File(filePath);
         try {
@@ -151,8 +164,11 @@ public class JavaUltilities {
         }
         return null;
     }
-
-    public void reduceQulityImage(String inputFile, String outputFile) {
+    /**
+     *
+     * @author HoangNHSE61007 reduce image Qulity
+     */
+    public void reduceImageQulity(String inputFile, String outputFile) {
 
         try {
             float quality = 0.3f;
@@ -182,11 +198,14 @@ public class JavaUltilities {
         }
 
     }
-
+    /**
+     *
+     * @author format date from yyyy-MM-dd to dd-MM-yyyy
+     */
     public String formatDateString(String dateString) {
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyy");
+            SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
             Date date = df.parse(dateString);
             String result = df2.format(date);
             return result;
@@ -203,7 +222,7 @@ public class JavaUltilities {
         File image = new File(path + product.getImage());
         try {
             image.deleteOnExit();
-            return consignmentID+fileName;
+            return consignmentID + fileName;
         } catch (Exception e) {
         }
         return null;
