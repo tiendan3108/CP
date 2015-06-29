@@ -101,7 +101,7 @@
 
         <!-- Main BEGIN -->
         <div class="main">
-            <div id="wrapper">
+            <div>
                 <h2><c:out value="${fn:trim(bodyTitle)}" /></h2>
                 <jsp:doBody />
             </div>
