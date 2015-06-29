@@ -59,12 +59,12 @@ public class ConsignServlet extends HttpServlet {
             String action = request.getParameter("btnAction");
             if (action == null) {
                 action = "consign";
+                session.removeAttribute("storeName");
+                session.removeAttribute("trackId");
+                session.removeAttribute("PRODUCT");
             }
             String url = "";
             if (action.equals("consign")) {
-
-                session.removeAttribute("storeName");
-                session.removeAttribute("trackId");
 
                 if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
                     CategoryDAO cateDao = new CategoryDAO();

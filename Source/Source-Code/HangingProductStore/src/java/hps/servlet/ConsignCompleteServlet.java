@@ -177,10 +177,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
                         JavaUltilities java = new JavaUltilities();
+                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
+                                + "Mã sản phẩm của bạn là: " +  consigmentID + ". \n"
+                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
                         if (phone.length() > 0) {
                             try {
-                                String msg = "Cam on " + fullName + " da ky gui thanh cong. Ma san pham cua ban la: " + consigmentID + ". "
-                                        + store.getFullName() + " se xem xet yeu cau cua ban.";
+                                
                                 java.sendSMS(msg, phone);
                             } catch (Exception e) {
                                 System.out.println("Loi khi gui tin nhan sms!");
@@ -189,7 +191,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                         }
                         if (email.length() > 0) {
                             try {
-                                java.sendEmail(email, "Ky gui thanh cong!", "Ma san pham cua ban la: " + consigmentID + ".");
+                                java.sendEmail(email, "Ky gui thanh cong!", msg);
                             } catch (Exception e) {
                                 System.out.println("Loi khi gui email!");
                                 e.printStackTrace();

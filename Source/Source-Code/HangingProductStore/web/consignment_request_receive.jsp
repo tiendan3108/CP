@@ -55,10 +55,10 @@
                         <!-- Nav tabs -->
                         <ul class=" nav nav-tabs nav-justified" id="myTab">
 
-                            <li id="requestTab"  class="active"><a href="#request"><b>Yêu cầu chưa duyệt</b></a></li>
-                            <li id="acceptedTab"><a href="#accepted"><b>Yêu cầu đã duyệt</b></a></li>
-                            <li id="refuseTab"><a href="#refuse"><b>Yêu cầu đã từ chối</b></a></li>
-                            <li id="cancelTab"><a href="#cancel"><b>Yêu cầu đã hủy</b></a></li>
+                            <li id="requestTab"  class="active"><a href="#request"><b>Chưa duyệt</b></a></li>
+                            <li id="acceptedTab"><a href="#accepted"><b>Đã duyệt</b></a></li>
+                            <li id="refuseTab"><a href="#refuse"><b>Từ chối</b></a></li>
+                            <li id="cancelTab"><a href="#cancel"><b>Đã hủy</b></a></li>
                         </ul>
 
                         <!-- Tab panes -->
@@ -525,16 +525,25 @@
     $(document).ready(function () {
         $('.tabs .nav-tabs a').on('click', function (e) {
             var currentAttrValue = $(this).attr('href');
-            $('.tabs ' + currentAttrValue).fadeIn(400).siblings().hide();
-            $(this).parent('li').addClass('active').siblings().removeClass('active');
+
+            $('.tabs ' + currentAttrValue).siblings().hide();
+            $(this).parent('li').siblings().removeClass('active');
+
+            $('.tabs ' + currentAttrValue).fadeIn(400);
+            $(this).parent('li').addClass('active');
+
             e.preventDefault();
         });
     });
     $(document).ready(function () {
         var currentTab = $('#currentTab').val();
         var currentLi = currentTab + 'Tab';
-        $('div#' + currentTab).fadeIn(400).siblings().hide();
-        $('li#' + currentLi).addClass('active').siblings().removeClass('active');
+        $('div#' + currentTab).siblings().hide();
+        $('li#' + currentLi).siblings().removeClass('active');
+        
+        $('div#' + currentTab).fadeIn(400);
+        $('li#' + currentLi).addClass('active');
+
     });
 
     $(function () {
@@ -564,7 +573,7 @@
             $("#r_description").html(data.product.description);
             $("#r_createdDate").html(data.createdDate);
             $("#r_email").html(data.email);
-            $("#r_phone").html( "0" + data.phone.substring(3));
+            $("#r_phone").html("0" + data.phone.substring(3));
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
             if (data.product.productStatusID == 6) {

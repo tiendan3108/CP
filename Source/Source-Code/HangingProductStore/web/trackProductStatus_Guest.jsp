@@ -13,12 +13,6 @@
 </jsp:attribute>
 <jsp:attribute name="extraNavigationContent">
 
-
-
-    
-    <li><a href="ConsignServlet">Kí Gửi</a></li>
-
-
 </jsp:attribute>
 
 <jsp:attribute name="extraBottomContent">
@@ -26,225 +20,226 @@
     <script src="js/jquery-ui.min.js"></script>
 </jsp:attribute>
 <jsp:body>
-    <!-- BEGIN SIDEBAR & CONTENT -->
-    <div class="row margin-bottom-40">
-        <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
-            <div class="row">
+    <div id="wrapper">
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
+                <div class="row">
 
-                <form class="form-horizontal" role="form" action="TrackProductStatus">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                                <div class="input-group">
-                                    <input id="searchInput" class="form-control" type="text" name="searchValue" value="${param.searchValue}" placeholder="Điền CODE">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="submit" name="btnAction" value="search">Kiểm tra</button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <br/><br/>
-                <c:if test="${empty CONSIGNMENT}">
-                    <c:if test="${not empty param.searchValue}">
-                        <h2 align="center">Sản phẩm với code này không tồn tại.</h2>
-                    </c:if>
-                </c:if>
-                <c:if test="${not empty CONSIGNMENT}">
-                    <c:set var="c" value="${CONSIGNMENT}"/>
-
-                    <!-- BEGIN PAGE CONTENT-->
-                    <div class="row margin-bottom-25">
-                        <!-- BEGIN CAROUSEL -->
-                        <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
-                            <div class="col-lg-5 col-md-5">Email: <b><span  id="r_email">${c.email}</span></b></div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9 col-md-9 col-lg-offset-3">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
-                            
-                        <br/>
-                        <div class="col-lg-4 col-md-4 front-carousel">
-
-                            <div class="carousel slide" id="myCarousel">
-                                <!-- Carousel items -->
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img id="r_image" alt="${c.product.name}" src="${c.product.image}">
-                                        <div class="carousel-caption">
-                                            <p></p>
-                                        </div>
+                    <form class="form-horizontal" role="form" action="TrackProductStatus">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                                    <div class="input-group">
+                                        <input id="searchInput" class="form-control" type="text" name="searchValue" value="${param.searchValue}" placeholder="Điền CODE">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" type="submit" name="btnAction" value="search">Kiểm tra</button>
+                                        </span>
                                     </div>
                                 </div>
-                                <!-- Carousel nav -->
-                                <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                    <i class="fa fa-angle-left"></i>
-                                </a>
-                                <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
                             </div>
-
                         </div>
-                        <!-- END CAROUSEL -->
+                    </form>
+                    <br/><br/>
+                    <c:if test="${empty CONSIGNMENT}">
+                        <c:if test="${not empty param.searchValue}">
+                            <h2 align="center">Sản phẩm với code này không tồn tại.</h2>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${not empty CONSIGNMENT}">
+                        <c:set var="c" value="${CONSIGNMENT}"/>
 
-                        <!-- BEGIN PRODUCT DESCRIPTION -->
-                        <div class="col-lg-8 col-md-8">
-                            <table style="font-size: 110%; border: none" class="table table-striped table-hover">
-                                <tr>
-                                    <th width="30%">Tên sản phẩm</th>
-                                    <td id='r_productName'><b>${c.product.name}</b></td>
-                                </tr>
-                                <tr>
-                                    <th width="30%">Mô tả</th>
-                                    <td id='r_description'>${c.product.description}</td>
-                                </tr>
-                                <tr>
-                                    <th>Cửa hàng ký gửi</th>
-                                    <td id='r_createdDate'><b>${c.storeOwner.fullName}</b></td>
-                                </tr>
-                                <tr>
-                                    <th>Ngày ký gửi</th>
-                                    <td id='r_createdDate'>${c.createdDate}</td>
-                                </tr>
+                        <!-- BEGIN PAGE CONTENT-->
+                        <div class="row margin-bottom-25">
+                            <!-- BEGIN CAROUSEL -->
+                            <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
+                            <div class="row">
+                                <div class="col-lg-3 col-md-3">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
+                                <div class="col-lg-5 col-md-5">Email: <b><span  id="r_email">${c.email}</span></b></div>
 
-                                <tr >
-                                    <th>Giá</th>
-                                    <td id="r_price"><fmt:formatNumber type="number"
-                                                      value="${c.minPrice}" 
-                                                      maxFractionDigits="0"/>
-                                        &nbsp;~&nbsp; <fmt:formatNumber type="number"
-                                                          value="${c.maxPrice}" 
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-9 col-md-9 col-lg-offset-3">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
+
+                            <br/>
+                            <div class="col-lg-4 col-md-4 front-carousel">
+
+                                <div class="carousel slide" id="myCarousel">
+                                    <!-- Carousel items -->
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img id="r_image" alt="${c.product.name}" src="${c.product.image}">
+                                            <div class="carousel-caption">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Carousel nav -->
+                                    <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                    <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <!-- END CAROUSEL -->
+
+                            <!-- BEGIN PRODUCT DESCRIPTION -->
+                            <div class="col-lg-8 col-md-8">
+                                <table style="font-size: 110%; border: none" class="table table-striped table-hover">
+                                    <tr>
+                                        <th width="30%">Tên sản phẩm</th>
+                                        <td id='r_productName'><b>${c.product.name}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <th width="30%">Mô tả</th>
+                                        <td id='r_description'>${c.product.description}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Cửa hàng ký gửi</th>
+                                        <td id='r_createdDate'><b>${c.storeOwner.fullName}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ngày ký gửi</th>
+                                        <td id='r_createdDate'>${c.createdDate}</td>
+                                    </tr>
+
+                                    <tr >
+                                        <th>Giá</th>
+                                        <td id="r_price"><fmt:formatNumber type="number"
+                                                          value="${c.minPrice}" 
                                                           maxFractionDigits="0"/>
-                                        &nbsp;VND
-                                    </td> 
-                                </tr>
-                                <tr>
-                                    <th>Ngày hẹn</th>
-                                    <td id='r_fromDateToDate'>
-                                        ${c.fromDate} - ${c.toDate}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Trạng thái</th>
-                                    <td id='r_status'> <b>
-                                            <c:choose>
-                                                <c:when test="${c.product.productStatusID == 6}">
-                                                    <font color="red">ĐÃ HỦY</font>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:choose>
-                                                        <c:when test="${c.consignmentStatusID == 1}">
-                                                            <font color="green">CHỜ XỬ LÝ</font>
-                                                        </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 2}">
-                                                            <font color="red">ĐÃ TỪ CHỐI</font>
-                                                        </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 3}">
-                                                            <font color="blue">ĐÃ CHẤP NHẬN</font>
-                                                        </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 4}">
-                                                            <font color="blue">HOÀN THÀNH</font>
-                                                        </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 5}">
-                                                            <c:choose>
-                                                                <c:when test="${c.product.productStatusID == 2}">
-                                                                    <font color="blue">ĐÃ NHẬP HÀNG</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 3}">
-                                                                    <font color="blue">ĐANG TRÊN WEB</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 4}">
-                                                                    <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 5}">
-                                                                    <font color="blue">ĐÃ BÁN</font>
-                                                                </c:when>
-                                                            </c:choose>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </b>
-                                    </td>
-                                </tr>
-                                <c:if test="${c.product.productStatusID != 6}">
-                                    <c:choose>
-                                        <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
-                                            <tr>
-                                                <td></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
-                                                        HỦY KÝ GỬI
-                                                    </button> 
-                                                </td>
-                                            </tr>
-                                        </c:when>
-                                        <c:when test="${c.consignmentStatusID == 5}">
+                                            &nbsp;~&nbsp; <fmt:formatNumber type="number"
+                                                              value="${c.maxPrice}" 
+                                                              maxFractionDigits="0"/>
+                                            &nbsp;VND
+                                        </td> 
+                                    </tr>
+                                    <tr>
+                                        <th>Ngày hẹn</th>
+                                        <td id='r_fromDateToDate'>
+                                            ${c.fromDate} - ${c.toDate}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Trạng thái</th>
+                                        <td id='r_status'> <b>
+                                                <c:choose>
+                                                    <c:when test="${c.product.productStatusID == 6}">
+                                                        <font color="red">ĐÃ HỦY</font>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:choose>
+                                                            <c:when test="${c.consignmentStatusID == 1}">
+                                                                <font color="green">CHỜ XỬ LÝ</font>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 2}">
+                                                                <font color="red">ĐÃ TỪ CHỐI</font>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 3}">
+                                                                <font color="blue">ĐÃ CHẤP NHẬN</font>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 4}">
+                                                                <font color="blue">HOÀN THÀNH</font>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 5}">
+                                                                <c:choose>
+                                                                    <c:when test="${c.product.productStatusID == 2}">
+                                                                        <font color="blue">ĐÃ NHẬP HÀNG</font>
+                                                                    </c:when>
+                                                                    <c:when test="${c.product.productStatusID == 3}">
+                                                                        <font color="blue">ĐANG TRÊN WEB</font>
+                                                                    </c:when>
+                                                                    <c:when test="${c.product.productStatusID == 4}">
+                                                                        <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
+                                                                    </c:when>
+                                                                    <c:when test="${c.product.productStatusID == 5}">
+                                                                        <font color="blue">ĐÃ BÁN</font>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </b>
+                                        </td>
+                                    </tr>
+                                    <c:if test="${c.product.productStatusID != 6}">
+                                        <c:choose>
+                                            <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
+                                                            HỦY KÝ GỬI
+                                                        </button> 
+                                                    </td>
+                                                </tr>
+                                            </c:when>
+                                            <c:when test="${c.consignmentStatusID == 5}">
+
+                                                <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
+                                                    <td></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
+                                                            HỦY KÝ GỬI
+                                                        </button> 
+                                                    </td>
+                                                </c:if>
+
+                                            </c:when>
+                                        </c:choose>
+                                    </c:if>
+
+                                </table>
+
+                            </div>
+                            <!-- END PRODUCT DESCRIPTION -->
+                        </div>
+
+                        <!--BEGIN MODAL -->
+                        <!-- Large modal -->
+
+                        <!-- END MODAL -->
+
+                        <div id="modalMessage" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Thông báo</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2 id="r_message" align="center">Bạn có chắc chắn muốn hủy ký gửi này không?</h2>
+                                        <c:if test="${c.consignmentStatusID == 5}">
 
                                             <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
-                                                <td></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
-                                                        HỦY KÝ GỬI
-                                                    </button> 
-                                                </td>
+                                                <h2 id="ar_message" align="center">Bạn sẽ chịu một khoản tiền phạt cho việc này.</h2>
                                             </c:if>
 
-                                        </c:when>
-                                    </c:choose>
-                                </c:if>
-
-                            </table>
-
-                        </div>
-                        <!-- END PRODUCT DESCRIPTION -->
-                    </div>
-
-                    <!--BEGIN MODAL -->
-                    <!-- Large modal -->
-
-                    <!-- END MODAL -->
-
-                    <div id="modalMessage" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Thông báo</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h2 id="r_message" align="center">Bạn có chắc chắn muốn hủy ký gửi này không?</h2>
-                                    <c:if test="${c.consignmentStatusID == 5}">
-
-                                        <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
-                                            <h2 id="ar_message" align="center">Bạn sẽ chịu một khoản tiền phạt cho việc này.</h2>
                                         </c:if>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="TrackProductStatus" method="POST">
+                                            <button type="submit" name="btnAction" class="btn btn-primary" value="cancel">Đồng ý</button>
+                                            <input type="hidden" name="actionValue" value="${c.product.productID}"/>
+                                            <input type="hidden" name="searchValue" value="${param.searchValue}"/>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </c:if>
+                </div>
 
-                                    </c:if>
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="TrackProductStatus" method="POST">
-                                        <button type="submit" name="btnAction" class="btn btn-primary" value="cancel">Đồng ý</button>
-                                        <input type="hidden" name="actionValue" value="${c.product.productID}"/>
-                                        <input type="hidden" name="searchValue" value="${param.searchValue}"/>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                    </form>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                </c:if>
+
             </div>
-
-
         </div>
+        <!-- END SIDEBAR & CONTENT -->
     </div>
-    <!-- END SIDEBAR & CONTENT -->
-
 </jsp:body>
 </template:shopbasic>
 
