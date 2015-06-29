@@ -122,13 +122,13 @@
                     <div class="row margin-bottom-40 " style="margin-top:50px">
                         <!-- BEGIN CONTENT -->
                         <h2>Sản Phẩm Nổi Bật</h2>
-                        <div class="owl-carousel owl-carousel3">
+                        <div class="owl-carousel owl-carousel4">
                             <c:set var="seasonItems" value="${requestScope.SEASONDATA}"/>
                             <c:if test="${not empty seasonItems}">
                                 <c:forEach items="${seasonItems}" var="seasonItem">
                                     <div class="product-item">
                                         <div class="pi-img-wrapper">
-                                            <img src="${seasonItem.image}" class="imgCrop3">
+                                            <img src="${seasonItem.image}" class="imgCrop">
                                         </div>
                                         <h3 style="color: black">${seasonItem.name}</h3>
                                         <c:url var="viewDetail2" value = "ViewProductDetailServlet">
