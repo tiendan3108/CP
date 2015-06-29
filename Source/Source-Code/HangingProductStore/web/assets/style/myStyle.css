@@ -4,6 +4,11 @@
     margin:auto;
     width: 80%;
 }
+#wrapper_manage{
+    min-height:400px;
+    margin:auto;
+    width: 90%;
+}
 .contain{
     margin:auto;
     width: 80%;
