@@ -923,18 +923,19 @@ public class DanqtDAO {
     }
 
     //remind consignor their consignment is out of date
-    public void remindConsignor() {
+    public List<ConsignmentDTO> remindConsignor() {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String query = null;
         List<String> consignmentList = new ArrayList<>();
+        List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String today = sdf.format(tempDate);
-            query = "SELECT c.ConsignmentID FROM Consignment c, Product p WHERE "
+            query = "SELECT c.ConsignmentID, p.FullName, p.Phone, p.Email FROM Consignment c, Product p WHERE "
                     + "DATEDIFF(day,[ReceivedDate],?) > Period AND p.ProductID = c.ProductID AND "
                     + "p.ProductStatusID > 1 AND p.ProductStatusID < 6";
             stm = conn.prepareStatement(query);
@@ -942,6 +943,16 @@ public class DanqtDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 consignmentList.add(rs.getString("ConsignmentID"));
+                String consignmentID = rs.getString("ConsignmentID");
+                String fullName = rs.getString("FullName");
+                String phone = convertPhone(rs.getString("Phone"));
+                String email = rs.getString("Email");
+                ConsignmentDTO item = new ConsignmentDTO();
+                item.setConsigmentID(consignmentID);
+                item.setName(fullName);
+                item.setPhone(phone);
+                item.setEmail(email);
+                result.add(item);
             }
             for (String consignmentID : consignmentList) {
                 query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
@@ -956,8 +967,10 @@ public class DanqtDAO {
                 stm.setString(2, consignmentID);
                 stm.executeUpdate();
             }
+            return result;
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
         } finally {
             try {
                 if (rs != null) {

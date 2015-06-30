@@ -10,6 +10,7 @@ import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
 import hps.dao.DanqtDAO;
+import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -229,6 +230,29 @@ public class JavaUltilities {
             System.out.println("deleted file " + path + "\\" + product.getImage());
         } catch (Exception e) {
             System.out.println("can not delete file " + path + "\\" + product.getImage());
+        }
+    }
+
+    public void sendSMSForExpiredProduct(String storeOwnerName) {
+        DanqtDAO dao = new DanqtDAO();
+        List<ConsignmentDTO> result = dao.remindConsignor();
+        String subject = "[HPS] Hết hạn kí gửi";
+        for (Iterator<ConsignmentDTO> item = result.iterator(); item.hasNext();) {
+            ConsignmentDTO next = item.next();
+            String sms = "Mon hang voi ma ki gui " + next.getConsigmentID() + " da qua han ki gui. "
+                    + "Vui long lien he voi " + storeOwnerName + " de gia han ki gui hoac nhan lai hang";
+            String email = "Xin chào " + next.getName() + "</br> Món hàng với mã kí gửi " + next.getConsigmentID() + " của bạn đã hết hạn kí gửi.</br>"
+                    + " Vui lòng liên hệ với " + storeOwnerName + " để gia hạn kí gửi hoặc nhận lại hàng.</br> Trân trọng</br> HPS System";
+            if (next.getPhone() != null) {
+                try {
+                    sendSMS(sms, next.getPhone());
+                } catch (TwilioRestException ex) {
+                    Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (next.getPhone() == null && next.getEmail() != null) {
+                sendEmail(next.getEmail(), subject, email);
+            }
         }
     }
 }
