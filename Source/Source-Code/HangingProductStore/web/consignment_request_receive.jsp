@@ -256,7 +256,7 @@
 
                             </div>
 
-                            <div class="tab" id="refuse">
+                            <div class="tab" id="refuse" >
                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                     <thead>
                                         <tr role="row" class="heading">
@@ -319,7 +319,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab" id="cancel">
+                            <div class="tab" id="cancel" >
                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                     <thead>
                                         <tr role="row" class="heading">
@@ -540,9 +540,11 @@
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).siblings().hide();
         $('li#' + currentLi).siblings().removeClass('active');
-        
+
         $('div#' + currentTab).fadeIn(400);
         $('li#' + currentLi).addClass('active');
+
+
 
     });
 
@@ -605,10 +607,35 @@
                     $("#ar_maxPrice").val(data.maxPrice.toFixed(0));
                     $("#ar_inputProductID").val(data.product.productID);
                 }
-                else {
+                else if (data.consignmentStatusID == 2) {
                     $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
                     $("#r_footer").hide();
                     $("#ar_footer").hide();
+                } else if (data.consignmentStatusID == 4) {
+                    $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                    $("#r_footer").hide();
+                    $("#ar_footer").hide();
+                } else if (data.consignmentStatusID == 5) {
+                    if (data.product.productStatusID == 2) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                        $("#r_footer").hide();
+                        $("#ar_footer").hide();
+                    }
+                    else if (data.product.productStatusID == 3) {
+                        $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                        $("#r_footer").hide();
+                        $("#ar_footer").hide();
+                    }
+                    else if (data.product.productStatusID == 4) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                        $("#r_footer").hide();
+                        $("#ar_footer").hide();
+                    }
+                    else if (data.product.productStatusID == 5) {
+                        $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                        $("#r_footer").hide();
+                        $("#ar_footer").hide();
+                    }
                 }
             }
 

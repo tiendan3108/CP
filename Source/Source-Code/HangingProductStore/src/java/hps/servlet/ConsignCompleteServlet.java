@@ -167,8 +167,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                         double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
                         maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
                         minPrice = Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
-                        System.out.println("MaxPrice: " + maxPrice);
-                        System.out.println("MinPrice: " + minPrice);
 
                     }
 
@@ -191,7 +189,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                         }
                         if (email.length() > 0) {
                             try {
-                                java.sendEmail(email, "Ky gui thanh cong!", msg);
+                                java.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
                             } catch (Exception e) {
                                 System.out.println("Loi khi gui email!");
                                 e.printStackTrace();
