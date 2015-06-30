@@ -63,7 +63,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div class="tab active" id="request">
+                            <div class="tab active" id="request" style="display: none">
 
                                 <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
@@ -162,7 +162,7 @@
 
 
 
-                            <div class="tab" id="accepted">
+                            <div class="tab" id="accepted" style="display: none">
 
                                 <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
@@ -256,7 +256,7 @@
 
                             </div>
 
-                            <div class="tab" id="refuse" >
+                            <div class="tab" id="refuse" style="display: none">
                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                     <thead>
                                         <tr role="row" class="heading">
@@ -319,7 +319,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab" id="cancel" >
+                            <div class="tab" id="cancel" style="display: none">
                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                     <thead>
                                         <tr role="row" class="heading">

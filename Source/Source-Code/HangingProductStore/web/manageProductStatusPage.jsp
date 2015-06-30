@@ -118,7 +118,7 @@
                             </div>
                             <!-- END EXPIRED TAB -->
                             <!-- BEGIN AVAILABLE TAB -->
-                            <div id="available" class="tab active">
+                            <div id="available" class="tab active" style="display: none">
                                 <c:set var="available" value="${requestScope.available}">
                                 </c:set>
                                 <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
@@ -175,7 +175,7 @@
                             </div>
                             <!-- END AVAILABLE TAB -->
                             <!-- BEGIN ONWEB TAB -->
-                            <div id="onWeb" class="tab col-md-12">
+                            <div id="onWeb" class="tab col-md-12" style="display: none">
                                 <c:set var="onWeb" value="${requestScope.onWeb}"></c:set>
                                     <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
                                         <div class="form-body">
@@ -229,7 +229,7 @@
                             </div>
                             <!-- END ONWEB TAB -->
                             <!-- BEGIN ORDERED TAB -->
-                            <div id="ordered" class="tab col-md-12">
+                            <div id="ordered" class="tab col-md-12" style="display: none">
                                 <c:set var="ordered" value="${requestScope.ordered}"></c:set>
                                     <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
                                         <div class="form-body">
@@ -283,7 +283,7 @@
                             </div>
                             <!-- END ORDERED TAB -->
                             <!-- BEGIN SOLD TAB -->
-                            <div id="sold" class="tab col-md-12">
+                            <div id="sold" class="tab col-md-12" style="display: none">
                                 <c:set var="sold" value="${requestScope.sold}"></c:set>
                                     <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
                                         <div class="form-body">
@@ -337,7 +337,7 @@
                             </div>
                             <!-- END SOLD TAB -->
                             <!-- BEGIN COMPLETED TAB -->
-                            <div id="completed" class="tab col-md-12">
+                            <div id="completed" class="tab col-md-12" style="display: none">
                                 <c:set var="completed" value="${requestScope.completed}"></c:set>
                                     <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
                                         <div class="form-body">
@@ -389,7 +389,7 @@
                             </div>
                             <!-- END COMPLETED TAB -->
                             <!-- BEGIN CANCELED TAB -->
-                            <div id="canceled" class="tab col-md-12">
+                            <div id="canceled" class="tab col-md-12" style="display: none">
                                 <c:set var="canceled" value="${requestScope.canceled}"></c:set>
                                     <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
                                         <div class="form-body">
