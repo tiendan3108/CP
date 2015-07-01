@@ -24,6 +24,7 @@ public class ProductDTO {
     private int parentCategoryID;
     //danqt - begin
     private String consignmentID;// for store owner management page
+    private String orderID;
     private String receivedDate;
     private String cancelDate;
     private float consignedPrice;
@@ -424,6 +425,20 @@ public class ProductDTO {
 
     public void setSellDate(String sellDate) {
         this.sellDate = sellDate;
+    }
+
+    /**
+     * @return the orderID
+     */
+    public String getOrderID() {
+        return orderID;
+    }
+
+    /**
+     * @param orderID the orderID to set
+     */
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
     }
     
 }

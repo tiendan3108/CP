@@ -81,7 +81,7 @@
                                 </form>
                                 <c:choose>
                                     <c:when test="${expired == null && requestScope.keywork7 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork7}</font>.
+                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${requestScope.keywork7}</font>.
                                     </c:when>
                                     <c:when test="${expired!=null}">
                                         <table class="table table-striped table-bordered table-hover"id="availableTable">
