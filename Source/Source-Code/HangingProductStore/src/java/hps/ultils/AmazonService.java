@@ -35,6 +35,17 @@ public class AmazonService {
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
     public static final String ASS_TAG = "danqt-20";// account given by amazon so we can send request.
 
+    public static void main(String[] args) {
+        AmazonService test = new AmazonService();
+        //test.getProductByUPC("635753490879");
+        AmazonProduct bla = test.getProductByUPC("4011200296908");
+        if (bla == null) {
+            System.out.println("sai cmnr");
+        } else {
+            System.out.println(bla.getNewPrice() + " " + bla.getPrice());
+        }
+    }
+
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
         List<AmazonProduct> result = new ArrayList<>();
         try {
@@ -75,24 +86,23 @@ public class AmazonService {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(requestUrl);
             doc.getDocumentElement().normalize();
-            NodeList source, items, itemContent, offerSummaryContent, lowestNewPriceContent;
-            Node nNode, item, ASINNode, offerSummaryNode, lowestNewPriceNode, priceNode, currencyNode, parentASINNode;
-            String ASIN, Currency;
-            Float price;
+            NodeList source, items, itemContent;
+            Node nNode, item, ASINNode;
+            String ASIN;
             source = doc.getElementsByTagName("Items");
             nNode = source.item(0);
             items = nNode.getChildNodes();
             //start first node
             NodeList TotalResultsContent = doc.getElementsByTagName("TotalResults");
             Node TotalResults = TotalResultsContent.item(0);
-            int maxLoop = 0, quantity;
+            int quantity;
             try {
                 quantity = Integer.parseInt(TotalResults.getTextContent());
             } catch (DOMException | NumberFormatException e) {
                 return null;
             }
             if (quantity >= 10) {
-                quantity = 10;
+                return null;
             }
             int i = 4;
             for (int j = 0; j < quantity; j++) {
@@ -100,23 +110,10 @@ public class AmazonService {
                 itemContent = item.getChildNodes();
                 ASINNode = itemContent.item(0);
                 ASIN = ASINNode.getTextContent();
-                parentASINNode = itemContent.item(1);
-                if (parentASINNode.getNodeName().equals("OfferSummary")) {
-                    offerSummaryNode = itemContent.item(1);
-                } else {
-                    offerSummaryNode = itemContent.item(2);
-                }
-                offerSummaryContent = offerSummaryNode.getChildNodes();
-                lowestNewPriceNode = offerSummaryContent.item(0);
-                lowestNewPriceContent = lowestNewPriceNode.getChildNodes();
-                priceNode = lowestNewPriceContent.item(0);
-                currencyNode = lowestNewPriceContent.item(1);
+                product = new AmazonProduct();
+                product.setASIN(ASIN);
+                temp_result.add(product);
                 i++;
-                if (lowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
-                    price = Float.parseFloat(priceNode.getTextContent()) / 100;
-                    Currency = currencyNode.getTextContent();
-                    temp_result.add(new AmazonProduct(price, ASIN, Currency));
-                }
             }
             for (AmazonProduct temp_product : temp_result) {
                 product = getProductDetail(temp_product);
@@ -141,7 +138,6 @@ public class AmazonService {
         }
 
         String requestUrl = null;
-        List<AmazonProduct> result = new ArrayList<AmazonProduct>();
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("Service", "AWSECommerceService");//ok
@@ -152,6 +148,7 @@ public class AmazonService {
         params.put("MerchantId", "All");
 
         requestUrl = helper.sign(params);
+        System.out.println("Child url : " + requestUrl);
         return fetchProductDetail(product, requestUrl);
     }
 
@@ -161,12 +158,134 @@ public class AmazonService {
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(requestUrl);
             doc.getDocumentElement().normalize();
-            NodeList DetailPageURLContent = doc.getElementsByTagName("DetailPageURL");
-            Node DetailPageURL = DetailPageURLContent.item(0);
-            product.setUrl(DetailPageURL.getTextContent());
             NodeList TitleContent = doc.getElementsByTagName("Title");
             Node Title = TitleContent.item(0);
             product.setName(Title.getTextContent());
+            NodeList MediumImageContent = doc.getElementsByTagName("MediumImage");
+            if (MediumImageContent != null) {
+                Node imageURL = MediumImageContent.item(0);
+                NodeList URLContent = imageURL.getChildNodes();
+                Node URL = URLContent.item(0);
+                if (URL != null && URL.getNodeName().equals("URL")) {
+                    product.setImage(URL.getTextContent());
+                }
+            }
+            NodeList LargeImageContent = doc.getElementsByTagName("LargeImage");
+            if (LargeImageContent != null) {
+                Node imageURL = LargeImageContent.item(0);
+                NodeList URLContent = imageURL.getChildNodes();
+                Node URL = URLContent.item(0);
+                if (URL != null && URL.getNodeName().equals("URL")) {
+                    product.setImage(URL.getTextContent());
+                }
+            }
+            NodeList OfferSummaryContent = doc.getElementsByTagName("OfferSummary");
+            if (OfferSummaryContent != null) {
+                Node OfferSummaryNode = OfferSummaryContent.item(0);
+                NodeList LowestNewPriceContent = OfferSummaryNode.getChildNodes();
+                if (LowestNewPriceContent != null) {
+                    Node LowestNewPriceNode = LowestNewPriceContent.item(0);
+                    if (LowestNewPriceNode != null && LowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
+                        NodeList AmountContent = LowestNewPriceNode.getChildNodes();
+                        Node AmountNode = AmountContent.item(0);
+                        if (AmountNode != null && AmountNode.getNodeName().equals("Amount")) {
+                            product.setPrice(Float.parseFloat(AmountNode.getTextContent()) / 100);
+                        } else {
+                            return null;
+                        }
+                    } else {
+                        return null;
+                    }
+                }
+            } else {
+                return null;
+            }
+            if (product.getImage() == null) {
+                NodeList ImageSetsContent = doc.getElementsByTagName("ImageSets");
+                if (ImageSetsContent != null) {
+                    for (int i = 0; i < ImageSetsContent.getLength(); i++) {
+                        Node imageURL = ImageSetsContent.item(i);
+                        if (imageURL.getNodeName().equals("MediumImage") || imageURL.getNodeName().equals("LargeImage")) {
+                            NodeList URLContent = imageURL.getChildNodes();
+                            Node URL = URLContent.item(0);
+                            if (URL != null && URL.getNodeName().equals("URL")) {
+                                product.setImage(URL.getTextContent());
+                            }
+                        }
+                    }
+                } else {
+                    return null;
+                }
+            }
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
+            Logger.getLogger(AmazonService.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return product;
+    }
+
+    public AmazonProduct getProductByUPC(String upc) {
+        try {
+            SignedRequestsHelper helper;
+            try {
+                helper = SignedRequestsHelper.getInstance(ENDPOINT, AWS_ACCESS_KEY_ID, AWS_SECRET_KEY, ASS_TAG);
+            } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
+                return null;
+            }
+
+            String requestUrl = null;
+
+            Map<String, String> params = new HashMap<>();
+            params.put("Service", "AWSECommerceService");//ok
+            params.put("Operation", "ItemLookup");
+            params.put("ResponseGroup", "Large");
+            params.put("SearchIndex", "All");
+            params.put("IdType", "UPC");
+            params.put("ItemId", upc);
+
+            requestUrl = helper.sign(params);
+            System.out.println(requestUrl);
+            return fetchProductByUPC(requestUrl);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private AmazonProduct fetchProductByUPC(String requestUrl) {
+        AmazonProduct product = null;
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(requestUrl);
+            doc.getDocumentElement().normalize();
+            NodeList error = doc.getElementsByTagName("Errors");
+            if (error.getLength() != 0) {
+                return null;
+            } else {
+                product = new AmazonProduct();
+                NodeList ListPriceContent = doc.getElementsByTagName("ListPrice");
+                if (ListPriceContent != null) {
+                    Node ListPriceNode = ListPriceContent.item(0);
+                    if (ListPriceNode != null) {
+                        NodeList AmoutContent = ListPriceNode.getChildNodes();
+                        Node AmoutNode = AmoutContent.item(0);
+                        if (AmoutNode != null) {
+                            product.setNewPrice(Float.parseFloat(AmoutNode.getTextContent()) / 100);
+                        }
+                    }
+                }
+                NodeList LowestUsedPriceContent = doc.getElementsByTagName("LowestUsedPrice");
+                if (LowestUsedPriceContent != null) {
+                    Node ListPriceNode = LowestUsedPriceContent.item(0);
+                    if (ListPriceNode != null) {
+                        NodeList AmoutContent = ListPriceNode.getChildNodes();
+                        Node AmoutNode = AmoutContent.item(0);
+                        if (AmoutNode != null) {
+                            product.setPrice(Float.parseFloat(AmoutNode.getTextContent()) / 100);
+                        }
+                    }
+                }
+            }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(AmazonService.class.getName()).log(Level.SEVERE, null, ex);
             return null;

@@ -10,29 +10,11 @@ package hps.ultils;
  * @author Tien Dan
  */
 public class AmazonProduct {
-
     private String name;
-    private float price;
     private String ASIN;
-    private String url;
-    private String currency;
-
-    public AmazonProduct(String name, float price, String ASIN, String url, String currency) {
-        this.name = name;
-        this.price = price;
-        this.ASIN = ASIN;
-        this.url = url;
-        this.currency = currency;
-    }
-
-    public AmazonProduct(float price, String ASIN, String currency) {
-        this.price = price;
-        this.ASIN = ASIN;
-        this.currency = currency;
-    }
-
-    public AmazonProduct() {
-    }
+    private float price;
+    private float newPrice;
+    private String image;
 
     /**
      * @return the name
@@ -46,20 +28,6 @@ public class AmazonProduct {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * @return the price
-     */
-    public float getPrice() {
-        return price;
-    }
-
-    /**
-     * @param price the price to set
-     */
-    public void setPrice(float price) {
-        this.price = price;
     }
 
     /**
@@ -77,31 +45,45 @@ public class AmazonProduct {
     }
 
     /**
-     * @return the url
+     * @return the price
      */
-    public String getUrl() {
-        return url;
+    public float getPrice() {
+        return price;
     }
 
     /**
-     * @param url the url to set
+     * @param price the price to set
      */
-    public void setUrl(String url) {
-        this.url = url;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     /**
-     * @return the currency
+     * @return the image
      */
-    public String getCurrency() {
-        return currency;
+    public String getImage() {
+        return image;
     }
 
     /**
-     * @param currency the currency to set
+     * @param image the image to set
      */
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setImage(String image) {
+        this.image = image;
     }
 
+    /**
+     * @return the newPrice
+     */
+    public float getNewPrice() {
+        return newPrice;
+    }
+
+    /**
+     * @param newPrice the newPrice to set
+     */
+    public void setNewPrice(float newPrice) {
+        this.newPrice = newPrice;
+    }
+    
 }
