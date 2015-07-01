@@ -112,9 +112,11 @@ public class OrderDAO {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "select * from [Order] "
-                    + "where DATEDIFF(day,[Order].Date, ?) >=3";
+                    + "where DATEDIFF(day,[Order].Date, ?) >=3 "
+                    + "and OrderStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setDate(1, new java.sql.Date(date.getTime()));
+            stm.setInt(2, OrderStatus.WAITING);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String orderID = rs.getString("OrderID");
@@ -122,7 +124,6 @@ public class OrderDAO {
                 OrderDTO order = new OrderDTO();
                 order.setOrderID(orderID);
                 order.setProductID(productID);
-                order.setOrderID(query);
                 orders.add(order);
             }
             return orders;
@@ -146,7 +147,7 @@ public class OrderDAO {
         return null;
     }
 
-    public boolean updateOrderWhenOrderExpired(int orderID) {
+    public boolean updateOrderWhenOrderExpired(String orderID) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -156,7 +157,7 @@ public class OrderDAO {
                     + " WHERE OrderID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, OrderStatus.EXPIRED);
-            stm.setInt(2, orderID);
+            stm.setString(2, orderID);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
