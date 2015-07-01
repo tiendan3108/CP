@@ -19,20 +19,7 @@
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
         <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <li id="nofi">
-                <a href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default">3</span>           
-                </a>
-                <ul class="fallback">
-                    <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                </ul>
-            </li>
-        </c:if>
+        
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper">
@@ -53,25 +40,37 @@
                                     <div class="form-body">
                                         <ul class="nav nav-pills nav-justified steps">
                                             <li class="done">
-                                                <a id="ltap1" class="step" >
+                                                <a class="step" >
                                                     <span class="number">
                                                         1 </span>
+                                                    <br/>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Thông tin sản phẩm </span>
+                                                </a>
+                                            </li>
+                                            <li class="done">
+                                                <a class="step" >
+                                                    <span class="number">
+                                                        2 </span>
+                                                    <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Kiểm tra sản phẩm </span>
                                                 </a>
                                             </li>
                                             <li class="done">
-                                                <a id="ltap2" class="step">
+                                                <a class="step">
                                                     <span class="number">
-                                                        2 </span>
+                                                        3 </span>
+                                                    <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i> Chọn cửa hàng </span>
                                                 </a>
                                             </li>
                                             <li class="done">
-                                                <a id="ltap3" class="step">
+                                                <a class="step">
                                                     <span class="number">
-                                                        3 </span>
+                                                        4 </span>
+                                                    <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin chi tiết </span>
                                                 </a>

@@ -21,21 +21,7 @@
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <li id="nofi">
-                <a href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default">3</span>           
-                </a>
-                <ul class="fallback">
-                    <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                </ul>
-            </li>
-        </c:if>
+
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper">
@@ -57,24 +43,36 @@
                                                     <a  class="step">
                                                         <span class="number">
                                                             1 </span>
+                                                        <br/>
                                                         <span class="desc" >
-                                                            <i class="fa fa-check"></i><b> Kiểm tra sản phẩm </b></span>
+                                                            <i class="fa fa-check"></i><b>Thông tin sản phẩm </b></span>
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a class="step">
                                                         <span class="number">
                                                             2 </span>
+                                                        <br/>
                                                         <span class="desc">
-                                                            <i class="fa fa-check"></i> Chọn cửa hàng </span>
+                                                            <i class="fa fa-check"></i>Kiểm tra sản phẩm</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="step">
+                                                        <span class="number">
+                                                            3 </span>
+                                                        <br/>
+                                                        <span class="desc">
+                                                            <i class="fa fa-check"></i>Chọn cửa hàng</span>
                                                     </a>
                                                 </li>
                                                 <li >
                                                     <a class="step">
                                                         <span class="number">
-                                                            3 </span>
+                                                            4 </span>
+                                                        <br/>
                                                         <span class="desc">
-                                                            <i class="fa fa-check"></i> Thông tin chi tiết </span>
+                                                            <i class="fa fa-check"></i>Thông tin chi tiết</span>
                                                     </a>
                                                 </li>
                                             </ul>

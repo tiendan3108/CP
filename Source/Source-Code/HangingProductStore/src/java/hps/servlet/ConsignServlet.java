@@ -12,9 +12,12 @@ import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
+import hps.ultils.AmazonProduct;
+import hps.ultils.AmazonService;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,6 +39,7 @@ public class ConsignServlet extends HttpServlet {
     private static final String STEP1 = "consign_step1.jsp";
     private static final String STEP2 = "consign_step2.jsp";
     private static final String STEP3 = "consign_step3.jsp";
+    private static final String STEP4 = "consign_step4.jsp";
     private static final String COMPLETED = "consign_success.jsp";
     private static final String HOME = "HomeServlet";
 
@@ -55,7 +59,6 @@ public class ConsignServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             request.setCharacterEncoding("UTF8");
             HttpSession session = request.getSession();
-
             String action = request.getParameter("btnAction");
             if (action == null) {
                 action = "consign";
@@ -64,6 +67,33 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("PRODUCT");
             }
             String url = "";
+
+            if (action.equals("backstep1")) {
+
+                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
+                    CategoryDAO cateDao = new CategoryDAO();
+                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                    List<CategoryDTO> category = cateDao.getAllCategory();
+                    session.setAttribute("FCATE", parentCategories);
+                    session.setAttribute("CATEGORY", category);
+                }
+                url = STEP1;
+//                request.setAttribute("backlink", url);
+            }
+            if (action.equals("backstep2")) {
+                if (session.getAttribute("AMAZONLIST") == null) {
+                    url = STEP1;
+                } else {
+                    url = STEP2;
+                }
+
+//                request.setAttribute("backlink", url);
+            }
+            if (action.equals("backstep3")) {
+                url = STEP3;
+//                request.setAttribute("backlink", url);
+            }
+
             if (action.equals("consign")) {
 
                 if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
@@ -74,58 +104,86 @@ public class ConsignServlet extends HttpServlet {
                     session.setAttribute("CATEGORY", category);
                 }
                 url = STEP1;
-                request.setAttribute("backlink", url);
-            } else if (action.equals("tostep2")) {
+//                request.setAttribute("backlink", url);
+            }
+            if (action.equals("tostep2")) {
+//                action = "tostep3";
 
                 String productName = request.getParameter("txtProductName");
                 String serialNumber = request.getParameter("txtSerialNumber");
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
                 String brand = request.getParameter("txtBrand");
                 String date = request.getParameter("txtDate");
-                //String description = request.getParameter("txtDescription");
                 String description = request.getParameter("txtDescription");
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
                 session.setAttribute("PRODUCT", product);
+                List<AmazonProduct> list = null;
+                if (serialNumber.length() > 0) {
+                    AmazonService amazon = new AmazonService();
+                    AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
+                    if (amazonProduct != null) {
+                        list.add(amazonProduct);
+                    }
+                }
+                if (list == null) {
+                    DuchcDAO dDAO = new DuchcDAO();
+                    list = dDAO.getListAmazonProduct(productName, brand, categoryID);
+                }
+                if (list != null) {
+                    if (list.size() > 0) {
+                        session.setAttribute("AMAZONLIST", list);
+                        url = STEP2;
+                    } else {
+                        action = "tostep3";
+                    }
 
-                DuchcDAO dDAO = new DuchcDAO();
+                } else {
+                    action = "tostep3";
+                }
+
+//                request.setAttribute("backlink", url);
+            }
+            if (action.equals("tostep3")) {
+
+                String ASIN = request.getParameter("rdAmazon");
                 double basicPrice = 0;
+                if (ASIN != null) {
+                    session.setAttribute("ASIN", ASIN);
+                    List<AmazonProduct> list = (List<AmazonProduct>) session.getAttribute("AMAZONLIST");
+                    for (AmazonProduct a : list) {
+                        if (a.getASIN().equals(ASIN)) {
+                            basicPrice = a.getPrice();
+                            break;
+                        }
+                    }
+                }
+                DuchcDAO dDAO = new DuchcDAO();
+
                 //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
                 //Bi loi khi ko co mang phai try catch
-                
-                    basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
-
+                //basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
                 session.setAttribute("BASICPRICE", (int) (basicPrice * GlobalVariables.VND_CURRENCY));
 
+                int categoryID = ((ProductDTO) session.getAttribute("PRODUCT")).getCategoryID();
                 List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");
 
-                url = STEP2;
-                request.setAttribute("backlink", url);
-            } else if (action.equals("tostep3")) {
+                url = STEP3;
+//                request.setAttribute("backlink", url);
+            }
+            if (action.equals("tostep4")) {
                 String storeOwnerID = request.getParameter("rdStore");
 
                 session.setAttribute("STORE", storeOwnerID);
-                url = STEP3;
-                request.setAttribute("backlink", url);
-            } else if (action.equals("backstep1")) {
+                url = STEP4;
+//                request.setAttribute("backlink", url);
+            }
 
-                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
-                    CategoryDAO cateDao = new CategoryDAO();
-                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
-                    List<CategoryDTO> category = cateDao.getAllCategory();
-                    session.setAttribute("FCATE", parentCategories);
-                    session.setAttribute("CATEGORY", category);
-                }
-                url = STEP1;
-                request.setAttribute("backlink", url);
-            } else if (action.equals("backstep2")) {
-                url = STEP2;
-                request.setAttribute("backlink", url);
-            } else if (action.equals("login")) {
+            if (action.equals("login")) {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 String backlink = request.getParameter("backlink");
@@ -143,6 +201,9 @@ public class ConsignServlet extends HttpServlet {
                         session.removeAttribute("STORELIST");
                         session.removeAttribute("FCATE");
                         session.removeAttribute("CATEGORY");
+                        session.removeAttribute("ASIN");
+                        session.removeAttribute("AMAZONLIST");
+
                         response.sendRedirect(request.getContextPath() + "/ConsignmentRequestReceive");
                         return;
                     } else {
@@ -158,7 +219,8 @@ public class ConsignServlet extends HttpServlet {
                 if (backlink == "") {
                     url = HOME;
                 }
-            } else if (action.equals("logout")) {
+            }
+            if (action.equals("logout")) {
                 String backlink = request.getParameter("backlink");
 
                 session.removeAttribute("ACCOUNT");
@@ -170,7 +232,10 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("STORELIST");
                 session.removeAttribute("FCATE");
                 session.removeAttribute("CATEGORY");
-            } else if (action.equals("getBrand")) {
+                session.removeAttribute("ASIN");
+                session.removeAttribute("AMAZONLIST");
+            }
+            if (action.equals("getBrand")) {
                 String term = request.getParameter("term");
                 List<String> list = DuchcDAO.autoCompleteBrandName(term);
                 String json = new Gson().toJson(list);
@@ -179,7 +244,7 @@ public class ConsignServlet extends HttpServlet {
                 return;
 
             }
-
+            request.setAttribute("backlink", url);
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);
         }

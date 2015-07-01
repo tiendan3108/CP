@@ -345,6 +345,49 @@ public class DuchcDAO {
         }
         return -1;
     }
+    
+    public List<AmazonProduct> getListAmazonProduct(String productName, String brand, int categoryID) {
+        System.out.println("dang vao");
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        float basicPrice = -1;
+        try {
+            String englishName = "";
+            con = DBUltilities.makeConnection();
+            String query = "SELECT EnglishName FROM Category WHERE (CategoryID = ?)";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, categoryID);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                englishName = rs.getString("EnglishName");
+            }
+            AmazonService amazon = new AmazonService();
+
+            List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
+            
+
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
 
     //
     public void updateProductImage(int productID, String imageLink) {
