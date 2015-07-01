@@ -9,8 +9,12 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>hps.mobile</param-value>
         </init-param>
-       
         <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>ScheduleTask</servlet-name>
+        <servlet-class>hps.servlet.ScheduleTaskServlet</servlet-class>
+        <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Jersey REST Service</servlet-name>
@@ -26,6 +30,10 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
+    <servlet-mapping>
+        <servlet-name>ScheduleTask</servlet-name>
+        <url-pattern>/ScheduleTask</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -34,5 +42,4 @@
     <welcome-file-list>
         <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
-       
 </web-app>
