@@ -890,18 +890,20 @@ public class DanqtDAO {
                 item.setEmail(email);
                 result.add(item);
             }
-            for (String consignmentID : consignmentList) {
-                query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMessaage = 1 WHERE ConsignmentID = ?";
-                stm = conn.prepareStatement(query);
-                stm.setInt(1, ConsignmentStatus.EXPIRED);
-                stm.setString(2, consignmentID);
-                stm.executeUpdate();
-                query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
-                        + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
-                stm = conn.prepareStatement(query);
-                stm.setInt(1, ProductStatus.NOT_AVAILABLE);
-                stm.setString(2, consignmentID);
-                stm.executeUpdate();
+            if (!consignmentList.isEmpty()) {
+                for (String consignmentID : consignmentList) {
+                    query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMessaage = 1 WHERE ConsignmentID = ?";
+                    stm = conn.prepareStatement(query);
+                    stm.setInt(1, ConsignmentStatus.EXPIRED);
+                    stm.setString(2, consignmentID);
+                    stm.executeUpdate();
+                    query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
+                            + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                    stm = conn.prepareStatement(query);
+                    stm.setInt(1, ProductStatus.NOT_AVAILABLE);
+                    stm.setString(2, consignmentID);
+                    stm.executeUpdate();
+                }
             }
             return result;
         } catch (SQLException e) {

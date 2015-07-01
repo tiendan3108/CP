@@ -86,24 +86,26 @@ public class ScheduleTaskServlet extends HttpServlet {
                 DanqtDAO dao = new DanqtDAO();
                 JavaUltilities ulti = new JavaUltilities();
                 List<ConsignmentDTO> listConsignor = dao.remindConsignor();
-                for (ConsignmentDTO consignor : listConsignor) {
-                    if (consignor.getPhone() != null) {
-                        String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
-                                + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
-                        try {
-                            ulti.sendSMS(sms, consignor.getPhone());
-                        } catch (TwilioRestException ex) {
-                            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+                if (!listConsignor.isEmpty()) {
+                    for (ConsignmentDTO consignor : listConsignor) {
+                        if (consignor.getPhone() != null) {
+                            String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
+                                    + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
+                            try {
+                                ulti.sendSMS(sms, consignor.getPhone());
+                            } catch (TwilioRestException ex) {
+                                Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
+                        if (consignor.getEmail() != null) {
+                            String subject = "[HPS] Hết hạn kí gửi";
+                            String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
+                                    + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
+                                    + " để nhận hàng hoặc gia hạn kí gửi.</br> Trân trọng</br> HPS System";
+                            ulti.sendEmail(consignor.getEmail(), subject, email);
+                        }
+                        System.out.println("Send dc 1 thang");
                     }
-                    if (consignor.getEmail() != null) {
-                        String subject = "[HPS] Hết hạn kí gửi";
-                        String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
-                                + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
-                                + " để nhận hàng hoặc gia hạn kí gửi.</br> Trân trọng</br> HPS System";
-                        ulti.sendEmail(consignor.getEmail(), subject, email);
-                    }
-                    System.out.println("Send dc 1 thang");
                 }
                 System.out.println("Tong cong co " + listConsignor.size() + " het han");
             }
