@@ -102,13 +102,12 @@ public class DanqtDAO {
                     image = rsP.getString(8);
                     productStatusID = rsP.getInt(9);
                     sellingPrice = rsP.getFloat(10);
-                    orderID = rsP.getString(11);
                     if (productStatus == ProductStatus.ORDERED) {
                         orderDate = convertDate(rsP.getString(12));
                         customerPhone = convertPhone(rsP.getString(13));
                     }
                     //..........
-                    product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, orderID, orderDate, customerPhone);
+                    product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, orderDate, customerPhone);
                 }
                 //...............
                 ConsignmentDTO item = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName, address, phone, email, paypalAccount, fromDate, toDate, raiseWebDate, period, maxPrice, minPrice, returnPrice, receivedDate, createdDate, consignmentStatusID, product);
@@ -1069,13 +1068,12 @@ public class DanqtDAO {
                     image = rsP.getString(8);
                     productStatusID = rsP.getInt(9);
                     sellingPrice = rsP.getFloat(10);
-                    orderID = rsP.getString(11);
                     if (productStatus == ProductStatus.ORDERED) {
                         orderDate = convertDate(rsP.getString(12));
                         customerPhone = convertPhone(rsP.getString(13));
                     }
                     //..........
-                    product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, orderID, orderDate, customerPhone);
+                    product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, orderDate, customerPhone);
                 }
                 //...............
                 ConsignmentDTO item = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName, address, phone, email, paypalAccount, fromDate, toDate, raiseWebDate, period, maxPrice, minPrice, returnPrice, receivedDate, createdDate, consignmentStatusID, product);

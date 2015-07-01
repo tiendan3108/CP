@@ -22,7 +22,6 @@ public class ProductDTO {
     private int productStatusID;
     private float sellingPrice;
     private int parentCategoryID;
-    private String orderID;
     //danqt - begin
     private String consignmentID;// for store owner management page
     private String receivedDate;
@@ -44,7 +43,7 @@ public class ProductDTO {
     }
 
     //danqt - begin
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, String orderID, String orderDate, String customerPhone) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, String orderDate, String customerPhone) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -55,7 +54,6 @@ public class ProductDTO {
         this.image = image;
         this.productStatusID = productStatusID;
         this.sellingPrice = sellingPrice;
-        this.orderID = orderID;
         this.orderDate = orderDate;
         this.customerPhone = customerPhone;
     }
@@ -134,7 +132,7 @@ public class ProductDTO {
      HoangNH     
      */
 
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String orderID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -146,11 +144,10 @@ public class ProductDTO {
         this.productStatusID = productStatusID;
         this.sellingPrice = sellingPrice;
         this.parentCategoryID = parentCategoryID;
-        this.orderID = orderID;
     }
 
     // constructor all tham so moi
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID, String orderID) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int productStatusID, float sellingPrice, int parentCategoryID, String consignmentID) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -163,7 +160,6 @@ public class ProductDTO {
         this.sellingPrice = sellingPrice;
         this.parentCategoryID = parentCategoryID;
         this.consignmentID = consignmentID;
-        this.orderID = orderID;
     }
 
 //duchc product constuctor for add new product
@@ -280,15 +276,6 @@ public class ProductDTO {
     public void setConsignmentID(String consignmentID) {
         this.consignmentID = consignmentID;
     }
-
-    public String getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(String orderID) {
-        this.orderID = orderID;
-    }
-
     /**
      * @return the receivedDate
      */

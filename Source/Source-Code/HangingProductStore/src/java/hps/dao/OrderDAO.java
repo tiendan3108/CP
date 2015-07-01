@@ -10,10 +10,11 @@ import hps.ultils.DBUltilities;
 import hps.ultils.OrderStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,7 +71,7 @@ public class OrderDAO {
         Date date = new Date();
         try {
             con = DBUltilities.makeConnection();
-            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setString(1, order.getOrderID());
             stm.setInt(2, order.getCustomerID());
@@ -81,6 +82,7 @@ public class OrderDAO {
             stm.setString(7, order.getPhone());
             stm.setFloat(8, order.getTotalPrice());
             stm.setInt(9, OrderStatus.WAITING);
+            stm.setInt(10, order.getProductID());
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -99,4 +101,79 @@ public class OrderDAO {
             }
         }
     }
+
+    public List<OrderDTO> checkOrderExpired() {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Date date = new Date();
+        List<OrderDTO> orders = new ArrayList<OrderDTO>();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from [Order] "
+                    + "where DATEDIFF(day,[Order].Date, ?) >=3";
+            stm = con.prepareStatement(query);
+            stm.setDate(1, new java.sql.Date(date.getTime()));
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String orderID = rs.getString("OrderID");
+                int productID = rs.getInt("ProductID");
+                OrderDTO order = new OrderDTO();
+                order.setOrderID(orderID);
+                order.setProductID(productID);
+                order.setOrderID(query);
+                orders.add(order);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public boolean updateOrderWhenOrderExpired(int orderID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE [Order] "
+                    + " SET OrderStatusID = ? "
+                    + " WHERE OrderID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, OrderStatus.EXPIRED);
+            stm.setInt(2, orderID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

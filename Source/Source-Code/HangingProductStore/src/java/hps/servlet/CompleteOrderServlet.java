@@ -76,10 +76,11 @@ public class CompleteOrderServlet extends HttpServlet {
                 order.setPhone(phone);
                 order.setAddress(address);
                 order.setFullName(fullname);
+                order.setProductID(productID);
                 //insert order
                 orderDao.insertOrderWithMemberInfo(order);
                 //update product status                                  
-                productDao.updateStatusToOrdered(productID, orderID);
+                productDao.updateStatusToOrdered(productID);
                 //send sms
                 if (!phone.isEmpty()) {     
                     try {

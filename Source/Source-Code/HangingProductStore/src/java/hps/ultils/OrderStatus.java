@@ -10,7 +10,9 @@ package hps.ultils;
  * @author Tien Dan
  */
 public class OrderStatus {
+
     public static final int WAITING = 1;
     public static final int COMPLETED = 2;
     public static final int CANCELED = 3;
+    public static final int EXPIRED = 4;
 }

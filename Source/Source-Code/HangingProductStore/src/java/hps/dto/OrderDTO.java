@@ -22,11 +22,12 @@ public class OrderDTO {
     private String phone;
     private float totalPrice;
     private int orderStatusID;
+    private int productID;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(String orderID, int customerID, Date date, String email, String fullName, String address, String phone, float totalPrice,int orderStatusID) {
+    public OrderDTO(String orderID, int customerID, Date date, String email, String fullName, String address, String phone, float totalPrice, int orderStatusID, int productID) {
         this.orderID = orderID;
         this.customerID = customerID;
         this.date = date;
@@ -36,6 +37,7 @@ public class OrderDTO {
         this.phone = phone;
         this.totalPrice = totalPrice;
         this.orderStatusID = orderStatusID;
+        this.productID = productID;
     }
 
     /**
@@ -162,6 +164,20 @@ public class OrderDTO {
      */
     public void setOrderStatusID(int orderStatusID) {
         this.orderStatusID = orderStatusID;
+    }
+
+    /**
+     * @return the productID
+     */
+    public int getProductID() {
+        return productID;
+    }
+
+    /**
+     * @param productID the productID to set
+     */
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
 }
