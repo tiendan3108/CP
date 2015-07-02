@@ -74,6 +74,9 @@ public class OrderProduct extends HttpServlet {
                         } catch (TwilioRestException ex) {
                             Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        catch (Exception ex) {
+                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                     if (consignor.getPhone() == null && consignor.getEmail() != null) {
                         message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được bán thành công.</br>"

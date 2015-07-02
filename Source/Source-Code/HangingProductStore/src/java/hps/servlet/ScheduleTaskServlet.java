@@ -76,7 +76,7 @@ public class ScheduleTaskServlet extends HttpServlet {
 
         //Timer timer = new Timer();
         long delay = 0;
-        long intevalPeriod = 1000 * 60;//1 mins
+        long intevalPeriod = 24 * 60 * 60 * 1000;//1 mins
         // schedules the task to be run in an interval
         timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
     }
@@ -98,6 +98,9 @@ public class ScheduleTaskServlet extends HttpServlet {
                             } catch (TwilioRestException ex) {
                                 Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
                             }
+                            catch (Exception e) {
+                                Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, e);
+                            }
                         }
                         if (consignor.getEmail() != null) {
                             String subject = "[HPS] Hết hạn kí gửi";
@@ -115,7 +118,7 @@ public class ScheduleTaskServlet extends HttpServlet {
 
         //Timer timer = new Timer();
         long delay = 0;
-        long intevalPeriod = 24 * 60 * 60;//1 mins
+        long intevalPeriod = 24 * 60 * 60 * 1000;//1 mins
         // schedules the task to be run in an interval
         timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
     }

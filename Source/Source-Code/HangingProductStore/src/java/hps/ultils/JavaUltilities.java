@@ -249,6 +249,9 @@ public class JavaUltilities {
                 } catch (TwilioRestException ex) {
                     Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                catch (Exception ex) {
+                    Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             if (next.getPhone() == null && next.getEmail() != null) {
                 sendEmail(next.getEmail(), subject, email);

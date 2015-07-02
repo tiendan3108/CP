@@ -125,6 +125,10 @@ public class CancelProduct extends HttpServlet {
                     url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                     Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                 catch (Exception e) {
+                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                    Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, e);
+                }
             } else {//send email
                 ultil.sendEmail(consignor.getEmail(), subject, message);
             }

@@ -484,7 +484,7 @@
                                             <li>Giá sản phẩm : <label id="sold_minPrice"></label> ~ <label id="sold_maxPrice"></label></li>
                                             <li>Giá bán: <label id="sold_sellingPrice"></label></li>
                                             <li>Ngày kí gửi : <label id="sold_receivedDate"></label></li>
-                                            <li>Tiền trả khách hàng: <input type="text" name="txtReturnPrice"></li>
+                                            <li>Tiền trả khách hàng: <input type="text" name="txtReturnPrice" id="sold_returnPrice"></li>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -885,6 +885,17 @@
         var productID = $(this).data('id');
         $.get('LoadSoldProduct', {productID: productID}, function (response) {
             var product = response.product;
+            var price;
+            var minPrice = response.minPrice;
+            var maxPrice = response.maxPrice;
+            var sellingPrice = response.returnPrice;
+            if ((sellingPrice / maxPrice) > 1.2) {
+                price = maxPrice;
+            } else if (sellingPrice < minPrice) {
+                price = minPrice;
+            }else{
+                price = (minPrice + maxPrice + sellingPrice) / 3;
+            };
             $("#sold_fullName").text(response.name);
             $("#sold_address").text(response.address);
             $("#sold_phone").text(response.phone);
@@ -897,6 +908,7 @@
             $("#sold_receivedDate").text(response.receivedDate);
             $("#sold_paypalAccount").text(response.paypalAccount);
             $("#soldconsignmentID").val(response.consigmentID);
+            $("#sold_returnPrice").val(price);
             $("#sold_name").val(product.name);
         });
         $('#soldModal').modal('show');

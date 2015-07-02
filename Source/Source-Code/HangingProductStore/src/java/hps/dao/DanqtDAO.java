@@ -74,8 +74,8 @@ public class DanqtDAO {
                             + "WHERE p.ProductID = ? AND p.ProductID = o.ProductID AND o.OrderStatusID = 1";
                 } else {
                     query = "SELECT p.ProductID, p.ProductName, p.SerialNumber, p.PurchasedDate, p.CategoryID, p.Brand, "
-                            + "p.Description, p.Image, p.ProductStatusID, p.SellingPrice, o.OrderID FROM Product p, [Order] o "
-                            + "WHERE p.ProductID = ? AND o.ProductID = p.ProductID";
+                            + "p.Description, p.Image, p.ProductStatusID, p.SellingPrice FROM Product p "
+                            + "WHERE p.ProductID = ?";
                 }
 
                 stmP = conn.prepareStatement(query);
@@ -401,8 +401,7 @@ public class DanqtDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
-                String orderID = rs.getString("OrderID");
-                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID, orderID);
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID);
             }
             return product;
         } catch (SQLException ex) {

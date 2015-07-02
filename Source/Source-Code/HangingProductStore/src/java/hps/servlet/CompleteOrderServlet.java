@@ -87,6 +87,8 @@ public class CompleteOrderServlet extends HttpServlet {
                         lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
                     } catch (TwilioRestException ex) {
                         Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 //send email
