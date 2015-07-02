@@ -78,7 +78,7 @@
                                             <div class="tab-content ">
                                                 <c:if test="${basicPrice <= 0}">
                                                     <div class="alert alert-warning" style="text-align: center">
-                                                        <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                                        <strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
                                                     </div>    
                                                 </c:if>
 

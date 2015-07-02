@@ -21,13 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
 /**
  *
@@ -42,6 +40,8 @@ public class ConsignServlet extends HttpServlet {
     private static final String STEP4 = "consign_step4.jsp";
     private static final String COMPLETED = "consign_success.jsp";
     private static final String HOME = "HomeServlet";
+    DuchcDAO dDAO = new DuchcDAO();
+    double basicPrice = 0;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -124,20 +124,14 @@ public class ConsignServlet extends HttpServlet {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
-                        list = new ArrayList<>();
-                        list.add(amazonProduct);
-                        session.setAttribute("AMAZONLIST", list);
-                        url = STEP2;
-                    }else{
-                        session.removeAttribute("AMAZONLIST");
-                        url=STEP3;
+                        basicPrice = amazonProduct.getPrice();
                     }
+                    session.removeAttribute("AMAZONLIST");
+                    action = "tostep3";
+                    
                 } else {
-
-                    if (list == null) {
-                        DuchcDAO dDAO = new DuchcDAO();
                         list = dDAO.getListAmazonProduct(productName, brand, categoryID);
-                    }
+                        
                     if (list != null) {
                         if (list.size() > 0) {
                             session.setAttribute("AMAZONLIST", list);
@@ -157,7 +151,7 @@ public class ConsignServlet extends HttpServlet {
             if (action.equals("tostep3")) {
 
                 String ASIN = request.getParameter("rdAmazon");
-                double basicPrice = 0;
+                
                 if (ASIN != null) {
                     session.setAttribute("ASIN", ASIN);
                     List<AmazonProduct> list = (List<AmazonProduct>) session.getAttribute("AMAZONLIST");
@@ -168,11 +162,6 @@ public class ConsignServlet extends HttpServlet {
                         }
                     }
                 }
-                DuchcDAO dDAO = new DuchcDAO();
-
-                //Thêm dữ liệu EnglishName vào Category sẽ chạy được hàm này
-                //Bi loi khi ko co mang phai try catch
-                //basicPrice = dDAO.getBasicPrice(productName, brand, categoryID);
                 session.setAttribute("BASICPRICE", (int) (basicPrice * GlobalVariables.VND_CURRENCY));
 
                 int categoryID = ((ProductDTO) session.getAttribute("PRODUCT")).getCategoryID();
