@@ -17,7 +17,7 @@
 
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        
+
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper">
@@ -218,15 +218,14 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
                                                                         <div class="col-md-8 col-sm-8">
                                                                             <div  class="input-group  date-picker input-daterange" data-date-format="mm/dd/yyyy" data-date-start-date="0d" >
-                                                                                <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" >
+                                                                                <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" value="" >
                                                                                 <span class="input-group-addon">
                                                                                     đến </span>
-                                                                                <input type="text" id="txtToDate" name="txtToDate" class="form-control" >
+                                                                                <input type="text" id="txtToDate" name="txtToDate" class="form-control" value="">
                                                                             </div>
 
                                                                             <span class="help-block" id="erDate">
@@ -289,6 +288,13 @@
         custom_theme_widget: 'recaptcha_widget'
     };
 
+    $(document).ready(function () {
+
+        $('#txtFromDate').val("07/01/2015");
+        $('#txtToDate').val("07/03/2015");
+
+
+    });
     $(function () {
 //        $('#txtFromDate').datepicker();
 //        $('#txtToDate').datepicker();
