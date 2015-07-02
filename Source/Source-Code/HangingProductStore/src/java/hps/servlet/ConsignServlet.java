@@ -137,10 +137,12 @@ public class ConsignServlet extends HttpServlet {
                         url = STEP2;
                     } else {
                         action = "tostep3";
+                        session.removeAttribute("AMAZONLIST");
                     }
 
                 } else {
                     action = "tostep3";
+                    session.removeAttribute("AMAZONLIST");
                 }
 
 //                request.setAttribute("backlink", url);
