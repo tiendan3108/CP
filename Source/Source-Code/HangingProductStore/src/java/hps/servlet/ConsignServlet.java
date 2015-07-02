@@ -124,27 +124,34 @@ public class ConsignServlet extends HttpServlet {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
+                        list = new ArrayList<>();
                         list.add(amazonProduct);
-                    }
-                }
-                if (list == null) {
-                    DuchcDAO dDAO = new DuchcDAO();
-                    list = dDAO.getListAmazonProduct(productName, brand, categoryID);
-                }
-                if (list != null) {
-                    if (list.size() > 0) {
                         session.setAttribute("AMAZONLIST", list);
                         url = STEP2;
+                    }else{
+                        session.removeAttribute("AMAZONLIST");
+                        url=STEP3;
+                    }
+                } else {
+
+                    if (list == null) {
+                        DuchcDAO dDAO = new DuchcDAO();
+                        list = dDAO.getListAmazonProduct(productName, brand, categoryID);
+                    }
+                    if (list != null) {
+                        if (list.size() > 0) {
+                            session.setAttribute("AMAZONLIST", list);
+                            url = STEP2;
+                        } else {
+                            action = "tostep3";
+                            session.removeAttribute("AMAZONLIST");
+                        }
+
                     } else {
                         action = "tostep3";
                         session.removeAttribute("AMAZONLIST");
                     }
-
-                } else {
-                    action = "tostep3";
-                    session.removeAttribute("AMAZONLIST");
                 }
-
 //                request.setAttribute("backlink", url);
             }
             if (action.equals("tostep3")) {
