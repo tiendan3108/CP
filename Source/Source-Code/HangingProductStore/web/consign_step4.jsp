@@ -289,9 +289,8 @@
     };
 
     $(document).ready(function () {
-
-        $('#txtFromDate').val("07/01/2015");
-        $('#txtToDate').val("07/03/2015");
+        $('#txtFromDate').val("07/03/2015");
+        $('#txtToDate').val("07/05/2015");
 
 
     });
