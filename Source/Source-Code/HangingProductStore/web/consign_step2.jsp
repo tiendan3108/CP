@@ -96,7 +96,7 @@
                                                                         Tên sản phẩm
                                                                     </th>
                                                                     <th>
-                                                                        ASIN
+                                                                        Hình ảnh
                                                                     </th>
                                                                     
 
@@ -117,7 +117,7 @@
                                                                             ${item.name}
                                                                         </td>
                                                                         <td>
-                                                                            ${item.ASIN}
+                                                                             <a target="_blank" href="${item.image}">Xem ảnh</a>
                                                                         </td>
 
                                                                         
