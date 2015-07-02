@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ScheduleTaskServlet extends HttpServlet {
 
+    public static Timer timer;
+
     @Override
     public void init() {
         checkOrder();
@@ -72,7 +74,7 @@ public class ScheduleTaskServlet extends HttpServlet {
             }
         };
 
-        Timer timer = new Timer();
+        //Timer timer = new Timer();
         long delay = 0;
         long intevalPeriod = 1000 * 60;//1 mins
         // schedules the task to be run in an interval
@@ -111,7 +113,7 @@ public class ScheduleTaskServlet extends HttpServlet {
             }
         };
 
-        Timer timer = new Timer();
+        //Timer timer = new Timer();
         long delay = 0;
         long intevalPeriod = 24 * 60 * 60;//1 mins
         // schedules the task to be run in an interval
