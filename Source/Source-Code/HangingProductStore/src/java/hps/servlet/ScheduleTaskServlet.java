@@ -30,12 +30,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ScheduleTaskServlet extends HttpServlet {
 
-    public static Timer timer;
+    public static Timer timer = new Timer();
 
     @Override
     public void init() {
-        checkOrder();
-        remindConsignor();
+        task();
     }
 
     /**
@@ -54,73 +53,68 @@ public class ScheduleTaskServlet extends HttpServlet {
         }
     }
 
-    private void checkOrder() {
+    private void task() {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                OrderDAO orderDao = new OrderDAO();
-                ProductDAO productDao = new ProductDAO();
-                List<OrderDTO> orders = orderDao.checkOrderExpired();
-                if (orders != null) {
-                    if (orders.size() > 0) {
-                        for (int i = 0; i < orders.size(); i++) {
-                            OrderDTO order = orders.get(i);
-                            orderDao.updateOrderWhenOrderExpired(order.getOrderID());
-                            productDao.updateProductWhenOrderExpired(order.getProductID());
-                            System.out.println("da update");
-                        }
-                    }
-                }
+                checkOrder();
+                remindConsignor();
             }
         };
-
         //Timer timer = new Timer();
         long delay = 0;
-        long intevalPeriod = 24 * 60 * 60 * 1000;//1 mins
+        long intevalPeriod = 10 * 1000;//1 mins
         // schedules the task to be run in an interval
         timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
     }
 
-    private void remindConsignor() {
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                DanqtDAO dao = new DanqtDAO();
-                JavaUltilities ulti = new JavaUltilities();
-                List<ConsignmentDTO> listConsignor = dao.remindConsignor();
-                if (!listConsignor.isEmpty()) {
-                    for (ConsignmentDTO consignor : listConsignor) {
-                        if (consignor.getPhone() != null) {
-                            String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
-                                    + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
-                            try {
-                                ulti.sendSMS(sms, consignor.getPhone());
-                            } catch (TwilioRestException ex) {
-                                Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            catch (Exception e) {
-                                Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, e);
-                            }
-                        }
-                        if (consignor.getEmail() != null) {
-                            String subject = "[HPS] Hết hạn kí gửi";
-                            String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
-                                    + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
-                                    + " để nhận hàng hoặc gia hạn kí gửi.</br> Trân trọng</br> HPS System";
-                            ulti.sendEmail(consignor.getEmail(), subject, email);
-                        }
-                        System.out.println("Send dc 1 thang");
-                    }
+    private void checkOrder() {
+        OrderDAO orderDao = new OrderDAO();
+        ProductDAO productDao = new ProductDAO();
+        List<OrderDTO> orders = orderDao.checkOrderExpired();
+        if (orders != null) {
+            if (orders.size() > 0) {
+                for (int i = 0; i < orders.size(); i++) {
+                    OrderDTO order = orders.get(i);
+                    orderDao.updateOrderWhenOrderExpired(order.getOrderID());
+                    productDao.updateProductWhenOrderExpired(order.getProductID());
+                    System.out.println("da update");
                 }
-                System.out.println("Tong cong co " + listConsignor.size() + " het han");
             }
-        };
+        }
+        //System.out.println("12345566");
+    }
 
-        //Timer timer = new Timer();
-        long delay = 0;
-        long intevalPeriod = 24 * 60 * 60 * 1000;//1 mins
-        // schedules the task to be run in an interval
-        timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
+    private void remindConsignor() {
+        DanqtDAO dao = new DanqtDAO();
+        JavaUltilities ulti = new JavaUltilities();
+        List<ConsignmentDTO> listConsignor = dao.remindConsignor();
+        if (listConsignor != null) {
+            if (!listConsignor.isEmpty()) {
+                for (ConsignmentDTO consignor : listConsignor) {
+                    if (consignor.getPhone() != null) {
+                        String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
+                                + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
+                        try {
+                            ulti.sendSMS(sms, consignor.getPhone());
+                        } catch (TwilioRestException ex) {
+                            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception e) {
+                            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, e);
+                        }
+                    }
+                    if (consignor.getEmail() != null) {
+                        String subject = "[HPS] Hết hạn kí gửi";
+                        String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
+                                + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
+                                + " để nhận hàng hoặc gia hạn kí gửi.</br> Trân trọng</br> HPS System";
+                        ulti.sendEmail(consignor.getEmail(), subject, email);
+                    }
+                    System.out.println("Send dc 1 thang");
+                }
+            }
+        }
+        //System.out.println("Tong cong co " + listConsignor.size() + " het han");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
