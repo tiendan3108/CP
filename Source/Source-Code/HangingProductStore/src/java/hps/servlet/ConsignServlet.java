@@ -119,7 +119,7 @@ public class ConsignServlet extends HttpServlet {
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
                 session.setAttribute("PRODUCT", product);
-                List<AmazonProduct> list = null;
+                List<AmazonProduct> list;
                 if (serialNumber.length() > 0) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
