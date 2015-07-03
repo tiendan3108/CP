@@ -83,6 +83,15 @@
                                     </li>
                                 </ul>
                             </c:if>
+                            <c:if test="${acc.role == 'admin'}">
+                                <ul>
+                                    <li style="float: left">
+                                        <a href="ViewAccountServlet">
+                                            <img style="margin-right: 5px" src="assets/image/home.png" width="35" height="35" alt="home"/>Trang chủ
+                                        </a>
+                                    </li>
+                                </ul>
+                            </c:if>
                         </c:if>
                         <c:if test="${empty acc}">
                             <ul>
