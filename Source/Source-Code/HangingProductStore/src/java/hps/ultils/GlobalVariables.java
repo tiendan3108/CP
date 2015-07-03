@@ -18,6 +18,8 @@ public class GlobalVariables {
     //role in account
     public static final String MEMBER = "member";
     public static final String STORE_OWNER = "storeOwner";
+    public static final String ADMIN = "admin";
+    public static final String GUEST = "guest";
     //status in account
     public static final String ACTIVE = "active";
     public static final String DEACTIVE = "deactive";

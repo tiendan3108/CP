@@ -8,10 +8,14 @@ package hps.dao;
 import hps.dto.AccountDTO;
 import hps.ultils.DBUltilities;
 import hps.ultils.GlobalVariables;
+import hps.ultils.OrderStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -196,5 +200,149 @@ public class AccountDAO {
             }
         }
         return null;
+    }
+
+    public List<AccountDTO> getAllAccount() {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<AccountDTO> accounts = new ArrayList<AccountDTO>();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from Account where Role != ?";
+            stm = con.prepareStatement(query);
+            stm.setString(1, GlobalVariables.ADMIN);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                AccountDTO account = new AccountDTO();
+                String accountID = rs.getString("AccountID");
+                String status = rs.getString("Status");
+                String fullName = rs.getString("FullName");
+                String address = rs.getString("Address");
+                String phone = rs.getString("Phone");
+                String email = rs.getString("Email");
+                String paypalAccount = rs.getString("PaypalAccount");
+                String role = rs.getString("Role");
+                account.setAccountID(accountID);
+                account.setStatus(status);
+                account.setFullName(fullName);
+                account.setAddress(address);
+                account.setPhone(phone);
+                account.setEmail(email);
+                account.setPaypalAccount(paypalAccount);
+                account.setRole(role);
+                accounts.add(account);
+            }
+            return accounts;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public boolean insertAccount(AccountDTO account) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "Insert into [Account] Values(?,?,?,?,?,?,?,?,?)";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, account.getAccountID());
+            stm.setString(2, account.getPassword());
+            stm.setString(3, GlobalVariables.ACTIVE);
+            stm.setString(4, account.getFullName());
+            stm.setString(5, account.getAddress());
+            stm.setString(6, account.getPhone());
+            stm.setString(7, account.getEmail());
+            stm.setString(8, account.getPaypalAccount());
+            stm.setString(9, account.getRole());
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean insertMember(String accountID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "Insert into Member(AccountID) Values(?,?)";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, accountID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean insertStoreOwner(String accountID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "Insert into StoreOwner(AccountID,Formula) Values(?,?)";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, accountID);
+            stm.setFloat(2, 10);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
