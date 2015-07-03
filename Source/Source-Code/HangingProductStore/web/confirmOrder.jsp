@@ -65,7 +65,7 @@
                         <input name="productID" value="${item.productID}" hidden="true">
                         <c:if test="${not empty acc}">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label col-md-2">Tên</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Tên</label>
                                 <div class="col-lg-3 col-md-4">
                                     <input value="${acc.fullName}" name="name" type="text" id="first-name" class="form-control">
                                 </div>
