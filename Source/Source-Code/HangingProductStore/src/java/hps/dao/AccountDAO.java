@@ -345,4 +345,42 @@ public class AccountDAO {
             }
         }
     }
+
+    public boolean updateAccount(AccountDTO account) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Account"
+                    + " SET FullName = ? ,"
+                    + " Address = ? ,"
+                    + " Phone = ? ,"
+                    + " Email = ? ,"
+                    + " PaypalAccount = ? "
+                    + " WHERE AccountID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, account.getFullName());
+            stm.setString(2, account.getAddress());
+            stm.setString(3, account.getPhone());
+            stm.setString(4, account.getEmail());
+            stm.setString(5, account.getPaypalAccount());
+            stm.setString(6, account.getAccountID());
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
