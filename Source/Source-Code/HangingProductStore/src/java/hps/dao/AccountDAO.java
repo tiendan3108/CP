@@ -383,4 +383,64 @@ public class AccountDAO {
             }
         }
     }
+
+    public boolean deactiveAccount(String accountID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Account"
+                    + " SET Status = ? "
+                    + " WHERE AccountID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, GlobalVariables.DEACTIVE);
+            stm.setString(2, accountID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean activeAccount(String accountID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Account"
+                    + " SET Status = ? "
+                    + " WHERE AccountID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, GlobalVariables.ACTIVE);
+            stm.setString(2, accountID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

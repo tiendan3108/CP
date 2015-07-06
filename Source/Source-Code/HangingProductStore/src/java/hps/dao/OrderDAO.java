@@ -24,10 +24,19 @@ import java.util.logging.Logger;
  */
 public class OrderDAO {
 
+    static OrderDAO orderDAO;
+
     /**
      *
      * @author HoangNHSE61007 insert order
      */
+    public static OrderDAO getInstance() {
+        if (orderDAO == null) {
+            orderDAO = new OrderDAO();
+        }
+        return orderDAO;
+    }
+
     public boolean insertOrder(String orderID, int customerID, String email, String phone, String fullname, String address) {
         Connection con = null;
         PreparedStatement stm = null;

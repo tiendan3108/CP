@@ -31,7 +31,17 @@ import java.util.logging.Logger;
  */
 public class DanqtDAO {
 
+    static DanqtDAO dao;
+
+    public static DanqtDAO getInstance() {
+        if (dao == null) {
+            dao = new DanqtDAO();
+        }
+        return dao;
+    }
+
     // used
+
     public List<ConsignmentDTO> getProductStatus(int storeOwnerID, int productStatus) {
         Connection conn = null;
         ResultSet rsC = null, rsP = null;

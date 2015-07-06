@@ -28,11 +28,19 @@ public class ProductDAO {
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private Date date = new Date();
     private String newDate = df.format(date);
+    static ProductDAO productDAO;
 
     /**
      *
      * @author HoangNHSE61007 get new product not set season
      */
+    public static ProductDAO getInstance() {
+        if (productDAO == null) {
+            productDAO = new ProductDAO();
+        }
+        return productDAO;
+    }
+
     public List<ProductDTO> getNewData() {
         Connection con = null;
         PreparedStatement stm = null;
@@ -752,7 +760,7 @@ public class ProductDAO {
         try {
             con = DBUltilities.makeConnection();
             String sql = "update Product set ProductStatusID = ? "
-                       + "where ProductID=?";
+                    + "where ProductID=?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, ProductStatus.ORDERED);
             stm.setInt(2, productId);
