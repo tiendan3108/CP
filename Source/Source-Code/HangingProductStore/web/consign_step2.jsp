@@ -117,7 +117,7 @@
                                                                             ${item.name}
                                                                         </td>
                                                                         <td>
-                                                                             <a target="_blank" href="${item.image}">Xem ảnh</a>
+                                                                            <a style="color:blue" target="_blank" href="${item.image}">Xem ảnh</a>
                                                                         </td>
 
                                                                         

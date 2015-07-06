@@ -115,10 +115,10 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                         }
                     } else {
-                        String projectPath = request.getServletContext().getRealPath("/") ; // web
-                        String basePath = projectPath.substring(0, projectPath.length() - 9)+ "web\\assets\\image";;// base path
-                        String deploymentPath = projectPath+"\\assets\\image";
-                        
+                        String projectPath = request.getServletContext().getRealPath("/"); // web
+                        String basePath = projectPath.substring(0, projectPath.length() - 9) + "web\\assets\\image";;// base path
+                        String deploymentPath = projectPath + "\\assets\\image";
+
 //                        File fileSaveDir = new File(path);
 //                        System.out.println("File path father: " + fileSaveDir.getParent());
 //                        if (!fileSaveDir.exists()) {
@@ -126,7 +126,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 //                        }
                         String filename = consigmentID + FilenameUtils.getName(item.getName()); // Get filename.
                         //web path
-                        File file = new File(basePath + "\\" +  filename); // base file
+                        File file = new File(basePath + "\\" + filename); // base file
                         // project path
                         File file2 = new File(deploymentPath + "\\" + filename);//deployment file
                         try {
@@ -176,26 +176,27 @@ public class ConsignCompleteServlet extends HttpServlet {
                     if (result) {
                         JavaUltilities java = new JavaUltilities();
                         String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
-                                + "Mã sản phẩm của bạn là: " +  consigmentID + ". \n"
+                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
                                 + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
-                        if (phone.length() > 0) {
-                            try {
-                                
-                                java.sendSMS(msg, phone);
-                            } catch (Exception e) {
-                                System.out.println("Loi khi gui tin nhan sms!");
-                                e.printStackTrace();
-                            }
-                        }
-                        if (email.length() > 0) {
-                            try {
-                                java.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
-                            } catch (Exception e) {
-                                System.out.println("Loi khi gui email!");
-                                e.printStackTrace();
-                            }
 
-                        }
+//                        //send sms and email
+//                        if (!phone.isEmpty()) {
+//                            try {
+//                                java.sendSMS(msg, phone);
+//                            } catch (Exception e) {
+//                                System.out.println("Loi khi gui tin nhan sms!");
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                        if (!email.isEmpty()) {
+//                            try {
+//                                java.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
+//                            } catch (Exception e) {
+//                                System.out.println("Loi khi gui email!");
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
 
                         session.setAttribute("storeName", store.getFullName());
                         session.setAttribute("trackId", consigmentID);
