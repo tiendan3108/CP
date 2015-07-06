@@ -289,8 +289,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
             }
             if(action.contains("ar_")){
-                request.setAttribute("currentTab", "accepted");
-                
+                request.setAttribute("currentTab", "accepted");  
+            }else{
+                request.setAttribute("currentTab", "request");  
             }
 
         RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);

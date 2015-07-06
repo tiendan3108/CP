@@ -54,7 +54,7 @@
                         <!-- Nav tabs -->
                         <ul class=" nav nav-tabs nav-justified" id="myTab">
 
-                            <li id="requestTab"  class="active"><a href="#request"><b>Chưa duyệt</b></a></li>
+                            <li id="requestTab" ><a href="#request"><b>Chưa duyệt</b></a></li>
                             <li id="acceptedTab"><a href="#accepted"><b>Đã duyệt</b></a></li>
                             <li id="refuseTab"><a href="#refuse"><b>Từ chối</b></a></li>
                             <li id="cancelTab"><a href="#cancel"><b>Đã hủy</b></a></li>
@@ -63,7 +63,7 @@
                         <!-- Tab panes -->
                         <div class="tab-content" style="background-color: white">
                             <div class="tab active" id="request" style="display: none">
-<!--                                <input type="hidden" id="currentTab" value="${currentTab}"/>-->
+                                <input type="hidden" id="currentTab" value="${currentTab}"/>
                                 <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
                                         <div class="form-group">
@@ -554,7 +554,7 @@
         //var currentTab = $('#currentTab').val();
         var currentTab = window.location.hash.substring(1);
         if(currentTab == ""){
-            currentTab = "request";
+            currentTab = $('#currentTab').val();
         }
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).siblings().hide();
