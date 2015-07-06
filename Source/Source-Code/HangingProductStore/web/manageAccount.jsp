@@ -126,15 +126,15 @@
                                     <div class="col-md-3 col-lg-3">
                                         <input class="form-control" name="paypalAccount" type="text">
                                     </div>
-                                    <label class="control-label col-md-2 col-lg-2"> Role:  <span class="require">*</span></label>
+                                    <label class="control-label col-md-2 col-lg-2"> Quyền hạn:  <span class="require">*</span></label>
                                     <div class="col-md-4 col-lg-4">
                                         <select required="true" name="role" class="form-control">
-                                            <option value="storeOwner">storeOwner</option>
-                                            <option value="member">member</option>
+                                            <option value="storeOwner">Chủ cửa hàng</option>
+                                            <option value="member">Thành viên</option>
                                         </select>
                                     </div>
                                 </div>
-                                <button style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary" type="submit">Thêm</button>
+                                <button style="float: right;margin-right: 75px;margin-top: 20px;width: 150px" class="btn btn-primary" type="submit">Hoàn tất</button>
                             </form>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h1 class="text-center">Sửa Tài Khoản</h1>
+                        <h1 id="aTitle" class="text-center">Sửa Tài Khoản</h1>
                     </div>
                     <div style="margin-bottom: 50px" class="modal-body">
                         <div class="row">
@@ -179,7 +179,7 @@
                                         <input id="aPaypal" class="form-control" name="paypalAccount" type="text">
                                     </div>
                                 </div>                   
-                                <button style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-info" type="submit">Sửa</button>
+                                <button style="float: right;margin-right: 75px;margin-top: 20px;width:150px" class="btn btn-info" type="submit">Hoàn tất</button>
                                 <div id="activeAccount">
 
                                 </div>                                                               
@@ -199,12 +199,13 @@
         $('#aAddress').val($(this).data('address'));
         $('#aPaypal').val($(this).data('paypal'));
         $('#aAccount').val($(this).data('account'));
+        $('#aTitle').html('Sửa tài khoản  ' + $(this).data('account'));
         var status = $(this).data('status');
         var accountID = $(this).data('account');
-        if(status == 'active'){
-            $('#activeAccount').html('<a href="DeactiveAccountServlet?accountID='+accountID+'" style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary">Hủy kích hoạt</a>');
-        }else if(status == 'deactive' ){
-            $('#activeAccount').html('<a href="ActiveAccountServlet?accountID='+accountID+'" style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary">Kích hoạt</a>');         
+        if (status == 'active') {
+            $('#activeAccount').html('<a href="DeactiveAccountServlet?accountID=' + accountID + '" style="float: right;margin-right: 30px;margin-top: 20px;width:150px" class="btn btn-primary">Hủy kích hoạt</a>');
+        } else if (status == 'deactive') {
+            $('#activeAccount').html('<a href="ActiveAccountServlet?accountID=' + accountID + '" style="float: right;margin-right: 30px;margin-top: 20px;width:150px" class="btn btn-primary">Kích hoạt</a>');
         }
     });
 </script>
