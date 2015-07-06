@@ -48,7 +48,6 @@
                 <!-- END SIDEBAR -->
 
                 <div class="col-md-9 col-sm-8">
-                    <input type="hidden" id="currentTab" value="${currentTab}"/>
                     <!-- START UPDATE -->
                     <div class="tabs row tab-style-1">
 
@@ -531,12 +530,21 @@
 
             $('.tabs ' + currentAttrValue).fadeIn(400);
             $(this).parent('li').addClass('active');
-
+            
+            window.location.hash = $(this).attr('href');
+            $('html,body').scrollTop(0);           
             e.preventDefault();
+            
         });
     });
     $(document).ready(function () {
-        var currentTab = $('#currentTab').val();
+        var hash = window.location.hash.substring(1);
+        if(hash == ""){
+            hash = "request";
+        }
+        
+        //var currentTab = $('#currentTab').val();
+        var currentTab = hash;
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).siblings().hide();
         $('li#' + currentLi).siblings().removeClass('active');

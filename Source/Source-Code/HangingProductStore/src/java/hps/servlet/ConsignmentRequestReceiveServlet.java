@@ -287,11 +287,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("CANCEL", c_cancel);
 
             }
-            if (action.contains("ar_")) {
-                request.setAttribute("currentTab", "accepted");
-            } else {
-                request.setAttribute("currentTab", "request");
-            }
+//            if (action.contains("ar_")) {
+//                request.setAttribute("currentTab", "accepted");
+//            } else {
+//                request.setAttribute("currentTab", "request");
+//            }
 
             RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);
             rd.forward(request, response);
