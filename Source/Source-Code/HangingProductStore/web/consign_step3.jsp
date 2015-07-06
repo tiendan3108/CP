@@ -39,7 +39,7 @@
                                                             1 </span>
                                                         <br/>
                                                         <span class="desc">
-                                                            <i class="fa fa-check"></i>Thông tin sản phẩm</span>
+                                                            <i class="fa fa-check"></i> Thông tin sản phẩm</span>
                                                     </a>
                                                 </li>
                                                 <li class="done">
@@ -48,7 +48,7 @@
                                                             2 </span>
                                                         <br/>
                                                         <span class="desc" >
-                                                            <i class="fa fa-check"></i>Kiểm tra sản phẩm</span>
+                                                            <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
                                                     </a>
                                                 </li>
                                                 <li class="active">
@@ -57,7 +57,7 @@
                                                             3 </span>
                                                         <br/>
                                                         <span class="desc" >
-                                                            <i class="fa fa-check"></i><b>Chọn cửa hàng</b></span>
+                                                            <i class="fa fa-check"></i><b> Chọn cửa hàng</b></span>
                                                     </a>
                                                 </li>
                                                 <li >
@@ -66,7 +66,7 @@
                                                             4 </span>
                                                         <br/>
                                                         <span class="desc">
-                                                            <i class="fa fa-check"></i>Thông tin chi tiết</span>
+                                                            <i class="fa fa-check"></i> Thông tin chi tiết</span>
                                                     </a>
                                                 </li>
 
