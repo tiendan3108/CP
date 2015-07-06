@@ -48,7 +48,7 @@ import org.apache.commons.io.FilenameUtils;
 public class ConsignCompleteServlet extends HttpServlet {
 
     private static final String SAVE_DIR = "assets\\image";
-    private static final String STEP3 = "consign_step3.jsp";
+    private static final String STEP4 = "consign_step4.jsp";
     private static final String COMPLETED = "consign_success.jsp";
 
     /**
@@ -98,12 +98,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                             case "txtFromDate":
                                 fromDate = item.getString();
                                 fromDate = formatDate(fromDate);
-                                System.out.println("fromDate: " + fromDate);
+                                
                                 break;
                             case "txtToDate":
                                 toDate = item.getString();
                                 toDate = formatDate(toDate);
-                                System.out.println("toDate: " + toDate);
+                                
                                 break;
                             case "txtAddress":
                                 address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -230,11 +230,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                         session.removeAttribute("FCATE");
                         session.removeAttribute("CATEGORY");
                     } else {
-                        url = STEP3;
+                        url = STEP4;
                     }
 
                 } else {
-                    url = STEP3;
+                    url = STEP4;
                 }
 
             }

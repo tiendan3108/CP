@@ -107,8 +107,6 @@ public class ConsignServlet extends HttpServlet {
 //                request.setAttribute("backlink", url);
             }
             if (action.equals("tostep2")) {
-//                action = "tostep3";
-
                 String productName = request.getParameter("txtProductName");
                 String serialNumber = request.getParameter("txtSerialNumber");
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
@@ -120,6 +118,7 @@ public class ConsignServlet extends HttpServlet {
 
                 session.setAttribute("PRODUCT", product);
                 
+                //check product using serial Number
                 if (!serialNumber.isEmpty()) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
@@ -129,7 +128,9 @@ public class ConsignServlet extends HttpServlet {
                     session.removeAttribute("AMAZONLIST");
                     action = "tostep3";
 
-                } else {
+                } 
+                //check product using name 
+                else {
 
                     List<AmazonProduct> list = dDAO.getListAmazonProduct(productName, brand, categoryID);
 
