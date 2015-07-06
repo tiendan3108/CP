@@ -22,6 +22,15 @@ import java.util.logging.Logger;
  */
 public class CategoryDAO {
 
+    static CategoryDAO categoryDAO;
+
+    public static CategoryDAO getInstance() {
+        if (categoryDAO == null) {
+            categoryDAO = new CategoryDAO();
+        }
+        return categoryDAO;
+    }
+
     public List<CategoryDTO> getParentCategory() {
         Connection con = null;
         PreparedStatement stm = null;
@@ -150,7 +159,7 @@ public class CategoryDAO {
                 int parentCatID = rs.getInt("ParentID");
                 String categoryName = rs.getString("CategoryName");
                 result.add(new CategoryDTO(categoryID, categoryName, parentCatID));
-                
+
             }
             return result;
         } catch (SQLException ex) {

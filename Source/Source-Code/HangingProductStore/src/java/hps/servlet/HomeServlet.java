@@ -74,10 +74,10 @@ public class HomeServlet extends HttpServlet {
             } else if ((newDate.after(d4) && newDate.before(d5)) || (newDate.after(d6) && newDate.before(d1))) {
                 season = Season.winter;
             }
-            ProductDAO productDao = new ProductDAO();
+            ProductDAO productDao = ProductDAO.getInstance();
             List<ProductDTO> data = productDao.getNewData();
             List<ProductDTO> seasonItems = productDao.getProductBySeason(season);
-            CategoryDAO cateDao = new CategoryDAO();
+            CategoryDAO cateDao = CategoryDAO.getInstance();
             List<CategoryDTO> parentCategories = cateDao.getParentCategory();
             List<CategoryDTO> category = cateDao.getAllCategory();
             request.setAttribute("DATA", data);

@@ -5,11 +5,13 @@
  */
 package hps.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author HoangNHSE61007 modify Cong Duc
  */
-public class ProductDTO {
+public class ProductDTO implements Serializable {
 
     private int productID;
     private String name;
@@ -58,6 +60,7 @@ public class ProductDTO {
         this.orderDate = orderDate;
         this.customerPhone = customerPhone;
     }
+
     public ProductDTO(String productName, String receivedDate, String consignmentID, float minPrice, float maxPrice, String cancelDate) {
         this.name = productName;
         this.receivedDate = receivedDate;
@@ -277,6 +280,7 @@ public class ProductDTO {
     public void setConsignmentID(String consignmentID) {
         this.consignmentID = consignmentID;
     }
+
     /**
      * @return the receivedDate
      */
@@ -440,5 +444,5 @@ public class ProductDTO {
     public void setOrderID(String orderID) {
         this.orderID = orderID;
     }
-    
+
 }
