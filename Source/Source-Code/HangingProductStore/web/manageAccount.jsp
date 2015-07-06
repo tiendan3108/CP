@@ -47,7 +47,7 @@
                             <th>Điện thoại</th>
                             <th>Email</th>
                             <th>Tài khoản Paypal</th>
-                            <th>Role</th>
+                            <th>Quyền hạn</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -63,8 +63,17 @@
                                     <td>${account.phone}</td>
                                     <td>${account.email}</td>
                                     <td>${account.paypalAccount}</td>
-                                    <td>${account.role}</td>    
-                                    <td><a data-account ="${account.accountID}" data-email="${account.email}" data-paypal ="${account.paypalAccount}" data-phone ="${account.phone}" data-address ="${account.address}" data-name ="${account.fullName}" data-toggle="modal" data-target="#EditAccountModel" class="btn btn-info editAccount">Sửa</a></td>
+                                    <td>
+                                        <c:if test="${account.role == 'storeOwner'}">
+                                            Chủ cửa hàng
+                                        </c:if>
+                                        <c:if test="${account.role == 'member'}">
+                                            Người dùng
+                                        </c:if>                              
+                                    </td>    
+                                    <td>
+                                        <a data-status ="${account.status}" data-account ="${account.accountID}" data-email="${account.email}" data-paypal ="${account.paypalAccount}" data-phone ="${account.phone}" data-address ="${account.address}" data-name ="${account.fullName}" data-toggle="modal" data-target="#EditAccountModel" class="btn btn-info editAccount">Sửa</a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </c:if>
@@ -169,8 +178,11 @@
                                     <div class="col-md-3 col-lg-3">
                                         <input id="aPaypal" class="form-control" name="paypalAccount" type="text">
                                     </div>
-                                </div>
-                                <button style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary" type="submit">Sửa</button>
+                                </div>                   
+                                <button style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-info" type="submit">Sửa</button>
+                                <div id="activeAccount">
+
+                                </div>                                                               
                             </form>
                         </div>
                     </div>
@@ -187,5 +199,12 @@
         $('#aAddress').val($(this).data('address'));
         $('#aPaypal').val($(this).data('paypal'));
         $('#aAccount').val($(this).data('account'));
+        var status = $(this).data('status');
+        var accountID = $(this).data('account');
+        if(status == 'active'){
+            $('#activeAccount').html('<a href="DeactiveAccountServlet?accountID='+accountID+'" style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary">Hủy kích hoạt</a>');
+        }else if(status == 'deactive' ){
+            $('#activeAccount').html('<a href="ActiveAccountServlet?accountID='+accountID+'" style="float: right;margin-right: 50px;margin-top: 20px" class="btn btn-primary">Kích hoạt</a>');         
+        }
     });
 </script>
