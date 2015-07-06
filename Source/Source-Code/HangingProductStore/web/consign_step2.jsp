@@ -26,159 +26,181 @@
                 <!-- BEGIN DIV STEP2 -->
 
                 <div id="divStep2" class="row" >
-                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation();">
-                        <div class="portlet box" id="form_wizard_1">
+                    <!--                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation();">-->
+                    <div class="portlet box" id="form_wizard_1">
 
-                            <div class="portlet-body form">
-                                <div  class="form-horizontal" id="submit_form">
-                                    <div class="form-wizard">
-                                        <div class="form-body">
-                                            <ul class="nav nav-pills nav-justified steps">
-                                                <li class="done">
-                                                    <a id="ltap1"  class="step" >
-                                                        <span class="number">
-                                                            1 </span>
-                                                        <br/>
-                                                        <span class="desc">
-                                                            <i class="fa fa-check"></i> Thông tin sản phẩm</span>
-                                                    </a>
-                                                </li>
-                                                <li class="active">
-                                                    <a id="ltap2" class="step">
-                                                        <span class="number">
-                                                            2 </span>
-                                                        <br/>
-                                                        <span class="desc" >
-                                                            <i class="fa fa-check"></i><b> Kiểm tra sản phẩm</b></span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="step">
-                                                        <span class="number">
-                                                            3 </span>
-                                                        <br/>
-                                                        <span class="desc" >
-                                                            <i class="fa fa-check"></i> Chọn cửa hàng</span>
-                                                    </a>
-                                                </li>
-                                                <li >
-                                                    <a class="step">
-                                                        <span class="number">
-                                                            4 </span>
-                                                        <br/>
-                                                        <span class="desc">
-                                                            <i class="fa fa-check"></i> Thông tin chi tiết</span>
-                                                    </a>
-                                                </li>
+                        <div class="portlet-body form">
+                            <div  class="form-horizontal" id="submit_form">
+                                <div class="form-wizard">
+                                    <div class="form-body">
+                                        <ul class="nav nav-pills nav-justified steps">
+                                            <li class="done">
+                                                <a id="ltap1"  class="step" >
+                                                    <span class="number">
+                                                        1 </span>
+                                                    <br/>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Thông tin sản phẩm</span>
+                                                </a>
+                                            </li>
+                                            <li class="active">
+                                                <a id="ltap2" class="step">
+                                                    <span class="number">
+                                                        2 </span>
+                                                    <br/>
+                                                    <span class="desc" >
+                                                        <i class="fa fa-check"></i><b> Kiểm tra sản phẩm</b></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="step">
+                                                    <span class="number">
+                                                        3 </span>
+                                                    <br/>
+                                                    <span class="desc" >
+                                                        <i class="fa fa-check"></i> Chọn cửa hàng</span>
+                                                </a>
+                                            </li>
+                                            <li >
+                                                <a class="step">
+                                                    <span class="number">
+                                                        4 </span>
+                                                    <br/>
+                                                    <span class="desc">
+                                                        <i class="fa fa-check"></i> Thông tin chi tiết</span>
+                                                </a>
+                                            </li>
 
-                                            </ul>
+                                        </ul>
 
-                                            <c:set var="data" value="${sessionScope.AMAZONLIST}"/>
-                                            <c:set var="asin" value="${sessionScope.ASIN}"/>
-                                            <div class="tab-content ">
-                                                <%--  <c:if test="${basicPrice <= 0}">
-                                                      <div class="alert alert-warning" style="text-align: center">
-                                                          <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
-                                                      </div>    
-                                                  </c:if> --%>
-                                                <div>
+                                        <c:set var="data" value="${AMAZONLIST}"/>
+
+                                        <div class="tab-content ">
+                                            <%--  <c:if test="${basicPrice <= 0}">
+                                                  <div class="alert alert-warning" style="text-align: center">
+                                                      <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                                  </div>    
+                                              </c:if> --%>
+                                            <div>
 
 
 
-                                                    <c:if test="${not empty data}">
+                                                <c:if test="${not empty data}">
 
-                                                        <!--                                                    <form id="form2"  action="ConsignServlet" method="POST">-->
-                                                        <table class="table table-striped table-hover">
-                                                            <thead>
+                                                    <!--                                                    <form id="form2"  action="ConsignServlet" method="POST">-->
+                                                    <table class="table table-striped table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>STT</th>
+                                                                <th style="width: 50%">
+                                                                    Tên sản phẩm
+                                                                </th>
+                                                                <th>
+                                                                    Hình ảnh
+                                                                </th>
+
+
+                                                                <th style="text-align:center">
+
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>                                                                 
+
+
+                                                            <c:forEach var="item" items="${data}" varStatus="count">
+                                                                <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
+
                                                                 <tr>
-                                                                    <th>STT</th>
-                                                                    <th style="width: 50%">
-                                                                        Tên sản phẩm
-                                                                    </th>
-                                                                    <th>
-                                                                        Hình ảnh
-                                                                    </th>
-                                                                    
-
-                                                                    <th style="text-align:center">
-
-                                                                    </th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>                                                                 
+                                                                    <td><c:out value="${count.count}" /></td>
+                                                                    <td>
+                                                                        ${item.name}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a name="amazonImage" style="color:blue" data-id="${item.image}" data-toggle="modal" data-target="#amazonModal">Xem ảnh</a>
+                                                                    </td>
 
 
-                                                                <c:forEach var="item" items="${data}" varStatus="count">
-                                                                    <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
+                                                                    <td align="center">
 
-                                                                    <tr>
-                                                                        <td><c:out value="${count.count}" /></td>
-                                                                        <td>
-                                                                            ${item.name}
-                                                                        </td>
-                                                                        <td>
-                                                                            <a style="color:blue" target="_blank" href="${item.image}">Xem ảnh</a>
-                                                                        </td>
-
-                                                                        
-                                                                        <td align="center">
-                                                                            <c:if test="${not empty asin}">
-                                                                                <c:if test="${asin == item.ASIN}">
-                                                                                    <input checked="checked"  name="rdAmazon" value="${item.ASIN}" type="radio"/>
-                                                                                </c:if>
-                                                                                <c:if test="${asin != item.ASIN}">
-                                                                                    <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
-                                                                                </c:if>
+                                                                        <c:if test="${not empty ASIN}">
+                                                                            <c:if test="${ASIN == item.ASIN}">
+                                                                                <input checked="checked"  name="rdAmazon" value="${item.ASIN}" type="radio"/>
                                                                             </c:if>
-                                                                            <c:if test="${empty asin}">
+                                                                            <c:if test="${ASIN != item.ASIN}">
                                                                                 <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
                                                                             </c:if>
+                                                                        </c:if>
+                                                                        <c:if test="${empty ASIN}">
+                                                                            <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
+                                                                        </c:if>
 
-                                                                        </td>
-                                                                    </tr>
+                                                                    </td>
+                                                                </tr>
 
-                                                                </c:forEach>
-                                                                <!--                                                            <input type="hidden" name="btnAction" value="tostep3"/>-->
-                                                            </tbody>
-                                                        </table>
-                                                        <!--                                                    </form>-->
-                                                    </c:if>
-                                                    <c:if test="${empty data}">
-                                                        <div class="alert alert-warning" style="text-align: center">
+                                                            </c:forEach>
+                                                            <!--                                                            <input type="hidden" name="btnAction" value="tostep3"/>-->
+                                                        </tbody>
+                                                    </table>
+                                                    <!--                                                    </form>-->
+                                                    
+                                                    
+                                                    <div id="amazonModal" class="modal fade">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title">Ảnh sản phẩm</h4>
+                                                                </div>
+                                                                <div class="modal-body" align="center">
+                                                                    <img id="modalImage" style="max-height: 400px"/>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                    
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div><!-- /.modal -->
+                                                    
+                                                </c:if>
+                                                <c:if test="${empty data}">
+                                                    <div class="alert alert-warning" style="text-align: center">
                                                         <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
                                                     </div>
-                                                    </c:if>
-
-                                                </div>
+                                                </c:if>
 
                                             </div>
-                                        </div>
-                                        <div class="form-actions" style="
-                                             padding-top: 5px;
-                                             padding-bottom: 5px;
-                                             padding-right: 5px;
-                                             padding-left: 5px;
-                                             ">
-<!--                                            <form id="form2"  action="ConsignServlet" method="POST">-->
-                                                <div class="row">
-                                                    <div class="col-sm-4"> 
-                                                        <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning">
-                                                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> 
-                                                    </div>
-                                                    <div class="col-sm-4"> </div>
-                                                    <div class="col-sm-4">
-                                                        <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-info" >NEXT <span class="glyphicon glyphicon-arrow-right" aria-hidden="true">
-                                                            </span></button> <i class="m-icon-big-swapright m-icon-white"></i> 
-                                                    </div>
 
-                                                </div>
-<!--                                            </form>-->
                                         </div>
+                                    </div>
+                                    <div class="form-actions" style="
+                                         padding-top: 5px;
+                                         padding-bottom: 5px;
+                                         padding-right: 5px;
+                                         padding-left: 5px;
+                                         ">
+                                        <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation()">
+                                            <div class="row">
+                                                <div class="col-sm-4"> 
+                                                    <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning">
+                                                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> 
+                                                </div>
+                                                <div class="col-sm-4"> </div>
+                                                <div class="col-sm-4">
+                                                    <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <span class="glyphicon glyphicon-arrow-right" aria-hidden="true">
+                                                        </span></button> <i class="m-icon-big-swapright m-icon-white"></i> 
+                                                </div>
+                                                <input type="hidden" id="txtAmazon" name="rdAmazon" value="${ASIN}"/>
+
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <!--                    </form>-->
                 </div>
                 <!-- END DIV STEP2 -->
 
@@ -194,15 +216,28 @@
     };
     function validation() {
         if (jQuery("#form2").context.activeElement.value == 'tostep3') {
-            if (!$("input:radio[name='rdAmazon']").is(":checked")) {
+//            if (!$("input:radio[name='rdAmazon']").is(":checked")) {
+//                alert("Xin chọn sản phẩm");
+//                return false;
+//                
+//            }
+            if ($('#txtAmazon').val() == "") {
                 alert("Xin chọn sản phẩm");
                 return false;
             }
         }
+        return true;
     }
-//    $('input[type=radio][name="rdAmazon"]').click(function () {
-//        $(this).closest("form").submit();
-//    });
+    $('input[type=radio][name="rdAmazon"]').click(function () {
+        //$(this).closest("form").submit();
+        $('#txtAmazon').val($(this).val());
+    });
+
+
+    $('a[name="amazonImage"]').click(function () {
+        var link = $(this).data('id');
+        $("#modalImage").attr("src", link);
+    });
 
 
 </script>

@@ -61,9 +61,9 @@
                         </ul>
 
                         <!-- Tab panes -->
-                        <div class="tab-content">
+                        <div class="tab-content" style="background-color: white">
                             <div class="tab active" id="request" style="display: none">
-
+<!--                                <input type="hidden" id="currentTab" value="${currentTab}"/>-->
                                 <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
                                     <div class="form-body">
                                         <div class="form-group">
@@ -130,15 +130,20 @@
 
                                                 </td>
                                                 <td>
-
-                                                    <fmt:formatNumber 
-                                                        value="${c.minPrice}" 
-                                                        maxFractionDigits="1"/>
-                                                    &nbsp; ~ &nbsp;
-                                                    <fmt:formatNumber 
-                                                        value="${c.maxPrice}" 
-                                                        maxFractionDigits="1"/> 
-
+                                                    <c:choose>
+                                                        <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
+                                                            <fmt:formatNumber 
+                                                                value="${c.minPrice}" 
+                                                                maxFractionDigits="1"/>
+                                                            &nbsp; ~ &nbsp;
+                                                            <fmt:formatNumber 
+                                                                value="${c.maxPrice}" 
+                                                                maxFractionDigits="1"/> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <b><font color="red">Chưa có giá</font></b>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                 </td>
                                                 <td>
 
@@ -230,13 +235,20 @@
                                                 </td>
                                                 <td>
 
-                                                    <fmt:formatNumber 
-                                                        value="${c.minPrice}" 
-                                                        maxFractionDigits="1"/>
-                                                    &nbsp; ~ &nbsp; 
-                                                    <fmt:formatNumber 
-                                                        value="${c.maxPrice}" 
-                                                        maxFractionDigits="1"/>
+                                                    <c:choose>
+                                                        <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
+                                                            <fmt:formatNumber 
+                                                                value="${c.minPrice}" 
+                                                                maxFractionDigits="1"/>
+                                                            &nbsp; ~ &nbsp;
+                                                            <fmt:formatNumber 
+                                                                value="${c.maxPrice}" 
+                                                                maxFractionDigits="1"/> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <b><font color="red">Chưa có giá</font></b>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                 </td>
                                                 <td>
 
@@ -530,21 +542,20 @@
 
             $('.tabs ' + currentAttrValue).fadeIn(400);
             $(this).parent('li').addClass('active');
-            
+
             window.location.hash = $(this).attr('href');
-            $('html,body').scrollTop(0);           
+            $('html,body').scrollTop(0);
             e.preventDefault();
-            
+
         });
     });
     $(document).ready(function () {
-        var hash = window.location.hash.substring(1);
-        if(hash == ""){
-            hash = "request";
-        }
-        
+
         //var currentTab = $('#currentTab').val();
-        var currentTab = hash;
+        var currentTab = window.location.hash.substring(1);
+        if(currentTab == ""){
+            currentTab = "request";
+        }
         var currentLi = currentTab + 'Tab';
         $('div#' + currentTab).siblings().hide();
         $('li#' + currentLi).siblings().removeClass('active');
@@ -599,7 +610,13 @@
                     $("#r_footer").show();
                     $("#ar_footer").hide();
                     $("#r_price").show();
-                    $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
+                    if (data.minPrice > 0 && data.maxPrice > 0) {
+
+
+                        $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
+                    } else {
+                        $("#r_price").html("");
+                    }
                     $("#ar_price").hide();
 
                 } else if (data.consignmentStatusID == 3) {

@@ -119,7 +119,7 @@ public class ConsignServlet extends HttpServlet {
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
                 session.setAttribute("PRODUCT", product);
-
+                
                 if (!serialNumber.isEmpty()) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
@@ -149,6 +149,7 @@ public class ConsignServlet extends HttpServlet {
                 }
 //                request.setAttribute("backlink", url);
                 session.removeAttribute("ASIN");
+                session.removeAttribute("BASICPRICE");
             }
             if (action.equals("tostep3")) {
 

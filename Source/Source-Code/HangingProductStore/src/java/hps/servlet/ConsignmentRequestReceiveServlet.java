@@ -57,9 +57,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     return;
                 }
             }
+            //get ACCOUNT on session
             AccountDTO storeOwner = (AccountDTO) session.getAttribute("ACCOUNT");
             ConsignmentDAO consignmentDAO = new ConsignmentDAO();
             String action = request.getParameter("btnAction");
+            //hash for url
             if (action == null) {
                 action = "r_search";
             }
@@ -101,14 +103,13 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED);
 
                 ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
-                
-                if (consignment != null) {
-                    session.removeAttribute("consignment_details");
-                    String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã được chấp nhận.\n "
-                            + "Cửa hàng sẽ đến nhận hàng từ " + consignment.getFromDate() + " đến ngày " + consignment.getToDate() + ".";
-                    JavaUltilities java = new JavaUltilities();
+                //send sms and email
+//                if (consignment != null) {
+//                    session.removeAttribute("consignment_details");
+//                    String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã được chấp nhận.\n "
+//                            + "Cửa hàng sẽ đến nhận hàng từ " + consignment.getFromDate() + " đến ngày " + consignment.getToDate() + ".";
+//                    JavaUltilities java = new JavaUltilities();
 
-                    //send sms and email
 //                    if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 //
 //                        try {
@@ -127,19 +128,19 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 //                            e.printStackTrace();
 //                        }
 //                    }
-                }
+//            }
 
-                String searchValue = request.getParameter("r_searchValue");
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
-                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
-                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+            String searchValue = request.getParameter("r_searchValue");
+            List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_WAITING);
+            List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+            List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+            List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
 
-                request.setAttribute("REQUEST", c_request);
-                request.setAttribute("ACCEPT", c_accept);
-                request.setAttribute("REFUSE", c_refuse);
-                request.setAttribute("CANCEL", c_cancel);
-            } else if (action.equals("r_refuse")) {
+            request.setAttribute("REQUEST", c_request);
+            request.setAttribute("ACCEPT", c_accept);
+            request.setAttribute("REFUSE", c_refuse);
+            request.setAttribute("CANCEL", c_cancel);
+        }else if (action.equals("r_refuse")) {
                 String consignmentID = request.getParameter("r_consignmentID");
                 consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
                 
@@ -287,28 +288,27 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("CANCEL", c_cancel);
 
             }
-//            if (action.contains("ar_")) {
-//                request.setAttribute("currentTab", "accepted");
-//            } else {
-//                request.setAttribute("currentTab", "request");
-//            }
+            if(action.contains("ar_")){
+                request.setAttribute("currentTab", "accepted");
+                
+            }
 
-            RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);
-            rd.forward(request, response);
-        }
+        RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);
+        rd.forward(request, response);
     }
+}
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+/**
+ * Handles the HTTP <code>GET</code> method.
+ *
+ * @param request servlet request
+ * @param response servlet response
+ * @throws ServletException if a servlet-specific error occurs
+ * @throws IOException if an I/O error occurs
+ */
+@Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -322,7 +322,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -333,7 +333,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+        public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
