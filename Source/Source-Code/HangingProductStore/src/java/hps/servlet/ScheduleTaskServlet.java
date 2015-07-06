@@ -57,8 +57,8 @@ public class ScheduleTaskServlet extends HttpServlet {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                checkOrder();
                 remindConsignor();
+                checkOrder();
             }
         };
         //Timer timer = new Timer();
@@ -69,8 +69,8 @@ public class ScheduleTaskServlet extends HttpServlet {
     }
 
     private void checkOrder() {
-        OrderDAO orderDao = new OrderDAO();
-        ProductDAO productDao = new ProductDAO();
+        OrderDAO orderDao = OrderDAO.getInstance();
+        ProductDAO productDao = ProductDAO.getInstance();
         List<OrderDTO> orders = orderDao.checkOrderExpired();
         if (orders != null) {
             if (orders.size() > 0) {
@@ -86,7 +86,7 @@ public class ScheduleTaskServlet extends HttpServlet {
     }
 
     private void remindConsignor() {
-        DanqtDAO dao = new DanqtDAO();
+        DanqtDAO dao = DanqtDAO.getInstance();
         JavaUltilities ulti = new JavaUltilities();
         List<ConsignmentDTO> listConsignor = dao.remindConsignor();
         if (listConsignor != null) {
