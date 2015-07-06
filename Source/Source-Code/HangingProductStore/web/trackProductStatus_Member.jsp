@@ -66,7 +66,7 @@
                                 <div class="input-group">
                                     <input id="searchInput" class="form-control" type="text" name="searchValue" value="${param.searchValue}">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-success" type="submit" name="btnAction" value="m_search">Tìm</button>
+                                        <button class="btn btn-info" type="submit" name="btnAction" value="m_search">Tìm</button>
                                     </span>
                                 </div>
                             </div>

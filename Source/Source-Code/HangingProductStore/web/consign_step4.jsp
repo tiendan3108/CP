@@ -221,8 +221,8 @@
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Ngày giao hàng <font color="red">*</font></label>
                                                                         <div class="col-md-8 col-sm-8">
-                                                                            <div  class="input-group  date-picker input-daterange" data-date-format="mm/dd/yyyy" data-date-start-date="0d" >
-                                                                                <input type="text" id="txtFromDate" name="txtFromDate"  class="form-control" value="" >
+                                                                            <div  class="input-group  date-picker input-daterange" data-date-format="dd-mm-yyyy" data-date-start-date="0d" >
+                                                                                <input type="text" id="txtFromDate" name="txtFromDate" class="form-control" value="" >
                                                                                 <span class="input-group-addon">
                                                                                     đến </span>
                                                                                 <input type="text" id="txtToDate" name="txtToDate" class="form-control" value="">
@@ -289,14 +289,16 @@
     };
 
     $(document).ready(function () {
-//        $('#txtFromDate').val("07/03/2015");
-//        $('#txtToDate').val("07/05/2015");
+        var date = new Date();
+        date.setDate(date.getDate() + 1);
+        $('#txtFromDate').val(formatDate(date));
+        date.setDate(date.getDate() + 3);
+        $('#txtToDate').val(formatDate(date));
 
 
     });
     $(function () {
-//        $('#txtFromDate').datepicker();
-//        $('#txtToDate').datepicker();
+
         if ($('#txtPhone').val().contains("+84")) {
             var phone = $('#txtPhone').val();
             phone = "0" + phone.substring(3);
@@ -307,6 +309,19 @@
     $("#btnComplete").click(function () {
         $("#form3").submit();
     });
+    function formatDate(date) {
+        var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [day, month, year].join('-');
+    }
 
 //    $('input:radio[name="rdContact"]').change(function () {
 //        if ($(this).val() == "phone") {

@@ -10,9 +10,17 @@ import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.JavaUltilities;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,9 +97,13 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "txtFromDate":
                                 fromDate = item.getString();
+                                fromDate = formatDate(fromDate);
+                                System.out.println("fromDate: " + fromDate);
                                 break;
                             case "txtToDate":
                                 toDate = item.getString();
+                                toDate = formatDate(toDate);
+                                System.out.println("toDate: " + toDate);
                                 break;
                             case "txtAddress":
                                 address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -126,12 +138,22 @@ public class ConsignCompleteServlet extends HttpServlet {
 //                        }
                         String filename = consigmentID + FilenameUtils.getName(item.getName()); // Get filename.
                         //web path
-                        File file = new File(basePath + "\\" + filename); // base file
+                        File file1 = new File(basePath + "\\" + filename); // base file
                         // project path
                         File file2 = new File(deploymentPath + "\\" + filename);//deployment file
                         try {
-                            item.write(file); // Write to base place
-                            item.write(file2);// write to deployment place
+                            //item.write(file); // Write to base place
+                            //item.write(file2);// write to deployment place
+                            InputStream in = item.getInputStream();
+                            OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
+                            OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
+                            for (int b; (b = in.read()) != -1;) {
+                                opsDeployment.write(b);
+                                opsBase.write(b);
+                            }
+                            opsDeployment.close();
+                            opsBase.close();
+                            in.close();
                         } catch (Exception ex) {
                             System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -141,7 +163,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                 }
 
                 ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
-
+                if (!product.getPurchasedDate().isEmpty()) {
+                    product.setPurchasedDate(formatDate(product.getPurchasedDate()));
+                }
                 product.setImage(imagePath);
 
                 DuchcDAO dao = new DuchcDAO();
@@ -197,7 +221,6 @@ public class ConsignCompleteServlet extends HttpServlet {
 //                            }
 //
 //                        }
-
                         session.setAttribute("storeName", store.getFullName());
                         session.setAttribute("trackId", consigmentID);
                         session.removeAttribute("PRODUCT");
@@ -236,6 +259,18 @@ public class ConsignCompleteServlet extends HttpServlet {
             if (s.trim().startsWith("filename")) {
                 return s.substring(s.indexOf("=") + 2, s.length() - 1);
             }
+        }
+        return "";
+    }
+
+    private String formatDate(String date) {
+        try {
+            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+            DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+            Date datetime = format1.parse(date);
+            return format2.format(datetime);
+        } catch (ParseException ex) {
+            Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
     }

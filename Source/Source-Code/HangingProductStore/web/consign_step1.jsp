@@ -7,7 +7,7 @@
 <template:consign htmlTitle="Consign" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
         <!-- Nơi để khai báo page level css, theme, style -->
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="js/jquery-ui.css">
         <style>
             .ui-autocomplete-loading {
                 background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
@@ -157,13 +157,13 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
                                                                     <div class="col-md-4 col-sm-5">
-                                                                        <!--                                                                    <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
-                                                                                                                                                <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
-                                                                                                                                                <span class="input-group-btn">
-                                                                                                                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                                                                                                </span>
-                                                                                                                                            </div>-->
-                                                                        <input id="txtDate" type="text" class="form-control" name="txtDate" value="${product.purchasedDate}">
+                                                                            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
+                                                                            <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
+                                                                            <span class="input-group-btn">
+                                                                                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                            </span>
+                                                                        </div>
+  <!--  <input id="txtDate" type="text" class="form-control" name="txtDate" value="${product.purchasedDate}"> -->
                                                                         <span class="help-block" id="erDate"> </span>
                                                                     </div>
                                                                 </div>
@@ -229,7 +229,6 @@
             select: function (event, ui) {
             }
         });
-        $('#txtDate').datepicker();
 
     });
 

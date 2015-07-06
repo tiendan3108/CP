@@ -119,8 +119,8 @@ public class ConsignServlet extends HttpServlet {
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
                 session.setAttribute("PRODUCT", product);
-                List<AmazonProduct> list;
-                if (serialNumber.length() > 0) {
+
+                if (!serialNumber.isEmpty()) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
@@ -128,10 +128,11 @@ public class ConsignServlet extends HttpServlet {
                     }
                     session.removeAttribute("AMAZONLIST");
                     action = "tostep3";
-                    
+
                 } else {
-                        list = dDAO.getListAmazonProduct(productName, brand, categoryID);
-                        
+
+                    List<AmazonProduct> list = dDAO.getListAmazonProduct(productName, brand, categoryID);
+
                     if (list != null) {
                         if (list.size() > 0) {
                             session.setAttribute("AMAZONLIST", list);
@@ -147,11 +148,12 @@ public class ConsignServlet extends HttpServlet {
                     }
                 }
 //                request.setAttribute("backlink", url);
+                session.removeAttribute("ASIN");
             }
             if (action.equals("tostep3")) {
 
                 String ASIN = request.getParameter("rdAmazon");
-                
+
                 if (ASIN != null) {
                     session.setAttribute("ASIN", ASIN);
                     List<AmazonProduct> list = (List<AmazonProduct>) session.getAttribute("AMAZONLIST");

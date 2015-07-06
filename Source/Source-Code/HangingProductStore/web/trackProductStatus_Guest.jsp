@@ -28,12 +28,13 @@
 
                     <form class="form-horizontal" role="form" action="TrackProductStatus">
                         <div class="form-body">
+                            
                             <div class="form-group">
-                                <div class="col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                                <div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
                                     <div class="input-group">
                                         <input id="searchInput" class="form-control" type="text" name="searchValue" value="${param.searchValue}" placeholder="Điền CODE">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-success" type="submit" name="btnAction" value="search">Kiểm tra</button>
+                                            <button class="btn btn-info" type="submit" name="btnAction" value="search">Kiểm tra</button>
                                         </span>
                                     </div>
                                 </div>
@@ -50,7 +51,7 @@
                         <c:set var="c" value="${CONSIGNMENT}"/>
 
                         <!-- BEGIN PAGE CONTENT-->
-                        <div class="row margin-bottom-25">
+                        <div class="row margin-bottom-25" style="background-color: white">
                             <!-- BEGIN CAROUSEL -->
                             <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
                             <div class="row">
@@ -59,7 +60,7 @@
 
                             </div>
                             <div class="row">
-                                <div class="col-lg-9 col-md-9 col-lg-offset-3">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
+                                <div class="col-lg-12 col-md-12 ">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
 
                             <br/>
                             <div class="col-lg-4 col-md-4 front-carousel">
@@ -108,13 +109,17 @@
 
                                     <tr >
                                         <th>Giá</th>
-                                        <td id="r_price"><fmt:formatNumber type="number"
-                                                          value="${c.minPrice}" 
-                                                          maxFractionDigits="0"/>
-                                            &nbsp;~&nbsp; <fmt:formatNumber type="number"
-                                                              value="${c.maxPrice}" 
-                                                              maxFractionDigits="0"/>
-                                            &nbsp;VND
+
+                                        <td id="r_price">
+                                            <c:if test="${c.minPrice > 0 or c.maxPrice > 0}">
+                                                <fmt:formatNumber type="number"
+                                                                  value="${c.minPrice}" 
+                                                                  maxFractionDigits="0"/>
+                                                &nbsp;~&nbsp; <fmt:formatNumber type="number"
+                                                                  value="${c.maxPrice}" 
+                                                                  maxFractionDigits="0"/>
+                                                &nbsp;VND
+                                            </c:if>
                                         </td> 
                                     </tr>
                                     <tr>

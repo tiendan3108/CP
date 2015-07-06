@@ -8,7 +8,7 @@
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý ký gửi" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="js/jquery-ui.css">
         <!-- Latest compiled and minified CSS -->
 
 
@@ -72,7 +72,7 @@
                                                 <div class="input-group">
                                                     <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit" name="btnAction" value="r_search">Tìm</button>
+                                                        <button class="btn btn-info" type="submit" name="btnAction" value="r_search">Tìm</button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -171,7 +171,7 @@
                                                 <div class="input-group">
                                                     <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
                                                     <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit" name="btnAction" value="ar_search">Tìm</button>
+                                                        <button class="btn btn-info" type="submit" name="btnAction" value="ar_search">Tìm</button>
                                                     </span>
                                                 </div>
                                             </div>
