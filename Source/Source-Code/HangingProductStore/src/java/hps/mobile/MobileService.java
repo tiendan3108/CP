@@ -106,7 +106,7 @@ public class MobileService {
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
-        dao.cancelConsignment(product.getProductID());
+        dao.cancelConsignment(product.getProductID(), product.getReason());
         return "ok";
     }
 }

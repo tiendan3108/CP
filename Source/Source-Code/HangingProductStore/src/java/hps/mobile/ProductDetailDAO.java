@@ -66,8 +66,9 @@ public class ProductDetailDAO {
         }
         return 0;
     }
-    public int getMemberID(String accountID){
-         Connection con = null;
+
+    public int getMemberID(String accountID) {
+        Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         try {
@@ -79,7 +80,7 @@ public class ProductDetailDAO {
             stm.setString(1, accountID);
             rs = stm.executeQuery();
             if (rs.next()) {
-                int memberID = rs.getInt("StoreOwnerID"); 
+                int memberID = rs.getInt("StoreOwnerID");
                 return memberID;
             }
         } catch (SQLException ex) {
@@ -101,6 +102,7 @@ public class ProductDetailDAO {
         }
         return 0;
     }
+
     public List<ProductDetail> getData(int memberID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -192,6 +194,7 @@ public class ProductDetailDAO {
         }
         return false;
     }
+
     public boolean receiveProduct(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -223,23 +226,25 @@ public class ProductDetailDAO {
         return false;
     }
 
-    public void cancelConsignment(int productID) {
-        updateConsignmentStatus(productID);
+    public void cancelConsignment(int productID, String reason) {
+        updateConsignmentStatus(productID, reason);
         updateProductStatus(productID);
     }
 
-    public void updateConsignmentStatus(int productID) {
+    public void updateConsignmentStatus(int productID, String reason) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "update Consignment "
-                    + "Set ConsignmentStatusId = ? "
+                    + "Set ConsignmentStatusId = ? , "
+                    + "Reason = ? "
                     + "where ProductId = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, ConsignmentStatus.REFUSE);
-            stm.setInt(2, productID);
+            stm.setString(2, reason);
+            stm.setInt(3, productID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
