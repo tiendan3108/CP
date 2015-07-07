@@ -52,13 +52,14 @@ public class ProductDAO {
             String query = "select top 12 * from Product,Category,Consignment "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductID = Consignment.ProductID "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
                     + "And Product.ProductID not in (select ProductID from Product_Season) "
                     + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
             stm.setInt(1, ProductStatus.ON_WEB);
-            stm.setString(2, newDate);
+            stm.setInt(2, ProductStatus.ORDERED);
+            stm.setString(3, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
@@ -111,10 +112,11 @@ public class ProductDAO {
             String query = "select * from Product,Category "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "and ProductID = ? "
-                    + "and Product.ProductStatusID = ?";
+                    + "and Product.ProductStatusID = in (?,?)";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
             stm.setInt(2, ProductStatus.ON_WEB);
+            stm.setInt(3, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
@@ -167,13 +169,14 @@ public class ProductDAO {
                     + "And Product.ProductID = Consignment.ProductID "
                     + "and Product.CategoryID = ? "
                     + "and Product.ProductID != ? "
-                    + "and Product.ProductStatusID = ? "
+                    + "and Product.ProductStatusID in (?,?) "
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
                     + "order by Product.ProductID desc";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             stm.setInt(2, productID);
             stm.setInt(3, ProductStatus.ON_WEB);
+            stm.setInt(4, ProductStatus.ORDERED);
             stm.setString(4, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
@@ -229,14 +232,14 @@ public class ProductDAO {
                     + "FROM Product, Category,Consignment "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductID = Consignment.ProductID "
-                    + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
+                    + "And DATEDIFF(day,Consignment.ReceivedDate, ? ) < Consignment.Period "
                     + "And Product.ProductName like ? "
                     + "And Category.ParentID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID = in (?,?) "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) a.ProductID "
                     + "   FROM Product a, Consignment b "
-                    + "   Where a.ProductStatusID = ?"
+                    + "   Where a.ProductStatusID = in (?,?)"
                     + "   And DATEDIFF(day,b.ReceivedDate, ?) < b.Period "
                     + "   ORDER BY ProductID ASC) "
                     + "ORDER BY Product.ProductID ASC";
@@ -245,9 +248,11 @@ public class ProductDAO {
             stm.setString(2, "%" + name + "%");
             stm.setInt(3, parentCategoryID);
             stm.setInt(4, ProductStatus.ON_WEB);
-            stm.setInt(5, next);
-            stm.setInt(6, ProductStatus.ON_WEB);
-            stm.setString(7, newDate);
+            stm.setInt(5, ProductStatus.ORDERED);
+            stm.setInt(6, next);
+            stm.setInt(7, ProductStatus.ON_WEB);
+            stm.setInt(8, ProductStatus.ORDERED);
+            stm.setString(9, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -304,18 +309,18 @@ public class ProductDAO {
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
                     + "And Product.ProductName like ? "
                     + "And Category.ParentID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, newDate);
             stm.setString(2, "%" + name + "%");
             stm.setInt(3, parentCategoryID);
             stm.setInt(4, ProductStatus.ON_WEB);
+            stm.setInt(5, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
             }
-            System.out.println(total);
             return total;
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -356,11 +361,11 @@ public class ProductDAO {
                     + "And Product.ProductID = Consignment.ProductID "
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
                     + "And Product.CategoryID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) a.ProductID "
                     + "   FROM Product a, Consignment b "
-                    + "   Where a.ProductStatusID = ? "
+                    + "   Where a.ProductStatusID in (?,?) "
                     + "   And a.ProductID = b.ProductID "
                     + "   And DATEDIFF(day,b.ReceivedDate, ?) < b.Period "
                     + "   ORDER BY ProductID ASC) "
@@ -369,9 +374,11 @@ public class ProductDAO {
             stm.setString(1, newDate);
             stm.setInt(2, categoryID);
             stm.setInt(3, ProductStatus.ON_WEB);
-            stm.setInt(4, next);
-            stm.setInt(5, ProductStatus.ON_WEB);
-            stm.setString(6, newDate);
+            stm.setInt(4, ProductStatus.ORDERED);
+            stm.setInt(5, next);
+            stm.setInt(6, ProductStatus.ON_WEB);
+            stm.setInt(7, ProductStatus.ORDERED);
+            stm.setString(8, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -426,13 +433,14 @@ public class ProductDAO {
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Product.ProductID = Consignment.ProductID "
                     + "And Product.CategoryID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ?) < Consignment.Period "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, categoryID);
             stm.setInt(2, ProductStatus.ON_WEB);
-            stm.setString(3, newDate);
+            stm.setInt(3, ProductStatus.ORDERED);
+            stm.setString(4, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -476,7 +484,7 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Category.ParentID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) ProductID "
                     + "   FROM Product "
@@ -485,7 +493,8 @@ public class ProductDAO {
             stm = con.prepareStatement(query);
             stm.setInt(1, parentCategoryID);
             stm.setInt(2, ProductStatus.ON_WEB);
-            stm.setInt(3, next);
+            stm.setInt(3, ProductStatus.ORDERED);
+            stm.setInt(4, next);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -539,11 +548,12 @@ public class ProductDAO {
                     + "FROM Product, Category "
                     + "WHERE Product.CategoryID = Category.CategoryID "
                     + "And Category.ParentID = ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setInt(1, parentcategoryID);
             stm.setInt(2, ProductStatus.ON_WEB);
+            stm.setInt(3, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -589,11 +599,11 @@ public class ProductDAO {
                     + "And Product.ProductID = Consignment.ProductID "
                     + "And DATEDIFF(day,Consignment.ReceivedDate,?) < Consignment.Period "
                     + "And Product.ProductName like ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) a.ProductID "
                     + "   FROM Product a, Consignment b "
-                    + "   Where a.ProductStatusID = ? "
+                    + "   Where a.ProductStatusID in (?,?) "
                     + "   And DATEDIFF(day,b.ReceivedDate,?) < b.Period "
                     + "   ORDER BY ProductID ASC) "
                     + "ORDER BY Product.ProductID ASC";
@@ -601,9 +611,11 @@ public class ProductDAO {
             stm.setString(1, newDate);
             stm.setString(2, "%" + name + "%");
             stm.setInt(3, ProductStatus.ON_WEB);
-            stm.setInt(4, next);
-            stm.setInt(5, ProductStatus.ON_WEB);
-            stm.setString(6, newDate);
+            stm.setInt(4, ProductStatus.ORDERED);
+            stm.setInt(5, next);
+            stm.setInt(6, ProductStatus.ON_WEB);
+            stm.setInt(7, ProductStatus.ORDERED);
+            stm.setString(8, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -660,12 +672,13 @@ public class ProductDAO {
                     + "And Product.ProductID = Consignment.ProductID "
                     + "And DATEDIFF(day,Consignment.ReceivedDate,?) < Consignment.Period "
                     + "And Product.ProductName like ? "
-                    + "And Product.ProductStatusID = ? "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "ORDER BY Product.ProductID ASC";
             stm = con.prepareStatement(query);
             stm.setString(1, newDate);
             stm.setString(2, "%" + name + "%");
             stm.setInt(3, ProductStatus.ON_WEB);
+            stm.setInt(4, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             while (rs.next()) {
                 total++;
@@ -709,10 +722,11 @@ public class ProductDAO {
                     + "WHERE Product.ProductID = Product_Season.ProductID "
                     + "And Product.CategoryID = Category.CategoryID "
                     + "And Product_Season.SeasonID = ? "
-                    + "And Product.ProductStatusID = ? ";
+                    + "And Product.ProductStatusID in (?,?) ";
             stm = con.prepareStatement(query);
             stm.setInt(1, seasonId);
             stm.setInt(2, ProductStatus.ON_WEB);
+            stm.setInt(3, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");

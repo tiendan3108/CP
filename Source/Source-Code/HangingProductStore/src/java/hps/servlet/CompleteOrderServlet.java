@@ -50,9 +50,9 @@ public class CompleteOrderServlet extends HttpServlet {
             int productID = Integer.parseInt(sproductID);
             String email = request.getParameter("email");
             String phone = request.getParameter("phone");
-            if(!phone.isEmpty()){
+            if (!phone.isEmpty()) {
                 phone = "+84" + phone.substring(1);
-            }           
+            }
             String fullname = request.getParameter("name");
             String address = request.getParameter("address");
             String orderID = lib.randomString(10);
@@ -68,41 +68,35 @@ public class CompleteOrderServlet extends HttpServlet {
                     customerID = 5;
                 }
             }
-            if (productDao.checkProduct(productID)) {
-                OrderDTO order = new OrderDTO();
-                order.setOrderID(orderID);
-                order.setCustomerID(customerID);
-                order.setEmail(email);
-                order.setPhone(phone);
-                order.setAddress(address);
-                order.setFullName(fullname);
-                order.setProductID(productID);
-                //insert order
-                orderDao.insertOrderWithMemberInfo(order);
-                //update product status                                  
-                productDao.updateStatusToOrdered(productID);
-                //send sms
-                if (!phone.isEmpty()) {     
-                    try {
-                        lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
-                    } catch (TwilioRestException ex) {
-                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            OrderDTO order = new OrderDTO();
+            order.setOrderID(orderID);
+            order.setCustomerID(customerID);
+            order.setEmail(email);
+            order.setPhone(phone);
+            order.setAddress(address);
+            order.setFullName(fullname);
+            order.setProductID(productID);
+            //insert order
+            orderDao.insertOrderWithMemberInfo(order);
+            //update product status                                  
+            productDao.updateStatusToOrdered(productID);
+            //send sms
+            if (!phone.isEmpty()) {
+                try {
+                    lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
+                } catch (TwilioRestException ex) {
+                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //send email
-                if (!email.isEmpty()) {
-                    String body = MessageString.orderSuccessEmail(orderID);
-                    lib.sendEmail(email, MessageString.confirmOrder, body);
-                }
-                RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.COMPLETE_ODER_PAGE);
-                rd.forward(request, response);
-            } else {
-                request.setAttribute("ERROR", MessageString.orderFail);
-                RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.HOME_SERVLET);
-                rd.forward(request, response);
             }
+            //send email
+            if (!email.isEmpty()) {
+                String body = MessageString.orderSuccessEmail(orderID);
+                lib.sendEmail(email, MessageString.confirmOrder, body);
+            }
+            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.COMPLETE_ODER_PAGE);
+            rd.forward(request, response);
 
         }
     }
