@@ -41,7 +41,7 @@ public class ConsignServlet extends HttpServlet {
     private static final String COMPLETED = "consign_success.jsp";
     private static final String HOME = "HomeServlet";
     DuchcDAO dDAO = new DuchcDAO();
-    double basicPrice = 0;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -67,7 +67,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("PRODUCT");
             }
             String url = "";
-
+            double basicPrice = 0;
             if (action.equals("backstep1")) {
 
                 if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
@@ -119,7 +119,7 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("PRODUCT", product);
                 
                 //check product using serial Number
-                if (!serialNumber.isEmpty()) {
+                if (serialNumber.length() > 0) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
