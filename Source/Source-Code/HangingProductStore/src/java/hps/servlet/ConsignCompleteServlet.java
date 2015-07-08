@@ -141,36 +141,36 @@ public class ConsignCompleteServlet extends HttpServlet {
                             String projectPath = request.getServletContext().getRealPath("/"); // web
                             String basePath = projectPath.substring(0, projectPath.length() - 9) + "web\\assets\\image";// base path
                             String deploymentPath = projectPath + "\\assets\\image";
-
+                            
                             //create inputstream
                             InputStream in;
-                            
+
                             //getString file name
                             String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                            
+
                             //if file is amazon url 
                             if (filename.trim().isEmpty()) {
-                                
-                                filename = product.getName().substring(product.getName().lastIndexOf("/"));;
+
+                                filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
+                                System.out.println("File name: " + filename);
                                 URL amazonUrl = new URL(product.getImage());
                                 in = amazonUrl.openStream();
                                 System.out.println("using amazon url");
-                            }
-                            else{
+                            } else {
                                 //if file is uploaded from pc
                                 in = item.getInputStream();
                                 System.out.println("using image from PC");
                             }
-                            filename = consigmentID + filename;
+                            filename = consigmentID + "_" + filename;
+                            System.out.println("File name after: " + filename);
 
                             //item.write(file); // Write to base place
                             //item.write(file2);// write to deployment place
-                            //web path
+                            
+    //web path                        
                             File file1 = new File(basePath + "\\" + filename); // base file
                             // project path
                             File file2 = new File(deploymentPath + "\\" + filename);//deployment file
-
-                            
 
                             OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
                             OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
@@ -178,9 +178,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 opsDeployment.write(b);
                                 opsBase.write(b);
                             }
-                            if (!filename.isEmpty()) {
-                                imagePath = "assets\\image\\" + filename;
-                            }
+
+                            imagePath = "assets\\image\\" + filename;
 
                             opsDeployment.close();
                             opsBase.close();
@@ -198,13 +197,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
 
-                System.out.println("Local image link:  " + imagePath);
                 System.out.println("product image link:  " + product.getImage());
-                if (!imagePath.isEmpty()) {
-                    product.setImage(imagePath);
-                }
-                //product.setImage(imagePath);
 
+                product.setImage(imagePath);
+
+                //product.setImage(imagePath);
                 DuchcDAO dao = new DuchcDAO();
 
                 //Add new product and get id of it

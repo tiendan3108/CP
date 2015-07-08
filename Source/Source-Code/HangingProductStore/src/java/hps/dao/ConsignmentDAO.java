@@ -36,14 +36,7 @@ public class ConsignmentDAO {
             stm.setString(1, consignmentID);
 
             rs = stm.executeQuery();
-            if (rs.next()) {
-                System.out.println("ID          :" + rs.getString("ConsignmentID"));
-                System.out.println("Created Date: " + rs.getDate("CreatedDate"));
-                System.out.println("From Date   : " + rs.getDate("FromDate"));
-                System.out.println("To Date     : " + rs.getDate("ToDate"));
-                
-                
-                
+            if (rs.next()) {               
                 result = getConsignment(rs);
                 populateProduct(result);
                 populateStoreOwner(result);
@@ -359,17 +352,23 @@ public class ConsignmentDAO {
     }
 
     //Update Consignment Status except Received
-    public boolean updateConsignmentStatus(String consignmentID, int status) {
+    public boolean updateConsignmentStatus(String consignmentID, int status, String reason) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
             String sql = "UPDATE Consignment"
-                    + " SET ConsignmentStatusID = ?"
+                    + " SET ConsignmentStatusID = ?, Reason = ?"
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
-            stm.setString(2, consignmentID);
+            if(reason.isEmpty()){
+                stm.setNull(2, java.sql.Types.NVARCHAR);
+            }else{
+                stm.setString(2, reason);
+            }
+            
+            stm.setString(3, consignmentID);
 
             int result = stm.executeUpdate();
             while (result > 0) {
@@ -473,50 +472,6 @@ public class ConsignmentDAO {
         return false;
     }
 
-//    public ConsignmentDTO getConsignmentByProductID(int productID) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        ConsignmentDTO result = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            String sql = "SELECT *"
-//                    + " FROM Consignment "
-//                    + " WHERE ProductID = ?";
-//            stm = con.prepareStatement(sql);
-//            stm.setInt(1, productID);
-//            rs = stm.executeQuery();
-//            if (rs.next()) {
-//                String consignmentID = rs.getString("ConsignmentID");
-//                int period = rs.getInt("Period");
-//                String receiveDate = rs.getString("ReceivedDate");
-//                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
-//                result = new ConsignmentDTO();
-//                result.setPeriod(period);
-//                result.setReceivedDate(receiveDate);
-//                result.setConsignmentStatusID(consignmentStatusID);
-//                result.setConsigmentID(consignmentID);
-//            }
-//            return result;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return result;
-//    }
     //used for getting product info from consignment table and insert into ConsignmentDTO
     public void populateProduct(ConsignmentDTO consignment) {
         ProductDAO dao = new ProductDAO();
@@ -578,7 +533,7 @@ public class ConsignmentDAO {
             //cancelDate = java.formatDateString(cancelDate);
         }
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
-
+        String reason = rs.getString("Reason");
         ConsignmentDTO consignment = new ConsignmentDTO();
         consignment.setConsigmentID(consignmentID);
         consignment.setProductID(productID);
@@ -602,6 +557,7 @@ public class ConsignmentDAO {
         consignment.setCreatedDate(createdDate);
         consignment.setCancelDate(cancelDate);
         consignment.setConsignmentStatusID(consignmentStatusID);
+        consignment.setReason(reason);
 
         return consignment;
     }

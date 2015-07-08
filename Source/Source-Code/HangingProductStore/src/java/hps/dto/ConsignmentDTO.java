@@ -45,6 +45,7 @@ public class ConsignmentDTO implements Serializable {
      //duchc - begin 
     private AccountDTO storeOwner;
     private String cancelDate; // add on 25/6/2015
+    private String reason;
     // duchc - end
 
     // No Argument Constructor
@@ -346,5 +347,14 @@ public class ConsignmentDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+  
+
 }

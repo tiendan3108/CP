@@ -55,12 +55,12 @@
                             <!-- BEGIN CAROUSEL -->
                             <h2 class="modal-title"> <small> Từ khách hàng </small> ${c.name}</h2>
                             <div class="row">
-                                <div class="col-lg-3 col-md-3">ĐT: <b><span  id="r_phone">${c.phone}</span></b></div>
-                                <div class="col-lg-5 col-md-5">Email: <b><span  id="r_email">${c.email}</span></b></div>
+                                <div class="col-lg-3 col-md-3"><b>ĐT: </b><span  id="r_phone">${c.phone}</span></div>
+                                <div class="col-lg-6 col-md-6"><b>Email: </b><span  id="r_email">${c.email}</span></div>
 
                             </div>
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 ">Địa chỉ: <span id="r_address">${c.address}</span></div></div>
+                                <div class="col-lg-12 col-md-12 "><b>Địa chỉ: </b><span id="r_address">${c.address}</span></div></div>
 
                             <br/>
                             <div class="col-lg-4 col-md-4 front-carousel">
@@ -69,7 +69,7 @@
                                     <!-- Carousel items -->
                                     <div class="carousel-inner">
                                         <div class="item active">
-                                            <img id="r_image" alt="${c.product.name}" src="${c.product.image}">
+                                            <img id="r_image" alt="${c.product.name}" src="${c.product.image}" style="max-height: 400px">
                                             <div class="carousel-caption">
                                                 <p></p>
                                             </div>
@@ -171,6 +171,14 @@
                                             </b>
                                         </td>
                                     </tr>
+                                    <c:if test="${c.consignmentStatusID == 2}">
+                                        <tr>
+                                            <th>Lí do</th>
+                                            <td>
+                                                ${c.reason}
+                                            </td>
+                                        </tr>
+                                    </c:if>
                                     <c:if test="${c.product.productStatusID != 6}">
                                         <c:choose>
                                             <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">

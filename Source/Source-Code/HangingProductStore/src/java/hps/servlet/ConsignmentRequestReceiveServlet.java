@@ -84,8 +84,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             } else if (action.equals("requestdetails")) {
                 String consignmentID = request.getParameter("id");
                 ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                System.out.println("consignment reason: " + consignment.getReason());
                 //set session this consignment for accept or refuse action
-                session.setAttribute("consignment_details", consignment);
+                //session.setAttribute("consignment_details", consignment);
                 String json = new Gson().toJson(consignment);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
@@ -100,9 +101,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 return;
             } else if (action.equals("r_accept")) {
                 String consignmentID = request.getParameter("r_consignmentID");
-                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED, "");
 
-                ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                 //send sms and email
 //                if (consignment != null) {
 //                    session.removeAttribute("consignment_details");
@@ -142,7 +143,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             request.setAttribute("CANCEL", c_cancel);
         }else if (action.equals("r_refuse")) {
                 String consignmentID = request.getParameter("r_consignmentID");
-                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, "Từ chối ký gửi");
                 
 //send sms and email
 //                ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
@@ -209,7 +210,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 int productID = Integer.parseInt(request.getParameter("ar_productID"));
                 consignmentDAO.updateConsignmentStatusAsReceived(consignmentID, minPrice, maxPrice, productID);
 
-                ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
 
                 //send sms and email
 //                if (consignment != null) {
@@ -248,9 +249,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("CANCEL", c_cancel);
             } else if (action.equals("ar_refuse")) {
                 String consignmentID = request.getParameter("ar_consignmentID");
-                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE);
+                String reason = request.getParameter("ar_reason");
+                System.out.println("reason: " + reason);
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
 
-                ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                 //send sms and email
                 
 //                if (consignment != null) {

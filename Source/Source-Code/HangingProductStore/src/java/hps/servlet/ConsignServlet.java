@@ -66,7 +66,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("PRODUCT");
                 session.removeAttribute("STOREOWNER");
                 session.removeAttribute("CONSIGNMENT");
-                
+
             }
             String url = "";
             double basicPrice = 0;
@@ -118,14 +118,13 @@ public class ConsignServlet extends HttpServlet {
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
-                session.setAttribute("PRODUCT", product);
-
                 //check product using serial Number
                 if (serialNumber.length() > 0) {
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
                         basicPrice = amazonProduct.getPrice();
+                        product.setImage(amazonProduct.getImage());
                     }
                     session.removeAttribute("AMAZONLIST");
                     action = "tostep3";
@@ -150,34 +149,35 @@ public class ConsignServlet extends HttpServlet {
                     }
                 }
 //                request.setAttribute("backlink", url);
+                session.setAttribute("PRODUCT", product);
+
                 session.removeAttribute("ASIN");
                 session.removeAttribute("BASICPRICE");
             }
             if (action.equals("tostep3")) {
 
                 String ASIN = request.getParameter("rdAmazon");
-
+                ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
                 if (ASIN != null) {
                     session.setAttribute("ASIN", ASIN);
                     List<AmazonProduct> list = (List<AmazonProduct>) session.getAttribute("AMAZONLIST");
                     for (AmazonProduct a : list) {
                         if (a.getASIN().equals(ASIN)) {
                             basicPrice = a.getPrice();
-                            ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
+
                             product.setImage(a.getImage());
                             session.setAttribute("PRODUCT", product);
                             break;
                         }
                     }
                 } else {
-                    ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
                     product.setImage(null);
                     session.setAttribute("PRODUCT", product);
                 }
 
                 session.setAttribute("BASICPRICE", (int) (basicPrice * GlobalVariables.VND_CURRENCY));
 
-                int categoryID = ((ProductDTO) session.getAttribute("PRODUCT")).getCategoryID();
+                int categoryID = product.getCategoryID();
                 List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
 
                 session.setAttribute("STORELIST", list);

@@ -429,7 +429,7 @@
                                                 <!-- Carousel items -->
                                                 <div class="carousel-inner">
                                                     <div class="item active">
-                                                        <img id="r_image" alt="">
+                                                        <img id="r_image" alt="" style="max-height: 400px">
                                                         <div class="carousel-caption">
                                                             <p></p>
                                                         </div>
@@ -474,7 +474,7 @@
                                                                 ~ </span>
                                                             <input type="text" id="ar_maxPrice" class="form-control" >    
                                                         </div>  
-                                                        <!--                                                    <input id="ar_minPrice" type="text" class="form-control"/> ~ <input id="ar_maxPrice" type="text" class="form-control"/>-->
+
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -484,7 +484,11 @@
                                                 <tr>
                                                     <th>Trạng thái</th>
                                                     <td id='r_status'>
-
+                                                    </td>
+                                                </tr>
+                                                <tr id="r_trReason">
+                                                    <th>Lí do</th>
+                                                    <td id="r_reason">
 
                                                     </td>
                                                 </tr>
@@ -498,31 +502,78 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div id="r_footer" >
-                                        <form action="ConsignmentRequestReceive" method="POST">
-                                            <button type="submit" name="btnAction" value="r_accept" class="btn btn-lg btn-primary">Chấp nhận</button>
-                                            <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                        <form id="r_form" action="ConsignmentRequestReceive" method="POST">
+
                                             <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
                                             <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                            <input type="hidden" name="btnAction" value="r_accept"/>
                                         </form>
-
+                                        <button id="r_btnSubmit" class="btn btn-lg btn-primary">Chấp nhận</button>
+                                        <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
                                     </div>
                                     <div id="ar_footer" style="display: none;">
                                         <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
-                                            <button type="submit" name="btnAction" value="ar_accept" class="btn btn-lg btn-primary">Nhận hàng</button>
-                                            <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                                            <input type="hidden" name="btnAction" value="ar_accept"/>
                                             <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
                                             <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
                                             <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
                                             <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
                                             <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
                                         </form>
-
+                                        <button id="ar_btnSubmit" class="btn btn-lg btn-primary">Nhận hàng</button>
+                                        <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!-- END MODAL -->
+
+                    <div id="modalConfirm" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Xác nhận</h4>
+                                </div>
+                                <div class="modal-body" align="center">
+                                    <div id="r_body_confirm" style="display: none;">
+                                        <h3>Bạn có chắc muốn từ chối sản phẩm này không?</h3>
+                                    </div>
+                                    <div id="ar_body_confirm" class="form-horizontal" style="display: none;">
+
+                                        <div class="form-group">
+                                            <label class="col-md-2 col-sm-3 control-label">Lí do: </label>
+                                            <div class="col-md-8 col-sm-7">
+                                                <textarea id="ar_txtReason" type="text" class="form-control" rows="3"></textarea>
+                                                <span id="ar_erReason" class="help-block">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div id="r_footer_confirm">
+                                        <form action="ConsignmentRequestReceive" method="POST">
+                                            <button type="submit" name="btnAction" value="r_refuse" class="btn btn-default">Xác nhận</button>
+                                            <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                            <input id="r_ActionValue_confirm" type="hidden" name="r_consignmentID"/>
+                                        </form>
+                                    </div>
+                                    <div id="ar_footer_confirm">
+                                        <form  action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_confirm_validation();">
+                                            <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-default">Xác nhận</button>
+                                            <input type="hidden" id="ar_inputReason" name="ar_reason"/>
+                                            <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                            <input id="ar_ActionValue_confirm" type="hidden" name="ar_consignmentID"/>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
 
                 </div>
             </div>
@@ -539,7 +590,6 @@
 
             $('.tabs ' + currentAttrValue).siblings().hide();
             $(this).parent('li').siblings().removeClass('active');
-
             $('.tabs ' + currentAttrValue).fadeIn(400);
             $(this).parent('li').addClass('active');
 
@@ -562,7 +612,6 @@
 
         $('div#' + currentTab).fadeIn(400);
         $('li#' + currentLi).addClass('active');
-
 
 
     });
@@ -597,6 +646,9 @@
             $("#r_phone").html("0" + data.phone.substring(3));
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+
+            $("#r_trReason").hide();
+            $("#r_reason").html("");
             if (data.product.productStatusID == 6) {
                 $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
                 $("#r_footer").hide();
@@ -606,7 +658,9 @@
                 if (data.consignmentStatusID == 1) {
                     $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
                     $("#r_ActionValue").val(data.consigmentID);
+                    $("#r_ActionValue_confirm").val(data.consigmentID);
                     $("#ar_ActionValue").val("");
+                    $("#ar_ActionValue_confirm").val("");
                     $("#r_footer").show();
                     $("#ar_footer").hide();
                     $("#r_price").show();
@@ -622,7 +676,9 @@
                 } else if (data.consignmentStatusID == 3) {
                     $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
                     $("#ar_ActionValue").val(data.consigmentID);
+                    $("#ar_ActionValue_confirm").val(data.consigmentID);
                     $("#r_ActionValue").val("");
+                    $("#r_ActionValue_confirm").val("");
                     $("#ar_footer").show();
                     $("#r_footer").hide();
                     $("#r_price").html("");
@@ -631,11 +687,12 @@
                     $("#ar_minPrice").val(data.minPrice.toFixed(0));
                     $("#ar_maxPrice").val(data.maxPrice.toFixed(0));
                     $("#ar_inputProductID").val(data.product.productID);
-                }
-                else if (data.consignmentStatusID == 2) {
+                } else if (data.consignmentStatusID == 2) {
                     $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
                     $("#r_footer").hide();
                     $("#ar_footer").hide();
+                    $("#r_trReason").show();
+                    $("#r_reason").html(data.reason);
                 } else if (data.consignmentStatusID == 4) {
                     $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
                     $("#r_footer").hide();
@@ -664,25 +721,56 @@
                 }
             }
 
-//            $('#btnRequestDetails').click();
+            //            $('#btnRequestDetails').click();
 
         });
     });
 
-    function ar_validation() {
-        if (jQuery("#ar_form").context.activeElement.value != "ar_refuse") {
-            var minPrice = $("#ar_minPrice").val();
-            var maxPrice = $("#ar_maxPrice").val();
-            if (minPrice == "" || maxPrice == "") {
-                alert("Xin nhập giá.");
-                return false;
-            }
-            $("#ar_inputMinPrice").val(minPrice);
-            $("#ar_inputMaxPrice").val(maxPrice);
-            return true;
+    $('button[name="btnRefuse"]').click(function () {
+        var action = $(this).val();
+        if (action == "ar_refuse") {
+            $('#ar_body_confirm').show();
+            $('#r_body_confirm').hide();
+            $('#ar_footer_confirm').show();
+            $('#r_footer_confirm').hide();
+        } else if (action == "r_refuse") {
+            $('#ar_body_confirm').hide();
+            $('#r_body_confirm').show();
+            $('#ar_footer_confirm').hide();
+            $('#r_footer_confirm').show();
         }
+    });
+
+    $('#r_btnSubmit').click(function () {
+        $('form#r_form').submit();
+    });
+    $('#ar_btnSubmit').click(function () {
+        $('form#ar_form').submit();
+    });
+
+    function ar_validation() {
+
+        var minPrice = $("#ar_minPrice").val();
+        var maxPrice = $("#ar_maxPrice").val();
+        if (minPrice == "" || maxPrice == "") {
+            alert("Xin nhập giá.");
+            return false;
+        }
+        $("#ar_inputMinPrice").val(minPrice);
+        $("#ar_inputMaxPrice").val(maxPrice);
+        return true;
+    }
+
+    function ar_confirm_validation() {
+        var reason = $("#ar_txtReason").val();
+        if (reason.trim() == "") {
+            alert("Xin nhập lí do");
+            return false;
+        }
+        $("#ar_inputReason").val(reason);
         return true;
 
+        return false;
     }
 
     function formatDollar(num) {

@@ -68,11 +68,8 @@ public class DuchcDAO {
             } else {
                 stm.setString(6, product.getDescription());
             }
-            if (product.getImage().equals("")) {
-                stm.setNull(7, java.sql.Types.VARCHAR);
-            } else {
-                stm.setString(7, product.getImage());
-            }
+
+            stm.setString(7, product.getImage());
 
             stm.setInt(8, product.getProductStatusID());
 
@@ -345,7 +342,7 @@ public class DuchcDAO {
         }
         return -1;
     }
-    
+
     public List<AmazonProduct> getListAmazonProduct(String productName, String brand, int categoryID) {
         System.out.println("dang vao");
         Connection con = null;
@@ -366,7 +363,6 @@ public class DuchcDAO {
             AmazonService amazon = new AmazonService();
 
             List<AmazonProduct> list = amazon.getProduct(productName, brand, englishName);
-            
 
             return list;
         } catch (SQLException ex) {
@@ -389,39 +385,38 @@ public class DuchcDAO {
         return null;
     }
 
-    //
-    public void updateProductImage(int productID, String imageLink) {
-        Connection con = null;
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        try {
-            String englishName = "";
-            con = DBUltilities.makeConnection();
-            String query = "UPDATE Product SET Image = ? WHERE (ProductID = ?)";
-            stm = con.prepareStatement(query);
-            stm.setString(1, imageLink);
-            stm.setInt(2, productID);
-            int result = stm.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
+    //upload image
+//    public void updateProductImage(int productID, String imageLink) {
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        ResultSet rs = null;
+//        try {
+//            String englishName = "";
+//            con = DBUltilities.makeConnection();
+//            String query = "UPDATE Product SET Image = ? WHERE (ProductID = ?)";
+//            stm = con.prepareStatement(query);
+//            stm.setString(1, imageLink);
+//            stm.setInt(2, productID);
+//            int result = stm.executeUpdate();
+//
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(DuchcDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
     //autocompleteBrandName
     public static List<String> autoCompleteBrandName(String brandName) {
         Connection con = null;
