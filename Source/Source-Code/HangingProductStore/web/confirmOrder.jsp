@@ -30,10 +30,14 @@
                 </li>
             </c:if>
         </c:if>
-        </jsp:attribute>
-        <jsp:body> 
+    </jsp:attribute>
+    <jsp:body> 
         <div id="wrapper">
             <div class="row margin-bottom-40">
+                <c:set var="mess" value="${requestScope.MESS}"/>
+                <c:if test="${not empty mess}">
+                    <h5 style="color: red">${mess}</h5>
+                </c:if>               
                 <h4>Bạn đã đặt món hàng:</h4>
                 <div class="content-form-page">                  
                     <div class="table-wrapper-responsive ">
@@ -41,16 +45,22 @@
                             <c:set var="item" value="${requestScope.DATA}"/>
                             <c:if test="${not empty item}">
                                 <div class="table-wrapper-responsive">
-                                    <table summary="Shopping cart">
-                                        <tr>
-                                            <th>Tên</th>
-                                            <th>Nhãn hiệu</th>                               
-                                            <th>Số Serial</th>
+                                    <table>
+                                        <tr style="font-weight: bold">
+                                            <th>Nhãn hiệu</th>
+                                            <th>Tên</th>                                                                         
+                                            <th>chủ cửa hàng</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Email</th>
+                                            <th>Điện thoại</th>
                                         </tr>
-                                        <tr>
-                                            <td>${item.name}</td>
-                                            <td><h3>${item.brand}</h3></td>
-                                            <td>${item.serialNumber}</td>
+                                        <tr style="font-weight: 500">
+                                            <td>${item.brand}</td>
+                                            <td>${item.productName}</td>
+                                            <td>${item.address}</td>
+                                            <td>${item.fullName}</td>
+                                            <td>${item.phone}</td>
+                                            <td>${item.email}</td>
                                         </tr>                                
                                     </table>
                                 </div>
@@ -99,11 +109,11 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label col-md-2">Địa chỉ</label>
                                 <div class="col-lg-3 col-md-4">
-                                    <textarea rows="3" name="address" type="text" class="form-control"></textarea>
+                                    <textarea id="addressInput" rows="3" name="address" type="text" class="form-control"></textarea>
                                 </div>
                                 <label class="col-lg-2 control-label col-md-2" for="first-name">Số điện thoại <span class="require">*</span></label>
                                 <div class="col-lg-3 col-md-3">
-                                    <input name="phone" required="true" type="number" class="form-control">
+                                    <input maxlength="11" name="phone" required="true" type="number" class="form-control">
                                 </div>
                             </div>
 
@@ -120,3 +130,75 @@
     </div>
 </jsp:body>
 </template:shopbasic>
+
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+<script>
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
+
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initialize_googleMap() {
+        // Create the autocomplete object, restricting the search
+        // to geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+                /** @type {HTMLInputElement} */(document.getElementById('addressInput')),
+                {types: ['geocode']});
+        // When the user selects an address from the dropdown,
+        // populate the address fields in the form.
+//        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+//            fillInAddress();
+//        });
+    }
+
+    // [START region_fillform]
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        for (var component in componentForm) {
+            document.getElementById(component).value = '';
+            document.getElementById(component).disabled = false;
+        }
+
+        // Get each component of the address from the place details
+        // and fill the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            if (componentForm[addressType]) {
+                var val = place.address_components[i][componentForm[addressType]];
+                document.getElementById(addressType).value = val;
+            }
+        }
+    }
+    // [END region_fillform]
+
+    // [START region_geolocation]
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = new google.maps.LatLng(
+                        position.coords.latitude, position.coords.longitude);
+                var circle = new google.maps.Circle({
+                    center: geolocation,
+                    radius: position.coords.accuracy
+                });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+    // [END region_geolocation]
+
+</script>
