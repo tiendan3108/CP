@@ -84,36 +84,24 @@
 
                                         <div class="tab-content" style="text-align: center" >
                                             <h3>
-                                                Sản phẩm ${CONSIGNMENT.product.name} đã được ký gửi 
-                                                <c:if test="${CONSIGNMENT.product.minPrice > 0}">
-                                                    với giá từ ${CONSIGNMENT.product.minPrice} đến ${CONSIGNMENT.product.maxPrice}
+                                                Sản phẩm <b>${CONSIGNMENT.product.name}</b> đã được ký gửi 
+                                                <c:if test="${CONSIGNMENT.minPrice > 0}">
+                                                    với giá từ <fmt:formatNumber 
+                                                        value="${CONSIGNMENT.minPrice}" 
+                                                        maxFractionDigits="0" />  đến <fmt:formatNumber 
+                                                        value="${CONSIGNMENT.maxPrice}" 
+                                                        maxFractionDigits="0" />  đồng.
                                                 </c:if>
                                             </h3>
                                             <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi đến nhận hàng.</h3>
 
-                                            <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consignmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái hàng ký gửi.</h3>
+                                            <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consigmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái sản phẩm.</h3>
 
-                                            <h3>Nhấn vào <a href="TrackProductStatus"><font color="blue">đây </font></a> để kiểm tra.</h3>
-
-                                        </div>
-                                    </div>
-                                    <div class="form-action" style="
-                                         padding-top: 5px;
-                                         padding-bottom: 5px;
-                                         padding-right: 5px;
-                                         padding-left: 5px;
-                                         ">
-                                        <div class="row">
-                                            <div class="col-sm-4"> 
-
-                                            </div>
-                                            <div class="col-sm-4"> </div>
-                                            <div class="col-sm-4">
-
-                                            </div>
+                                            <h3>Nhấn vào <a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a> để kiểm tra.</h3>
 
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

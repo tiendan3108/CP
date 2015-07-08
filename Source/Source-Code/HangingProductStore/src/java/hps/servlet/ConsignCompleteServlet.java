@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -82,8 +83,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                 //tạo ID cho consigment và dùng cho product Image thêm đa dạng
                 String consigmentID = ulti.randomString(10);
 
+                //For parsing request with image
                 List<FileItem> items = null;
+                //for upload image from client to server
                 String imagePath = "";
+                //getProduct on session
+                ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
 
                 try {
                     items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
@@ -92,6 +97,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 }
                 for (FileItem item : items) {
                     if (item.isFormField()) {
+                        //if item is form fie
                         switch (item.getFieldName()) {
                             case "txtFullName":
                                 fullName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -131,24 +137,41 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                         }
                     } else {
-                        String projectPath = request.getServletContext().getRealPath("/"); // web
-                        String basePath = projectPath.substring(0, projectPath.length() - 9) + "web\\assets\\image";;// base path
-                        String deploymentPath = projectPath + "\\assets\\image";
-
-//                        File fileSaveDir = new File(path);
-//                        System.out.println("File path father: " + fileSaveDir.getParent());
-//                        if (!fileSaveDir.exists()) {
-//                            fileSaveDir.mkdir();
-//                        }
-                        String filename = consigmentID + FilenameUtils.getName(item.getName()); // Get filename.
-                        //web path
-                        File file1 = new File(basePath + "\\" + filename); // base file
-                        // project path
-                        File file2 = new File(deploymentPath + "\\" + filename);//deployment file
                         try {
+                            String projectPath = request.getServletContext().getRealPath("/"); // web
+                            String basePath = projectPath.substring(0, projectPath.length() - 9) + "web\\assets\\image";// base path
+                            String deploymentPath = projectPath + "\\assets\\image";
+
+                            //create inputstream
+                            InputStream in;
+                            
+                            //getString file name
+                            String filename = FilenameUtils.getName(item.getName()); // Get filename.
+                            
+                            //if file is amazon url 
+                            if (filename.trim().isEmpty()) {
+                                
+                                filename = product.getName().substring(product.getName().lastIndexOf("/"));;
+                                URL amazonUrl = new URL(product.getImage());
+                                in = amazonUrl.openStream();
+                                System.out.println("using amazon url");
+                            }
+                            else{
+                                //if file is uploaded from pc
+                                in = item.getInputStream();
+                                System.out.println("using image from PC");
+                            }
+                            filename = consigmentID + filename;
+
                             //item.write(file); // Write to base place
                             //item.write(file2);// write to deployment place
-                            InputStream in = item.getInputStream();
+                            //web path
+                            File file1 = new File(basePath + "\\" + filename); // base file
+                            // project path
+                            File file2 = new File(deploymentPath + "\\" + filename);//deployment file
+
+                            
+
                             OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
                             OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
                             for (int b; (b = in.read()) != -1;) {
@@ -170,7 +193,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     }
                 }
 
-                ProductDTO product = (ProductDTO) session.getAttribute("PRODUCT");
+                // upload if image exist but we don't need it 
                 if (!product.getPurchasedDate().isEmpty()) {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
@@ -240,8 +263,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                         consignment.setProduct(product);
                         session.setAttribute("CONSIGNMENT", consignment);
                         session.setAttribute("STOREOWNER", store);
-                        
-                        
+
                         session.removeAttribute("PRODUCT");
                         session.removeAttribute("BASICPRICE");
                         session.removeAttribute("STORE");

@@ -108,7 +108,7 @@
                                                                                                                                     Reliability
                                                                                                                                 </th>-->
                                                                     <th>
-                                                                        Giá (VND)
+                                                                        Giá (nghìn đồng)
                                                                     </th>
 
                                                                     <th style="text-align:center">
@@ -140,10 +140,10 @@
                                                                                 <fmt:parseNumber var="minPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 - item.formula/100) / 1000}" />
                                                                                 <fmt:parseNumber var="maxPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 + item.formula/100) / 1000}" />
                                                                                 <fmt:formatNumber type="number"
-                                                                                                  value="${minPrice * 1000}" 
+                                                                                                  value="${minPrice}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 
-                                                                                                  value="${maxPrice * 1000}" 
-                                                                                                  maxFractionDigits="0" />
+                                                                                                  value="${maxPrice}" 
+                                                                                                  maxFractionDigits="0" /> &nbsp; 
 
                                                                             </c:if>
                                                                             <c:if test="${basicPrice <= 0}">
