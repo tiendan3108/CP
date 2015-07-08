@@ -7,8 +7,6 @@ package hps.mobile;
 
 import com.google.gson.Gson;
 import hps.ultils.JavaUltilities;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
