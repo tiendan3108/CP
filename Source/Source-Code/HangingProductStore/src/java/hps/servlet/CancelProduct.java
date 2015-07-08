@@ -80,58 +80,57 @@ public class CancelProduct extends HttpServlet {
         AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
         String action = request.getParameter("btnAction");
         String consignmentID = request.getParameter("txtConsignmentID");
-        String url = "", message = "", subject = "[HPS] Huy bo ki gui ma " + consignmentID;
+        String url = "", sms = "", email = "", subject = "[HPS] Huy bo ki gui ma " + consignmentID;
         int status = 0;
         Date tempDate = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String toDay = sdf.format(tempDate);
-        boolean flag = true;//only phone
         JavaUltilities ultil = new JavaUltilities();
         DanqtDAO dao = new DanqtDAO();
         if (user == null || !user.getRole().equals("storeOwner")) {
             url = GlobalVariables.SESSION_TIME_OUT_PAGE;
         } else {
             AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
-            if (consignor.getPhone() == null) {
-                flag = false;// only email
-            }
             // get message
             if (action.equals("cancel")) {//agree cancel product
                 status = ProductStatus.COMPLETED;
-                if (flag) {
-                    message = "Mon hang voi ma ki gui " + consignmentID + " cua ban da duoc huy thanh cong."
+                if (consignor.getPhone() != null) {
+                    sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban da duoc huy thanh cong."
                             + " Vui long den nhan lai hang trong 3 ngay ke tu ngay " + toDay;
-                } else {
-                    message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công.</br>"
+                    try {
+                        ultil.sendSMS(sms, consignor.getPhone());
+                    } catch (TwilioRestException ex) {
+                        Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (consignor.getEmail() != null) {
+                    email = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công.</br>"
                             + " Vui lòng đến nhận lại hàng trong 3 ngày kể từ ngày " + toDay + "</br> Trân trọng</br> HPS System";
+                    ultil.sendEmail(consignor.getEmail(), subject, email);
                 }
             } else {//not agree cancel product
                 status = ProductStatus.ON_WEB;
-                if (flag) {
-                    message = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy khong thanh cong."
+                if (consignor.getPhone() != null) {
+                    sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy khong thanh cong."
                             + " Vui long lien he voi chu cua hang " + user.getFullName() + " de biet them chi tiet";
-                } else {
-                    message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn không được hủy thành công.</br>"
+                    try {
+                        ultil.sendSMS(sms, consignor.getPhone());
+                    } catch (TwilioRestException ex) {
+                        Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (consignor.getEmail() != null) {
+                    email = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn không được hủy thành công.</br>"
                             + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
+                    ultil.sendEmail(consignor.getEmail(), subject, email);
                 }
             }
             //update database
             dao.cancelProduct(consignmentID, status);
-            //send confirm information
-            if (flag) {//send SMS
-                try {
-                    ultil.sendSMS(message,consignor.getPhone());
-                } catch (TwilioRestException ex) {
-                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                    Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                 catch (Exception e) {
-                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                    Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, e);
-                }
-            } else {//send email
-                ultil.sendEmail(consignor.getEmail(), subject, message);
-            }
             //change url
             url = GlobalVariables.MANAGERMENT_SERVLET;
             request.setAttribute("currentTab", "canceled");

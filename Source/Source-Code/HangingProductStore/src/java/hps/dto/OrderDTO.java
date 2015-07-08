@@ -23,6 +23,9 @@ public class OrderDTO {
     private float totalPrice;
     private int orderStatusID;
     private int productID;
+    //begin danqt
+    private String orderedDate;
+    //end danqt
 
     public OrderDTO() {
     }
@@ -40,6 +43,16 @@ public class OrderDTO {
         this.productID = productID;
     }
 
+    //danqt begin
+    public OrderDTO(String orderID, String orderedDate, String email, String fullName, String address, String phone) {
+        this.orderID = orderID;
+        this.orderedDate = orderedDate;
+        this.email = email;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+    }
+    //danqt end
     /**
      * @return the orderID
      */
@@ -178,6 +191,20 @@ public class OrderDTO {
      */
     public void setProductID(int productID) {
         this.productID = productID;
+    }
+
+    /**
+     * @return the orderedDate
+     */
+    public String getOrderedDate() {
+        return orderedDate;
+    }
+
+    /**
+     * @param orderedDate the orderedDate to set
+     */
+    public void setOrderedDate(String orderedDate) {
+        this.orderedDate = orderedDate;
     }
 
 }

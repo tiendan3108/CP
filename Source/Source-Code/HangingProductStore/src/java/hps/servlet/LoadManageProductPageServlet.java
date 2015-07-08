@@ -57,7 +57,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
 
                 List<ConsignmentDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
                 List<ConsignmentDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
-                List<ConsignmentDTO> ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED);
+                List<ConsignmentDTO> ordered = dao.getOrderedProduct(user.getRoleID(),ProductStatus.ORDERED);
                 List<ConsignmentDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
                 List<ConsignmentDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
                 List<ConsignmentDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
@@ -92,7 +92,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                             request.setAttribute("keywork2", keywork);
                             break;
                         case "ordered":
-                            ordered = dao.getProductStatus(user.getRoleID(), ProductStatus.ORDERED, keywork);
+                            ordered = dao.getOrderedProduct(user.getRoleID(),ProductStatus.ORDERED, keywork);
                             request.setAttribute("keywork3", keywork);
                             break;
                         case "sold":

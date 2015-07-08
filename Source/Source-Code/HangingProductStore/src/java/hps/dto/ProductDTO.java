@@ -6,6 +6,7 @@
 package hps.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -34,6 +35,7 @@ public class ProductDTO implements Serializable {
     private float maxPrice;
     private String orderDate;
     private String customerPhone;
+    private List<OrderDTO> orderList;
     //danqt - end
 
 //duchc - begin
@@ -443,6 +445,20 @@ public class ProductDTO implements Serializable {
      */
     public void setOrderID(String orderID) {
         this.orderID = orderID;
+    }
+
+    /**
+     * @return the orderList
+     */
+    public List<OrderDTO> getOrderList() {
+        return orderList;
+    }
+
+    /**
+     * @param orderList the orderList to set
+     */
+    public void setOrderList(List<OrderDTO> orderList) {
+        this.orderList = orderList;
     }
 
 }

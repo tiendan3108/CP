@@ -8,11 +8,13 @@ package hps.servlet;
 import com.twilio.sdk.TwilioRestException;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
+import hps.dto.OrderDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
-import hps.ultils.ProductStatus;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -45,47 +47,47 @@ public class OrderProduct extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
             AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
-            String action = request.getParameter("btnAction");
-            String url = "", consignmentID = "";
+            String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String tmp_productID = request.getParameter("txtProductID");
                 DanqtDAO dao = new DanqtDAO();
-                int productID = Integer.parseInt(tmp_productID);
-                AccountDTO consignor = dao.getCustomerInforByProductID(productID);
+                String orderID = request.getParameter("txtOrderID");
+                String temp_sellingPrice = request.getParameter("txtSellingPrice");
+                float sellingPrice = Float.parseFloat(temp_sellingPrice);
+                List<OrderDTO> listCustomer = dao.getListOrderedCustomer(orderID);
+                String consignmentID = dao.getConsignmentIDByOrderID(orderID);
+                AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
+                dao.changeProductStatus(orderID, sellingPrice);
                 JavaUltilities ultil = new JavaUltilities();
-                String message = "";
-                int status = 0;
-                float sellingPrice = 0;
-                if (action.equals("notOrder")) {
-                    status = ProductStatus.ON_WEB;
-                } else {
-                    String temp_sellingPrice = request.getParameter("txtSellingPrice");
-                    consignmentID = request.getParameter("txtConsignmentID");
-                    sellingPrice = Float.parseFloat(temp_sellingPrice);
-                    status = ProductStatus.SOLD;
-                    //send sms
-                    if (consignor.getPhone() != null) {
-                        message = "Hang ki gui voi ma " + consignmentID + " cua ban da duoc ban. Vui long lien he voi"
-                                + " chu cua hang " + user.getFullName() + " de biet them chi tiet.";
-                        try {
-                            ultil.sendSMS(message, consignor.getPhone());
-                        } catch (TwilioRestException ex) {
-                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        catch (Exception ex) {
-                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    if (consignor.getPhone() == null && consignor.getEmail() != null) {
-                        message = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được bán thành công.</br>"
-                                + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
-                        ultil.sendEmail(consignor.getEmail(), "[HPS] Hàng kí gửi", message);
+                if (consignor.getPhone() != null) {
+                    try {
+                        ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
+                    } catch (TwilioRestException ex) {
+                        Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                //change db
-                dao.orderProduct(productID, status, sellingPrice);
+                if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
+                    ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
+                }
+                if (listCustomer != null && !listCustomer.isEmpty()) {
+                    for (OrderDTO order : listCustomer) {
+                        if (order.getPhone() != null) {
+                            try {
+                                ultil.sendSMS(MessageString.cancelOrderSMS(order.getOrderID(), user.getFullName()), order.getPhone());
+                            } catch (TwilioRestException ex) {
+                                Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        if (order.getEmail() != null && !consignor.getEmail().equals("")) {
+                            ultil.sendEmail(order.getEmail(), MessageString.Subject(), MessageString.cancelOrderEmail(order.getOrderID(), user.getFullName(), order.getFullName()));
+                        }
+                    }
+                }
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "ordered");
             }

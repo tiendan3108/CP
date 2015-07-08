@@ -41,7 +41,7 @@
                             <a href="ManageProduct"><i class="fa fa-angle-right"></i>Quản lý hàng kí gửi</a>
                         </li>
                         <li class="list-group-item clearfix dropdown">
-                            <a href="#"><i class="fa fa-angle-right"></i>Thống kê</a>
+                            <a href="Statistics"><i class="fa fa-angle-right"></i>Thống kê</a>
                         </li>
                     </ul>
                 </div>
@@ -82,7 +82,7 @@
                                     <thead>
                                         <tr role="row" class="heading">
                                             <th>
-                                                Stt.
+                                                STT
                                             </th>
                                             <th>
                                                 Tên Sản Phẩm
@@ -186,7 +186,7 @@
                                     <thead>
                                         <tr role="row" class="heading">
                                             <th>
-                                                Stt.
+                                                STT
                                             </th>
                                             <th>
                                                 Tên Sản Phẩm
@@ -272,7 +272,7 @@
                                     <thead>
                                         <tr role="row" class="heading">
                                             <th>
-                                                Stt.
+                                                STT
                                             </th>
                                             <th>
                                                 Tên Sản Phẩm
@@ -335,7 +335,7 @@
                                     <thead>
                                         <tr role="row" class="heading">
                                             <th>
-                                                Stt.
+                                                STT
                                             </th>
                                             <th>
                                                 Tên Sản Phẩm

@@ -118,7 +118,7 @@ public class ScheduleTaskServlet extends HttpServlet {
                 }
             }
         }
-        //System.out.println("Tong cong co " + listConsignor.size() + " het han");
+        System.out.println("Tong cong co " + listConsignor.size() + " het han");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
