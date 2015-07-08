@@ -67,7 +67,7 @@ public class ConsignCompleteServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String url = "consign_success.jsp";
             HttpSession session = request.getSession();
-            if (session.getAttribute("storeName") == null || session.getAttribute("trackId") == null) {
+            if (session.getAttribute("CONSIGNMENT") == null || session.getAttribute("STOREOWNER") == null) {
                 String fullName = null;
                 String fromDate = null;
                 String toDate = null;
@@ -75,6 +75,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String phone = null;
                 String email = null;
                 String paypalAccount = null;
+                String image = null;
                 String rdPayment = "";
 
                 JavaUltilities ulti = new JavaUltilities();
@@ -98,12 +99,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                             case "txtFromDate":
                                 fromDate = item.getString();
                                 fromDate = formatDate(fromDate);
-                                
+
                                 break;
                             case "txtToDate":
                                 toDate = item.getString();
                                 toDate = formatDate(toDate);
-                                
+
                                 break;
                             case "txtAddress":
                                 address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -122,6 +123,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "rdPayment":
                                 rdPayment = item.getString();
+                                break;
+                            case "txtImage":
+                                image = item.getString();
                                 break;
                             default:
                                 break;
@@ -151,6 +155,10 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 opsDeployment.write(b);
                                 opsBase.write(b);
                             }
+                            if (!filename.isEmpty()) {
+                                imagePath = "assets\\image\\" + filename;
+                            }
+
                             opsDeployment.close();
                             opsBase.close();
                             in.close();
@@ -158,7 +166,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        imagePath = "assets\\image\\" + filename;
+
                     }
                 }
 
@@ -166,7 +174,13 @@ public class ConsignCompleteServlet extends HttpServlet {
                 if (!product.getPurchasedDate().isEmpty()) {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
-                product.setImage(imagePath);
+
+                System.out.println("Local image link:  " + imagePath);
+                System.out.println("product image link:  " + product.getImage());
+                if (!imagePath.isEmpty()) {
+                    product.setImage(imagePath);
+                }
+                //product.setImage(imagePath);
 
                 DuchcDAO dao = new DuchcDAO();
 
@@ -182,11 +196,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                     int storeOwnerID = 0;
 
                     storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-
+                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
                     double maxPrice = 0;
                     double minPrice = 0;
                     //get store de lay fomula va nam cua store
-                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
+
                     if (session.getAttribute("BASICPRICE") != null) {
                         double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
                         maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
@@ -194,19 +208,21 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     }
 
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    String createdDate = dateFormat.format(date);
                     ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
-                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
+                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
-                        JavaUltilities java = new JavaUltilities();
-                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
-                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
-                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
 
+//                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
+//                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
+//                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
 //                        //send sms and email
 //                        if (!phone.isEmpty()) {
 //                            try {
-//                                java.sendSMS(msg, phone);
+//                                ultil.sendSMS(msg, phone);
 //                            } catch (Exception e) {
 //                                System.out.println("Loi khi gui tin nhan sms!");
 //                                e.printStackTrace();
@@ -214,15 +230,18 @@ public class ConsignCompleteServlet extends HttpServlet {
 //                        }
 //                        if (!email.isEmpty()) {
 //                            try {
-//                                java.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
+//                                ultil.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
 //                            } catch (Exception e) {
 //                                System.out.println("Loi khi gui email!");
 //                                e.printStackTrace();
 //                            }
 //
 //                        }
-                        session.setAttribute("storeName", store.getFullName());
-                        session.setAttribute("trackId", consigmentID);
+                        consignment.setProduct(product);
+                        session.setAttribute("CONSIGNMENT", consignment);
+                        session.setAttribute("STOREOWNER", store);
+                        
+                        
                         session.removeAttribute("PRODUCT");
                         session.removeAttribute("BASICPRICE");
                         session.removeAttribute("STORE");
