@@ -6,6 +6,7 @@
 package hps.dao;
 
 import hps.dto.ProductDTO;
+import hps.dto.productDetailDTO;
 import hps.ultils.DBUltilities;
 import hps.ultils.ProductStatus;
 import java.sql.Connection;
@@ -112,7 +113,7 @@ public class ProductDAO {
             String query = "select * from Product,Category "
                     + "Where Product.CategoryID = Category.CategoryID "
                     + "and ProductID = ? "
-                    + "and Product.ProductStatusID = in (?,?)";
+                    + "and Product.ProductStatusID in (?,?)";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
             stm.setInt(2, ProductStatus.ON_WEB);
@@ -177,7 +178,7 @@ public class ProductDAO {
             stm.setInt(2, productID);
             stm.setInt(3, ProductStatus.ON_WEB);
             stm.setInt(4, ProductStatus.ORDERED);
-            stm.setString(4, newDate);
+            stm.setString(5, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("ProductID");
@@ -235,11 +236,11 @@ public class ProductDAO {
                     + "And DATEDIFF(day,Consignment.ReceivedDate, ? ) < Consignment.Period "
                     + "And Product.ProductName like ? "
                     + "And Category.ParentID = ? "
-                    + "And Product.ProductStatusID = in (?,?) "
+                    + "And Product.ProductStatusID in (?,?) "
                     + "And Product.ProductID NOT IN "
                     + "  (SELECT TOP (?) a.ProductID "
                     + "   FROM Product a, Consignment b "
-                    + "   Where a.ProductStatusID = in (?,?)"
+                    + "   Where a.ProductStatusID in (?,?)"
                     + "   And DATEDIFF(day,b.ReceivedDate, ?) < b.Period "
                     + "   ORDER BY ProductID ASC) "
                     + "ORDER BY Product.ProductID ASC";
@@ -898,7 +899,7 @@ public class ProductDAO {
                     + "and Product.ProductStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
-            stm.setInt(2, ProductStatus.ON_WEB);
+            stm.setInt(2, ProductStatus.ORDERED);
             rs = stm.executeQuery();
             if (rs.next()) {
                 return true;
@@ -951,6 +952,53 @@ public class ProductDAO {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public productDetailDTO getProductAndStoreDetailByID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        productDetailDTO product = new productDetailDTO();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select Product.Brand, Product.ProductName, Account.Address, Account.FullName, Account.Phone, Account.Email "
+                    + "from Product, Consignment,StoreOwner,Account "
+                    + "where Product.ProductID = Consignment.ProductID "
+                    + "and Consignment.StoreOwnerID = StoreOwner.StoreOwnerID "
+                    + "and StoreOwner.AccountID = Account.AccountID "
+                    + "and Product.ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String brand = rs.getString("Brand");
+                String address = rs.getString("Address");
+                String fullName = rs.getString("FullName");
+                String phone = rs.getString("phone");
+                String email = rs.getString("Email");
+                product = new productDetailDTO(productID, brand, productName, address, fullName, phone, email);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 
 }

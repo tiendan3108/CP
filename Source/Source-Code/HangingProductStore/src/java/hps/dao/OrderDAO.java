@@ -121,7 +121,7 @@ public class OrderDAO {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "select * from [Order] "
-                    + "where DATEDIFF(day,[Order].Date, ?) >=3 "
+                    + "where DATEDIFF(day,[Order].Date, ?) >=2 "
                     + "and OrderStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setDate(1, new java.sql.Date(date.getTime()));

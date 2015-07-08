@@ -8,7 +8,9 @@ package hps.servlet;
 import hps.dao.ProductDAO;
 import hps.dto.Cart;
 import hps.dto.ProductDTO;
+import hps.dto.productDetailDTO;
 import hps.ultils.GlobalVariables;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -43,15 +45,18 @@ public class ConfirmOrderServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String sproductId = request.getParameter("productId");
             int productID;
-            try{
+            try {
                 productID = Integer.parseInt(sproductId);
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 productID = 0;
                 e.printStackTrace();
             }
             if (productID > 0) {
                 ProductDAO dao = new ProductDAO();
-                ProductDTO product = dao.getProductByID(productID);
+                if (dao.checkProduct(productID)) {
+                    request.setAttribute("MESS", MessageString.warningOrdered);
+                }
+                productDetailDTO product = dao.getProductAndStoreDetailByID(productID);
                 request.setAttribute("DATA", product);
             }
             RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.CONFIRM_ORDER_PAGE);
