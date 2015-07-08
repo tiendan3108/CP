@@ -14,9 +14,11 @@ import hps.dto.OrderDTO;
 import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ScheduleTaskServlet extends HttpServlet {
 
-    public static Timer timer = new Timer();
+    public static Timer timer = new Timer(true);
 
     @Override
     public void init() {
@@ -57,14 +59,16 @@ public class ScheduleTaskServlet extends HttpServlet {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("start task");
                 remindConsignor();
                 checkOrder();
+                System.out.println("end task");
             }
         };
         //Timer timer = new Timer();
         long delay = 0;
-        long intevalPeriod = 10 * 1000;//1 mins
-        // schedules the task to be run in an interval
+        long intevalPeriod = 10 * 1000;//10 seconds
+        //schedules the task to be run in an interval
         timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
     }
 
