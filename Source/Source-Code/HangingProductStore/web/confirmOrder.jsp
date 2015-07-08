@@ -36,7 +36,7 @@
             <div class="row margin-bottom-40">
                 <c:set var="mess" value="${requestScope.MESS}"/>
                 <c:if test="${not empty mess}">
-                    <h5 style="color: red">${mess}</h5>
+                    <h5 style="color: red;margin-bottom: 50px">${mess}</h5>
                 </c:if>               
                 <h4>Bạn đã đặt món hàng:</h4>
                 <div class="content-form-page">                  
