@@ -4,6 +4,7 @@ import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.DBUltilities;
+import hps.ultils.JavaUltilities;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -30,12 +31,19 @@ public class ConsignmentDAO {
         try {
             con = DBUltilities.makeConnection();
             String sql = "SELECT * FROM Consignment"
-                    + " WHERE ConsignmentID = ?";
+                    + " WHERE ConsignmentID = ? ";
             stm = con.prepareStatement(sql);
             stm.setString(1, consignmentID);
 
             rs = stm.executeQuery();
             if (rs.next()) {
+                System.out.println("ID          :" + rs.getString("ConsignmentID"));
+                System.out.println("Created Date: " + rs.getDate("CreatedDate"));
+                System.out.println("From Date   : " + rs.getDate("FromDate"));
+                System.out.println("To Date     : " + rs.getDate("ToDate"));
+                
+                
+                
                 result = getConsignment(rs);
                 populateProduct(result);
                 populateStoreOwner(result);
@@ -526,6 +534,8 @@ public class ConsignmentDAO {
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        //JavaUltilities java = new JavaUltilities();
+        
         String consignmentID = rs.getString("ConsignmentID");
         int productID = rs.getInt("ProductID");
         Integer memberID = rs.getInt("MemberID");
@@ -534,12 +544,20 @@ public class ConsignmentDAO {
         String address = rs.getString("Address");
         String phone = rs.getString("Phone");
         String email = rs.getString("Email");
-        String paypalAccount = rs.getString("PaypalAccount");
+        String paypalAccount = rs.getString("PaypalAccount")
+                ;
+        //String fromDate = rs.getString("FromDate");
+        //fromDate = java.formatDateString(fromDate);
         String fromDate = df.format(rs.getDate("FromDate"));
+        
+        //String toDate = rs.getString("ToDate");
+        //toDate = java.formatDateString(toDate);
         String toDate = df.format(rs.getDate("ToDate"));
+        
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
             raiseWebDate = df.format(rs.getDate("RaiseWebDate"));
+            //raiseWebDate = java.formatDateString(raiseWebDate);
         }
         int period = rs.getInt("Period");
         float minPrice = rs.getFloat("MinPrice");
@@ -551,11 +569,13 @@ public class ConsignmentDAO {
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
+            //createdDate = java.formatDateString(createdDate);
             createdDate = df.format(rs.getDate("CreatedDate"));
         }
         String cancelDate = rs.getString("CancelDate");
         if (cancelDate != null) {
             cancelDate = df.format(rs.getDate("CancelDate"));
+            //cancelDate = java.formatDateString(cancelDate);
         }
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
 

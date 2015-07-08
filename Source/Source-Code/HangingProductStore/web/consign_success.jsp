@@ -19,7 +19,7 @@
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
         <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        
+
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper">
@@ -83,12 +83,17 @@
                                         </div> -->
 
                                         <div class="tab-content" style="text-align: center" >
-                                            <h3>Yêu cầu ký gửi của bạn đã được gửi!</h3>
-                                            <h3><b>${sessionScope.storeName}</b> sẽ liên lạc với bạn ngay khi có thể.</h3>
-                                            <c:if test="${empty sessionScope.MEMBER}">
-                                                <h3>Mã ký gửi của bạn là <b>[${sessionScope.trackId}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái hàng ký gửi.</h3>
-                                            </c:if>
-                                            <h3>Nhấn vào <a href="TrackProductStatus">đây</a> để kiểm tra.</h3>
+                                            <h3>
+                                                Sản phẩm ${CONSIGNMENT.product.name} đã được ký gửi 
+                                                <c:if test="${CONSIGNMENT.product.minPrice > 0}">
+                                                    với giá từ ${CONSIGNMENT.product.minPrice} đến ${CONSIGNMENT.product.maxPrice}
+                                                </c:if>
+                                            </h3>
+                                            <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi đến nhận hàng.</h3>
+
+                                            <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consignmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái hàng ký gửi.</h3>
+
+                                            <h3>Nhấn vào <a href="TrackProductStatus"><font color="blue">đây </font></a> để kiểm tra.</h3>
 
                                         </div>
                                     </div>

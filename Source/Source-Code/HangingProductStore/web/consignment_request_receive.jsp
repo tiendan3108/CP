@@ -553,7 +553,7 @@
 
         //var currentTab = $('#currentTab').val();
         var currentTab = window.location.hash.substring(1);
-        if(currentTab == ""){
+        if (currentTab == "") {
             currentTab = $('#currentTab').val();
         }
         var currentLi = currentTab + 'Tab';
@@ -613,7 +613,7 @@
                     if (data.minPrice > 0 && data.maxPrice > 0) {
 
 
-                        $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
+                        $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
                     } else {
                         $("#r_price").html("");
                     }
@@ -685,6 +685,11 @@
 
     }
 
-
+    function formatDollar(num) {
+        var p = num.toFixed(0);
+        return  p.split("").reverse().reduce(function (acc, num, i, orig) {
+            return  num + (i && !(i % 3) ? "," : "") + acc;
+        }, "");
+    }
 
 </script> 

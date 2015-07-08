@@ -167,9 +167,9 @@ public class DuchcDAO {
             } else {
                 stm.setNull(14, java.sql.Types.FLOAT);
             }
-            Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            stm.setString(15, dateFormat.format(date));
+//            Date date = new Date();
+//            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            stm.setString(15, consigment.getCreatedDate());
             stm.setInt(16, consigment.getConsignmentStatusID());
             int result = stm.executeUpdate();
             return result > 0;

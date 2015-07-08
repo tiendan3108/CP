@@ -195,24 +195,50 @@
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Hình ảnh <font color="red">*</font></label>
                                                                         <div class="col-md-8 col-sm-8" align="center">
-                                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                                <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                                                                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
-                                                                                </div>
-                                                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
-                                                                                </div>
-                                                                                <div >
-                                                                                    <span class="btn btn-info btn-file">
-                                                                                        <span class="fileinput-new btn " >
-                                                                                            CHỌN ẢNH </span>
-                                                                                        <span class="fileinput-exists btn">
-                                                                                            THAY ẢNH </span>
-                                                                                        <input  type="file" id="txtImage" name="txtImage" id="txtImage" />
-                                                                                    </span>
-                                                                                    <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                                        XÓA </a>
-                                                                                </div>
-                                                                            </div>
+                                                                            <c:choose>
+                                                                                <c:when test="${not empty PRODUCT.image}">
+                                                                                    <div id="divImage" class="fileinput fileinput-exists" data-provides="fileinput">
+                                                                                        <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                                                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                                                        </div>
+                                                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                                                            <img src="${PRODUCT.image}" alt="Product" style="max-height: 200px"/>
+                                                                                        </div>
+                                                                                        <div >
+                                                                                            <span class="btn btn-info btn-file">
+                                                                                                <span class="fileinput-new btn " >
+                                                                                                    CHỌN ẢNH </span>
+                                                                                                <span class="fileinput-exists btn">
+                                                                                                    THAY ẢNH </span>
+                                                                                                <input  type="file" name="txtImage" value="${PRODUCT.image}" />
+                                                                                            </span>
+                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                                XÓA </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <div id="divImage" class="fileinput fileinput-new" data-provides="fileinput">
+                                                                                        <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                                                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                                                        </div>
+                                                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                                                        </div>
+                                                                                        <div >
+                                                                                            <span class="btn btn-info btn-file">
+                                                                                                <span class="fileinput-new btn " >
+                                                                                                    CHỌN ẢNH </span>
+                                                                                                <span class="fileinput-exists btn">
+                                                                                                    THAY ẢNH </span>
+                                                                                                <input  type="file" name="txtImage" />
+                                                                                            </span>
+                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                                XÓA </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+
                                                                             <span class="help-block" id="erImage">
 
                                                                             </span>
@@ -404,7 +430,14 @@
             }
         }
 
-        if ($('#txtImage').val() == "") {
+//        if ($('#txtImage').val() == "") {
+//            $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
+//            check = false;
+//        } else {
+//            $('#erImage').html("");
+//        }
+
+        if ($('#divImage').attr("class") == "fileinput fileinput-new") {
             $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
             check = false;
         } else {

@@ -77,8 +77,13 @@
                                             <c:set var="store" value="${sessionScope.STORE}"/>
                                             <div class="tab-content ">
                                                 <c:if test="${basicPrice <= 0}">
-                                                    <div class="alert alert-warning" style="text-align: center">
+                                                    <div class="alert alert-danger" style="text-align: center">
                                                         <strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                                    </div>    
+                                                </c:if>
+                                                <c:if test="${basicPrice > 0}">
+                                                    <div class="alert alert-warning" style="text-align: center">
+                                                        <strong>Giá cửa hàng đề nghị có thể không chính xác. Cửa hàng sẽ kiểm tra và định giá chính xác khi đến nhận hàng</strong>
                                                     </div>    
                                                 </c:if>
 
@@ -216,7 +221,7 @@
     function validation() {
         if (jQuery("#form3").context.activeElement.value == 'tostep4') {
             if (!$("input:radio[name='rdStore']").is(":checked")) {
-                alert("Please choose a store");
+                alert("Xin chọn cửa hàng");
                 return false;
             }
         }
