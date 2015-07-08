@@ -21,12 +21,17 @@ import javax.sql.DataSource;
  */
 public class DBUltilities implements Serializable {
 
+    static DataSource ds;
+
     public static Connection makeConnection() {
         try {
             Context context = new InitialContext();
             Context envContext = (Context) context.lookup("java:comp/env");
-            DataSource ds = (DataSource) envContext.lookup("scriptingElement");
+            if (ds == null) {
+                ds = (DataSource) envContext.lookup("scriptingElement");
+            }
             Connection con = ds.getConnection();
+            ds = null;
             return con;
         } catch (NamingException ex) {
             Logger.getLogger(DBUltilities.class.getName()).log(Level.SEVERE, null, ex);
