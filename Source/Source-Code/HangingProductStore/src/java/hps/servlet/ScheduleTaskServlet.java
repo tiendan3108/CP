@@ -18,9 +18,13 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +34,43 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author HoangNHSE61007
  */
-public class ScheduleTaskServlet extends HttpServlet {
+public class ScheduleTaskServlet extends HttpServlet implements ServletContextListener {
 
+    ScheduledExecutorService service;
+
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+//        Runnable runnable = new Runnable() {
+//            public void run() {
+//                System.out.println("start task");
+//                remindConsignor();
+//                checkOrder();
+//                System.out.println("end task");
+//            }
+//        };
+//        service = Executors.newSingleThreadScheduledExecutor();
+//        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        service.shutdownNow();
+    }
     public static Timer timer = new Timer(true);
 
     @Override
     public void init() {
-        task();
+        Runnable runnable = new Runnable() {
+            public void run() {
+                System.out.println("start task");
+                remindConsignor();
+                checkOrder();
+                System.out.println("end task");
+            }
+        };
+        service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
+        //task();
     }
 
     /**
@@ -55,23 +89,24 @@ public class ScheduleTaskServlet extends HttpServlet {
         }
     }
 
-    private void task() {
-        TimerTask timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("start task");
-                remindConsignor();
-                checkOrder();
-                System.out.println("end task");
-            }
-        };
-        //Timer timer = new Timer();
-        long delay = 0;
-        long intevalPeriod = 10 * 1000;//10 seconds
-        //schedules the task to be run in an interval
-        timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
-    }
-
+//    private void task() {
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                System.out.println("start task");
+//                remindConsignor();
+//                checkOrder();
+//                System.out.println("end task");
+//                System.out.println(System.nanoTime()/1000);
+//            }
+//        };
+//        //Timer timer = new Timer();
+//        long delay = 0;
+//        long intevalPeriod = 10 * 1000;//10 seconds
+//        //schedules the task to be run in an interval
+//        timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
+//
+//    }
     private void checkOrder() {
         OrderDAO orderDao = OrderDAO.getInstance();
         ProductDAO productDao = ProductDAO.getInstance();
