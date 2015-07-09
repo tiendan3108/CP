@@ -158,7 +158,7 @@ public class ProductDetailDAO {
         return null;
     }
 
-    public boolean updateConsignment(int productID, String receivedDate, float minPrice, float maxPrice) {
+    public boolean updateConsignment(int productID, String receivedDate, float negotiatedPrice) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -166,16 +166,14 @@ public class ProductDetailDAO {
             con = db.makeConnection();
             String query = "update Consignment "
                     + "Set ReceivedDate = ?, "
-                    + "MaxPrice = ?, "
-                    + "MinPrice = ?, "
+                    + "NegotiatedPrice = ?, "
                     + "ConsignmentStatusID = ? "
                     + "where ProductID = ?";
             stm = con.prepareStatement(query);
             stm.setString(1, receivedDate);
-            stm.setFloat(2, maxPrice);
-            stm.setFloat(3, minPrice);
-            stm.setInt(4, ConsignmentStatus.RECEIVED);
-            stm.setInt(5, productID);
+            stm.setFloat(2, negotiatedPrice);;
+            stm.setInt(3, ConsignmentStatus.RECEIVED);
+            stm.setInt(4, productID);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {

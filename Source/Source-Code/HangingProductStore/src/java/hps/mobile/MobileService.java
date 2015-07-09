@@ -91,7 +91,8 @@ public class MobileService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String newDate = df.format(date);
-        dao.updateConsignment(product.getProductID(), newDate, product.getMinPrice(), product.getMaxPrice());
+        System.out.println(product.getNegotiatedPrice());
+        dao.updateConsignment(product.getProductID(), newDate, product.getNegotiatedPrice());
         dao.receiveProduct(product.getProductID());
         return "ok";
     }

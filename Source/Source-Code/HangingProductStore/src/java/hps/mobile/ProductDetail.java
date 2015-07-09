@@ -25,6 +25,7 @@ public class ProductDetail {
     private String fromDate;
     private String toDate;
     private String reason;
+    private float negotiatedPrice;
 
     public ProductDetail() {
     }
@@ -239,6 +240,20 @@ public class ProductDetail {
      */
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    /**
+     * @return the negotiatedPrice
+     */
+    public float getNegotiatedPrice() {
+        return negotiatedPrice;
+    }
+
+    /**
+     * @param negotiatedPrice the negotiatedPrice to set
+     */
+    public void setNegotiatedPrice(float negotiatedPrice) {
+        this.negotiatedPrice = negotiatedPrice;
     }
 
 }
