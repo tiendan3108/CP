@@ -642,9 +642,10 @@ public class DanqtDAO {
         List<OrderDTO> listOrder = new ArrayList<>();
         try {
             con = DBUltilities.makeConnection();
-            query = "SELECT * FROM [Order] WHERE ProductID = ?";
+            query = "SELECT * FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
+            stm.setInt(2, OrderStatus.WAITING);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String orderID = rs.getString("OrderID");
@@ -849,6 +850,12 @@ public class DanqtDAO {
                             + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                     stm = conn.prepareStatement(query);
                     stm.setInt(1, ProductStatus.NOT_AVAILABLE);
+                    stm.setString(2, consignmentID);
+                    stm.executeUpdate();
+                    query = "UPDATE [Order] SET OrderStatusID = ? WHERE ProductID = "
+                            + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                    stm = conn.prepareStatement(query);
+                    stm.setInt(1, OrderStatus.CANCELED);
                     stm.setString(2, consignmentID);
                     stm.executeUpdate();
                 }
@@ -1295,9 +1302,10 @@ public class DanqtDAO {
                 productList.add(item);
             }
             for (int i = 0; i < productList.size(); i++) {
-                query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ?";
+                query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
                 stm = conn.prepareStatement(query);
                 stm.setInt(1, productList.get(i).getProductID());
+                stm.setInt(2, OrderStatus.WAITING);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     ConsignmentDTO cons = new ConsignmentDTO();
@@ -1359,9 +1367,10 @@ public class DanqtDAO {
                 productList.add(item);
             }
             for (int i = 0; i < productList.size(); i++) {
-                query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ?";
+                query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
                 stm = conn.prepareStatement(query);
                 stm.setInt(1, productList.get(i).getProductID());
+                stm.setInt(2, OrderStatus.WAITING);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     ConsignmentDTO cons = new ConsignmentDTO();

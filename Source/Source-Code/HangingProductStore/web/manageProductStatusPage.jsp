@@ -531,11 +531,13 @@
                                     <h4>Thông tin đặt hàng</h4>        
                                 </div>
                                 <div class="modal-body" id="ordered_bodymodal">
-
+                                    <div class="col-sm-6" id="OrderList">
+                                    </div>
+                                    <div class="col-sm-6" id="ProductInfor">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <form action="OrderProduct" method="POST">
-                                        <input type="hidden" name="txtProductID" id="ordered_productID" value="">
                                         <input class="btn btn-info confirmOrderedModal" type="button" data-togle="modal" value="Đồng ý bán" onclick="return checkCustomer();">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </form>
