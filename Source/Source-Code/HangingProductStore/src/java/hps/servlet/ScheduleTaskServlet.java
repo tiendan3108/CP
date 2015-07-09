@@ -55,12 +55,18 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         service.shutdownNow();
+        try {
+            service.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public static Timer timer = new Timer(true);
 
     @Override
     public void init() {
         Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 System.out.println("start task");
                 remindConsignor();
@@ -71,6 +77,19 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
         //task();
+    }
+
+    @Override
+    public void destroy() {
+
+        service.shutdownNow();
+        try {
+            service.awaitTermination(10, TimeUnit.SECONDS);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        super.destroy();
     }
 
     /**
