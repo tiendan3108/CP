@@ -13,30 +13,15 @@
         <!-- Nơi để khai báo page level javascript -->
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <c:if test="${acc.role == 'member'}">
-                <li id="nofi">
-                    <a href="#">
-                        <i class="icon-bell"></i>
-                        <span class="badge badge-default">3</span>           
-                    </a>
-                    <ul class="fallback">
-                        <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                    </ul>
-                </li>
-            </c:if>
-        </c:if>
     </jsp:attribute>
     <jsp:body> 
         <div id="wrapper">
             <div class="row margin-bottom-40">
                 <c:set var="mess" value="${requestScope.MESS}"/>
                 <c:if test="${not empty mess}">
-                    <h5 style="color: red;margin-bottom: 50px">${mess}</h5>
+                    <div class="alert alert-warning" style="text-align: left;font-weight: bold;font-size: 14px">
+                         <strong>${mess}</strong>
+                    </div>                  
                 </c:if>               
                 <h4>Bạn đã đặt món hàng:</h4>
                 <div class="content-form-page">                  
@@ -75,13 +60,13 @@
                         <input name="productID" value="${item.productID}" hidden="true">
                         <c:if test="${not empty acc}">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label col-md-2">Tên</label>
+                                <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
                                 <div class="col-lg-3 col-md-4">
-                                    <input value="${acc.fullName}" name="name" type="text" id="first-name" class="form-control">
+                                    <input min="4" required="true" value="${acc.fullName}" name="name" type="text" id="first-name" class="form-control">
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2" for="first-name">Email <span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2" for="first-name">Email</label>
                                 <div class="col-md-4 col-lg-4">
-                                    <input value="${acc.email}" name="email" required="true" type="text" id="first-name" class="form-control">
+                                    <input value="${acc.email}" name="email" type="text" id="first-name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -97,9 +82,9 @@
                         </c:if>
                         <c:if test="${empty acc}">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label col-md-2">Tên</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
                                 <div class="col-lg-3 col-md-4">
-                                    <input name="name" type="text" id="first-name" class="form-control">
+                                    <input min="4" required="true" name="name" type="text" id="first-name" class="form-control">
                                 </div>
                                 <label class="col-lg-2 control-label col-md-2" for="first-name">Email </span></label>
                                 <div class="col-lg-4 col-md-4">
@@ -116,7 +101,6 @@
                                     <input maxlength="11" name="phone" required="true" type="number" class="form-control">
                                 </div>
                             </div>
-
                         </c:if>                      
                         <div class="row">
                             <div class="col-lg-8 col-md-offset-8 padding-left-0 padding-top-20">

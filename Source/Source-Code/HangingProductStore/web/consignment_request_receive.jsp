@@ -33,7 +33,7 @@
             <div class="row margin-bottom-40">
                 <!--BEGIN SIDEBAR -->
                 <div class="sidebar col-md-3 col-sm-4">
-                    <ul class="list-group sidebar-menu">
+                    <ul class="list-group sidebar-menu" style="font-size: 14px;">
                         <li class="list-group-item clearfix dropdown active">
                             <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                         </li>
@@ -49,15 +49,15 @@
 
                 <div class="col-md-9 col-sm-8">
                     <!-- START UPDATE -->
-                    <div class="tabs row tab-style-1">
+                    <div style="margin-bottom: 50px" class="tabs row tab-style-1">
 
                         <!-- Nav tabs -->
                         <ul class=" nav nav-tabs nav-justified" id="myTab">
 
-                            <li id="requestTab" ><a href="#request"><b>Chưa duyệt</b></a></li>
-                            <li id="acceptedTab"><a href="#accepted"><b>Đã duyệt</b></a></li>
-                            <li id="refuseTab"><a href="#refuse"><b>Từ chối</b></a></li>
-                            <li id="cancelTab"><a href="#cancel"><b>Đã hủy</b></a></li>
+                            <li id="requestTab" ><a href="#request">Chưa duyệt</a></li>
+                            <li id="acceptedTab"><a href="#accepted">Đã duyệt</a></li>
+                            <li id="refuseTab"><a href="#refuse">Từ chối</a></li>
+                            <li id="cancelTab"><a href="#cancel">Đã hủy</a></li>
                         </ul>
 
                         <!-- Tab panes -->

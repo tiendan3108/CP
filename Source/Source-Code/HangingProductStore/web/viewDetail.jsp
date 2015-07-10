@@ -17,23 +17,6 @@
         </script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
-        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <c:if test="${acc.role == 'member'}">
-                <li id="nofi">
-                    <a href="#">
-                        <i class="icon-bell"></i>
-                        <span class="badge badge-default">3</span>           
-                    </a>
-                    <ul class="fallback">
-                        <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                        <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                    </ul>
-                </li>
-            </c:if>
-        </c:if>
     </jsp:attribute>
     <jsp:body>  
         <div id="wrapper">
