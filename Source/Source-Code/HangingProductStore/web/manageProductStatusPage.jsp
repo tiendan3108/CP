@@ -46,7 +46,7 @@
                     <!-- BEGIN TAB -->
                     <div class="tabs row">
                         <!-- BEGIN TAB LINK -->
-                        <ul class=" nav nav-tabs nav-justified" id="myTab">
+                        <ul class=" nav nav-tabs nav-justified" id="myTab" style="font-size: 14px;">
                             <li id="availableTab"><a href="#available">Chờ duyệt</a></li>
                             <li id="onWebTab"><a href="#onWeb">Trên web</a></li>
                             <li id="orderedTab"><a href="#ordered">Đã được đặt</a></li>
