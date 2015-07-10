@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,13 +79,15 @@ public class OrderDAO {
         Connection con = null;
         PreparedStatement stm = null;
         Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentDateTime = format.format(date);
         try {
             con = DBUltilities.makeConnection();
             String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setString(1, order.getOrderID());
             stm.setInt(2, order.getCustomerID());
-            stm.setDate(3, new java.sql.Date(date.getTime()));
+            stm.setString(3, currentDateTime);
             stm.setString(4, order.getEmail());
             stm.setString(5, order.getFullName());
             stm.setString(6, order.getAddress());
@@ -184,6 +187,44 @@ public class OrderDAO {
                 Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public long getNumOfOrder(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        long numOfOrder = 0;
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select COUNT(OrderID) as numOfOrder "
+                    + "from [Order] "
+                    + "where ProductID = ?";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                numOfOrder  = rs.getLong("numOfOrder");
+            }
+            return numOfOrder;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return 0;
     }
 
 }

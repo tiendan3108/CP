@@ -81,20 +81,21 @@ public class CompleteOrderServlet extends HttpServlet {
             //update product status                                  
             productDao.updateStatusToOrdered(productID);
             //send sms
-            if (!phone.isEmpty()) {
-                try {
-                    lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
-                } catch (TwilioRestException ex) {
-                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
-                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+//            if (!phone.isEmpty()) {
+//                try {
+//                    lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
+//                } catch (TwilioRestException ex) {
+//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
             //send email
             if (!email.isEmpty()) {
                 String body = MessageString.orderSuccessEmail(orderID);
                 lib.sendEmail(email, MessageString.confirmOrder, body);
             }
+            request.setAttribute("MESS", MessageString.orderSuccess(orderID));
             RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.COMPLETE_ODER_PAGE);
             rd.forward(request, response);
 

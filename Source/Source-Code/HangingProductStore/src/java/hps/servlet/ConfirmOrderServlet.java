@@ -5,6 +5,7 @@
  */
 package hps.servlet;
 
+import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.Cart;
 import hps.dto.ProductDTO;
@@ -54,7 +55,9 @@ public class ConfirmOrderServlet extends HttpServlet {
             if (productID > 0) {
                 ProductDAO dao = new ProductDAO();
                 if (dao.checkProduct(productID)) {
-                    request.setAttribute("MESS", MessageString.warningOrdered);
+                    OrderDAO orderDao = new OrderDAO();
+                    long number = orderDao.getNumOfOrder(productID);
+                    request.setAttribute("MESS", MessageString.warningOrdered(number));
                 }
                 productDetailDTO product = dao.getProductAndStoreDetailByID(productID);
                 request.setAttribute("DATA", product);

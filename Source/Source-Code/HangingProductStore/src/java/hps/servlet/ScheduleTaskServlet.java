@@ -65,6 +65,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
 
     @Override
     public void init() {
+        /*
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -75,21 +76,21 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
             }
         };
         service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS); */
         //task();
     }
 
     @Override
     public void destroy() {
 
-        service.shutdownNow();
-        try {
-            service.awaitTermination(10, TimeUnit.SECONDS);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        super.destroy();
+//        service.shutdownNow();
+//        try {
+//            service.awaitTermination(10, TimeUnit.SECONDS);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        super.destroy();
     }
 
     /**
