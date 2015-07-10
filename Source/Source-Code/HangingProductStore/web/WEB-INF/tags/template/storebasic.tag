@@ -55,18 +55,6 @@
         </li>
         <li><a href="shop-account.html">Management</a>
         </li>        
-        <li id="nofi">
-            <a href="#">
-                <i class="icon-bell"></i>
-                <span class="badge badge-default">3</span>           
-            </a>
-            <ul class="fallback">
-                <li style="margin-left: -40px"><a href="ProcessServlet?action=manage">Manage Product Status</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-            </ul>
-        </li>
     </jsp:attribute>
     <jsp:body>
         <jsp:doBody />
