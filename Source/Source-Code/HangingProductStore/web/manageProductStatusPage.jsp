@@ -46,13 +46,13 @@
                     <!-- BEGIN TAB -->
                     <div class="tabs row">
                         <!-- BEGIN TAB LINK -->
-                        <ul class=" nav nav-tabs nav-justified" id="myTab" style="font-weight: 700">
+                        <ul class=" nav nav-tabs nav-justified" id="myTab">
                             <li id="availableTab"><a href="#available">Chờ duyệt</a></li>
                             <li id="onWebTab"><a href="#onWeb">Trên web</a></li>
                             <li id="orderedTab"><a href="#ordered">Đã được đặt</a></li>
                             <li id="soldTab"><a href="#sold">Đã bán</a></li>
                         </ul>
-                        <ul class=" nav nav-tabs nav-justified" style="font-weight: 700">
+                        <ul class=" nav nav-tabs nav-justified">
                             <li id="canceledTab"><a href="#canceled">Đăng kí hủy kí gửi</a></li>
                             <li id="completedTab"><a href="#completed">Hoàn tất thanh toán</a></li>
                             <li id="expiredTab"><a href="#expired">Hết hạn kí gửi</a></li>
