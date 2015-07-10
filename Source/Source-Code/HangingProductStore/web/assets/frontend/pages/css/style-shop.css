@@ -1016,12 +1016,15 @@ table .product-quantity .input-group {
 }
 
 .ecommerce .nav-tabs {
-	text-transform: uppercase;
-	font: 16px/1 "PT Sans Narrow", sans-serif;	
+	font-family: 'Open Sans', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        text-transform: uppercase;
 }
 .ecommerce .nav-tabs > li > a, .ecommerce .nav-tabs > li > a:hover, .ecommerce .nav-tabs > li > a:focus {
-	padding: 5px 15px 3px;
-	background: #edeff1;
+	padding: 7px 15px 7px;
+	background: white;
+        margin-left: 4px;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     background: #E6400C;

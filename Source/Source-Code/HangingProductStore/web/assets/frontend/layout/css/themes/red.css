@@ -112,7 +112,7 @@ a:hover {
 	border-color: #e6400c;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-	background: #e6400c;
+	background: #5e6e92;
 }
 .content-search h1 em {
 	color: #e6400c;
@@ -140,7 +140,7 @@ a:hover {
 	color: #e6400c;
 }
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background: #E6400C;
+    background: #01579b;
     color: #fff;
 }
 .list-view-sorting a {
@@ -374,4 +374,10 @@ a:hover {
 .header-navigation ul > li.active > a/*,
 .ecommerce .header-navigation ul > li.active > a*/ {
 	border-bottom: 2px solid #e64f00;
+}
+
+
+.nav-tabs.nav-justified>li>a {
+  border-bottom: 1px solid #ddd;
+  border-radius: 0px 0px 0 0;
 }
