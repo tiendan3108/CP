@@ -45,10 +45,18 @@ public class MessageString {
 
     public static final String orderSuccessEmail(String orderID) {
         return "<h3>Chúc Mừng Bạn</h3> Bạn đã đặt hàng thành công, mã đơn hàng của bạn là "
-                + orderID + "<br/>" + "Cửa hàng sẽ liên lạc lại với bạn "
-                +"<br/> Sau 3 ngày nếu không tới lấy hàng, đơn hàng của bạn sẽ bị hủy";
+                + orderID + "<br/>" + "Cửa hàng sẽ liên lạc lại với bạn."
+                + "<br/> Đơn đặt hàng của bạn chỉ có giá trị trong vòng 3 ngày";
     }
     public static final String loginFail = "Tên đăng nhập hoặc mật khẩu không đúng";
-    public static final String warningOrdered = "Món hàng này đã có người đặt trước bạn, "
-            + "có thể bạn sẽ không mua được món hàng, vui lòng liên hệ với chủ cửa hàng để biêt thêm.";
+
+    public static final String warningOrdered(long num) {
+        return "Món hàng này đã có "+num+" người đặt, "
+                + "có thể bạn sẽ không mua được món hàng, vui lòng liên hệ với chủ cửa hàng để biêt thêm.";
+    }
+
+    public static final String orderSuccess(String orderID) {
+        return "Bạn đã đặt hàng thành công. Mã đơn hàng của bạn là " + orderID+ "."
+                + "<br/> <br/>Chủ cửa hàng sẽ liên lạc giá sản phẩm cho bạn sau.";
+    }
 }
