@@ -28,7 +28,7 @@
             <div class="row margin-bottom-40">
                 <!--BEGIN SIDEBAR -->
                 <div class="sidebar col-md-3 col-sm-4">
-                    <ul class="list-group sidebar-menu">
+                    <ul class="list-group sidebar-menu" style="font-size: 14px;">
                         <li class="list-group-item clearfix dropdown">
                             <a href="ConsignmentRequestReceive"><i class="fa fa-angle-right"></i>Quản lý yêu cầu</a>
                         </li>
@@ -46,7 +46,7 @@
                     <!-- BEGIN TAB -->
                     <div class="tabs row">
                         <!-- BEGIN TAB LINK -->
-                        <ul class=" nav nav-tabs nav-justified" id="myTab" style="font-size: 14px;">
+                        <ul class=" nav nav-tabs nav-justified" id="myTab" style="margin-bottom: 3px">
                             <li id="availableTab"><a href="#available">Chờ duyệt</a></li>
                             <li id="onWebTab"><a href="#onWeb">Trên web</a></li>
                             <li id="orderedTab"><a href="#ordered">Đã được đặt</a></li>
