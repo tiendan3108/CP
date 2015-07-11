@@ -66,7 +66,7 @@ public class ConsignCompleteServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String url = "consign_success.jsp";
+            String url = COMPLETED;
             HttpSession session = request.getSession();
             if (session.getAttribute("CONSIGNMENT") == null || session.getAttribute("STOREOWNER") == null) {
                 String fullName = null;
@@ -76,10 +76,10 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String phone = null;
                 String email = null;
                 String paypalAccount = null;
-                String image = null;
-                String rdPayment = "";
+                String paymentMethod = "";
 
                 JavaUltilities ulti = new JavaUltilities();
+                
                 //tạo ID cho consigment và dùng cho product Image thêm đa dạng
                 String consigmentID = ulti.randomString(10);
 
@@ -128,10 +128,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 paypalAccount = item.getString();
                                 break;
                             case "rdPayment":
-                                rdPayment = item.getString();
-                                break;
-                            case "txtImage":
-                                image = item.getString();
+                                paymentMethod = item.getString();
                                 break;
                             default:
                                 break;
@@ -152,14 +149,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                             if (filename.trim().isEmpty()) {
 
                                 filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
-                                System.out.println("File name: " + filename);
                                 URL amazonUrl = new URL(product.getImage());
                                 in = amazonUrl.openStream();
-                                System.out.println("using amazon url");
                             } else {
                                 //if file is uploaded from pc
                                 in = item.getInputStream();
-                                System.out.println("using image from PC");
                             }
                             filename = consigmentID + "_" + filename;
                             System.out.println("File name after: " + filename);
@@ -191,13 +185,10 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     }
                 }
-
-                // upload if image exist but we don't need it 
+                // add Purchased date from step1 if user set it
                 if (!product.getPurchasedDate().isEmpty()) {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
-
-                System.out.println("product image link:  " + product.getImage());
 
                 product.setImage(imagePath);
 
@@ -225,12 +216,17 @@ public class ConsignCompleteServlet extends HttpServlet {
                         double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
                         maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
                         minPrice = Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
-
                     }
-
+                    // Set created date
                     Date date = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
                     String createdDate = dateFormat.format(date);
+                    
+                    //set if user choose to paypal account
+                    if(paymentMethod.equals("direct")){
+                        paypalAccount = "";
+                    }
+                    
                     ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
                     boolean result = dao.addConsigment(consignment);
