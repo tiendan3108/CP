@@ -36,7 +36,7 @@ public class ConsignmentDAO {
             stm.setString(1, consignmentID);
 
             rs = stm.executeQuery();
-            if (rs.next()) {               
+            if (rs.next()) {
                 result = getConsignment(rs);
                 populateProduct(result);
                 populateStoreOwner(result);
@@ -362,12 +362,12 @@ public class ConsignmentDAO {
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
-            if(reason.isEmpty()){
+            if (reason.isEmpty()) {
                 stm.setNull(2, java.sql.Types.NVARCHAR);
-            }else{
+            } else {
                 stm.setString(2, reason);
             }
-            
+
             stm.setString(3, consignmentID);
 
             int result = stm.executeUpdate();
@@ -435,6 +435,68 @@ public class ConsignmentDAO {
         return false;
     }
 
+    //update consignment and product status for request management
+    public boolean updateConsignmentAndProductStatus(String consignmentID, float negotiatedPrice,
+            String receivedDate, int consignmentStatusID, int productID, String productName, int categoryID,
+            String brand, String description, int productStatusID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Consignment"
+                    + " SET NegotiatedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = ?"
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+            if (negotiatedPrice > 0) {
+                stm.setDouble(1, negotiatedPrice);
+            } else {
+                stm.setNull(1, java.sql.Types.FLOAT);
+            }
+
+            if (receivedDate.isEmpty()) {
+                stm.setNull(2, java.sql.Types.DATE);
+            } else {
+                stm.setString(2, receivedDate);
+            }
+
+            stm.setInt(3, consignmentStatusID);
+            stm.setString(4, consignmentID);
+
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
+                        + " ProductStatusID = ? WHERE ProductID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, productName);
+                stm.setInt(2, categoryID);
+                stm.setString(3, brand);
+                stm.setString(4, description);
+                stm.setDouble(5, productStatusID);
+                stm.setInt(6, productID);
+                result = stm.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
+    //cancel Product by change status of product as Canceled and update date on consignment
     public boolean cancelConsignmentInProduct(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -449,7 +511,7 @@ public class ConsignmentDAO {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, productID);
                 result = stm.executeUpdate();
-                if(result >0){
+                if (result > 0) {
                     return true;
                 }
             }
@@ -490,7 +552,7 @@ public class ConsignmentDAO {
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         //JavaUltilities java = new JavaUltilities();
-        
+
         String consignmentID = rs.getString("ConsignmentID");
         int productID = rs.getInt("ProductID");
         Integer memberID = rs.getInt("MemberID");
@@ -499,16 +561,15 @@ public class ConsignmentDAO {
         String address = rs.getString("Address");
         String phone = rs.getString("Phone");
         String email = rs.getString("Email");
-        String paypalAccount = rs.getString("PaypalAccount")
-                ;
+        String paypalAccount = rs.getString("PaypalAccount");
         //String fromDate = rs.getString("FromDate");
         //fromDate = java.formatDateString(fromDate);
         String fromDate = df.format(rs.getDate("FromDate"));
-        
+
         //String toDate = rs.getString("ToDate");
         //toDate = java.formatDateString(toDate);
         String toDate = df.format(rs.getDate("ToDate"));
-        
+
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
             raiseWebDate = df.format(rs.getDate("RaiseWebDate"));

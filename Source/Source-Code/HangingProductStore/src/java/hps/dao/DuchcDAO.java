@@ -113,8 +113,8 @@ public class DuchcDAO {
             // add Consigment Values
             String query = "INSERT INTO Consignment(ConsignmentID, ProductID, MemberID, StoreOwnerID, FullName, Address,"
                     + " Phone, Email, PaypalAccount,\n"
-                    + "                     FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, ConsignmentStatusID)\n"
-                    + "                     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + "                     FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, ConsignmentStatusID, ReceivedDate, NegotiatedPrice)\n"
+                    + "                     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query);
             stm.setString(1, consigment.getConsigmentID());
             stm.setInt(2, consigment.getProductID());
@@ -164,10 +164,24 @@ public class DuchcDAO {
             } else {
                 stm.setNull(14, java.sql.Types.FLOAT);
             }
-//            Date date = new Date();
-//            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            
+            //Date date = new Date();
+            //DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
             stm.setString(15, consigment.getCreatedDate());
             stm.setInt(16, consigment.getConsignmentStatusID());
+            
+            
+            if(consigment.getReceivedDate() != null){
+                stm.setString(17, consigment.getReceivedDate());
+            }else{
+                stm.setNull(17, java.sql.Types.DATE);
+            }
+            if(consigment.getNegotiatedPrice() > 0){
+                stm.setDouble(18, consigment.getNegotiatedPrice());
+            }else{
+                stm.setNull(18, java.sql.Types.FLOAT);
+            }
+            
             int result = stm.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {

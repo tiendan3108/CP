@@ -208,8 +208,8 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
                     AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
-                    double maxPrice = 0;
-                    double minPrice = 0;
+                    float maxPrice = 0;
+                    float minPrice = 0;
                     //get store de lay fomula va nam cua store
 
                     if (session.getAttribute("BASICPRICE") != null) {

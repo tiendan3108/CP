@@ -151,8 +151,8 @@
                                                 </td>
                                                 <td align="center">
 
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequestAccept"
+                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -256,8 +256,8 @@
                                                 </td>
                                                 <td align="center">
 
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequestAccept"
+                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -321,8 +321,8 @@
                                                 </td>
                                                 <td align="center">
 
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -384,8 +384,8 @@
                                                 </td>
                                                 <td align="center">
 
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequest"
-                                                            name="requestDetails" value="${c.consigmentID}">Xem</button>
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
 
                                                 </td>
                                             </tr>
@@ -399,11 +399,12 @@
 
                     </div>
 
-
+                    <c:set var="fCate" value="${FCATE}" />
+                    <c:set var="category" value="${CATEGORY}" />                                
 
                     <!--BEGIN MODAL -->
                     <!-- Large modal -->
-                    <div id="modalRequest" class="modal fade bs-example-modal-lg" aria-hidden="true">
+                    <div id="modalRequestAccept" class="modal fade bs-example-modal-lg" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -421,7 +422,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <!-- BEGIN PAGE CONTENT-->
-                                    <div class="row margin-bottom-25">
+                                    <div>
                                         <!-- BEGIN CAROUSEL -->
                                         <div class="col-lg-4 col-md-4 front-carousel">
 
@@ -429,7 +430,7 @@
                                                 <!-- Carousel items -->
                                                 <div class="carousel-inner">
                                                     <div class="item active">
-                                                        <img id="r_image" alt="" style="max-height: 400px">
+                                                        <img id="r_image" alt="" style="max-height: 600px">
                                                         <div class="carousel-caption">
                                                             <p></p>
                                                         </div>
@@ -449,52 +450,90 @@
 
                                         <!-- BEGIN PRODUCT DESCRIPTION -->
                                         <div class="col-lg-8 col-md-8">
+                                            <form id="r_form" action="ConsignmentRequestReceive" method="POST">
+
+                                                <table style="font-size: 110%" class="table table-striped table-hover" >
+                                                    <tr>
+                                                        <th width="30%">Tên sản phẩm</th>
+                                                        <td><input id="r_productName" name="txtProductName" type="text" class="form-control" ></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Loại</th>
+                                                        <td>
+
+                                                            <select id="r_category" name="txtCategoryID"  class="form-control" >
+                                                                <option value='' disabled selected style='display:none;'>Chọn...</option>
+
+                                                                <c:forEach var="father" items="${fCate}">
+                                                                    <optgroup label="${father.categoryName}">
+                                                                        <c:forEach var="child" items="${category}">
+                                                                            <c:if test="${child.parentId == father.categoryId}">
+
+                                                                                <option value="${child.categoryId}">${child.categoryName}</option>
 
 
-                                            <table style="font-size: 110%" class="table table-striped table-hover" >
-                                                <tr>
-                                                    <th width="30%">Tên sản phẩm</th>
-                                                    <td id='r_productName'></td>
-                                                </tr>
-                                                <tr>
-                                                    <th width="30%">Mô tả</th>
-                                                    <td id='r_description'></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Ngày ký gửi</th>
-                                                    <td id='r_createdDate'></td>
-                                                </tr>
-                                                <tr >
-                                                    <th>Giá (VND)</th>
-                                                    <td id="r_price"></td>
-                                                    <td id="ar_price" style="display: none;">
-                                                        <div class="input-group">
-                                                            <input type="text" id="ar_minPrice" class="form-control" >
-                                                            <span class="input-group-addon">
-                                                                ~ </span>
-                                                            <input type="text" id="ar_maxPrice" class="form-control" >    
-                                                        </div>  
 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Ngày hẹn</th>
-                                                    <td id='r_fromDateToDate'></td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Trạng thái</th>
-                                                    <td id='r_status'>
-                                                    </td>
-                                                </tr>
-                                                <tr id="r_trReason">
-                                                    <th>Lí do</th>
-                                                    <td id="r_reason">
 
-                                                    </td>
-                                                </tr>
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </optgroup>
 
-                                            </table>
+                                                                </c:forEach>
 
+                                                            </select>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Hãng</th>
+                                                        <td><input id="r_brand" name="txtBrand" type="text" class="form-control" ></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Mô tả</th>
+                                                        <td>
+                                                            <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Ngày ký gửi</th>
+                                                        <td id='r_createdDate'></td>
+                                                    </tr>
+                                                    <tr >
+                                                        <th>Giá (VND)</th>
+                                                        <td id="r_price"></td>
+                                                    </tr>
+                                                    <tr id="ar_price" style="display: none;">
+                                                        <th>Giá nhận (VND)</th>
+                                                        <td>
+                                                            <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" >
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Ngày hẹn</th>
+                                                        <td id='r_fromDateToDate'></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Trạng thái</th>
+                                                        <td id='r_status'>
+                                                        </td>
+                                                    </tr>
+                                                    <tr id="r_trReason">
+                                                        <th>Lí do</th>
+                                                        <td id="r_reason">
+
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                                <input id="r_ActionValue" type="hidden" name="consignmentID"/>
+                                                <input id="r_productID" type="hidden" name="productID"/>
+<!--                                                <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>-->
+                                                <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                                <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                                <input id="r_btnAction" type="hidden" name="btnAction"/>
+                                            </form>
                                         </div>
                                         <!-- END PRODUCT DESCRIPTION -->
                                     </div>
@@ -502,24 +541,12 @@
                                 </div>
                                 <div class="modal-footer">
                                     <div id="r_footer" >
-                                        <form id="r_form" action="ConsignmentRequestReceive" method="POST">
 
-                                            <input id="r_ActionValue" type="hidden" name="r_consignmentID"/>
-                                            <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
-                                            <input type="hidden" name="btnAction" value="r_accept"/>
-                                        </form>
                                         <button id="r_btnSubmit" class="btn btn-lg btn-primary">Chấp nhận</button>
                                         <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
                                     </div>
                                     <div id="ar_footer" style="display: none;">
-                                        <form id="ar_form" action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_validation()">
-                                            <input type="hidden" name="btnAction" value="ar_accept"/>
-                                            <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
-                                            <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>
-                                            <input id="ar_inputProductID" type="hidden" name="ar_productID"/>
-                                            <input id="ar_inputMinPrice" type="hidden" name="ar_minPrice"/>
-                                            <input id="ar_inputMaxPrice" type="hidden" name="ar_maxPrice"/>
-                                        </form>
+
                                         <button id="ar_btnSubmit" class="btn btn-lg btn-primary">Nhận hàng</button>
                                         <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
                                     </div>
@@ -574,6 +601,111 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
+
+                    <!--BEGIN MODAL -->
+                    <!-- Large modal -->
+                    <div id="modalRefuseCancel" class="modal fade bs-example-modal-lg" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+                                    <h2 class="modal-title" id="rc_name"></h2>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3"><b>Email: </b><span id="rc_email"></span></div>
+                                        <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="rc_phone"></span></div>
+                                        <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="rc_address"></span></div>
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-body">
+                                    <!-- BEGIN PAGE CONTENT-->
+                                    <div>
+                                        <!-- BEGIN CAROUSEL -->
+                                        <div class="col-lg-4 col-md-4 front-carousel">
+
+                                            <div class="carousel slide" id="myCarousel">
+                                                <!-- Carousel items -->
+                                                <div class="carousel-inner">
+                                                    <div class="item active">
+                                                        <img id="rc_image" alt="" style="max-height: 600px">
+                                                        <div class="carousel-caption">
+                                                            <p></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Carousel nav -->
+                                                <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                    <i class="fa fa-angle-left"></i>
+                                                </a>
+                                                <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                    <i class="fa fa-angle-right"></i>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <!-- END CAROUSEL -->
+
+                                        <!-- BEGIN PRODUCT DESCRIPTION -->
+                                        <div class="col-lg-8 col-md-8">
+
+
+                                            <table style="font-size: 110%" class="table table-striped table-hover" >
+                                                <tr>
+                                                    <th width="30%">Tên sản phẩm</th>
+                                                    <td id="rc_productName"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Mô tả</th>
+                                                    <td id="rc_description">
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ngày ký gửi</th>
+                                                    <td id='rc_createdDate'></td>
+                                                </tr>
+                                                <tr >
+                                                    <th>Giá (VND)</th>
+                                                    <td id="rc_price"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Ngày hẹn</th>
+                                                    <td id='rc_fromDateToDate'></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Trạng thái</th>
+                                                    <td id='rc_status'>
+                                                    </td>
+                                                </tr>
+                                                <tr id="rc_trReason">
+                                                    <th>Lí do</th>
+                                                    <td id="rc_reason">
+
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+                                        </div>
+                                        <!-- END PRODUCT DESCRIPTION -->
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END MODAL -->
+
+                    
+
 
                 </div>
             </div>
@@ -633,19 +765,87 @@
 
     });
 
-    $('button[name="requestDetails"]').click(function () {
-        var id = $(this).val();
-        $.get('ConsignmentRequestReceive', {btnAction: 'requestdetails', id: id}, function (data) {
+    function loadRefuseCancelDetails(id) {
+        $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
+
+            $("#rc_name").html("<small>Từ khách hàng</small> " + data.name);
+            $("#rc_productName").html(data.product.name);
+            $("#rc_image").attr("src", data.product.image);
+            $("#rc_description").html(data.product.description);
+            $("#rc_createdDate").html(data.createdDate);
+            $("#rc_email").html(data.email);
+            $("#rc_phone").html("0" + data.phone.substring(3));
+            $("#rc_address").html(data.address);
+            $("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+            if (data.minPrice > 0 && data.maxPrice > 0) {
+                $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
+            } else {
+                $("#rc_price").html("");
+            }
+
+
+            $("#rc_trReason").hide();
+            $("#rc_reason").html("");
+            if (data.product.productStatusID == 6) {
+                $("#rc_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
+            }
+            else {
+                if (data.consignmentStatusID == 1) {
+                    $("#rc_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+
+                } else if (data.consignmentStatusID == 3) {
+                    $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+
+                } else if (data.consignmentStatusID == 2) {
+                    $("#rc_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
+                    $("#rc_trReason").show();
+                    $("#rc_reason").html(data.reason);
+                } else if (data.consignmentStatusID == 4) {
+                    $("#rc_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                } else if (data.consignmentStatusID == 5) {
+                    if (data.product.productStatusID == 2) {
+                        $("#rc_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                    }
+                    else if (data.product.productStatusID == 3) {
+                        $("#rc_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                    }
+                    else if (data.product.productStatusID == 4) {
+                        $("#rc_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                    }
+                    else if (data.product.productStatusID == 5) {
+                        $("#rc_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                    }
+                }
+            }
+        });
+    }
+
+    function loadRequestAcceptDetails(id) {
+        $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
 
             $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
-            $("#r_productName").html("<b>" + data.product.name + "</b>");
+            $("#r_productName").val(data.product.name);
+
+            $('#r_category').val(data.product.categoryID).change();
+            $("#r_brand").val(data.product.brand);
             $("#r_image").attr("src", data.product.image);
-            $("#r_description").html(data.product.description);
+            $("#r_description").val(data.product.description);
             $("#r_createdDate").html(data.createdDate);
             $("#r_email").html(data.email);
             $("#r_phone").html("0" + data.phone.substring(3));
             $("#r_address").html(data.address);
             $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+
+            if (data.minPrice > 0 && data.maxPrice > 0) {
+
+
+                $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
+            } else {
+                $("#r_price").html("");
+            }
+            
+            $("#r_productID").val(data.product.productID);
+            $("#r_ActionValue").val(data.consigmentID);
 
             $("#r_trReason").hide();
             $("#r_reason").html("");
@@ -657,36 +857,33 @@
             else {
                 if (data.consignmentStatusID == 1) {
                     $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
-                    $("#r_ActionValue").val(data.consigmentID);
+//                    $("#r_ActionValue").val(data.consigmentID);
                     $("#r_ActionValue_confirm").val(data.consigmentID);
-                    $("#ar_ActionValue").val("");
+//                    $("#ar_ActionValue").val("");
                     $("#ar_ActionValue_confirm").val("");
                     $("#r_footer").show();
                     $("#ar_footer").hide();
-                    $("#r_price").show();
-                    if (data.minPrice > 0 && data.maxPrice > 0) {
+                    //$("#r_price").show();
 
-
-                        $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
-                    } else {
-                        $("#r_price").html("");
-                    }
                     $("#ar_price").hide();
+                    $("#r_btnAction").val("r_accept");
 
                 } else if (data.consignmentStatusID == 3) {
                     $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
-                    $("#ar_ActionValue").val(data.consigmentID);
+//                    $("#ar_ActionValue").val(data.consigmentID);
                     $("#ar_ActionValue_confirm").val(data.consigmentID);
-                    $("#r_ActionValue").val("");
+//                    $("#r_ActionValue").val("");
                     $("#r_ActionValue_confirm").val("");
                     $("#ar_footer").show();
                     $("#r_footer").hide();
-                    $("#r_price").html("");
-                    $("#r_price").hide();
+                    //$("#r_price").html("");
+                    //$("#r_price").hide();
                     $("#ar_price").show();
-                    $("#ar_minPrice").val(data.minPrice.toFixed(0));
-                    $("#ar_maxPrice").val(data.maxPrice.toFixed(0));
-                    $("#ar_inputProductID").val(data.product.productID);
+                    //$("#ar_minPrice").val(data.minPrice.toFixed(0));
+                    //$("#ar_maxPrice").val(data.maxPrice.toFixed(0));
+                    
+                    $("#r_btnAction").val("ar_accept");
+                    
                 } else if (data.consignmentStatusID == 2) {
                     $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
                     $("#r_footer").hide();
@@ -720,10 +917,19 @@
                     }
                 }
             }
-
-            //            $('#btnRequestDetails').click();
-
         });
+    }
+
+    $('button[name="requestAcceptDetails"]').click(function () {
+        var id = $(this).val();
+        loadRequestAcceptDetails(id);
+
+    });
+
+    $('button[name="refuseCancelDetails"]').click(function () {
+        var id = $(this).val();
+        loadRefuseCancelDetails(id);
+
     });
 
     $('button[name="btnRefuse"]').click(function () {
@@ -745,7 +951,12 @@
         $('form#r_form').submit();
     });
     $('#ar_btnSubmit').click(function () {
-        $('form#ar_form').submit();
+        if($('#ar_negotiatedPrice').val() == ""){
+          alert("Xin nhập giá thỏa thuận!");  
+        }else{
+            $('form#r_form').submit();
+        }
+        //$('form#ar_form').submit();
     });
 
     function ar_validation() {
