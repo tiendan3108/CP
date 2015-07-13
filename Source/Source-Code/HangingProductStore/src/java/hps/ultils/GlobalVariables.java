@@ -25,7 +25,7 @@ public class GlobalVariables {
     public static final String DEACTIVE = "deactive";
     //
     public static final String MANAGERMENT_PAGE = "manageProductStatusPage.jsp";
-    public static final String SESSION_TIME_OUT_PAGE = "errorPage.jsp";
+    public static final String SESSION_TIME_OUT_PAGE = "HomeServlet";
 
     public static final String MANAGERMENT_SERVLET = "ManageProduct";
     

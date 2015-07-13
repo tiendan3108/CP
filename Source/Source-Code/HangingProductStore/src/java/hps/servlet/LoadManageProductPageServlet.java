@@ -49,7 +49,10 @@ public class LoadManageProductPageServlet extends HttpServlet {
             DanqtDAO dao = new DanqtDAO();
             CategoryDAO catDao = new CategoryDAO();
             HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            AccountDTO user = null;
+            if (session != null) {
+                user = (AccountDTO) session.getAttribute("ACCOUNT");
+            }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
@@ -57,7 +60,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
 
                 List<ConsignmentDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
                 List<ConsignmentDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
-                List<ConsignmentDTO> ordered = dao.getOrderedProduct(user.getRoleID(),ProductStatus.ORDERED);
+                List<ConsignmentDTO> ordered = dao.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED);
                 List<ConsignmentDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
                 List<ConsignmentDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
                 List<ConsignmentDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
@@ -80,7 +83,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 if (keywork != null) {
                     switch (tab) {
                         case "expired":
-                            expired = dao.getExpiredProduct(user.getRoleID(),keywork);
+                            expired = dao.getExpiredProduct(user.getRoleID(), keywork);
                             request.setAttribute("keywork7", keywork);
                             break;
                         case "available":
@@ -92,7 +95,7 @@ public class LoadManageProductPageServlet extends HttpServlet {
                             request.setAttribute("keywork2", keywork);
                             break;
                         case "ordered":
-                            ordered = dao.getOrderedProduct(user.getRoleID(),ProductStatus.ORDERED, keywork);
+                            ordered = dao.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED, keywork);
                             request.setAttribute("keywork3", keywork);
                             break;
                         case "sold":
@@ -123,8 +126,11 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 request.setAttribute("season", season);
                 url = GlobalVariables.MANAGERMENT_PAGE;
             }
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+                response.sendRedirect(url);
+            } else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 

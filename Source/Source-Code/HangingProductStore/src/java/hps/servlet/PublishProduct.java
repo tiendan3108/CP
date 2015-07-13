@@ -56,7 +56,10 @@ public class PublishProduct extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            AccountDTO user = null;
+            if (session != null) {
+                user = (AccountDTO) session.getAttribute("ACCOUNT");
+            }
             String url = "";
             String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null;
             List<String> season = new ArrayList<>();

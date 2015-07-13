@@ -95,7 +95,7 @@ public class JavaUltilities {
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("To", to));
-        params.add(new BasicNameValuePair("From", "+12568417673"));
+        params.add(new BasicNameValuePair("From", "+16467989980"));
         params.add(new BasicNameValuePair("Body", content));
 
         MessageFactory messageFactory = client.getAccount().getMessageFactory();

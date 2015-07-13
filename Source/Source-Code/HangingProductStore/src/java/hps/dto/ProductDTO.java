@@ -36,6 +36,7 @@ public class ProductDTO implements Serializable {
     private String orderDate;
     private String customerPhone;
     private List<OrderDTO> orderList;
+    private float negotiatedPrice;
     //danqt - end
 
 //duchc - begin
@@ -63,13 +64,12 @@ public class ProductDTO implements Serializable {
         this.customerPhone = customerPhone;
     }
 
-    public ProductDTO(String productName, String receivedDate, String consignmentID, float minPrice, float maxPrice, String cancelDate) {
+    public ProductDTO(String productName, String receivedDate, String consignmentID, float negotiatedPrice, String cancelDate) {
         this.name = productName;
         this.receivedDate = receivedDate;
         this.consignmentID = consignmentID;
         this.cancelDate = cancelDate;
-        this.minPrice = minPrice;
-        this.maxPrice = maxPrice;
+        this.negotiatedPrice = negotiatedPrice;
     }
 
     public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image) {
@@ -459,6 +459,20 @@ public class ProductDTO implements Serializable {
      */
     public void setOrderList(List<OrderDTO> orderList) {
         this.orderList = orderList;
+    }
+
+    /**
+     * @return the negotiatedPrice
+     */
+    public float getNegotiatedPrice() {
+        return negotiatedPrice;
+    }
+
+    /**
+     * @param negotiatedPrice the negotiatedPrice to set
+     */
+    public void setNegotiatedPrice(float negotiatedPrice) {
+        this.negotiatedPrice = negotiatedPrice;
     }
 
 }

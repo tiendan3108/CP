@@ -46,32 +46,67 @@ public class OrderProduct extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            AccountDTO user = null;
+            if (session != null) {
+                user = (AccountDTO) session.getAttribute("ACCOUNT");
+            }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 DanqtDAO dao = new DanqtDAO();
                 String orderID = request.getParameter("txtOrderID");
-                String temp_sellingPrice = request.getParameter("txtSellingPrice");
-                float sellingPrice = Float.parseFloat(temp_sellingPrice);
-                List<OrderDTO> listCustomer = dao.getListOrderedCustomer(orderID);
-                String consignmentID = dao.getConsignmentIDByOrderID(orderID);
-                AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
-                dao.changeProductStatus(orderID, sellingPrice);
                 JavaUltilities ultil = new JavaUltilities();
-                if (consignor.getPhone() != null) {
-                    try {
-                        ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
-                    } catch (TwilioRestException ex) {
-                        Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                List<OrderDTO> listCustomer = null;
+                String action = request.getParameter("btnAction");
+                if (action.equals("order")) {
+                    String temp_sellingPrice = request.getParameter("txtSellingPrice");
+                    float sellingPrice = Float.parseFloat(temp_sellingPrice);
+                    String consignmentID = dao.getConsignmentIDByOrderID(orderID);
+                    AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
+                    listCustomer = dao.getListOrderedCustomer(orderID, true);
+                    dao.changeProductStatus(orderID, sellingPrice);
+                    if (consignor.getPhone() != null) {
+                        try {
+                            ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
+                        } catch (TwilioRestException ex) {
+                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                    if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
+                        ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
                     }
                 }
-                if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
-                    ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
+                if (action.equals("cancel")) {
+                    dao.cancelAllOrders(orderID);
+                    listCustomer = dao.getListOrderedCustomer(orderID, false);
                 }
+                if (action.equals("sendPrice")) {
+                    String[] orderIDs = request.getParameterValues("chkboxCustomer");
+                    String temp_sendPrice = request.getParameter("txtSendPrice");
+                    float sendPrice = 0;
+                    try {
+                        sendPrice = Float.parseFloat(temp_sendPrice);
+                    } catch (Exception e) {
+                    }
+                    if (orderIDs.length > 0) {
+                        for (String _orderID : orderIDs) {
+                            String phone = dao.getCustomerInforByOrderID(_orderID, sendPrice);
+                            if (phone != null) {
+                                try {
+                                    ultil.sendSMS(MessageString.sendPriceSMS(_orderID, sendPrice, user.getFullName()), phone);
+                                } catch (TwilioRestException ex) {
+                                    Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (Exception ex) {
+                                    Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (listCustomer != null && !listCustomer.isEmpty()) {
                     for (OrderDTO order : listCustomer) {
                         if (order.getPhone() != null) {
@@ -83,15 +118,20 @@ public class OrderProduct extends HttpServlet {
                                 Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        if (order.getEmail() != null && !consignor.getEmail().equals("")) {
+                        if (order.getEmail() != null && !order.getEmail().equals("")) {
                             ultil.sendEmail(order.getEmail(), MessageString.Subject(), MessageString.cancelOrderEmail(order.getOrderID(), user.getFullName(), order.getFullName()));
                         }
                     }
                 }
+
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "ordered");
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+                response.sendRedirect(url);
+            } else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 

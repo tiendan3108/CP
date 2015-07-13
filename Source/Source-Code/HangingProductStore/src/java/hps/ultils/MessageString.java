@@ -11,6 +11,10 @@ package hps.ultils;
  */
 public class MessageString {
 
+    public static final String sendPriceSMS(String orderID, float price, String storeOwner) {
+        return "Don hang voi ma " + orderID + " co gia la : " + price + ". Vui long lien he voi chu cua hang " + storeOwner + " de biet them chi tiet";
+    }
+
     public static final String cancelOrderSMS(String orderID, String storeOwner) {
         return "Don hang voi ma " + orderID + " cua ban da bi huy. Vui long lien he voi " + storeOwner + " de biet them chi tiet";
     }
@@ -51,12 +55,12 @@ public class MessageString {
     public static final String loginFail = "Tên đăng nhập hoặc mật khẩu không đúng";
 
     public static final String warningOrdered(long num) {
-        return "Món hàng này đã có "+num+" người đặt, "
+        return "Món hàng này đã có " + num + " người đặt, "
                 + "có thể bạn sẽ không mua được món hàng, vui lòng liên hệ với chủ cửa hàng để biêt thêm.";
     }
 
     public static final String orderSuccess(String orderID) {
-        return "Bạn đã đặt hàng thành công. Mã đơn hàng của bạn là " + orderID+ "."
+        return "Bạn đã đặt hàng thành công. Mã đơn hàng của bạn là " + orderID + "."
                 + "<br/> <br/>Chủ cửa hàng sẽ liên lạc giá sản phẩm cho bạn sau.";
     }
 }

@@ -7,9 +7,7 @@ package hps.servlet;
 
 import com.google.gson.Gson;
 import hps.dao.DanqtDAO;
-import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
-import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -22,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadCancelProduct", urlPatterns = {"/LoadCancelProduct"})
-public class LoadCancelProduct extends HttpServlet {
+@WebServlet(name = "LoadOnWebProduct", urlPatterns = {"/LoadOnWebProduct"})
+public class LoadOnWebProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,6 +37,13 @@ public class LoadCancelProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            request.setCharacterEncoding("UTF-8");
+            String consignmentID = request.getParameter("consignmentID");
+            DanqtDAO dao = new DanqtDAO();
+            ConsignmentDTO infor = dao.getInforForOnWebPage(consignmentID);
+            String json = new Gson().toJson(infor);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(json);
         }
     }
 
@@ -54,16 +59,7 @@ public class LoadCancelProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String consignmentID = request.getParameter("consignmentID");
-        DanqtDAO dao = new DanqtDAO();
-        ConsignmentDTO infor = dao.getInforForCancelPage(consignmentID);
-        String json = "";
-        if (infor!=null) {
-            json = new Gson().toJson(infor);
-        }
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(json);
+        processRequest(request, response);
     }
 
     /**

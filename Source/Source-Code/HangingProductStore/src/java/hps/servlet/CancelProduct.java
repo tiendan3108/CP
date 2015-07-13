@@ -77,7 +77,10 @@ public class CancelProduct extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+        AccountDTO user = null;
+        if (session != null) {
+            user = (AccountDTO) session.getAttribute("ACCOUNT");
+        }
         String action = request.getParameter("btnAction");
         String consignmentID = request.getParameter("txtConsignmentID");
         String url = "", sms = "", email = "", subject = "[HPS] Huy bo ki gui ma " + consignmentID;
@@ -135,7 +138,11 @@ public class CancelProduct extends HttpServlet {
             url = GlobalVariables.MANAGERMENT_SERVLET;
             request.setAttribute("currentTab", "canceled");
         }
-        request.getRequestDispatcher(url).forward(request, response);
+        if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+            response.sendRedirect(url);
+        } else {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
 
     /**

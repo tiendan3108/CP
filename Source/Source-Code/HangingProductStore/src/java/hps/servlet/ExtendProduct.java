@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ExtendProduct", urlPatterns = {"/ExtendProduct"})
 public class ExtendProduct extends HttpServlet {
 
+    private static final int period = 30;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,29 +40,39 @@ public class ExtendProduct extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            AccountDTO user = null;
+            if (session != null) {
+                user = (AccountDTO) session.getAttribute("ACCOUNT");
+            }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 DanqtDAO dao = new DanqtDAO();
                 String action = request.getParameter("btnAction");
-                if (action.equals("receive")) {
-                    String consignmentID = request.getParameter("txtConsignmentID");
-                    String tempExpiredFee = request.getParameter("txtExpiredFee");
-                    float expiredFee = Float.parseFloat(tempExpiredFee);
-                    dao.ExtendProduct(consignmentID,expiredFee);
+                if (action != null) {
+                    if (action.equals("receive")) {
+                        String consignmentID = request.getParameter("txtConsignmentID");
+                        String tempExpiredFee = request.getParameter("txtExpiredFee");
+                        float expiredFee = Float.parseFloat(tempExpiredFee);
+                        dao.ExtendProduct(consignmentID, expiredFee);
+                    }
+                    if (action.equals("extend")) {
+                        String consignmentID = request.getParameter("txtConsignmentID");
+                        dao.ExtendProduct(consignmentID, period);
+                    }
+                    request.setAttribute("currentTab", "expired");
+                    url = GlobalVariables.MANAGERMENT_SERVLET;
                 }
-                if (action.equals("extend")) {
-                    String consignmentID = request.getParameter("txtConsignmentID");
-                    String tempPeriod = request.getParameter("txtPeriod");
-                    int period = Integer.parseInt(tempPeriod);
-                    dao.ExtendProduct(consignmentID,period);
+                else{
+                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                 }
-                request.setAttribute("currentTab", "expired");
-                url = GlobalVariables.MANAGERMENT_SERVLET;
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+                response.sendRedirect(url);
+            } else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 

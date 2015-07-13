@@ -83,7 +83,7 @@ public class OrderDAO {
         String currentDateTime = format.format(date);
         try {
             con = DBUltilities.makeConnection();
-            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?,?)";
+            String sql = "Insert into [Order] Values(?,?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setString(1, order.getOrderID());
             stm.setInt(2, order.getCustomerID());
@@ -95,6 +95,7 @@ public class OrderDAO {
             stm.setFloat(8, order.getTotalPrice());
             stm.setInt(9, OrderStatus.WAITING);
             stm.setInt(10, order.getProductID());
+            stm.setNull(11, java.sql.Types.FLOAT);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -204,7 +205,7 @@ public class OrderDAO {
             stm.setInt(1, productID);
             rs = stm.executeQuery();
             if (rs.next()) {
-                numOfOrder  = rs.getLong("numOfOrder");
+                numOfOrder = rs.getLong("numOfOrder");
             }
             return numOfOrder;
         } catch (SQLException ex) {

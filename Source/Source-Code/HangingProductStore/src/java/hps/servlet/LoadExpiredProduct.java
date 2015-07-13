@@ -42,7 +42,6 @@ public class LoadExpiredProduct extends HttpServlet {
             DanqtDAO dao = new DanqtDAO();
             ConsignmentDTO infor = dao.getInforForExpiredPage(consignmentID);
             String json = new Gson().toJson(infor);
-            System.out.println(json);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);
         }

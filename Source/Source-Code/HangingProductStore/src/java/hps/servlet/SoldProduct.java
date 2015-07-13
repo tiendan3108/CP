@@ -39,7 +39,10 @@ public class SoldProduct extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            AccountDTO user = (AccountDTO) session.getAttribute("ACCOUNT");
+            AccountDTO user = null;
+            if (session != null) {
+                user = (AccountDTO) session.getAttribute("ACCOUNT");
+            }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
@@ -52,7 +55,11 @@ public class SoldProduct extends HttpServlet {
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "sold");
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+                response.sendRedirect(url);
+            } else {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 
