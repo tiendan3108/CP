@@ -108,7 +108,7 @@
                                                                                                                                     Reliability
                                                                                                                                 </th>-->
                                                                     <th>
-                                                                        Giá (nghìn đồng)
+                                                                        Giá (Ngàn đồng)
                                                                     </th>
 
                                                                     <th style="text-align:center">

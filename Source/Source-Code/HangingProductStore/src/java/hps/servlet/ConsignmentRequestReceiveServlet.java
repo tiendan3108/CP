@@ -248,7 +248,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                 String brand = request.getParameter("txtBrand");
                 String description = request.getParameter("txtDescription");
-                float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice"));
+                float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
 
                 Date date = new Date();
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");

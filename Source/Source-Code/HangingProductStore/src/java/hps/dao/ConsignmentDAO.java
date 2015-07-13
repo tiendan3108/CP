@@ -576,9 +576,9 @@ public class ConsignmentDAO {
             //raiseWebDate = java.formatDateString(raiseWebDate);
         }
         int period = rs.getInt("Period");
-        float minPrice = rs.getFloat("MinPrice");
-        float maxPrice = rs.getFloat("MaxPrice");
-        float returnPrice = rs.getFloat("ReturnedPrice");
+        float minPrice = rs.getFloat("MinPrice") / 1000;
+        float maxPrice = rs.getFloat("MaxPrice") / 1000;
+        float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
         String receiveDate = rs.getString("ReceivedDate");
         if (receiveDate != null) {
             receiveDate = df.format(rs.getDate("ReceivedDate"));

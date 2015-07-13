@@ -87,14 +87,14 @@
                                             <th>
                                                 Tên Sản Phẩm
                                             </th>
-                                            <!--                                        <th>
-                                                                                        Mã ký gửi
-                                                                                    </th>-->
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
                                             <th>
                                                 Ngày Gửi
                                             </th>
                                             <th>
-                                                Giá (VND)
+                                                Giá (Ngàn đồng)
                                             </th>
                                             <th>
                                                 Ngày hẹn
@@ -109,10 +109,10 @@
 
                                             <tr>
                                                 <c:if test="${empty param.r_searchValue}">
-                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
+                                                    <td colspan="7">Không có yêu cầu nào đang chờ xử lý.</td>
                                                 </c:if>
                                                 <c:if test="${not empty param.r_searchValue}">
-                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.r_searchValue}".</td>
+                                                    <td colspan="7">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.r_searchValue}".</td>
                                                 </c:if>
                                             </tr>
                                         </c:if>
@@ -122,9 +122,9 @@
                                                 <td>
                                                     ${c.product.name}
                                                 </td>
-                                                <!--                                            <td>
-                                                ${c.consigmentID}
-                                            </td>-->
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
                                                 <td>
                                                     ${c.createdDate}
 
@@ -141,7 +141,7 @@
                                                                 maxFractionDigits="1"/> 
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <b><font color="red">Chưa có giá</font></b>
+                                                            <b><font color="red">Không có giá</font></b>
                                                             </c:otherwise>
                                                         </c:choose>
                                                 </td>
@@ -191,14 +191,14 @@
                                             <th>
                                                 Tên Sản Phẩm
                                             </th>
-                                            <!--                                        <th>
-                                                                                        Mã ký gửi
-                                                                                    </th>-->
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
                                             <th>
                                                 Ngày Gửi
                                             </th>
                                             <th>
-                                                Giá (VND)
+                                                Giá (Ngàn đồng)
                                             </th>
                                             <th>
                                                 Ngày hẹn
@@ -213,10 +213,10 @@
 
                                             <tr>
                                                 <c:if test="${empty param.ar_searchValue}">
-                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý.</td>
+                                                    <td colspan="7">Không có yêu cầu nào đang chờ xử lý.</td>
                                                 </c:if>
                                                 <c:if test="${not empty param.ar_searchValue}">
-                                                    <td colspan="6">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.ar_searchValue}".</td>
+                                                    <td colspan="7">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.ar_searchValue}".</td>
                                                 </c:if>
                                             </tr>
                                         </c:if>
@@ -226,9 +226,9 @@
                                                 <td>
                                                     ${c.product.name}
                                                 </td>
-                                                <!--                                            <td>
-                                                ${c.consigmentID}
-                                            </td>-->
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
                                                 <td>
                                                     ${c.createdDate}
 
@@ -500,11 +500,11 @@
                                                         <td id='r_createdDate'></td>
                                                     </tr>
                                                     <tr >
-                                                        <th>Giá (VND)</th>
+                                                        <th>Giá tham khảo (Ngàn đồng) </th>
                                                         <td id="r_price"></td>
                                                     </tr>
                                                     <tr id="ar_price" style="display: none;">
-                                                        <th>Giá nhận (VND)</th>
+                                                        <th>Giá thỏa thuận (Ngàn đồng)</th>
                                                         <td>
                                                             <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" >
 
@@ -778,9 +778,9 @@
             $("#rc_address").html(data.address);
             $("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
             if (data.minPrice > 0 && data.maxPrice > 0) {
-                $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
+                $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
             } else {
-                $("#rc_price").html("");
+                $("#rc_price").html("Không có giá");
             }
 
 
@@ -839,9 +839,9 @@
             if (data.minPrice > 0 && data.maxPrice > 0) {
 
 
-                $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " VND");
+                $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
             } else {
-                $("#r_price").html("");
+                $("#r_price").html("Không có giá");
             }
             
             $("#r_productID").val(data.product.productID);

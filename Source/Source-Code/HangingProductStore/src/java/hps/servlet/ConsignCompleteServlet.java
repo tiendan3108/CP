@@ -219,7 +219,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     }
                     // Set created date
                     Date date = new Date();
-                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     String createdDate = dateFormat.format(date);
                     
                     //set if user choose to paypal account

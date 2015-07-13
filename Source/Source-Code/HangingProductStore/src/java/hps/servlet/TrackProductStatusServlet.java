@@ -61,6 +61,7 @@ public class TrackProductStatusServlet extends HttpServlet {
 
             if (member == null) {
                 if (action == null) {
+                    session.removeAttribute("CONSIGNMENT");
                     RequestDispatcher rd = request.getRequestDispatcher(GUEST_PAGE);
                     rd.forward(request, response);
                     return;
