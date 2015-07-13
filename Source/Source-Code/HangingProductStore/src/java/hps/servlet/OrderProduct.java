@@ -61,7 +61,7 @@ public class OrderProduct extends HttpServlet {
                 String action = request.getParameter("btnAction");
                 if (action.equals("order")) {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
-                    float sellingPrice = Float.parseFloat(temp_sellingPrice);
+                    float sellingPrice = Float.parseFloat(temp_sellingPrice)*1000;
                     String consignmentID = dao.getConsignmentIDByOrderID(orderID);
                     AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
                     listCustomer = dao.getListOrderedCustomer(orderID, true);
@@ -88,7 +88,7 @@ public class OrderProduct extends HttpServlet {
                     String temp_sendPrice = request.getParameter("txtSendPrice");
                     float sendPrice = 0;
                     try {
-                        sendPrice = Float.parseFloat(temp_sendPrice);
+                        sendPrice = Float.parseFloat(temp_sendPrice)*1000;
                     } catch (Exception e) {
                     }
                     if (orderIDs.length > 0) {

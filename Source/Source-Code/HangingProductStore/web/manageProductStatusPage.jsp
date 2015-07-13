@@ -92,7 +92,7 @@
                                                     <th>Tên khách hàng</th>
                                                     <th>Ngày nhận</th>
                                                     <th>Mã kí gửi</th>
-                                                    <th>Giá kí gửi</th>
+                                                    <th>Giá kí gửi (Ngàn đồng)</th>
                                                     <th>Chi Tiết</th>
                                                 </tr>
                                             </thead>
@@ -152,7 +152,7 @@
                                                     <th>Tên khách hàng</th>
                                                     <th>Ngày nhận</th>
                                                     <th>Mã kí gửi</th>
-                                                    <th>Giá kí gửi</th>
+                                                    <th>Giá kí gửi (Ngàn đồng)</th>
                                                     <th>Chi Tiết</th>
                                                 </tr>
                                             </thead>
@@ -263,7 +263,7 @@
                                                 <tr role="row" class="heading">
                                                     <th>STT</th>
                                                     <th>Tên sản phẩm</th>
-                                                    <th>Giá sản phẩm</th>
+                                                    <th>Giá sản phẩm (Ngàn đồng)</th>
                                                     <th>Mã kí gửi</th>
                                                     <th>Số người đặt</th>
                                                     <th>Chi Tiết</th>
@@ -323,7 +323,7 @@
                                                     <th>Tên sản phẩm</th>
                                                     <th>Ngày nhận</th>
                                                     <th>Mã kí gửi</th>
-                                                    <th>Giá bán</th>
+                                                    <th>Giá bán (Ngàn đồng)</th>
                                                     <th>Chi Tiết</th>
                                                 </tr>
                                             </thead>
@@ -509,10 +509,10 @@
                                                 <h5>Thông tin sản phẩm</h5>
                                                 <li>Tên sản phẩm : <label id="sold_productName"></label></li>
                                                 <li>Mã kí gửi : <label id="sold_consignmentID"></label></li>
-                                                <li>Giá sản phẩm : <label id="sold_negotiatedPrice"></label></li>
-                                                <li>Giá bán: <label id="sold_sellingPrice"></label></li>
+                                                <li>Giá sản phẩm (Ngàn đồng): <label id="sold_negotiatedPrice"></label></li>
+                                                <li>Giá bán (Ngàn đồng): <label id="sold_sellingPrice"></label></li>
                                                 <li>Ngày kí gửi : <label id="sold_receivedDate"></label></li>
-                                                <li>Tiền trả khách hàng: <input type="text" name="txtReturnPrice" id="sold_returnPrice"></li>
+                                                <li>Tiền trả khách hàng (Ngàn đồng): <input type="text" name="txtReturnPrice" id="sold_returnPrice"></li>
                                             </div>
                                         </div>
                                     </div>
@@ -533,10 +533,10 @@
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header">
                                         <h4>Thông tin đặt hàng</h4>
-                                        Giá : <input type="text" name="txtSendPrice" id="sendPrice" value="">&nbsp;VND
+                                        Giá bán (Ngàn đồng): <input type="text" name="txtSendPrice" id="sendPrice" value="">
                                         <span id="erSendPrice" class="help-block">
                                         </span>
-                                        Giá kí gửi <label id="ordered_negotiatedPrice"></label>&nbsp;VND
+                                        Giá kí gửi (Ngàn đồng) <label id="ordered_negotiatedPrice"></label>
                                     </div>
                                     <div class="modal-body">
                                         <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
@@ -574,7 +574,7 @@
                                         <h4>Thông tin giá bán</h4>        
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Giá bán :</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;"> &nbsp;VND
+                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" id="order_OrderID">
@@ -606,7 +606,7 @@
                                             <h5>Thông tin hàng kí gửi</h5>
                                             <li>Tên sản phẩm : <label id="cancel_productName"></label></li>
                                             <li>Mã hàng kí gửi : <label id="cancel_consignmentID"></label></li>
-                                            <li>Giá kí gửi : <label id="cancel_negotiatedPrice"></label></li>
+                                            <li>Giá kí gửi (Ngàn đồng): <label id="cancel_negotiatedPrice"></label></li>
                                             <li>Ngày kí gửi : <label id="cancel_consignedDate"></label></li>
                                             <li>Ngày hủy kí gửi : <label id="cancel_canceledDate"></label></li>
                                         </div>
@@ -796,7 +796,7 @@
                                         <h4>Thông tin tiền phạt</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Tiền phạt :</label><input type="text" id="expired_fee" value="" name="txtExpiredFee"> &nbsp;VND
+                                        <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
@@ -828,7 +828,7 @@
                                                 Ngày nhận hàng : <label id="onWeb_ReceivedDate"></label>
                                             </div>
                                             <div class="input-group">
-                                                Giá bán thỏa thuận : <label id="onWeb_NegotiatedPrice"></label>&nbsp;VND
+                                                Giá bán thỏa thuận (Ngàn đồng): <label id="onWeb_NegotiatedPrice"></label>
                                             </div>
                                         </div>
                                     </div>
@@ -850,7 +850,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <h5>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h5>
-                                    <h5>Tiền phạt : <label id="confirmCancel_Fee"></label>&nbsp;VND</h5>
+                                    <h5>Tiền phạt (Ngàn đồng): <label id="confirmCancel_Fee"></label></h5>
                                 </div>
                                 <div class="modal-footer">
                                     <form action="CancelProductOnWeb" method="POST">
@@ -972,9 +972,9 @@
             var product = response.product;
             var price;
             if (response.period >= 120) {
-                price = (response.negotiatedPrice * 70 / 100).toFixed(0);
+                price = ((response.negotiatedPrice * 70 / 100)).toFixed(0);
             } else {
-                price = ((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10)).toFixed(0);
+                price = (((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10))).toFixed(0);
             }
             console.log(price);
             $("#sold_fullName").text(response.name);

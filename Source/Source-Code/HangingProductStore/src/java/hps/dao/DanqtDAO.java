@@ -72,8 +72,8 @@ public class DanqtDAO {
                 String toDate = formatDateString(rsC.getString(11));
                 String raiseWebDate = formatDateString(rsC.getString(12));
                 int period = rsC.getInt(13);
-                float negotiatedPrice = rsC.getFloat(24);
-                float returnPrice = rsC.getFloat(16);
+                float negotiatedPrice = rsC.getFloat(24)/1000;
+                float returnPrice = rsC.getFloat(16)/1000;
                 String receivedDate = formatDateString(rsC.getString(17));
                 String createdDate = formatDateString(rsC.getString(18));
                 int consignmentStatusID = rsC.getInt(19);
@@ -103,7 +103,7 @@ public class DanqtDAO {
                     String description = rsP.getString(7);
                     String image = rsP.getString(8);
                     int productStatusID = rsP.getInt(9);
-                    float sellingPrice = rsP.getFloat(10);
+                    float sellingPrice = rsP.getFloat(10)/1000;
                     String orderDate = null;
                     String customerPhone = null;
                     String orderID = null;
@@ -235,7 +235,7 @@ public class DanqtDAO {
                 address = rs.getString("Address");
                 phone = convertPhone(rs.getString("Phone"));
                 email = rs.getString("Email");
-                consignedPrice = rs.getFloat("ReturnedPrice");
+                consignedPrice = rs.getFloat("ReturnedPrice")/1000;
                 paypalAccount = rs.getString("PaypalAccount");
                 AccountDTO result = new AccountDTO(fullName, address, phone, email, consignedPrice);
                 result.setPaypalAccount(paypalAccount);
@@ -280,8 +280,8 @@ public class DanqtDAO {
                 Address = rs.getString("Address");
                 Phone = convertPhone(rs.getString("Phone"));
                 Email = rs.getString("Email");
-                returnPrice = rs.getFloat("ReturnedPrice");
-                sellingPrice = rs.getFloat("SellingPrice");
+                returnPrice = rs.getFloat("ReturnedPrice")/1000;
+                sellingPrice = rs.getFloat("SellingPrice")/1000;
                 Date = rs.getString("Date");
                 return new AccountDTO(fullName, Address, Phone, Email, returnPrice, sellingPrice, Date);
             }
@@ -409,7 +409,7 @@ public class DanqtDAO {
                 String description = rs.getString("Description");
                 String image = rs.getString("Image");
                 int productStatusID = rs.getInt("ProductStatusID");
-                float sellingPrice = rs.getFloat("SellingPrice");
+                float sellingPrice = rs.getFloat("SellingPrice")/1000;
                 int parentCategoryID = rs.getInt("ParentID");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID);
             }
@@ -524,7 +524,7 @@ public class DanqtDAO {
                     String ConsignmentID = rs.getString("ConsignmentID");
                     ReceivedDate = formatDateString(rs.getString("ReceivedDate"));
                     CancelDate = formatDateString(rs.getString("CancelDate"));
-                    float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                    float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                     ProductDTO product = new ProductDTO(ProductName, ReceivedDate, ConsignmentID, negotiatedPrice, CancelDate);
                     result.setProduct(product);
                 }
@@ -656,7 +656,7 @@ public class DanqtDAO {
                 String email = rs.getString("Email");
                 String phone = convertPhone(rs.getString("Phone"));
                 String orderDate = formatDateString(rs.getString("Date"));
-                float sendPrice = rs.getFloat("SendPrice");
+                float sendPrice = rs.getFloat("SendPrice")/1000;
                 OrderDTO item = new OrderDTO(orderID, orderDate, email, fullName, address, phone);
                 item.setSendPrice(sendPrice);
                 listOrder.add(item);
@@ -672,7 +672,7 @@ public class DanqtDAO {
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
                 String serialNumber = rs.getString("SerialNumber");
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 result.setConsignmentID(consignmentID);
                 result.setName(productName);
                 result.setSerialNumber(serialNumber);
@@ -726,8 +726,8 @@ public class DanqtDAO {
                 address = rs.getString("Address");
                 productName = rs.getString("ProductName");
                 paypalAccount = rs.getString("PaypalAccount");
-                sellingPrice = rs.getFloat("SellingPrice");
-                negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                sellingPrice = rs.getFloat("SellingPrice")/1000;
+                negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 period = rs.getInt("Period");
             }
             result.setConsigmentID(consignmentID);
@@ -936,8 +936,8 @@ public class DanqtDAO {
                 toDate = formatDateString(rsC.getString(11));
                 raiseWebDate = formatDateString(rsC.getString(12));
                 period = rsC.getInt(13);
-                negotiatedPrice = rsC.getFloat(24);
-                returnPrice = rsC.getFloat(16);
+                negotiatedPrice = rsC.getFloat(24)/1000;
+                returnPrice = rsC.getFloat(16)/1000;
                 receivedDate = formatDateString(rsC.getString(17));
                 createdDate = formatDateString(rsC.getString(18));
                 consignmentStatusID = rsC.getInt(19);
@@ -967,7 +967,7 @@ public class DanqtDAO {
                     description = rsP.getString(7);
                     image = rsP.getString(8);
                     productStatusID = rsP.getInt(9);
-                    sellingPrice = rsP.getFloat(10);
+                    sellingPrice = rsP.getFloat(10)/1000;
                     if (productStatus == ProductStatus.ORDERED) {
                         orderDate = formatDateString(rsP.getString(12));
                         customerPhone = convertPhone(rsP.getString(13));
@@ -1108,7 +1108,7 @@ public class DanqtDAO {
                 String address = rs.getString("Address");
                 String phone = convertPhone(rs.getString("Phone"));
                 String receivedDate = formatDateString(rs.getString("ReceivedDate"));
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 String productName = rs.getString("ProductName");
                 int period = rs.getInt("Period");
                 result.setName(fullName);
@@ -1121,10 +1121,10 @@ public class DanqtDAO {
                 product.setName(productName);
                 result.setProduct(product);
                 result.setExpiredDays(diffDate - period);
-                if (negotiatedPrice > 1000000) {
-                    result.setExpiredFee((diffDate - period) * 10000);
+                if (negotiatedPrice > 1000) {
+                    result.setExpiredFee((diffDate - period) * 10);
                 } else {
-                    result.setExpiredFee((diffDate - period) * 5000);
+                    result.setExpiredFee((diffDate - period) * 5);
                 }
             }
             return result;
@@ -1169,7 +1169,7 @@ public class DanqtDAO {
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
                 String receivedDate = formatDateString(rs.getString("ReceivedDate"));
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 String fullName = rs.getString("FullName");
                 item = new ConsignmentDTO();
                 item.setProductID(productID);
@@ -1235,7 +1235,7 @@ public class DanqtDAO {
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
                 String receivedDate = formatDateString(rs.getString("ReceivedDate"));
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 String fullName = rs.getString("FullName");
                 item = new ConsignmentDTO();
                 item.setProductID(productID);
@@ -1300,7 +1300,7 @@ public class DanqtDAO {
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
                 int productID = rs.getInt("ProductID");
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 ProductDTO item = new ProductDTO();
                 item.setName(productName);
                 item.setProductID(productID);
@@ -1365,7 +1365,7 @@ public class DanqtDAO {
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
                 int productID = rs.getInt("ProductID");
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 ProductDTO item = new ProductDTO();
                 item.setName(productName);
                 item.setConsignmentID(consignmentID);
@@ -1598,7 +1598,7 @@ public class DanqtDAO {
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
                 String receivedDate = formatDateString(rs.getString("ReceivedDate"));
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
                 product.setName(productName);
                 result.setProduct(product);
                 result.setReceivedDate(receivedDate);

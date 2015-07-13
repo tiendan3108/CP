@@ -49,7 +49,7 @@ public class SoldProduct extends HttpServlet {
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
                 String tmp_returnPrice = request.getParameter("txtReturnPrice");
-                float returnPrice = Float.parseFloat(tmp_returnPrice);
+                float returnPrice = Float.parseFloat(tmp_returnPrice)*1000;
                 DanqtDAO dao = new DanqtDAO();
                 dao.soldProduct(consignmentID, returnPrice);
                 url = GlobalVariables.MANAGERMENT_SERVLET;

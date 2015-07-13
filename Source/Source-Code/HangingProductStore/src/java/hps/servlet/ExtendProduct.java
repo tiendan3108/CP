@@ -54,7 +54,7 @@ public class ExtendProduct extends HttpServlet {
                     if (action.equals("receive")) {
                         String consignmentID = request.getParameter("txtConsignmentID");
                         String tempExpiredFee = request.getParameter("txtExpiredFee");
-                        float expiredFee = Float.parseFloat(tempExpiredFee);
+                        float expiredFee = Float.parseFloat(tempExpiredFee)*1000;
                         dao.ExtendProduct(consignmentID, expiredFee);
                     }
                     if (action.equals("extend")) {
