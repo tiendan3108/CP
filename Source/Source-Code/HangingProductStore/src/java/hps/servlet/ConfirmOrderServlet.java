@@ -57,7 +57,9 @@ public class ConfirmOrderServlet extends HttpServlet {
                 if (dao.checkProduct(productID)) {
                     OrderDAO orderDao = new OrderDAO();
                     long number = orderDao.getNumOfOrder(productID);
-                    request.setAttribute("MESS", MessageString.warningOrdered(number));
+                    if (number > 0) {
+                        request.setAttribute("MESS", MessageString.warningOrdered(number));
+                    }
                 }
                 productDetailDTO product = dao.getProductAndStoreDetailByID(productID);
                 request.setAttribute("DATA", product);

@@ -19,29 +19,32 @@
     <jsp:attribute name="extraNavigationContent">
     </jsp:attribute>
     <jsp:body>  
+        <c:set var="account" value="${sessionScope.ACCOUNT}"/>
         <div id="wrapper">
             <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row margin-bottom-40">
                 <!-- BEGIN SIDEBAR -->
                 <div class="sidebar col-md-3 col-sm-4">
-                    <c:set var="categories" value="${requestScope.CATEGORY}"/>
-                    <ul class="list-group margin-bottom-25 sidebar-menu">
-                        <c:forEach var="category" items="${categories}">
-                            <li class="list-group-item clearfix dropdown">
-                                <a><i class="fa fa-angle-right"></i>${category.categoryName}</a>
-                                <ul class="dropdown-menu">                             
-                                    <c:set var="allCate" value="${requestScope.ALLCATE}"/>
-                                    <c:forEach var="childCate" items="${allCate}">
-                                        <c:if test="${category.categoryId == childCate.parentId}">
-                                            <li>
-                                                <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
-                                            </li>
-                                        </c:if>
-                                    </c:forEach>       
-                                </ul>
-                            </li>
-                        </c:forEach>
-                    </ul>
+                    <c:if test="${empty account || account.role == 'member'}">
+                        <c:set var="categories" value="${requestScope.CATEGORY}"/>
+                        <ul class="list-group margin-bottom-25 sidebar-menu">
+                            <c:forEach var="category" items="${categories}">
+                                <li class="list-group-item clearfix dropdown">
+                                    <a><i class="fa fa-angle-right"></i>${category.categoryName}</a>
+                                    <ul class="dropdown-menu">                             
+                                        <c:set var="allCate" value="${requestScope.ALLCATE}"/>
+                                        <c:forEach var="childCate" items="${allCate}">
+                                            <c:if test="${category.categoryId == childCate.parentId}">
+                                                <li>
+                                                    <a href="ProductServlet?categoryId=${childCate.categoryId}"><i class="fa fa-angle-right"></i>${childCate.categoryName}</a>
+                                                </li>
+                                            </c:if>
+                                        </c:forEach>       
+                                    </ul>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
                 </div>
                 <!-- END SIDEBAR -->
 
@@ -79,8 +82,7 @@
                                             <p>Số điện thoại: ${store.phone}</p> 
                                             <p>Địa chỉ: ${store.address}</p> 
                                         </div>  
-                                    </c:if>
-                                    <c:set var="account" value="${sessionScope.ACCOUNT}"/>
+                                    </c:if>                                  
                                     <c:if test="${empty account || account.role == 'member'}">
                                         <div class="product-page-options">
                                             <div class="pull-left">
