@@ -246,7 +246,7 @@
                                                                 maxFractionDigits="1"/> 
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <b><font color="red">Chưa có giá</font></b>
+                                                            <b><font color="red">Không có giá</font></b>
                                                             </c:otherwise>
                                                         </c:choose>
                                                 </td>
@@ -780,7 +780,7 @@
             if (data.minPrice > 0 && data.maxPrice > 0) {
                 $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
             } else {
-                $("#rc_price").html("Không có giá");
+                $("#rc_price").html("<font color='red'>Không có giá </font>");
             }
 
 
@@ -802,7 +802,10 @@
                     $("#rc_reason").html(data.reason);
                 } else if (data.consignmentStatusID == 4) {
                     $("#rc_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                } else if (data.consignmentStatusID == 5) {
+                }else if (data.consignmentStatusID == 6) {
+                    $("#rc_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
+                }
+                else if (data.consignmentStatusID == 5) {
                     if (data.product.productStatusID == 2) {
                         $("#rc_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
                     }
@@ -841,7 +844,7 @@
 
                 $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
             } else {
-                $("#r_price").html("Không có giá");
+                $("#r_price").html("<font color='red'>Không có giá </font>");
             }
             
             $("#r_productID").val(data.product.productID);
@@ -894,7 +897,12 @@
                     $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
                     $("#r_footer").hide();
                     $("#ar_footer").hide();
-                } else if (data.consignmentStatusID == 5) {
+                }else if (data.consignmentStatusID == 6) {
+                    $("#r_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
+                    $("#r_footer").hide();
+                    $("#ar_footer").hide();
+                }
+                else if (data.consignmentStatusID == 5) {
                     if (data.product.productStatusID == 2) {
                         $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
                         $("#r_footer").hide();

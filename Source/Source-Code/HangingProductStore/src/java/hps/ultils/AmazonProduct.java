@@ -5,11 +5,13 @@
  */
 package hps.ultils;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Tien Dan
  */
-public class AmazonProduct {
+public class AmazonProduct implements Serializable{
     private String name;
     private String ASIN;
     private float price;

@@ -28,7 +28,7 @@
 
                     <form class="form-horizontal" role="form" action="TrackProductStatus">
                         <div class="form-body">
-                            
+
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
                                     <div class="input-group">
@@ -108,7 +108,7 @@
                                     </tr>
 
                                     <tr >
-                                        <th>Giá</th>
+                                        <th>Giá (Ngàn đồng)</th>
 
                                         <td id="r_price">
                                             <c:if test="${c.minPrice > 0 or c.maxPrice > 0}">
@@ -148,6 +148,9 @@
                                                             </c:when>
                                                             <c:when test="${c.consignmentStatusID == 4}">
                                                                 <font color="blue">HOÀN THÀNH</font>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 6}">
+                                                                <font color="blue">ĐÃ HẾT HẠN</font>
                                                             </c:when>
                                                             <c:when test="${c.consignmentStatusID == 5}">
                                                                 <c:choose>
