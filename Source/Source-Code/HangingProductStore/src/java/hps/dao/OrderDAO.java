@@ -125,7 +125,7 @@ public class OrderDAO {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "select * from [Order] "
-                    + "where DATEDIFF(day,[Order].Date, ?) >=2 "
+                    + "where DATEDIFF(day,[Order].Date, ?) >= 3 "
                     + "and OrderStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setDate(1, new java.sql.Date(date.getTime()));
@@ -200,9 +200,11 @@ public class OrderDAO {
             con = db.makeConnection();
             String query = "select COUNT(OrderID) as numOfOrder "
                     + "from [Order] "
-                    + "where ProductID = ?";
+                    + "where ProductID = ? "
+                    + "and OrderStatusID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
+            stm.setInt(2, OrderStatus.WAITING);
             rs = stm.executeQuery();
             if (rs.next()) {
                 numOfOrder = rs.getLong("numOfOrder");
