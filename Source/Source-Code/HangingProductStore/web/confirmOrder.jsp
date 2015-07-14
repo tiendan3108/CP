@@ -20,11 +20,11 @@
                 <c:set var="mess" value="${requestScope.MESS}"/>
                 <c:if test="${not empty mess}">
                     <div class="alert alert-warning" style="text-align: left;font-weight: bold;font-size: 14px">
-                         <strong>${mess}</strong>
+                        <strong>${mess}</strong>
                     </div>                  
                 </c:if>               
                 <h4>Bạn đã đặt món hàng:</h4>
-                <div class="content-form-page">                  
+                <div class="">                  
                     <div class="table-wrapper-responsive ">
                         <div class="goods-data clearfix ">
                             <c:set var="item" value="${requestScope.DATA}"/>
@@ -97,13 +97,13 @@
                                     <textarea id="addressInput" rows="3" name="address" type="text" class="form-control"></textarea>
                                 </div>
                                 <label class="col-lg-2 control-label col-md-2" for="first-name">Số điện thoại <span class="require">*</span></label>
-                                <div class="col-lg-3 col-md-3">
+                                <div class="col-lg-4 col-md-4">
                                     <input maxlength="11" name="phone" required="true" type="number" class="form-control">
                                 </div>
                             </div>
                         </c:if>                      
                         <div class="row">
-                            <div class="col-lg-8 col-md-offset-8 padding-left-0 padding-top-20">
+                            <div class="col-lg-offset-10 col-md-offset-10 padding-left-0 padding-top-20">
                                 <button class="btn btn-primary" type="submit">Xác Nhận</button>
                             </div>
                         </div>
