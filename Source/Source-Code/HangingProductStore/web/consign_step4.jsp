@@ -95,7 +95,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div class="form-group" id="locationField">
+                                                                    <div class="form-group">
                                                                         <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
                                                                         <div  class="col-md-8 col-sm-8">
                                                                             <textarea id="addressInput" name="txtAddress" class="form-control" maxlength="225" rows="3"  placeholder="" >${member.address}</textarea>

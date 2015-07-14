@@ -17,7 +17,7 @@
 
 <c:if test="${not empty sessionScope.ACCOUNT}">
     <c:if test="${sessionScope.ACCOUNT.role == 'storeOwner'}">
-        <c:redirect url="./consignment"/>
+        <c:redirect url="./ConsignmentRequestReceive"/>
     </c:if>    
 </c:if>
 

@@ -152,15 +152,26 @@
                                                                         </td>
                                                                         <td align="center">
                                                                             <c:if test="${not empty store}">
-                                                                                <c:if test="${store == item.roleID}">
-                                                                                    <input checked="checked"  name="rdStore" value="${item.roleID}" type="radio"/>
-                                                                                </c:if>
-                                                                                <c:if test="${store != item.roleID}">
-                                                                                    <input  name="rdStore" value="${item.roleID}" type="radio"/>
-                                                                                </c:if>
+                                                                                <c:choose>
+                                                                                    <c:when test="${store == item.roleID}">
+                                                                                        <input checked="checked"  name="rdStore" value="${item.roleID}" type="radio"/>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <input  name="rdStore" value="${item.roleID}" type="radio"/>    
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+
                                                                             </c:if>
                                                                             <c:if test="${empty store}">
-                                                                                <input  name="rdStore" value="${item.roleID}" type="radio"/>
+                                                                                <c:choose>
+                                                                                    <c:when test="${count.count == 1}">
+                                                                                        <input  name="rdStore" value="${item.roleID}" type="radio" checked/>        
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <input  name="rdStore" value="${item.roleID}" type="radio"/>        
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+
                                                                             </c:if>
 
                                                                         </td>

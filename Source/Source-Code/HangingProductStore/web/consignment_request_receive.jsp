@@ -61,23 +61,27 @@
                         </ul>
 
                         <!-- Tab panes -->
+                        <input type="hidden" id="currentTab" value="${currentTab}"/>
                         <div class="tab-content" style="background-color: white">
                             <div class="tab active" id="request" style="display: none">
-                                <input type="hidden" id="currentTab" value="${currentTab}"/>
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="input-group">
-                                                    <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info" type="submit" name="btnAction" value="r_search">Tìm</button>
-                                                    </span>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="input-group">
+                                                            <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-info" type="submit" name="btnAction" value="r_search">Tìm</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
                                 <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
                                     <thead>
                                         <tr role="row" class="heading">
@@ -167,22 +171,32 @@
 
 
                             <div class="tab" id="accepted" style="display: none">
-
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="input-group">
-                                                    <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info" type="submit" name="btnAction" value="ar_search">Tìm</button>
-                                                    </span>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
+                                            <div class="form-body">
+                                                <div class="form-group">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="input-group">
+                                                            <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-info" type="submit" name="btnAction" value="ar_search">Tìm</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
-                                </form>
-                                <table class="table table-striped table-bordered table-hover" id="datatable_ajax">
+                                    <div class="col-md-4 col-sm-4">
+
+                                    </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <button data-toggle="modal" data-target="#modalAddConsignment"
+                                                class="btn btn-primary">Tạo mới ký gửi</button>
+                                    </div>
+                                </div>           
+                                <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr role="row" class="heading">
                                             <th>
@@ -529,7 +543,7 @@
                                                 </table>
                                                 <input id="r_ActionValue" type="hidden" name="consignmentID"/>
                                                 <input id="r_productID" type="hidden" name="productID"/>
-<!--                                                <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>-->
+                                                <!--                                                <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>-->
                                                 <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
                                                 <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
                                                 <input id="r_btnAction" type="hidden" name="btnAction"/>
@@ -704,7 +718,231 @@
                     </div>
                     <!-- END MODAL -->
 
-                    
+
+                    <!--BEGIN MODAL -->
+                    <!-- Large modal -->
+                    <div id="modalAddConsignment" class="modal fade bs-example-modal-lg" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h2 class="modal-title">Tạo sản phẩm</h2>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form id="addConsignment_form" action="AddConsignment" method="POST" enctype="multipart/form-data">
+                                        <div class="row">    
+
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-horizontal">
+
+                                                    <div class="form-group">
+                                                        <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font color="red">*</font></label> <!--<span class="required">*</span> -->
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="50" />
+                                                            <p class="help-block" id="erProductName">  </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số </label>
+                                                        <div class="col-md-5 col-sm-6">
+                                                            <input id="addConsignment_txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" />
+                                                            <p class="help-block" id="erSerialNumber"> </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4">Loại <font color="red">*</font></label>
+                                                        <div class="col-md-5 col-sm-6">
+                                                            <select id="addConsignment_txtCategoryID" name="txtCategoryID"  class="form-control" >
+                                                                <option value='' disabled selected style='display:none;'>Chọn...</option>
+
+                                                                <c:forEach var="father" items="${fCate}">
+                                                                    <optgroup label="${father.categoryName}">
+                                                                        <c:forEach var="child" items="${category}">
+                                                                            <c:if test="${child.parentId == father.categoryId}">
+
+                                                                                <option value="${child.categoryId}">${child.categoryName}</option>
+
+
+
+
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </optgroup>
+
+                                                                </c:forEach>
+
+                                                            </select>
+                                                            <span class="help-block" id="erCategoryID">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4">Hãng</label>
+                                                        <div class="col-md-5 col-sm-6">
+                                                            <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+
+                                                            <span class="help-block" id="erBrand">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label  class="col-md-4 col-sm-4 control-label"> Mô tả </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <textarea id="addConsignment_txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="" value="${product.description}"/>${product.description}</textarea>
+                                                            <span class="help-block" id="erDescription">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4">Hình ảnh <font color="red">*</font></label>
+                                                        <div class="col-md-8 col-sm-8" align="center">
+
+                                                            <div id="addConsignment_divImage" class="fileinput fileinput-new" data-provides="fileinput">
+                                                                <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                                </div>
+                                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                                </div>
+                                                                <div >
+                                                                    <span class="btn btn-info btn-file">
+                                                                        <span class="fileinput-new btn " >
+                                                                            CHỌN ẢNH </span>
+                                                                        <span class="fileinput-exists btn">
+                                                                            THAY ẢNH </span>
+                                                                        <input  type="file" name="txtImage" />
+                                                                    </span>
+                                                                    <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                        XÓA </a>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <span class="help-block" id="erImage">
+
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
+                                                        <div class="col-md-4 col-sm-5">
+
+                                                            <input id="addConsignment_txtDate" type="text" class="form-control" name="txtDate"> 
+                                                            <span class="help-block" id="erDate"> </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="addConsignment_txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input type="text" id="addConsignment_txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="">
+
+                                                            <p class="help-block" id="erFullName"> </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="addConsignment_txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                                        <div  class="col-md-8 col-sm-8">
+                                                            <textarea id="addressInput" name="txtAddress" class="form-control" maxlength="225" rows="3"  placeholder="" ></textarea>
+                                                            <span class="help-block" id="erAddress">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="addConsignment_txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                        <div class="col-md-5 col-sm-7">
+                                                            <input type="text" id="addConsignment_txtPhone" name="txtPhone" class="form-control"/>
+                                                            <p class="help-block" id="erPhone"></p>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="addConsignment_txtEmail" class="col-md-4 col-sm-4 control-label">Email </label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com">
+                                                            <p class="help-block" id="erEmail"></p>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
+
+                                                        <div class="radio-list col-md-8 col-sm-8">
+
+                                                            <label class="radio-list">
+                                                                <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                            <label class="radio-list">
+                                                                <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div id="addConsignment_divCCNumber" class="form-group" style="display: none" >
+                                                        <label class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input type="text" id="addConsignment_txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder=""/>
+
+                                                            <p class="help-block" id="erPaypalAccount"></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-4 col-sm-4">Giá thỏa thuận</label>
+                                                        <div class="col-md-5 col-sm-6">
+                                                            <input id="addConsignment_txtNegotiatedPrice" name="txtNegotiatedPrice" type="text" class="form-control" maxlength="50"/>
+
+                                                            <span class="help-block" id="erNegotiatedPrice">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div></div>            
+                                        </div>
+                                        <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                                    </form> 
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button id="btnAddConsignment" class="btn btn-lg btn-primary">Thêm</button>
+                                    <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END MODAL -->
 
 
                 </div>
@@ -714,289 +952,371 @@
         </div>
     </jsp:body>
 </template:shopbasic>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+
+<script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('.tabs .nav-tabs a').on('click', function (e) {
-            var currentAttrValue = $(this).attr('href');
+                                            $(document).ready(function () {
+                                                $('.tabs .nav-tabs a').on('click', function (e) {
+                                                    var currentAttrValue = $(this).attr('href');
 
-            $('.tabs ' + currentAttrValue).siblings().hide();
-            $(this).parent('li').siblings().removeClass('active');
-            $('.tabs ' + currentAttrValue).fadeIn(400);
-            $(this).parent('li').addClass('active');
+                                                    $('.tabs ' + currentAttrValue).siblings().hide();
+                                                    $(this).parent('li').siblings().removeClass('active');
+                                                    $('.tabs ' + currentAttrValue).fadeIn(400);
+                                                    $(this).parent('li').addClass('active');
 
-            window.location.hash = $(this).attr('href');
-            $('html,body').scrollTop(0);
-            e.preventDefault();
+                                                    window.location.hash = $(this).attr('href');
+                                                    $('html,body').scrollTop(0);
+                                                    e.preventDefault();
 
-        });
-    });
-    $(document).ready(function () {
+                                                });
+                                            });
+                                            $(document).ready(function () {
 
-        //var currentTab = $('#currentTab').val();
-        var currentTab = window.location.hash.substring(1);
-        if (currentTab == "") {
-            currentTab = $('#currentTab').val();
-        }
-        var currentLi = currentTab + 'Tab';
-        $('div#' + currentTab).siblings().hide();
-        $('li#' + currentLi).siblings().removeClass('active');
+                                                //var currentTab = $('#currentTab').val();
+                                                var currentTab = window.location.hash.substring(1);
+                                                if (currentTab == "") {
+                                                    currentTab = $('#currentTab').val();
+                                                }
+                                                var currentLi = currentTab + 'Tab';
+                                                $('div#' + currentTab).siblings().hide();
+                                                $('li#' + currentLi).siblings().removeClass('active');
 
-        $('div#' + currentTab).fadeIn(400);
-        $('li#' + currentLi).addClass('active');
-
-
-    });
-
-    $(function () {
-        $("#r_searchInput").autocomplete({
-            source: "ConsignmentRequestReceive?btnAction=r_searchName",
-            minLength: 1,
-            select: function (event, ui) {
-            }
-        });
-
-        $("#ar_searchInput").autocomplete({
-            source: "ConsignmentRequestReceive?btnAction=ar_searchName",
-            minLength: 1,
-            select: function (event, ui) {
-            }
-        });
-
-    });
-
-    function loadRefuseCancelDetails(id) {
-        $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
-
-            $("#rc_name").html("<small>Từ khách hàng</small> " + data.name);
-            $("#rc_productName").html(data.product.name);
-            $("#rc_image").attr("src", data.product.image);
-            $("#rc_description").html(data.product.description);
-            $("#rc_createdDate").html(data.createdDate);
-            $("#rc_email").html(data.email);
-            $("#rc_phone").html("0" + data.phone.substring(3));
-            $("#rc_address").html(data.address);
-            $("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-            if (data.minPrice > 0 && data.maxPrice > 0) {
-                $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
-            } else {
-                $("#rc_price").html("<font color='red'>Không có giá </font>");
-            }
+                                                $('div#' + currentTab).fadeIn(400);
+                                                $('li#' + currentLi).addClass('active');
 
 
-            $("#rc_trReason").hide();
-            $("#rc_reason").html("");
-            if (data.product.productStatusID == 6) {
-                $("#rc_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
-            }
-            else {
-                if (data.consignmentStatusID == 1) {
-                    $("#rc_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+                                            });
 
-                } else if (data.consignmentStatusID == 3) {
-                    $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                                            $(function () {
+                                                $("#r_searchInput").autocomplete({
+                                                    source: "ConsignmentRequestReceive?btnAction=r_searchName",
+                                                    minLength: 1,
+                                                    select: function (event, ui) {
+                                                    }
+                                                });
 
-                } else if (data.consignmentStatusID == 2) {
-                    $("#rc_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
-                    $("#rc_trReason").show();
-                    $("#rc_reason").html(data.reason);
-                } else if (data.consignmentStatusID == 4) {
-                    $("#rc_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                }else if (data.consignmentStatusID == 6) {
-                    $("#rc_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
-                }
-                else if (data.consignmentStatusID == 5) {
-                    if (data.product.productStatusID == 2) {
-                        $("#rc_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
-                    }
-                    else if (data.product.productStatusID == 3) {
-                        $("#rc_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
-                    }
-                    else if (data.product.productStatusID == 4) {
-                        $("#rc_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
-                    }
-                    else if (data.product.productStatusID == 5) {
-                        $("#rc_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
-                    }
-                }
-            }
-        });
-    }
+                                                $("#ar_searchInput").autocomplete({
+                                                    source: "ConsignmentRequestReceive?btnAction=ar_searchName",
+                                                    minLength: 1,
+                                                    select: function (event, ui) {
+                                                    }
+                                                });
 
-    function loadRequestAcceptDetails(id) {
-        $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
+                                                $("#addConsignment_txtDate").datetimepicker();
 
-            $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
-            $("#r_productName").val(data.product.name);
+                                            });
 
-            $('#r_category').val(data.product.categoryID).change();
-            $("#r_brand").val(data.product.brand);
-            $("#r_image").attr("src", data.product.image);
-            $("#r_description").val(data.product.description);
-            $("#r_createdDate").html(data.createdDate);
-            $("#r_email").html(data.email);
-            $("#r_phone").html("0" + data.phone.substring(3));
-            $("#r_address").html(data.address);
-            $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                                            function loadRefuseCancelDetails(id) {
+                                                $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
 
-            if (data.minPrice > 0 && data.maxPrice > 0) {
+                                                    $("#rc_name").html("<small>Từ khách hàng</small> " + data.name);
+                                                    $("#rc_productName").html(data.product.name);
+                                                    $("#rc_image").attr("src", data.product.image);
+                                                    $("#rc_description").html(data.product.description);
+                                                    $("#rc_createdDate").html(data.createdDate);
+                                                    $("#rc_email").html(data.email);
+                                                    $("#rc_phone").html("0" + data.phone.substring(3));
+                                                    $("#rc_address").html(data.address);
+                                                    $("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                                                    if (data.minPrice > 0 && data.maxPrice > 0) {
+                                                        $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
+                                                    } else {
+                                                        $("#rc_price").html("<font color='red'>Không có giá </font>");
+                                                    }
 
 
-                $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
-            } else {
-                $("#r_price").html("<font color='red'>Không có giá </font>");
-            }
-            
-            $("#r_productID").val(data.product.productID);
-            $("#r_ActionValue").val(data.consigmentID);
+                                                    $("#rc_trReason").hide();
+                                                    $("#rc_reason").html("");
+                                                    if (data.product.productStatusID == 6) {
+                                                        $("#rc_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
+                                                    }
+                                                    else {
+                                                        if (data.consignmentStatusID == 1) {
+                                                            $("#rc_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
 
-            $("#r_trReason").hide();
-            $("#r_reason").html("");
-            if (data.product.productStatusID == 6) {
-                $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
-                $("#r_footer").hide();
-                $("#ar_footer").hide();
-            }
-            else {
-                if (data.consignmentStatusID == 1) {
-                    $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+                                                        } else if (data.consignmentStatusID == 3) {
+                                                            $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+
+                                                        } else if (data.consignmentStatusID == 2) {
+                                                            $("#rc_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
+                                                            $("#rc_trReason").show();
+                                                            $("#rc_reason").html(data.reason);
+                                                        } else if (data.consignmentStatusID == 4) {
+                                                            $("#rc_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                                                        } else if (data.consignmentStatusID == 6) {
+                                                            $("#rc_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
+                                                        }
+                                                        else if (data.consignmentStatusID == 5) {
+                                                            if (data.product.productStatusID == 2) {
+                                                                $("#rc_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                                                            }
+                                                            else if (data.product.productStatusID == 3) {
+                                                                $("#rc_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                                                            }
+                                                            else if (data.product.productStatusID == 4) {
+                                                                $("#rc_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                                                            }
+                                                            else if (data.product.productStatusID == 5) {
+                                                                $("#rc_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            function loadRequestAcceptDetails(id) {
+                                                $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
+
+                                                    $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
+                                                    $("#r_productName").val(data.product.name);
+
+                                                    $('#r_category').val(data.product.categoryID).change();
+                                                    $("#r_brand").val(data.product.brand);
+                                                    $("#r_image").attr("src", data.product.image);
+                                                    $("#r_description").val(data.product.description);
+                                                    $("#r_createdDate").html(data.createdDate);
+                                                    $("#r_email").html(data.email);
+                                                    $("#r_phone").html("0" + data.phone.substring(3));
+                                                    $("#r_address").html(data.address);
+                                                    $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+
+                                                    if (data.minPrice > 0 && data.maxPrice > 0) {
+
+
+                                                        $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
+                                                    } else {
+                                                        $("#r_price").html("<font color='red'>Không có giá </font>");
+                                                    }
+
+                                                    $("#r_productID").val(data.product.productID);
+                                                    $("#r_ActionValue").val(data.consigmentID);
+
+                                                    $("#r_trReason").hide();
+                                                    $("#r_reason").html("");
+                                                    if (data.product.productStatusID == 6) {
+                                                        $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
+                                                        $("#r_footer").hide();
+                                                        $("#ar_footer").hide();
+                                                    }
+                                                    else {
+                                                        if (data.consignmentStatusID == 1) {
+                                                            $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
 //                    $("#r_ActionValue").val(data.consigmentID);
-                    $("#r_ActionValue_confirm").val(data.consigmentID);
-//                    $("#ar_ActionValue").val("");
-                    $("#ar_ActionValue_confirm").val("");
-                    $("#r_footer").show();
-                    $("#ar_footer").hide();
-                    //$("#r_price").show();
+                                                            $("#r_ActionValue_confirm").val(data.consigmentID);
+                                                            //                    $("#ar_ActionValue").val("");
+                                                            $("#ar_ActionValue_confirm").val("");
+                                                            $("#r_footer").show();
+                                                            $("#ar_footer").hide();
+                                                            //$("#r_price").show();
 
-                    $("#ar_price").hide();
-                    $("#r_btnAction").val("r_accept");
+                                                            $("#ar_price").hide();
+                                                            $("#r_btnAction").val("r_accept");
 
-                } else if (data.consignmentStatusID == 3) {
-                    $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                                                        } else if (data.consignmentStatusID == 3) {
+                                                            $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
 //                    $("#ar_ActionValue").val(data.consigmentID);
-                    $("#ar_ActionValue_confirm").val(data.consigmentID);
-//                    $("#r_ActionValue").val("");
-                    $("#r_ActionValue_confirm").val("");
-                    $("#ar_footer").show();
-                    $("#r_footer").hide();
-                    //$("#r_price").html("");
-                    //$("#r_price").hide();
-                    $("#ar_price").show();
-                    //$("#ar_minPrice").val(data.minPrice.toFixed(0));
-                    //$("#ar_maxPrice").val(data.maxPrice.toFixed(0));
-                    
-                    $("#r_btnAction").val("ar_accept");
-                    
-                } else if (data.consignmentStatusID == 2) {
-                    $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
-                    $("#r_footer").hide();
-                    $("#ar_footer").hide();
-                    $("#r_trReason").show();
-                    $("#r_reason").html(data.reason);
-                } else if (data.consignmentStatusID == 4) {
-                    $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                    $("#r_footer").hide();
-                    $("#ar_footer").hide();
-                }else if (data.consignmentStatusID == 6) {
-                    $("#r_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
-                    $("#r_footer").hide();
-                    $("#ar_footer").hide();
-                }
-                else if (data.consignmentStatusID == 5) {
-                    if (data.product.productStatusID == 2) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
-                        $("#r_footer").hide();
-                        $("#ar_footer").hide();
-                    }
-                    else if (data.product.productStatusID == 3) {
-                        $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
-                        $("#r_footer").hide();
-                        $("#ar_footer").hide();
-                    }
-                    else if (data.product.productStatusID == 4) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
-                        $("#r_footer").hide();
-                        $("#ar_footer").hide();
-                    }
-                    else if (data.product.productStatusID == 5) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
-                        $("#r_footer").hide();
-                        $("#ar_footer").hide();
-                    }
-                }
-            }
-        });
-    }
+                                                            $("#ar_ActionValue_confirm").val(data.consigmentID);
+                                                            //                    $("#r_ActionValue").val("");
+                                                            $("#r_ActionValue_confirm").val("");
+                                                            $("#ar_footer").show();
+                                                            $("#r_footer").hide();
+                                                            //$("#r_price").html("");
+                                                            //$("#r_price").hide();
+                                                            $("#ar_price").show();
+                                                            //$("#ar_minPrice").val(data.minPrice.toFixed(0));
+                                                            //$("#ar_maxPrice").val(data.maxPrice.toFixed(0));
 
-    $('button[name="requestAcceptDetails"]').click(function () {
-        var id = $(this).val();
-        loadRequestAcceptDetails(id);
+                                                            $("#r_btnAction").val("ar_accept");
 
-    });
+                                                        } else if (data.consignmentStatusID == 2) {
+                                                            $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
+                                                            $("#r_footer").hide();
+                                                            $("#ar_footer").hide();
+                                                            $("#r_trReason").show();
+                                                            $("#r_reason").html(data.reason);
+                                                        } else if (data.consignmentStatusID == 4) {
+                                                            $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                                                            $("#r_footer").hide();
+                                                            $("#ar_footer").hide();
+                                                        } else if (data.consignmentStatusID == 6) {
+                                                            $("#r_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
+                                                            $("#r_footer").hide();
+                                                            $("#ar_footer").hide();
+                                                        }
+                                                        else if (data.consignmentStatusID == 5) {
+                                                            if (data.product.productStatusID == 2) {
+                                                                $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                                                                $("#r_footer").hide();
+                                                                $("#ar_footer").hide();
+                                                            }
+                                                            else if (data.product.productStatusID == 3) {
+                                                                $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                                                                $("#r_footer").hide();
+                                                                $("#ar_footer").hide();
+                                                            }
+                                                            else if (data.product.productStatusID == 4) {
+                                                                $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                                                                $("#r_footer").hide();
+                                                                $("#ar_footer").hide();
+                                                            }
+                                                            else if (data.product.productStatusID == 5) {
+                                                                $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                                                                $("#r_footer").hide();
+                                                                $("#ar_footer").hide();
+                                                            }
+                                                        }
+                                                    }
+                                                });
+                                            }
 
-    $('button[name="refuseCancelDetails"]').click(function () {
-        var id = $(this).val();
-        loadRefuseCancelDetails(id);
+                                            $('button[name="requestAcceptDetails"]').click(function () {
+                                                var id = $(this).val();
+                                                loadRequestAcceptDetails(id);
 
-    });
+                                            });
 
-    $('button[name="btnRefuse"]').click(function () {
-        var action = $(this).val();
-        if (action == "ar_refuse") {
-            $('#ar_body_confirm').show();
-            $('#r_body_confirm').hide();
-            $('#ar_footer_confirm').show();
-            $('#r_footer_confirm').hide();
-        } else if (action == "r_refuse") {
-            $('#ar_body_confirm').hide();
-            $('#r_body_confirm').show();
-            $('#ar_footer_confirm').hide();
-            $('#r_footer_confirm').show();
-        }
-    });
+                                            $('button[name="refuseCancelDetails"]').click(function () {
+                                                var id = $(this).val();
+                                                loadRefuseCancelDetails(id);
 
-    $('#r_btnSubmit').click(function () {
-        $('form#r_form').submit();
-    });
-    $('#ar_btnSubmit').click(function () {
-        if($('#ar_negotiatedPrice').val() == ""){
-          alert("Xin nhập giá thỏa thuận!");  
-        }else{
-            $('form#r_form').submit();
-        }
-        //$('form#ar_form').submit();
-    });
+                                            });
 
-    function ar_validation() {
+                                            $('button[name="btnRefuse"]').click(function () {
+                                                var action = $(this).val();
+                                                if (action == "ar_refuse") {
+                                                    $('#ar_body_confirm').show();
+                                                    $('#r_body_confirm').hide();
+                                                    $('#ar_footer_confirm').show();
+                                                    $('#r_footer_confirm').hide();
+                                                } else if (action == "r_refuse") {
+                                                    $('#ar_body_confirm').hide();
+                                                    $('#r_body_confirm').show();
+                                                    $('#ar_footer_confirm').hide();
+                                                    $('#r_footer_confirm').show();
+                                                }
+                                            });
 
-        var minPrice = $("#ar_minPrice").val();
-        var maxPrice = $("#ar_maxPrice").val();
-        if (minPrice == "" || maxPrice == "") {
-            alert("Xin nhập giá.");
-            return false;
-        }
-        $("#ar_inputMinPrice").val(minPrice);
-        $("#ar_inputMaxPrice").val(maxPrice);
-        return true;
-    }
+                                            $('#r_btnSubmit').click(function () {
+                                                $('form#r_form').submit();
+                                            });
+                                            $('#ar_btnSubmit').click(function () {
+                                                if ($('#ar_negotiatedPrice').val() == "") {
+                                                    alert("Xin nhập giá thỏa thuận!");
+                                                } else {
+                                                    $('form#r_form').submit();
+                                                }
+                                                //$('form#ar_form').submit();
+                                            });
 
-    function ar_confirm_validation() {
-        var reason = $("#ar_txtReason").val();
-        if (reason.trim() == "") {
-            alert("Xin nhập lí do");
-            return false;
-        }
-        $("#ar_inputReason").val(reason);
-        return true;
+                                            function ar_validation() {
 
-        return false;
-    }
+                                                var minPrice = $("#ar_minPrice").val();
+                                                var maxPrice = $("#ar_maxPrice").val();
+                                                if (minPrice == "" || maxPrice == "") {
+                                                    alert("Xin nhập giá.");
+                                                    return false;
+                                                }
+                                                $("#ar_inputMinPrice").val(minPrice);
+                                                $("#ar_inputMaxPrice").val(maxPrice);
+                                                return true;
+                                            }
 
-    function formatDollar(num) {
-        var p = num.toFixed(0);
-        return  p.split("").reverse().reduce(function (acc, num, i, orig) {
-            return  num + (i && !(i % 3) ? "," : "") + acc;
-        }, "");
-    }
+                                            function ar_confirm_validation() {
+                                                var reason = $("#ar_txtReason").val();
+                                                if (reason.trim() == "") {
+                                                    alert("Xin nhập lí do");
+                                                    return false;
+                                                }
+                                                $("#ar_inputReason").val(reason);
+                                                return true;
+
+                                                return false;
+                                            }
+
+                                            $('input:radio[name="rdPayment"]').change(function () {
+                                                if ($(this).val() == "cc") {
+                                                    $("#addConsignment_divCCNumber").show();
+                                                }
+                                                else {
+                                                    $("#addConsignment_divCCNumber").hide();
+
+                                                }
+                                            });
+
+                                            function formatDollar(num) {
+                                                var p = num.toFixed(0);
+                                                return  p.split("").reverse().reduce(function (acc, num, i, orig) {
+                                                    return  num + (i && !(i % 3) ? "," : "") + acc;
+                                                }, "");
+                                            }
+
+                                            $('#btnAddConsignment').click(function () {
+                                                var check = true;
+                                                if ($('#addConsignment_txtProductName').val().trim().length < 5 || $('#addConsignment_txtProductName').val().trim().length > 50) {
+                                                    $('#erProductName').html("<font color='red'>Yệu cầu 5-50 ký tự</font>");
+                                                    check = false;
+                                                }
+                                                else {
+                                                    $('#erProductName').html("");
+                                                }
+                                                if ($('#addConsignment_txtCategoryID').val() == null) {
+                                                    $('#erCategoryID').html("<font color='red'>Xin chọn loại hàng</font>");
+                                                    check = false;
+                                                } else {
+                                                    $('#erCategoryID').html("");
+                                                }
+
+
+                                                if ($('#addConsignment_txtFullName').val().trim().length < 5 || $('#addConsignment_txtFullName').val().trim().length > 50) {
+                                                    $('#erFullName').html("<font color='red'>Yêu cầu 5-50 ký tự</font>");
+                                                    check = false;
+                                                }
+                                                else {
+                                                    $('#erFullName').html("");
+                                                }
+
+
+                                                if ($('#addConsignment_txtPhone').val().trim().length < 10) {
+                                                    $('#erPhone').html("<font color='red'>Xin nhập số điện thoại ít nhất 10 chữ số</font>");
+                                                    check = false;
+                                                }
+                                                else {
+                                                    $('#erPhone').html("");
+                                                }
+
+                                                var payment = $('input:radio[name="rdPayment"]:checked').val();
+                                                if (payment == "cc") {
+                                                    if ($('#addConsignment_txtPaypalAccount').val().trim().length == 0) {
+                                                        $('#erPaypalAccount').html("<font color='red'>Xin nhập tài khoản</font>");
+                                                        check = false;
+                                                    }
+                                                    else {
+                                                        $('#erPaypalAccount').html("");
+                                                    }
+                                                }
+
+
+                                                if ($('#addConsignment_divImage').attr("class") == "fileinput fileinput-new") {
+                                                    $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
+                                                    check = false;
+                                                } else {
+                                                    $('#erImage').html("");
+                                                }
+
+                                                if ($('#addConsignment_txtNegotiatedPrice').val().trim().length <= 0) {
+                                                    $('#erNegotiatedPrice').html("<font color='red'>Xin nhập giá</font>");
+                                                    check = false;
+                                                }
+                                                else {
+                                                    $('#erNegotiatedPrice').html("");
+                                                }
+
+                                                if (check) {
+                                                    $('form#addConsignment_form').submit();
+                                                }
+
+                                            });
 
 </script> 

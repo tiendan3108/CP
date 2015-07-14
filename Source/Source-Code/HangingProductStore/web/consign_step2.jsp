@@ -124,15 +124,26 @@
                                                                     <td align="center">
 
                                                                         <c:if test="${not empty ASIN}">
-                                                                            <c:if test="${ASIN == item.ASIN}">
-                                                                                <input checked="checked"  name="rdAmazon" value="${item.ASIN}" type="radio"/>
-                                                                            </c:if>
-                                                                            <c:if test="${ASIN != item.ASIN}">
-                                                                                <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
-                                                                            </c:if>
+                                                                            <c:choose>
+                                                                                <c:when test="${ASIN == item.ASIN}">
+                                                                                    <input checked="checked"  name="rdAmazon" value="${item.ASIN}" type="radio"/>    
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>    
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+
                                                                         </c:if>
                                                                         <c:if test="${empty ASIN}">
-                                                                            <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
+                                                                            <c:choose>
+                                                                                <c:when test="${count.count == 1}">
+                                                                                    <input  name="rdAmazon" value="${item.ASIN}" type="radio" checked="checked"/>        
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <input  name="rdAmazon" value="${item.ASIN}" type="radio"/>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+
                                                                         </c:if>
 
                                                                     </td>
@@ -143,8 +154,8 @@
                                                         </tbody>
                                                     </table>
                                                     <!--                                                    </form>-->
-                                                    
-                                                    
+
+
                                                     <div id="amazonModal" class="modal fade">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -157,12 +168,12 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                                                    
+
                                                                 </div>
                                                             </div><!-- /.modal-content -->
                                                         </div><!-- /.modal-dialog -->
                                                     </div><!-- /.modal -->
-                                                    
+
                                                 </c:if>
                                                 <c:if test="${empty data}">
                                                     <div class="alert alert-warning" style="text-align: center">
@@ -214,7 +225,11 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
+    $(document).ready(function () {
+    });
+    
     function validation() {
+        $('#txtAmazon').val($('input:radio[name="rdAmazon"]:checked').val());
         if (jQuery("#form2").context.activeElement.value == 'tostep3') {
 //            if (!$("input:radio[name='rdAmazon']").is(":checked")) {
 //                alert("Xin chọn sản phẩm");
@@ -230,7 +245,7 @@
     }
     $('input[type=radio][name="rdAmazon"]').click(function () {
         //$(this).closest("form").submit();
-        $('#txtAmazon').val($(this).val());
+//        $('#txtAmazon').val($(this).val());
     });
 
 

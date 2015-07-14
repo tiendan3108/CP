@@ -164,6 +164,7 @@ public class ConsignServlet extends HttpServlet {
                     for (AmazonProduct a : list) {
                         if (a.getASIN().equals(ASIN)) {
                             basicPrice = a.getPrice();
+                            System.out.println("chosen amazon: " + a.getName().length() + " - " + a.getName());
 
                             product.setImage(a.getImage());
                             session.setAttribute("PRODUCT", product);
