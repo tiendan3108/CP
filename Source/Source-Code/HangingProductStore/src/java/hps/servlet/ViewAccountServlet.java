@@ -40,7 +40,7 @@ public class ViewAccountServlet extends HttpServlet {
             AccountDAO dao = new AccountDAO();
             List<AccountDTO> data = dao.getAllAccount();
             request.setAttribute("DATA", data);
-            RequestDispatcher rd = request.getRequestDispatcher("manageAccount.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("accountManagement.jsp");
             rd.forward(request, response);
         }
     }
