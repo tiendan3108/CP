@@ -4,7 +4,6 @@ import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.DBUltilities;
-import hps.ultils.JavaUltilities;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -495,6 +494,70 @@ public class ConsignmentDAO {
         }
         return false;
     }
+    
+    //update consignment with date in consignment management 14/7/2015
+    public boolean updateConsignmentAndProductStatusWithDate(String consignmentID, float negotiatedPrice,
+            String fromDate, String toDate, String receivedDate, int consignmentStatusID, int productID,
+            String productName, int categoryID, String brand, String description, int productStatusID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Consignment"
+                    + " SET NegotiatedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = ?, FromDate = ?, ToDate = ? "
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+            if (negotiatedPrice > 0) {
+                stm.setDouble(1, negotiatedPrice);
+            } else {
+                stm.setNull(1, java.sql.Types.FLOAT);
+            }
+
+            if (receivedDate.isEmpty()) {
+                stm.setNull(2, java.sql.Types.DATE);
+            } else {
+                stm.setString(2, receivedDate);
+            }
+
+            stm.setInt(3, consignmentStatusID);
+            
+            stm.setString(4, fromDate);
+            stm.setString(5, toDate);
+            stm.setString(6, consignmentID);
+
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
+                        + " ProductStatusID = ? WHERE ProductID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, productName);
+                stm.setInt(2, categoryID);
+                stm.setString(3, brand);
+                stm.setString(4, description);
+                stm.setDouble(5, productStatusID);
+                stm.setInt(6, productID);
+                result = stm.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
 
     //cancel Product by change status of product as Canceled and update date on consignment
     public boolean cancelConsignmentInProduct(int productID) {
@@ -550,7 +613,8 @@ public class ConsignmentDAO {
     }
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dfHour = new SimpleDateFormat("hh:mm aa"); 
         //JavaUltilities java = new JavaUltilities();
 
         String consignmentID = rs.getString("ConsignmentID");
@@ -569,6 +633,7 @@ public class ConsignmentDAO {
         //String toDate = rs.getString("ToDate");
         //toDate = java.formatDateString(toDate);
         String toDate = df.format(rs.getDate("ToDate"));
+        String hour = dfHour.format(rs.getTimestamp("FromDate"));
 
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
@@ -609,6 +674,7 @@ public class ConsignmentDAO {
         consignment.setPaypalAccount(paypalAccount);
         consignment.setFromDate(fromDate);
         consignment.setToDate(toDate);
+        consignment.setHour(hour);
         consignment.setRaiseWebDate(raiseWebDate);
         consignment.setPeriod(period);
         consignment.setMinPrice(minPrice);

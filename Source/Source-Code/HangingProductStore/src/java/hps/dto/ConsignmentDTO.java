@@ -47,6 +47,7 @@ public class ConsignmentDTO implements Serializable {
     private String cancelDate; // add on 25/6/2015
     private String reason;
     private float negotiatedPrice;
+    private String hour;
     // duchc - end
 
     // No Argument Constructor
@@ -359,4 +360,14 @@ public class ConsignmentDTO implements Serializable {
     public void setNegotiatedPrice(float negotiatedPrice) {
         this.negotiatedPrice = negotiatedPrice;
     }
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+    
+    
 }

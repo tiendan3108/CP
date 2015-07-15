@@ -12,13 +12,15 @@ import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
-import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -113,12 +115,21 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             } else if (action.equals("r_accept")) {
                 String consignmentID = request.getParameter("consignmentID");
                 String productName = request.getParameter("txtProductName");
+                String hour = request.getParameter("txtHour");
+                String fromDate = request.getParameter("txtFromDate") + " " + hour;
+                String toDate = request.getParameter("txtToDate") + " " + hour;
+                fromDate = formatDate(fromDate);
+                toDate = formatDate(toDate);
+                System.out.println("Update fromDate: " + fromDate);
+                System.out.println("Update ToDate: " + toDate);
                 int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                 String brand = request.getParameter("txtBrand");
                 String description = request.getParameter("txtDescription");
                 int productID = Integer.parseInt(request.getParameter("productID"));
+                
                 //consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED, "");
-                consignmentDAO.updateConsignmentAndProductStatus(consignmentID, 0, "", GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                //consignmentDAO.updateConsignmentAndProductStatus(consignmentID, 0, "", GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                consignmentDAO.updateConsignmentAndProductStatusWithDate(consignmentID, 0, fromDate, toDate, "", GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
 
                 //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                 //send sms and email
@@ -353,6 +364,18 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(CONSIGNMENT_SITE);
             rd.forward(request, response);
         }
+    }
+    
+    private String formatDate(String date) {
+        try {
+            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date datetime = format1.parse(date);
+            return format2.format(datetime);
+        } catch (ParseException ex) {
+            Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

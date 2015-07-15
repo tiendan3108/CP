@@ -151,7 +151,7 @@ public class AddConsignmentServlet extends HttpServlet {
                             break;
                         case "txtNegotiatedPrice":
                             String negotiate = item.getString();
-                            negotiatedPrice = Float.parseFloat(negotiate);
+                            negotiatedPrice = Float.parseFloat(negotiate) * 1000;
                             break;
                         default:
                             break;

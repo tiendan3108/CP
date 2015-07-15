@@ -69,13 +69,14 @@ public class ConsignCompleteServlet extends HttpServlet {
             String url = COMPLETED;
             HttpSession session = request.getSession();
             if (session.getAttribute("CONSIGNMENT") == null || session.getAttribute("STOREOWNER") == null) {
-                String fullName = null;
-                String fromDate = null;
-                String toDate = null;
-                String address = null;
-                String phone = null;
-                String email = null;
-                String paypalAccount = null;
+                String fullName = "";
+                String fromDate = "";
+                String toDate = "";
+                String hour = "";
+                String address = "";
+                String phone = "";
+                String email = "";
+                String paypalAccount = "";
                 String paymentMethod = "";
 
                 JavaUltilities ulti = new JavaUltilities();
@@ -104,14 +105,18 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "txtFromDate":
                                 fromDate = item.getString();
-                                fromDate = formatDate(fromDate);
+                                //fromDate = formatDate(fromDate);
 
                                 break;
                             case "txtToDate":
                                 toDate = item.getString();
-                                toDate = formatDate(toDate);
+                                //toDate = formatDate(toDate);
 
                                 break;
+                            case "txtHour":
+                                hour = item.getString();
+
+                                break;    
                             case "txtAddress":
                                 address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
@@ -189,7 +194,16 @@ public class ConsignCompleteServlet extends HttpServlet {
                 if (!product.getPurchasedDate().isEmpty()) {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
-
+                
+                //add Hour to fromdate and to date then format them
+                
+                fromDate = fromDate + " " + hour;
+                toDate = toDate + " " + hour;
+                
+                fromDate = formatDate(fromDate);
+                toDate = formatDate(toDate);
+                
+                //set image link
                 product.setImage(imagePath);
 
                 //product.setImage(imagePath);
@@ -299,8 +313,8 @@ public class ConsignCompleteServlet extends HttpServlet {
 
     private String formatDate(String date) {
         try {
-            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-            DateFormat format2 = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date datetime = format1.parse(date);
             return format2.format(datetime);
         } catch (ParseException ex) {

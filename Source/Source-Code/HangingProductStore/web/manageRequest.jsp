@@ -160,7 +160,7 @@
             <div class="page-content-wrapper">
                 <div class="page-content">
                     <input type="hidden" id="currentTab" value="${currentTab}"/>
-                    
+
                     <!-- END PAGE HEADER-->
                     <!-- BEGIN PAGE CONTENT-->
                     <div  id="request" style="display: none">
@@ -209,7 +209,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 <c:forEach var="c" items="${REQUEST}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -309,7 +309,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
                                 <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -383,7 +383,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 <c:forEach var="c" items="${REFUSE}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -440,7 +440,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 <c:forEach var="c" items="${CANCEL}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -503,7 +503,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- BEGIN PAGE CONTENT-->
-                        <div>
+                        <div class="row">
                             <!-- BEGIN CAROUSEL -->
                             <div class="col-lg-4 col-md-4 front-carousel">
 
@@ -593,7 +593,31 @@
                                         </tr>
                                         <tr>
                                             <th>Ngày hẹn</th>
-                                            <td id='r_fromDateToDate'></td>
+                                            <td>
+                                                <div id="r_divFromDateToDate"  class="input-group  date-picker input-daterange" data-date-format="dd-mm-yyyy" data-date-start-date="0d" >
+                                                    <input type="text" id="r_fromDate" name="txtFromDate" class="form-control" value="" >
+                                                    <span class="input-group-addon">
+                                                        đến </span>
+                                                    <input type="text" id="r_toDate" name="txtToDate" class="form-control" value="">
+                                                </div>
+                                                
+                                                <div id="ar_divFromDateToDate"></div>
+
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Giờ hẹn</th>
+                                            <td >
+                                                <div id="r_divHour" class="input-group" style="width: 40%">
+                                                    <input id="r_hour" name="txtHour" type="text" class="form-control timepicker timepicker-no-seconds">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
+                                                    </span>
+                                                </div>
+                                                <div id="ar_divHour"></div>
+                                            </td>
+                                            
                                         </tr>
                                         <tr>
                                             <th>Trạng thái</th>
@@ -624,12 +648,14 @@
                         <div id="r_footer" >
 
                             <button id="r_btnSubmit" class="btn btn-lg btn-primary">Chấp nhận</button>
-                            <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                            <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-lg btn-warning">Từ chối</button>
+                            <button class="btn btn-lg btn-default" data-dismiss="modal">Đóng</button>
                         </div>
                         <div id="ar_footer" style="display: none;">
 
                             <button id="ar_btnSubmit" class="btn btn-lg btn-primary">Nhận hàng</button>
-                            <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-lg btn-default">Từ chối</button>
+                            <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-lg btn-warning">Từ chối</button>
+                            <button class="btn btn-lg btn-default" data-dismiss="modal">Đóng</button>
                         </div>
 
                     </div>
@@ -1053,76 +1079,77 @@
         <script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
         <script src="assets/admin/pages/scripts/table-managed.js"></script>
-        
-        
+
+
         <!--BEGIN PAGE CSS -->
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
 
         <script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
         <!--END PAGE CSS -->
-        
-        
-
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/clockface/css/clockface.css"/>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
 
 
 
-<script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
-<script type="text/javascript" src="assets/global/plugins/clockface/js/clockface.js"></script>
-<script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript" src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-<script type="text/javascript" src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/clockface/css/clockface.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
 
-<script src="assets/admin/pages/scripts/components-form-tools.js"></script>
-<script src="assets/admin/pages/scripts/components-pickers.js"></script>
- 
-        
-        
+
+
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/clockface/js/clockface.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+        <script src="assets/admin/pages/scripts/components-form-tools.js"></script>
+        <script src="assets/admin/pages/scripts/components-pickers.js"></script>
+
+
+
         <script>
-                                            jQuery(document).ready(function () {
-                                                // initiate layout and plugins
-                                                Metronic.init(); // init metronic core components
-                                                Layout.init(); // init current layout
-                                                QuickSidebar.init(); // init quick sidebar
-                                                Demo.init(); // init demo features
-                                                TableManaged.init();
-                                                
-                                                ComponentsPickers.init();
-                                            });
+                                jQuery(document).ready(function () {
+                                    // initiate layout and plugins
+                                    Metronic.init(); // init metronic core components
+                                    Layout.init(); // init current layout
+                                    QuickSidebar.init(); // init quick sidebar
+                                    Demo.init(); // init demo features
+                                    TableManaged.init();
+
+                                    ComponentsPickers.init();
+                                });
         </script>
         <script type="text/javascript">
 
 
             $(document).ready(function () {
-                $('.page-sidebar-menu .nav-tabs a').on('click', function (e) {
-                    var currentAttrValue = $(this).attr('href');
-
-                    $('.tabs ' + currentAttrValue).siblings().hide();
-                    $(this).parent('li').siblings().removeClass('active');
-                    $('.tabs ' + currentAttrValue).fadeIn(400);
-                    $(this).parent('li').addClass('active');
-
-                    window.location.hash = $(this).attr('href');
-                    $('html,body').scrollTop(0);
-                    e.preventDefault();
-
-                });
+//                $('.page-sidebar-menu .nav-tabs a').on('click', function (e) {
+//                    var currentAttrValue = $(this).attr('href');
+//
+//                    $('.tabs ' + currentAttrValue).siblings().hide();
+//                    $(this).parent('li').siblings().removeClass('active');
+//                    $('.tabs ' + currentAttrValue).fadeIn(400);
+//                    $(this).parent('li').addClass('active');
+//
+//                    window.location.hash = $(this).attr('href');
+//                    $('html,body').scrollTop(0);
+//                    e.preventDefault();
+//
+//                });
             });
             $(document).ready(function () {
-                
+
                 //var currentTab = $('#currentTab').val();
                 var currentTab = window.location.hash.substring(1);
-                
+
                 if (currentTab == "") {
                     currentTab = $('#currentTab').val();
                 }
+
                 //var currentLi = currentTab + 'Tab';
                 $('div#' + currentTab).siblings().hide();
                 //$('li#' + currentLi).siblings().removeClass('active');
@@ -1135,12 +1162,13 @@
             });
 
             $('ul li ul li a').on('click', function (e) {
-                
+
                 var currentTab = $(this).attr('href').substring(1);
-                
+
+
                 //var currentLi = currentTab + 'Tab';
                 $('div#' + currentTab).siblings().hide();
-                $('li#' + currentLi).siblings().removeClass('active');
+                //$('li#' + currentLi).siblings().removeClass('active');
 
                 //$('div#' + currentTab).fadeIn(400);
                 $('div#' + currentTab).show();
@@ -1238,7 +1266,12 @@
                     $("#r_email").html(data.email);
                     $("#r_phone").html("0" + data.phone.substring(3));
                     $("#r_address").html(data.address);
-                    $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                    //$("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+
+                    $("#r_fromDate").val(data.fromDate);
+                    $("#r_toDate").val(data.toDate);
+
+                    $("#r_hour").val(data.hour);
 
                     if (data.minPrice > 0 && data.maxPrice > 0) {
 
@@ -1272,6 +1305,18 @@
                             $("#ar_price").hide();
                             $("#r_btnAction").val("r_accept");
 
+
+                            $("#r_fromDate").val(data.fromDate);
+                            $("#r_toDate").val(data.toDate);
+                            $("#r_hour").val(data.hour);
+                            $("#ar_divFromDateToDate").html("");
+                            $("#ar_divHour").html("");
+                            
+                            $("#r_divFromDateToDate").show();
+                            $("#r_divHour").show();
+                            $("#ar_divFromDateToDate").hide();
+                            $("#ar_divHour").hide();
+
                         } else if (data.consignmentStatusID == 3) {
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
 //                    $("#ar_ActionValue").val(data.consigmentID);
@@ -1287,6 +1332,20 @@
                             //$("#ar_maxPrice").val(data.maxPrice.toFixed(0));
 
                             $("#r_btnAction").val("ar_accept");
+                            
+                            $("#r_fromDate").val("");
+                            $("#r_toDate").val("");
+                            $("#r_hour").val("");
+                            
+                            $("#ar_divFromDateToDate").html(data.fromDate + " - " + data.toDate);
+                            $("#ar_divHour").html(data.hour);
+                            
+                            
+                            $("#r_divFromDateToDate").hide();
+                            $("#r_divHour").hide();
+                            $("#ar_divFromDateToDate").show();
+                            $("#ar_divHour").show();
+                            
 
                         } else if (data.consignmentStatusID == 2) {
                             $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");

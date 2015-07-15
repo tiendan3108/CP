@@ -17,7 +17,6 @@ import hps.ultils.AmazonService;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -124,7 +123,16 @@ public class ConsignServlet extends HttpServlet {
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
                         basicPrice = amazonProduct.getPrice();
+                        System.out.println("UPC name: " + amazonProduct.getName().length() + " - " + amazonProduct.getName());
+                        System.out.println("UPC link: " + amazonProduct.getImage());
                         product.setImage(amazonProduct.getImage());
+                        
+                        if (amazonProduct.getName().length() > 50) {
+                            product.setName(amazonProduct.getName().substring(0, 50));
+
+                        } else {
+                            product.setName(amazonProduct.getName());
+                        }
                     }
                     session.removeAttribute("AMAZONLIST");
                     action = "tostep3";
@@ -164,7 +172,13 @@ public class ConsignServlet extends HttpServlet {
                     for (AmazonProduct a : list) {
                         if (a.getASIN().equals(ASIN)) {
                             basicPrice = a.getPrice();
-                            System.out.println("chosen amazon: " + a.getName().length() + " - " + a.getName());
+                            if (a.getName().length() > 50) {
+                                product.setName(a.getName().substring(0, 50));
+
+                            } else {
+                                product.setName(a.getName());
+                            }
+                            System.out.println("amazon name length: " + product.getName());
 
                             product.setImage(a.getImage());
                             session.setAttribute("PRODUCT", product);
@@ -172,7 +186,8 @@ public class ConsignServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    product.setImage(null);
+                    
+                    //product.setImage(null);
                     session.setAttribute("PRODUCT", product);
                 }
                 basicPrice = (basicPrice * GlobalVariables.VND_CURRENCY);

@@ -234,8 +234,6 @@ public class DuchcDAO {
                 //add MinPrice & MaxPrice
                 store.setMinPrice(Math.round((basicPrice * 60/100)*(1 - store.getFormula()/100)/1000));
                 store.setMaxPrice(Math.round((basicPrice * 60/100)*(1 + store.getFormula()/100)/1000));
-                System.out.println("minPrice: " + store.getMinPrice());
-                System.out.println("maxPrice: " + store.getMaxPrice());
                 list.add(store);
             }
             return list;
