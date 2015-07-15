@@ -838,8 +838,13 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
                                                         <div class="col-md-4 col-sm-5">
-
-                                                            <input id="addConsignment_txtDate" type="text" class="form-control" name="txtDate"> 
+                                                            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
+                                                                <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
+                                                                <span class="input-group-btn">
+                                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                </span>
+                                                            </div>
+                                                            <!--                                                            <input id="addConsignment_txtDate" type="text" class="form-control" name="txtDate"> -->
                                                             <span class="help-block" id="erDate"> </span>
                                                         </div>
                                                     </div>
@@ -952,11 +957,34 @@
         </div>
     </jsp:body>
 </template:shopbasic>
-<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+<!--<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
 
-<script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>-->
 
+<!--START PAGE CSS 
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/clockface/css/clockface.css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+<link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+END PAGE CSS 
+
+START PAGE JS 
+<script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+<script type="text/javascript" src="assets/global/plugins/clockface/js/clockface.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="assets/admin/pages/scripts/components-form-tools.js"></script>
+<script src="assets/admin/pages/scripts/components-pickers.js"></script>
+ END PAGE JS -->
 <script type="text/javascript">
+                                            
+                                            
                                             $(document).ready(function () {
                                                 $('.tabs .nav-tabs a').on('click', function (e) {
                                                     var currentAttrValue = $(this).attr('href');
