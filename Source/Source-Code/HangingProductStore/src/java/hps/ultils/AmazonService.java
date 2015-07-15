@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
  * @author Tien Dan
  */
 public class AmazonService {
-
+    
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
@@ -37,15 +37,16 @@ public class AmazonService {
 
     public static void main(String[] args) {
         AmazonService test = new AmazonService();
-        //test.getProductByUPC("635753490879");
-        AmazonProduct bla = test.getProductByUPC("4011200296908");
-        if (bla == null) {
-            System.out.println("sai cmnr");
-        } else {
-            System.out.println(bla.getNewPrice() + " " + bla.getPrice());
-        }
+//        test.getProductByUPC("635753490879");
+        AmazonProduct bla = test.getProductByUPC("079767960599");
+//        if (bla == null) {
+//            System.out.println("sai cmnr");
+//        } else {
+//            System.out.println(bla.getNewPrice() + " " + bla.getPrice());
+//        }
+//        List<AmazonProduct> result = test.getProduct("Crawford Boyfriend Watch-Chocolate", "Geneva", "Watches");
     }
-
+    
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
         List<AmazonProduct> result = new ArrayList<>();
         try {
@@ -55,9 +56,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-
+            
             String requestUrl = null;
-
+            
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemSearch");
@@ -67,7 +68,7 @@ public class AmazonService {
             params.put("MerchantId", "All");
             params.put("SearchIndex", type);
             params.put("Brand", brand);
-
+            
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             result = fetchProduct(requestUrl);
@@ -76,7 +77,7 @@ public class AmazonService {
             return result;
         }
     }
-
+    
     private List<AmazonProduct> fetchProduct(String requestUrl) {
         List<AmazonProduct> temp_result = new ArrayList<>();
         List<AmazonProduct> result = new ArrayList<>();
@@ -127,7 +128,7 @@ public class AmazonService {
         }
         return result;
     }
-
+    
     private AmazonProduct getProductDetail(AmazonProduct product) {
         SignedRequestsHelper helper;
         try {
@@ -136,9 +137,9 @@ public class AmazonService {
             e.printStackTrace();
             return null;
         }
-
+        
         String requestUrl = null;
-
+        
         Map<String, String> params = new HashMap<String, String>();
         params.put("Service", "AWSECommerceService");//ok
         params.put("Operation", "ItemLookup");
@@ -146,12 +147,12 @@ public class AmazonService {
         params.put("Condition", "New");
         params.put("ItemId", product.getASIN());
         params.put("MerchantId", "All");
-
+        
         requestUrl = helper.sign(params);
         System.out.println("Child url : " + requestUrl);
         return fetchProductDetail(product, requestUrl);
     }
-
+    
     private AmazonProduct fetchProductDetail(AmazonProduct product, String requestUrl) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -177,6 +178,13 @@ public class AmazonService {
                 Node URL = URLContent.item(0);
                 if (URL != null && URL.getNodeName().equals("URL")) {
                     product.setImage(URL.getTextContent());
+                }
+            }
+            NodeList DetailPageURLContent = doc.getElementsByTagName("DetailPageURL");
+            if (DetailPageURLContent != null) {
+                Node detailPage = DetailPageURLContent.item(0);
+                if (detailPage != null) {
+                    product.setUrl(detailPage.getTextContent());
                 }
             }
             NodeList OfferSummaryContent = doc.getElementsByTagName("OfferSummary");
@@ -223,7 +231,7 @@ public class AmazonService {
         }
         return product;
     }
-
+    
     public AmazonProduct getProductByUPC(String upc) {
         try {
             SignedRequestsHelper helper;
@@ -232,9 +240,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-
+            
             String requestUrl = null;
-
+            
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemLookup");
@@ -242,7 +250,7 @@ public class AmazonService {
             params.put("SearchIndex", "All");
             params.put("IdType", "UPC");
             params.put("ItemId", upc);
-
+            
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             return fetchProductByUPC(requestUrl);
@@ -250,7 +258,7 @@ public class AmazonService {
             return null;
         }
     }
-
+    
     private AmazonProduct fetchProductByUPC(String requestUrl) {
         AmazonProduct product = null;
         try {
@@ -263,6 +271,55 @@ public class AmazonService {
                 return null;
             } else {
                 product = new AmazonProduct();
+                NodeList TitleContent = doc.getElementsByTagName("Title");
+                if (TitleContent != null) {
+                    Node titleNode = TitleContent.item(0);
+                    if (titleNode != null) {
+                        product.setName(titleNode.getTextContent());
+                    }
+                }
+                NodeList DetailPageURLContent = doc.getElementsByTagName("DetailPageURL");
+                if (DetailPageURLContent != null) {
+                    Node urlNode = DetailPageURLContent.item(0);
+                    if (urlNode != null) {
+                        product.setUrl(urlNode.getTextContent());
+                    }
+                }
+                NodeList MediumImageContent = doc.getElementsByTagName("MediumImage");
+                if (MediumImageContent != null) {
+                    Node imageURL = MediumImageContent.item(0);
+                    NodeList URLContent = imageURL.getChildNodes();
+                    Node URL = URLContent.item(0);
+                    if (URL != null && URL.getNodeName().equals("URL")) {
+                        product.setImage(URL.getTextContent());
+                    }
+                }
+                NodeList LargeImageContent = doc.getElementsByTagName("LargeImage");
+                if (LargeImageContent != null) {
+                    Node imageURL = LargeImageContent.item(0);
+                    NodeList URLContent = imageURL.getChildNodes();
+                    Node URL = URLContent.item(0);
+                    if (URL != null && URL.getNodeName().equals("URL")) {
+                        product.setImage(URL.getTextContent());
+                    }
+                }
+                if (product.getImage() == null) {
+                    NodeList ImageSetsContent = doc.getElementsByTagName("ImageSets");
+                    if (ImageSetsContent != null) {
+                        for (int i = 0; i < ImageSetsContent.getLength(); i++) {
+                            Node imageURL = ImageSetsContent.item(i);
+                            if (imageURL.getNodeName().equals("MediumImage") || imageURL.getNodeName().equals("LargeImage")) {
+                                NodeList URLContent = imageURL.getChildNodes();
+                                Node URL = URLContent.item(0);
+                                if (URL != null && URL.getNodeName().equals("URL")) {
+                                    product.setImage(URL.getTextContent());
+                                }
+                            }
+                        }
+                    } else {
+                        return null;
+                    }
+                }
                 NodeList ListPriceContent = doc.getElementsByTagName("ListPrice");
                 if (ListPriceContent != null) {
                     Node ListPriceNode = ListPriceContent.item(0);

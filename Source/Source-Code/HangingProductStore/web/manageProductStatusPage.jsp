@@ -5,21 +5,6 @@
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
         <!-- Nơi để khai báo page level css, theme, style -->
-        <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-        <c:if test="${not empty acc}">
-            <li id="nofi">
-                <a href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-default">3</span>           
-                </a>
-                <ul class="fallback">
-                    <li style="margin-left: -40px"><a href="#">notification 1</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 2</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 3</a></li>
-                    <li style="margin-left: -40px"><a href="#">notification 4</a></li>
-                </ul>
-            </li>
-        </c:if>
     </jsp:attribute>
     <jsp:body>
         <div id="wrapper_manage">
@@ -790,7 +775,7 @@
                     <!-- CONFIRM RECEIVE MODAL BEGIN-->
                     <div class="modal fade bs-example-modal-lg" id="confirmReceiveModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
-                            <form action="ExtendProduct" method="POST">
+                            <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h4>Thông tin tiền phạt</h4>
@@ -957,7 +942,7 @@
                 if (orderList[i].sendPrice == 0) {
                     row = row + 'Chưa gửi giá</td></tr>';
                 } else {
-                    row = row + 'Gửi giá '+orderList[i].sendPrice + '</td></tr>';
+                    row = row + 'Gửi giá ' + orderList[i].sendPrice + '</td></tr>';
                 }
                 $('#table_body_ordered').append(row);
             }
@@ -1078,6 +1063,17 @@
             return false;
         }
         return true;
+    }
+    ;
+    function validationPrice()
+    {
+        var fee = $('#expired_fee').val();
+        if (isNaN(fee) || fee < 0) {
+            alert('Tiền phạt phải là số dương');
+            return false;
+        } else {
+            return true;
+        }
     }
     ;
 </script>

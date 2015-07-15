@@ -248,8 +248,7 @@ public class JavaUltilities {
                     sendSMS(sms, next.getPhone());
                 } catch (TwilioRestException ex) {
                     Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

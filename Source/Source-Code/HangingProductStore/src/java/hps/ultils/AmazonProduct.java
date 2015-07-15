@@ -17,6 +17,7 @@ public class AmazonProduct implements Serializable{
     private float price;
     private float newPrice;
     private String image;
+    private String url;
 
     /**
      * @return the name
@@ -86,6 +87,20 @@ public class AmazonProduct implements Serializable{
      */
     public void setNewPrice(float newPrice) {
         this.newPrice = newPrice;
+    }
+
+    /**
+     * @return the url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url the url to set
+     */
+    public void setUrl(String url) {
+        this.url = url;
     }
     
 }

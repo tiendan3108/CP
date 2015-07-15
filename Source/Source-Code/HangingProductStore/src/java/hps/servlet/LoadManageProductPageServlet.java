@@ -70,9 +70,12 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 List<SeasonDTO> season = dao.getSeason();
 
                 Object currentTab = request.getAttribute("currentTab");
+                String temp_currentTab = request.getParameter("currentTab");
                 String tab = "";
                 if (currentTab != null) {
                     tab = (String) currentTab;
+                } else if (temp_currentTab != null) {
+                    tab = temp_currentTab;
                 } else {
                     tab = "available";
                 }
