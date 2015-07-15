@@ -175,11 +175,11 @@ public class ConsignServlet extends HttpServlet {
                     product.setImage(null);
                     session.setAttribute("PRODUCT", product);
                 }
-
-                session.setAttribute("BASICPRICE", (int) (basicPrice * GlobalVariables.VND_CURRENCY));
+                basicPrice = (basicPrice * GlobalVariables.VND_CURRENCY);
+                session.setAttribute("BASICPRICE", basicPrice);
 
                 int categoryID = product.getCategoryID();
-                List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID);
+                List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID, basicPrice);
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");

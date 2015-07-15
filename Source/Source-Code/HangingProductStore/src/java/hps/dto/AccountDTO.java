@@ -35,6 +35,8 @@ public class AccountDTO implements Serializable{
     //danqt - end
 
 //duchc - begin
+    private double minPrice;
+    private double maxPrice;
     //duchc - end
 
     //constructor with no parameter
@@ -320,6 +322,22 @@ public class AccountDTO implements Serializable{
      */
     public void setOrderedDate(String orderedDate) {
         this.orderedDate = orderedDate;
+    }
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maPrice) {
+        this.maxPrice = maPrice;
     }
 
 

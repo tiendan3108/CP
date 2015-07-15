@@ -62,7 +62,7 @@
                             </ul>                           
                         </li>
                         <li class="dropdown dropdown-user">
-                            <a href="#" class="dropdown-toggle">
+                            <a href="LogoutServlet" class="dropdown-toggle">
                                 <span style="color:white;font-size: 15px" class="username username-hide-on-mobile">Đăng xuất</span>
                             </a>                      
                         </li>
@@ -159,9 +159,8 @@
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <div class="page-content">
-                    <h3 class="page-title">
-                        Quản lí yêu cầu <small style="color: #0288d1 ">Chưa duyêt</small> 
-                    </h3>
+                    <input type="hidden" id="currentTab" value="${currentTab}"/>
+                    
                     <!-- END PAGE HEADER-->
                     <!-- BEGIN PAGE CONTENT-->
                     <div  id="request" style="display: none">
@@ -210,17 +209,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${empty REQUEST}">
-
-                                    <tr>
-                                        <c:if test="${empty param.r_searchValue}">
-                                            <td colspan="7">Không có yêu cầu nào đang chờ xử lý.</td>
-                                        </c:if>
-                                        <c:if test="${not empty param.r_searchValue}">
-                                            <td colspan="7">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.r_searchValue}".</td>
-                                        </c:if>
-                                    </tr>
-                                </c:if>
+                                
                                 <c:forEach var="c" items="${REQUEST}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -320,17 +309,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${empty ACCEPT}">
-
-                                    <tr>
-                                        <c:if test="${empty param.ar_searchValue}">
-                                            <td colspan="7">Không có yêu cầu nào đang chờ xử lý.</td>
-                                        </c:if>
-                                        <c:if test="${not empty param.ar_searchValue}">
-                                            <td colspan="7">Không có yêu cầu nào đang chờ xử lý với tên sản phẩm tương tự "${param.ar_searchValue}".</td>
-                                        </c:if>
-                                    </tr>
-                                </c:if>
+                               
                                 <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -404,14 +383,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${empty REFUSE}">
-
-                                    <tr>
-
-                                        <td colspan="6">Không có yêu cầu nào </td>
-
-                                    </tr>
-                                </c:if>
+                                
                                 <c:forEach var="c" items="${REFUSE}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -468,14 +440,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${empty CANCEL}">
-
-                                    <tr>
-
-                                        <td colspan="6">Không có yêu cầu nào </td>
-
-                                    </tr>
-                                </c:if>
+                                
                                 <c:forEach var="c" items="${CANCEL}" varStatus="counter">
                                     <tr class="odd gradeX">
                                         <td>${counter.count}</td>
@@ -1175,7 +1140,7 @@
                 
                 //var currentLi = currentTab + 'Tab';
                 $('div#' + currentTab).siblings().hide();
-                //$('li#' + currentLi).siblings().removeClass('active');
+                $('li#' + currentLi).siblings().removeClass('active');
 
                 //$('div#' + currentTab).fadeIn(400);
                 $('div#' + currentTab).show();

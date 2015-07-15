@@ -137,12 +137,11 @@
                                                                         <td>
                                                                             <c:if test="${basicPrice > 0}">
 
-                                                                                <fmt:parseNumber var="minPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 - item.formula/100) / 1000}" />
-                                                                                <fmt:parseNumber var="maxPrice" type="number" integerOnly="true" value="${(basicPrice * 60/100) * ( 1 + item.formula/100) / 1000}" />
+                                                                                
                                                                                 <fmt:formatNumber type="number"
-                                                                                                  value="${minPrice}" 
+                                                                                                  value="${item.minPrice}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 
-                                                                                                  value="${maxPrice}" 
+                                                                                                  value="${item.maxPrice}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; 
 
                                                                             </c:if>

@@ -206,7 +206,7 @@ public class DuchcDAO {
     }
 
     //duchc _get all store owners based on categoryID actor choose in consign_step1
-    public List<AccountDTO> getListStoreOwnerByCategory(int categoryID) {
+    public List<AccountDTO> getListStoreOwnerByCategory(int categoryID, double basicPrice) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -230,6 +230,12 @@ public class DuchcDAO {
                 store.setPhone(rs.getString("Phone"));
                 store.setEmail(rs.getString("Email"));
                 store.setFormula(rs.getFloat("Formula"));
+                
+                //add MinPrice & MaxPrice
+                store.setMinPrice(Math.round((basicPrice * 60/100)*(1 - store.getFormula()/100)/1000));
+                store.setMaxPrice(Math.round((basicPrice * 60/100)*(1 + store.getFormula()/100)/1000));
+                System.out.println("minPrice: " + store.getMinPrice());
+                System.out.println("maxPrice: " + store.getMaxPrice());
                 list.add(store);
             }
             return list;
