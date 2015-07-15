@@ -112,7 +112,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- BEGIN BORDERED TABLE PORTLET-->
-                                <div class="table-scrollable">
+                                <div class="table-responsive">
                                     <table class="table table-bordered table-hover">
                                         <thead style="background-color:  #b3e5fc">
                                             <tr>
