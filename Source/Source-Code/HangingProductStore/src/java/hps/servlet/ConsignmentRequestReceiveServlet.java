@@ -35,7 +35,7 @@ import javax.servlet.http.HttpSession;
 public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
     private static final String HOME = "HomeServlet";
-    private static final String CONSIGNMENT_SITE = "consignment_request_receive.jsp";
+    private static final String CONSIGNMENT_SITE = "manageRequest.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
