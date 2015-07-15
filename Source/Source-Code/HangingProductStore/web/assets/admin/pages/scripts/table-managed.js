@@ -109,7 +109,7 @@ var TableManaged = function () {
                     "sortAscending": ": activate to sort column ascending",
                     "sortDescending": ": activate to sort column descending"
                 },
-                "emptyTable": "No data available in table",
+                "emptyTable": "Không có dữ liệu",
                 "info": "Showing _START_ to _END_ of _TOTAL_ entries",
                 "infoEmpty": "No entries found",
                 "infoFiltered": "(filtered1 from _MAX_ total entries)",
@@ -181,7 +181,7 @@ var TableManaged = function () {
                     "sortAscending": ": activate to sort column ascending",
                     "sortDescending": ": activate to sort column descending"
                 },
-                "emptyTable": "No data available in table",
+                "emptyTable": "Không có dữ liệu",
                 "info": "Showing _START_ to _END_ of _TOTAL_ entries",
                 "infoEmpty": "No entries found",
                 "infoFiltered": "(filtered1 from _MAX_ total entries)",
@@ -432,7 +432,7 @@ var TableManaged = function () {
     
     var initTable3_Request = function () {
 
-        var table = $('#acceptedTable');
+        var table = $('#refuseTable');
 
         // begin first table
         table.dataTable({
@@ -527,7 +527,7 @@ var TableManaged = function () {
     
     var initTable4_Request = function () {
 
-        var table = $('#acceptedTable');
+        var table = $('#cancelTable');
 
         // begin first table
         table.dataTable({
