@@ -120,51 +120,51 @@
                                         </div>
                                     </div>
                                     <div class="portlet-body">
-                                            <table class="table table-striped table-hover" id="sample_1">
-                                                <thead>
-                                                    <tr>
-                                                        <th>STT</th>
-                                                        <th>Tên đăng nhập</th>
-                                                        <th>Status</th>
-                                                        <th>Tên</th>
-                                                        <th>Địa chỉ</th>
-                                                        <th>Điện thoại</th>
-                                                        <th>Email</th>
-                                                        <th>Tài khoản Paypal</th>
-                                                        <th>Quyền hạn</th>
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <c:if test="${not empty accounts}">
-                                                        <c:forEach var="account" items="${accounts}" varStatus="counter">
-                                                            <tr class="odd gradeX">
-                                                                <td>${counter.count}</td>
-                                                                <td>${account.accountID}</td> 
-                                                                <td>${account.status}</td>
-                                                                <td>${account.fullName}</td>
-                                                                <td>${account.address}</td>
-                                                                <td>${account.phone}</td>
-                                                                <td>${account.email}</td>
-                                                                <td>${account.paypalAccount}</td>
-                                                                <td>
-                                                                    <c:if test="${account.role == 'storeOwner'}">
-                                                                        Chủ cửa hàng
-                                                                    </c:if>
-                                                                    <c:if test="${account.role == 'member'}">
-                                                                        Người dùng
-                                                                    </c:if>                              
-                                                                </td>    
-                                                                <td>
-                                                                    <a data-status ="${account.status}" data-account ="${account.accountID}" data-email="${account.email}" data-paypal ="${account.paypalAccount}" data-phone ="${account.phone}" data-address ="${account.address}" data-name ="${account.fullName}" data-toggle="modal" data-target="#EditAccountModel" class="btn btn-danger editAccount">
-                                                                        Sửa
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </c:if>
-                                                </tbody>
-                                            </table>
+                                        <table class="table table-striped table-hover" id="sample_1">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tên đăng nhập</th>
+                                                    <th>Status</th>
+                                                    <th>Tên</th>
+                                                    <th>Địa chỉ</th>
+                                                    <th>Điện thoại</th>
+                                                    <th>Email</th>
+                                                    <th>Tài khoản Paypal</th>
+                                                    <th>Quyền hạn</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:if test="${not empty accounts}">
+                                                    <c:forEach var="account" items="${accounts}" varStatus="counter">
+                                                        <tr class="odd gradeX">
+                                                            <td>${counter.count}</td>
+                                                            <td>${account.accountID}</td> 
+                                                            <td>${account.status}</td>
+                                                            <td>${account.fullName}</td>
+                                                            <td>${account.address}</td>
+                                                            <td>${account.phone}</td>
+                                                            <td>${account.email}</td>
+                                                            <td>${account.paypalAccount}</td>
+                                                            <td>
+                                                                <c:if test="${account.role == 'storeOwner'}">
+                                                                    Chủ cửa hàng
+                                                                </c:if>
+                                                                <c:if test="${account.role == 'member'}">
+                                                                    Người dùng
+                                                                </c:if>                              
+                                                            </td>    
+                                                            <td>
+                                                                <a data-status ="${account.status}" data-account ="${account.accountID}" data-email="${account.email}" data-paypal ="${account.paypalAccount}" data-phone ="${account.phone}" data-address ="${account.address}" data-name ="${account.fullName}" data-toggle="modal" data-target="#EditAccountModel" class="btn btn-danger editAccount">
+                                                                    Sửa
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>                              
                             </div>
@@ -181,51 +181,68 @@
                             </div>
                             <div style="margin-bottom: 50px" class="modal-body">
                                 <div class="row">
-                                    <form class="form-horizontal form-without-legend" action="AddAccountServlet" method="GET">                       
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2 col-lg-2"> Tên đăng nhập:<span class="require">*</span> </label>
-                                            <div class="col-md-3 col-lg-3">
-                                                <input class="form-control" required="true" name="accountID" type="text">
+                                    <form id="form_sample_2" class="form-horizontal form-without-legend" action="AddAccountServlet" method="GET"> 
+                                        <div class="form-body">
+                                            <div class="alert alert-danger display-hide">
+                                                <button class="close" data-close="alert"></button>
+                                                Thông tin nhập bị lỗi, vui lòng kiểm tra lại.
                                             </div>
-                                            <label class="control-label col-md-2 col-lg-2"> Mật Khẩu: <span class="require">*</span></label>
-                                            <div class="col-md-3 col-lg-3">
-                                                <input class="form-control" required="true" name="password" type="text">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-lg-2"> Tên đăng nhập:<span class="require">*</span> </label>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <input class="form-control" name="accountID" type="text">
+                                                    </div>                                                  
+                                                </div>
+                                                <label class="control-label col-md-2 col-lg-2"> Mật Khẩu: <span class="require">*</span></label>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <input class="form-control" name="password" type="text">
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-lg-2"> Điện thoại: </label>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <input class="form-control" name="phone" type="text">
+                                                    </div>                                                  
+                                                </div>
+                                                <label class="control-label col-md-2 col-lg-2"> Email: </label>
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="input-icon right">
+                                                        <i class="fa"></i>
+                                                        <input class="form-control" name="email" type="text">
+                                                    </div>                   
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-lg-2"> Tên: </label>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <input class="form-control" name="fullName" type="text">
+                                                </div>
+                                                <label class="control-label col-md-2 col-lg-2"> Địa chỉ: </label>
+                                                <div class="col-lg-4 col-md-4">
+                                                    <textarea  rows="3" name="address" type="text" class="form-control"></textarea>
+                                                </div>
+                                            </div>   
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2 col-lg-2"> Tài khoản PayPal: </label>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <input class="form-control" name="paypalAccount" type="text">
+                                                </div>
+                                                <label class="control-label col-md-2 col-lg-2"> Quyền hạn:  <span class="require">*</span></label>
+                                                <div class="col-md-4 col-lg-4">                                                       <select name="role" class="form-control">
+                                                            <option value="storeOwner">Chủ cửa hàng</option>
+                                                            <option value="member">Thành viên</option>
+                                                        </select>                     
+                                                </div>
+                                            </div>
+                                            <button style="float: right;margin-right: 75px;margin-top: 20px;width: 150px" class="btn btn-primary" type="submit">Hoàn tất</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2 col-lg-2"> Điện thoại: </label>
-                                            <div class="col-md-3 col-lg-3">
-                                                <input class="form-control" name="phone" type="text">
-                                            </div>
-                                            <label class="control-label col-md-2 col-lg-2"> Email: </label>
-                                            <div class="col-md-4 col-lg-4">
-                                                <input class="form-control" name="email" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2 col-lg-2"> Tên: </label>
-                                            <div class="col-md-3 col-lg-3">
-                                                <input class="form-control" name="fullName" type="text">
-                                            </div>
-                                            <label class="control-label col-md-2 col-lg-2"> Địa chỉ: </label>
-                                            <div class="col-lg-4 col-md-4">
-                                                <textarea  rows="3" name="address" type="text" class="form-control"></textarea>
-                                            </div>
-                                        </div>   
-                                        <div class="form-group">
-                                            <label class="control-label col-md-2 col-lg-2"> Tài khoản PayPal: </label>
-                                            <div class="col-md-3 col-lg-3">
-                                                <input class="form-control" name="paypalAccount" type="text">
-                                            </div>
-                                            <label class="control-label col-md-2 col-lg-2"> Quyền hạn:  <span class="require">*</span></label>
-                                            <div class="col-md-4 col-lg-4">
-                                                <select required="true" name="role" class="form-control">
-                                                    <option value="storeOwner">Chủ cửa hàng</option>
-                                                    <option value="member">Thành viên</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <button style="float: right;margin-right: 75px;margin-top: 20px;width: 150px" class="btn btn-primary" type="submit">Hoàn tất</button>
                                     </form>
                                 </div>
                             </div>
@@ -304,6 +321,8 @@
         <script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
 
+        <script type="text/javascript" src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/jquery-validation/js/additional-methods.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/select2/select2.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/datatables/media/js/jquery.dataTables.js"></script>
         <script type="text/javascript" src="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
@@ -314,6 +333,7 @@
         <script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
         <script src="assets/scripts/accountTable.js"></script>
+        <script src="assets/scripts/validateManageAccount.js"></script>
         <script>
             jQuery(document).ready(function () {
                 // initiate layout and plugins
@@ -322,6 +342,7 @@
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
                 TableManaged.init();
+                FormValidation.init();
             });
         </script>
     </body>

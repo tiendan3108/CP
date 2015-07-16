@@ -6,11 +6,8 @@
 
 <template:shopbasic htmlTitle="Home" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
-
-        <!-- Nơi để khai báo page level css, theme, style -->
     </jsp:attribute>        
-    <jsp:attribute name="extraBottomContent">
-        <!-- Nơi để khai báo page level javascript -->
+    <jsp:attribute name="extraBottomContent">   
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
     </jsp:attribute>
@@ -55,18 +52,19 @@
                 </div>  
                 <h4 style="margin-top: 20px">Vui lòng nhập thông tin để chúng tôi liên lạc với bạn:</h4>
                 <c:set var="acc" value="${sessionScope.ACCOUNT}"/>
-                <div class="col-md-12">
-                    <form class="form-horizontal form-without-legend" action="CompleteOrderServlet">
+                <div class="col-md-12">                  
+                    <form class="form-horizontal form-without-legend" action="CompleteOrderServlet" onsubmit="return checkForm(this);">                     
                         <input name="productID" value="${item.productID}" hidden="true">
+                        <span id="err" style="color:red"></span>
                         <c:if test="${not empty acc}">
                             <div class="form-group">
                                 <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
                                 <div class="col-lg-3 col-md-4">
-                                    <input min="4" required="true" value="${acc.fullName}" name="name" type="text" id="first-name" class="form-control">
+                                    <input required="true" value="${acc.fullName}" name="name" type="text" class="form-control">
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2" for="first-name">Email</label>
+                                <label class="col-lg-2 control-label col-md-2">Email</label>
                                 <div class="col-md-4 col-lg-4">
-                                    <input value="${acc.email}" name="email" type="text" id="first-name" class="form-control">
+                                    <input value="${acc.email}" name="email" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -74,7 +72,7 @@
                                 <div class="col-lg-3 col-md-4">
                                     <textarea  rows="3" name="address" type="text" class="form-control">${acc.address}</textarea>
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2" for="first-name">Sồ điện thoại <span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Sồ điện thoại <span class="require">*</span></label>
                                 <div class="col-md-3">
                                     <input value="${acc.phone}" name="phone" required="true" type="text" id="first-name" class="form-control">
                                 </div>
@@ -84,11 +82,11 @@
                             <div class="form-group">
                                 <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
                                 <div class="col-lg-3 col-md-4">
-                                    <input min="4" required="true" name="name" type="text" id="first-name" class="form-control">
+                                    <input id="name" name="name" type="text" class="form-control">
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2" for="first-name">Email </span></label>
+                                <label class="col-lg-2 control-label col-md-2">Email </span></label>
                                 <div class="col-lg-4 col-md-4">
-                                    <input name="email" type="text" id="first-name" class="form-control">
+                                    <input name="email" type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -98,7 +96,7 @@
                                 </div>
                                 <label class="col-lg-2 control-label col-md-2" for="first-name">Số điện thoại <span class="require">*</span></label>
                                 <div class="col-lg-4 col-md-4">
-                                    <input maxlength="11" name="phone" required="true" type="number" class="form-control">
+                                    <input id="phone" name="phone" class="form-control">
                                 </div>
                             </div>
                         </c:if>                      
@@ -114,7 +112,28 @@
     </div>
 </jsp:body>
 </template:shopbasic>
-
+<script>
+    function checkForm(form)
+    {
+        var phone = form.phone.value;
+        if (form.name.value == "") {
+            alert("vui lòng nhập tên.");
+            form.name.focus();
+            return false;
+        } else if (phone == "") {
+            alert("Vui lòng nhập số điện thoại");
+            form.phone.focus();
+            return false;
+        }else if(isNaN(phone)|| phone.length < 9 || phone.leghth >11){
+            alert("Vui lòng nhập đúng số điện thoại");
+            form.phone.focus();
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+</script>
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
