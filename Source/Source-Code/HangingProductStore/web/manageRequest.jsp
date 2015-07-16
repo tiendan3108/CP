@@ -92,14 +92,17 @@
                                 <span class="arrow open"></span>
                             </a>
                             <ul class="sub-menu">
-                                <li class="active">
-                                    <a href="#request">Chưa duyệt</a>
+                                <li id="request">
+                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request">Chưa duyệt</a>
                                 </li>
-                                <li><a href="#accepted">Đã duyệt</a>
+                                <li id="accepted">
+                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted">Đã duyệt</a>
                                 </li>
-                                <li><a href="#refuse">Từ chối</a>
+                                <li id="refuse">
+                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse">Từ chối</a>
                                 </li>
-                                <li><a href="#cancel">Đã hủy</a>
+                                <li id="cancel">
+                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel">Đã hủy</a>
                                 </li>
                             </ul>
                         </li>
@@ -111,25 +114,25 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="#">Chờ duyệt</a>
+                                    <a href="ManageProduct?currentTab=available">Chờ duyệt</a>
                                 </li>
                                 <li>
-                                    <a href="#">Trên web</a>
+                                    <a href="ManageProduct?currentTab=onWeb">Trên web</a>
                                 </li>
                                 <li>
-                                    <a href="#">Đã được đặt</a>
+                                    <a href="ManageProduct?currentTab=ordered">Đã được đặt</a>
                                 </li>
                                 <li>
-                                    <a href="#">Đã bán</a>
+                                    <a href="ManageProduct?currentTab=sold">Đã bán</a>
                                 </li>
                                 <li>
-                                    <a href="#">Đăng kí hủy kí gửi</a>
+                                    <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
                                 <li>
-                                    <a href="#">Hoàn tất thanh toán</a>
+                                    <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
                                 </li>
                                 <li>
-                                    <a href="#">Hết hạn kí gửi</a>
+                                    <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
                                 </li>
                             </ul>
                         </li>
@@ -141,13 +144,10 @@
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="#">Thống kê trong ngày</a>
+                                    <a href="#">Yêu cầu kí gửi</a>
                                 </li>
                                 <li>
-                                    <a href="#">New Dashboard #1</a>
-                                </li>
-                                <li>
-                                    <a href="#">New Dashboard #2</a>
+                                    <a href="Statistics">Sản phẩm ký gửi</a>
                                 </li>
                             </ul>
                         </li>								
@@ -166,20 +166,7 @@
                     <div  id="request" style="display: none">
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="input-group">
-                                                    <input id="r_searchInput" class="form-control" type="text" name="r_searchValue" value="${param.r_searchValue}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info" type="submit" name="btnAction" value="r_search">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                
                             </div>
                         </div>
                         <table class="table table-striped table-bordered table-hover" id="requestTable">
@@ -257,31 +244,19 @@
                     </div>
 
                     <div  id="accepted" style="display: none">
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-md-6 col-sm-6">
-                                <form class="form-horizontal" role="form" action="ConsignmentRequestReceive" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-12 col-sm-12">
-                                                <div class="input-group">
-                                                    <input id="ar_searchInput" class="form-control" type="text" name="ar_searchValue" value="${param.ar_searchValue}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-info" type="submit" name="btnAction" value="ar_search">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <h3><b>ĐÃ DUYỆT</b></h3>
                             </div>
                             <div class="col-md-4 col-sm-4">
 
                             </div>
                             <div class="col-md-2 col-sm-2">
                                 <button data-toggle="modal" data-target="#modalAddConsignment"
-                                        class="btn btn-primary">Tạo mới ký gửi</button>
+                                        class="btn btn-lg btn-primary btn-block">Tạo mới ký gửi</button>
                             </div>
-                        </div>           
+                        </div>
+                        <br/>
                         <table class="table table-striped table-bordered table-hover" id="acceptedTable">
                             <thead>
                                 <tr role="row" class="heading">
@@ -1143,37 +1118,17 @@
             });
             $(document).ready(function () {
 
-                //var currentTab = $('#currentTab').val();
                 var currentTab = window.location.hash.substring(1);
-
                 if (currentTab == "") {
                     currentTab = $('#currentTab').val();
                 }
-
-                //var currentLi = currentTab + 'Tab';
-                $('div#' + currentTab).siblings().hide();
-                //$('li#' + currentLi).siblings().removeClass('active');
-
-                //$('div#' + currentTab).fadeIn(400);
-                $('div#' + currentTab).show();
-                //$('li#' + currentLi).addClass('active');
-
-
+                $('div#' + currentTab).fadeIn(400).siblings().hide();
+                $('div.portlet-title').show();
+                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
+                $('html,body').scrollTop(0);
             });
 
-            $('ul li ul li a').on('click', function (e) {
-
-                var currentTab = $(this).attr('href').substring(1);
-
-
-                //var currentLi = currentTab + 'Tab';
-                $('div#' + currentTab).siblings().hide();
-                //$('li#' + currentLi).siblings().removeClass('active');
-
-                //$('div#' + currentTab).fadeIn(400);
-                $('div#' + currentTab).show();
-                //$('li#' + currentLi).addClass('active');
-            });
+            
 
             $(function () {
                 $("#r_searchInput").autocomplete({
