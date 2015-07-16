@@ -22,8 +22,11 @@
         <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
         <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
         <link href="assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-        <link id="style_color" href="assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css"/>
+        <link id="style_color" href="assets/admin/layout/css/themes/blue.css" rel="stylesheet" type="text/css"/>
         <link href="assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
+        <!-- END THEME STYLES -->
         <!-- END THEME STYLES -->
     </head>
     <body class="page-header-fixed page-quick-sidebar-over-content ">
@@ -43,7 +46,7 @@
                 <div class="page-header-inner">
                     <!-- BEGIN LOGO -->
                     <div class="page-logo">
-                        <a style="text-decoration: none;color:white;font-size: 18px;line-height: 25px;margin-top: 10px" href="ManageProduct">
+                        <a style="text-decoration: none;color:white;font-size: 18px;line-height: 25px;margin-top: 6px" href="#">
                             Hanging Product Store
                         </a>
                     </div>
@@ -52,19 +55,19 @@
                         <ul class="nav navbar-nav pull-right">
                             <li class="dropdown dropdown-user">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <span class="username username-hide-on-mobile">${sessionScope.ACCOUNT.fullName}</span>
+                                    <span style="color:white;font-size: 15px" class="username username-hide-on-mobile">${sessionScope.ACCOUNT.fullName}</span>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
                                 <li>
-                                    <a href="#">
+                                    <a href="extra_profile.html">
                                         <i class="icon-user"></i> My Profile </a>
                                 </li>
                             </ul>                           
                         </li>
                         <li class="dropdown dropdown-user">
                             <a href="LogoutServlet" class="dropdown-toggle">
-                                <span class="username username-hide-on-mobile">Đăng xuất</span>
+                                <span style="color:white;font-size: 15px" class="username username-hide-on-mobile">Đăng xuất</span>
                             </a>                      
                         </li>
                     </ul>
@@ -82,7 +85,7 @@
             <div class="page-sidebar-wrapper">
                 <div class="page-sidebar navbar-collapse collapse">
                     <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                        <li class="sidebar-toggler-wrapper">
+                        <li class="sidebar-toggler-wrapper" class="sidebar-toggler-wrapper">
                             <div class="sidebar-toggler">
                             </div>->
                         </li>
@@ -104,13 +107,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="open">
+                        <li class="open active">
                             <a href="javascript:;">
                                 <i class="icon-basket"></i>
                                 <span class="title">Quản lí hàng kí gửi</span>
                                 <span class="arrow open"></span>
                             </a>
-                            <ul class="sub-menu" style="display: block">
+                            <ul class="sub-menu open">
                                 <li id="available">
                                     <a href="ManageProduct?currentTab=available">Chờ duyệt</a>
                                 </li>
@@ -124,7 +127,7 @@
                                     <a href="ManageProduct?currentTab=sold">Đã bán</a>
                                 </li>
                                 <li id="cancel">
-                                    <a href="ManageProduct?currentTab=cancel">Đăng kí hủy kí gửi</a>
+                                    <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
                                 <li id="completed">
                                     <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
@@ -157,598 +160,276 @@
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <div class="page-content">
-                    <h3 class="page-title">
-                        Quản lí sản phẩm
-                        <small style="color: #0288d1 ">
-                            <c:choose>
-                                <c:when test="${requestScope.currentTab == 'available'}">
-                                    Chờ duyệt
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'onWeb'}">
-                                    Trên web
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'ordered'}">
-                                    Đã được đặt
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'sold'}">
-                                    Đã bán
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'completed'}">
-                                    Hoàn tất thanh toán
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'expired'}">
-                                    Hết hạn kí gửi
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'cancel'}">
-                                    Đăng kí hủy kí gửi
-                                </c:when>
-                            </c:choose>
-                        </small> 
-                    </h3>
-                    <!-- END PAGE HEADER-->
-                    <!-- BEGIN PAGE CONTENT-->
                     <div class="row">
                         <div class="col-md-12">
-                            <!-- BEGIN EXPIRED TAB -->
-                            <div id="expired" class="tab table-scrollable">
-                                <c:set var="expired" value="${requestScope.expired}">
-                                </c:set>
-                                <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="input-group">
-                                                    <input type="hidden" name="txtCurrentTab" value="expired">
-                                                    <input class="form-control" type="text" name="txtKeywork" value="${keywork7}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${expired == null && requestScope.keywork7 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${requestScope.keywork7}</font>.
-                                    </c:when>
-                                    <c:when test="${expired!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Ngày nhận</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Giá kí gửi (Ngàn đồng)</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${expired}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.name}</font></td>
-                                                        <td><font>${item.receivedDate}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td><fmt:formatNumber 
-                                                                value="${item.negotiatedPrice}" 
-                                                                maxFractionDigits="1"/>
-                                                        </td>
-                                                        <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END EXPIRED TAB -->
-                            <!-- BEGIN AVAILABLE TAB -->
-                            <div id="available" class="tab" style="display: none">
-                                <c:set var="available" value="${requestScope.available}">
-                                </c:set>
-                                <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="input-group">
-                                                    <input type="hidden" name="txtCurrentTab" value="available">
-                                                    <input class="form-control" type="text" name="txtKeywork" value="${keywork1}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${available == null && requestScope.keywork1 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork1}</font>.
-                                    </c:when>
-                                    <c:when test="${available!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Ngày nhận</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Giá kí gửi (Ngàn đồng)</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${available}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.name}</font></td>
-                                                        <td><font>${item.receivedDate}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td>
-                                                            <fmt:formatNumber 
-                                                                value="${item.negotiatedPrice}" 
-                                                                maxFractionDigits="1"/>
-                                                        </td>
-                                                        <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END AVAILABLE TAB -->
-                            <!-- BEGIN ONWEB TAB -->
-                            <div id="onWeb" class="tab col-md-12" style="display: none">
-                                <c:set var="onWeb" value="${requestScope.onWeb}"></c:set>
-                                    <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="txtCurrentTab" value="onWeb">
-                                                        <input class="form-control" type="text" name="txtKeywork" value="${keywork2}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${onWeb == null && requestScope.keywork2 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork2}</font>.
-                                    </c:when>
-                                    <c:when test="${onWeb!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ngày đăng lên web</th>
-                                                    <th>Thời gian kí gửi</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${onWeb}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.raiseWebDate}</font></td>
-                                                        <td><font>${item.period}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END ONWEB TAB -->
-                            <!-- BEGIN ORDERED TAB -->
-                            <div id="ordered" class="tab col-md-12" style="display: none">
-                                <c:set var="ordered" value="${requestScope.ordered}"></c:set>
-                                    <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="txtCurrentTab" value="ordered">
-                                                        <input class="form-control" type="text" name="txtKeywork" value="${keywork3}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${ordered == null && requestScope.keywork3 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork3}</font>.
-                                    </c:when>
-                                    <c:when test="${ordered!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Giá sản phẩm (Ngàn đồng)</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Số người đặt</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${ordered}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td>
-                                                            <fmt:formatNumber 
-                                                                value="${item.product.negotiatedPrice}" 
-                                                                maxFractionDigits="1"/>
-                                                        </td>
-                                                        <td><font>${item.product.consignmentID}</font></td>
-                                                        <td><font>${item.quantity}</font></td>
-                                                        <td><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.product.productID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END ORDERED TAB -->
-                            <!-- BEGIN SOLD TAB -->
-                            <div id="sold" class="tab col-md-12" style="display: none">
-                                <c:set var="sold" value="${requestScope.sold}"></c:set>
-                                    <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="txtCurrentTab" value="sold">
-                                                        <input class="form-control" type="text" name="txtKeywork" value="${keywork4}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${sold == null && requestScope.keywork4 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork4}</font>.
-                                    </c:when>
-                                    <c:when test="${sold!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ngày nhận</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Giá bán (Ngàn đồng)</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${sold}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.receivedDate}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td>
-                                                            <fmt:formatNumber 
-                                                                value="${item.product.sellingPrice}" 
-                                                                maxFractionDigits="1"/>
-                                                        </td>
-                                                        <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END SOLD TAB -->
-                            <!-- BEGIN COMPLETED TAB -->
-                            <div id="completed" class="tab col-md-12" style="display: none">
-                                <c:set var="completed" value="${requestScope.completed}"></c:set>
-                                    <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="txtCurrentTab" value="completed">
-                                                        <input class="form-control" type="text" name="txtKeywork" value="${keywork5}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${completed == null && requestScope.keywork5 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork5}</font>.
-                                    </c:when>
-                                    <c:when test="${completed!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ngày nhận</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>Trạng thái</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${completed}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.receivedDate}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td><c:choose>
-                                                                <c:when test="${item.consignmentStatusID==4}">
-                                                                    Đã bán thành công
-                                                                </c:when>
-                                                                <c:when test="${item.consignmentStatusID==5}">
-                                                                    Đã bán thành công
-                                                                </c:when>
-                                                                <c:when test="${item.consignmentStatusID==6}">
-                                                                    Khách hàng từ chối gia hạn
-                                                                </c:when>
-                                                                <c:when test="${item.consignmentStatusID==7}">
-                                                                    Khách hàng hủy kí gửi
-                                                                </c:when>   
-                                                            </c:choose>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END COMPLETED TAB -->
-                            <!-- BEGIN CANCELED TAB -->
-                            <div id="canceled" class="tab col-md-12" style="display: none">
-                                <c:set var="canceled" value="${requestScope.canceled}"></c:set>
-                                    <form class="form-horizontal" role="form" action="ManageProduct" method="POST">
-                                        <div class="form-body">
-                                            <div class="form-group">
-                                                <div class="col-md-6 col-sm-6">
-                                                    <div class="input-group">
-                                                        <input type="hidden" name="txtCurrentTab" value="canceled">
-                                                        <input class="form-control" type="text" name="txtKeywork" value="${keywork6}">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-success" type="submit">Tìm</button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <c:choose>
-                                    <c:when test="${canceled == null && requestScope.keywork6 != null}">
-                                        Không có sản phẩm tìm kiếm phù hợp với từ khóa <font style="color: red">${keywork6}</font>.
-                                    </c:when>
-                                    <c:when test="${canceled!=null}">
-                                        <table class="table table-bordered table-hover">
-                                            <thead>
-                                                <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                    <th>STT</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Ngày hủy</th>
-                                                    <th>Ngày kí gửi</th>
-                                                    <th>Mã kí gửi</th>
-                                                    <th>TT liên lạc</th>
-                                                    <th>Chi Tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="item" items="${canceled}" varStatus="counter">
-                                                    <tr>
-                                                        <td style="text-align: center"><font  >${counter.count}</font></td>
-                                                        <td><font>${item.product.name}</font></td>
-                                                        <td><font>${item.cancelDate}</font></td>
-                                                        <td><font>${item.receivedDate}</font></td>
-                                                        <td><font>${item.consigmentID}</font></td>
-                                                        <td><font>
-                                                            <c:if test="${item.phone!=null}">
-                                                                ${item.phone}
-                                                            </c:if>
-                                                            <c:if test="${item.phone==null && item.email!=null}">
-                                                                ${item.email}
-                                                            </c:if></font></td>
-                                                        <td><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </c:when>
-                                    <c:otherwise>
-                                        Danh sách hiện thời trống
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                            <!-- END CANCELED TAB -->
-                        </div>
-                    </div>
-                    <!-- END PAGE CONTENT-->
-                </div>
-            </div>
-            <!-- END CONTENT -->
-            <!-- BEGIN MODAL -->
-            <div id="modal">
-                <!-- SOLD MODAL BEGIN-->
-                <div class="modal fade bs-example-modal-lg" id="soldModal" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <form action="SoldProduct" method="POST">
-                                <div class="modal-header">
-                                    <h4>Thông tin sản phẩm</h4>        
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-6">
-                                            <h5>Thông tin người kí gửi</h5>
-                                            <li>Họ tên : <label id="sold_fullName"></label></li>
-                                            <li>Địa chỉ : <label id="sold_address"></label></li>
-                                            <li>Số điện thoại : <label id="sold_phone"></label></li>
-                                            <li>Email : <label id="sold_email"></label></li>
-                                            <li>Tài khoản Paypal : <label id="sold_paypalAccount"></label></li>
-                                        </div>
-                                        <div class="col-sm-6 col-md-6">
-                                            <h5>Thông tin sản phẩm</h5>
-                                            <li>Tên sản phẩm : <label id="sold_productName"></label></li>
-                                            <li>Mã kí gửi : <label id="sold_consignmentID"></label></li>
-                                            <li>Giá sản phẩm (Ngàn đồng): <label id="sold_negotiatedPrice"></label></li>
-                                            <li>Giá bán (Ngàn đồng): <label id="sold_sellingPrice"></label></li>
-                                            <li>Ngày kí gửi : <label id="sold_receivedDate"></label></li>
-                                            <li>Tiền trả khách hàng (Ngàn đồng): <input type="text" name="txtReturnPrice" id="sold_returnPrice"></li>
-                                        </div>
+                            <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
+                            <div class="portlet box blue">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-globe"></i>Quản lí sản phẩm 
+										<c:choose>
+                                            <c:when test="${requestScope.currentTab == 'available'}">
+                                                Chờ duyệt
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'onWeb'}">
+                                                Trên web
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'ordered'}">
+                                                Đã được đặt
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'sold'}">
+                                                Đã bán
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'completed'}">
+                                                Hoàn tất thanh toán
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'expired'}">
+                                                Hết hạn kí gửi
+                                            </c:when>
+                                            <c:when test="${requestScope.currentTab == 'cancel'}">
+                                                Đăng kí hủy kí gửi
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
-                                    <input class="btn btn-info" type="submit" name="btnAction" value="Trả tiền"/>
-                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- SOLD MODAL END-->
-                <!-- ORDERED MODAL BEGIN-->
-                <div class="modal fade bs-example-modal-lg" id="orderedModal" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <form action="OrderProduct" method="POST">
-                                <div class="modal-header">
-                                    <h4>Thông tin đặt hàng</h4>
-                                    Giá bán (Ngàn đồng): <input type="text" name="txtSendPrice" id="sendPrice" value="">
-                                    <span id="erSendPrice" class="help-block">
-                                    </span>
-                                    Giá kí gửi (Ngàn đồng) <label id="ordered_negotiatedPrice"></label>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table table-bordered table-hover">
+                                <!-- BEGIN EXPIRED TAB-->
+                                <div class="portlet-body" id="expired" style="display: none;">
+                                    <table class="table table-striped table-hover" id="expiredTable">
                                         <thead>
-                                            <tr role="row" class="heading" style="background-color:  #b3e5fc">
-                                                <th></th>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
                                                 <th>Tên khách hàng</th>
-                                                <th>Ngày đặt mua</th>
-                                                <th>Thông tin liên hệ</th>
-                                                <th>Trạng thái</th>
+                                                <th>Ngày nhận</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Giá kí gửi (Ngàn đồng)</th>
+                                                <th>Chi Tiết</th>
                                             </tr>
                                         </thead>
-                                        <tbody id="table_body_ordered">
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.expired}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td class="center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td>${item.name}</td>
+                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td><fmt:formatNumber 
+                                                            value="${item.negotiatedPrice}" 
+                                                            maxFractionDigits="1"/>
+                                                    </td>
+                                                    <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="modal-footer">
-                                    <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
-                                    <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();">Gửi giá</button>
-                                    <button class="btn btn-warning" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
-                                    <input class="btn btn-info confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
-                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                <!-- END EXPIRED TAB-->
+                                <!-- BEGIN AVAILABLE TAB-->
+                                <div class="portlet-body" id="available" style="display: none;">
+                                    <table class="table table-striped table-hover" id="availableTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Tên khách hàng</th>
+                                                <th>Ngày nhận</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Giá kí gửi (Ngàn đồng)</th>
+                                                <th>Chi Tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.available}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td class="center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td>${item.name}</td>
+                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td>
+                                                        <fmt:formatNumber 
+                                                            value="${item.negotiatedPrice}" 
+                                                            maxFractionDigits="1"/>
+                                                    </td>
+                                                    <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- ORDERED MODAL END-->
-                <!-- CONFIRM ORDERED MODAL BEGIN-->
-                <div class="modal fade bs-example-modal-lg" id="confirmOrderedModal" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <form action="OrderProduct" method="POST">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Thông tin giá bán</h4>        
+                                <!-- END AVAILABLE TAB-->
+                                <!-- BEGIN ONWEB TAB-->
+                                <div class="portlet-body" id="onWeb" style="display: none;">
+                                    <table class="table table-striped table-hover" id="onWebTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Ngày đăng lên web</th>
+                                                <th>Thời gian kí gửi</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Chi Tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.onWeb}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td style="text-align: center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td class="center">${item.raiseWebDate}</td>
+                                                    <td>${item.period}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="modal-body">
-                                    <label class="control-label">Giá bán (Ngàn đồng):</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;">
+                                <!-- END ONWEB TAB-->
+                                <!-- BEGIN ORDERED TAB-->
+                                <div class="portlet-body" id="ordered" style="display: none;">
+                                    <table class="table table-striped table-hover" id="orderedTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Giá sản phẩm (Ngàn đồng)</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Số người đặt</th>
+                                                <th>Chi Tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.ordered}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td class="center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td>
+                                                        <fmt:formatNumber 
+                                                            value="${item.product.negotiatedPrice}" 
+                                                            maxFractionDigits="1"/>
+                                                    </td>
+                                                    <td>${item.product.consignmentID}</td>
+                                                    <td>${item.quantity}</td>
+                                                    <td><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.product.productID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="modal-footer">
-                                    <input type="hidden" name="txtOrderID" id="order_OrderID">
-                                    <button class="btn btn-info" name="btnAction" type="submit" value="order">Đồng ý</button>
-                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                <!-- END ORDERED TAB-->
+                                <!-- BEGIN CANCEL TAB-->
+                                <div class="portlet-body" id="canceled" style="display: none;">
+                                    <table class="table table-striped table-hover" id="canceledTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Ngày hủy</th>
+                                                <th>Ngày kí gửi</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>TT liên lạc</th>
+                                                <th>Chi Tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.canceled}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td class="center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td class="center">${item.cancelDate}</td>
+                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td>
+                                                        <c:if test="${item.phone!=null}">
+                                                            ${item.phone}
+                                                        </c:if>
+                                                        <c:if test="${item.phone==null && item.email!=null}">
+                                                            ${item.email}
+                                                        </c:if>
+                                                    </td>
+                                                    <td><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
+                                <!-- END CANCEL TAB-->
+                                <!-- BEGIN COMPLETED TAB-->
+                                <div class="portlet-body" id="completed" style="display: none;">
+                                    <table class="table table-striped table-hover" id="completedTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Ngày nhận</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.completed}" varStatus="counter">
+                                                <tr>
+                                                    <td>${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td><c:choose>
+                                                            <c:when test="${item.consignmentStatusID==4}">
+                                                                Đã bán thành công
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID==5}">
+                                                                Đã bán thành công
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID==6}">
+                                                                Khách hàng từ chối gia hạn
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID==7}">
+                                                                Khách hàng hủy kí gửi
+                                                            </c:when>   
+                                                        </c:choose>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END COMPLETED TAB-->
+                                <!-- BEGIN SOLD TAB-->
+                                <div class="portlet-body" id="sold" style="display: none;">
+                                    <table class="table table-striped table-hover" id="soldTable">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Ngày nhận</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Giá bán (Ngàn đồng)</th>
+                                                <th>Chi Tiết</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.sold}" varStatus="counter">
+                                                <tr>
+                                                    <td class="center">${counter.count}</td>
+                                                    <td>${item.product.name}</td>
+                                                    <td>${item.receivedDate}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td>
+                                                        <fmt:formatNumber 
+                                                            value="${item.product.sellingPrice}" 
+                                                            maxFractionDigits="1"/>
+                                                    </td>
+                                                    <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END SOLD TAB-->
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- CONFIRM ORDERED MODAL END-->
-                <!-- CANCEL MODAL BEGIN-->
-                <div class="modal fade bs-example-modal-lg" id="cancelModal" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4>Thông tin hủy kí gửi</h4>        
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <h5>Thông tin người kí gửi</h5>
-                                        <li>Họ tên : <label id="cancel_fullName"></label></li>
-                                        <li>Địa chỉ : <label id="cancel_address"></label></li>
-                                        <li>Số điện thoại : <label id="cancel_phone"></label></li>
-                                        <li>Email : <label id="cancel_email"></label></li>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h5>Thông tin hàng kí gửi</h5>
-                                        <li>Tên sản phẩm : <label id="cancel_productName"></label></li>
-                                        <li>Mã hàng kí gửi : <label id="cancel_consignmentID"></label></li>
-                                        <li>Giá kí gửi (Ngàn đồng): <label id="cancel_negotiatedPrice"></label></li>
-                                        <li>Ngày kí gửi : <label id="cancel_consignedDate"></label></li>
-                                        <li>Ngày hủy kí gửi : <label id="cancel_canceledDate"></label></li>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <form action="CancelProduct" method="POST">
-                                    <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
-                                    <button class="btn btn-info" name="btnAction" type="submit" value="cancel">Đồng ý hủy</button>
-                                    <button class="btn btn-warning" name="btnAction" type="submit" value="notCancel">Không đồng ý hủy</button>
-                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
-                                </form>
-                            </div>
+                            <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>
                 </div>
@@ -1019,19 +700,28 @@
         <script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
+        <script type="text/javascript" src="assets/global/plugins/select2/select2.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+
         <!-- END CORE PLUGINS -->
         <script src="assets/global/scripts/metronic.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
+        <script src="assets/admin/pages/scripts/table-managed.js"></script>
+        <!-- END CORE PLUGINS -->
         <script>
-                                jQuery(document).ready(function () {
-                                    // initiate layout and plugins
-                                    Metronic.init(); // init metronic core components
-                                    Layout.init(); // init current layout
-                                    QuickSidebar.init(); // init quick sidebar
-                                    Demo.init(); // init demo features
-                                });
+                            jQuery(document).ready(function () {
+                                // initiate layout and plugins
+                                // initiate layout and plugins
+                                Metronic.init(); // init metronic core components
+                                Layout.init(); // init current layout
+                                QuickSidebar.init(); // init quick sidebar
+                                Demo.init(); // init demo features
+                                TableManaged.init();
+                            });
         </script>
         <script>
             //script switch tab
@@ -1041,6 +731,7 @@
                     currentTab = $('#currentTab').val();
                 }
                 $('div#' + currentTab).fadeIn(400).siblings().hide();
+                $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
             });
