@@ -496,15 +496,14 @@ public class ConsignmentDAO {
     }
     
     //update consignment with date in consignment management 14/7/2015
-    public boolean updateConsignmentAndProductStatusWithDate(String consignmentID, float negotiatedPrice,
-            String fromDate, String toDate, String receivedDate, int consignmentStatusID, int productID,
+    public boolean updateConsignmentAndProductStatusWithDate(String consignmentID, float negotiatedPrice, String receivedDate, int consignmentStatusID, int productID,
             String productName, int categoryID, String brand, String description, int productStatusID) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
             String sql = "UPDATE Consignment"
-                    + " SET NegotiatedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = ?, FromDate = ?, ToDate = ? "
+                    + " SET NegotiatedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = ?"
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             if (negotiatedPrice > 0) {
@@ -521,9 +520,7 @@ public class ConsignmentDAO {
 
             stm.setInt(3, consignmentStatusID);
             
-            stm.setString(4, fromDate);
-            stm.setString(5, toDate);
-            stm.setString(6, consignmentID);
+            stm.setString(4, consignmentID);
 
             int result = stm.executeUpdate();
             if (result > 0) {
@@ -633,7 +630,7 @@ public class ConsignmentDAO {
         //String toDate = rs.getString("ToDate");
         //toDate = java.formatDateString(toDate);
         String toDate = df.format(rs.getDate("ToDate"));
-        String hour = dfHour.format(rs.getTimestamp("FromDate"));
+        
 
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
@@ -644,9 +641,12 @@ public class ConsignmentDAO {
         float minPrice = rs.getFloat("MinPrice") / 1000;
         float maxPrice = rs.getFloat("MaxPrice") / 1000;
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
+        
+        String hour = "";
         String receiveDate = rs.getString("ReceivedDate");
         if (receiveDate != null) {
             receiveDate = df.format(rs.getDate("ReceivedDate"));
+            hour = dfHour.format(rs.getTimestamp("ReceivedDate"));
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {

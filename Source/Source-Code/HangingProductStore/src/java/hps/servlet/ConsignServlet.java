@@ -79,7 +79,6 @@ public class ConsignServlet extends HttpServlet {
                     session.setAttribute("CATEGORY", category);
                 }
                 url = STEP1;
-//                request.setAttribute("backlink", url);
             }
             if (action.equals("backstep2")) {
                 if (session.getAttribute("AMAZONLIST") == null) {
@@ -87,12 +86,9 @@ public class ConsignServlet extends HttpServlet {
                 } else {
                     url = STEP2;
                 }
-
-//                request.setAttribute("backlink", url);
             }
             if (action.equals("backstep3")) {
                 url = STEP3;
-//                request.setAttribute("backlink", url);
             }
 
             if (action.equals("consign")) {
@@ -105,7 +101,6 @@ public class ConsignServlet extends HttpServlet {
                     session.setAttribute("CATEGORY", category);
                 }
                 url = STEP1;
-//                request.setAttribute("backlink", url);
             }
             if (action.equals("tostep2")) {
                 String productName = request.getParameter("txtProductName");
@@ -126,20 +121,26 @@ public class ConsignServlet extends HttpServlet {
                         System.out.println("UPC name: " + amazonProduct.getName().length() + " - " + amazonProduct.getName());
                         System.out.println("UPC link: " + amazonProduct.getImage());
                         product.setImage(amazonProduct.getImage());
-                        
+
                         if (amazonProduct.getName().length() > 50) {
                             product.setName(amazonProduct.getName().substring(0, 50));
 
                         } else {
                             product.setName(amazonProduct.getName());
                         }
+
+                        action = "tostep3";
+                    } else {
+                        
+                        url = STEP1;
+                        request.setAttribute("UPCERROR", "Không thể tìm thấy sản phẩm với mã số này");
                     }
                     session.removeAttribute("AMAZONLIST");
-                    action = "tostep3";
+                    //action = "tostep3";
 
                 } //check product using name 
                 else {
-
+                    
                     List<AmazonProduct> list = dDAO.getListAmazonProduct(productName, brand, categoryID);
 
                     if (list != null) {
@@ -186,7 +187,7 @@ public class ConsignServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    
+
                     //product.setImage(null);
                     session.setAttribute("PRODUCT", product);
                 }

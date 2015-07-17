@@ -258,7 +258,7 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group">
+<!--                                                                    <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Giờ hẹn</label>
                                                                         <div class="col-md-4 col-sm-4">
                                                                             <div class="input-group">
@@ -268,7 +268,7 @@
                                                                                 </span>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    </div>-->
 
                                                                     <div class="form-group">
                                                                         <div id="map-canvas"></div>

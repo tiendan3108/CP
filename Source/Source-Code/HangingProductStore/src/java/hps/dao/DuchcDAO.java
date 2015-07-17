@@ -10,17 +10,13 @@ import hps.dto.ProductDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.AmazonService;
 import hps.ultils.DBUltilities;
-import hps.ultils.GlobalVariables;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -170,7 +166,6 @@ public class DuchcDAO {
             stm.setString(15, consigment.getCreatedDate());
             stm.setInt(16, consigment.getConsignmentStatusID());
             
-            
             if(consigment.getReceivedDate() != null){
                 stm.setString(17, consigment.getReceivedDate());
             }else{
@@ -181,6 +176,7 @@ public class DuchcDAO {
             }else{
                 stm.setNull(18, java.sql.Types.FLOAT);
             }
+            
             
             int result = stm.executeUpdate();
             return result > 0;

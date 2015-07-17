@@ -114,12 +114,14 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 String consignmentID = request.getParameter("consignmentID");
                 String productName = request.getParameter("txtProductName");
                 String hour = request.getParameter("txtHour");
-                String fromDate = request.getParameter("txtFromDate") + " " + hour;
-                String toDate = request.getParameter("txtToDate") + " " + hour;
-                fromDate = formatDate(fromDate);
-                toDate = formatDate(toDate);
-                System.out.println("Update fromDate: " + fromDate);
-                System.out.println("Update ToDate: " + toDate);
+//                String fromDate = request.getParameter("txtFromDate") + " " + hour;
+//                String toDate = request.getParameter("txtToDate") + " " + hour;
+//                fromDate = formatDate(fromDate);
+//                toDate = formatDate(toDate);
+//                System.out.println("Update fromDate: " + fromDate);
+//                System.out.println("Update ToDate: " + toDate);
+                  String receivedDate = request.getParameter("txtReceivedDate") + " " + hour;
+                  receivedDate = formatDate(receivedDate);
                 int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                 String brand = request.getParameter("txtBrand");
                 String description = request.getParameter("txtDescription");
@@ -127,7 +129,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                 //consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_ACCEPTED, "");
                 //consignmentDAO.updateConsignmentAndProductStatus(consignmentID, 0, "", GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                consignmentDAO.updateConsignmentAndProductStatusWithDate(consignmentID, 0, fromDate, toDate, "", GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                consignmentDAO.updateConsignmentAndProductStatusWithDate(consignmentID, 0, receivedDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
 
                 //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                 //send sms and email

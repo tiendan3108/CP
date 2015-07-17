@@ -81,13 +81,24 @@
                                             <c:set var="product" value="${sessionScope.PRODUCT}" />
                                             <div>
                                                 <div class="tab-content">
+                                                    <c:if test="${requestScope.UPCERROR != null}">
+                                                        <div class="alert alert-danger" style="text-align: center">
+                                                            <strong>${requestScope.UPCERROR}</strong>
+                                                        </div>    
+                                                    </c:if>
+
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-horizontal">
                                                                 <div class="form-group">
                                                                     <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font color="red">*</font></label> <!--<span class="required">*</span> -->
                                                                     <div class="col-md-8 col-sm-8">
+
+
                                                                         <input id="txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="50" value="${product.name}"/>
+
+
+
                                                                         <p class="help-block" id="erProductName">  </p>
                                                                     </div>
                                                                 </div>
@@ -156,8 +167,8 @@
 
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                                    <div class="col-md-4 col-sm-5">
-                                                                            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
+                                                                    <div class="col-md-5 col-sm-6">
+                                                                        <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                                             <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                                             <span class="input-group-btn">
                                                                                 <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
@@ -220,8 +231,22 @@
 </template:consign>
 
 <script type="text/javascript">
+    $(document).ready(function () {
 
+        if ($("#txtProductName").val().length > 0 && $("#txtSerialNumber").val().length == 0) {
+            $("#txtSerialNumber").prop("readonly",true);
 
+        }
+        else if ($("#txtSerialNumber").val().length > 0 && $("#txtProductName").val().length == 0) {
+            $("#txtProductName").prop("readonly",true);
+
+        }
+        else if ($("#txtSerialNumber").val().length == 0 && $("#txtProductName").val().length == 0) {
+            $("#txtSerialNumber").prop("readonly",true);
+            $("#txtProductName").prop("readonly",true);
+
+        }
+    });
     $(function () {
         $("#txtBrand").autocomplete({
             source: "ConsignServlet?btnAction=getBrand",
@@ -229,18 +254,44 @@
             select: function (event, ui) {
             }
         });
+    });
 
+    $('#txtProductName').on('input', function (e) {
+        if ($(this).val().length > 0) {
+            $("#txtSerialNumber").prop("readonly",true);
+            $("#txtSerialNumber").val("");
+        } else {
+            $("#txtSerialNumber").prop("readonly",false);
+        }
+    });
+    $('#txtSerialNumber').on('input', function (e) {
+        if ($(this).val().length > 0) {
+            $("#txtProductName").prop("readonly",true);
+            $("#txtProductName").val("");
+        } else {
+            $("#txtProductName").prop("readonly",false);
+        }
     });
 
     function validation() {
         var check = true;
-        if ($('#txtProductName').val().trim().length < 5 || $('#txtProductName').val().trim().length > 50) {
-            $('#erProductName').html("<font color='red'>Yệu cầu 5-50 ký tự</font>");
+        if ($('#txtProductName').prop('readonly') == false && $('#txtSerialNumber').prop('readonly') == false) {
+            
+            $('#erProductName').html("<font color='red'>Xin nhập tên hoặc mã số</font>");
             check = false;
-        }
-        else {
+        } else {
             $('#erProductName').html("");
         }
+        if ($('#txtProductName').prop('readonly') == false && $('#txtSerialNumber').prop('readonly') == true) {
+            if ($('#txtProductName').val().trim().length < 5 || $('#txtProductName').val().trim().length > 50) {
+                $('#erProductName').html("<font color='red'>Yệu cầu 5-50 ký tự</font>");
+                check = false;
+            }
+            else {
+                $('#erProductName').html("");
+            }
+        }
+
         if ($('#txtCategory').val() == null) {
             $('#erCategory').html("<font color='red'>Xin chọn loại hàng</font>");
             check = false;

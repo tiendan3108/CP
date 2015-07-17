@@ -72,7 +72,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String fullName = "";
                 String fromDate = "";
                 String toDate = "";
-                String hour = "";
+                //String hour = "";
                 String address = "";
                 String phone = "";
                 String email = "";
@@ -80,7 +80,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String paymentMethod = "";
 
                 JavaUltilities ulti = new JavaUltilities();
-                
+
                 //tạo ID cho consigment và dùng cho product Image thêm đa dạng
                 String consigmentID = ulti.randomString(10);
 
@@ -113,10 +113,10 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 //toDate = formatDate(toDate);
 
                                 break;
-                            case "txtHour":
-                                hour = item.getString();
-
-                                break;    
+//                            case "txtHour":
+//                                hour = item.getString();
+//
+//                                break;
                             case "txtAddress":
                                 address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
@@ -143,7 +143,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             String projectPath = request.getServletContext().getRealPath("/"); // web
                             String basePath = projectPath.substring(0, projectPath.length() - 9) + "web\\assets\\image";// base path
                             String deploymentPath = projectPath + "\\assets\\image";
-                            
+
                             //create inputstream
                             InputStream in;
 
@@ -165,8 +165,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                             //item.write(file); // Write to base place
                             //item.write(file2);// write to deployment place
-                            
-    //web path                        
+                            //web path                        
                             File file1 = new File(basePath + "\\" + filename); // base file
                             // project path
                             File file2 = new File(deploymentPath + "\\" + filename);//deployment file
@@ -194,15 +193,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 if (!product.getPurchasedDate().isEmpty()) {
                     product.setPurchasedDate(formatDate(product.getPurchasedDate()));
                 }
-                
-                //add Hour to fromdate and to date then format them
-                
-                fromDate = fromDate + " " + hour;
-                toDate = toDate + " " + hour;
-                
-                fromDate = formatDate(fromDate);
-                toDate = formatDate(toDate);
-                
+
                 //set image link
                 product.setImage(imagePath);
 
@@ -235,14 +226,22 @@ public class ConsignCompleteServlet extends HttpServlet {
                     Date date = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     String createdDate = dateFormat.format(date);
-                    
+
+                    //add Hour to fromdate and to date then format them
+                    //fromDate = fromDate + " " + hour;
+                    //toDate = toDate + " " + hour;
+
+                    fromDate = formatDate(fromDate);
+                    toDate = formatDate(toDate);
+
                     //set if user choose to paypal account
-                    if(paymentMethod.equals("direct")){
+                    if (paymentMethod.equals("direct")) {
                         paypalAccount = "";
                     }
-                    
+
                     ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
+                    consignment.setReceivedDate(fromDate);
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
 
@@ -313,8 +312,8 @@ public class ConsignCompleteServlet extends HttpServlet {
 
     private String formatDate(String date) {
         try {
-            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
-            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+            DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd");
             Date datetime = format1.parse(date);
             return format2.format(datetime);
         } catch (ParseException ex) {

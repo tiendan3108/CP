@@ -588,17 +588,21 @@
 
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <tr id="r_divFromDateToDate">
                                                 <th>Ngày hẹn</th>
+                                                <td id="r_fromDateToDate"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngày lấy hàng</th>
                                                 <td>
-                                                    <div id="r_divFromDateToDate"  class="input-group  date-picker input-daterange" data-date-format="dd-mm-yyyy" data-date-start-date="0d" >
-                                                        <input type="text" id="r_fromDate" name="txtFromDate" class="form-control" value="" >
-                                                        <span class="input-group-addon">
-                                                            đến </span>
-                                                        <input type="text" id="r_toDate" name="txtToDate" class="form-control" value="">
+                                                    <div id="r_divReceivedDate" class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="0d" style="width: 40%">
+                                                        <input  id="r_receivedDate" type="text" class="form-control" name="txtReceivedDate" value="">
+                                                        <span class="input-group-btn">
+                                                            <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                        </span>
                                                     </div>
 
-                                                    <div id="ar_divFromDateToDate"></div>
+                                                    <div id="ar_divReceivedDate"></div>
 
                                                 </td>
 
@@ -781,10 +785,10 @@
                                             <th>Giá (VND)</th>
                                             <td id="rc_price"></td>
                                         </tr>
-                                        <tr>
-                                            <th>Ngày hẹn</th>
-                                            <td id='rc_fromDateToDate'></td>
-                                        </tr>
+                                        <!--                                        <tr>
+                                                                                    <th>Ngày hẹn</th>
+                                                                                    <td id='rc_fromDateToDate'></td>
+                                                                                </tr>-->
                                         <tr>
                                             <th>Trạng thái</th>
                                             <td id='rc_status'>
@@ -1188,7 +1192,7 @@
                     $("#rc_email").html(data.email);
                     $("#rc_phone").html("0" + data.phone.substring(3));
                     $("#rc_address").html(data.address);
-                    $("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                    //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
                     if (data.minPrice > 0 && data.maxPrice > 0) {
                         $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
                     } else {
@@ -1249,10 +1253,10 @@
                     $("#r_email").html(data.email);
                     $("#r_phone").html("0" + data.phone.substring(3));
                     $("#r_address").html(data.address);
-                    //$("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                    $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
 
-                    $("#r_fromDate").val(data.fromDate);
-                    $("#r_toDate").val(data.toDate);
+                    //$("#r_fromDate").val(data.fromDate);
+                    //$("#r_toDate").val(data.toDate);
 
                     $("#r_hour").val(data.hour);
 
@@ -1269,6 +1273,7 @@
 
                     $("#r_trReason").hide();
                     $("#r_reason").html("");
+                    $("#r_divFromDateToDate").hide();
                     if (data.product.productStatusID == 6) {
                         $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
                         $("#r_footer").hide();
@@ -1289,16 +1294,20 @@
                             $("#r_btnAction").val("r_accept");
 
 
-                            $("#r_fromDate").val(data.fromDate);
-                            $("#r_toDate").val(data.toDate);
+                            //$("#r_fromDate").val(data.fromDate);
+                            //$("#r_toDate").val(data.toDate);
+                            
+                            $("#r_receivedDate").val(data.receivedDate);
                             $("#r_hour").val(data.hour);
-                            $("#ar_divFromDateToDate").html("");
+                            $("#ar_divReceivedDate").html("");
                             $("#ar_divHour").html("");
 
-                            $("#r_divFromDateToDate").show();
+                            $("#r_divReceivedDate").show();
                             $("#r_divHour").show();
-                            $("#ar_divFromDateToDate").hide();
+                            $("#ar_divReceivedDate").hide();
                             $("#ar_divHour").hide();
+                            
+                            $("#r_divFromDateToDate").show();
 
                         } else if (data.consignmentStatusID == 3) {
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
@@ -1316,19 +1325,19 @@
 
                             $("#r_btnAction").val("ar_accept");
 
-                            $("#r_fromDate").val("");
-                            $("#r_toDate").val("");
+                            //$("#r_fromDate").val("");
+                            //$("#r_toDate").val("");
+                            $("#r_receivedDate").val("");
                             $("#r_hour").val("");
 
-                            $("#ar_divFromDateToDate").html(data.fromDate + " - " + data.toDate);
+                            $("#ar_divReceivedDate").html(data.receivedDate);
                             $("#ar_divHour").html(data.hour);
+                            
 
-
-                            $("#r_divFromDateToDate").hide();
+                            $("#r_divReceivedDate").hide();
                             $("#r_divHour").hide();
-                            $("#ar_divFromDateToDate").show();
+                            $("#ar_divReceivedDate").show();
                             $("#ar_divHour").show();
-
 
                         } else if (data.consignmentStatusID == 2) {
                             $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
