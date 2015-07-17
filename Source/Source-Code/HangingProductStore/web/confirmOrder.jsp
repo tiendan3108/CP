@@ -41,8 +41,8 @@
                                             <td>${item.productName}</td>
                                             <td>${item.address}</td>
                                             <td>${item.fullName}</td>
-                                            <td>${item.phone}</td>
                                             <td>${item.email}</td>
+                                            <td>${item.phone}</td>
                                         </tr>                                
                                     </table>
                                 </div>
