@@ -676,10 +676,10 @@
                             <h4 class="modal-title">Xác nhận</h4>
                         </div>
                         <div class="modal-body" align="center">
-                            <div id="r_body_confirm" style="display: none;">
-                                <h3>Bạn có chắc muốn từ chối sản phẩm này không?</h3>
+                            <div id="r_body_confirm">
+                                <h3>Xin nhập lí do từ chối sản phẩm</h3>
                             </div>
-                            <div id="ar_body_confirm" class="form-horizontal" style="display: none;">
+                            <div id="ar_body_confirm" class="form-horizontal">
 
                                 <div class="form-group">
                                     <label class="col-md-2 col-sm-3 control-label">Lí do: </label>
@@ -693,9 +693,9 @@
                         </div>
                         <div class="modal-footer">
                             <div id="r_footer_confirm">
-                                <form action="ConsignmentRequestReceive" method="POST">
+                                <form action="ConsignmentRequestReceive" method="POST" onsubmit="return r_confirm_validation();">
                                     <button type="submit" name="btnAction" value="r_refuse" class="btn btn-default">Xác nhận</button>
-                                    <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
+                                    <input type="hidden" id="r_inputReason" name="r_reason"/>
                                     <input id="r_ActionValue_confirm" type="hidden" name="r_consignmentID"/>
                                 </form>
                             </div>
@@ -703,7 +703,6 @@
                                 <form  action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_confirm_validation();">
                                     <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-default">Xác nhận</button>
                                     <input type="hidden" id="ar_inputReason" name="ar_reason"/>
-                                    <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
                                     <input id="ar_ActionValue_confirm" type="hidden" name="ar_consignmentID"/>
                                 </form>
                             </div>
@@ -1255,14 +1254,9 @@
                     $("#r_address").html(data.address);
                     $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
 
-                    //$("#r_fromDate").val(data.fromDate);
-                    //$("#r_toDate").val(data.toDate);
-
                     $("#r_hour").val(data.hour);
 
                     if (data.minPrice > 0 && data.maxPrice > 0) {
-
-
                         $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
                     } else {
                         $("#r_price").html("<font color='red'>Không có giá </font>");
@@ -1282,21 +1276,14 @@
                     else {
                         if (data.consignmentStatusID == 1) {
                             $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
-//                    $("#r_ActionValue").val(data.consigmentID);
                             $("#r_ActionValue_confirm").val(data.consigmentID);
-                            //                    $("#ar_ActionValue").val("");
                             $("#ar_ActionValue_confirm").val("");
                             $("#r_footer").show();
                             $("#ar_footer").hide();
-                            //$("#r_price").show();
 
                             $("#ar_price").hide();
                             $("#r_btnAction").val("r_accept");
 
-
-                            //$("#r_fromDate").val(data.fromDate);
-                            //$("#r_toDate").val(data.toDate);
-                            
                             $("#r_receivedDate").val(data.receivedDate);
                             $("#r_hour").val(data.hour);
                             $("#ar_divReceivedDate").html("");
@@ -1306,33 +1293,24 @@
                             $("#r_divHour").show();
                             $("#ar_divReceivedDate").hide();
                             $("#ar_divHour").hide();
-                            
+
                             $("#r_divFromDateToDate").show();
 
                         } else if (data.consignmentStatusID == 3) {
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
-//                    $("#ar_ActionValue").val(data.consigmentID);
                             $("#ar_ActionValue_confirm").val(data.consigmentID);
-                            //                    $("#r_ActionValue").val("");
                             $("#r_ActionValue_confirm").val("");
                             $("#ar_footer").show();
                             $("#r_footer").hide();
-                            //$("#r_price").html("");
-                            //$("#r_price").hide();
                             $("#ar_price").show();
-                            //$("#ar_minPrice").val(data.minPrice.toFixed(0));
-                            //$("#ar_maxPrice").val(data.maxPrice.toFixed(0));
 
                             $("#r_btnAction").val("ar_accept");
-
-                            //$("#r_fromDate").val("");
-                            //$("#r_toDate").val("");
                             $("#r_receivedDate").val("");
                             $("#r_hour").val("");
 
                             $("#ar_divReceivedDate").html(data.receivedDate);
                             $("#ar_divHour").html(data.hour);
-                            
+
 
                             $("#r_divReceivedDate").hide();
                             $("#r_divHour").hide();
@@ -1395,13 +1373,13 @@
             $('button[name="btnRefuse"]').click(function () {
                 var action = $(this).val();
                 if (action == "ar_refuse") {
-                    $('#ar_body_confirm').show();
-                    $('#r_body_confirm').hide();
+                    //$('#ar_body_confirm').show();
+                    //$('#r_body_confirm').hide();
                     $('#ar_footer_confirm').show();
                     $('#r_footer_confirm').hide();
                 } else if (action == "r_refuse") {
-                    $('#ar_body_confirm').hide();
-                    $('#r_body_confirm').show();
+                    //$('#ar_body_confirm').hide();
+                    //$('#r_body_confirm').show();
                     $('#ar_footer_confirm').hide();
                     $('#r_footer_confirm').show();
                 }
@@ -1416,7 +1394,6 @@
                 } else {
                     $('form#r_form').submit();
                 }
-                //$('form#ar_form').submit();
             });
 
             function ar_validation() {
@@ -1440,8 +1417,16 @@
                 }
                 $("#ar_inputReason").val(reason);
                 return true;
-
-                return false;
+            }
+            
+            function r_confirm_validation() {
+                var reason = $("#ar_txtReason").val();
+                if (reason.trim() == "") {
+                    alert("Xin nhập lí do");
+                    return false;
+                }
+                $("#r_inputReason").val(reason);
+                return true;
             }
 
             $('input:radio[name="rdPayment"]').change(function () {

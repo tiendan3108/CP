@@ -171,7 +171,8 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
             } else if (action.equals("r_refuse")) {
                 String consignmentID = request.getParameter("r_consignmentID");
-                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, "Từ chối ký gửi");
+                String reason = request.getParameter("r_reason");
+                consignmentDAO.updateConsignmentStatus(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
 
 //send sms and email
 //                ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");

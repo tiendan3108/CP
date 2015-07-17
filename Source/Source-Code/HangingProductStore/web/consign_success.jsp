@@ -98,6 +98,7 @@
                                             <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consigmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái sản phẩm.</h3>
 
                                             <h3>Nhấn vào <a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a> để kiểm tra.</h3>
+                                            <h3>Nhấn vào <a href="ConsignServlet"><font color="blue">đây </font></a> để ký gửi món khác.</h3>
 
                                         </div>
                                     </div>
