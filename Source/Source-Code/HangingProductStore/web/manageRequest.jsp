@@ -335,7 +335,7 @@
                                                     </td>
                                                     <td>
 
-                                                        ${c.fromDate} - ${c.toDate}
+                                                        ${c.receivedDate} &nbsp; ${c.hour}
                                                     </td>
                                                     <td align="center">
 
@@ -368,9 +368,6 @@
                                                 </th>
 
                                                 <th>
-                                                    Ngày hẹn
-                                                </th>
-                                                <th>
                                                     Chi Tiết
                                                 </th>
                                             </tr>
@@ -391,10 +388,6 @@
 
                                                     </td>
 
-                                                    <td>
-
-                                                        ${c.fromDate} - ${c.toDate}
-                                                    </td>
                                                     <td align="center">
 
                                                         <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"

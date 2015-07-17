@@ -353,15 +353,15 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
-                }, {
-                    "orderable": true
-                }, {
                     "orderable": false
                 }, {
                     "orderable": true
                 }, {
                     "orderable": false
+                }, {
+                    "orderable": true
+                }, {
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {
@@ -448,15 +448,13 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
-                }, {
-                    "orderable": true
-                }, {
                     "orderable": false
                 }, {
                     "orderable": true
                 }, {
                     "orderable": false
+                }, {
+                    "orderable": true
                 }, {
                     "orderable": false
                 }],
@@ -541,7 +539,7 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
+                    "orderable": false
                 }, {
                     "orderable": true
                 }, {
