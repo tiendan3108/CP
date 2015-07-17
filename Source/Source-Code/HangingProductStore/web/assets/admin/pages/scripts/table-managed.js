@@ -353,7 +353,7 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": false
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {
@@ -448,7 +448,7 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": false
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {
@@ -539,7 +539,7 @@ var TableManaged = function () {
             "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": false
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {
