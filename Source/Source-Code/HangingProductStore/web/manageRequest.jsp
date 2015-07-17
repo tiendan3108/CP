@@ -113,25 +113,25 @@
                                 <span class="arrow "></span>
                             </a>
                             <ul class="sub-menu">
-                                <li>
+                                <li id="available">
                                     <a href="ManageProduct?currentTab=available">Chờ duyệt</a>
                                 </li>
-                                <li>
+                                <li id="onWeb">
                                     <a href="ManageProduct?currentTab=onWeb">Trên web</a>
                                 </li>
-                                <li>
+                                <li id="ordered">
                                     <a href="ManageProduct?currentTab=ordered">Đã được đặt</a>
                                 </li>
-                                <li>
+                                <li id="sold">
                                     <a href="ManageProduct?currentTab=sold">Đã bán</a>
                                 </li>
-                                <li>
+                                <li id="canceled">
                                     <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
-                                <li>
+                                <li id="completed">
                                     <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
                                 </li>
-                                <li>
+                                <li id="expired">
                                     <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
                                 </li>
                             </ul>
@@ -143,11 +143,11 @@
                                 <span class="arrow "></span>
                             </a>
                             <ul class="sub-menu">
-                                <li>
-                                    <a href="#">Yêu cầu kí gửi</a>
+                                <li id="consignment">
+                                    <a href="Statistics?currentTab=consignment">Yêu cầu kí gửi</a>
                                 </li>
-                                <li>
-                                    <a href="Statistics">Sản phẩm ký gửi</a>
+                                <li id="product">
+                                    <a href="Statistics?currentTab=product">Sản phẩm ký gửi</a>
                                 </li>
                             </ul>
                         </li>								
