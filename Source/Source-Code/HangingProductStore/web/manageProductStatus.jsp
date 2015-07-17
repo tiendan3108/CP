@@ -637,7 +637,9 @@
                                                             <label  class="col-sm-4 control-label">Mùa </label>
                                                             <div class="col-sm-8">
                                                                 <c:forEach var="item" items="${requestScope.season}">
-                                                                    <input style="width: 8%" type="checkbox" name="chkSeason" value="${item.seasonID}"/><label style="width: 40%">${item.seasonName}</label>
+                                                                    <div class="col-sm-3">
+                                                                        <input style="width: 8%" type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
+                                                                    </div>
                                                                 </c:forEach>
                                                             </div>
                                                         </div>
