@@ -234,10 +234,13 @@
                                                     <td>${item.createdDate}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
                                                             <c:when test="${item.consignmentStatusID == 1}">Đang chờ xử lý</c:when>
                                                             <c:when test="${item.consignmentStatusID == 2}">Đã từ chối</c:when>
                                                             <c:when test="${item.consignmentStatusID == 3}">Đã duyệt</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 4}">Hoàn tất thanh toán</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 6}">Hết hạn kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 7}">Hủy kí gửi</c:when>
                                                         </c:choose>
                                                     </td>
                                                 </tr>

@@ -1065,7 +1065,7 @@
                 }
                 function checkSoldProduct() {
                     var price = $('#sold_returnPrice').val();
-                    if (isNaN(fee) || fee < 0) {
+                    if (isNaN(price) || price < 0) {
                         alert('Tiền phạt phải là số dương');
                         return false;
                     } else {
