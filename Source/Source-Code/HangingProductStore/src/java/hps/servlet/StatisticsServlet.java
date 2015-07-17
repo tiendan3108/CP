@@ -52,40 +52,30 @@ public class StatisticsServlet extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
+            List<StatisticDTO> resultP = null;
+            List<ConsignmentDTO> resultC = null;
+            float totalPrice = 0;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String action = request.getParameter("btnAction");
-                List<StatisticDTO> result = null;
-                if (action != null && action.equals("search")) {
-                    String fromDate = request.getParameter("txtFromDate");
-                    String toDate = request.getParameter("txtToDate");
-                    System.out.println(fromDate + "/n" + toDate);
-                    Date tempDate = Calendar.getInstance().getTime();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    String today = sdf.format(tempDate);
-                    if (fromDate.equals(toDate) && fromDate.equals(today)) {
-                        result = dao.getInforForStatisticPage(user.getRoleID());
-                        System.out.println("tìm tất cả");
-                    } else {
-                        result = dao.getInforForStatisticPage(user.getRoleID(), fromDate, toDate);
-                        System.out.println("tìm theo ngày");
+                String currentTab = request.getParameter("currentTab");
+                if (currentTab == null || currentTab.equals("product")) {
+                    resultP = dao.getProductInforForStatisticPage(user.getRoleID());
+                    if (resultP != null) {
+                        for (StatisticDTO item : resultP) {
+                            totalPrice += item.getRevenue();
+                        }
                     }
+                    request.setAttribute("totalPrice", totalPrice);
+                    request.setAttribute("resultP", resultP);
+                    request.setAttribute("currentTab", "product");
                 } else {
-                    result = dao.getInforForStatisticPage(user.getRoleID());
-                }
-                float totalPrice = 0;
-                if (result != null) {
-                    for (StatisticDTO item : result) {
-                        totalPrice += item.getRevenue();
-                    }
+                    resultC = dao.getConsignmentInforForStatisticPage(user.getRoleID());
+                    request.setAttribute("resultC", resultC);
+                    request.setAttribute("currentTab", "consignment");
                 }
                 url = GlobalVariables.STATISTIC_PAGE;
-                request.setAttribute("totalPrice", totalPrice);
-                request.setAttribute("result", result);
-                request.setAttribute("currentTab", "product");
             }
-
             if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
                 response.sendRedirect(url);
             } else {
@@ -94,7 +84,7 @@ public class StatisticsServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

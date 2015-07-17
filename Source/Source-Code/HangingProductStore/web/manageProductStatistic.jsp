@@ -111,7 +111,7 @@
                             <a href="javascript:;">
                                 <i class="icon-basket"></i>
                                 <span class="title">Quản lí hàng kí gửi</span>
-                                <span class="arrow open"></span>
+                                <span class="arrow"></span>
                             </a>
                             <ul class="sub-menu">
                                 <li id="available">
@@ -145,7 +145,7 @@
                             </a>
                             <ul class="sub-menu open">
                                 <li>
-                                    <a href="Statistics?currentTab=request">Yêu cầu kí gửi</a>
+                                    <a href="Statistics?currentTab=consignment">Yêu cầu kí gửi</a>
                                 </li>
                                 <li>
                                     <a href="Statistics?currentTab=product">Sản phẩm ký gửi</a>
@@ -166,37 +166,81 @@
                             <div class="portlet box blue">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-globe"></i>Quản lí sản phẩm 
+                                        <i class="fa fa-globe"></i>Thống kê 
                                         <c:choose>
-                                            <c:when test="${requestScope.currentTab == 'available'}">
-                                                Chờ duyệt
+                                            <c:when test="${requestScope.currentTab == 'product'}">
+                                                Hàng kí gửi
                                             </c:when>
-                                            <c:when test="${requestScope.currentTab == 'onWeb'}">
-                                                Trên web
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'ordered'}">
-                                                Đã được đặt
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'sold'}">
-                                                Đã bán
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'completed'}">
-                                                Hoàn tất thanh toán
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'expired'}">
-                                                Hết hạn kí gửi
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'cancel'}">
-                                                Đăng kí hủy kí gửi
+                                            <c:when test="${requestScope.currentTab == 'consignment'}">
+                                                Đơn kí gửi
                                             </c:when>
                                         </c:choose>
                                     </div>
                                 </div>
                                 <div class="portlet-body" id="product" style="display: none;">
-                                    
+                                    <table class="table table-striped table-hover" id="productTable">
+                                        <thead>
+                                            <tr role="row" class="heading">
+                                                <th>STT</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Tên khách hàng</th>
+                                                <th>Ngày nhận</th>
+                                                <th>Giá thương lượng</th>
+                                                <th>Giá bán</th>
+                                                <th>Giá trả khách hàng</th>
+                                                <th>Phí</th>
+                                                <th>Lợi nhuận</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.resultP}" varStatus="counter">
+                                                <tr>
+                                                    <td>${counter.count}</td>
+                                                    <td>${item.productName}</td>
+                                                    <td>${item.consignorName}</td>
+                                                    <td>${item.receivedDate}</td>
+                                                    <td><fmt:formatNumber value="${item.consignPrice}" maxFractionDigits="1"/></td>
+                                                    <td><c:if test="${item.sellingPrice>0}"><fmt:formatNumber value="${item.sellingPrice}" maxFractionDigits="1"/></c:if></td>
+                                                    <td><c:if test="${item.returnPrice>0}"><fmt:formatNumber value="${item.returnPrice}" maxFractionDigits="1"/></c:if></td>
+                                                    <td><c:if test="${item.fee>0}"><fmt:formatNumber value="${item.fee}" maxFractionDigits="1"/></c:if></td>
+                                                    <td><fmt:formatNumber value="${item.revenue}" maxFractionDigits="1"/></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="portlet-body" id="request" style="display: none;">
-                                    
+                                <div class="portlet-body" id="consignment" style="display: none;">
+                                    <table class="table table-striped table-hover" id="consignmentTable">
+                                        <thead>
+                                            <tr role="row" class="heading">
+                                                <th>STT</th>
+                                                <th>Tên khách hàng</th>
+                                                <th>Số điện thoại</th>
+                                                <th>Mã kí gửi</th>
+                                                <th>Ngày tạo</th>
+                                                <th>Trạng thái</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="item" items="${requestScope.resultC}" varStatus="counter">
+                                                <tr>
+                                                    <td>${counter.count}</td>
+                                                    <td>${item.name}</td>
+                                                    <td>${item.phone}</td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td>${item.createdDate}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 1}">Đang chờ xử lý</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 2}">Đã từ chối</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 3}">Đã duyệt</c:when>
+                                                        </c:choose>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

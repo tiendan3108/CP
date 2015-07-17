@@ -1715,7 +1715,7 @@ public class DanqtDAO {
         }
     }
 
-    public List<StatisticDTO> getInforForStatisticPage(int roleID) {
+    public List<StatisticDTO> getProductInforForStatisticPage(int roleID) {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -1782,43 +1782,26 @@ public class DanqtDAO {
         }
     }
 
-    public List<StatisticDTO> getInforForStatisticPage(int roleID, String fromDate, String toDate) {
+    public List<ConsignmentDTO> getConsignmentInforForStatisticPage(int roleID) {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String query = "";
-        List<StatisticDTO> result = new ArrayList<>();
+        List<ConsignmentDTO> result = new ArrayList<>();
+        ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
-                    + "p.SellingPrice, c.CancelFee, c.ReceivedDate FROM Product p, Consignment c "
-                    + "WHERE p.ProductID = c.ProductID AND c.StoreOWnerID = ? AND "
-                    + "((p.SellDate BETWEEN ? AND ?) OR (c.CancelDate BETWEEN ? AND ?) OR (c.ReceivedDate BETWEEN ? AND ?) AND "
-                    + "((c.ConsignmentStatusID = 6 AND p.ProductStatusID = 7) OR (c.ConsignmentStatusID = 5 AND p.ProductStatusID = 7) OR (c.ConsignmentStatusID = 7 AND p.ProductStatusID = 7))";
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
-            stm.setString(2, fromDate);
-            stm.setString(3, toDate);
-            stm.setString(4, fromDate);
-            stm.setString(5, toDate);
-            stm.setString(6, fromDate);
-            stm.setString(7, toDate);
             rs = stm.executeQuery();
             while (rs.next()) {
-                String productName = rs.getString("ProductName");
-                String consignorName = rs.getString("FullName");
-                float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
-                float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
-                float sellingPrice = rs.getFloat("SellingPrice") / 1000;
-                float fee = rs.getFloat("CancelFee") / 1000;
-                float revenue = 0;
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
-                if (fee != 0) {
-                    revenue = fee;
-                } else {
-                    revenue = sellingPrice - returnPrice;
-                }
-                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, fee, revenue, sellingPrice, receivedDate);
+                item = new ConsignmentDTO();
+                item.setName(rs.getString("FullName"));
+                item.setConsigmentID(rs.getString("ConsignmentID"));
+                item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));
+                item.setPhone(convertPhone(rs.getString("Phone")));
+                item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 result.add(item);
             }
             if (result.isEmpty()) {
