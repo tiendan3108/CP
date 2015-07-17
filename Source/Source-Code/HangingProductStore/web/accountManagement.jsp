@@ -104,22 +104,19 @@
                 <!-- BEGIN CONTENT -->
                 <div class="page-content-wrapper">
                     <c:set var="accounts" value="${requestScope.DATA}"/>  
-                    <div class="page-content">
-                        <h3 class="page-title">
-                            Quản lí tài khoản 
-                        </h3>
+                    <div class="page-content">   
                         <a data-toggle="modal" data-target="#addAccountModel"  style="margin-bottom: 20px;float: right" class="btn btn-primary">Thêm tài khoản</a>
                         <!-- END PAGE HEADER-->
                         <!-- BEGIN PAGE CONTENT-->
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12">                                
                                 <div class="portlet box blue">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="fa fa-globe"></i>Quản lí yêu cầu
-                                        </div>
+                                            <i class="fa fa-globe"></i>Quản lí tài khoản
+                                        </div>                                        
                                     </div>
-                                    <div class="portlet-body">
+                                    <div class="portlet-body">                                     
                                         <table class="table table-striped table-hover" id="sample_1">
                                             <thead>
                                                 <tr>
@@ -177,7 +174,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h1 class="text-center">Thêm Tài Khoản</h1>
+                                <h3 class="text-center">Thêm Tài Khoản</h3>
                             </div>
                             <div style="margin-bottom: 50px" class="modal-body">
                                 <div class="row">
@@ -236,9 +233,9 @@
                                                 </div>
                                                 <label class="control-label col-md-2 col-lg-2"> Quyền hạn:  <span class="require">*</span></label>
                                                 <div class="col-md-4 col-lg-4">                                                       <select name="role" class="form-control">
-                                                            <option value="storeOwner">Chủ cửa hàng</option>
-                                                            <option value="member">Thành viên</option>
-                                                        </select>                     
+                                                        <option value="storeOwner">Chủ cửa hàng</option>
+                                                        <option value="member">Thành viên</option>
+                                                    </select>                     
                                                 </div>
                                             </div>
                                             <button style="float: right;margin-right: 75px;margin-top: 20px;width: 150px" class="btn btn-primary" type="submit">Hoàn tất</button>
@@ -254,7 +251,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h1 id="aTitle" class="text-center">Sửa Tài Khoản</h1>
+                                <h3 id="aTitle" class="text-center">Sửa Tài Khoản</h3>
                             </div>
                             <div style="margin-bottom: 50px" class="modal-body">
                                 <div class="row">
