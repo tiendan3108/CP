@@ -242,7 +242,11 @@
 
         }
         else if ($("#txtSerialNumber").val().length == 0 && $("#txtProductName").val().length == 0) {
-            $("#txtSerialNumber").prop("readonly",true);
+            $("#txtSerialNumber").prop("readonly",false);
+            $("#txtProductName").prop("readonly",false);
+
+        }else if ($("#txtSerialNumber").val().length >= 0 && $("#txtProductName").val().length >= 0) {
+            $("#txtSerialNumber").prop("readonly",false);
             $("#txtProductName").prop("readonly",true);
 
         }
@@ -275,7 +279,7 @@
 
     function validation() {
         var check = true;
-        if ($('#txtProductName').prop('readonly') == false && $('#txtSerialNumber').prop('readonly') == false) {
+        if ($('#txtProductName').val().length == 0 && $('#txtSerialNumber').val().length == 0) {
             
             $('#erProductName').html("<font color='red'>Xin nhập tên hoặc mã số</font>");
             check = false;
