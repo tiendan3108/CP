@@ -248,7 +248,7 @@ public class ProductDetailDAO {
             con = db.makeConnection();
             String query = "update Consignment "
                     + "Set ConsignmentStatusId = ? , "
-                    + "Reason = ? ,"
+                    + "Reason = ? "
  //                   + "CancelDate = ?"
                     + "where ProductId = ?";
             stm = con.prepareStatement(query);
