@@ -29,7 +29,10 @@ public class ConsignmentDTO implements Serializable {
     private float maxPrice;
     private float minPrice;
     private float returnPrice;
-    private String receivedDate;
+    //danqt start change receivedDate to reviewProductDate, add reviewRequestDate
+    private String reviewProductDate;
+    private String reviewRequestDate;
+    //danqt end
     private String createdDate;
 
     private int consignmentStatusID;
@@ -71,7 +74,7 @@ public class ConsignmentDTO implements Serializable {
         this.raiseWebDate = raiseWebDate;
         this.period = period;
         this.negotiatedPrice = negotiatedPrice;
-        this.receivedDate = receivedDate;
+        this.reviewProductDate = receivedDate;
         this.createdDate = createdDate;
         this.consignmentStatusID = consignmentStatusID;
         this.product = product;
@@ -240,14 +243,6 @@ public class ConsignmentDTO implements Serializable {
         this.returnPrice = returnPrice;
     }
 
-    public String getReceivedDate() {
-        return receivedDate;
-    }
-
-    public void setReceivedDate(String receivedDate) {
-        this.receivedDate = receivedDate;
-    }
-
     public ProductDTO getProduct() {
         return product;
     }
@@ -377,6 +372,33 @@ public class ConsignmentDTO implements Serializable {
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
-    
-    
+
+    /**
+     * @return the reviewProductDate
+     */
+    public String getReviewProductDate() {
+        return reviewProductDate;
+    }
+
+    /**
+     * @param reviewProductDate the reviewProductDate to set
+     */
+    public void setReviewProductDate(String reviewProductDate) {
+        this.reviewProductDate = reviewProductDate;
+    }
+
+    /**
+     * @return the reviewRequestDate
+     */
+    public String getReviewRequestDate() {
+        return reviewRequestDate;
+    }
+
+    /**
+     * @param reviewRequestDate the reviewRequestDate to set
+     */
+    public void setReviewRequestDate(String reviewRequestDate) {
+        this.reviewRequestDate = reviewRequestDate;
+    }
+
 }
