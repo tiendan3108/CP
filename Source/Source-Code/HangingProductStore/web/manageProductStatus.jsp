@@ -172,25 +172,25 @@
                                         <i class="fa fa-globe"></i>Quản lí sản phẩm 
                                         <c:choose>
                                             <c:when test="${requestScope.currentTab == 'available'}">
-                                                Chờ duyệt
+                                                chờ duyệt
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'onWeb'}">
-                                                Trên web
+                                                trên web
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'ordered'}">
-                                                Đã được đặt
+                                                đã được đặt
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'sold'}">
-                                                Đã bán
+                                                đã bán
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'completed'}">
-                                                Hoàn tất thanh toán
+                                                hoàn tất thanh toán
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'expired'}">
-                                                Hết hạn kí gửi
+                                                hết hạn kí gửi
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'canceled'}">
-                                                Đăng kí hủy kí gửi
+                                                đăng kí hủy kí gửi
                                             </c:when>
                                         </c:choose>
                                     </div>

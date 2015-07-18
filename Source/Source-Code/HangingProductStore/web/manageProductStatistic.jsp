@@ -4,7 +4,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>Quản lí</title>
+        <title>Quản lí yêu cầu ký gửi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -26,8 +26,6 @@
         <link href="assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css"/>
-        <!-- END THEME STYLES -->
-        <!-- END THEME STYLES -->
     </head>
     <body class="page-header-fixed page-quick-sidebar-over-content ">
         <!-- BEGIN SET PARAMETER -->
@@ -181,6 +179,10 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body" id="product" style="display: none;">
+                                    <div class="input-daterange col-sm-8">
+                                        Sản phẩm từ 
+                                        <input type="text" id="daterange">
+                                    </div>
                                     <table class="table table-striped table-hover" id="productTable">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -265,9 +267,6 @@
                 <i class="icon-arrow-up"></i>
             </div>
         </div>
-        <!-- END FOOTER -->
-        <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-        <!-- BEGIN CORE PLUGINS -->
         <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
         <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
@@ -279,7 +278,6 @@
         <script src="assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-
         <script type="text/javascript" src="assets/global/plugins/select2/select2.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
@@ -290,7 +288,28 @@
         <script src="assets/admin/layout/scripts/quick-sidebar.js" type="text/javascript"></script>
         <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
         <script src="assets/admin/pages/scripts/table-managed.js"></script>
-        <!-- END CORE PLUGINS -->
+
+        <!--BEGIN PAGE CSS -->
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+        <!--END PAGE CSS -->
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/clockface/css/clockface.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+        <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/clockface/js/clockface.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="assets/admin/pages/scripts/components-form-tools.js"></script>
+        <script src="assets/admin/pages/scripts/components-pickers.js"></script>
         <script>
             jQuery(document).ready(function () {
                 // initiate layout and plugins
@@ -300,8 +319,7 @@
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
                 TableManaged.init();
-            });
-        </script>
+            });</script>
         <script>
             //script switch tab
             $(document).ready(function () {
@@ -314,6 +332,58 @@
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
             });
+            //date picker
+            $(function () {
+                $('#daterange').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    maxDate: new Date(),
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+            });
+            $('#daterange').on('apply.daterangepicker', function (ev, picker) {
+                var startDate = picker.startDate.format("DD-MM-YYYY");
+                var endDate = picker.endDate.format("DD-MM-YYYY");
+                var table = $('#productTable');
+                table.find('tr').each(function (index, row)
+                {
+                    var allCells = $(row).find('td');
+                    if (allCells.length > 0)
+                    {
+                        var found = false;
+                        allCells.each(function (index, td)
+                        {
+                            if (index == 3) {
+                                var currentDate = $(td).text();
+                                    if (compareDate(currentDate, startDate) >= 0 && compareDate(currentDate, endDate) <= 0) {
+                                    found = true;
+                                return false;
+                            }
+                        }
+                        });
+                            if (found == true)
+                        $(row).show();
+                            else
+                    $(row).hide();
+                }
+            });
+            });
+                function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+                    if (source.substring(6, 10) > target.substring(6, 10)) {
+                return 1;
+                }
+                    if (source.substring(3, 5) > target.substring(3, 5)) {
+                return 1;
+                }
+                    if (source.substring(0, 2) > target.substring(0, 2)) {
+                return 1;
+                }
+                    if (source.localeCompare(target) == 0) {
+                return 0;
+                }
+            return -1;
+            }
         </script>
     </body>
     <!-- END BODY -->
