@@ -456,6 +456,8 @@ var TableManaged = function () {
                 }, {
                     "orderable": true
                 }, {
+                    "orderable": true
+                }, {
                     "orderable": false
                 }],
             "lengthMenu": [
@@ -603,7 +605,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initExpiredTable = function () {
 
         var table = $('#expiredTable');
@@ -698,7 +700,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initAvailableTable = function () {
 
         var table = $('#availableTable');
@@ -793,7 +795,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initOnWebTable = function () {
 
         var table = $('#onWebTable');
@@ -886,7 +888,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initOrderedTable = function () {
 
         var table = $('#orderedTable');
@@ -979,7 +981,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initCanceledTable = function () {
 
         var table = $('#canceledTable');
@@ -1074,7 +1076,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initCompletedTable = function () {
 
         var table = $('#completedTable');
@@ -1165,7 +1167,7 @@ var TableManaged = function () {
 
         tableWrapper.find('.dataTables_length select').addClass("form-control input-xsmall input-inline"); // modify table per page dropdown
     }
-    
+
     var initSoldTable = function () {
 
         var table = $('#soldTable');
@@ -1279,7 +1281,7 @@ var TableManaged = function () {
             initTable1_Request();
             initTable2_Request();
             initTable3_Request();
-            initTable4_Request(); 
+            initTable4_Request();
         }
 
     };

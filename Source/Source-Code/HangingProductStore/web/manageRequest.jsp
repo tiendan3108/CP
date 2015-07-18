@@ -335,7 +335,7 @@
                                                     </td>
                                                     <td>
 
-                                                        ${c.receivedDate} &nbsp; ${c.hour}
+                                                        ${c.appointmentDate} &nbsp; ${c.hour}
                                                     </td>
                                                     <td align="center">
 
@@ -366,7 +366,9 @@
                                                 <th>
                                                     Ngày Gửi
                                                 </th>
-
+                                                <th>
+                                                    Ngày từ chối
+                                                </th>
                                                 <th>
                                                     Chi Tiết
                                                 </th>
@@ -385,6 +387,10 @@
                                                     </td>
                                                     <td>
                                                         ${c.createdDate}
+
+                                                    </td>
+                                                    <td>
+                                                        ${c.reviewRequestDate}
 
                                                     </td>
 

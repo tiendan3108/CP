@@ -158,7 +158,7 @@ public class ConsignmentServlet extends HttpServlet {
             if (request.getParameter("id") != null) {
                 String consignmentId = request.getParameter("id");
                 if (request.getParameter("accept") != null) {
-                    consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_ACCEPTED, "");
+                   // consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_ACCEPTED, "");
 //                    try {
 //                        notification.sendSMS("Yêu cầu ký gửi " + consignmentId + " đã được chấp nhận", "+84917533644");
 //                    } catch (TwilioRestException ex) {
@@ -168,7 +168,7 @@ public class ConsignmentServlet extends HttpServlet {
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã chấp nhận!", "Sản phẩm được dời qua mục Yêu Cầu Đã Duyệt.");
                     request.setAttribute("alert", alert);
                 } else if (request.getParameter("refuse") != null) {
-                    consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_REFUSED, "");
+                   // consignmentDAO.updateConsignmentStatus(consignmentId, REQUEST_REFUSED, "");
 
                     Alert alert = new Alert(Alert.AlertType.SUCCESS, "Đã từ chối!", "Sản phẩm đã được loại bỏ.");
                     request.setAttribute("alert", alert);
