@@ -47,6 +47,7 @@ public class ConsignmentDTO implements Serializable {
     private String cancelDate; // add on 25/6/2015
     private String reason;
     private float negotiatedPrice;
+    private String appointmentDate;
     private String hour;
     // duchc - end
 
@@ -367,6 +368,14 @@ public class ConsignmentDTO implements Serializable {
 
     public void setHour(String hour) {
         this.hour = hour;
+    }
+
+    public String getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(String appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
     
     

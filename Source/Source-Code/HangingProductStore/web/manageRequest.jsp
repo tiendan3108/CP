@@ -1250,7 +1250,7 @@
                     $("#r_address").html(data.address);
                     $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
 
-                    $("#r_hour").val(data.hour);
+                    //$("#r_hour").val(data.hour);
 
                     if (data.minPrice > 0 && data.maxPrice > 0) {
                         $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
@@ -1280,8 +1280,8 @@
                             $("#ar_price").hide();
                             $("#r_btnAction").val("r_accept");
 
-                            $("#r_receivedDate").val(data.receivedDate);
-                            $("#r_hour").val(data.hour);
+                            $("#r_receivedDate").val(data.fromDate);
+                            $("#r_hour").val("12:00 PM");
                             $("#ar_divReceivedDate").html("");
                             $("#ar_divHour").html("");
 
@@ -1304,7 +1304,7 @@
                             $("#r_receivedDate").val("");
                             $("#r_hour").val("");
 
-                            $("#ar_divReceivedDate").html(data.receivedDate);
+                            $("#ar_divReceivedDate").html(data.appointmentDate);
                             $("#ar_divHour").html(data.hour);
 
 

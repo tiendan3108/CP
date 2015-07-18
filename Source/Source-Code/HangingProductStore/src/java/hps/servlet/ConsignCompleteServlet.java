@@ -241,7 +241,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
-                    consignment.setReceivedDate(fromDate);
+                    
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
 

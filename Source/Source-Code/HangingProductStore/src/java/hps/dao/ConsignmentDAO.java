@@ -494,16 +494,16 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     //update consignment with date in consignment management 14/7/2015
-    public boolean updateConsignmentAndProductStatusWithDate(String consignmentID, float negotiatedPrice, String receivedDate, int consignmentStatusID, int productID,
+    public boolean updateConsignmentAndProductStatusWithDate(String consignmentID, float negotiatedPrice, String appointmentDate, int consignmentStatusID, int productID,
             String productName, int categoryID, String brand, String description, int productStatusID) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
             String sql = "UPDATE Consignment"
-                    + " SET NegotiatedPrice = ?, ReceivedDate = ?, ConsignmentStatusID = ?"
+                    + " SET NegotiatedPrice = ?, AppointmentDate = ?, ConsignmentStatusID = ?"
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             if (negotiatedPrice > 0) {
@@ -512,14 +512,14 @@ public class ConsignmentDAO {
                 stm.setNull(1, java.sql.Types.FLOAT);
             }
 
-            if (receivedDate.isEmpty()) {
+            if (appointmentDate.isEmpty()) {
                 stm.setNull(2, java.sql.Types.DATE);
             } else {
-                stm.setString(2, receivedDate);
+                stm.setString(2, appointmentDate);
             }
 
             stm.setInt(3, consignmentStatusID);
-            
+
             stm.setString(4, consignmentID);
 
             int result = stm.executeUpdate();
@@ -611,7 +611,7 @@ public class ConsignmentDAO {
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        DateFormat dfHour = new SimpleDateFormat("hh:mm aa"); 
+        DateFormat dfHour = new SimpleDateFormat("hh:mm aa");
         //JavaUltilities java = new JavaUltilities();
 
         String consignmentID = rs.getString("ConsignmentID");
@@ -630,7 +630,6 @@ public class ConsignmentDAO {
         //String toDate = rs.getString("ToDate");
         //toDate = java.formatDateString(toDate);
         String toDate = df.format(rs.getDate("ToDate"));
-        
 
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
@@ -641,12 +640,10 @@ public class ConsignmentDAO {
         float minPrice = rs.getFloat("MinPrice") / 1000;
         float maxPrice = rs.getFloat("MaxPrice") / 1000;
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
-        
-        String hour = "";
+
         String receiveDate = rs.getString("ReceivedDate");
         if (receiveDate != null) {
             receiveDate = df.format(rs.getDate("ReceivedDate"));
-            hour = dfHour.format(rs.getTimestamp("ReceivedDate"));
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
@@ -658,12 +655,18 @@ public class ConsignmentDAO {
             cancelDate = df.format(rs.getDate("CancelDate"));
             //cancelDate = java.formatDateString(cancelDate);
         }
+        String appointmentDate = rs.getString("AppointmentDate");
+        String hour = "";
+        if (appointmentDate != null) {
+            appointmentDate = df.format(rs.getDate("AppointmentDate"));
+            hour = dfHour.format(rs.getTimestamp("AppointmentDate"));
+        }
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
         ConsignmentDTO consignment = new ConsignmentDTO();
         consignment.setConsigmentID(consignmentID);
         consignment.setProductID(productID);
-        if (memberID != null) {
+        if (memberID > 0) {
             consignment.setMemberID(memberID);
         }
         consignment.setStoreOwnerID(storeOwnerID);
@@ -683,6 +686,7 @@ public class ConsignmentDAO {
         consignment.setReceivedDate(receiveDate);
         consignment.setCreatedDate(createdDate);
         consignment.setCancelDate(cancelDate);
+        consignment.setAppointmentDate(appointmentDate);
         consignment.setConsignmentStatusID(consignmentStatusID);
         consignment.setReason(reason);
 
