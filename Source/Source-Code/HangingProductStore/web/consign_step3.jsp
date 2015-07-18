@@ -75,18 +75,20 @@
                                             <c:set var="data" value="${sessionScope.STORELIST}"/>
                                             <c:set var="basicPrice" value="${sessionScope.BASICPRICE}"/>
                                             <c:set var="store" value="${sessionScope.STORE}"/>
-                                            <div class="tab-content ">
-                                                <c:if test="${basicPrice <= 0}">
-                                                    <div class="alert alert-danger" style="text-align: center">
-                                                        <strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
-                                                    </div>    
-                                                </c:if>
-                                                <c:if test="${basicPrice > 0}">
-                                                    <div class="alert alert-warning" style="text-align: center">
-                                                        <strong>Giá cửa hàng đề nghị có thể không chính xác. Cửa hàng sẽ kiểm tra và định giá chính xác khi đến nhận hàng</strong>
-                                                    </div>    
-                                                </c:if>
 
+                                            <div class="tab-content ">
+                                                <c:if test="${not empty data}">
+                                                    <c:if test="${basicPrice <= 0}">
+                                                        <div class="alert alert-danger" style="text-align: center">
+                                                            <strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                                        </div>    
+                                                    </c:if>
+                                                    <c:if test="${basicPrice > 0}">
+                                                        <div class="alert alert-warning" style="text-align: center">
+                                                            <strong>Giá cửa hàng đề nghị có thể không chính xác. Cửa hàng sẽ kiểm tra và định giá chính xác khi đến nhận hàng</strong>
+                                                        </div>    
+                                                    </c:if>
+                                                </c:if>
                                                 <div>
 
 
@@ -137,7 +139,7 @@
                                                                         <td>
                                                                             <c:if test="${basicPrice > 0}">
 
-                                                                                
+
                                                                                 <fmt:formatNumber type="number"
                                                                                                   value="${item.minPrice}" 
                                                                                                   maxFractionDigits="0" /> &nbsp; ~ &nbsp; <fmt:formatNumber 
@@ -183,7 +185,8 @@
                                                         <!--                                                    </form>-->
                                                     </c:if>
                                                     <c:if test="${empty data}">
-                                                        <h2 align="center">Không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h2>
+                                                        <h3 align="center">Hiện không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h3>
+                                                        <h3 align="center">Chúng tôi rất tiếc vì điều này.</h3>
                                                     </c:if>
 
                                                 </div>

@@ -255,10 +255,10 @@ var TableManaged = function () {
             // So when dropdowns used the scrollable div should be removed. 
             //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
-            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+            "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
+                    "orderable": false
                 }, {
                     "orderable": true
                 }, {
@@ -297,7 +297,7 @@ var TableManaged = function () {
                     "targets": [0]
                 }],
             "order": [
-                [1, "asc"]
+                [0, "asc"]
             ] // set first column as a default sort by asc
         });
 
@@ -350,10 +350,10 @@ var TableManaged = function () {
             // So when dropdowns used the scrollable div should be removed. 
             //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
-            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+            "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
+                    "orderable": false
                 }, {
                     "orderable": true
                 }, {
@@ -392,7 +392,7 @@ var TableManaged = function () {
                     "targets": [0]
                 }],
             "order": [
-                [1, "asc"]
+                [0, "asc"]
             ] // set first column as a default sort by asc
         });
 
@@ -445,10 +445,10 @@ var TableManaged = function () {
             // So when dropdowns used the scrollable div should be removed. 
             //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
-            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+            "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
+                    "orderable": false
                 }, {
                     "orderable": true
                 }, {
@@ -485,7 +485,7 @@ var TableManaged = function () {
                     "targets": [0]
                 }],
             "order": [
-                [1, "asc"]
+                [0, "asc"]
             ] // set first column as a default sort by asc
         });
 
@@ -538,10 +538,10 @@ var TableManaged = function () {
             // So when dropdowns used the scrollable div should be removed. 
             //"dom": "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
 
-            "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+            "bStateSave": false, // save datatable state(pagination, sort, etc) in cookie.
 
             "columns": [{
-                    "orderable": true
+                    "orderable": false
                 }, {
                     "orderable": true
                 }, {
@@ -578,7 +578,7 @@ var TableManaged = function () {
                     "targets": [0]
                 }],
             "order": [
-                [1, "asc"]
+                [0, "asc"]
             ] // set first column as a default sort by asc
         });
 

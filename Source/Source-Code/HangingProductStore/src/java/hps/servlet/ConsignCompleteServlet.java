@@ -101,15 +101,15 @@ public class ConsignCompleteServlet extends HttpServlet {
                         //if item is form fie
                         switch (item.getFieldName()) {
                             case "txtFullName":
-                                fullName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
+                                fullName = new String(item.getString().getBytes("iso-8859-1"), "utf-8").trim();
                                 break;
                             case "txtFromDate":
-                                fromDate = item.getString();
+                                fromDate = item.getString().trim();
                                 //fromDate = formatDate(fromDate);
 
                                 break;
                             case "txtToDate":
-                                toDate = item.getString();
+                                toDate = item.getString().trim();
                                 //toDate = formatDate(toDate);
 
                                 break;
@@ -118,22 +118,22 @@ public class ConsignCompleteServlet extends HttpServlet {
 //
 //                                break;
                             case "txtAddress":
-                                address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
+                                address = new String(item.getString().getBytes("iso-8859-1"), "utf-8").trim();
                                 break;
                             case "txtPhone":
-                                phone = item.getString();
+                                phone = item.getString().trim();
                                 if (phone.length() > 0) {
                                     phone = "+84" + phone.substring(1);
                                 }
                                 break;
                             case "txtEmail":
-                                email = item.getString();
+                                email = item.getString().trim();
                                 break;
                             case "txtPaypalAccount":
-                                paypalAccount = item.getString();
+                                paypalAccount = item.getString().trim();
                                 break;
                             case "rdPayment":
-                                paymentMethod = item.getString();
+                                paymentMethod = item.getString().trim();
                                 break;
                             default:
                                 break;

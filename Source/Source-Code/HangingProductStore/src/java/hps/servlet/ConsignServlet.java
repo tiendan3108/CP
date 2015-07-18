@@ -103,12 +103,12 @@ public class ConsignServlet extends HttpServlet {
                 url = STEP1;
             }
             if (action.equals("tostep2")) {
-                String productName = request.getParameter("txtProductName");
-                String serialNumber = request.getParameter("txtSerialNumber");
+                String productName = request.getParameter("txtProductName").trim();
+                String serialNumber = request.getParameter("txtSerialNumber").trim();
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
-                String brand = request.getParameter("txtBrand");
-                String date = request.getParameter("txtDate");
-                String description = request.getParameter("txtDescription");
+                String brand = request.getParameter("txtBrand").trim();
+                String date = request.getParameter("txtDate").trim();
+                String description = request.getParameter("txtDescription").trim();
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
 
