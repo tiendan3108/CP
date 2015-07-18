@@ -669,9 +669,9 @@
                             <h4 class="modal-title">Xác nhận</h4>
                         </div>
                         <div class="modal-body" align="center">
-                            <div id="r_body_confirm">
+<!--                            <div id="r_body_confirm">
                                 <h3>Xin nhập lí do từ chối sản phẩm</h3>
-                            </div>
+                            </div>-->
                             <div id="ar_body_confirm" class="form-horizontal">
 
                                 <div class="form-group">
@@ -1227,6 +1227,9 @@
                                 $("#rc_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
                             }
                         }
+                        else if (data.consignmentStatusID == 7) {
+                            $("#rc_status").html("<b><font color='red'>ĐÃ TRẢ HÀNG</font></b>");
+                        }
                     }
                 });
             }
@@ -1346,7 +1349,12 @@
                                 $("#r_footer").hide();
                                 $("#ar_footer").hide();
                             }
+                        } else if (data.consignmentStatusID == 7) {
+                            $("#r_status").html("<b><font color='red'>ĐÃ TRẢ HÀNG</font></b>");
+                            $("#r_footer").hide();
+                            $("#ar_footer").hide();
                         }
+
                     }
                 });
             }
@@ -1411,7 +1419,7 @@
                 $("#ar_inputReason").val(reason);
                 return true;
             }
-            
+
             function r_confirm_validation() {
                 var reason = $("#ar_txtReason").val();
                 if (reason.trim() == "") {
