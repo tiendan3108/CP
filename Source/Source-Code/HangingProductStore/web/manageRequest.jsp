@@ -169,7 +169,7 @@
 
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-globe"></i>Quản lí yêu cầu
+                                        <i class="fa fa-globe"></i>Yêu cầu
                                         <c:choose>
                                             <c:when test="${requestScope.currentTab == 'request'}">
                                                 chưa duyệt
@@ -202,7 +202,7 @@
                                                     Mã ký gửi
                                                 </th>
                                                 <th>
-                                                    Ngày Gửi
+                                                    Ngày tạo yêu cầu
                                                 </th>
                                                 <th>
                                                     Giá (Ngàn đồng)
@@ -288,7 +288,7 @@
                                                     Mã ký gửi
                                                 </th>
                                                 <th>
-                                                    Ngày Gửi
+                                                    Ngày tạo yêu cầu
                                                 </th>
                                                 <th>
                                                     Giá (Ngàn đồng)
@@ -364,7 +364,7 @@
                                                     Mã ký gửi
                                                 </th>
                                                 <th>
-                                                    Ngày Gửi
+                                                    Ngày tạo yêu cầu
                                                 </th>
                                                 <th>
                                                     Ngày từ chối
@@ -420,7 +420,7 @@
                                                     Mã ký gửi
                                                 </th>
                                                 <th>
-                                                    Ngày Gửi
+                                                    Ngày tạo yêu cầu
                                                 </th>
 
                                                 <th>
