@@ -253,7 +253,7 @@
     });
     $(function () {
         $("#txtBrand").autocomplete({
-            source: "ConsignServlet?btnAction=getBrand",
+            source: "BrandAutocomplete",
             minLength: 1,
             select: function (event, ui) {
             }

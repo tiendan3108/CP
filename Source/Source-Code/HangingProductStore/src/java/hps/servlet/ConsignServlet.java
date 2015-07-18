@@ -263,15 +263,15 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("ASIN");
                 session.removeAttribute("AMAZONLIST");
             }
-            if (action.equals("getBrand")) {
-                String term = request.getParameter("term");
-                List<String> list = DuchcDAO.autoCompleteBrandName(term);
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(json);
-                return;
-
-            }
+//            if (action.equals("getBrand")) {
+//                String term = request.getParameter("term");
+//                List<String> list = DuchcDAO.autoCompleteBrandName(term);
+//                String json = new Gson().toJson(list);
+//                response.setContentType("application/json;charset=UTF-8");
+//                response.getWriter().write(json);
+//                return;
+//
+//            }
             request.setAttribute("backlink", url);
             RequestDispatcher dispatcher = request.getRequestDispatcher(url);
             dispatcher.forward(request, response);

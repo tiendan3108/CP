@@ -468,13 +468,14 @@
 
         <!--BEGIN MODAL -->
 
-
+        <c:set var="fCate" value="${FCATE}" />
+        <c:set var="category" value="${CATEGORY}" />    
 
         <!--BEGIN MODAL -->
         <!-- Large modal -->
+
         <c:if test="${not empty requestScope.REQUEST or not empty requestScope.ACCEPT}">
-            <c:set var="fCate" value="${FCATE}" />
-            <c:set var="category" value="${CATEGORY}" />    
+
             <div id="modalRequestAccept" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -669,9 +670,9 @@
                             <h4 class="modal-title">Xác nhận</h4>
                         </div>
                         <div class="modal-body" align="center">
-<!--                            <div id="r_body_confirm">
-                                <h3>Xin nhập lí do từ chối sản phẩm</h3>
-                            </div>-->
+                            <!--                            <div id="r_body_confirm">
+                                                            <h3>Xin nhập lí do từ chối sản phẩm</h3>
+                                                        </div>-->
                             <div id="ar_body_confirm" class="form-horizontal">
 
                                 <div class="form-group">
@@ -1108,7 +1109,17 @@
         <script src="assets/admin/pages/scripts/components-form-tools.js"></script>
         <script src="assets/admin/pages/scripts/components-pickers.js"></script>
 
+        <!-- START AUTO COMPLETE CSS AND JS -->
 
+        <link rel="stylesheet" href="js/jquery-ui.css">
+        <style>
+            .ui-autocomplete-loading {
+                background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+            }
+        </style>
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <!-- END AUTO COMPLETE -->
 
         <script>
                                     jQuery(document).ready(function () {
@@ -1124,22 +1135,6 @@
         </script>
         <script type="text/javascript">
 
-
-            $(document).ready(function () {
-//                $('.page-sidebar-menu .nav-tabs a').on('click', function (e) {
-//                    var currentAttrValue = $(this).attr('href');
-//
-//                    $('.tabs ' + currentAttrValue).siblings().hide();
-//                    $(this).parent('li').siblings().removeClass('active');
-//                    $('.tabs ' + currentAttrValue).fadeIn(400);
-//                    $(this).parent('li').addClass('active');
-//
-//                    window.location.hash = $(this).attr('href');
-//                    $('html,body').scrollTop(0);
-//                    e.preventDefault();
-//
-//                });
-            });
             $(document).ready(function () {
 
                 var currentTab = window.location.hash.substring(1);
@@ -1155,21 +1150,20 @@
 
 
             $(function () {
-                $("#r_searchInput").autocomplete({
-                    source: "ConsignmentRequestReceive?btnAction=r_searchName",
+                $("#r_brand").autocomplete({
+                    source: "BrandAutocomplete",
                     minLength: 1,
                     select: function (event, ui) {
                     }
                 });
-
-                $("#ar_searchInput").autocomplete({
-                    source: "ConsignmentRequestReceive?btnAction=ar_searchName",
+            });
+            $(function () {
+                $("#addConsignment_txtBrand").autocomplete({
+                    source: "BrandAutocomplete",
                     minLength: 1,
                     select: function (event, ui) {
                     }
                 });
-
-                $("#addConsignment_txtDate").datetimepicker();
 
             });
 
