@@ -15,7 +15,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,10 +28,18 @@ import java.util.logging.Logger;
  */
 public class ProductDetailDAO {
 
+    private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+    private Date date = new Date();
+    private String newDate = df.format(date);
+
+    SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String currentDateTime = dtf.format(date);
+
     public int checkLogin(String username, String password) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -115,10 +125,12 @@ public class ProductDetailDAO {
                     + "Where Product.ProductID = Consignment.ProductID "
                     + "And Consignment.StoreOwnerID = ? "
                     + "And Consignment.ConsignmentStatusID = ? "
-                    + "order by Consignment.ToDate asc";
+                    + "And CAST (Consignment.AppointmentDate as DATE) = ? "
+                    + "order by Consignment.AppointmentDate asc";
             stm = con.prepareStatement(query);
             stm.setInt(1, memberID);
             stm.setInt(2, ConsignmentStatus.ACCEPTED);
+            stm.setString(3, newDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
@@ -130,11 +142,10 @@ public class ProductDetailDAO {
                 String customerName = rs.getString("FullName");
                 String address = rs.getString("Address");
                 String phone = rs.getString("Phone");
-                String fromDate = rs.getString("FromDate");
-                String toDate = rs.getString("ToDate");
+                String appointmentDate = rs.getString("AppointmentDate");
                 float maxPrice = rs.getFloat("MaxPrice");
                 float minPrice = rs.getFloat("MinPrice");
-                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, image, customerName, address, phone, maxPrice, minPrice, fromDate, toDate);
+                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, image, customerName, address, phone, maxPrice, minPrice, appointmentDate);
                 products.add(product);
             }
             return products;
@@ -237,11 +248,13 @@ public class ProductDetailDAO {
             con = db.makeConnection();
             String query = "update Consignment "
                     + "Set ConsignmentStatusId = ? , "
-                    + "Reason = ? "
+                    + "Reason = ? ,"
+ //                   + "CancelDate = ?"
                     + "where ProductId = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, ConsignmentStatus.REFUSE);
             stm.setString(2, reason);
+ //           stm.setString(3, currentDateTime);
             stm.setInt(3, productID);
             stm.executeUpdate();
         } catch (SQLException ex) {

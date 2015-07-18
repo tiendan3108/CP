@@ -22,15 +22,14 @@ public class ProductDetail {
     private String phone;
     private float maxPrice;
     private float minPrice;
-    private String fromDate;
-    private String toDate;
+    private String appointmentDate;
     private String reason;
     private float negotiatedPrice;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(int productID, String productName, String serialNumber, String brand, String description, String image, String customerName, String address, String phone, float maxPrice, float minPrice, String fromDate, String toDate) {
+    public ProductDetail(int productID, String productName, String serialNumber, String brand, String description, String image, String customerName, String address, String phone, float maxPrice, float minPrice, String appointmentDate) {
         this.productID = productID;
         this.productName = productName;
         this.serialNumber = serialNumber;
@@ -42,8 +41,7 @@ public class ProductDetail {
         this.phone = phone;
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        this.appointmentDate = appointmentDate;
     }
 
     /**
@@ -173,34 +171,6 @@ public class ProductDetail {
     }
 
     /**
-     * @return the fromDate
-     */
-    public String getFromDate() {
-        return fromDate;
-    }
-
-    /**
-     * @param fromDate the fromDate to set
-     */
-    public void setFromDate(String fromDate) {
-        this.fromDate = fromDate;
-    }
-
-    /**
-     * @return the toDate
-     */
-    public String getToDate() {
-        return toDate;
-    }
-
-    /**
-     * @param toDate the toDate to set
-     */
-    public void setToDate(String toDate) {
-        this.toDate = toDate;
-    }
-
-    /**
      * @return the minPrice
      */
     public float getMinPrice() {
@@ -254,6 +224,20 @@ public class ProductDetail {
      */
     public void setNegotiatedPrice(float negotiatedPrice) {
         this.negotiatedPrice = negotiatedPrice;
+    }
+
+    /**
+     * @return the appointmentDate
+     */
+    public String getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    /**
+     * @param appointmentDate the appointmentDate to set
+     */
+    public void setAppointmentDate(String appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
 }

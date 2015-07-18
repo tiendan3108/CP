@@ -56,10 +56,6 @@ public class MobileService {
             for (int i = 0; i < data.size(); i++) {
                 ProductDetail productItem = data.get(i);
                 String imagePath = productItem.getImage();
-                String toDate = productItem.getToDate();
-                String fromDate = productItem.getFromDate();
-                String formatToDate = lib.formatDateString(toDate);
-                String formatFromDate = lib.formatDateString(fromDate);
                 if (imagePath != null) {
                     String path = "";
                     try {
@@ -70,8 +66,6 @@ public class MobileService {
                     String imageCode = lib.encodeImage(path + imagePath);
                     productItem.setImage(imageCode);
                 }
-                productItem.setToDate(formatToDate);
-                productItem.setFromDate(formatFromDate);
                 data.set(i, productItem);
             }
 
@@ -88,10 +82,9 @@ public class MobileService {
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String newDate = df.format(date);
-        System.out.println(product.getNegotiatedPrice());
         dao.updateConsignment(product.getProductID(), newDate, product.getNegotiatedPrice());
         dao.receiveProduct(product.getProductID());
         return "ok";
