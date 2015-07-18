@@ -237,29 +237,29 @@ public class AddConsignmentServlet extends HttpServlet {
                 }
                 ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                         address, phone, email, paypalAccount, currentDate, currentDate, 30, minPrice, maxPrice, currentDate, 5);
-                consignment.setReceivedDate(currentDate);
+                consignment.setReviewProductDate(currentDate);
                 consignment.setNegotiatedPrice(negotiatedPrice);
                 boolean result = dao.addConsigment(consignment);
                 if (result) {
                     ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                     CategoryDAO categoryDAO = new CategoryDAO();
                     List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
-                    List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
-                    List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
-                    List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(account.getRoleID());
+//                    List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
+//                    List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+//                    List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(account.getRoleID());
                     request.setAttribute("REQUEST", c_request);
-                    request.setAttribute("ACCEPT", c_accept);
-                    request.setAttribute("REFUSE", c_refuse);
-                    request.setAttribute("CANCEL", c_cancel);
+//                    request.setAttribute("ACCEPT", c_accept);
+//                    request.setAttribute("REFUSE", c_refuse);
+//                    request.setAttribute("CANCEL", c_cancel);
 
                     List<CategoryDTO> parentCategories = categoryDAO.getParentCategory();
                     List<CategoryDTO> category = categoryDAO.getAllCategory();
                     request.setAttribute("FCATE", parentCategories);
                     request.setAttribute("CATEGORY", category);
-                    
+
                     request.setAttribute("currentTab", "accepted");
-                    
-                    RequestDispatcher rd = request.getRequestDispatcher("consignment_request_receive.jsp");
+
+                    RequestDispatcher rd = request.getRequestDispatcher("manageRequest.jsp");
                     rd.forward(request, response);
                 }
 

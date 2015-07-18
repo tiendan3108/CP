@@ -391,48 +391,48 @@ public class ConsignmentDAO {
     }
 
     // update Consigment Status AS Received and Product Status AS Available
-    public boolean updateConsignmentStatusAsReceived(String consignmentID,
-            double minPrice, double maxPrice, int productID) {
-        Connection con = null;
-        PreparedStatement stm = null;
-        try {
-            con = DBUltilities.makeConnection();
-            String sql = "UPDATE Consignment"
-                    + " SET MinPrice = ?, MaxPrice = ?, ReceivedDate = ?, ConsignmentStatusID = 5"
-                    + " WHERE ConsignmentID = ?";
-            stm = con.prepareStatement(sql);
-            stm.setDouble(1, minPrice);
-            stm.setDouble(2, maxPrice);
-            stm.setDate(3, new Date(System.currentTimeMillis()));
-            stm.setString(4, consignmentID);
-
-            int result = stm.executeUpdate();
-            if (result > 0) {
-                sql = "UPDATE Product SET ProductStatusID = 2 WHERE ProductID = ?";
-                stm = con.prepareStatement(sql);
-                stm.setDouble(1, productID);
-                result = stm.executeUpdate();
-                if (result > 0) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (SQLException ex) {
-            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return false;
-    }
+//    public boolean updateConsignmentStatusAsReceived(String consignmentID,
+//            double minPrice, double maxPrice, int productID) {
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        try {
+//            con = DBUltilities.makeConnection();
+//            String sql = "UPDATE Consignment"
+//                    + " SET MinPrice = ?, MaxPrice = ?, ReviewProductDate = ?, ConsignmentStatusID = 5"
+//                    + " WHERE ConsignmentID = ?";
+//            stm = con.prepareStatement(sql);
+//            stm.setDouble(1, minPrice);
+//            stm.setDouble(2, maxPrice);
+//            stm.setDate(3, new Date(System.currentTimeMillis()));
+//            stm.setString(4, consignmentID);
+//
+//            int result = stm.executeUpdate();
+//            if (result > 0) {
+//                sql = "UPDATE Product SET ProductStatusID = 2 WHERE ProductID = ?";
+//                stm = con.prepareStatement(sql);
+//                stm.setDouble(1, productID);
+//                result = stm.executeUpdate();
+//                if (result > 0) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        return false;
+//    }
 
     //update consignment and product status for request management
     public boolean updateConsignmentAndProductStatus(String consignmentID, float negotiatedPrice,
@@ -641,9 +641,9 @@ public class ConsignmentDAO {
         float maxPrice = rs.getFloat("MaxPrice") / 1000;
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
 
-        String receiveDate = rs.getString("ReceivedDate");
-        if (receiveDate != null) {
-            receiveDate = df.format(rs.getDate("ReceivedDate"));
+        String reviewProductDate = rs.getString("ReviewProductDate");
+        if (reviewProductDate != null) {
+            reviewProductDate = df.format(rs.getDate("ReviewProductDate"));
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
@@ -661,6 +661,14 @@ public class ConsignmentDAO {
             appointmentDate = df.format(rs.getDate("AppointmentDate"));
             hour = dfHour.format(rs.getTimestamp("AppointmentDate"));
         }
+        
+        String reviewRequestDate = rs.getString("ReviewRequestDate");
+        if(reviewRequestDate != null) {
+            reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
+            //cancelDate = java.formatDateString(cancelDate);
+        }
+        
+        
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
         ConsignmentDTO consignment = new ConsignmentDTO();
@@ -675,18 +683,23 @@ public class ConsignmentDAO {
         consignment.setPhone(phone);
         consignment.setEmail(email);
         consignment.setPaypalAccount(paypalAccount);
+        
         consignment.setFromDate(fromDate);
         consignment.setToDate(toDate);
-        consignment.setHour(hour);
+        
         consignment.setRaiseWebDate(raiseWebDate);
+        
         consignment.setPeriod(period);
         consignment.setMinPrice(minPrice);
         consignment.setMaxPrice(maxPrice);
         consignment.setReturnPrice(returnPrice);
-        consignment.setReceivedDate(receiveDate);
+        
+        consignment.setReviewProductDate(reviewProductDate);
         consignment.setCreatedDate(createdDate);
         consignment.setCancelDate(cancelDate);
         consignment.setAppointmentDate(appointmentDate);
+        consignment.setHour(hour);
+        consignment.setReviewRequestDate(reviewRequestDate);
         consignment.setConsignmentStatusID(consignmentStatusID);
         consignment.setReason(reason);
 

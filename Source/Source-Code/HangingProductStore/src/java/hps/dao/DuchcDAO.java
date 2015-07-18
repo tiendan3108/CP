@@ -109,8 +109,8 @@ public class DuchcDAO {
             // add Consigment Values
             String query = "INSERT INTO Consignment(ConsignmentID, ProductID, MemberID, StoreOwnerID, FullName, Address,"
                     + " Phone, Email, PaypalAccount,\n"
-                    + "                     FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, ConsignmentStatusID, ReceivedDate, NegotiatedPrice)\n"
-                    + "                     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + "                     FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, ConsignmentStatusID, ReviewProductDate, NegotiatedPrice, AppointmentDate, ReviewRequestDate)\n"
+                    + "                     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query);
             stm.setString(1, consigment.getConsigmentID());
             stm.setInt(2, consigment.getProductID());
@@ -166,8 +166,8 @@ public class DuchcDAO {
             stm.setString(15, consigment.getCreatedDate());
             stm.setInt(16, consigment.getConsignmentStatusID());
             
-            if(consigment.getReceivedDate() != null){
-                stm.setString(17, consigment.getReceivedDate());
+            if(consigment.getReviewProductDate()!= null){
+                stm.setString(17, consigment.getReviewProductDate());
             }else{
                 stm.setNull(17, java.sql.Types.DATE);
             }
@@ -175,6 +175,18 @@ public class DuchcDAO {
                 stm.setDouble(18, consigment.getNegotiatedPrice());
             }else{
                 stm.setNull(18, java.sql.Types.FLOAT);
+            }
+            
+            if(consigment.getAppointmentDate()!= null){
+                stm.setString(19, consigment.getAppointmentDate());
+            }else{
+                stm.setNull(19, java.sql.Types.DATE);
+            }
+            
+            if(consigment.getReviewRequestDate()!= null){
+                stm.setString(20, consigment.getReviewRequestDate());
+            }else{
+                stm.setNull(20, java.sql.Types.DATE);
             }
             
             
