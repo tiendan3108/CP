@@ -54,7 +54,7 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) ORDER BY ReceivedDate";
+            String query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) ORDER BY ReviewProductDate";
             stmC = conn.prepareStatement(query);
             stmC.setInt(1, storeOwnerID);
             stmC.setInt(2, productStatus);
@@ -497,7 +497,7 @@ public class DanqtDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        String address = "", phone = "", email = "", ReceivedDate = "", CancelDate = "";
+        String address = "", phone = "", email = "", ReviewProductDate = "", CancelDate = "";
         ConsignmentDTO result = null;
         try {
             con = DBUltilities.makeConnection();
@@ -514,7 +514,7 @@ public class DanqtDAO {
                 result = new ConsignmentDTO(fullName, phone, address, email);
             }
             if (result != null) {
-                query = "SELECT p.ProductName, c.ConsignmentID, c.ReceivedDate, c.NegotiatedPrice, "
+                query = "SELECT p.ProductName, c.ConsignmentID, c.ReviewProductDate, c.NegotiatedPrice, "
                         + "c.CancelDate FROM Product p, Consignment c WHERE c.ConsignmentID = ? AND "
                         + "c.ProductID = p.ProductID";
                 stm = con.prepareStatement(query);
@@ -523,10 +523,10 @@ public class DanqtDAO {
                 if (rs.next()) {
                     String ProductName = rs.getString("ProductName");
                     String ConsignmentID = rs.getString("ConsignmentID");
-                    ReceivedDate = formatDateString(rs.getString("ReceivedDate"));
+                    ReviewProductDate = formatDateString(rs.getString("ReviewProductDate"));
                     CancelDate = formatDateString(rs.getString("CancelDate"));
                     float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
-                    ProductDTO product = new ProductDTO(ProductName, ReceivedDate, ConsignmentID, negotiatedPrice, CancelDate);
+                    ProductDTO product = new ProductDTO(ProductName, ReviewProductDate, ConsignmentID, negotiatedPrice, CancelDate);
                     result.setProduct(product);
                 }
             }
@@ -712,7 +712,7 @@ public class DanqtDAO {
         try {
             con = DBUltilities.makeConnection();
             String query = "SELECT c.NegotiatedPrice, c.FullName, c.Address, c.Phone, c.Email, c.Period, "
-                    + "c.PaypalAccount, c.ReceivedDate, c.ConsignmentID, p.ProductName, p.SellingPrice "
+                    + "c.PaypalAccount, c.ReviewProductDate, c.ConsignmentID, p.ProductName, p.SellingPrice "
                     + "FROM Consignment c, Product p WHERE c.ProductID = ? AND p.ProductID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
@@ -720,7 +720,7 @@ public class DanqtDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 consignmentID = rs.getString("ConsignmentID");
-                receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 fullname = rs.getString("FullName");
                 email = rs.getString("Email");
                 phone = convertPhone(rs.getString("Phone"));
@@ -739,7 +739,7 @@ public class DanqtDAO {
             result.setAddress(address);
             result.setPhone(phone);
             result.setEmail(email);
-            result.setReceivedDate(receivedDate);
+            result.setReviewProductDate(receivedDate);
             result.setPeriod(period);
             ProductDTO product = new ProductDTO();
             product.setName(productName);
@@ -817,8 +817,8 @@ public class DanqtDAO {
             String today = sdf.format(tempDate);
             System.out.println("Today : " + today);
             query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email FROM Consignment c, Product p WHERE "
-                    + "DATEDIFF(day,[ReceivedDate],?) > Period AND p.ProductID = c.ProductID AND "
-                    + "p.ProductStatusID > 1 AND p.ProductStatusID < 4 AND c.isExpiredMessaage is NULL";
+                    + "DATEDIFF(day,[ReviewProductDate],?) > Period AND p.ProductID = c.ProductID AND "
+                    + "p.ProductStatusID > 1 AND p.ProductStatusID < 4 AND c.isExpiredMessage is NULL";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
             rs = stm.executeQuery();
@@ -839,7 +839,7 @@ public class DanqtDAO {
             if (!consignmentList.isEmpty()) {
                 for (String consignmentID : consignmentList) {
                     System.out.println("ConsignmentID : " + consignmentID);
-                    query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMessaage = 1 WHERE ConsignmentID = ?";
+                    query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMesaage = 1 WHERE ConsignmentID = ?";
                     stm = conn.prepareStatement(query);
                     stm.setInt(1, ConsignmentStatus.EXPIRED);
                     stm.setString(2, consignmentID);
@@ -905,12 +905,12 @@ public class DanqtDAO {
                 query = "SELECT DISTINCT c.* FROM Consignment c, Product p, [Order] o WHERE c.StoreOwnerID = ? AND "
                         + "c.ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND "
                         + "(lower(c.ConsignmentID) LIKE ? OR lower(p.ProductName) LIKE ? OR lower(c.FullName) LIKE ? OR "
-                        + "lower(c.Phone) LIKE ? OR lower(o.OrderID) = ?) AND c.ProductID = p.ProductID AND p.ProductID = o.ProductID ORDER BY c.ReceivedDate";
+                        + "lower(c.Phone) LIKE ? OR lower(o.OrderID) = ?) AND c.ProductID = p.ProductID AND p.ProductID = o.ProductID ORDER BY c.ReviewProductDate";
             } else {
                 query = "SELECT DISTINCT c.* FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND "
                         + "c.ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND "
                         + "(lower(c.ConsignmentID) LIKE ? OR lower(p.ProductName) LIKE ? OR lower(c.FullName) LIKE ? OR "
-                        + "lower(c.Phone) LIKE ?) AND c.ProductID = p.ProductID ORDER BY c.ReceivedDate";
+                        + "lower(c.Phone) LIKE ?) AND c.ProductID = p.ProductID ORDER BY c.ReviewProductDate";
             }
             stmC = conn.prepareStatement(query);
             stmC.setInt(1, storeOwnerID);
@@ -1053,7 +1053,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
 
-            String query = "UPDATE Consignment SET isExpiredMessaage = null, ConsignmentStatusID = ?, Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
+            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ConsignmentStatus.RECEIVED);
             stm.setString(2, consignmentID);
@@ -1096,7 +1096,7 @@ public class DanqtDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String today = sdf.format(tempDate);
 
-            String query = "SELECT c.*, p.ProductName, DATEDIFF(day,c.ReceivedDate,?) AS DiffDate "
+            String query = "SELECT c.*, p.ProductName, DATEDIFF(day,c.ReviewProductDate,?) AS DiffDate "
                     + "FROM Consignment c, Product p WHERE ConsignmentID = ? AND c.ProductID = p.ProductID";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
@@ -1108,7 +1108,7 @@ public class DanqtDAO {
                 String email = rs.getString("Email");
                 String address = rs.getString("Address");
                 String phone = convertPhone(rs.getString("Phone"));
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 String productName = rs.getString("ProductName");
                 int period = rs.getInt("Period");
@@ -1116,7 +1116,7 @@ public class DanqtDAO {
                 result.setEmail(email);
                 result.setAddress(address);
                 result.setPhone(phone);
-                result.setReceivedDate(receivedDate);
+                result.setReviewProductDate(receivedDate);
                 result.setNegotiatedPrice(negotiatedPrice);
                 result.setPeriod(period);
                 product.setName(productName);
@@ -1169,13 +1169,13 @@ public class DanqtDAO {
                 int productID = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 String fullName = rs.getString("FullName");
                 item = new ConsignmentDTO();
                 item.setProductID(productID);
                 item.setConsigmentID(consignmentID);
-                item.setReceivedDate(receivedDate);
+                item.setReviewProductDate(receivedDate);
                 item.setNegotiatedPrice(negotiatedPrice);
                 item.setName(fullName);
                 product = new ProductDTO();
@@ -1235,13 +1235,13 @@ public class DanqtDAO {
                 int productID = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 String fullName = rs.getString("FullName");
                 item = new ConsignmentDTO();
                 item.setProductID(productID);
                 item.setConsigmentID(consignmentID);
-                item.setReceivedDate(receivedDate);
+                item.setReviewProductDate(receivedDate);
                 item.setNegotiatedPrice(negotiatedPrice);
                 item.setName(fullName);
                 product = new ProductDTO();
@@ -1603,11 +1603,11 @@ public class DanqtDAO {
             rs = stm.executeQuery();
             if (rs.next()) {
                 String productName = rs.getString("ProductName");
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 product.setName(productName);
                 result.setProduct(product);
-                result.setReceivedDate(receivedDate);
+                result.setReviewProductDate(receivedDate);
                 result.setNegotiatedPrice(negotiatedPrice);
             }
             return result;
@@ -1725,7 +1725,7 @@ public class DanqtDAO {
 
             conn = DBUltilities.makeConnection();
             query = "SELECT c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
-                    + "p.SellingPrice, c.CancelFee, c.ReceivedDate FROM Product p, Consignment c WHERE "
+                    + "p.SellingPrice, c.CancelFee, c.ReviewProductDate FROM Product p, Consignment c WHERE "
                     + "p.ProductID = c.ProductID AND c.StoreOWnerID = ? AND "
                     + "((c.ConsignmentStatusID = 6 AND p.ProductStatusID = 7) OR "
                     + "(c.ConsignmentStatusID = 5 AND p.ProductStatusID = 7) OR "
@@ -1748,7 +1748,7 @@ public class DanqtDAO {
                 } else {
                     fee = expiredFee;
                 }
-                String receivedDate = formatDateString(rs.getString("ReceivedDate"));
+                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 if (fee != 0) {
                     revenue = fee;
                 } else {

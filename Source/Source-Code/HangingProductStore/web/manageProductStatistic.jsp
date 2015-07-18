@@ -203,7 +203,7 @@
                                                     <td>${counter.count}</td>
                                                     <td>${item.productName}</td>
                                                     <td>${item.consignorName}</td>
-                                                    <td>${item.receivedDate}</td>
+                                                    <td>${item.reviewProductDate}</td>
                                                     <td><fmt:formatNumber value="${item.consignPrice}" maxFractionDigits="1"/></td>
                                                     <td><c:if test="${item.sellingPrice>0}"><fmt:formatNumber value="${item.sellingPrice}" maxFractionDigits="1"/></c:if></td>
                                                     <td><c:if test="${item.returnPrice>0}"><fmt:formatNumber value="${item.returnPrice}" maxFractionDigits="1"/></c:if></td>

@@ -215,7 +215,7 @@
                                                     <td class="center">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>${item.name}</td>
-                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td><fmt:formatNumber 
                                                             value="${item.negotiatedPrice}" 
@@ -248,7 +248,7 @@
                                                     <td class="center">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>${item.name}</td>
-                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <fmt:formatNumber 
@@ -342,7 +342,7 @@
                                                     <td class="center">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td class="center">${item.cancelDate}</td>
-                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <c:if test="${item.phone!=null}">
@@ -376,7 +376,7 @@
                                                 <tr>
                                                     <td>${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td class="center">${item.receivedDate}</td>
+                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td><c:choose>
                                                             <c:when test="${item.consignmentStatusID==4}">
@@ -417,7 +417,7 @@
                                                 <tr>
                                                     <td class="center">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td>${item.receivedDate}</td>
+                                                    <td>${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <fmt:formatNumber 
@@ -890,7 +890,7 @@
                         $("#cancel_productName").text(product.name);
                         $("#cancel_consignmentID").text(product.consignmentID);
                         $("#cancel_negotiatedPrice").text(product.negotiatedPrice);
-                        $("#cancel_consignedDate").text(product.receivedDate);
+                        $("#cancel_consignedDate").text(product.reviewProductDate);
                         $("#cancel_canceledDate").text(product.cancelDate);
                         $("#cancel_ID").val(product.consignmentID);
                     });
@@ -969,7 +969,7 @@
                         $("#sold_consignmentID").text(response.consigmentID);
                         $("#sold_negotiatedPrice").text(response.negotiatedPrice);
                         $("#sold_sellingPrice").text(response.returnPrice);
-                        $("#sold_receivedDate").text(response.receivedDate);
+                        $("#sold_receivedDate").text(response.reviewProductDate);
                         $("#sold_paypalAccount").text(response.paypalAccount);
                         $("#soldconsignmentID").val(response.consigmentID);
                         $("#sold_returnPrice").val(price);
@@ -990,7 +990,7 @@
                         $("#expired_consignmentID").text(consignmentID);
                         $("#expired_extendConsignmentID").val(consignmentID);
                         $("#expired_receiveConsignmentID").val(consignmentID);
-                        $("#expired_consignedDate").text(response.receivedDate);
+                        $("#expired_consignedDate").text(response.reviewProductDate);
                         $("#expired_period").text(response.period);
                         $("#expired_days").text(response.expiredDays);
                         $("#expired_fee").val(response.expiredFee);
@@ -1011,7 +1011,7 @@
                         var price = (response.negotiatedPrice * 15 / 100).toFixed(0);
                         $("#onWeb_ProductName").text(response.product.name);
                         $("#onWeb_ConsignmentID").text(consignmentID);
-                        $("#onWeb_ReceivedDate").text(response.receivedDate);
+                        $("#onWeb_ReceivedDate").text(response.reviewProductDate);
                         $("#onWeb_NegotiatedPrice").text(response.negotiatedPrice);
                         $("#confirmCancel_ConsignmentID1").text(consignmentID);
                         $("#confirmCancel_ConsignmentID2").val(consignmentID);
