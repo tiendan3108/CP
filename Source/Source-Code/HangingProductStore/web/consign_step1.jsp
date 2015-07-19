@@ -91,7 +91,7 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-horizontal">
                                                                 <div class="form-group">
-                                                                    <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font color="red">*</font></label> <!--<span class="required">*</span> -->
+                                                                    <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font id="reProductName" color="red">*</font></label> <!--<span class="required">*</span> -->
                                                                     <div class="col-md-8 col-sm-8">
 
 
@@ -104,7 +104,7 @@
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số </label>
+                                                                    <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số <font id="reSerialNumber" color="red">*</font></label>
                                                                     <div class="col-md-5 col-sm-6">
                                                                         <input id="txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                                         <p class="help-block" id="erSerialNumber"> </p>
@@ -235,10 +235,12 @@
 
         if ($("#txtProductName").val().length > 0 && $("#txtSerialNumber").val().length == 0) {
             $("#txtSerialNumber").prop("readonly",true);
+            $("#reSerialNumber").hide();
 
         }
         else if ($("#txtSerialNumber").val().length > 0 && $("#txtProductName").val().length == 0) {
             $("#txtProductName").prop("readonly",true);
+            $("#reProductName").hide();
 
         }
         else if ($("#txtSerialNumber").val().length == 0 && $("#txtProductName").val().length == 0) {
@@ -248,6 +250,7 @@
         }else if ($("#txtSerialNumber").val().length >= 0 && $("#txtProductName").val().length >= 0) {
             $("#txtSerialNumber").prop("readonly",false);
             $("#txtProductName").prop("readonly",true);
+            $("#reProductName").hide();
 
         }
     });
@@ -264,16 +267,20 @@
         if ($(this).val().length > 0) {
             $("#txtSerialNumber").prop("readonly",true);
             $("#txtSerialNumber").val("");
+            $("#reSerialNumber").hide();
         } else {
             $("#txtSerialNumber").prop("readonly",false);
+            $("#reSerialNumber").show();
         }
     });
     $('#txtSerialNumber').on('input', function (e) {
         if ($(this).val().length > 0) {
             $("#txtProductName").prop("readonly",true);
             $("#txtProductName").val("");
+            $("#reProductName").hide();
         } else {
             $("#txtProductName").prop("readonly",false);
+            $("#reProductName").show();
         }
     });
 

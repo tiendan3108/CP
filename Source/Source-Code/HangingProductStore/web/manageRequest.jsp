@@ -1154,7 +1154,6 @@
             });
 
 
-
             $(function () {
                 $("#r_brand").autocomplete({
                     source: "BrandAutocomplete",
@@ -1163,6 +1162,8 @@
                     }
                 });
             });
+
+
             $(function () {
                 $("#addConsignment_txtBrand").autocomplete({
                     source: "BrandAutocomplete",

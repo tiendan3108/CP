@@ -187,6 +187,7 @@
                                                     <c:if test="${empty data}">
                                                         <h3 align="center">Hiện không có cửa hàng nào nhận ký gửi loại sản phẩm này.</h3>
                                                         <h3 align="center">Chúng tôi rất tiếc vì điều này.</h3>
+<!--                                                        <h3 align="center"> Xin nhấn vào <a href="ConsignServlet"><font color="blue">đây</font></a> để ký gửi món khác.</h3>-->
                                                     </c:if>
 
                                                 </div>
