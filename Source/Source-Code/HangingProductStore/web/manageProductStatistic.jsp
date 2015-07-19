@@ -172,10 +172,10 @@
                                         <i class="fa fa-globe"></i>Thống kê 
                                         <c:choose>
                                             <c:when test="${requestScope.currentTab == 'product'}">
-                                                Hàng kí gửi
+                                                hàng kí gửi
                                             </c:when>
                                             <c:when test="${requestScope.currentTab == 'consignment'}">
-                                                Đơn kí gửi
+                                                đơn kí gửi
                                             </c:when>
                                         </c:choose>
                                     </div>
@@ -186,7 +186,10 @@
                                             Sản phẩm từ ngày &nbsp;&nbsp;
                                             <input type="text" id="daterangeProduct">
                                         </div>
-                                        <div class="col-md-8 col-sm-8">
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-2 col-sm-2" style="color: red">
+                                            Đơn vị tính (Ngàn đồng)
                                         </div>
                                     </div>
                                     <br/>
@@ -364,75 +367,75 @@
                 // initiate layout and plugins
                 // initiate layout and plugins
                 Metronic.init(); // init metronic core components
-            Layout.init(); // init current layout
+                Layout.init(); // init current layout
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
                 TableManaged.init();
             });</script>
         <script>
-                $(document).ready(function () {
+            $(document).ready(function () {
                 //script switch tab
                 var currentTab = window.location.hash.substring(1);
                 if (currentTab == "") {
-            currentTab = $('#currentTab').val();
-            }
+                    currentTab = $('#currentTab').val();
+                }
                 $('div#' + currentTab).fadeIn(400).siblings().hide();
                 $('div.portlet-title').show();
-                    $('li#' + currentTab).addClass('open').siblings().removeClass('open');
+                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
-                });
+            });
             //date picker product
-                $(document).ready(function () {
-                $('#daterangeProduct').daterangepicker({                     format: "DD/MM/YYYY",
-                maxDate: moment(),
-            startDate: moment(),
-            endDate: moment(),
+            $(document).ready(function () {
+                $('#daterangeProduct').daterangepicker({format: "DD/MM/YYYY",
+                    maxDate: moment(),
+                    startDate: moment(),
+                    endDate: moment(),
                     locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
                 });
-                    });
-                    $('#daterangeProduct').on('apply.daterangepicker', function (ev, picker) {
-                    var table = $('#productTable').DataTable();
-            var startDate = $('#daterangeProduct').data('daterangepicker').startDate.format('DD-MM-YYYY');
+            });
+            $('#daterangeProduct').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#productTable').DataTable();
+                var startDate = $('#daterangeProduct').data('daterangepicker').startDate.format('DD-MM-YYYY');
                 var endDate = $('#daterangeProduct').data('daterangepicker').endDate.format('DD-MM-YYYY');
                 $('#fromDate').val(startDate);
                 $('#toDate').val(endDate);
                 table.draw();
             });
-                //date picker consignment
+            //date picker consignment
             $(document).ready(function () {
                 $('#daterangeConsignment').daterangepicker({
-                format: "DD/MM/YYYY",
-                maxDate: moment(),
-            startDate: moment(),
-            endDate: moment(),
+                    format: "DD/MM/YYYY",
+                    maxDate: moment(),
+                    startDate: moment(),
+                    endDate: moment(),
                     locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
                 });
-                    });
-                    $('#daterangeConsignment').on('apply.daterangepicker', function (ev, picker) {
-                    var table = $('#consignmentTable').DataTable();
-            var startDate = $('#daterangeConsignment').data('daterangepicker').startDate.format('DD-MM-YYYY');
+            });
+            $('#daterangeConsignment').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#consignmentTable').DataTable();
+                var startDate = $('#daterangeConsignment').data('daterangepicker').startDate.format('DD-MM-YYYY');
                 var endDate = $('#daterangeConsignment').data('daterangepicker').endDate.format('DD-MM-YYYY');
                 $('#fromDate').val(startDate);
                 $('#toDate').val(endDate);
                 table.draw();
             });
-                $.fn.dataTable.ext.search.push(
+            $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
-                var startDate = $('#fromDate').val();
-                var endDate = $('#toDate').val();
-            var date = data[3]; // use data for the 'Ngày' column
+                        var startDate = $('#fromDate').val();
+                        var endDate = $('#toDate').val();
+                        var date = data[3]; // use data for the 'Ngày' column
                         if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
                         {
                             return true;
                         }
                         return false;
                     }
-                        );
-                            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
-                        if (source.substring(6, 10) > target.substring(6, 10)) {
+            );
+            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+                if (source.substring(6, 10) > target.substring(6, 10)) {
                     return 1;
-            }
-            if (source.substring(3, 5) > target.substring(3, 5)) {
+                }
+                if (source.substring(3, 5) > target.substring(3, 5)) {
                     return 1;
                 }
                 if (source.substring(0, 2) > target.substring(0, 2)) {
@@ -440,9 +443,9 @@
                 }
                 if (source.localeCompare(target) == 0) {
                     return 0;
-                    }
-                return -1;
                 }
+                return -1;
+            }
         </script>
     </body>
     <!-- END BODY -->

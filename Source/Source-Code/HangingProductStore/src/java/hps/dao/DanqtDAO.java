@@ -178,7 +178,7 @@ public class DanqtDAO {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String today = sdf.format(tempDate);
 
-                query = "UPDATE Consignment SET AgreeCancelDate = ? ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
+                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setString(1, today);
                 stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
@@ -1741,12 +1741,17 @@ public class DanqtDAO {
 
             conn = DBUltilities.makeConnection();
             query = "SELECT c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
-                    + "p.SellingPrice, c.CancelFee, c.AgreeCancelDate, c.ReturnDate, c.ReceivedDate "
+                    + "p.SellingPrice, c.CancelFee, c.AgreeCancelDate, c.ReturnDate, c.ReceivedDate, "
+                    + "CASE WHEN c.AgreeCancelDate IS NOT NULL THEN c.AgreeCancelDate "
+                    + "WHEN c.ReturnDate IS NOT NULL THEN c.ReturnDate "
+                    + "WHEN c.ReceivedDate IS NOT NULL THEN c.ReceivedDate "
+                    + "END AS ActionDate "
                     + "FROM Product p, Consignment c WHERE "
                     + "p.ProductID = c.ProductID AND c.StoreOWnerID = ? AND "
                     + "((c.ConsignmentStatusID = 6 AND p.ProductStatusID = 7) OR "
                     + "(c.ConsignmentStatusID = 5 AND p.ProductStatusID = 7) OR "
-                    + "(c.ConsignmentStatusID = 7 AND p.ProductStatusID = 7))";
+                    + "(c.ConsignmentStatusID = 7 AND p.ProductStatusID = 7)) "
+                    + "ORDER BY ActionDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             rs = stm.executeQuery();
@@ -1765,14 +1770,7 @@ public class DanqtDAO {
                 } else {
                     fee = expiredFee;
                 }
-                String actionDate = "";
-                if (rs.getString("AgreeCancelDate") != null && !rs.getString("AgreeCancelDate").equals("")) {
-                    actionDate = formatDateString(rs.getString("AgreeCancelDate"));
-                } else if (rs.getString("ReturnDate") != null && !rs.getString("ReturnDate").equals("")) {
-                    actionDate = formatDateString(rs.getString("ReturnDate"));
-                } else {
-                    actionDate = formatDateString(rs.getString("ReceivedDate"));
-                }
+                String actionDate = formatDateString(rs.getString("ActionDate"));
                 if (fee != 0) {
                     revenue = fee;
                 } else {
@@ -1815,13 +1813,16 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ConsignmentStatusID in (?,?,?)";
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ConsignmentStatusID in (?,?,?)"
+                    + "ORDER BY ISNULL(ReviewRequestDate, ?) , ISNULL(ReviewProductDate, ?)";
+            String maxDate = "2079-06-05T23:59:00";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             stm.setInt(2, ConsignmentStatus.REFUSE);
             stm.setInt(3, ConsignmentStatus.ACCEPTED);
-            stm.setInt(3, ConsignmentStatus.RECEIVED);
-            stm.setInt(4, roleID);
+            stm.setInt(4, ConsignmentStatus.RECEIVED);
+            stm.setString(5, maxDate);
+            stm.setString(6, maxDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 item = new ConsignmentDTO();
