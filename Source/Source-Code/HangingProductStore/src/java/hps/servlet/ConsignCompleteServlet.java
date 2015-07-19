@@ -154,13 +154,14 @@ public class ConsignCompleteServlet extends HttpServlet {
                             if (filename.trim().isEmpty()) {
 
                                 filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
+                                //filename = filename.replaceAll("[!@#$%^&*.?,;/]", " ");
                                 URL amazonUrl = new URL(product.getImage());
                                 in = amazonUrl.openStream();
                             } else {
                                 //if file is uploaded from pc
                                 in = item.getInputStream();
                             }
-                            filename = consigmentID + "_" + filename;
+                            filename = consigmentID + "_" + filename.replaceAll("[!@#$%^&*.?,;/]", " ");
                             System.out.println("File name after: " + filename);
 
                             //item.write(file); // Write to base place

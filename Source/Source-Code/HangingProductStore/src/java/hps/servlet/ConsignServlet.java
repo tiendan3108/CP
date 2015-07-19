@@ -118,20 +118,19 @@ public class ConsignServlet extends HttpServlet {
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
                         basicPrice = amazonProduct.getPrice();
-                        System.out.println("UPC name: " + amazonProduct.getName().length() + " - " + amazonProduct.getName());
-                        System.out.println("UPC link: " + amazonProduct.getImage());
                         product.setImage(amazonProduct.getImage());
 
-                        if (amazonProduct.getName().length() > 50) {
-                            product.setName(amazonProduct.getName().substring(0, 50));
+                        String formatName = amazonProduct.getName().trim().replaceAll("[!@#$%^&*.?,;/]", " ");
+                        if (formatName.length() > 100) {
+                            product.setName(formatName.substring(0, 100));
 
                         } else {
-                            product.setName(amazonProduct.getName());
+                            product.setName(formatName);
                         }
 
                         action = "tostep3";
                     } else {
-                        
+
                         url = STEP1;
                         request.setAttribute("UPCERROR", "Không thể tìm thấy sản phẩm với mã số này");
                     }
@@ -140,7 +139,7 @@ public class ConsignServlet extends HttpServlet {
 
                 } //check product using name 
                 else {
-                    
+
                     List<AmazonProduct> list = dDAO.getListAmazonProduct(productName, brand, categoryID);
 
                     if (list != null) {
@@ -173,11 +172,12 @@ public class ConsignServlet extends HttpServlet {
                     for (AmazonProduct a : list) {
                         if (a.getASIN().equals(ASIN)) {
                             basicPrice = a.getPrice();
-                            if (a.getName().length() > 50) {
-                                product.setName(a.getName().substring(0, 50));
+                            String formatName = a.getName().trim().replaceAll("[!@#$%^&*.?,;]", " ");
+                            if (formatName.length() > 100) {
+                                product.setName(formatName.substring(0, 100));
 
                             } else {
-                                product.setName(a.getName());
+                                product.setName(formatName);
                             }
                             System.out.println("amazon name length: " + product.getName());
 

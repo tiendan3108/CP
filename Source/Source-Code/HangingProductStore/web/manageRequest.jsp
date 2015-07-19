@@ -839,7 +839,7 @@
                                             <div class="form-group">
                                                 <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font color="red">*</font></label> <!--<span class="required">*</span> -->
                                                 <div class="col-md-8 col-sm-8">
-                                                    <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="50" />
+                                                    <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="100" />
                                                     <p class="help-block" id="erProductName">  </p>
                                                 </div>
                                             </div>
@@ -1450,8 +1450,8 @@
 
             $('#btnAddConsignment').click(function () {
                 var check = true;
-                if ($('#addConsignment_txtProductName').val().trim().length < 5 || $('#addConsignment_txtProductName').val().trim().length > 50) {
-                    $('#erProductName').html("<font color='red'>Yệu cầu 5-50 ký tự</font>");
+                if ($('#addConsignment_txtProductName').val().trim().length < 5 || $('#addConsignment_txtProductName').val().trim().length > 100) {
+                    $('#erProductName').html("<font color='red'>Yệu cầu 5-100 ký tự</font>");
                     check = false;
                 }
                 else {

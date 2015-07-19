@@ -118,7 +118,6 @@
                                                 &nbsp;~&nbsp; <fmt:formatNumber type="number"
                                                                   value="${c.maxPrice}" 
                                                                   maxFractionDigits="0"/>
-                                                &nbsp;VND
                                             </c:if>
                                         </td> 
                                     </tr>
