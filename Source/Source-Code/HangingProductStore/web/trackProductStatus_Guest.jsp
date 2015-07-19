@@ -197,14 +197,24 @@
                                             <c:when test="${c.consignmentStatusID == 5}">
 
                                                 <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
-                                                    <td></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
-                                                            HỦY KÝ GỬI
-                                                        </button> 
-                                                    </td>
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
+                                                                HỦY KÝ GỬI
+                                                            </button> 
+                                                        </td>
+                                                    </tr>
                                                 </c:if>
 
+                                            </c:when>
+                                            <c:when test="${c.consignmentStatusID == 6}">
+                                                <tr>
+                                                    <td>
+                                                        <button type="button" class="btn btn-info btn-lg">
+                                                            GIA HẠN
+                                                        </button> 
+                                                    </td>
+                                                </tr>
                                             </c:when>
                                         </c:choose>
                                     </c:if>
