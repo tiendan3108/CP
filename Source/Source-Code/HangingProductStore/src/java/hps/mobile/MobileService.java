@@ -85,7 +85,7 @@ public class MobileService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String newDate = df.format(date);
-        dao.updateConsignment(product.getProductID(), newDate, product.getNegotiatedPrice());
+        dao.updateConsignment(product.getProductID(), product.getReviewProductDate(), product.getNegotiatedPrice());
         dao.receiveProduct(product.getProductID());
         return "ok";
     }
@@ -98,7 +98,7 @@ public class MobileService {
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
-        dao.cancelConsignment(product.getProductID(), product.getReason());
+        dao.cancelConsignment(product.getProductID(), product.getReason(),product.getReviewProductDate());
         return "ok";
     }
 }

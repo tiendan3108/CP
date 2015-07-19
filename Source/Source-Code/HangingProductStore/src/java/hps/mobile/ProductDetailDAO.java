@@ -145,7 +145,8 @@ public class ProductDetailDAO {
                 String appointmentDate = rs.getString("AppointmentDate");
                 float maxPrice = rs.getFloat("MaxPrice");
                 float minPrice = rs.getFloat("MinPrice");
-                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, image, customerName, address, phone, maxPrice, minPrice, appointmentDate);
+                String reviewProductDate = rs.getString("ReviewProductDate");
+                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, image, customerName, address, phone, maxPrice, minPrice, appointmentDate,reviewProductDate);
                 products.add(product);
             }
             return products;
@@ -169,19 +170,19 @@ public class ProductDetailDAO {
         return null;
     }
 
-    public boolean updateConsignment(int productID, String receivedDate, float negotiatedPrice) {
+    public boolean updateConsignment(int productID, String reviewProductDate, float negotiatedPrice) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "update Consignment "
-                    + "Set ReceivedDate = ?, "
+                    + "Set ReviewProductDate = ?, "
                     + "NegotiatedPrice = ?, "
                     + "ConsignmentStatusID = ? "
                     + "where ProductID = ?";
             stm = con.prepareStatement(query);
-            stm.setString(1, receivedDate);
+            stm.setString(1, reviewProductDate);
             stm.setFloat(2, negotiatedPrice);;
             stm.setInt(3, ConsignmentStatus.RECEIVED);
             stm.setInt(4, productID);
@@ -235,12 +236,12 @@ public class ProductDetailDAO {
         return false;
     }
 
-    public void cancelConsignment(int productID, String reason) {
-        updateConsignmentStatus(productID, reason);
+    public void cancelConsignment(int productID, String reason, String date) {
+        updateConsignmentStatus(productID, reason, date);
         updateProductStatus(productID);
     }
 
-    public void updateConsignmentStatus(int productID, String reason) {
+    public void updateConsignmentStatus(int productID, String reason, String date) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -248,14 +249,14 @@ public class ProductDetailDAO {
             con = db.makeConnection();
             String query = "update Consignment "
                     + "Set ConsignmentStatusId = ? , "
-                    + "Reason = ? "
- //                   + "CancelDate = ?"
+                    + "Reason = ? , "
+                    + "ReviewProductDate = ? "
                     + "where ProductId = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, ConsignmentStatus.REFUSE);
             stm.setString(2, reason);
- //           stm.setString(3, currentDateTime);
-            stm.setInt(3, productID);
+            stm.setString(3, date);
+            stm.setInt(4, productID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);

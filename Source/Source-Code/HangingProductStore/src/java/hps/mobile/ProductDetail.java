@@ -25,11 +25,12 @@ public class ProductDetail {
     private String appointmentDate;
     private String reason;
     private float negotiatedPrice;
+    private String reviewProductDate;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(int productID, String productName, String serialNumber, String brand, String description, String image, String customerName, String address, String phone, float maxPrice, float minPrice, String appointmentDate) {
+    public ProductDetail(int productID, String productName, String serialNumber, String brand, String description, String image, String customerName, String address, String phone, float maxPrice, float minPrice, String appointmentDate, String reviewProductDate) {
         this.productID = productID;
         this.productName = productName;
         this.serialNumber = serialNumber;
@@ -42,6 +43,7 @@ public class ProductDetail {
         this.maxPrice = maxPrice;
         this.minPrice = minPrice;
         this.appointmentDate = appointmentDate;
+        this.reviewProductDate = reviewProductDate;
     }
 
     /**
@@ -238,6 +240,20 @@ public class ProductDetail {
      */
     public void setAppointmentDate(String appointmentDate) {
         this.appointmentDate = appointmentDate;
+    }
+
+    /**
+     * @return the ReviewProductDate
+     */
+    public String getReviewProductDate() {
+        return reviewProductDate;
+    }
+
+    /**
+     * @param ReviewProductDate the ReviewProductDate to set
+     */
+    public void setReviewProductDate(String reviewProductDate) {
+        this.reviewProductDate = reviewProductDate;
     }
 
 }
