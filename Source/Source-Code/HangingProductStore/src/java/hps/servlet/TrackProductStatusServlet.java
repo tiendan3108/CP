@@ -84,9 +84,9 @@ public class TrackProductStatusServlet extends HttpServlet {
 
                 request.setAttribute("CONSIGNMENT", consignment);
             } else if (action.equals("cancel")) {
-                int actionValue = Integer.parseInt(request.getParameter("actionValue"));
+                int consignmentID = Integer.parseInt(request.getParameter("consignmentID"));
                 String searchValue = request.getParameter("searchValue");
-                dao.cancelConsignmentInProduct(actionValue);
+                dao.cancelConsignmentInProduct(consignmentID);
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 request.setAttribute("CONSIGNMENT", consignment);
 

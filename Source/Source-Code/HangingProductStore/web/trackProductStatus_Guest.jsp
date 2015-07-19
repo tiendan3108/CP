@@ -188,7 +188,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
+                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCancel">
                                                             HỦY KÝ GỬI
                                                         </button> 
                                                     </td>
@@ -199,7 +199,7 @@
                                                 <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMessage">
+                                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCancel">
                                                                 HỦY KÝ GỬI
                                                             </button> 
                                                         </td>
@@ -225,12 +225,9 @@
                             <!-- END PRODUCT DESCRIPTION -->
                         </div>
 
-                        <!--BEGIN MODAL -->
-                        <!-- Large modal -->
 
-                        <!-- END MODAL -->
-
-                        <div id="modalMessage" class="modal fade">
+                        <!-- Begin Modal -->
+                        <div id="modalCancel" class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -250,8 +247,30 @@
                                     <div class="modal-footer">
                                         <form action="TrackProductStatus" method="POST">
                                             <button type="submit" name="btnAction" class="btn btn-primary" value="cancel">Đồng ý</button>
-                                            <input type="hidden" name="actionValue" value="${c.product.productID}"/>
+                                            <input type="hidden" name="consignmentID" value="${c.product.productID}"/>
                                             <input type="hidden" name="searchValue" value="${param.searchValue}"/>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                        
+                        <!-- Begin Modal -->
+                        <div id="modalExtend" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Gia hạn</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2>Bạn có chắc muốn gia hạn sản phẩm không?</h2>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="TrackProductStatus" method="POST">
+                                            <button type="submit" name="btnAction" class="btn btn-primary" value="extend">Đồng ý</button>
+                                            <input type="hidden" name="consignmentID" value="${param.searchValue}"/>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                         </form>
                                     </div>
