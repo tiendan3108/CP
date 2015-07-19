@@ -595,9 +595,11 @@ public class ConsignmentDAO {
             stm.setInt(1, productID);
             int result = stm.executeUpdate();
             if (result > 0) {
-                sql = "UPDATE Consignment SET CancelDate = GETDATE() WHERE ProductID = ?";
+                sql = "UPDATE Consignment SET CancelDate = GETDATE(), CancelFee = (SELECT ((NegotiatedPrice)*15/100) FROM Consignment WHERE ProductID = ?) "
+                        + " WHERE ProductID = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, productID);
+                stm.setInt(2, productID);
                 result = stm.executeUpdate();
                 if (result > 0) {
                     return true;
