@@ -2669,7 +2669,8 @@
 		str = str.match(/_INPUT_/) ?
 			str.replace('_INPUT_', input) :
 			str+input;
-	
+		var test = classes+" "+tableId+" "+language+" "+previousSearch+" "+feature+" "+input+" "+str;
+		console.log(test);
 		var filter = $('<div/>', {
 				'id': ! features.f ? tableId+'_filter' : null,
 				'class': classes.sFilter
@@ -2680,6 +2681,8 @@
 			/* Update all other filter input elements for the new display */
 			var n = features.f;
 			var val = !this.value ? "" : this.value; // mental IE8 fix :-(
+			console.log(val);
+			console.log(n);
 	
 			/* Now do the filter */
 			if ( val != previousSearch.sSearch ) {

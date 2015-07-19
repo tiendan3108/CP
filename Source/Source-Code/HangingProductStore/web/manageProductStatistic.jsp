@@ -166,6 +166,8 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
                             <div class="portlet box blue">
                                 <div class="portlet-title">
+                                    <input type="hidden" id="fromDate" value="${requestScope.fromDate}">
+                                    <input type="hidden" id="toDate" value="${requestScope.toDate}">
                                     <div class="caption">
                                         <i class="fa fa-globe"></i>Thống kê 
                                         <c:choose>
@@ -179,21 +181,26 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body" id="product" style="display: none;">
-                                    <div class="input-daterange col-sm-8">
-                                        Sản phẩm từ 
-                                        <input type="text" id="daterange">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4 input-daterange">
+                                            Sản phẩm từ ngày &nbsp;&nbsp;
+                                            <input type="text" id="daterangeProduct">
+                                        </div>
+                                        <div class="col-md-8 col-sm-8">
+                                        </div>
                                     </div>
+                                    <br/>
                                     <table class="table table-striped table-hover" id="productTable">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
                                                 <th>Tên khách hàng</th>
-                                                <th>Ngày nhận</th>
+                                                <th>Ngày hoàn tất</th>
                                                 <th>Giá thương lượng</th>
                                                 <th>Giá bán</th>
                                                 <th>Giá trả khách hàng</th>
-                                                <th>Phí</th>
+                                                <th>Phí phạt</th>
                                                 <th>Lợi nhuận</th>
                                             </tr>
                                         </thead>
@@ -203,26 +210,66 @@
                                                     <td>${counter.count}</td>
                                                     <td>${item.productName}</td>
                                                     <td>${item.consignorName}</td>
-                                                    <td>${item.reviewProductDate}</td>
-                                                    <td><fmt:formatNumber value="${item.consignPrice}" maxFractionDigits="1"/></td>
-                                                    <td><c:if test="${item.sellingPrice>0}"><fmt:formatNumber value="${item.sellingPrice}" maxFractionDigits="1"/></c:if></td>
-                                                    <td><c:if test="${item.returnPrice>0}"><fmt:formatNumber value="${item.returnPrice}" maxFractionDigits="1"/></c:if></td>
-                                                    <td><c:if test="${item.fee>0}"><fmt:formatNumber value="${item.fee}" maxFractionDigits="1"/></c:if></td>
-                                                    <td><fmt:formatNumber value="${item.revenue}" maxFractionDigits="1"/></td>
+                                                    <td>${item.actionDate}</td>
+                                                    <td>
+                                                        <fmt:formatNumber value="${item.consignPrice}" maxFractionDigits="1"/>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.sellingPrice!=''}">
+                                                                <fmt:formatNumber value="${item.sellingPrice}" maxFractionDigits="1"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                Trống
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.returnPrice!=''}">
+                                                                <fmt:formatNumber value="${item.returnPrice}" maxFractionDigits="1"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                Trống
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.fee!=''}">
+                                                                <fmt:formatNumber value="${item.fee}" maxFractionDigits="1"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                Trống
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <fmt:formatNumber value="${item.revenue}" maxFractionDigits="1"/>
+                                                    </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="portlet-body" id="consignment" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-4 col-sm-4 input-daterange">
+                                            Yêu cầu từ ngày &nbsp;&nbsp;
+                                            <input type="text" id="daterangeConsignment">
+                                        </div>
+                                        <div class="col-md-8 col-sm-8">
+                                        </div>
+                                    </div>
+                                    <br/>
                                     <table class="table table-striped table-hover" id="consignmentTable">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>STT</th>
                                                 <th>Tên khách hàng</th>
                                                 <th>Số điện thoại</th>
+                                                <th>Ngày duyệt</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Ngày tạo</th>
                                                 <th>Trạng thái</th>
                                             </tr>
                                         </thead>
@@ -232,17 +279,19 @@
                                                     <td>${counter.count}</td>
                                                     <td>${item.name}</td>
                                                     <td>${item.phone}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td>${item.createdDate}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.consignmentStatusID == 1}">Đang chờ xử lý</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 2}">Đã từ chối</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 3}">Đã duyệt</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 4}">Hoàn tất thanh toán</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 6}">Hết hạn kí gửi</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 7}">Hủy kí gửi</c:when>
+                                                            <c:when test="${item.reviewProductDate!=''}">${item.reviewProductDate}</c:when>
+                                                            <c:otherwise>${item.reviewRequestDate}</c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>${item.consigmentID}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.consignmentStatusID == 2 && item.reviewProductDate!=''}">Từ chối khi đến nhận hàng</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 3}">Đồng ý nhận kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 5 && item.reviewProductDate!=''}">Đã nhận hàng kí gửi</c:when>
                                                         </c:choose>
                                                     </td>
                                                 </tr>
@@ -315,75 +364,85 @@
                 // initiate layout and plugins
                 // initiate layout and plugins
                 Metronic.init(); // init metronic core components
-                Layout.init(); // init current layout
+            Layout.init(); // init current layout
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
                 TableManaged.init();
             });</script>
         <script>
-            //script switch tab
-            $(document).ready(function () {
+                $(document).ready(function () {
+                //script switch tab
                 var currentTab = window.location.hash.substring(1);
                 if (currentTab == "") {
-                    currentTab = $('#currentTab').val();
-                }
+            currentTab = $('#currentTab').val();
+            }
                 $('div#' + currentTab).fadeIn(400).siblings().hide();
                 $('div.portlet-title').show();
-                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
+                    $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
-            });
-            //date picker
-            $(function () {
-                $('#daterange').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    maxDate: new Date(),
-                    startDate: new Date(),
-                    endDate: new Date(),
+                });
+            //date picker product
+                $(document).ready(function () {
+                $('#daterangeProduct').daterangepicker({                     format: "DD/MM/YYYY",
+                maxDate: moment(),
+            startDate: moment(),
+            endDate: moment(),
                     locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
                 });
+                    });
+                    $('#daterangeProduct').on('apply.daterangepicker', function (ev, picker) {
+                    var table = $('#productTable').DataTable();
+            var startDate = $('#daterangeProduct').data('daterangepicker').startDate.format('DD-MM-YYYY');
+                var endDate = $('#daterangeProduct').data('daterangepicker').endDate.format('DD-MM-YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
             });
-            $('#daterange').on('apply.daterangepicker', function (ev, picker) {
-                var startDate = picker.startDate.format("DD-MM-YYYY");
-                var endDate = picker.endDate.format("DD-MM-YYYY");
-                var table = $('#productTable');
-                table.find('tr').each(function (index, row)
-                {
-                    var allCells = $(row).find('td');
-                    if (allCells.length > 0)
-                    {
-                        var found = false;
-                        allCells.each(function (index, td)
+                //date picker consignment
+            $(document).ready(function () {
+                $('#daterangeConsignment').daterangepicker({
+                format: "DD/MM/YYYY",
+                maxDate: moment(),
+            startDate: moment(),
+            endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+                    });
+                    $('#daterangeConsignment').on('apply.daterangepicker', function (ev, picker) {
+                    var table = $('#consignmentTable').DataTable();
+            var startDate = $('#daterangeConsignment').data('daterangepicker').startDate.format('DD-MM-YYYY');
+                var endDate = $('#daterangeConsignment').data('daterangepicker').endDate.format('DD-MM-YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+                $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                var startDate = $('#fromDate').val();
+                var endDate = $('#toDate').val();
+            var date = data[3]; // use data for the 'Ngày' column
+                        if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
                         {
-                            if (index == 3) {
-                                var currentDate = $(td).text();
-                                    if (compareDate(currentDate, startDate) >= 0 && compareDate(currentDate, endDate) <= 0) {
-                                    found = true;
-                                return false;
-                            }
+                            return true;
                         }
-                        });
-                            if (found == true)
-                        $(row).show();
-                            else
-                    $(row).hide();
-                }
-            });
-            });
-                function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
-                    if (source.substring(6, 10) > target.substring(6, 10)) {
-                return 1;
-                }
-                    if (source.substring(3, 5) > target.substring(3, 5)) {
-                return 1;
-                }
-                    if (source.substring(0, 2) > target.substring(0, 2)) {
-                return 1;
-                }
-                    if (source.localeCompare(target) == 0) {
-                return 0;
-                }
-            return -1;
+                        return false;
+                    }
+                        );
+                            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+                        if (source.substring(6, 10) > target.substring(6, 10)) {
+                    return 1;
             }
+            if (source.substring(3, 5) > target.substring(3, 5)) {
+                    return 1;
+                }
+                if (source.substring(0, 2) > target.substring(0, 2)) {
+                    return 1;
+                }
+                if (source.localeCompare(target) == 0) {
+                    return 0;
+                    }
+                return -1;
+                }
         </script>
     </body>
     <!-- END BODY -->

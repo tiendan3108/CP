@@ -20,9 +20,9 @@ public class StatisticDTO implements Serializable {
     private float returnPrice;
     private float fee;
     private float revenue;
-    private String receivedDate;
+    private String actionDate;
 
-    public StatisticDTO(String productName, String consignorName, float consignPrice, float returnPrice, float fee, float revenue, float sellingPrice, String receivedDate) {
+    public StatisticDTO(String productName, String consignorName, float consignPrice, float returnPrice, float fee, float revenue, float sellingPrice, String actionDate) {
         this.productName = productName;
         this.consignorName = consignorName;
         this.consignPrice = consignPrice;
@@ -30,7 +30,7 @@ public class StatisticDTO implements Serializable {
         this.fee = fee;
         this.revenue = revenue;
         this.sellingPrice = sellingPrice;
-        this.receivedDate = receivedDate;
+        this.actionDate = actionDate;
     }
 
     /**
@@ -132,17 +132,17 @@ public class StatisticDTO implements Serializable {
     }
 
     /**
-     * @return the receivedDate
+     * @return the actionDate
      */
-    public String getReceivedDate() {
-        return receivedDate;
+    public String getActionDate() {
+        return actionDate;
     }
 
     /**
-     * @param receivedDate the receivedDate to set
+     * @param actionDate the receivedDate to set
      */
-    public void setReceivedDate(String receivedDate) {
-        this.receivedDate = receivedDate;
+    public void setActionDate(String actionDate) {
+        this.actionDate = actionDate;
     }
 
 }

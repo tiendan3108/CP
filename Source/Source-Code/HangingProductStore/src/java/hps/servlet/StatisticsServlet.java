@@ -10,9 +10,9 @@ import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StatisticDTO;
 import hps.ultils.GlobalVariables;
-import hps.ultils.JavaUltilities;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -66,13 +66,33 @@ public class StatisticsServlet extends HttpServlet {
                             totalPrice += item.getRevenue();
                         }
                     }
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(Calendar.DAY_OF_MONTH, 1);
+                    Date firstDayOfMonth = calendar.getTime();
+                    calendar.add(Calendar.MONTH, 1);
+                    calendar.add(Calendar.DATE, -1);
+                    Date lastDayOfMonth = calendar.getTime();
+                    DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+                    String fromDate = sdf.format(firstDayOfMonth);
+                    String toDate = sdf.format(lastDayOfMonth);
+
                     request.setAttribute("totalPrice", totalPrice);
                     request.setAttribute("resultP", resultP);
                     request.setAttribute("currentTab", "product");
+                    request.setAttribute("fromDate", fromDate);
+                    request.setAttribute("toDate", toDate);
                 } else {
+                    Date tempDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                    String today = sdf.format(tempDate);
+
                     resultC = dao.getConsignmentInforForStatisticPage(user.getRoleID());
                     request.setAttribute("resultC", resultC);
                     request.setAttribute("currentTab", "consignment");
+                    request.setAttribute("fromDate", today);
+                    request.setAttribute("toDate", today);
                 }
                 url = GlobalVariables.STATISTIC_PAGE;
             }

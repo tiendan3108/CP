@@ -61,7 +61,7 @@ public class OrderProduct extends HttpServlet {
                 String action = request.getParameter("btnAction");
                 if (action.equals("order")) {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
-                    float sellingPrice = Float.parseFloat(temp_sellingPrice)*1000;
+                    float sellingPrice = Float.parseFloat(temp_sellingPrice) * 1000;
                     String consignmentID = dao.getConsignmentIDByOrderID(orderID);
                     AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
                     listCustomer = dao.getListOrderedCustomer(orderID, true);
@@ -75,7 +75,7 @@ public class OrderProduct extends HttpServlet {
                             Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
+                    if (consignor.getEmail() != null) {
                         ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
                     }
                 }
@@ -88,7 +88,7 @@ public class OrderProduct extends HttpServlet {
                     String temp_sendPrice = request.getParameter("txtSendPrice");
                     float sendPrice = 0;
                     try {
-                        sendPrice = Float.parseFloat(temp_sendPrice)*1000;
+                        sendPrice = Float.parseFloat(temp_sendPrice) * 1000;
                     } catch (Exception e) {
                     }
                     if (orderIDs.length > 0) {
@@ -118,7 +118,7 @@ public class OrderProduct extends HttpServlet {
                                 Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        if (order.getEmail() != null && !order.getEmail().equals("")) {
+                        if (order.getEmail() != null) {
                             ultil.sendEmail(order.getEmail(), MessageString.Subject(), MessageString.cancelOrderEmail(order.getOrderID(), user.getFullName(), order.getFullName()));
                         }
                     }
