@@ -7,6 +7,7 @@ package hps.servlet;
 
 import com.google.gson.Gson;
 import hps.dao.ConsignmentDAO;
+import hps.dao.DuchcDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
@@ -55,7 +56,7 @@ public class TrackProductStatusServlet extends HttpServlet {
                     return;
                 }
             }
-
+            ConsignmentDAO dao = new ConsignmentDAO();
             String action = request.getParameter("btnAction");
             String url = "";
 
@@ -76,7 +77,6 @@ public class TrackProductStatusServlet extends HttpServlet {
 
             if (action.equals("search")) {
                 String searchValue = request.getParameter("searchValue");
-                ConsignmentDAO dao = new ConsignmentDAO();
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 if (consignment != null) {
                     consignment.setPhone("0" + consignment.getPhone().substring(3));
@@ -86,23 +86,26 @@ public class TrackProductStatusServlet extends HttpServlet {
             } else if (action.equals("cancel")) {
                 int actionValue = Integer.parseInt(request.getParameter("actionValue"));
                 String searchValue = request.getParameter("searchValue");
-                ConsignmentDAO dao = new ConsignmentDAO();
                 dao.cancelConsignmentInProduct(actionValue);
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 request.setAttribute("CONSIGNMENT", consignment);
 
-            } else if (action.equals("m_search")) {
+            }else if (action.equals("extend")) {
+                String consignmentID = request.getParameter("consignmentID");
+                dao.ExtendProduct(consignmentID, 30);
+                ConsignmentDTO consignment = dao.getConsignment(consignmentID);
+                request.setAttribute("CONSIGNMENT", consignment);
+            }
+            else if (action.equals("m_search")) {
                 String searchValue = request.getParameter("searchValue");
                 if (searchValue == null) {
                     searchValue = "";
                 }
-                ConsignmentDAO dao = new ConsignmentDAO();
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
             } else if (action.equals("m_cancel")) {
                 int actionValue = Integer.parseInt(request.getParameter("actionValue"));
                 String searchValue = request.getParameter("searchValue");
-                ConsignmentDAO dao = new ConsignmentDAO();
                 dao.cancelConsignmentInProduct(actionValue);
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
@@ -112,7 +115,6 @@ public class TrackProductStatusServlet extends HttpServlet {
             } else if (action.equals("m_searchName")) {
                 String term = request.getParameter("term");
 
-                ConsignmentDAO dao = new ConsignmentDAO();
                 List<String> list = dao.autoCompleteConsignmentByMemberIDAndProductName(member.getRoleID(), term);
                 String json = new Gson().toJson(list);
                 response.setContentType("application/json;charset=UTF-8");
@@ -120,7 +122,6 @@ public class TrackProductStatusServlet extends HttpServlet {
                 return;
             } else if (action.equals("requestdetails")) {
                 String consignmentID = request.getParameter("id");
-                ConsignmentDAO dao = new ConsignmentDAO();
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
                 String json = new Gson().toJson(consignment);
                 response.setContentType("application/json;charset=UTF-8");

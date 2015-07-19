@@ -3,7 +3,9 @@ package hps.dao;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
+import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
+import hps.ultils.ProductStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -618,6 +620,42 @@ public class ConsignmentDAO {
             }
         }
         return false;
+    }
+    
+    public void ExtendProduct(String consignmentID, int period) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+
+            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ConsignmentStatus.RECEIVED);
+            stm.setString(2, consignmentID);
+            stm.setInt(3, period);
+            stm.setString(4, consignmentID);
+            int i = stm.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.ON_WEB);
+            stm.setString(2, consignmentID);
+            i = stm.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     //used for getting product info from consignment table and insert into ConsignmentDTO
