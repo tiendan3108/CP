@@ -210,7 +210,7 @@
                                             <c:when test="${c.consignmentStatusID == 6}">
                                                 <tr>
                                                     <td>
-                                                        <button type="button" class="btn btn-info btn-lg">
+                                                        <button type="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalExtend">
                                                             GIA HẠN
                                                         </button> 
                                                     </td>

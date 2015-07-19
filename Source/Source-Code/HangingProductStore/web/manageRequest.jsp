@@ -271,7 +271,7 @@
                                         </div>
                                         <div class="col-md-2 col-sm-2">
                                             <button data-toggle="modal" data-target="#modalAddConsignment"
-                                                    class="btn btn-lg btn-primary btn-block">Tạo mới ký gửi</button>
+                                                    class="btn btn-primary btn-block">Tạo mới ký gửi</button>
                                         </div>
                                     </div>
                                     <br/>
@@ -808,7 +808,7 @@
 
                         </div>
                         <div class="modal-footer">
-
+                            <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button>
 
                         </div>
                     </div>
