@@ -733,6 +733,7 @@
 
                         </div>
                         <div class="modal-body">
+                            <div class="row">
                             <!-- BEGIN PAGE CONTENT-->
                             <div>
                                 <!-- BEGIN CAROUSEL -->
@@ -805,7 +806,7 @@
                                 </div>
                                 <!-- END PRODUCT DESCRIPTION -->
                             </div>
-
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button>
