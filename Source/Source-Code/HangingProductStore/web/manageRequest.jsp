@@ -248,7 +248,7 @@
                                                     </td>
                                                     <td>
 
-                                                        ${c.fromDate} - ${c.toDate}
+                                                        ${c.fromDate}&nbsp; ~ &nbsp;${c.toDate}
                                                     </td>
                                                     <td align="center">
 
