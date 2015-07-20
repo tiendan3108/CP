@@ -1412,10 +1412,11 @@
                     check = false;
                 }
                 if (check) {
-                    if ($('#ar_negotiatedPrice').val() == "") {
-                        alert("Xin nhập giá thỏa thuận!");
-                    } else {
+                    if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
                         $('form#r_form').submit();
+
+                    } else {
+                        alert("Xin nhập đúng giá thỏa thuận!");
                     }
                 } else {
                     alert("Xin nhập đầy đủ thông tin");
@@ -1525,12 +1526,14 @@
                     $('#erImage').html("");
                 }
 
-                if ($('#addConsignment_txtNegotiatedPrice').val().trim().length <= 0) {
-                    $('#erNegotiatedPrice').html("<font color='red'>Xin nhập giá</font>");
-                    check = false;
+                if ($('#addConsignment_txtNegotiatedPrice').val().length > 0 && !isNaN($('#addConsignment_txtNegotiatedPrice').val())) {
+                    $('#erNegotiatedPrice').html("");
                 }
                 else {
-                    $('#erNegotiatedPrice').html("");
+                    $('#erNegotiatedPrice').html("<font color='red'>Xin nhập đúng giá</font>");
+                    check = false;
+
+
                 }
 
                 if (check) {
