@@ -1069,6 +1069,10 @@
                 }
                 function checkSoldProduct() {
                     var price = $('#sold_returnPrice').val();
+                    if (price.length == 0) {
+                        alert('Vui lòng nhập tiền phạt.');
+                        return false;
+                    }
                     if (isNaN(price) || price < 0) {
                         alert('Tiền phạt phải là số dương');
                         return false;
@@ -1079,6 +1083,10 @@
                 function validateSellingPrice()
                 {
                     var fee = $('#sellingPrice').val();
+                    if (fee.length == 0) {
+                        alert('Vui lòng nhập giá bán.');
+                        return false;
+                    }
                     if (isNaN(fee) || fee < 0) {
                         alert('Tiền bán phải là số dương');
                         return false;
@@ -1089,6 +1097,10 @@
                 function validationPrice()
                 {
                     var fee = $('#expired_fee').val();
+                    if (fee.length == 0) {
+                        alert('Vui lòng nhập tiền phạt.');
+                        return false;
+                    }
                     if (isNaN(fee) || fee < 0) {
                         alert('Tiền phạt phải là số dương');
                         return false;
