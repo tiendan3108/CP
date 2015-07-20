@@ -111,20 +111,38 @@
                                         <th>Giá (Ngàn đồng)</th>
 
                                         <td id="r_price">
-                                            <c:if test="${c.minPrice > 0 or c.maxPrice > 0}">
-                                                <fmt:formatNumber type="number"
-                                                                  value="${c.minPrice}" 
-                                                                  maxFractionDigits="0"/>
-                                                &nbsp;~&nbsp; <fmt:formatNumber type="number"
-                                                                  value="${c.maxPrice}" 
-                                                                  maxFractionDigits="0"/>
-                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${c.negotiatedPrice > 0}">
+                                                    <fmt:formatNumber type="number"
+                                                                      value="${c.negotiatedPrice}" 
+                                                                      maxFractionDigits="0"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:if test="${c.minPrice > 0 or c.maxPrice > 0}">
+                                                        <fmt:formatNumber type="number"
+                                                                          value="${c.minPrice}" 
+                                                                          maxFractionDigits="0"/>
+                                                        &nbsp;~&nbsp; <fmt:formatNumber type="number"
+                                                                          value="${c.maxPrice}" 
+                                                                          maxFractionDigits="0"/>
+                                                    </c:if>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </td> 
                                     </tr>
                                     <tr>
                                         <th>Ngày hẹn</th>
                                         <td id='r_fromDateToDate'>
-                                            ${c.fromDate} - ${c.toDate}
+                                            <c:choose>
+                                                <c:when test="${not empty c.appointmentDate}">
+                                                    ${c.appointmentDate} &nbsp; ${c.hour}
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${c.fromDate} - ${c.toDate}
+                                                </c:otherwise>
+                                            </c:choose>
+                                            
                                         </td>
                                     </tr>
                                     <tr>
@@ -254,7 +272,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-                        
+
                         <!-- Begin Modal -->
                         <div id="modalExtend" class="modal fade">
                             <div class="modal-dialog">

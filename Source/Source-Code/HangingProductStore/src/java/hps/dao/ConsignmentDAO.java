@@ -225,7 +225,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> findConsignmentByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
+    public List<ConsignmentDTO> findRequestByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -235,7 +235,7 @@ public class ConsignmentDAO {
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
                     + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
-                    + " AND P.ProductStatusID <> 6 "
+                    + " AND P.ProductStatusID = 1 "
                     + " ORDER BY C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
@@ -701,6 +701,7 @@ public class ConsignmentDAO {
         float minPrice = rs.getFloat("MinPrice") / 1000;
         float maxPrice = rs.getFloat("MaxPrice") / 1000;
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
+        float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
 
         String reviewProductDate = rs.getString("ReviewProductDate");
         if (reviewProductDate != null) {
@@ -725,6 +726,8 @@ public class ConsignmentDAO {
         if (reviewRequestDate != null) {
             reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
         }
+        
+        
 
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
@@ -759,6 +762,7 @@ public class ConsignmentDAO {
         consignment.setReviewRequestDate(reviewRequestDate);
         consignment.setConsignmentStatusID(consignmentStatusID);
         consignment.setReason(reason);
+        consignment.setNegotiatedPrice(negotiatedPrice);
 
         return consignment;
     }

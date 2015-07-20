@@ -281,7 +281,7 @@ var TableManaged = function () {
             "pagingType": "bootstrap_full_number",
             "language": {
                 "search": "Tìm: ",
-                "lengthMenu": "  _MENU_ sản phẩm",
+                "lengthMenu": "  _MENU_ yêu cầu",
                 "paginate": {
                     "previous": "Prev",
                     "next": "Next",
@@ -376,7 +376,7 @@ var TableManaged = function () {
             "pagingType": "bootstrap_full_number",
             "language": {
                 "search": "Tìm: ",
-                "lengthMenu": "  _MENU_ sản phẩm",
+                "lengthMenu": "  _MENU_ yêu cầu",
                 "paginate": {
                     "previous": "Prev",
                     "next": "Next",
@@ -469,7 +469,7 @@ var TableManaged = function () {
             "pagingType": "bootstrap_full_number",
             "language": {
                 "search": "Tìm: ",
-                "lengthMenu": "  _MENU_ sản phẩm",
+                "lengthMenu": "  _MENU_ yêu cầu",
                 "paginate": {
                     "previous": "Prev",
                     "next": "Next",
@@ -562,7 +562,7 @@ var TableManaged = function () {
             "pagingType": "bootstrap_full_number",
             "language": {
                 "search": "Tìm: ",
-                "lengthMenu": "  _MENU_ sản phẩm",
+                "lengthMenu": "  _MENU_ yêu cầu",
                 "paginate": {
                     "previous": "Prev",
                     "next": "Next",

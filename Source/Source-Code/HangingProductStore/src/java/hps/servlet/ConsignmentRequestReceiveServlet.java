@@ -271,13 +271,13 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             }
 
             if (currentTab.equals("request")) {
-                List<ConsignmentDTO> c_request = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_request = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
                 request.setAttribute("REQUEST", c_request);
             } else if (currentTab.equals("accepted")) {
-                List<ConsignmentDTO> c_accept = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_accept = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
                 request.setAttribute("ACCEPT", c_accept);
             } else if (currentTab.equals("refuse")) {
-                List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
                 request.setAttribute("REFUSE", c_refuse);
 
             } else if (currentTab.equals("cancel")) {
