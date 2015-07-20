@@ -734,78 +734,78 @@
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                            <!-- BEGIN PAGE CONTENT-->
-                            <div>
-                                <!-- BEGIN CAROUSEL -->
-                                <div class="col-lg-4 col-md-4 front-carousel">
+                                <!-- BEGIN PAGE CONTENT-->
+                                <div>
+                                    <!-- BEGIN CAROUSEL -->
+                                    <div class="col-lg-4 col-md-4 front-carousel">
 
-                                    <div class="carousel slide" id="myCarousel">
-                                        <!-- Carousel items -->
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <img id="rc_image" alt="" style="max-height: 600px">
-                                                <div class="carousel-caption">
-                                                    <p></p>
+                                        <div class="carousel slide" id="myCarousel">
+                                            <!-- Carousel items -->
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+                                                    <img id="rc_image" alt="" style="max-height: 600px">
+                                                    <div class="carousel-caption">
+                                                        <p></p>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- Carousel nav -->
+                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
                                         </div>
-                                        <!-- Carousel nav -->
-                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
+
                                     </div>
+                                    <!-- END CAROUSEL -->
 
+                                    <!-- BEGIN PRODUCT DESCRIPTION -->
+                                    <div class="col-lg-8 col-md-8">
+
+
+                                        <table style="font-size: 110%" class="table table-striped table-hover" >
+                                            <tr>
+                                                <th width="30%">Tên sản phẩm</th>
+                                                <td id="rc_productName"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Mô tả</th>
+                                                <td id="rc_description">
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Ngày ký gửi</th>
+                                                <td id='rc_createdDate'></td>
+                                            </tr>
+                                            <tr >
+                                                <th>Giá (VND)</th>
+                                                <td id="rc_price"></td>
+                                            </tr>
+                                            <!--                                        <tr>
+                                                                                        <th>Ngày hẹn</th>
+                                                                                        <td id='rc_fromDateToDate'></td>
+                                                                                    </tr>-->
+                                            <tr>
+                                                <th>Trạng thái</th>
+                                                <td id='rc_status'>
+                                                </td>
+                                            </tr>
+                                            <tr id="rc_trReason">
+                                                <th>Lí do</th>
+                                                <td id="rc_reason">
+
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                    <!-- END PRODUCT DESCRIPTION -->
                                 </div>
-                                <!-- END CAROUSEL -->
-
-                                <!-- BEGIN PRODUCT DESCRIPTION -->
-                                <div class="col-lg-8 col-md-8">
-
-
-                                    <table style="font-size: 110%" class="table table-striped table-hover" >
-                                        <tr>
-                                            <th width="30%">Tên sản phẩm</th>
-                                            <td id="rc_productName"></td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>Mô tả</th>
-                                            <td id="rc_description">
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ngày ký gửi</th>
-                                            <td id='rc_createdDate'></td>
-                                        </tr>
-                                        <tr >
-                                            <th>Giá (VND)</th>
-                                            <td id="rc_price"></td>
-                                        </tr>
-                                        <!--                                        <tr>
-                                                                                    <th>Ngày hẹn</th>
-                                                                                    <td id='rc_fromDateToDate'></td>
-                                                                                </tr>-->
-                                        <tr>
-                                            <th>Trạng thái</th>
-                                            <td id='rc_status'>
-                                            </td>
-                                        </tr>
-                                        <tr id="rc_trReason">
-                                            <th>Lí do</th>
-                                            <td id="rc_reason">
-
-                                            </td>
-                                        </tr>
-
-                                    </table>
-
-                                </div>
-                                <!-- END PRODUCT DESCRIPTION -->
-                            </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -1389,13 +1389,36 @@
             });
 
             $('#r_btnSubmit').click(function () {
-                $('form#r_form').submit();
+                var check = true;
+                if ($('#r_productName').val().length == 0) {
+                    check = false;
+                }
+                if ($('#r_hour').val().length == 0) {
+                    check = false;
+                }
+                if ($('#r_receivedDate').val().length == 0) {
+                    check = false;
+                }
+                if (check) {
+                    $('form#r_form').submit();
+                } else {
+                    alert("Xin nhập đầy đủ thông tin");
+                }
+
             });
             $('#ar_btnSubmit').click(function () {
-                if ($('#ar_negotiatedPrice').val() == "") {
-                    alert("Xin nhập giá thỏa thuận!");
+                var check = true;
+                if ($('#r_productName').val().length == 0) {
+                    check = false;
+                }
+                if (check) {
+                    if ($('#ar_negotiatedPrice').val() == "") {
+                        alert("Xin nhập giá thỏa thuận!");
+                    } else {
+                        $('form#r_form').submit();
+                    }
                 } else {
-                    $('form#r_form').submit();
+                    alert("Xin nhập đầy đủ thông tin");
                 }
             });
 
