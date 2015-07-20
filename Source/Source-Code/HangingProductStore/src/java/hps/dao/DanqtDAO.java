@@ -1813,25 +1813,35 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? "
-                    + "ORDER BY ISNULL(ReviewRequestDate, ?) , ISNULL(ReviewProductDate, ?)";
-            String maxDate = "2079-06-05T23:59:00";
+            
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewRequestDate IS NOT NULL";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
-            stm.setString(2, maxDate);
-            stm.setString(3, maxDate);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                item = new ConsignmentDTO();
+                item.setName(rs.getString("FullName"));
+                item.setConsigmentID(rs.getString("ConsignmentID"));
+                item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
+                item.setPhone(convertPhone(rs.getString("Phone")));
+                item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
+                result.add(item);
+            }
+            
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewProductDate IS NOT NULL";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, roleID);
             rs = stm.executeQuery();
             while (rs.next()) {
                 item = new ConsignmentDTO();
                 item.setName(rs.getString("FullName"));
                 item.setConsigmentID(rs.getString("ConsignmentID"));
                 item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
-                item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
-                item.setReason(rs.getString("Reason"));
                 result.add(item);
             }
+            
             if (result.isEmpty()) {
                 return null;
             } else {

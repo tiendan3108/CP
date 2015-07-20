@@ -284,18 +284,19 @@
                                                     <td>${item.phone}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.reviewProductDate!=''}">${item.reviewProductDate}</c:when>
-                                                            <c:otherwise>${item.reviewRequestDate}</c:otherwise>
+                                                            <c:when test="${item.reviewRequestDate!=''}">${item.reviewRequestDate}</c:when>
+                                                            <c:otherwise>${item.reviewProductDate}</c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.consignmentStatusID == 2 && item.reviewProductDate!=''}">Từ chối khi đến nhận hàng</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 3}">Đồng ý nhận kí gửi</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 5 && item.reviewProductDate!=''}">Đã nhận hàng kí gửi</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 7 && item.reviewProductDate!=''}">Đã nhận hàng kí gửi</c:when>
+                                                            <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID == 2}">Từ chối khi đến nhận hàng</c:when>
+                                                            <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 5 && not empty item.reviewProductDate}">Đã nhận hàng kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 7 && not empty item.reviewProductDate}">Đã nhận hàng kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 5 && not empty item.reviewRequestDate}">Đồng ý nhận kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 7 && not empty item.reviewRequestDate}">Đồng ý nhận kí gửi</c:when>
                                                         </c:choose>
                                                     </td>
                                                 </tr>
@@ -436,10 +437,10 @@
                 if (source.substring(6, 10) > target.substring(6, 10)) {
                     return 1;
                 }
-                if (source.substring(3, 5) > target.substring(3, 5)) {
+                if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
                     return 1;
                 }
-                if (source.substring(0, 2) > target.substring(0, 2)) {
+                if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
                     return 1;
                 }
                 if (source.localeCompare(target) == 0) {

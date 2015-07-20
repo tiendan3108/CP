@@ -1297,7 +1297,7 @@ var TableManaged = function () {
                 }, {
                     "orderable": false
                 }, {
-                    "orderable": false
+                    "orderable": true
                 }, {
                     "orderable": true
                 }],
