@@ -1813,16 +1813,13 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ConsignmentStatusID in (?,?,?)"
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? "
                     + "ORDER BY ISNULL(ReviewRequestDate, ?) , ISNULL(ReviewProductDate, ?)";
             String maxDate = "2079-06-05T23:59:00";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
-            stm.setInt(2, ConsignmentStatus.REFUSE);
-            stm.setInt(3, ConsignmentStatus.ACCEPTED);
-            stm.setInt(4, ConsignmentStatus.RECEIVED);
-            stm.setString(5, maxDate);
-            stm.setString(6, maxDate);
+            stm.setString(2, maxDate);
+            stm.setString(3, maxDate);
             rs = stm.executeQuery();
             while (rs.next()) {
                 item = new ConsignmentDTO();

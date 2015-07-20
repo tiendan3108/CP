@@ -295,6 +295,7 @@
                                                             <c:when test="${item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
                                                             <c:when test="${item.consignmentStatusID == 3}">Đồng ý nhận kí gửi</c:when>
                                                             <c:when test="${item.consignmentStatusID == 5 && item.reviewProductDate!=''}">Đã nhận hàng kí gửi</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 7 && item.reviewProductDate!=''}">Đã nhận hàng kí gửi</c:when>
                                                         </c:choose>
                                                     </td>
                                                 </tr>
