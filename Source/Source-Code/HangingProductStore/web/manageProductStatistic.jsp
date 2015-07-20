@@ -284,7 +284,7 @@
                                                     <td>${item.phone}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.reviewRequestDate!=''}">${item.reviewRequestDate}</c:when>
+                                                            <c:when test="${not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
                                                             <c:otherwise>${item.reviewProductDate}</c:otherwise>
                                                         </c:choose>
                                                     </td>
