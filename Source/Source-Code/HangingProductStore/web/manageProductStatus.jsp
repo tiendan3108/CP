@@ -1048,7 +1048,7 @@
                 function checkCustomer2()
                 {
                     var n = $("input:checked").length;
-                    var price = $("#sendPrice").val();
+                    var price = $("#sendPrice").val().trim();
                     if (n == 0) {
                         alert('Vui lòng chọn ít nhất một khách hàng.');
                         return false;
@@ -1068,7 +1068,7 @@
                     return true;
                 }
                 function checkSoldProduct() {
-                    var price = $('#sold_returnPrice').val();
+                    var price = $('#sold_returnPrice').val().trim();
                     if (price.length == 0) {
                         alert('Vui lòng nhập tiền phạt.');
                         return false;
@@ -1082,7 +1082,7 @@
                 }
                 function validateSellingPrice()
                 {
-                    var fee = $('#sellingPrice').val();
+                    var fee = $('#sellingPrice').val().trim();
                     if (fee.length == 0) {
                         alert('Vui lòng nhập giá bán.');
                         return false;
@@ -1096,7 +1096,7 @@
                 }
                 function validationPrice()
                 {
-                    var fee = $('#expired_fee').val();
+                    var fee = $('#expired_fee').val().trim();
                     if (fee.length == 0) {
                         alert('Vui lòng nhập tiền phạt.');
                         return false;
