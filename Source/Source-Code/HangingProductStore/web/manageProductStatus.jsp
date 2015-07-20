@@ -525,11 +525,11 @@
                                         <h4>Thông tin giá bán</h4>        
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input type="text" name="txtSellingPrice" value ="" style="width: 300px;">
+                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input id="sellingPrice" type="text" name="txtSellingPrice" value ="" style="width: 300px;">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" id="order_OrderID">
-                                        <button class="btn btn-info" name="btnAction" type="submit" value="order">Đồng ý</button>
+                                        <button class="btn btn-info" name="btnAction" type="submit" value="order" onclick="return validateSellingPrice();">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -1071,6 +1071,16 @@
                     var price = $('#sold_returnPrice').val();
                     if (isNaN(price) || price < 0) {
                         alert('Tiền phạt phải là số dương');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                function validateSellingPrice()
+                {
+                    var fee = $('#sellingPrice').val();
+                    if (isNaN(fee) || fee < 0) {
+                        alert('Tiền bán phải là số dương');
                         return false;
                     } else {
                         return true;
