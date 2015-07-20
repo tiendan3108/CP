@@ -638,7 +638,9 @@
                                                             <div class="col-sm-8">
                                                                 <c:forEach var="item" items="${requestScope.season}">
                                                                     <div class="col-sm-3">
-                                                                        <input style="width: 8%" type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
+                                                                        <label>
+                                                                            <input style="width: 8%" type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
+                                                                        </label>
                                                                     </div>
                                                                 </c:forEach>
                                                             </div>
