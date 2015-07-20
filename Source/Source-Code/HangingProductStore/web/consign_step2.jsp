@@ -76,11 +76,9 @@
                                         <c:set var="data" value="${AMAZONLIST}"/>
 
                                         <div class="tab-content ">
-                                            <%--  <c:if test="${basicPrice <= 0}">
-                                                  <div class="alert alert-warning" style="text-align: center">
-                                                      <strong>Chúng tôi không thể tìm thấy thông tin sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
-                                                  </div>    
-                                              </c:if> --%>
+                                            <div class="alert alert-warning" style="text-align: center">
+                                                <strong>Nếu không tìm thấy sản phẩm của bạn, có thể bạn đã nhập sai tên. Vui lòng nhấn quay lại để sửa thông tin.</strong>
+                                            </div> 
                                             <div>
 
 
@@ -227,7 +225,7 @@
     };
     $(document).ready(function () {
     });
-    
+
     function validation() {
         $('#txtAmazon').val($('input:radio[name="rdAmazon"]:checked').val());
         if (jQuery("#form2").context.activeElement.value == 'tostep3') {

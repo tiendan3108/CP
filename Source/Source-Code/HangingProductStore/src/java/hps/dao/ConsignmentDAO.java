@@ -269,7 +269,7 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> getCanceledConsignmentByStoreOwnerID(int storeOwnerID) {
+    public List<ConsignmentDTO> getCanceledrequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -278,7 +278,7 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE C.ConsignmentStatusID = 1 AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
+                    + " WHERE (C.ConsignmentStatusID = 1 OR C.ConsignmentStatusID = 3) AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
                     + " ORDER BY C.CancelDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);

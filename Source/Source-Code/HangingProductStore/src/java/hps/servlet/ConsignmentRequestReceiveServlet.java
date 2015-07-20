@@ -281,7 +281,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 request.setAttribute("REFUSE", c_refuse);
 
             } else if (currentTab.equals("cancel")) {
-                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(storeOwner.getRoleID());
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledrequestByStoreOwnerID(storeOwner.getRoleID());
                 request.setAttribute("CANCEL", c_cancel);
             }
 
