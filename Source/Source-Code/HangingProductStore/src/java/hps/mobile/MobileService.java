@@ -5,6 +5,8 @@
  */
 package hps.mobile;
 
+import hps.mobile.nofitication.NotificationDTO;
+import hps.mobile.nofitication.NotificationDAO;
 import com.google.gson.Gson;
 import hps.ultils.JavaUltilities;
 import java.io.UnsupportedEncodingException;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -98,7 +101,29 @@ public class MobileService {
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
-        dao.cancelConsignment(product.getProductID(), product.getReason(),product.getReviewProductDate());
+        dao.cancelConsignment(product.getProductID(), product.getReason(), product.getReviewProductDate());
         return "ok";
+    }
+
+    @Path("/getDateSystem")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getDateSystem() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String newDate = df.format(date);
+        return newDate;
+    }
+
+    @Path("/registrationNotify")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String registrationNotify(String input) {
+        Gson gson = new Gson();
+        NotificationDTO notify;
+        notify = gson.fromJson(input, NotificationDTO.class);
+        NotificationDAO dao = new NotificationDAO();
+        dao.insertToken(notify);
+        return "OK";
     }
 }
