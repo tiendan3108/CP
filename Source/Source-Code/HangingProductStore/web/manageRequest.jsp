@@ -1435,7 +1435,6 @@
                 }
                 if (check) {
                     $('form#r_form').submit();
-                    //alert($("#r_isSpecial").is(':checked'));
                 } else {
                     alert("Xin nhập đầy đủ thông tin");
                 }
@@ -1469,7 +1468,6 @@
                 }
                 if (check) {
                     updateRequest();
-                    //alert($("#r_isSpecial").is(':checked'));
                 } else {
                     alert("Xin nhập đầy đủ thông tin");
                 }
@@ -1488,8 +1486,8 @@
                 if ($("input#r_isSpecial").is(":checked")) {
                     isSpecial = 1;
                 }
-                alert(consignmentID + " - " + productName + " - " + categoryID + " - " + brand + " - " + description
-                        + " - " + receivedDate + " - " + hour + " - " + isSpecial);
+//                alert(consignmentID + " - " + productName + " - " + categoryID + " - " + brand + " - " + description
+//                        + " - " + receivedDate + " - " + hour + " - " + isSpecial);
                 $.get('ConsignmentRequestReceive',
                         {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName, categoryID: categoryID, brand: brand,
                             description: description, receivedDate: receivedDate, hour: hour, isSpecial: isSpecial},
