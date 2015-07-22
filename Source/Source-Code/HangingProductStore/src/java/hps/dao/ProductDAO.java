@@ -881,6 +881,8 @@ public class ProductDAO {
                     sellDate = df.format(rs.getDate("SellDate"));
                     product.setSellDate(sellDate);
                 }
+                int isSpecial = rs.getInt("IsSpecial");
+                product.setIsSpecial(isSpecial);
             }
             return product;
         } catch (SQLException ex) {

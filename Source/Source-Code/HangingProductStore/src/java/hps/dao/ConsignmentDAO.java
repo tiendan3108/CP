@@ -5,6 +5,7 @@ import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
+import hps.ultils.GlobalVariables;
 import hps.ultils.ProductStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -477,9 +478,8 @@ public class ConsignmentDAO {
 //        return false;
 //    }
     //update consignment and product status for request management
-    public boolean updateConsignmentWhenAcceptProduct(String consignmentID, float negotiatedPrice,
-            int consignmentStatusID, int productID, String productName, int categoryID,
-            String brand, String description, int productStatusID) {
+    public boolean updateConsignmentWhenAcceptProduct(String consignmentID, float negotiatedPrice, String productName, int categoryID,
+            String brand, String description, int isSpecial) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -496,20 +496,22 @@ public class ConsignmentDAO {
 
             stm.setString(2, getCurrentDate());
 
-            stm.setInt(3, consignmentStatusID);
+            stm.setInt(3, GlobalVariables.CONSIGNMENT_RECEIVED);
             stm.setString(4, consignmentID);
 
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
-                        + " ProductStatusID = ? WHERE ProductID = ?";
+                        + " ProductStatusID = 2, IsSpecial = ? "
+                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryID);
                 stm.setString(3, brand);
                 stm.setString(4, description);
-                stm.setDouble(5, productStatusID);
-                stm.setInt(6, productID);
+                //stm.setDouble(5, productStatusID);
+                stm.setInt(5, isSpecial);
+                stm.setString(6, consignmentID);
                 result = stm.executeUpdate();
                 if (result > 0) {
                     return true;
@@ -534,8 +536,8 @@ public class ConsignmentDAO {
     }
 
     //update consignment with date in consignment management 14/7/2015
-    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String appointmentDate, int consignmentStatusID, int productID,
-            String productName, int categoryID, String brand, String description, int productStatusID) {
+    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String appointmentDate,
+            String productName, int categoryID, String brand, String description, int isSpecial) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -547,20 +549,21 @@ public class ConsignmentDAO {
 
             stm.setString(1, appointmentDate);
             stm.setString(2, getCurrentDate());
-            stm.setInt(3, consignmentStatusID);
+            stm.setInt(3, GlobalVariables.CONSIGNMENT_ACCEPTED);
             stm.setString(4, consignmentID);
 
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
-                        + " ProductStatusID = ? WHERE ProductID = ?";
+                        + " IsSpecial = ?, ProductStatusID = 1"
+                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, productName);
                 stm.setInt(2, categoryID);
                 stm.setString(3, brand);
                 stm.setString(4, description);
-                stm.setDouble(5, productStatusID);
-                stm.setInt(6, productID);
+                stm.setInt(5, isSpecial);
+                stm.setString(6, consignmentID);
                 result = stm.executeUpdate();
                 if (result > 0) {
                     return true;
@@ -726,8 +729,7 @@ public class ConsignmentDAO {
         if (reviewRequestDate != null) {
             reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
         }
-        
-        
+              
 
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");

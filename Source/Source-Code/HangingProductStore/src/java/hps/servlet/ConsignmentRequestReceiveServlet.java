@@ -80,7 +80,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 } else if (action.equals("consignmentdetails")) {
                     String consignmentID = request.getParameter("id");
                     ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
-                //System.out.println("consignment reason: " + consignment.getReason());
+                    //System.out.println("consignment reason: " + consignment.getReason());
                     //set session this consignment for accept or refuse action
                     //session.setAttribute("consignment_details", consignment);
                     String json = new Gson().toJson(consignment);
@@ -100,6 +100,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String productName = request.getParameter("txtProductName");
                     String hour = request.getParameter("txtHour");
 
+                    int isSpecial = 0;
+                    if (request.getParameter("txtIsSpecial") != null) {
+                        isSpecial = 1;
+                    }
+
 // get appointmentDate and add hour into it then format to update database
                     String appointmentDate = request.getParameter("txtReceivedDate") + " " + hour;
                     appointmentDate = formatDate(appointmentDate);
@@ -109,9 +114,10 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String description = request.getParameter("txtDescription");
                     int productID = Integer.parseInt(request.getParameter("productID"));
 
-                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                    //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, productName, categoryID, brand, description, isSpecial);
 
-                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                    //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                     //send sms and email
 //                if (consignment != null) {
 //                    session.removeAttribute("consignment_details");
@@ -174,12 +180,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     currentTab = "request";
 
                 } else if (action.equals("ar_accept")) {
-                    //String consignmentID = request.getParameter("ar_consignmentID");
-//                double maxPrice = Double.parseDouble(request.getParameter("ar_maxPrice"));
-//                double minPrice = Double.parseDouble(request.getParameter("ar_minPrice"));
-//                int productID = Integer.parseInt(request.getParameter("ar_productID"));
-//                consignmentDAO.updateConsignmentStatusAsReceived(consignmentID, minPrice, maxPrice, productID);
-
                     String consignmentID = request.getParameter("consignmentID");
                     int productID = Integer.parseInt(request.getParameter("productID"));
                     String productName = request.getParameter("txtProductName");
@@ -187,14 +187,19 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String brand = request.getParameter("txtBrand");
                     String description = request.getParameter("txtDescription");
                     float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
+                    int isSpecial = 0;
+                    if (request.getParameter("txtIsSpecial") != null) {
+                        isSpecial = 1;
+                    }
 
 //                Date date = new Date();
 //                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 //                String receivedDate = dateFormat.format(date);
                     //consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, receivedDate, GlobalVariables.CONSIGNMENT_RECEIVED, productID, productName, categoryID, brand, description, 2);
-                    consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, GlobalVariables.CONSIGNMENT_RECEIVED, productID, productName, categoryID, brand, description, 2);
+                    //consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, GlobalVariables.CONSIGNMENT_RECEIVED, productID, productName, categoryID, brand, description, 2);
+                    consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, productName, categoryID, brand, description, isSpecial);
 
-                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                    //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                     //send sms and email
 //                if (consignment != null) {
 //                    session.removeAttribute("consignment_details");
@@ -238,7 +243,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     System.out.println("reason: " + reason);
                     consignmentDAO.updateConsignmentStatusWhenRefuseProduct(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
 
-                //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
+                    //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                     //send sms and email
 //                if (consignment != null) {
 //                    session.removeAttribute("consignment_details");
@@ -267,6 +272,37 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                     currentTab = "accepted";
 
+                } else if (action.equals("updateRequest")) {
+                    String consignmentID = request.getParameter("consignmentID");
+                    String productName = request.getParameter("productName");
+                    int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                    String brand = request.getParameter("brand");
+
+                    String description = request.getParameter("description");
+                    
+                    int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
+                    
+
+// get appointmentDate and add hour into it then format to update database
+                    String hour = request.getParameter("hour");
+                    String appointmentDate = request.getParameter("receivedDate") + " " + hour;
+                    appointmentDate = formatDate(appointmentDate);
+                    
+
+                    //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, productName, categoryID, brand, description, isSpecial);
+
+                    String message;
+                    if (result) {
+                        message = "Cập nhật thành công";
+                    } else {
+                        message = "Cập nhật thất bại";
+                    }
+
+                    String json = new Gson().toJson(message);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(json);
+                    return;
                 }
             }
 
