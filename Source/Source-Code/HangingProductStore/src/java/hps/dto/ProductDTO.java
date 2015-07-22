@@ -43,6 +43,7 @@ public class ProductDTO implements Serializable {
     private String status; // for showing product status
     private String categoryName; // for showing category Name
     private String sellDate; // add on 25/6/2015
+    private int isSpecial; // add on 22/7/2015
     //duchc - end
 
     public ProductDTO() {
@@ -473,6 +474,14 @@ public class ProductDTO implements Serializable {
      */
     public void setNegotiatedPrice(float negotiatedPrice) {
         this.negotiatedPrice = negotiatedPrice;
+    }
+
+    public int getIsSpecial() {
+        return isSpecial;
+    }
+
+    public void setIsSpecial(int isSpecial) {
+        this.isSpecial = isSpecial;
     }
 
 }
