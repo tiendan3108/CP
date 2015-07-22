@@ -12,6 +12,9 @@ import com.twilio.sdk.resource.instance.Message;
 import hps.dao.DanqtDAO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
+import hps.mobile.nofitication.Data;
+import hps.mobile.nofitication.Notification;
+import hps.mobile.nofitication.NotificationUltils;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,20 +62,7 @@ public class JavaUltilities {
     static Random rnd = new Random();
 
     public static void main(String[] args) {
-        try {
-            JavaUltilities a = new JavaUltilities();
-//        String body = "<table >";
-//        body += "<tr><th>MONHANG</th><th>MON HANG</th></tr>";
-//        body += "<tr><td>123</td><td>234</td></tr>";
-//        body += "<tr><td>123</td><td>234</td></tr>";
-//        body += "</table>";     
-//        a.sendEmail("HoangNHSE61007@fpt.edu.vn", "Test CSS", body);
-            //System.out.println(a.encodeImage("././web/assets/image/tag1.jpg"));
-            //a.reduceQulityImage("././web/assets/image/adidas-supercolor.jpg", "././web/assets/image/adidas-supercolor1.jpg");
-            a.sendSMS("test abc", "+841689191917");
-        } catch (TwilioRestException ex) {
-            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     /**
@@ -256,5 +246,12 @@ public class JavaUltilities {
                 sendEmail(next.getEmail(), subject, email);
             }
         }
+    }
+
+    public void sendNofitiCation(String title, String content, String gcmID) {
+        Data data = new Data(content, title);
+        Notification notification = new Notification();
+        notification.setData(data);
+        NotificationUltils.sendNotification(notification);
     }
 }
