@@ -11,10 +11,14 @@ import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.OrderDTO;
+import hps.mobile.nofitication.AccountReceiveNofiticationDAO;
+import hps.mobile.nofitication.AccountReceiveNotification;
 import hps.ultils.JavaUltilities;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -72,6 +76,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
                 System.out.println("start task");
                 remindConsignor();
                 checkOrder();
+                sendNofitication();
                 System.out.println("end task");
             }
         };
@@ -173,6 +178,29 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
                 }
             }
             System.out.println("Tong cong co " + listConsignor.size() + " het han");
+        }
+    }
+
+    private void sendNofitication() {
+        AccountReceiveNofiticationDAO dao = new AccountReceiveNofiticationDAO();
+        JavaUltilities lib = new JavaUltilities();
+        List<AccountReceiveNotification> accounts = dao.getAccount();
+        Date date = new Date();
+        int hours = date.getHours();
+        int minutes = date.getMinutes();
+        int seconds = date.getSeconds();
+        if (hours == 6 && minutes == 0) {
+            for (int i = 1; i <= 9; i++) {
+                if (seconds == i) {
+                    if (accounts != null) {
+                        for (int j = 0; j < accounts.size(); j++) {                           
+                            AccountReceiveNotification account = accounts.get(j);
+                            int num = dao.getNumOfProduct(account.getAccountID());
+                            lib.sendNofitiCation(MessageString.titleNofitication, MessageString.contenNofitication(num) , account.getGcmID());
+                        }
+                    }
+                }
+            }
         }
     }
 
