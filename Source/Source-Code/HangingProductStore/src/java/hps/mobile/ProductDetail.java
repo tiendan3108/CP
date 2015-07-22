@@ -26,12 +26,15 @@ public class ProductDetail {
     private String reason;
     private float negotiatedPrice;
     private String reviewProductDate;
-    private String paypalAccountID;    
+    private String paypalAccountID;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(int productID, String productName, String serialNumber, String brand, String description, String image, String customerName, String address, String phone, float maxPrice, float minPrice, String appointmentDate, String reviewProductDate) {
+    public ProductDetail(int productID, String productName, String serialNumber,
+            String brand, String description, String image, String customerName,
+            String address, String phone, float maxPrice, float minPrice,
+            String appointmentDate, String reviewProductDate, String paypalAccountID) {
         this.productID = productID;
         this.productName = productName;
         this.serialNumber = serialNumber;
@@ -45,6 +48,7 @@ public class ProductDetail {
         this.minPrice = minPrice;
         this.appointmentDate = appointmentDate;
         this.reviewProductDate = reviewProductDate;
+        this.paypalAccountID = paypalAccountID;
     }
 
     /**
@@ -255,6 +259,20 @@ public class ProductDetail {
      */
     public void setReviewProductDate(String reviewProductDate) {
         this.reviewProductDate = reviewProductDate;
+    }
+
+    /**
+     * @return the paypalAccountID
+     */
+    public String getPaypalAccountID() {
+        return paypalAccountID;
+    }
+
+    /**
+     * @param paypalAccountID the paypalAccountID to set
+     */
+    public void setPaypalAccountID(String paypalAccountID) {
+        this.paypalAccountID = paypalAccountID;
     }
 
 }

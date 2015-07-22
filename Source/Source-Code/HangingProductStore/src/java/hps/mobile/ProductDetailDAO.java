@@ -146,7 +146,10 @@ public class ProductDetailDAO {
                 float maxPrice = rs.getFloat("MaxPrice");
                 float minPrice = rs.getFloat("MinPrice");
                 String reviewProductDate = rs.getString("ReviewProductDate");
-                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, image, customerName, address, phone, maxPrice, minPrice, appointmentDate,reviewProductDate);
+                String paypalAccount = rs.getString("PaypalAccount");
+                ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, 
+                                                          image, customerName, address, phone, maxPrice, minPrice, 
+                                                          appointmentDate,reviewProductDate,paypalAccount);
                 products.add(product);
             }
             return products;
@@ -183,6 +186,7 @@ public class ProductDetailDAO {
                     + "FullName = ? "
                     + "Address = ?"
                     + "Phone = ? "
+                    + "PaypalAccount = ? "
                     + "where ProductID = ?";
             stm = con.prepareStatement(query);
             stm.setString(1, product.getReviewProductDate());
@@ -191,7 +195,8 @@ public class ProductDetailDAO {
             stm.setString(4, product.getCustomerName());
             stm.setString(5, product.getAddress());
             stm.setString(6, product.getPhone());
-            stm.setInt(7, product.getProductID());
+            stm.setString(7, product.getPaypalAccountID());
+            stm.setInt(8, product.getProductID());
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
