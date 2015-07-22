@@ -197,6 +197,13 @@
                                 </div>
                                 <!-- BEGIN EXPIRED TAB-->
                                 <div class="portlet-body" id="expired" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=completed"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm hoàn tất</a>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9">
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="expiredTable">
                                         <thead>
                                             <tr>
@@ -230,6 +237,15 @@
                                 <!-- END EXPIRED TAB-->
                                 <!-- BEGIN AVAILABLE TAB-->
                                 <div class="portlet-body" id="available" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">S/phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="availableTable">
                                         <thead>
                                             <tr>
@@ -264,6 +280,16 @@
                                 <!-- END AVAILABLE TAB-->
                                 <!-- BEGIN ONWEB TAB-->
                                 <div class="portlet-body" id="onWeb" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm chờ duyệt</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">S/phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="onWebTable">
                                         <thead>
                                             <tr>
@@ -292,6 +318,16 @@
                                 <!-- END ONWEB TAB-->
                                 <!-- BEGIN ORDERED TAB-->
                                 <div class="portlet-body" id="ordered" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm trên web</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">S/phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="orderedTable">
                                         <thead>
                                             <tr>
@@ -324,6 +360,16 @@
                                 <!-- END ORDERED TAB-->
                                 <!-- BEGIN CANCEL TAB-->
                                 <div class="portlet-body" id="canceled" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm đã bán</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">S/phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="canceledTable">
                                         <thead>
                                             <tr>
@@ -361,6 +407,16 @@
                                 <!-- END CANCEL TAB-->
                                 <!-- BEGIN COMPLETED TAB-->
                                 <div class="portlet-body" id="completed" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm hủy kí gửi</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">S/phẩm hết hạn kí gửi<i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="completedTable">
                                         <thead>
                                             <tr>
@@ -401,6 +457,16 @@
                                 <!-- END COMPLETED TAB-->
                                 <!-- BEGIN SOLD TAB-->
                                 <div class="portlet-body" id="sold" style="display: none;">
+                                    <div class="row" >
+                                        <div class="col-md-3 col-sm-3" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> S/phẩm đã được đặt</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">S/phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-hover" id="soldTable">
                                         <thead>
                                             <tr>
@@ -577,7 +643,7 @@
                     <!-- CANCEL MODAL END-->
                     <!-- AVAILABLE MODAL BEGIN-->
                     <div class="modal fade bs-example-modal-lg" id="availableModal" aria-hidden="true">
-                        <form action="PublishProduct" method="POST" enctype="multipart/form-data">
+                        <form action="PublishProduct" method="POST" enctype="multipart/form-data" onsubmit="return getSeason();">
                             <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -637,9 +703,9 @@
                                                             <label  class="col-sm-4 control-label">Mùa </label>
                                                             <div class="col-sm-8">
                                                                 <c:forEach var="item" items="${requestScope.season}">
-                                                                    <div class="col-sm-3">
+                                                                    <div class="col-sm-3 seasonDiv">
                                                                         <label>
-                                                                            <input style="width: 8%" type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
+                                                                            <input style="width: 8%" id="chkSeason${item.seasonID}"type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
                                                                         </label>
                                                                     </div>
                                                                 </c:forEach>
@@ -677,6 +743,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info" type="submit">Duyệt</button>
+                                        <input type="hidden" name="txtSeasonList" id="seasonID">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -901,6 +968,7 @@
                 //end cancel modal
                 //start available modal
                 $(document).on("click", ".availableModal", function () {
+                    setSeason();
                     var productID = $(this).data('id');
                     $.get('LoadAvailableProduct', {productID: productID}, function (response) {
                         $("#avai_ProductName").val(response.name);
@@ -1107,6 +1175,59 @@
                     } else {
                         return true;
                     }
+                }
+                //compare date
+                function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+                    if (source.substring(6, 10) > target.substring(6, 10)) {
+                        return 1;
+                    }
+                    if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+                        return 1;
+                    }
+                    if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+                        return 1;
+                    }
+                    if (source.localeCompare(target) == 0) {
+                        return 0;
+                    }
+                    return -1;
+                }
+                //set season by time
+                function setSeason() {
+                    $("div.seasonDiv").siblings().children('label').children('div').children('span').removeClass("checked");
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+
+                    if (dd < 10) {
+                        dd = '0' + dd;
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm;
+                    }
+
+                    today = dd + '-' + mm + '-' + yyyy;
+                    if (compareDate(today, '23-01-' + yyyy) >= 0 && compareDate(today, '21-06-' + yyyy) < 0) {
+                        $("input#chkSeason1").parent("span").addClass("checked");
+                    } else if (compareDate(today, '21-06-' + yyyy) >= 0 && compareDate(today, '23-09-' + yyyy) < 0) {
+                        $("input#chkSeason2").parent("span").addClass("checked");
+                    } else if (compareDate(today, '23-09-' + yyyy) >= 0 && compareDate(today, '22-12-' + yyyy) < 0) {
+                        $("input#chkSeason3").parent("span").addClass("checked");
+                    } else
+                    {
+                        $("input#chkSeason4").parent("span").addClass("checked");
+                    }
+                }
+                //get season checkbox
+                function getSeason()
+                {
+                    var selected = '';
+                    $('span.checked').each(function () {
+                        selected += ($(this).children('input').attr('value'));
+                    });
+                    $('seasonID').val(selected);
+                    return true;
                 }
             </script>
     </body>

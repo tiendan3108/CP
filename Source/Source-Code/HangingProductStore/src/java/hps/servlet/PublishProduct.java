@@ -46,8 +46,7 @@ public class PublishProduct extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if
-     * a servlet-specific error occurs
+     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -62,6 +61,7 @@ public class PublishProduct extends HttpServlet {
             }
             String url = "";
             String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null;
+            String tempSeason = "";
             List<String> season = new ArrayList<>();
             int categoryID = 0, productID = 0;
             List<FileItem> items = null;
@@ -97,8 +97,8 @@ public class PublishProduct extends HttpServlet {
                                 tmp_productID = item.getString();
                                 productID = Integer.parseInt(tmp_productID);
                                 break;
-                            case "chkSeason":
-                                season.add(new String(item.getString().getBytes("iso-8859-1"), "utf-8"));
+                            case "txtSeasonList":
+                                tempSeason = item.getString();
                                 break;
                             default:
                                 break;
@@ -134,6 +134,18 @@ public class PublishProduct extends HttpServlet {
                     }
                 }
                 ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image);
+                if (tempSeason.contains("1")) {
+                    season.add("1");
+                }
+                if (tempSeason.contains("2")) {
+                    season.add("2");
+                }
+                if (tempSeason.contains("3")) {
+                    season.add("3");
+                }
+                if (tempSeason.contains("4")) {
+                    season.add("4");
+                }
                 dao.publishOnWeb(product, season);
                 url = GlobalVariables.MANAGERMENT_SERVLET;
             }
