@@ -85,10 +85,7 @@ public class MobileService {
         ProductDetail product;
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        String newDate = df.format(date);
-        dao.updateConsignment(product.getProductID(), product.getReviewProductDate(), product.getNegotiatedPrice());
+        dao.updateConsignment(product);
         dao.receiveProduct(product.getProductID());
         return "ok";
     }

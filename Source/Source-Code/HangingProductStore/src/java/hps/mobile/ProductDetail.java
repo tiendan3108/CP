@@ -26,6 +26,7 @@ public class ProductDetail {
     private String reason;
     private float negotiatedPrice;
     private String reviewProductDate;
+    private String paypalAccountID;    
 
     public ProductDetail() {
     }
