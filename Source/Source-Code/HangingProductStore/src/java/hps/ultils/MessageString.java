@@ -63,4 +63,8 @@ public class MessageString {
         return "Bạn đã đặt hàng thành công. Mã đơn hàng của bạn là " + orderID + "."
                 + "<br/> <br/>Chủ cửa hàng sẽ liên lạc giá sản phẩm cho bạn sau.";
     }
+    public static final String titleNofitication = "Hệ thống HPS";
+    public static final String contenNofitication(int num){
+        return "Hôm nay có "+num +" món hàng cần lấy";
+    }
 }

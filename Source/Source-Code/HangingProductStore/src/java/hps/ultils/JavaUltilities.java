@@ -62,7 +62,14 @@ public class JavaUltilities {
     static Random rnd = new Random();
 
     public static void main(String[] args) {
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+         Date date = new Date();
+         int hour = date.getHours();
+         int minute = date.getMinutes();
+         int second = date.getSeconds();
+         System.out.println(hour);
+         JavaUltilities lib = new JavaUltilities();
+         lib.sendNofitiCation("Title", "test", "fsiENlf0Ir4:APA91bGjplwivH0lYdBm0CXvu8554MhpvSV-Had54_VMiDYICw5aD6duAfSiv7RqV4ZtxgVhaR0qqPTZGHDtyuX1qzavyBhlJ1_yhNZTiTV6n4FJEx5e51vO92xJI6ZJf9Wwj4VClaDl");
     }
 
     /**
