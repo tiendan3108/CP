@@ -189,6 +189,15 @@
 
 
                                 <div class="portlet-body"  id="request" style="display: none">
+                                    <div class="row" >
+                                        <div class="col-md-9 col-sm-9">
+                                        </div>
+                                        <div class="col-md-3 col-sm-3" align="right">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary">Yêu cầu đã duyệt <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
+                                    <br/>
+
                                     <table class="table table-striped table-bordered table-hover" id="requestTable">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -266,12 +275,15 @@
                                 <div class="portlet-body"  id="accepted" style="display: none">
                                     <div class="row" >
 
-                                        <div class="col-md-10 col-sm-10">
-
+                                        <div class="col-md-4 col-sm-4" align="left">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu chưa duyệt</a>
                                         </div>
-                                        <div class="col-md-2 col-sm-2">
+                                        <div class="col-md-4 col-sm-4" align="center">
                                             <button data-toggle="modal" data-target="#modalAddConsignment"
-                                                    class="btn btn-primary btn-block">Tạo mới ký gửi</button>
+                                                    class="btn btn-warning ">Tạo mới ký gửi</button>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4" align="right">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-primary">Yêu cầu đã từ chối <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
                                     <br/>
@@ -351,6 +363,19 @@
                                 </div>
 
                                 <div class="portlet-body" id="refuse" style="display: none">
+                                    <div class="row" >
+
+                                        <div class="col-md-4 col-sm-4" align="left">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã duyệt</a>
+                                        </div>
+                                        <div class="col-md-4 col-sm-4" align="center">
+                                        </div>
+                                        <div class="col-md-4 col-sm-4" align="right">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel" class="btn  btn-primary">Yêu cầu đã hủy <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    
                                     <table class="table table-striped table-bordered table-hover" id="refuseTable">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -407,6 +432,14 @@
                                 </div>
 
                                 <div class="portlet-body" id="cancel" style="display: none">
+                                    <div class="row" >
+
+                                        <div class="col-md-4 col-sm-4" align="left">
+                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã từ chối</a>
+                                        </div>
+                                        
+                                    </div>
+                                    <br/>
                                     <table class="table table-striped table-bordered table-hover" id="cancelTable">
                                         <thead>
                                             <tr role="row" class="heading">
