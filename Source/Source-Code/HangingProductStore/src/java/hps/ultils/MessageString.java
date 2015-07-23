@@ -42,9 +42,9 @@ public class MessageString {
             + "xin vui lòng đặt món hàng khác.";
     public static final String confirmOrder = "Xác nhận đơn hàng";
 
-    public static final String orderSuccessSMS(String orderID) {
-        return "Ban da dat hang thanh cong, ma don hang cua ban la "
-                + orderID + ". Chu cua hang se lien lac lai voi ban. Sau 3 ngay neu khong toi lay hang, don hang cua ban se bi huy";
+    public static final String orderSuccessSMS(String productName, float price) {
+        return "Mon hang "+productName + "cua ban da dat co gia la " + price 
+                + " .Gia tren co the thoa thuan khi ban den xem hang.";
     }
 
     public static final String orderSuccessEmail(String orderID) {
