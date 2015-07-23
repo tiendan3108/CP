@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import hps.ultils.AmazonProduct;
+import java.sql.Date;
 
 /**
  *
@@ -161,9 +162,10 @@ public class DuchcDAO {
                 stm.setNull(14, java.sql.Types.FLOAT);
             }
             
-            //Date date = new Date();
-            //DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-            stm.setString(15, consigment.getCreatedDate());
+            
+            //stm.setString(15, consigment.getCreatedDate());
+            stm.setDate(15, new Date(System.currentTimeMillis()));
+            
             stm.setInt(16, consigment.getConsignmentStatusID());
             
             if(consigment.getReviewProductDate()!= null){

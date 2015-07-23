@@ -415,7 +415,15 @@
 
                                                     </td>
                                                     <td>
-                                                        ${c.reviewRequestDate}
+                                                        <c:choose>
+                                                            <c:when test="${not empty c.reviewProductDate}">
+                                                                ${c.reviewProductDate}        
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${c.reviewRequestDate}
+                                                            </c:otherwise>
+                                                        </c:choose>
+
 
                                                     </td>
 
@@ -794,7 +802,7 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="rc_image" alt="" style="max-height: 600px">
+                                                    <img id="rc_image" alt="" style="max-height: 400px">
                                                     <div class="carousel-caption">
                                                         <p></p>
                                                     </div>
@@ -1230,6 +1238,7 @@
                     $("#rc_phone").html("0" + data.phone.substring(3));
                     $("#rc_address").html(data.address);
                     //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+                    
                     if (data.minPrice > 0 && data.maxPrice > 0) {
                         $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
                     } else {

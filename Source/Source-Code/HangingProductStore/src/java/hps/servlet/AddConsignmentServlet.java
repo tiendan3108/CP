@@ -63,7 +63,7 @@ public class AddConsignmentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+
             HttpSession session = request.getSession();
             String productName = "";
             String serialNumber = "";
@@ -81,7 +81,7 @@ public class AddConsignmentServlet extends HttpServlet {
             String searchValue = "";
 
             JavaUltilities ulti = new JavaUltilities();
-            AccountDTO account = (AccountDTO)session.getAttribute("ACCOUNT");
+            AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
 
             //tạo ID cho consigment và dùng cho product Image thêm đa dạng
             String consigmentID = ulti.randomString(10);
@@ -108,7 +108,7 @@ public class AddConsignmentServlet extends HttpServlet {
                         case "txtFullName":
                             fullName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                             break;
-                        
+
                         case "txtAddress":
                             address = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                             break;
@@ -143,7 +143,7 @@ public class AddConsignmentServlet extends HttpServlet {
 
                         case "txtDate":
                             purchasedDate = item.getString();
-                            
+
                             break;
 
                         case "txtDescription":
@@ -169,15 +169,15 @@ public class AddConsignmentServlet extends HttpServlet {
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
 
                         //if file is amazon url 
-                        if (filename.trim().isEmpty()) {
-
-                            filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
-                            URL amazonUrl = new URL(product.getImage());
-                            in = amazonUrl.openStream();
-                        } else {
-                            //if file is uploaded from pc
-                            in = item.getInputStream();
-                        }
+//                        if (filename.trim().isEmpty()) {
+//
+//                            filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
+//                            URL amazonUrl = new URL(product.getImage());
+//                            in = amazonUrl.openStream();
+//                        } else {
+                        //if file is uploaded from pc
+                        in = item.getInputStream();
+                        //}
                         filename = consigmentID + "_" + filename.replaceAll("[!@#$%^&*.?,;/]", "");
                         System.out.println("File name after: " + filename);
 
@@ -248,7 +248,7 @@ public class AddConsignmentServlet extends HttpServlet {
 //                    List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
 //                    List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(account.getRoleID());
                     //request.setAttribute("REQUEST", c_request);
-                  request.setAttribute("ACCEPT", c_accept);
+                    request.setAttribute("ACCEPT", c_accept);
 //                    request.setAttribute("REFUSE", c_refuse);
 //                    request.setAttribute("CANCEL", c_cancel);
 

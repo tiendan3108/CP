@@ -170,7 +170,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             File file1 = new File(basePath + "\\" + filename); // base file
                             // project path
                             File file2 = new File(deploymentPath + "\\" + filename);//deployment file
-
+                            
                             OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
                             OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
                             for (int b; (b = in.read()) != -1;) {
@@ -183,6 +183,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             opsDeployment.close();
                             opsBase.close();
                             in.close();
+                            
                         } catch (Exception ex) {
                             System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -227,10 +228,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                     Date date = new Date();
                     DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
                     String createdDate = dateFormat.format(date);
-
-                    //add Hour to fromdate and to date then format them
-                    //fromDate = fromDate + " " + hour;
-                    //toDate = toDate + " " + hour;
 
                     fromDate = formatDate(fromDate);
                     toDate = formatDate(toDate);
