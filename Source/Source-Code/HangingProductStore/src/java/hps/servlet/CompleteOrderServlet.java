@@ -85,14 +85,16 @@ public class CompleteOrderServlet extends HttpServlet {
             //send sms
             if (!phone.isEmpty()) {
                 ProductDTO product = productDao.getDetailByID(productID);
-                if (product.getIsSpecial() == SpecialProduct.NOT_SPECIAL) {
-                    float price = product.getNegotiatedPrice() * 120 / 100;
-                    try {
-                        lib.sendSMS(MessageString.orderSuccessSMS(product.getName(), price), phone);
-                    } catch (TwilioRestException ex) {
-                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (Exception ex) {
-                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                if (product != null) {
+                    if (product.getIsSpecial() == SpecialProduct.NOT_SPECIAL) {
+                        float price = product.getNegotiatedPrice() * 120 / 100;
+                        try {
+                            lib.sendSMS(MessageString.orderSuccessSMS(product.getName(), price), phone);
+                        } catch (TwilioRestException ex) {
+                            Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
 

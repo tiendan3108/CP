@@ -1064,7 +1064,7 @@ public class ProductDAO {
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
-            String query = "select * from Product, Consigment "
+            String query = "select * from Product, Consignment "
                     + "where Product.ProductID = ? "
                     + "And Product.ProductID = Consignment.ProductID";
             stm = con.prepareStatement(query);

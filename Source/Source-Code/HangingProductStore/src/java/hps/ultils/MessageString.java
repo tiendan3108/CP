@@ -43,7 +43,7 @@ public class MessageString {
     public static final String confirmOrder = "Xác nhận đơn hàng";
 
     public static final String orderSuccessSMS(String productName, float price) {
-        return "Mon hang "+productName + "cua ban da dat co gia la " + price 
+        return "Mon hang "+productName + " cua ban da dat co gia la " + price 
                 + " .Gia tren co the thoa thuan khi ban den xem hang.";
     }
 
