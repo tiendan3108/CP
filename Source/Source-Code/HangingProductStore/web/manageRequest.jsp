@@ -11,7 +11,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>Quản lí yêu cầu ký gửi</title>
+        <title>[HPS]:: Quản lí yêu cầu ký gửi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -527,45 +527,46 @@
 
 
                             <h2 class="modal-title" id="r_name"></h2>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
-                                <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
-                                <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
-
-                            </div>
+                            <!--                            <div class="row">
+                                                            <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
+                                                            <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
+                                                            <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
+                            
+                                                        </div>-->
 
                         </div>
                         <div class="modal-body">
-                            <!-- BEGIN PAGE CONTENT-->
-                            <div class="row">
-                                <!-- BEGIN CAROUSEL -->
-                                <div class="col-lg-4 col-md-4 front-carousel">
+                            <form id="r_form" action="ConsignmentRequestReceive" method="POST">
+                                <!-- BEGIN PAGE CONTENT-->
+                                <div class="row">
+                                    <!-- BEGIN CAROUSEL -->
+                                    <div class="col-lg-4 col-md-4 front-carousel">
 
-                                    <div class="carousel slide" id="myCarousel">
-                                        <!-- Carousel items -->
-                                        <div class="carousel-inner">
-                                            <div class="item active">
-                                                <img id="r_image" alt="" style="max-height: 600px">
-                                                <div class="carousel-caption">
-                                                    <p></p>
+                                        <div class="carousel slide" id="myCarousel">
+                                            <!-- Carousel items -->
+                                            <div class="carousel-inner">
+                                                <div class="item active">
+                                                    <img id="r_image" alt="" style="max-height: 600px">
+                                                    <div class="carousel-caption">
+                                                        <p></p>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <!-- Carousel nav -->
+                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
                                         </div>
-                                        <!-- Carousel nav -->
-                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
+
                                     </div>
+                                    <!-- END CAROUSEL -->
 
-                                </div>
-                                <!-- END CAROUSEL -->
+                                    <!-- BEGIN PRODUCT DESCRIPTION -->
+                                    <div class="col-lg-8 col-md-8">
 
-                                <!-- BEGIN PRODUCT DESCRIPTION -->
-                                <div class="col-lg-8 col-md-8">
-                                    <form id="r_form" action="ConsignmentRequestReceive" method="POST">
 
                                         <table style="font-size: 110%" class="table table-striped table-hover" >
                                             <tr>
@@ -680,7 +681,7 @@
                                                 <td id='r_status'>
                                                 </td>
                                             </tr>
-                                            <tr id="r_trReason">
+                                            <tr id="r_trReason" style="display: none">
                                                 <th>Lí do</th>
                                                 <td id="r_reason">
 
@@ -688,17 +689,116 @@
                                             </tr>
 
                                         </table>
+                                        <br/>
+                                        <table id="r_divPersonalInfo" style="font-size: 110%" class="table table-striped table-hover">
+                                            <tr>
+                                                <th>Họ tên </th>
+                                                <td><input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Điện thoại</th>
+                                                <td><input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td><input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Địa chỉ</th>
+                                                <td><textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="3"></textarea></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Cách thanh toán</th>
+                                                <td><div class="radio-list">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="r_rdPayment"  value="direct" checked> Tiền mặt </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="r_rdPayment"  value="cc"> Tài khoản paypal </label>
+                                                    </div></td>
+                                            </tr>
+                                            <tr id="r_divCCNumber" style="display: none">
+                                                <th>Mã tài khoản</th>
+                                                <td><input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" /></td>
+                                            </tr>
+                                        </table>
+                                        <!--START HIDDEN ACTION VALUE -->
                                         <input id="r_ActionValue" type="hidden" name="consignmentID"/>
                                         <input id="r_productID" type="hidden" name="productID"/>
-                                        <!--                                                <input id="ar_ActionValue" type="hidden" name="ar_consignmentID"/>-->
-<!--                                        <input type="hidden" name="r_searchValue" value="${param.r_searchValue}"/>
-                                        <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>-->
                                         <input id="r_btnAction" type="hidden" name="btnAction"/>
-                                    </form>
+                                        <!--END HIDDEN ACTION VALUE -->
+                                    </div>
+                                    <!-- END PRODUCT DESCRIPTION -->
                                 </div>
-                                <!-- END PRODUCT DESCRIPTION -->
-                            </div>
 
+                                <!--                                <div id="r_divPersonalInfo" class="row" style="display:none;">
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-horizontal">
+                                
+                                                                            <div class="form-group">
+                                                                                <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
+                                                                                <div class="col-md-8 col-sm-8">
+                                                                                    <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
+                                
+                                                                                    <p class="help-block" id="r_erFullName"> </p>
+                                                                                </div>
+                                                                            </div>
+                                
+                                
+                                
+                                                                            <div class="form-group" id="divPhone">
+                                                                                <label for="txtPhone" class="col-md-4 col-sm-4 control-label">Điện thoại <font color="red">*</font> </label>
+                                                                                <div class="col-md-4 col-sm-6">
+                                                                                    <input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/>
+                                                                                    <p class="help-block" id="r_erPhone"></p>
+                                
+                                                                                </div>
+                                                                            </div>
+                                
+                                                                            <div class="form-group">
+                                                                                <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email</label>
+                                                                                <div class="col-md-8 col-sm-8">
+                                                                                    <input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" />
+                                                                                    <p class="help-block" id="r_erEmail"></p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                
+                                                                    <div class="col-md-6 col-sm-6">
+                                                                        <div class="form-horizontal">
+                                
+                                                                            <div class="form-group">
+                                                                                <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                                                                <div  class="col-md-8 col-sm-8">
+                                                                                    <textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="3"></textarea>
+                                                                                    <span class="help-block" id="r_erAddress">
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                
+                                                                            <div class="form-group">
+                                                                                <label for="" class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
+                                                                                <div class="radio-list col-md-8 col-sm-8">
+                                                                                    <label class="radio-inline">
+                                                                                        <input type="radio" name="r_rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                                                    <label class="radio-inline">
+                                                                                        <input type="radio" name="r_rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+                                                                                </div>
+                                                                            </div>
+                                
+                                                                            <div id="r_divCCNumber" class="form-group" style="display: none" >
+                                                                                <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                                <div class="col-md-8 col-sm-8">
+                                                                                    <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
+                                
+                                                                                    <p class="help-block" id="r_erPaypalAccount"></p>
+                                                                                </div>
+                                                                            </div>
+                                
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <div id="r_footer" >
@@ -993,7 +1093,7 @@
 
                                             <div class="form-group">
                                                 <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                <div class="col-md-4 col-sm-5">
+                                                <div class="col-md-5 col-sm-6">
                                                     <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                         <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                         <span class="input-group-btn">
@@ -1192,7 +1292,8 @@
                                         Demo.init(); // init demo features
                                         TableManaged.init();
                                         ComponentsPickers.init();
-                                    });</script>
+                                    });
+        </script>
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -1209,16 +1310,14 @@
             $(function () {
                 $("#r_brand").autocomplete({
                     source: "BrandAutocomplete",
-                    minLength: 1,
-                    select: function (event, ui) {
+                    minLength: 1, select: function (event, ui) {
                     }
                 });
             });
             $(function () {
                 $("#addConsignment_txtBrand").autocomplete({
                     source: "BrandAutocomplete",
-                    minLength: 1,
-                    select: function (event, ui) {
+                    minLength: 1, select: function (event, ui) {
                     }
                 });
             });
@@ -1227,14 +1326,13 @@
 
                     $("#rc_name").html("<small>Khách hàng: </small> " + data.name);
                     $("#rc_productName").html(data.product.name);
-                    $("#rc_image").attr("src", data.product.image);
+                    $("#rc_image").attr("src", data.product.image.replace(/\\/g, '/'));
                     $("#rc_description").html(data.product.description);
                     $("#rc_createdDate").html(data.createdDate);
                     $("#rc_email").html(data.email);
                     $("#rc_phone").html("0" + data.phone.substring(3));
-                    $("#rc_address").html(data.address);
-                    //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-                    
+                    $("#rc_address").html(data.address);                     //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+
                     if (data.minPrice > 0 && data.maxPrice > 0) {
                         $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
                     } else {
@@ -1289,12 +1387,12 @@
                     $("#r_productName").val(data.product.name);
                     $('#r_category').val(data.product.categoryID).change();
                     $("#r_brand").val(data.product.brand);
-                    $("#r_image").attr("src", data.product.image);
+                    $("#r_image").attr("src", data.product.image.replace(/\\/g, '/'));
                     $("#r_description").val(data.product.description);
                     $("#r_createdDate").html(data.createdDate);
-                    $("#r_email").html(data.email);
-                    $("#r_phone").html("0" + data.phone.substring(3));
-                    $("#r_address").html(data.address);
+                    //$("#r_email").html(data.email);
+                    //$("#r_phone").html("0" + data.phone.substring(3));
+                    //$("#r_address").html(data.address);
                     $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
                     //$("#r_hour").val(data.hour);
 
@@ -1315,6 +1413,8 @@
                     $("#r_trReason").hide();
                     $("#r_reason").html("");
                     $("#r_divFromDateToDate").hide();
+                    $("#r_divPersonalInfo").hide();
+
                     if (data.product.productStatusID == 6) {
                         $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
                         $("#r_footer").hide();
@@ -1330,16 +1430,29 @@
                             $("#ar_price").hide();
                             $("#r_btnAction").val("r_accept");
                             $("#r_receivedDate").val(data.fromDate);
-                            //$("#r_hour").val("12:00 PM");
-//                            $("#ar_divReceivedDate").html("");
-//                            $("#ar_divHour").html("");
-
-//                            $("#r_divReceivedDate").show();
-//                            $("#r_divHour").show();
-//                            $("#ar_divReceivedDate").hide();
-//                            $("#ar_divHour").hide();
 
                             $("#r_divFromDateToDate").show();
+
+                            $("#r_divPersonalInfo").show();
+
+                            $("#r_txtFullName").val(data.name);
+                            $("#r_txtAddress").val(data.address);
+                            $("#r_txtPhone").val("0" + data.phone.substring(3));
+                            $("#r_txtEmail").val(data.email);
+                            if (data.paypalAccount != null) {
+                                $("#r_txtPaypalAccount").val(data.paypalAccount);
+                                $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
+                                $("#r_divCCNumber").show();
+                            } else {
+                                $("#r_txtPaypalAccount").val("");
+                                $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
+                                $("#r_divCCNumber").hide();
+                            }
+
+
+
                         } else if (data.consignmentStatusID == 3) {
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
                             $("#ar_ActionValue_confirm").val(data.consigmentID);
@@ -1350,14 +1463,24 @@
                             $("#r_btnAction").val("ar_accept");
                             $("#r_receivedDate").val(data.appointmentDate);
                             $("#r_hour").val(data.hour);
-//                            $("#ar_divReceivedDate").html(data.appointmentDate);
-//                            $("#ar_divHour").html(data.hour);
 
+                            $("#r_divPersonalInfo").show();
+                            $("#r_txtFullName").val(data.name);
+                            $("#r_txtAddress").val(data.address);
+                            $("#r_txtPhone").val("0" + data.phone.substring(3));
+                            $("#r_txtEmail").val(data.email);
 
-//                            $("#r_divReceivedDate").hide();
-//                            $("#r_divHour").hide();
-//                            $("#ar_divReceivedDate").show();
-//                            $("#ar_divHour").show();
+                            if (data.paypalAccount != null) {
+                                $("#r_txtPaypalAccount").val(data.paypalAccount);
+                                $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
+                                $("#r_divCCNumber").show();
+                            } else {
+                                $("#r_txtPaypalAccount").val("");
+                                $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
+                                $("#r_divCCNumber").hide();
+                            }
 
                         } else if (data.consignmentStatusID == 2) {
                             $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
@@ -1429,7 +1552,7 @@
             });
             $('#r_btnSubmit').click(function () {
                 var check = true;
-                if ($('#r_productName').val().length == 0 || $('#r_productName').val().length > 100) {
+                if ($('#r_productName').val().length <= 0 || $('#r_productName').val().length > 100) {
                     check = false;
                 }
                 if ($('#r_hour').val().length == 0) {
@@ -1438,10 +1561,23 @@
                 if ($('#r_receivedDate').val().length == 0) {
                     check = false;
                 }
+                if ($('#r_txtFullName').val().length <= 0 || $('#r_txtFullName').val().length > 50) {
+                    check = false;
+                }
+
+                if ($('#r_txtPhone').val().length < 10 || $('#r_txtPhone').val().substring(0, 1) != "0") {
+                    check = false;
+                }
+                if ($("input[name='r_rdPayment'][value='cc']").is(":checked")) {
+                    if ($('#r_txtPaypalAccount').val().length == 0) {
+                        check = false;
+                    }
+                }
+
                 if (check) {
                     $('form#r_form').submit();
                 } else {
-                    alert("Xin nhập đầy đủ thông tin");
+                    alert("Xin nhập đúng thông tin");
                 }
 
             });
@@ -1471,6 +1607,19 @@
                 if ($('#r_receivedDate').val().length == 0) {
                     check = false;
                 }
+                if ($('#r_txtFullName').val().length <= 0 || $('#r_txtFullName').val().length > 50) {
+                    check = false;
+                }
+
+                if ($('#r_txtPhone').val().length < 10 || $('#r_txtPhone').val().substring(0, 1) != "0") {
+                    check = false;
+                }
+                if ($("input[name='r_rdPayment'][value='cc']").is(":checked")) {
+                    if ($('#r_txtPaypalAccount').val().length == 0) {
+                        check = false;
+                    }
+                }
+                
                 if (check) {
                     updateRequest();
                 } else {
@@ -1491,26 +1640,34 @@
                 if ($("input#r_isSpecial").is(":checked")) {
                     isSpecial = 1;
                 }
-//                alert(consignmentID + " - " + productName + " - " + categoryID + " - " + brand + " - " + description
-//                        + " - " + receivedDate + " - " + hour + " - " + isSpecial);
+                var fullName = $("#r_txtFullName").val();
+                var address = $("#r_txtAddress").val();
+                var phone = $("#r_txtPhone").val();
+                var email = $("#r_txtEmail").val();
+                var paypalAccount = $("#r_txtPaypalAccount").val();
+                if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
+                    paypalAccount = "";
+                }
+
                 $.get('ConsignmentRequestReceive',
-                        {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName, categoryID: categoryID, brand: brand,
-                            description: description, receivedDate: receivedDate, hour: hour, isSpecial: isSpecial},
+                        {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName,
+                            categoryID: categoryID, brand: brand, description: description,
+                            receivedDate: receivedDate, hour: hour, isSpecial: isSpecial,
+                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
                 function (data) {
-                    if(data){
-                           var consignmentTD = $("td:contains('" + consignmentID + "')");
-                           consignmentTD.prev().html(productName);
-                           consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
-                           alert("Cập nhật thành công");
-                    }else{
+                    if (data) {
+                        var consignmentTD = $("td:contains('" + consignmentID + "')");
+                        consignmentTD.prev().html(productName);
+                        consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
+                        $("#r_name").html("<small>Khách hàng: </small> " + fullName);
+                        alert("Cập nhật thành công");
+                    } else {
                         alert("Cập nhật thất bại");
                     }
                 });
             }
 
-
             function ar_validation() {
-
                 var minPrice = $("#ar_minPrice").val();
                 var maxPrice = $("#ar_maxPrice").val();
                 if (minPrice == "" || maxPrice == "") {
@@ -1550,6 +1707,16 @@
                     $("#addConsignment_divCCNumber").hide();
                 }
             });
+
+            $('input:radio[name="r_rdPayment"]').change(function () {
+                if ($(this).val() == "cc") {
+                    $("#r_divCCNumber").show();
+                }
+                else {
+                    $("#r_divCCNumber").hide();
+                }
+            });
+
             function formatDollar(num) {
                 var p = num.toFixed(0);
                 return  p.split("").reverse().reduce(function (acc, num, i, orig) {

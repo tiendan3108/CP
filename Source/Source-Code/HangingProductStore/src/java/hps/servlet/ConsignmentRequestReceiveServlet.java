@@ -112,10 +112,19 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                     String brand = request.getParameter("txtBrand");
                     String description = request.getParameter("txtDescription");
-                    int productID = Integer.parseInt(request.getParameter("productID"));
+                    //int productID = Integer.parseInt(request.getParameter("productID"));
+                    String fullName = request.getParameter("txtFullName");
+                    String address = request.getParameter("txtAddress");
+                    String phone = "+84" + request.getParameter("txtPhone").substring(1);
+                    String email = request.getParameter("txtEmail");
+                    String paymentMethod = request.getParameter("r_rdPayment");
+                    String paypalAccount = request.getParameter("txtPaypalAccount");
+                    if(paymentMethod.equals("direct")){
+                        paypalAccount = "";
+                    }
 
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, productName, categoryID, brand, description, isSpecial);
+                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
 
                     //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                     //send sms and email
@@ -181,7 +190,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                 } else if (action.equals("ar_accept")) {
                     String consignmentID = request.getParameter("consignmentID");
-                    int productID = Integer.parseInt(request.getParameter("productID"));
+                    //int productID = Integer.parseInt(request.getParameter("productID"));
                     String productName = request.getParameter("txtProductName");
                     int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                     String brand = request.getParameter("txtBrand");
@@ -288,9 +297,15 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String appointmentDate = request.getParameter("receivedDate") + " " + hour;
                     appointmentDate = formatDate(appointmentDate);
                     
+                    String fullName = request.getParameter("fullName");
+                    String address = request.getParameter("address");
+                    String phone = "+84" + request.getParameter("phone").substring(1);
+                    String email = request.getParameter("email");
+                    String paypalAccount = request.getParameter("paypalAccount");
+                    
 
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, productName, categoryID, brand, description, isSpecial);
+                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
 
                     String json = new Gson().toJson(result);
                     response.setContentType("application/json;charset=UTF-8");

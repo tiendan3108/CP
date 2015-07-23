@@ -536,21 +536,92 @@ public class ConsignmentDAO {
     }
 
     //update consignment with date in consignment management 14/7/2015
-    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String appointmentDate,
+//    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String appointmentDate,
+//            String productName, int categoryID, String brand, String description, int isSpecial) {
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        try {
+//            con = DBUltilities.makeConnection();
+//            String sql = "UPDATE Consignment"
+//                    + " SET  AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?"
+//                    + " WHERE ConsignmentID = ?";
+//            stm = con.prepareStatement(sql);
+//
+//            stm.setString(1, appointmentDate);
+//            stm.setString(2, getCurrentDate());
+//            stm.setInt(3, GlobalVariables.CONSIGNMENT_ACCEPTED);
+//            stm.setString(4, consignmentID);
+//
+//            int result = stm.executeUpdate();
+//            if (result > 0) {
+//                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
+//                        + " IsSpecial = ?, ProductStatusID = 1"
+//                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+//                stm = con.prepareStatement(sql);
+//                stm.setString(1, productName);
+//                stm.setInt(2, categoryID);
+//                stm.setString(3, brand);
+//                stm.setString(4, description);
+//                stm.setInt(5, isSpecial);
+//                stm.setString(6, consignmentID);
+//                result = stm.executeUpdate();
+//                if (result > 0) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        return false;
+//    }
+    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address, 
+            String phone, String email, String paypalAccount, String appointmentDate,
             String productName, int categoryID, String brand, String description, int isSpecial) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "UPDATE Consignment"
-                    + " SET  AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?"
+            String sql = "UPDATE Consignment "
+                    + " SET FullName = ?, Address = ?, Phone = ?, Email = ?, PaypalAccount = ?, "
+                    + " AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ? "
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
-
-            stm.setString(1, appointmentDate);
-            stm.setString(2, getCurrentDate());
-            stm.setInt(3, GlobalVariables.CONSIGNMENT_ACCEPTED);
-            stm.setString(4, consignmentID);
+            stm.setString(1, fullName);
+            if(address.isEmpty()){
+                stm.setNull(2, java.sql.Types.NVARCHAR);
+            }else{
+                stm.setString(2, address);
+            }
+            stm.setString(3, phone);
+            
+            if(email.isEmpty()){
+                stm.setNull(4, java.sql.Types.VARCHAR);
+            }else{
+                stm.setString(4, email);
+            }
+            
+            if(paypalAccount.isEmpty()){
+                stm.setNull(5, java.sql.Types.VARCHAR);
+            }else{
+                stm.setString(5, paypalAccount);
+            }
+            
+            stm.setString(6, appointmentDate);
+            stm.setString(7, getCurrentDate());
+            stm.setInt(8, GlobalVariables.CONSIGNMENT_ACCEPTED);
+            stm.setString(9, consignmentID);
 
             int result = stm.executeUpdate();
             if (result > 0) {
@@ -626,7 +697,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public void ExtendProduct(String consignmentID, int period) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -704,7 +775,7 @@ public class ConsignmentDAO {
         float minPrice = rs.getFloat("MinPrice") / 1000;
         float maxPrice = rs.getFloat("MaxPrice") / 1000;
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
-        float negotiatedPrice = rs.getFloat("NegotiatedPrice")/1000;
+        float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
 
         String reviewProductDate = rs.getString("ReviewProductDate");
         if (reviewProductDate != null) {
@@ -729,7 +800,6 @@ public class ConsignmentDAO {
         if (reviewRequestDate != null) {
             reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
         }
-              
 
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
@@ -768,11 +838,11 @@ public class ConsignmentDAO {
 
         return consignment;
     }
-    
-    private String getCurrentDate(){
+
+    private String getCurrentDate() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            java.util.Date currentDate = new java.util.Date();
-            return df.format(currentDate);
-            
+        java.util.Date currentDate = new java.util.Date();
+        return df.format(currentDate);
+
     }
 }
