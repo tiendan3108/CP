@@ -318,15 +318,27 @@ public class DanqtDAO {
         PreparedStatement stmConsignment = null;
         int resultProduct = 0;
         int resultConsignment = 0;
+        ResultSet rs = null;
         String query = "";
+        List<String> existSeason = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
 
+            if (product.getIsSpecial() == 2) {
+                query = "SELECT IsSpecial FROM Product WHERE ProductID = ?";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setInt(1, product.getProductID());
+                rs = stmProduct.executeQuery();
+                while (rs.next()) {
+                    product.setIsSpecial(rs.getInt("IsSpecial"));
+                }
+            }
+
             if (product.getImage() == null) {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
-                        + "Description = ?, ProductStatusID = 3 "
+                        + "Description = ?, ProductStatusID = 3, IsSpecial = ? "
                         + "WHERE ProductID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
@@ -334,11 +346,12 @@ public class DanqtDAO {
                 stmProduct.setInt(3, product.getCategoryID());
                 stmProduct.setString(4, product.getBrand());
                 stmProduct.setString(5, product.getDescription());
-                stmProduct.setInt(6, product.getProductID());
+                stmProduct.setInt(6, product.getIsSpecial());
+                stmProduct.setInt(7, product.getProductID());
             } else {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
-                        + "Description = ?, Image = ?, ProductStatusID = 3 "
+                        + "Description = ?, Image = ?, ProductStatusID = 3 , IsSpecial = ? "
                         + "WHERE ProductID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
@@ -347,7 +360,8 @@ public class DanqtDAO {
                 stmProduct.setString(4, product.getBrand());
                 stmProduct.setString(5, product.getDescription());
                 stmProduct.setString(6, product.getImage());
-                stmProduct.setInt(7, product.getProductID());
+                stmProduct.setInt(7, product.getIsSpecial());
+                stmProduct.setInt(8, product.getProductID());
             }
             resultProduct = stmProduct.executeUpdate();
 
@@ -360,12 +374,33 @@ public class DanqtDAO {
             stmConsignment.setString(1, raiseWebDate);
             stmConsignment.setInt(2, product.getProductID());
             resultConsignment = stmConsignment.executeUpdate();
+            //get exist season of product
+            query = "SELECT SeasonID FROM Product_Season WHERE ProductID = ?";
+            stmProduct = conn.prepareStatement(query);
+            stmProduct.setInt(1, product.getProductID());
+            rs = stmProduct.executeQuery();
+            while (rs.next()) {
+                existSeason.add(rs.getInt("SeasonID") + "");
+            }
+            // insert if not exist
             for (String item : season) {
-                query = "INSERT INTO Product_Season VALUES (?,?)";
-                stmProduct = conn.prepareCall(query);
-                stmProduct.setInt(1, product.getProductID());
-                stmProduct.setInt(2, Integer.parseInt(item));
-                stmProduct.execute();
+                if (!existSeason.contains(item)) {
+                    query = "INSERT INTO Product_Season VALUES (?,?)";
+                    stmProduct = conn.prepareCall(query);
+                    stmProduct.setInt(1, product.getProductID());
+                    stmProduct.setInt(2, Integer.parseInt(item));
+                    stmProduct.execute();
+                }
+            }
+            //detele if no more remain
+            for (String item : existSeason) {
+                if (!season.contains(item)) {
+                    query = "DELETE Product_Season WHERE ProductID = ? AND SeasonID = ?";
+                    stmProduct = conn.prepareCall(query);
+                    stmProduct.setInt(1, product.getProductID());
+                    stmProduct.setInt(2, Integer.parseInt(item));
+                    stmProduct.execute();
+                }
             }
             if (resultProduct > 0 && resultConsignment > 0) {
                 conn.commit();
@@ -378,6 +413,9 @@ public class DanqtDAO {
             return false;
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (stmProduct != null) {
                     stmProduct.close();
                 }
@@ -563,11 +601,11 @@ public class DanqtDAO {
         ResultSet rs = null;
         ProductDTO result = null;
         String productName = "", serialNumber = "", purchasedDate = "", brand = "", description = "", image = "";
-        int categoryID = 0;
+        int categoryID = 0, isSpecial = 0;
         try {
             con = DBUltilities.makeConnection();
             String query = "SELECT ProductName, SerialNumber, PurchasedDate, "
-                    + "CategoryID, Brand, Description, Image "
+                    + "CategoryID, Brand, Description, Image, IsSpecial "
                     + "FROM Product WHERE ProductID = ?";
             stm = con.prepareStatement(query);
             stm.setInt(1, productID);
@@ -580,7 +618,8 @@ public class DanqtDAO {
                 description = rs.getString("Description");
                 image = rs.getString("Image");
                 categoryID = rs.getInt("CategoryID");
-                result = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image);
+                isSpecial = rs.getInt("IsSpecial");
+                result = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, isSpecial);
             }
             return result;
         } catch (SQLException ex) {
@@ -1325,15 +1364,15 @@ public class DanqtDAO {
                 item.setNegotiatedPrice(negotiatedPrice);
                 productList.add(item);
             }
-            for (int i = 0; i < productList.size(); i++) {
+            for (ProductDTO productList1 : productList) {
                 query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
                 stm = conn.prepareStatement(query);
-                stm.setInt(1, productList.get(i).getProductID());
+                stm.setInt(1, productList1.getProductID());
                 stm.setInt(2, OrderStatus.WAITING);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     ConsignmentDTO cons = new ConsignmentDTO();
-                    cons.setProduct(productList.get(i));
+                    cons.setProduct(productList1);
                     cons.setQuantity(rs.getInt("NumberOfOrders"));
                     result.add(cons);
                 }
@@ -1390,15 +1429,15 @@ public class DanqtDAO {
                 item.setNegotiatedPrice(negotiatedPrice);
                 productList.add(item);
             }
-            for (int i = 0; i < productList.size(); i++) {
+            for (ProductDTO productList1 : productList) {
                 query = "SELECT COUNT(*) as NumberOfOrders FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
                 stm = conn.prepareStatement(query);
-                stm.setInt(1, productList.get(i).getProductID());
+                stm.setInt(1, productList1.getProductID());
                 stm.setInt(2, OrderStatus.WAITING);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     ConsignmentDTO cons = new ConsignmentDTO();
-                    cons.setProduct(productList.get(i));
+                    cons.setProduct(productList1);
                     cons.setQuantity(rs.getInt("NumberOfOrders"));
                     result.add(cons);
                 }
@@ -1609,6 +1648,7 @@ public class DanqtDAO {
         ResultSet rs = null;
         ConsignmentDTO result = new ConsignmentDTO();
         ProductDTO product = new ProductDTO();
+        List<Integer> season = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
 
@@ -1622,10 +1662,18 @@ public class DanqtDAO {
                 String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 product.setName(productName);
-                result.setProduct(product);
                 result.setReviewProductDate(receivedDate);
                 result.setNegotiatedPrice(negotiatedPrice);
             }
+            query = "SELECT SeasonID FROM Product_Season WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                season.add(rs.getInt("SeasonID"));
+            }
+            product.setSeasonList(season);
+            result.setProduct(product);
             return result;
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -1813,7 +1861,7 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            
+
             query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewRequestDate IS NOT NULL";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
@@ -1827,7 +1875,7 @@ public class DanqtDAO {
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 result.add(item);
             }
-            
+
             query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewProductDate IS NOT NULL";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
@@ -1841,7 +1889,7 @@ public class DanqtDAO {
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 result.add(item);
             }
-            
+
             if (result.isEmpty()) {
                 return null;
             } else {
@@ -1850,6 +1898,42 @@ public class DanqtDAO {
         } catch (SQLException e) {
             Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
             return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public int getProductIDByConsignmentID(String consignmentID) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+
+            query = "SELECT ProductID FROM Consignment WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("ProductID");
+            }
+            return 0;
+        } catch (SQLException e) {
+            Logger.getLogger(DanqtDAO.class.getName()).log(Level.SEVERE, null, e);
+            return 0;
         } finally {
             try {
                 if (rs != null) {

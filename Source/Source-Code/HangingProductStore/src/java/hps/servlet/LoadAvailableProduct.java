@@ -58,9 +58,15 @@ public class LoadAvailableProduct extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            String tmp_productID = request.getParameter("productID");
-            int productID = Integer.parseInt(tmp_productID);
+            int productID;
             DanqtDAO dao = new DanqtDAO();
+            String tmp_productID = request.getParameter("productID");
+            String consignmentID = request.getParameter("consignmentID");
+            if (tmp_productID == null) {
+                productID = dao.getProductIDByConsignmentID(consignmentID);
+            } else {
+                productID = Integer.parseInt(tmp_productID);
+            }
             ProductDTO infor = dao.getInforForPublishPage(productID);
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");

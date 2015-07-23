@@ -572,7 +572,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
-                                        <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();">Gửi giá</button>
+                                        <!--                                        <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();">Gửi giá</button>-->
                                         <button class="btn btn-warning" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
                                         <input class="btn btn-info confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -643,7 +643,8 @@
                     <!-- CANCEL MODAL END-->
                     <!-- AVAILABLE MODAL BEGIN-->
                     <div class="modal fade bs-example-modal-lg" id="availableModal" aria-hidden="true">
-                        <form action="PublishProduct" method="POST" enctype="multipart/form-data" onsubmit="return getSeason();">
+                        <form action="PublishProduct" method="POST" enctype="multipart/form-data" onsubmit="return getSeasonAvai();">
+                            <input type="hidden" value="available" name="btnAction">
                             <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -712,6 +713,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
+                                                            <label class="control-label col-sm-4">Tự động gửi giá</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="rdSendPrice_1" value="isSpecial"> Có </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="rdSendPrice_1" value="notSpecial" checked> Không </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
                                                             <label  class="col-sm-4 control-label">Mô tả </label>
                                                             <div class="col-sm-8">
                                                                 <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
@@ -743,7 +753,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-info" type="submit">Duyệt</button>
-                                        <input type="hidden" name="txtSeasonList" id="seasonID">
+                                        <input type="hidden" name="txtSeasonList" id="avai_seasonID">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -832,35 +842,123 @@
                     <!-- CONFIRM RECEIVE MODAL END-->
                     <!-- CANCEL PRODUCT ONWEB MODAL BEGIN-->
                     <div class="modal fade bs-example-modal-lg" id="onWebModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Thông tin sản phẩm</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="input-group">
-                                                Tên sản phẩm :<label id="onWeb_ProductName"></label>
-                                            </div>
-                                            <div class="input-group">
-                                                Mã kí gửi : <label id="onWeb_ConsignmentID"></label>
-                                            </div>
-                                            <div class="input-group">
-                                                Ngày nhận hàng : <label id="onWeb_ReceivedDate"></label>
-                                            </div>
-                                            <div class="input-group">
-                                                Giá bán thỏa thuận (Ngàn đồng): <label id="onWeb_NegotiatedPrice"></label>
+                        <form action="PublishProduct" method="POST" enctype="multipart/form-data" onsubmit="return getSeasonOnWeb();">
+                            <input type="hidden" value="onWeb" name="btnAction">
+                            <input type="hidden" id="onWeb_ProductID" value="" name="txtProductID">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Thông tin sản phẩm</h4>        
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="tab-content">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label for="txtProductName" class="col-sm-4 control-label">Tên sản phẩm</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="onWeb_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="txtSerial" class="col-sm-4 control-label">Số seri </label>
+                                                            <div class="col-sm-8">
+                                                                <input id="onWeb_SerialNumber" type="text" class="form-control" name="txtSerialNumber"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-4">Ngày mua hàng</label>
+                                                            <div class="col-sm-8">
+                                                                <div class="input-group date date-picker">
+                                                                    <input id="onWeb_BoughtDate" type="text" class="form-control" name="txtDate" readonly>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-4">Loại sản phẩm</label>
+                                                            <div class="col-sm-8">
+                                                                <c:set var="parentCat" value="${requestScope.parentCat}"/>
+                                                                <c:set var="allCat" value="${requestScope.allCat}"/>
+                                                                <select id="onWeb_Category" name="txtCategory"style="width: 120px">
+                                                                    <c:forEach var="parent" items="${parentCat}">
+                                                                        <optgroup label="${parent.categoryName}">
+                                                                            <c:forEach var="item" items="${allCat}">
+                                                                                <c:if test="${item.parentId == parent.categoryId}">
+                                                                                    <option id="onWeb_${item.categoryId}" value="${item.categoryId}">${item.categoryName}</option>
+                                                                                </c:if>
+                                                                            </c:forEach>
+                                                                        </optgroup>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-4">Hãng</label>
+                                                            <div class="col-sm-8">
+                                                                <input id="onWeb_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-sm-4 control-label">Mùa </label>
+                                                            <div class="col-sm-8">
+                                                                <c:forEach var="item" items="${requestScope.season}">
+                                                                    <div class="col-sm-3 seasonDiv">
+                                                                        <label>
+                                                                            <input style="width: 8%" id="onWeb_chkSeason${item.seasonID}" type="checkbox" name="chkSeason" value="${item.seasonID}"/>${item.seasonName}
+                                                                        </label>
+                                                                    </div>
+                                                                </c:forEach>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-sm-4">Tự động gửi giá</label>
+                                                            <div class="col-sm-8">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="rdSendPrice_2" id="sendPriceTrue_2" value="isSpecial"> Có </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="rdSendPrice_2" id="sendPriceFalse_2" value="notSpecial"> Không </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-sm-4 control-label">Mô tả </label>
+                                                            <div class="col-sm-8">
+                                                                <textarea id="onWeb_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-horizontal">
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm</label>
+                                                            <div class="col-md-8 col-sm-8" align="center">
+                                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                                    <div class="fileinput-new thumbnail">
+                                                                        <img src="" id="onWeb_Image"/>
+                                                                    </div>
+                                                                    <div >
+                                                                        <span class="btn btn-info btn-file" style="width: 100%">
+                                                                            <input type="file" name="txtImage" onchange="readURL(this);" style="max-width: "/>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <input class="btn btn-info confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
-                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    <div class="modal-footer">
+                                        <button class="btn btn-info" type="submit">Sửa</button>
+                                        <input class="btn btn-info confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
+                                        <input type="hidden" name="txtSeasonList" id="onWeb_seasonID">
+                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <!-- CANCEL PRODUCT ONWEB MODAL END-->
                     <!-- CONFIRM CANCEL PRODUCT ONWEB MODAL BEGIN-->
@@ -925,15 +1023,15 @@
             <script src="assets/admin/pages/scripts/table-managed.js"></script>
             <!-- END CORE PLUGINS -->
             <script>
-                                jQuery(document).ready(function () {
-                                    // initiate layout and plugins
-                                    // initiate layout and plugins
-                                    Metronic.init(); // init metronic core components
-                                    Layout.init(); // init current layout
-                                    QuickSidebar.init(); // init quick sidebar
-                                    Demo.init(); // init demo features
-                                    TableManaged.init();
-                                });
+                                                                                jQuery(document).ready(function () {
+                                                                                    // initiate layout and plugins
+                                                                                    // initiate layout and plugins
+                                                                                    Metronic.init(); // init metronic core components
+                                                                                    Layout.init(); // init current layout
+                                                                                    QuickSidebar.init(); // init quick sidebar
+                                                                                    Demo.init(); // init demo features
+                                                                                    TableManaged.init();
+                                                                                });
             </script>
             <script>
                 //script switch tab
@@ -1078,14 +1176,36 @@
                 $(document).on("click", ".onWebModal", function () {
                     var consignmentID = $(this).data('id');
                     $.get('LoadOnWebProduct', {consignmentID: consignmentID}, function (response) {
+                        var season = [];
+                        season = response.product.seasonList;
+                        for (var i = 1, max = 4; i <= max; i++) {
+                            $("input#onWeb_chkSeason" + i).parent("span").removeClass("checked");
+                        }
+                        for (var i = 0; i < season.length; i++) {
+                            $("input#onWeb_chkSeason" + season[i]).parent("span").addClass("checked");
+                        }
                         var price = (response.negotiatedPrice * 15 / 100).toFixed(0);
-                        $("#onWeb_ProductName").text(response.product.name);
-                        $("#onWeb_ConsignmentID").text(consignmentID);
-                        $("#onWeb_ReceivedDate").text(response.reviewProductDate);
-                        $("#onWeb_NegotiatedPrice").text(response.negotiatedPrice);
                         $("#confirmCancel_ConsignmentID1").text(consignmentID);
                         $("#confirmCancel_ConsignmentID2").val(consignmentID);
                         $("#confirmCancel_Fee").text(price);
+                    });
+                    $.get('LoadAvailableProduct', {consignmentID: consignmentID}, function (response) {
+                        $("#onWeb_ProductName").val(response.name);
+                        $("#onWeb_ProductID").val(response.productID);
+                        $("#onWeb_SerialNumber").val(response.serialNumber);
+                        $("#onWeb_BoughtDate").val(response.purchasedDate);
+                        $("#onWeb_Brand").val(response.brand);
+                        $("#onWeb_Description").val(response.description);
+                        $("#onWeb_Image").attr("src", response.image);
+                        var option = "option#onWeb_" + response.categoryID;
+                        $(option).attr("selected", "selected");
+                        if (response.isSpecial > 0) {
+                            $('#sendPriceTrue_2').parent('span').addClass('checked');
+                            $('#sendPriceFalse_2').parent('span').removeClass('checked')
+                        } else {
+                            $('#sendPriceTrue_2').parent('span').removeClass('checked')
+                            $('#sendPriceFalse_2').parent('span').addClass('checked')
+                        }
                     });
                     $('#onWebModal').modal('show');
                 });
@@ -1099,17 +1219,14 @@
                     var n = $("input:checked").length;
                     if (n == 0) {
                         alert('Vui lòng chọn ít nhất một khách hàng');
-                        console.log('Ko chon thang nao');
                         return false;
                     }
                     if (n > 1) {
                         alert('Vui lòng chỉ chọn một khách hàng');
-                        console.log('Chon hon 1 thang');
                         return false;
                     }
                     if (n == 1) {
                         $('#order_OrderID').val($("input:checked").val());
-                        console.log('ok ne');
                         $('#confirmOrderedModal').modal('show');
                     }
                 }
@@ -1220,13 +1337,27 @@
                     }
                 }
                 //get season checkbox
-                function getSeason()
+                function getSeasonAvai()
                 {
-                    var selected = '';
-                    $('span.checked').each(function () {
-                        selected += ($(this).children('input').attr('value'));
+                    var selected = [];
+                    $('#chkSeason1').parent('span').parent('div').parent('label').parent('div').siblings().addBack().each(function () {
+                        if ($(this).children('label').children('div').children('span').hasClass('checked')) {
+                            console.log($(this).children('label').children('div').children('span').children('input').attr('value'));
+                            selected += ($(this).children('label').children('div').children('span').children('input').attr('value'));
+                        }
                     });
-                    $('seasonID').val(selected);
+                    $('#avai_seasonID').val(selected);
+                    return true;
+                }
+                function getSeasonOnWeb()
+                {
+                    var selected = [];
+                    $('#onWeb_chkSeason1').parent('span').parent('div').parent('label').parent('div').siblings().addBack().each(function () {
+                        if ($(this).children('label').children('div').children('span').hasClass('checked')) {
+                            selected += ($(this).children('label').children('div').children('span').children('input').attr('value'));
+                        }
+                    });
+                    $('#onWeb_seasonID').val(selected);
                     return true;
                 }
             </script>

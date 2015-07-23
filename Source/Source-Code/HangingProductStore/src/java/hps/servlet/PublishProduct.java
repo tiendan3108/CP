@@ -10,6 +10,7 @@ import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
+import hps.ultils.SpecialProduct;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -60,10 +61,10 @@ public class PublishProduct extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null;
+            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null;
             String tempSeason = "";
             List<String> season = new ArrayList<>();
-            int categoryID = 0, productID = 0;
+            int categoryID = 0, productID = 0, special = 2;
             List<FileItem> items = null;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
@@ -77,6 +78,8 @@ public class PublishProduct extends HttpServlet {
                 for (FileItem item : items) {
                     if (item.isFormField()) {
                         switch (item.getFieldName()) {
+                            case "btnAction":
+                                action = item.getString();
                             case "txtProductName":
                                 productName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
@@ -100,6 +103,10 @@ public class PublishProduct extends HttpServlet {
                             case "txtSeasonList":
                                 tempSeason = item.getString();
                                 break;
+                            case "rdSendPrice_1":
+                                isSpecial = item.getString();
+                            case "rdSendPrice_2":
+                                isSpecial = item.getString();
                             default:
                                 break;
                         }
@@ -116,16 +123,17 @@ public class PublishProduct extends HttpServlet {
                             File file1 = new File(path + "\\" + image); // deployment place
                             File file2 = new File(basePath + "\\" + image);//base place
                             try {
-                                InputStream in = item.getInputStream();
-                                OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
-                                OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
-                                for (int b; (b = in.read()) != -1;) {
-                                    opsDeployment.write(b);
-                                    opsBase.write(b);
+                                try (InputStream in = item.getInputStream()) {
+                                    OutputStream opsBase;
+                                    try (OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1))) {
+                                        opsBase = new BufferedOutputStream(new FileOutputStream(file2));
+                                        for (int b; (b = in.read()) != -1;) {
+                                            opsDeployment.write(b);
+                                            opsBase.write(b);
+                                        }
+                                    }
+                                    opsBase.close();
                                 }
-                                opsDeployment.close();
-                                opsBase.close();
-                                in.close();
                             } catch (IOException ex) {
                                 System.out.println("can not write file");
                                 Logger.getLogger(PublishProduct.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,23 +141,38 @@ public class PublishProduct extends HttpServlet {
                         }
                     }
                 }
-                ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image);
-                if (tempSeason.contains("1")) {
-                    season.add("1");
+                if (action == null) {
+                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                } else {
+                    if (isSpecial != null && isSpecial.equals("isSpecial")) {
+                        special = SpecialProduct.SPECIAL;
+                    }
+                    if (isSpecial != null && isSpecial.equals("notSpecial")) {
+                        special = SpecialProduct.NOT_SPECIAL;
+                    }
+                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image, special);
+                    if (tempSeason.contains("1")) {
+                        season.add("1");
+                    }
+                    if (tempSeason.contains("2")) {
+                        season.add("2");
+                    }
+                    if (tempSeason.contains("3")) {
+                        season.add("3");
+                    }
+                    if (tempSeason.contains("4")) {
+                        season.add("4");
+                    }
+                    dao.publishOnWeb(product, season);
+                    url = GlobalVariables.MANAGERMENT_SERVLET;
                 }
-                if (tempSeason.contains("2")) {
-                    season.add("2");
-                }
-                if (tempSeason.contains("3")) {
-                    season.add("3");
-                }
-                if (tempSeason.contains("4")) {
-                    season.add("4");
-                }
-                dao.publishOnWeb(product, season);
-                url = GlobalVariables.MANAGERMENT_SERVLET;
             }
-            response.sendRedirect(url);
+            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+                response.sendRedirect(url);
+            } else {
+                request.setAttribute("currentTab", action);
+                request.getRequestDispatcher(url).forward(request, response);
+            }
         }
     }
 

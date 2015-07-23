@@ -37,6 +37,7 @@ public class ProductDTO implements Serializable {
     private String customerPhone;
     private List<OrderDTO> orderList;
     private float negotiatedPrice;
+    private List<Integer> seasonList;
     //danqt - end
 
 //duchc - begin
@@ -73,7 +74,7 @@ public class ProductDTO implements Serializable {
         this.negotiatedPrice = negotiatedPrice;
     }
 
-    public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image) {
+    public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image, int isSpecial) {
         this.productID = productID;
         this.name = productName;
         this.serialNumber = serialNumber;
@@ -81,6 +82,7 @@ public class ProductDTO implements Serializable {
         this.categoryID = categoryID;
         this.description = description;
         this.image = image;
+        this.isSpecial = isSpecial;
     }
 
     public ProductDTO(int productID, String productName, String receivedDate, String consignmentID, float price, int productStatusID) {
@@ -125,7 +127,7 @@ public class ProductDTO implements Serializable {
     //danqt - end
 
     //ban cu anh huon DanqtDAO
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image) {
+    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int isSpecial) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -134,6 +136,7 @@ public class ProductDTO implements Serializable {
         this.brand = brand;
         this.description = description;
         this.image = image;
+        this.isSpecial = isSpecial;
     }
     /*
      HoangNH     
@@ -482,6 +485,20 @@ public class ProductDTO implements Serializable {
 
     public void setIsSpecial(int isSpecial) {
         this.isSpecial = isSpecial;
+    }
+
+    /**
+     * @return the seasonList
+     */
+    public List<Integer> getSeasonList() {
+        return seasonList;
+    }
+
+    /**
+     * @param seasonList the seasonList to set
+     */
+    public void setSeasonList(List<Integer> seasonList) {
+        this.seasonList = seasonList;
     }
 
 }
