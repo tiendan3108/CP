@@ -10,9 +10,11 @@ import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.OrderDTO;
+import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
 import hps.ultils.MessageString;
+import hps.ultils.SpecialProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -81,15 +83,20 @@ public class CompleteOrderServlet extends HttpServlet {
             //update product status                                  
             productDao.updateStatusToOrdered(productID);
             //send sms
-//            if (!phone.isEmpty()) {
-//                try {
-//                    lib.sendSMS(MessageString.orderSuccessSMS(orderID), phone);
-//                } catch (TwilioRestException ex) {
-//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (Exception ex) {
-//                    Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
+            if (!phone.isEmpty()) {
+                ProductDTO product = productDao.getDetailByID(productID);
+                if (product.getIsSpecial() == SpecialProduct.NOT_SPECIAL) {
+                    float price = product.getNegotiatedPrice() * 120 / 100;
+                    try {
+                        lib.sendSMS(MessageString.orderSuccessSMS(product.getName(), price), phone);
+                    } catch (TwilioRestException ex) {
+                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            }
             //send email
             if (!email.isEmpty()) {
                 String body = MessageString.orderSuccessEmail(orderID);
