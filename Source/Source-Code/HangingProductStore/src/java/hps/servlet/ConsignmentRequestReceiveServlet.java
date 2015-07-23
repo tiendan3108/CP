@@ -292,14 +292,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
                     boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, productName, categoryID, brand, description, isSpecial);
 
-                    String message;
-                    if (result) {
-                        message = "Cập nhật thành công";
-                    } else {
-                        message = "Cập nhật thất bại";
-                    }
-
-                    String json = new Gson().toJson(message);
+                    String json = new Gson().toJson(result);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);
                     return;

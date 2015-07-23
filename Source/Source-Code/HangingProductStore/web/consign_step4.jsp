@@ -336,8 +336,7 @@
 
     });
     $(function () {
-
-        if ($('#txtPhone').val().contains("+84")) {
+        if ($('#txtPhone').val().indexOf("+84") > -1) {
             var phone = $('#txtPhone').val();
             phone = "0" + phone.substring(3);
             $('#txtPhone').val(phone);

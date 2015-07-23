@@ -161,7 +161,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 //if file is uploaded from pc
                                 in = item.getInputStream();
                             }
-                            filename = consigmentID + "_" + filename.replaceAll("[!@#$%^&*.?,;/]", "");
+                            filename = consigmentID + "_" + filename.replaceAll("[!@#$%^&*?,;/'\" ]", "_");
                             System.out.println("File name after: " + filename);
 
                             //item.write(file); // Write to base place

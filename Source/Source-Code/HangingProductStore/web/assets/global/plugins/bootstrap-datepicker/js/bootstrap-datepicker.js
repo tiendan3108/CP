@@ -1398,7 +1398,7 @@
 		daysOfWeekDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
-		format: 'dd/MM/yyyy',
+		format: 'dd-MM-yyyy',
 		keyboardNavigation: true,
 		language: 'vi',
 		minViewMode: 0,

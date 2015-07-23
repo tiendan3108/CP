@@ -244,9 +244,7 @@
                                                             <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
                                                                 <fmt:formatNumber 
                                                                     value="${c.minPrice}" 
-                                                                    maxFractionDigits="1"/>
-                                                                &nbsp; ~ &nbsp;
-                                                                <fmt:formatNumber 
+                                                                    maxFractionDigits="1"/>&nbsp; ~ &nbsp;<fmt:formatNumber 
                                                                     value="${c.maxPrice}" 
                                                                     maxFractionDigits="1"/> 
                                                             </c:when>
@@ -334,9 +332,7 @@
                                                             <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
                                                                 <fmt:formatNumber 
                                                                     value="${c.minPrice}" 
-                                                                    maxFractionDigits="1"/>
-                                                                &nbsp; ~ &nbsp;
-                                                                <fmt:formatNumber 
+                                                                    maxFractionDigits="1"/>&nbsp; ~ &nbsp;<fmt:formatNumber 
                                                                     value="${c.maxPrice}" 
                                                                     maxFractionDigits="1"/> 
                                                             </c:when>
@@ -347,7 +343,7 @@
                                                     </td>
                                                     <td>
 
-                                                        ${c.appointmentDate} &nbsp; ${c.hour}
+                                                        ${c.appointmentDate}&nbsp;${c.hour}
                                                     </td>
                                                     <td align="center">
 
@@ -574,7 +570,7 @@
                                         <table style="font-size: 110%" class="table table-striped table-hover" >
                                             <tr>
                                                 <th width="30%">Tên sản phẩm</th>
-                                                <td><input id="r_productName" name="txtProductName" type="text" class="form-control" ></td>
+                                                <td><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" ></td>
                                             </tr>
                                             <tr>
                                                 <th>Loại</th>
@@ -1501,7 +1497,14 @@
                         {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName, categoryID: categoryID, brand: brand,
                             description: description, receivedDate: receivedDate, hour: hour, isSpecial: isSpecial},
                 function (data) {
-                    alert(data);
+                    if(data){
+                           var consignmentTD = $("td:contains('" + consignmentID + "')");
+                           consignmentTD.prev().html(productName);
+                           consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
+                           alert("Cập nhật thành công");
+                    }else{
+                        alert("Cập nhật thất bại");
+                    }
                 });
             }
 
