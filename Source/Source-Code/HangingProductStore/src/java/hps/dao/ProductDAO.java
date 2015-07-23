@@ -1056,4 +1056,47 @@ public class ProductDAO {
         return null;
     }
 
+    public ProductDTO getDetailByID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * from Product, Consigment "
+                    + "where Product.ProductID = ? "
+                    + "And Product.ProductID = Consignment.ProductID";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                int isSpecial = rs.getInt("IsSpecial");
+                product.setName(productName);
+                product.setNegotiatedPrice(negotiatedPrice);
+                product.setIsSpecial(isSpecial);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
 }
