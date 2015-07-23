@@ -182,10 +182,10 @@ public class ProductDetailDAO {
             String query = "update Consignment "
                     + "Set ReviewProductDate = ?, "
                     + "NegotiatedPrice = ?, "
-                    + "ConsignmentStatusID = ? "
-                    + "FullName = ? "
-                    + "Address = ?"
-                    + "Phone = ? "
+                    + "ConsignmentStatusID = ?, "
+                    + "FullName = ?, "
+                    + "Address = ?, "
+                    + "Phone = ?, "
                     + "PaypalAccount = ? "
                     + "where ProductID = ?";
             stm = con.prepareStatement(query);
