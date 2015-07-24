@@ -890,7 +890,7 @@ public class DanqtDAO {
             if (!consignmentList.isEmpty()) {
                 for (String consignmentID : consignmentList) {
                     System.out.println("ConsignmentID : " + consignmentID);
-                    query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMesaage = 1 WHERE ConsignmentID = ?";
+                    query = "UPDATE Consignment SET ConsignmentStatusID = ?, isExpiredMessage = 1 WHERE ConsignmentID = ?";
                     stm = conn.prepareStatement(query);
                     stm.setInt(1, ConsignmentStatus.EXPIRED);
                     stm.setString(2, consignmentID);

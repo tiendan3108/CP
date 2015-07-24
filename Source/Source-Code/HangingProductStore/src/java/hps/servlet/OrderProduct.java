@@ -66,7 +66,7 @@ public class OrderProduct extends HttpServlet {
                     AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
                     listCustomer = dao.getListOrderedCustomer(orderID, true);
                     dao.changeProductStatus(orderID, sellingPrice);
-                    if (consignor.getPhone() != null) {
+                    if (consignor.getPhone() != null &&!consignor.getPhone().equals("")) {
                         try {
                             ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
                         } catch (TwilioRestException ex) {
@@ -75,7 +75,7 @@ public class OrderProduct extends HttpServlet {
                             Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    if (consignor.getEmail() != null) {
+                    if (consignor.getEmail() != null &&!consignor.getEmail().equals("")) {
                         ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
                     }
                 }
@@ -94,7 +94,7 @@ public class OrderProduct extends HttpServlet {
                     if (orderIDs.length > 0) {
                         for (String _orderID : orderIDs) {
                             String phone = dao.getCustomerInforByOrderID(_orderID, sendPrice);
-                            if (phone != null) {
+                            if (phone != null && !phone.equals("")) {
                                 try {
                                     ultil.sendSMS(MessageString.sendPriceSMS(_orderID, sendPrice, user.getFullName()), phone);
                                 } catch (TwilioRestException ex) {
@@ -106,10 +106,10 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-
+                
                 if (listCustomer != null && !listCustomer.isEmpty()) {
                     for (OrderDTO order : listCustomer) {
-                        if (order.getPhone() != null) {
+                        if (order.getPhone() != null && !order.getPhone().equals("")) {
                             try {
                                 ultil.sendSMS(MessageString.cancelOrderSMS(order.getOrderID(), user.getFullName()), order.getPhone());
                             } catch (TwilioRestException ex) {
@@ -118,12 +118,12 @@ public class OrderProduct extends HttpServlet {
                                 Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        if (order.getEmail() != null) {
+                        if (order.getEmail() != null && !order.getEmail().equals("")) {
                             ultil.sendEmail(order.getEmail(), MessageString.Subject(), MessageString.cancelOrderEmail(order.getOrderID(), user.getFullName(), order.getFullName()));
                         }
                     }
                 }
-
+                
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "ordered");
             }

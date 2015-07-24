@@ -99,7 +99,7 @@ public class CancelProduct extends HttpServlet {
                 status = ProductStatus.COMPLETED;
             } else {//not agree cancel product
                 status = ProductStatus.ON_WEB;
-                if (consignor.getPhone() != null) {
+                if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                     sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy khong thanh cong."
                             + " Vui long lien he voi chu cua hang " + user.getFullName() + " de biet them chi tiet";
                     try {
@@ -110,7 +110,7 @@ public class CancelProduct extends HttpServlet {
                         Logger.getLogger(CancelProduct.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (consignor.getEmail() != null) {
+                if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
                     email = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn không được hủy thành công.</br>"
                             + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
                     ultil.sendEmail(consignor.getEmail(), subject, email);

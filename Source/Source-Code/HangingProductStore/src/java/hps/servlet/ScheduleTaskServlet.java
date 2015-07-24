@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author HoangNHSE61007
  */
 public class ScheduleTaskServlet extends HttpServlet implements ServletContextListener {
-
+    
     ScheduledExecutorService service;
-
+    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 //        Runnable runnable = new Runnable() {
@@ -55,7 +55,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
 //        service = Executors.newSingleThreadScheduledExecutor();
 //        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
     }
-
+    
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         service.shutdownNow();
@@ -66,10 +66,10 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         }
     }
     public static Timer timer = new Timer(true);
-
+    
     @Override
     public void init() {
-
+        
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -84,17 +84,17 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
         //task();
     }
-
+    
     @Override
     public void destroy() {
-
+        
         service.shutdownNow();
         try {
             service.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
             Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         super.destroy();
     }
 
@@ -148,7 +148,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         }
         //System.out.println("12345566");
     }
-
+    
     private void remindConsignor() {
         DanqtDAO dao = DanqtDAO.getInstance();
         JavaUltilities ulti = new JavaUltilities();
@@ -156,7 +156,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         if (listConsignor != null) {
             if (!listConsignor.isEmpty()) {
                 for (ConsignmentDTO consignor : listConsignor) {
-                    if (consignor.getPhone() != null) {
+                    if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
                                 + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
                         try {
@@ -167,7 +167,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
                             Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
-                    if (consignor.getEmail() != null) {
+                    if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
                         String subject = "[HPS] Hết hạn kí gửi";
                         String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
                                 + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
@@ -180,7 +180,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
             System.out.println("Tong cong co " + listConsignor.size() + " het han");
         }
     }
-
+    
     private void sendNofitication() {
         AccountReceiveNofiticationDAO dao = new AccountReceiveNofiticationDAO();
         JavaUltilities lib = new JavaUltilities();
@@ -193,10 +193,10 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
             for (int i = 1; i <= 9; i++) {
                 if (seconds == i) {
                     if (accounts != null) {
-                        for (int j = 0; j < accounts.size(); j++) {                           
+                        for (int j = 0; j < accounts.size(); j++) {                            
                             AccountReceiveNotification account = accounts.get(j);
                             int num = dao.getNumOfProduct(account.getAccountID());
-                            lib.sendNofitiCation(MessageString.titleNofitication, MessageString.contenNofitication(num) , account.getGcmID());
+                            lib.sendNofitiCation(MessageString.titleNofitication, MessageString.contenNofitication(num), account.getGcmID());
                         }
                     }
                 }
