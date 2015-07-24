@@ -230,4 +230,47 @@ public class OrderDAO {
         return 0;
     }
 
+    public List<OrderDTO> getPhone(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<OrderDTO> orders = new ArrayList<OrderDTO>();
+        try {
+            DBUltilities db = new DBUltilities();
+            con = db.makeConnection();
+            String query = "select * "
+                    + "from [Order] "
+                    + "where ProductID = ? "
+                    + "and OrderStatusID = ?";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            stm.setInt(2, OrderStatus.WAITING);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                OrderDTO order = new OrderDTO();
+                String phone = rs.getString("Phone");
+                order.setPhone(phone);
+                orders.add(order);
+            }
+            return orders;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
 }
