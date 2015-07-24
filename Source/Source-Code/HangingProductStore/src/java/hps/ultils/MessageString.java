@@ -68,6 +68,6 @@ public class MessageString {
         return "Hôm nay có "+num +" món hàng cần lấy";
     }
     public static final String newProductNotification(String name){
-        return "Bạn có thêm món hàng "+ name " cần lấy trong ngày hôm nay.";
+        return "Bạn có thêm món hàng "+ name + " cần lấy trong ngày hôm nay.";
     }
 }
