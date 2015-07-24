@@ -550,10 +550,7 @@
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header">
                                         <h4>Thông tin đặt hàng</h4>
-                                        Giá bán (Ngàn đồng): <input type="text" name="txtSendPrice" id="sendPrice" value="">
-                                        <span id="erSendPrice" class="help-block">
-                                        </span>
-                                        Giá kí gửi (Ngàn đồng) <label id="ordered_negotiatedPrice"></label>
+                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label>
                                     </div>
                                     <div class="modal-body">
                                         <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
@@ -563,7 +560,6 @@
                                                     <th>Tên khách hàng</th>
                                                     <th>Ngày đặt mua</th>
                                                     <th>Thông tin liên hệ</th>
-                                                    <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table_body_ordered">
@@ -1105,15 +1101,10 @@
                                     orderList[i].orderID + '"></td><td>' +
                                     orderList[i].fullName + '</td><td>' +
                                     orderList[i].orderedDate + '</td><td>' +
-                                    orderList[i].phone + '</td><td>';
-                            if (orderList[i].sendPrice == 0) {
-                                row = row + 'Chưa gửi giá</td></tr>';
-                            } else {
-                                row = row + 'Gửi giá ' + orderList[i].sendPrice + '</td></tr>';
-                            }
+                                    orderList[i].phone + '</td></tr>';
                             $('#table_body_ordered').append(row);
-                        }
-                    });
+                            }
+                        })
                     $('#orderedModal').modal('show');
                 });
                 //end ordered modal
@@ -1200,11 +1191,11 @@
                         var option = "option#onWeb_" + response.categoryID;
                         $(option).attr("selected", "selected");
                         if (response.isSpecial > 0) {
-                            $('#sendPriceTrue_2').parent('span').addClass('checked');
-                            $('#sendPriceFalse_2').parent('span').removeClass('checked')
-                        } else {
+                            $('#sendPriceFalse_2').parent('span').addClass('checked');
                             $('#sendPriceTrue_2').parent('span').removeClass('checked')
-                            $('#sendPriceFalse_2').parent('span').addClass('checked')
+                        } else {
+                            $('#sendPriceFalse_2').parent('span').removeClass('checked')
+                            $('#sendPriceTrue_2').parent('span').addClass('checked')
                         }
                     });
                     $('#onWebModal').modal('show');

@@ -134,7 +134,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                     if (preAppointmentDate.equals(today)) {
                         JavaUltilities java = new JavaUltilities();
-                        java.sendNofitiCation(MessageString.titleNofitication, MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
+                        //java.sendNofitiCation(MessageString.titleNofitication, MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
                     }
 
                     //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");

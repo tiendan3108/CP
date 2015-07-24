@@ -105,8 +105,10 @@ public class PublishProduct extends HttpServlet {
                                 break;
                             case "rdSendPrice_1":
                                 isSpecial = item.getString();
+                                break;
                             case "rdSendPrice_2":
                                 isSpecial = item.getString();
+                                break;
                             default:
                                 break;
                         }

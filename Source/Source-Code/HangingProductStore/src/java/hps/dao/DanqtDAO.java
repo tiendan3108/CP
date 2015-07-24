@@ -17,6 +17,7 @@ import hps.ultils.DBUltilities;
 import hps.ultils.JavaUltilities;
 import hps.ultils.OrderStatus;
 import hps.ultils.ProductStatus;
+import hps.ultils.SpecialProduct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1416,6 +1417,7 @@ public class DanqtDAO {
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             stm.setInt(2, ORDERED);
+//            stm.setInt(3, SpecialProduct.NOT_SPECIAL);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String productName = rs.getString("ProductName");

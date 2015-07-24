@@ -61,7 +61,6 @@ public class LoadOrderedProduct extends HttpServlet {
             DanqtDAO dao = new DanqtDAO();
             ProductDTO infor = dao.getInforForOrderedPage(productID);
             String json = new Gson().toJson(infor);
-            System.out.println(json);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);
         } catch (NumberFormatException e) {
