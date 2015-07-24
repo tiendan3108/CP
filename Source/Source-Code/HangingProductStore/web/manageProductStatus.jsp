@@ -1216,7 +1216,7 @@
                 // validation check customer
                 function checkCustomer1()
                 {
-                    var n = $("input:checked").length;
+                    var n = $('input[name=chkboxCustomer]:checked').length;
                     if (n == 0) {
                         alert('Vui lòng chọn ít nhất một khách hàng');
                         return false;
