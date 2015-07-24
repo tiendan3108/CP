@@ -712,9 +712,9 @@
                                                             <label class="control-label col-sm-4">Tự động gửi giá</label>
                                                             <div class="col-sm-8">
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" name="rdSendPrice_1" value="isSpecial"> Có </label>
+                                                                    <input type="radio" name="rdSendPrice_1" id="rdIsSpecial1" value="isSpecial"> Có </label>
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" name="rdSendPrice_1" value="notSpecial" checked> Không </label>
+                                                                    <input type="radio" name="rdSendPrice_1" id="rdNotSpecial1" value="notSpecial" checked> Không </label>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
@@ -1074,6 +1074,13 @@
                         $("#avai_Image").attr("src", response.image);
                         var option = "option#" + response.categoryID;
                         $(option).attr("selected", "selected");
+                        if (response.isSpecial > 0) {
+                            $('#rdIsSpecial1').parent('span').addClass('checked');
+                            $('#rdNotSpecial1').parent('span').removeClass('checked')
+                        } else {
+                            $('#rdIsSpecial1').parent('span').removeClass('checked')
+                            $('#rdNotSpecial1').parent('span').addClass('checked')
+                        }
                     });
                     $('#availableModal').modal('show');
                 });
@@ -1103,8 +1110,8 @@
                                     orderList[i].orderedDate + '</td><td>' +
                                     orderList[i].phone + '</td></tr>';
                             $('#table_body_ordered').append(row);
-                            }
-                        })
+                        }
+                    })
                     $('#orderedModal').modal('show');
                 });
                 //end ordered modal
@@ -1191,11 +1198,13 @@
                         var option = "option#onWeb_" + response.categoryID;
                         $(option).attr("selected", "selected");
                         if (response.isSpecial > 0) {
-                            $('#sendPriceFalse_2').parent('span').addClass('checked');
-                            $('#sendPriceTrue_2').parent('span').removeClass('checked')
-                        } else {
+                            console.log('khong gui gia');
+                            $('#sendPriceTrue_2').parent('span').addClass('checked');
                             $('#sendPriceFalse_2').parent('span').removeClass('checked')
-                            $('#sendPriceTrue_2').parent('span').addClass('checked')
+                        } else {
+                            console.log('co gui gia');
+                            $('#sendPriceTrue_2').parent('span').removeClass('checked')
+                            $('#sendPriceFalse_2').parent('span').addClass('checked')
                         }
                     });
                     $('#onWebModal').modal('show');
