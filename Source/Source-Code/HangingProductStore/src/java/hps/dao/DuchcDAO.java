@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import hps.ultils.AmazonProduct;
+import hps.ultils.JavaUltilities;
 import java.sql.Date;
+import java.text.DateFormat;
 
 /**
  *
@@ -537,6 +539,89 @@ public class DuchcDAO {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+    
+    public void sendSmsAndEmailForCreateRequest(ConsignmentDTO consignment){
+        JavaUltilities ultil = new JavaUltilities();
+        String msg = "Cám ơn " + consignment.getName() + " đã ký gửi. \n"
+                + "Mã sản phẩm của bạn là: " + consignment.getConsigmentID() + ". \n"
+                + consignment.getStoreOwner().getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
+        //send sms and email
+        if (!consignment.getPhone().isEmpty()) {
+            try {
+                ultil.sendSMS(msg, consignment.getPhone());
+            } catch (Exception e) {
+                System.out.println("Loi khi gui tin nhan sms!");
+                e.printStackTrace();
+            }
+        }
+        if (!consignment.getEmail().isEmpty()) {
+            try {
+                ultil.sendEmail(consignment.getEmail(), "[HPS] Ky gui thanh cong!", msg);
+            } catch (Exception e) {
+                System.out.println("Loi khi gui email!");
+                e.printStackTrace();
+            }
+
+        }
+    }
+    
+    public void sendSmsAndEmailForAcceptRequest(ConsignmentDTO consignment){
+        
+    }
+    
+    public void sendSmsAndEmailForAcceptProduct(ConsignmentDTO consignment){
+        
+    }
+    
+    public void sendSmsAndEmailForrefuseRequest(ConsignmentDTO consignment){
+        
+    }
+    public void sendSmsAndEmailForRefuseProduct(ConsignmentDTO consignment){
+        
+    }
+    
+    public void notification(String appoinmentDate){
+        
+    }
+    
+    public static String getGcmID(String storeOwnerID){
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String gcmID = "";
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT GcmID "
+                    + " FROM Account "
+                    + " WHERE AccountID = ? ";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, storeOwnerID);
+            
+            rs = stm.executeQuery();
+            
+            if (rs.next()) {
+                gcmID = rs.getString("GcmID");
+            }
+            return gcmID;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;

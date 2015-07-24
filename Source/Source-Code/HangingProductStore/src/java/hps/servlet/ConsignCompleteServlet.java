@@ -242,28 +242,28 @@ public class ConsignCompleteServlet extends HttpServlet {
                     
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
+                        JavaUltilities ultil = new JavaUltilities();
+                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
+                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
+                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";
+                        //send sms and email
+                        if (!phone.isEmpty()) {
+                            try {
+                                ultil.sendSMS(msg, phone);
+                            } catch (Exception e) {
+                                System.out.println("Loi khi gui tin nhan sms!");
+                                e.printStackTrace();
+                            }
+                        }
+                        if (!email.isEmpty()) {
+                            try {
+                                ultil.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
+                            } catch (Exception e) {
+                                System.out.println("Loi khi gui email!");
+                                e.printStackTrace();
+                            }
 
-//                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
-//                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
-//                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";;
-//                        //send sms and email
-//                        if (!phone.isEmpty()) {
-//                            try {
-//                                ultil.sendSMS(msg, phone);
-//                            } catch (Exception e) {
-//                                System.out.println("Loi khi gui tin nhan sms!");
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        if (!email.isEmpty()) {
-//                            try {
-//                                ultil.sendEmail(email, "[HPS] Ky gui thanh cong!", msg);
-//                            } catch (Exception e) {
-//                                System.out.println("Loi khi gui email!");
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
+                        }
                         consignment.setProduct(product);
                         session.setAttribute("CONSIGNMENT", consignment);
                         session.setAttribute("STOREOWNER", store);
