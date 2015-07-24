@@ -17,6 +17,7 @@ import hps.ultils.MessageString;
 import hps.ultils.SpecialProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -48,6 +49,8 @@ public class CompleteOrderServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             JavaUltilities lib = new JavaUltilities();
+            boolean isOrdered = false;
+            String url;
             String sproductID = request.getParameter("productID");
             int productID = Integer.parseInt(sproductID);
             String email = request.getParameter("email");
@@ -61,51 +64,66 @@ public class CompleteOrderServlet extends HttpServlet {
             int customerID = 5;
             OrderDAO orderDao = new OrderDAO();
             ProductDAO productDao = new ProductDAO();
-            HttpSession session = request.getSession();
-            if (session != null) {
-                AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
-                if (account != null) {
-                    customerID = account.getRoleID();
-                } else {
-                    customerID = 5;
+            List<OrderDTO> orders = orderDao.getPhone(productID);
+            if (orders != null) {
+                for (int i = 0; i < orders.size(); i++) {
+                    OrderDTO temp = orders.get(i);
+                    if (phone.equals(temp.getPhone())) {
+                        isOrdered = true;
+
+                    }
                 }
             }
-            OrderDTO order = new OrderDTO();
-            order.setOrderID(orderID);
-            order.setCustomerID(customerID);
-            order.setEmail(email);
-            order.setPhone(phone);
-            order.setAddress(address);
-            order.setFullName(fullname);
-            order.setProductID(productID);
-            //insert order
-            orderDao.insertOrderWithMemberInfo(order);
-            //update product status                                  
-            productDao.updateStatusToOrdered(productID);
-            //send sms
-            if (!phone.isEmpty()) {
-                ProductDTO product = productDao.getDetailByID(productID);
-                if (product != null) {
-                    if (product.getIsSpecial() == SpecialProduct.NOT_SPECIAL) {
-                        float price = product.getNegotiatedPrice() * 120 / 100;
-                        try {
-                            lib.sendSMS(MessageString.orderSuccessSMS(product.getName(), price), phone);
-                        } catch (TwilioRestException ex) {
-                            Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (Exception ex) {
-                            Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+            if (isOrdered) {
+                request.setAttribute("ERROR", MessageString.errorOrder);
+                url = "HomeServlet";
+            } else {
+                HttpSession session = request.getSession();
+                if (session != null) {
+                    AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
+                    if (account != null) {
+                        customerID = account.getRoleID();
+                    } else {
+                        customerID = 5;
+                    }
+                }
+                OrderDTO order = new OrderDTO();
+                order.setOrderID(orderID);
+                order.setCustomerID(customerID);
+                order.setEmail(email);
+                order.setPhone(phone);
+                order.setAddress(address);
+                order.setFullName(fullname);
+                order.setProductID(productID);
+                //insert order
+                orderDao.insertOrderWithMemberInfo(order);
+                //update product status                                  
+                productDao.updateStatusToOrdered(productID);
+                //send sms
+                if (!phone.isEmpty()) {
+                    ProductDTO product = productDao.getDetailByID(productID);
+                    if (product != null) {
+                        if (product.getIsSpecial() == SpecialProduct.NOT_SPECIAL) {
+                            float price = product.getNegotiatedPrice() * 120 / 100;
+                            try {
+                                lib.sendSMS(MessageString.orderSuccessSMS(product.getName(), price), phone);
+                            } catch (TwilioRestException ex) {
+                                Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                Logger.getLogger(CompleteOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         }
                     }
                 }
-
+                //send email
+                if (!email.isEmpty()) {
+                    String body = MessageString.orderSuccessEmail(orderID);
+                    lib.sendEmail(email, MessageString.confirmOrder, body);
+                }
+                request.setAttribute("MESS", MessageString.orderSuccess(orderID));
+                url = GlobalVariables.COMPLETE_ODER_PAGE;
             }
-            //send email
-            if (!email.isEmpty()) {
-                String body = MessageString.orderSuccessEmail(orderID);
-                lib.sendEmail(email, MessageString.confirmOrder, body);
-            }
-            request.setAttribute("MESS", MessageString.orderSuccess(orderID));
-            RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.COMPLETE_ODER_PAGE);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
 
         }
