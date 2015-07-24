@@ -13,6 +13,8 @@ import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
+import hps.ultils.JavaUltilities;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -106,8 +108,8 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     }
 
 // get appointmentDate and add hour into it then format to update database
-                    String appointmentDate = request.getParameter("txtReceivedDate") + " " + hour;
-                    appointmentDate = formatDate(appointmentDate);
+                    String preAppointmentDate = request.getParameter("txtReceivedDate");
+                    String appointmentDate = formatDate(preAppointmentDate + " " + hour);
 
                     int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                     String brand = request.getParameter("txtBrand");
@@ -119,12 +121,21 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String email = request.getParameter("txtEmail");
                     String paymentMethod = request.getParameter("r_rdPayment");
                     String paypalAccount = request.getParameter("txtPaypalAccount");
-                    if(paymentMethod.equals("direct")){
+                    if (paymentMethod.equals("direct")) {
                         paypalAccount = "";
                     }
 
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
                     consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
+
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    java.util.Date currentDate = new java.util.Date();
+                    String today = df.format(currentDate);
+
+                    if (preAppointmentDate.equals(today)) {
+                        JavaUltilities java = new JavaUltilities();
+                        java.sendNofitiCation(MessageString.titleNofitication, MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
+                    }
 
                     //ConsignmentDTO consignment = (ConsignmentDTO) session.getAttribute("consignment_details");
                     //send sms and email
@@ -288,21 +299,19 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String brand = request.getParameter("brand");
 
                     String description = request.getParameter("description");
-                    
+
                     int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
-                    
 
 // get appointmentDate and add hour into it then format to update database
                     String hour = request.getParameter("hour");
                     String appointmentDate = request.getParameter("receivedDate") + " " + hour;
                     appointmentDate = formatDate(appointmentDate);
-                    
+
                     String fullName = request.getParameter("fullName");
                     String address = request.getParameter("address");
                     String phone = "+84" + request.getParameter("phone").substring(1);
                     String email = request.getParameter("email");
                     String paypalAccount = request.getParameter("paypalAccount");
-                    
 
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
                     boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
