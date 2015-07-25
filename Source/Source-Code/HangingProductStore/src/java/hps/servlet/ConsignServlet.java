@@ -261,6 +261,8 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("CATEGORY");
                 session.removeAttribute("ASIN");
                 session.removeAttribute("AMAZONLIST");
+                session.removeAttribute("CONSIGNMENT");
+                session.removeAttribute("STOREOWNER");
             }
 //            if (action.equals("getBrand")) {
 //                String term = request.getParameter("term");

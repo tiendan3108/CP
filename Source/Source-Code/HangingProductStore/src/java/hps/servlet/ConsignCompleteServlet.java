@@ -170,7 +170,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             File file1 = new File((basePath + "\\" + filename).replaceAll("\\\\", "/")); // base file
                             // project path
                             File file2 = new File((deploymentPath + "\\" + filename).replaceAll("\\\\", "/"));//deployment file
-                            
+
                             OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
                             OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
                             for (int b; (b = in.read()) != -1;) {
@@ -183,7 +183,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                             opsDeployment.close();
                             opsBase.close();
                             in.close();
-                            
+
                         } catch (Exception ex) {
                             System.out.println("Cannot upload image");
                             Logger.getLogger(ConsignCompleteServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -239,7 +239,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
-                    
+
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
                         JavaUltilities ultil = new JavaUltilities();
@@ -274,6 +274,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                         session.removeAttribute("STORELIST");
                         session.removeAttribute("FCATE");
                         session.removeAttribute("CATEGORY");
+                        session.removeAttribute("ASIN");
+                        session.removeAttribute("AMAZONLIST");
                     } else {
                         url = STEP4;
                     }
