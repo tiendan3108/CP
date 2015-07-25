@@ -167,9 +167,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                             //item.write(file); // Write to base place
                             //item.write(file2);// write to deployment place
                             //web path                        
-                            File file1 = new File(basePath + "\\" + filename); // base file
+                            File file1 = new File((basePath + "\\" + filename).replaceAll("\\\\", "/")); // base file
                             // project path
-                            File file2 = new File(deploymentPath + "\\" + filename);//deployment file
+                            File file2 = new File((deploymentPath + "\\" + filename).replaceAll("\\\\", "/"));//deployment file
                             
                             OutputStream opsDeployment = new BufferedOutputStream(new FileOutputStream(file1));
                             OutputStream opsBase = new BufferedOutputStream(new FileOutputStream(file2));
@@ -178,7 +178,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 opsBase.write(b);
                             }
 
-                            imagePath = "assets\\image\\" + filename;
+                            imagePath = "assets/image/" + filename;
 
                             opsDeployment.close();
                             opsBase.close();

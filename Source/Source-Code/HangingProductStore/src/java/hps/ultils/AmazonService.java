@@ -5,6 +5,7 @@
  */
 package hps.ultils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -29,16 +30,16 @@ import org.xml.sax.SAXException;
  * @author Tien Dan
  */
 public class AmazonService {
-    
+
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
     public static final String ASS_TAG = "danqt-20";// account given by amazon so we can send request.
 
     public static void main(String[] args) {
-        AmazonService test = new AmazonService();
+//        AmazonService test = new AmazonService();
 //        test.getProductByUPC("635753490879");
-        AmazonProduct bla = test.getProductByUPC("079767960599");
+//        AmazonProduct bla = test.getProductByUPC("079767960599");
 //        if (bla == null) {
 //            System.out.println("sai cmnr");
 //        } else {
@@ -46,7 +47,7 @@ public class AmazonService {
 //        }
 //        List<AmazonProduct> result = test.getProduct("Crawford Boyfriend Watch-Chocolate", "Geneva", "Watches");
     }
-    
+
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
         List<AmazonProduct> result = new ArrayList<>();
         try {
@@ -56,9 +57,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-            
+
             String requestUrl = null;
-            
+
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemSearch");
@@ -68,16 +69,17 @@ public class AmazonService {
             params.put("MerchantId", "All");
             params.put("SearchIndex", type);
             params.put("Brand", brand);
-            
+
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             result = fetchProduct(requestUrl);
             return result;
         } catch (Exception e) {
+            e.printStackTrace();
             return result;
         }
     }
-    
+
     private List<AmazonProduct> fetchProduct(String requestUrl) {
         List<AmazonProduct> temp_result = new ArrayList<>();
         List<AmazonProduct> result = new ArrayList<>();
@@ -128,7 +130,7 @@ public class AmazonService {
         }
         return result;
     }
-    
+
     private AmazonProduct getProductDetail(AmazonProduct product) {
         SignedRequestsHelper helper;
         try {
@@ -137,9 +139,9 @@ public class AmazonService {
             e.printStackTrace();
             return null;
         }
-        
+
         String requestUrl = null;
-        
+
         Map<String, String> params = new HashMap<String, String>();
         params.put("Service", "AWSECommerceService");//ok
         params.put("Operation", "ItemLookup");
@@ -147,12 +149,12 @@ public class AmazonService {
         params.put("Condition", "New");
         params.put("ItemId", product.getASIN());
         params.put("MerchantId", "All");
-        
+
         requestUrl = helper.sign(params);
         System.out.println("Child url : " + requestUrl);
         return fetchProductDetail(product, requestUrl);
     }
-    
+
     private AmazonProduct fetchProductDetail(AmazonProduct product, String requestUrl) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -165,19 +167,23 @@ public class AmazonService {
             NodeList MediumImageContent = doc.getElementsByTagName("MediumImage");
             if (MediumImageContent != null) {
                 Node imageURL = MediumImageContent.item(0);
-                NodeList URLContent = imageURL.getChildNodes();
-                Node URL = URLContent.item(0);
-                if (URL != null && URL.getNodeName().equals("URL")) {
-                    product.setImage(URL.getTextContent());
+                if (imageURL != null) {
+                    NodeList URLContent = imageURL.getChildNodes();
+                    Node URL = URLContent.item(0);
+                    if (URL != null && URL.getNodeName().equals("URL")) {
+                        product.setImage(URL.getTextContent());
+                    }
                 }
             }
             NodeList LargeImageContent = doc.getElementsByTagName("LargeImage");
             if (LargeImageContent != null) {
                 Node imageURL = LargeImageContent.item(0);
-                NodeList URLContent = imageURL.getChildNodes();
-                Node URL = URLContent.item(0);
-                if (URL != null && URL.getNodeName().equals("URL")) {
-                    product.setImage(URL.getTextContent());
+                if (imageURL != null) {
+                    NodeList URLContent = imageURL.getChildNodes();
+                    Node URL = URLContent.item(0);
+                    if (URL != null && URL.getNodeName().equals("URL")) {
+                        product.setImage(URL.getTextContent());
+                    }
                 }
             }
             NodeList DetailPageURLContent = doc.getElementsByTagName("DetailPageURL");
@@ -190,19 +196,21 @@ public class AmazonService {
             NodeList OfferSummaryContent = doc.getElementsByTagName("OfferSummary");
             if (OfferSummaryContent != null) {
                 Node OfferSummaryNode = OfferSummaryContent.item(0);
-                NodeList LowestNewPriceContent = OfferSummaryNode.getChildNodes();
-                if (LowestNewPriceContent != null) {
-                    Node LowestNewPriceNode = LowestNewPriceContent.item(0);
-                    if (LowestNewPriceNode != null && LowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
-                        NodeList AmountContent = LowestNewPriceNode.getChildNodes();
-                        Node AmountNode = AmountContent.item(0);
-                        if (AmountNode != null && AmountNode.getNodeName().equals("Amount")) {
-                            product.setPrice(Float.parseFloat(AmountNode.getTextContent()) / 100);
+                if (OfferSummaryNode != null) {
+                    NodeList LowestNewPriceContent = OfferSummaryNode.getChildNodes();
+                    if (LowestNewPriceContent != null) {
+                        Node LowestNewPriceNode = LowestNewPriceContent.item(0);
+                        if (LowestNewPriceNode != null && LowestNewPriceNode.getNodeName().equals("LowestNewPrice")) {
+                            NodeList AmountContent = LowestNewPriceNode.getChildNodes();
+                            Node AmountNode = AmountContent.item(0);
+                            if (AmountNode != null && AmountNode.getNodeName().equals("Amount")) {
+                                product.setPrice(Float.parseFloat(AmountNode.getTextContent()) / 100);
+                            } else {
+                                return null;
+                            }
                         } else {
                             return null;
                         }
-                    } else {
-                        return null;
                     }
                 }
             } else {
@@ -225,13 +233,17 @@ public class AmazonService {
                     return null;
                 }
             }
+            System.out.println(product.toString());
+            if (product.getImage() == null) {
+                return null;
+            }
+            return product;
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(AmazonService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return product;
     }
-    
+
     public AmazonProduct getProductByUPC(String upc) {
         try {
             SignedRequestsHelper helper;
@@ -240,9 +252,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-            
+
             String requestUrl = null;
-            
+
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemLookup");
@@ -250,7 +262,7 @@ public class AmazonService {
             params.put("SearchIndex", "All");
             params.put("IdType", "UPC");
             params.put("ItemId", upc);
-            
+
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             return fetchProductByUPC(requestUrl);
@@ -258,7 +270,7 @@ public class AmazonService {
             return null;
         }
     }
-    
+
     private AmazonProduct fetchProductByUPC(String requestUrl) {
         AmazonProduct product = null;
         try {
@@ -347,6 +359,7 @@ public class AmazonService {
             Logger.getLogger(AmazonService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+
         return product;
     }
 }

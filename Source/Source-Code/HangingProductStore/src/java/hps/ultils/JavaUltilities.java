@@ -221,7 +221,7 @@ public class JavaUltilities {
     public static void deleteProductImage(String path, int productID) {
         DanqtDAO dao = new DanqtDAO();
         ProductDTO product = dao.getProductByID(productID);
-        File image = new File(path + "\\" + product.getImage());
+        File image = new File((path + "\\" + product.getImage()).replaceAll("\\\\", "/"));
         try {
             image.delete();
             System.out.println("deleted file " + path + "\\" + product.getImage());

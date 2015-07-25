@@ -11,13 +11,19 @@ import java.io.Serializable;
  *
  * @author Tien Dan
  */
-public class AmazonProduct implements Serializable{
+public class AmazonProduct implements Serializable {
+
     private String name;
     private String ASIN;
     private float price;
     private float newPrice;
     private String image;
     private String url;
+
+    @Override
+    public String toString() {
+        return name + " " + ASIN + " " + price + " " + newPrice + " " + image + " " + url;
+    }
 
     /**
      * @return the name
@@ -102,5 +108,5 @@ public class AmazonProduct implements Serializable{
     public void setUrl(String url) {
         this.url = url;
     }
-    
+
 }

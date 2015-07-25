@@ -122,8 +122,8 @@ public class PublishProduct extends HttpServlet {
                             String consignmentID = dao.getConsignmentIDByProductID(productID);
                             filename = consignmentID + filename;
                             image = "assets\\image\\" + filename;
-                            File file1 = new File(path + "\\" + image); // deployment place
-                            File file2 = new File(basePath + "\\" + image);//base place
+                            File file1 = new File((path + "\\" + image).replaceAll("\\\\", "/")); // deployment place
+                            File file2 = new File((basePath + "\\" + image).replaceAll("\\\\", "/"));//base place
                             try {
                                 try (InputStream in = item.getInputStream()) {
                                     OutputStream opsBase;
@@ -137,7 +137,6 @@ public class PublishProduct extends HttpServlet {
                                     opsBase.close();
                                 }
                             } catch (IOException ex) {
-                                System.out.println("can not write file");
                                 Logger.getLogger(PublishProduct.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
