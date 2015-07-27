@@ -1864,7 +1864,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
 
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewRequestDate IS NOT NULL";
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewRequestDate IS NOT NULL ORDER BY ReviewRequestDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             rs = stm.executeQuery();
@@ -1878,7 +1878,7 @@ public class DanqtDAO {
                 result.add(item);
             }
 
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewProductDate IS NOT NULL";
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewProductDate IS NOT NULL ORDER BY ReviewProductDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             rs = stm.executeQuery();

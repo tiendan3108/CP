@@ -508,37 +508,56 @@
                     <div class="modal fade bs-example-modal-lg" id="soldModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <form action="SoldProduct" method="POST">
-                                    <div class="modal-header">
-                                        <h4>Thông tin sản phẩm</h4>        
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-6">
-                                                <h5>Thông tin người kí gửi</h5>
-                                                <li>Họ tên : <label id="sold_fullName"></label></li>
-                                                <li>Địa chỉ : <label id="sold_address"></label></li>
-                                                <li>Số điện thoại : <label id="sold_phone"></label></li>
-                                                <li>Email : <label id="sold_email"></label></li>
-                                                <li>Tài khoản Paypal : <label id="sold_paypalAccount"></label></li>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6">
-                                                <h5>Thông tin sản phẩm</h5>
-                                                <li>Tên sản phẩm : <label id="sold_productName"></label></li>
-                                                <li>Mã kí gửi : <label id="sold_consignmentID"></label></li>
-                                                <li>Giá sản phẩm (Ngàn đồng): <label id="sold_negotiatedPrice"></label></li>
-                                                <li>Giá bán (Ngàn đồng): <label id="sold_sellingPrice"></label></li>
-                                                <li>Ngày kí gửi : <label id="sold_receivedDate"></label></li>
-                                                <li>Tiền trả khách hàng (Ngàn đồng): <input type="text" name="txtReturnPrice" id="sold_returnPrice"></li>
-                                            </div>
+
+                                <div class="modal-header">
+                                    <h4>Thông tin sản phẩm</h4>        
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6">
+                                            <h5>Thông tin người kí gửi</h5>
+                                            <li>Họ tên : <label id="sold_fullName"></label></li>
+                                            <li>Địa chỉ : <label id="sold_address"></label></li>
+                                            <li>Số điện thoại : <label id="sold_phone"></label></li>
+                                            <li>Email : <label id="sold_email"></label></li>
+                                            <li>Tài khoản Paypal : <label id="sold_paypalAccount"></label></li>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6">
+                                            <h5>Thông tin sản phẩm</h5>
+                                            <li>Tên sản phẩm : <label id="sold_productName"></label></li>
+                                            <li>Mã kí gửi : <label id="sold_consignmentID"></label></li>
+                                            <li>Giá sản phẩm (Ngàn đồng): <label id="sold_negotiatedPrice"></label></li>
+                                            <li>Giá bán (Ngàn đồng): <label id="sold_sellingPrice"></label></li>
+                                            <li>Ngày kí gửi : <label id="sold_receivedDate"></label></li>
+                                            <li>Tiền trả khách hàng (Ngàn đồng): <input type="text" id="sold_returnPrice" disabled="disabled"></li>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
-                                        <button class="btn btn-primary" name="btnAction" type="submit" value="pay" onclick="return checkSoldProduct();">Trả tiền</button>
-                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div style="float: right; margin: 0px 5px;">
+                                            <form action="SoldProduct" method="POST">
+                                                <input type="hidden" name="txtReturnPrice" id="sold_returnPrice1" value=""/>
+                                                <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
+                                                <button class="btn btn-primary" name="btnAction" type="submit" value="pay" onclick="return checkSoldProduct();">Trả tiền</button>
+                                                <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
+                                            </form>
+                                        </div>
+                                        <div style="float: right" style="display: none" id="paypal_form">
+                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" onsubmit="loadPaypalInformation();">
+                                                <input type="hidden" name="cmd" value="">
+                                                <input type="hidden" name="business" value="">
+                                                <input type="hidden" name="return" value="">
+                                                <input type="hidden" name="rm" value=""/>
+                                                <input type="hidden" name="item_name" value="">
+                                                <input type="hidden" name="item_number" value="">
+                                                <input type="hidden" name="amount" value="">
+                                                <input type="hidden" name="currency_code" value="">
+                                                <button class="btn btn-primary" type="submit">Thanh toán qua Paypal</button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -736,7 +755,7 @@
                                                                     </div>
                                                                     <div >
                                                                         <span class="btn btn-info btn-file" style="width: 100%">
-                                                                            <input type="file" name="txtImage" onchange="readURL(this);" style="max-width: "/>
+                                                                            <input type="file" accept="image/*" name="avai_txtImage" onchange="readURL1(this);" style="max-width: "/>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -935,7 +954,7 @@
                                                                     </div>
                                                                     <div >
                                                                         <span class="btn btn-info btn-file" style="width: 100%">
-                                                                            <input type="file" name="txtImage" onchange="readURL(this);" style="max-width: "/>
+                                                                            <input type="file" name="onweb_txtImage" onchange="readURL2(this);" style="max-width: "/>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -1084,11 +1103,21 @@
                     });
                     $('#availableModal').modal('show');
                 });
-                function readURL(input) {
+                function readURL1(input) {
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            $('#avai_Image').attr('src', e.target.result);
+                            $('#avai_txtImage').attr('src', e.target.result);
+                        };
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+                ;
+                function readURL2(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#onweb_txtImage').attr('src', e.target.result);
                         };
                         reader.readAsDataURL(input.files[0]);
                     }
@@ -1126,7 +1155,6 @@
                         } else {
                             price = (((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10))).toFixed(0);
                         }
-                        console.log(price);
                         $("#sold_fullName").text(response.name);
                         $("#sold_address").text(response.address);
                         $("#sold_phone").text(response.phone);
@@ -1140,9 +1168,29 @@
                         $("#soldconsignmentID").val(response.consigmentID);
                         $("#sold_returnPrice").val(price);
                         $("#sold_name").val(product.name);
+                        if (typeof response.paypalAccount === "undefined") {
+                            $("#paypal_form").hide();
+                        } else {
+                            $("#paypal_form").show();
+                        }
                     });
                     $('#soldModal').modal('show');
                 });
+                function loadPaypalInformation() {
+                    var consignmentID = $("#soldconsignmentID").val();
+                    var price = $("#sold_returnPrice").val();
+                    $.get('LoadPaypalInformation', function (result) {
+                        $("input[name=cmd]").val(result.cmd);
+                        $("input[name=business]").val(result.business);
+                        $("input[name=return]").val(result.returnURL + "?txtConsignmentID=" + consignmentID + "&txtReturnPrice=" + price);
+                        $("input[name=rm]").val(result.rm);
+                        $("input[name=item_name]").val(result.item_name + consignmentID);
+                        $("input[name=item_number]").val(result.item_number);
+                        $("input[name=currency_code]").val(result.currency_code);
+                        $("input[name=amount]").val(price);
+                    });
+                }
+                ;
                 //end sold modal
                 //start expired modal
                 $(document).on("click", ".expiredModal", function () {
@@ -1198,11 +1246,9 @@
                         var option = "option#onWeb_" + response.categoryID;
                         $(option).attr("selected", "selected");
                         if (response.isSpecial > 0) {
-                            console.log('khong gui gia');
                             $('#sendPriceTrue_2').parent('span').addClass('checked');
                             $('#sendPriceFalse_2').parent('span').removeClass('checked')
                         } else {
-                            console.log('co gui gia');
                             $('#sendPriceTrue_2').parent('span').removeClass('checked')
                             $('#sendPriceFalse_2').parent('span').addClass('checked')
                         }
@@ -1259,10 +1305,12 @@
                         return false;
                     }
                     if (isNaN(price) || price < 0) {
-                        alert('Tiền phạt phải là số dương');
+                        alert('Tiền trả khách hàng phải là số dương');
                         return false;
                     } else {
-                        return true;
+                        $("#sold_returnPrice1").val($("#sold_returnPrice").val());
+                        return false;
+                        //return true;
                     }
                 }
                 function validateSellingPrice()
