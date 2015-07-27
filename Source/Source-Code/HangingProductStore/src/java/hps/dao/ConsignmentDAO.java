@@ -751,6 +751,7 @@ public class ConsignmentDAO {
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat df2 = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
         DateFormat dfHour = new SimpleDateFormat("hh:mm aa");
         //JavaUltilities java = new JavaUltilities();
 
@@ -783,7 +784,7 @@ public class ConsignmentDAO {
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
-            createdDate = df.format(rs.getDate("CreatedDate"));
+            createdDate = df2.format(rs.getTimestamp("CreatedDate"));
         }
         String cancelDate = rs.getString("CancelDate");
         if (cancelDate != null) {

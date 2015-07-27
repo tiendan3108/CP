@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import hps.ultils.AmazonProduct;
 import hps.ultils.JavaUltilities;
-import java.sql.Date;
 import java.text.DateFormat;
 
 /**
@@ -166,7 +165,7 @@ public class DuchcDAO {
             
             
             //stm.setString(15, consigment.getCreatedDate());
-            stm.setDate(15, new Date(System.currentTimeMillis()));
+            stm.setString(15, getCurrentDate());
             
             stm.setInt(16, consigment.getConsignmentStatusID());
             
@@ -625,6 +624,13 @@ public class DuchcDAO {
             }
         }
         return null;
+    }
+    
+    private String getCurrentDate() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.util.Date currentDate = new java.util.Date();
+        return df.format(currentDate);
+
     }
 
 }
