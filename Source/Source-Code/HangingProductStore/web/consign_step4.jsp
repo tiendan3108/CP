@@ -210,7 +210,7 @@
                                                                                                     CHỌN ẢNH </span>
                                                                                                 <span class="fileinput-exists btn">
                                                                                                     THAY ẢNH </span>
-                                                                                                <input  type="file" name="txtImage" value="${PRODUCT.image}" />
+                                                                                                <input  type="file" name="txtImage" accept='image/*' value="${PRODUCT.image}" />
                                                                                             </span>
                                                                                             <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
                                                                                                 XÓA </a>
@@ -230,7 +230,7 @@
                                                                                                     CHỌN ẢNH </span>
                                                                                                 <span class="fileinput-exists btn">
                                                                                                     THAY ẢNH </span>
-                                                                                                <input  type="file" name="txtImage" />
+                                                                                                <input  type="file" name="txtImage" accept='image/*' />
                                                                                             </span>
                                                                                             <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
                                                                                                 XÓA </a>
