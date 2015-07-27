@@ -119,14 +119,9 @@ public class CancelProduct extends HttpServlet {
             //update database
             dao.cancelProduct(consignmentID, status);
             //change url
-            url = GlobalVariables.MANAGERMENT_SERVLET;
-            request.setAttribute("currentTab", "canceled");
+            url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=canceled";
         }
-        if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
-            response.sendRedirect(url);
-        } else {
-            request.getRequestDispatcher(url).forward(request, response);
-        }
+        response.sendRedirect(url);
     }
 
     /**

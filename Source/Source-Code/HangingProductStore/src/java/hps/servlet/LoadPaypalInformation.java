@@ -5,9 +5,8 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
-import hps.dto.AccountDTO;
-import hps.ultils.GlobalVariables;
+import com.google.gson.Gson;
+import hps.ultils.PaypalInformation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,16 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Tien Dan
  */
-@WebServlet(name = "ExtendProduct", urlPatterns = {"/ExtendProduct"})
-public class ExtendProduct extends HttpServlet {
-
-    private static final int period = 30;
+@WebServlet(name = "LoadPaypalInformation", urlPatterns = {"/LoadPaypalInformation"})
+public class LoadPaypalInformation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,34 +36,11 @@ public class ExtendProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            AccountDTO user = null;
-            if (session != null) {
-                user = (AccountDTO) session.getAttribute("ACCOUNT");
-            }
-            String url = "";
-            if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-            } else {
-                DanqtDAO dao = new DanqtDAO();
-                String action = request.getParameter("btnAction");
-                if (action != null) {
-                    if (action.equals("receive")) {
-                        String consignmentID = request.getParameter("txtConsignmentID");
-                        String tempExpiredFee = request.getParameter("txtExpiredFee");
-                        float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
-                        dao.ExtendProduct(consignmentID, expiredFee);
-                    }
-                    if (action.equals("extend")) {
-                        String consignmentID = request.getParameter("txtConsignmentID");
-                        dao.ExtendProduct(consignmentID, period);
-                    }
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired";
-                } else {
-                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
-                }
-            }
-            response.sendRedirect(url);
+            PaypalInformation infor = new PaypalInformation();
+            String json = new Gson().toJson(infor);
+            System.out.println(json);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(json);
         }
     }
 

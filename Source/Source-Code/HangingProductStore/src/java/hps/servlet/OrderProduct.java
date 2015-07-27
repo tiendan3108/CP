@@ -66,7 +66,7 @@ public class OrderProduct extends HttpServlet {
                     AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
                     listCustomer = dao.getListOrderedCustomer(orderID, true);
                     dao.changeProductStatus(orderID, sellingPrice);
-                    if (consignor.getPhone() != null &&!consignor.getPhone().equals("")) {
+                    if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         try {
                             ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
                         } catch (TwilioRestException ex) {
@@ -75,7 +75,7 @@ public class OrderProduct extends HttpServlet {
                             Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                    if (consignor.getEmail() != null &&!consignor.getEmail().equals("")) {
+                    if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
                         ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
                     }
                 }
@@ -106,7 +106,7 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-                
+
                 if (listCustomer != null && !listCustomer.isEmpty()) {
                     for (OrderDTO order : listCustomer) {
                         if (order.getPhone() != null && !order.getPhone().equals("")) {
@@ -123,15 +123,9 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-                
-                url = GlobalVariables.MANAGERMENT_SERVLET;
-                request.setAttribute("currentTab", "ordered");
+                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered";
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
-                response.sendRedirect(url);
-            } else {
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+            response.sendRedirect(url);
         }
     }
 

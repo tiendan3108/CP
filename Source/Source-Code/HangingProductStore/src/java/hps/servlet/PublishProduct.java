@@ -165,15 +165,10 @@ public class PublishProduct extends HttpServlet {
                         season.add("4");
                     }
                     dao.publishOnWeb(product, season);
-                    url = GlobalVariables.MANAGERMENT_SERVLET;
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action;
                 }
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
-                response.sendRedirect(url);
-            } else {
-                request.setAttribute("currentTab", action);
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+            response.sendRedirect(url);
         }
     }
 

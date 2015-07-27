@@ -544,7 +544,7 @@
                                             </form>
                                         </div>
                                         <div style="float: right" style="display: none" id="paypal_form">
-                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" onsubmit="loadPaypalInformation();">
+                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="POST">
                                                 <input type="hidden" name="cmd" value="">
                                                 <input type="hidden" name="business" value="">
                                                 <input type="hidden" name="return" value="">
@@ -1147,6 +1147,19 @@
                 //start sold modal
                 $(document).on("click", ".soldModal", function () {
                     var productID = $(this).data('id');
+                    $("#sold_fullName").text("");
+                    $("#sold_address").text("");
+                    $("#sold_phone").text("");
+                    $("#sold_email").text("");
+                    $("#sold_productName").text("");
+                    $("#sold_consignmentID").text("");
+                    $("#sold_negotiatedPrice").text("");
+                    $("#sold_sellingPrice").text("");
+                    $("#sold_receivedDate").text("");
+                    $("#sold_paypalAccount").text("");
+                    $("#soldconsignmentID").val("");
+                    $("#sold_returnPrice").val("");
+                    $("#sold_name").val("");
                     $.get('LoadSoldProduct', {productID: productID}, function (response) {
                         var product = response.product;
                         var price;
@@ -1171,6 +1184,7 @@
                         if (typeof response.paypalAccount === "undefined") {
                             $("#paypal_form").hide();
                         } else {
+                            loadPaypalInformation();
                             $("#paypal_form").show();
                         }
                     });
@@ -1187,7 +1201,7 @@
                         $("input[name=item_name]").val(result.item_name + consignmentID);
                         $("input[name=item_number]").val(result.item_number);
                         $("input[name=currency_code]").val(result.currency_code);
-                        $("input[name=amount]").val(price);
+                        $("input[name=amount]").val((price * 1000 / result.exchangeRate).toFixed(2));
                     });
                 }
                 ;

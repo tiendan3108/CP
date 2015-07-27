@@ -49,17 +49,12 @@ public class SoldProduct extends HttpServlet {
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
                 String tmp_returnPrice = request.getParameter("txtReturnPrice");
-                float returnPrice = Float.parseFloat(tmp_returnPrice)*1000;
+                float returnPrice = Float.parseFloat(tmp_returnPrice) * 1000;
                 DanqtDAO dao = new DanqtDAO();
                 dao.soldProduct(consignmentID, returnPrice);
-                url = GlobalVariables.MANAGERMENT_SERVLET;
-                request.setAttribute("currentTab", "sold");
+                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold";
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
-                response.sendRedirect(url);
-            } else {
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+            response.sendRedirect(url);
         }
     }
 
