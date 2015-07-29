@@ -326,17 +326,20 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             }
 
             if (currentTab.equals("request")) {
-                List<ConsignmentDTO> c_request = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                //List<ConsignmentDTO> c_request = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
+                List<ConsignmentDTO> c_request = consignmentDAO.getListNewRequestByStoreOwnerID(storeOwner.getRoleID());
                 request.setAttribute("REQUEST", c_request);
             } else if (currentTab.equals("accepted")) {
-                List<ConsignmentDTO> c_accept = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                //List<ConsignmentDTO> c_accept = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_ACCEPTED);
+                List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDIsTakenByStore(storeOwner.getRoleID(), true);
                 request.setAttribute("ACCEPT", c_accept);
             } else if (currentTab.equals("refuse")) {
-                List<ConsignmentDTO> c_refuse = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                //List<ConsignmentDTO> c_refuse = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(storeOwner.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
+                List<ConsignmentDTO> c_refuse = consignmentDAO.getListRefusedRequestByStoreOwnerID(storeOwner.getRoleID());
                 request.setAttribute("REFUSE", c_refuse);
 
             } else if (currentTab.equals("cancel")) {
-                List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledrequestByStoreOwnerID(storeOwner.getRoleID());
+                List<ConsignmentDTO> c_cancel = consignmentDAO.getListCanceledRequestByStoreOwnerID(storeOwner.getRoleID());
                 request.setAttribute("CANCEL", c_cancel);
             }
 

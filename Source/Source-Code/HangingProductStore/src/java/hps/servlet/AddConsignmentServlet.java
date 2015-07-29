@@ -243,10 +243,9 @@ public class AddConsignmentServlet extends HttpServlet {
                 if (result) {
                     ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                     CategoryDAO categoryDAO = new CategoryDAO();
-                    //List<ConsignmentDTO> c_request = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_WAITING);
-                    List<ConsignmentDTO> c_accept = consignmentDAO.findRequestByStoreOwnerIDProductNameAndStatus(account.getRoleID(), searchValue, GlobalVariables.CONSIGNMENT_ACCEPTED);
-//                    List<ConsignmentDTO> c_refuse = consignmentDAO.findConsignmentByStoreOwnerIDProductNameAndStatus(account.getRoleID(), "", GlobalVariables.CONSIGNMENT_REFUSE);
-//                    List<ConsignmentDTO> c_cancel = consignmentDAO.getCanceledConsignmentByStoreOwnerID(account.getRoleID());
+
+                    List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDIsTakenByStore(account.getRoleID(), true);
+
                     //request.setAttribute("REQUEST", c_request);
                     request.setAttribute("ACCEPT", c_accept);
 //                    request.setAttribute("REFUSE", c_refuse);

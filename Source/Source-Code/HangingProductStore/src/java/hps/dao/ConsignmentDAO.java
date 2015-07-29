@@ -226,22 +226,150 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> findRequestByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
+//    public List<ConsignmentDTO> findRequestByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
+//        Connection con = null;
+//        PreparedStatement stm = null;
+//        ResultSet rs = null;
+//        List<ConsignmentDTO> result = null;
+//        try {
+//            con = DBUltilities.makeConnection();
+//            String sql = "SELECT *"
+//                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
+//                    + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
+//                    + " AND P.ProductStatusID = 1 "
+//                    + " ORDER BY C.CreatedDate DESC";
+//            stm = con.prepareStatement(sql);
+//            stm.setInt(1, status);
+//            stm.setInt(2, storeOwnerID);
+//            stm.setString(3, "%" + productName + "%");
+//
+//            rs = stm.executeQuery();
+//            result = new ArrayList<>();
+//            while (rs.next()) {
+//                ConsignmentDTO consignment = getConsignment(rs);
+//                populateProduct(consignment);
+//                result.add(consignment);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (stm != null) {
+//                    stm.close();
+//                }
+//                if (con != null) {
+//                    con.close();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        return result;
+//    }
+    
+    public List<ConsignmentDTO> getListNewRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<ConsignmentDTO> result = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT *"
-                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
-                    + " AND P.ProductStatusID = 1 "
-                    + " ORDER BY C.CreatedDate DESC";
+            String sql = "SELECT C.*"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID "
+                    + " WHERE C.ConsignmentStatusID = 1 AND P.ProductStatusID = 1 "
+                    + " AND C.StoreOwnerID = ? "
+                    + " ORDER BY C.CreatedDate DESC, C.FromDate ASC, C.ToDate ASC";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, status);
-            stm.setInt(2, storeOwnerID);
-            stm.setString(3, "%" + productName + "%");
+            stm.setInt(1, storeOwnerID);
+
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                ConsignmentDTO consignment = getConsignment(rs);
+                populateProduct(consignment);
+                result.add(consignment);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+    
+    public List<ConsignmentDTO> getListAcceptedRequestByStoreOwnerIDIsTakenByStore(int storeOwnerID, boolean isTakenByStore) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ConsignmentDTO> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT C.*"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID "
+                    + " WHERE C.ConsignmentStatusID = 3 AND P.ProductStatusID = 1 "
+                    + " AND C.StoreOwnerID = ?  "
+                    //+ " AND C.IsTakenByStore = ? "
+                    + " ORDER BY C.ReviewRequestDate DESC, C.AppointmentDate ASC, C.CreatedDate DESC";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, storeOwnerID);
+            //stm.setBoolean(2, isTakenByStore);
+
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                ConsignmentDTO consignment = getConsignment(rs);
+                populateProduct(consignment);
+                result.add(consignment);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+    
+    public List<ConsignmentDTO> getListRefusedRequestByStoreOwnerID(int storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ConsignmentDTO> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT C.*"
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID "
+                    + " WHERE C.ConsignmentStatusID = 2 AND P.ProductStatusID = 1 "
+                    + " AND C.StoreOwnerID = ? "
+                    + " ORDER BY C.ReviewProductDate DESC, C.ReviewRequestDate DESC, C.CreatedDate DESC";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, storeOwnerID);
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -270,17 +398,17 @@ public class ConsignmentDAO {
         return result;
     }
 
-    public List<ConsignmentDTO> getCanceledrequestByStoreOwnerID(int storeOwnerID) {
+    public List<ConsignmentDTO> getListCanceledRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<ConsignmentDTO> result = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT *"
+            String sql = "SELECT C.*"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
                     + " WHERE (C.ConsignmentStatusID = 1 OR C.ConsignmentStatusID = 3) AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
-                    + " ORDER BY C.CancelDate DESC";
+                    + " ORDER BY C.CancelDate DESC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
 
@@ -781,7 +909,7 @@ public class ConsignmentDAO {
 
         String reviewProductDate = rs.getString("ReviewProductDate");
         if (reviewProductDate != null) {
-            reviewProductDate = df.format(rs.getDate("ReviewProductDate"));
+            reviewProductDate = df2.format(rs.getTimestamp("ReviewProductDate"));
         }
         String createdDate = rs.getString("CreatedDate");
         if (createdDate != null) {
@@ -800,7 +928,7 @@ public class ConsignmentDAO {
 
         String reviewRequestDate = rs.getString("ReviewRequestDate");
         if (reviewRequestDate != null) {
-            reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
+            reviewRequestDate = df2.format(rs.getTimestamp("ReviewRequestDate"));
         }
         
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");

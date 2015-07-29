@@ -298,7 +298,7 @@
                                                     Mã ký gửi
                                                 </th>
                                                 <th>
-                                                    Ngày tạo yêu cầu
+                                                    Ngày duyệt yêu cầu
                                                 </th>
                                                 <th>
                                                     Giá (Ngàn đồng)
@@ -323,7 +323,7 @@
                                                         ${c.consigmentID}
                                                     </td>
                                                     <td>
-                                                        ${c.createdDate}
+                                                        ${c.reviewRequestDate}
 
                                                     </td>
                                                     <td>
@@ -1446,7 +1446,7 @@
                             $("#ar_footer").hide();
                             $("#ar_price").hide();
                             $("#r_btnAction").val("r_accept");
-                            $("#r_receivedDate").val(data.fromDate);
+                            $("#r_receivedDate").val(getCurrentDate());
 
                             $("#r_divFromDateToDate").show();
 
@@ -1744,6 +1744,20 @@
                 return  p.split("").reverse().reduce(function (acc, num, i, orig) {
                     return  num + (i && !(i % 3) ? "," : "") + acc;
                 }, "");
+            }
+
+            function getCurrentDate() {
+                var d = new Date(),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+
+                if (month.length < 2)
+                    month = '0' + month;
+                if (day.length < 2)
+                    day = '0' + day;
+
+                return [day, month, year].join('-');
             }
 
             $('#btnAddConsignment').click(function () {
