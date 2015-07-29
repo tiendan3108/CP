@@ -40,7 +40,7 @@ public class ConsignmentDAO {
             if (rs.next()) {
                 result = getConsignment(rs);
                 populateProduct(result);
-                populateStoreOwner(result);
+                //populateStoreOwner(result);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -587,7 +587,7 @@ public class ConsignmentDAO {
 //        return false;
 //    }
     public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address, 
-            String phone, String email, String paypalAccount, String appointmentDate,
+            String phone, String email, String paypalAccount, String appointmentDate, boolean isTakenByStore,
             String productName, int categoryID, String brand, String description, int isSpecial) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -595,7 +595,7 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "UPDATE Consignment "
                     + " SET FullName = ?, Address = ?, Phone = ?, Email = ?, PaypalAccount = ?, "
-                    + " AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ? "
+                    + " AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?, IsTakenByStore = ? "
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setString(1, fullName);
@@ -621,7 +621,8 @@ public class ConsignmentDAO {
             stm.setString(6, appointmentDate);
             stm.setString(7, getCurrentDate());
             stm.setInt(8, GlobalVariables.CONSIGNMENT_ACCEPTED);
-            stm.setString(9, consignmentID);
+            stm.setBoolean(9, isTakenByStore);
+            stm.setString(10, consignmentID);
 
             int result = stm.executeUpdate();
             if (result > 0) {
@@ -801,9 +802,12 @@ public class ConsignmentDAO {
         if (reviewRequestDate != null) {
             reviewRequestDate = df.format(rs.getDate("ReviewRequestDate"));
         }
-
+        
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
+        boolean isTakenByStore = rs.getInt("IsTakenByStore") > 0;
+        
+        
         ConsignmentDTO consignment = new ConsignmentDTO();
         consignment.setConsigmentID(consignmentID);
         consignment.setProductID(productID);
@@ -837,6 +841,7 @@ public class ConsignmentDAO {
         consignment.setReason(reason);
         consignment.setNegotiatedPrice(negotiatedPrice);
 
+        consignment.setIsTakenByStore(isTakenByStore);
         return consignment;
     }
 

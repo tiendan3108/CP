@@ -112,8 +112,8 @@
                                                                 </div>
 
 
-                                                                <c:set var="fCate" value="${sessionScope.FCATE}" />
-                                                                <c:set var="category" value="${sessionScope.CATEGORY}" />
+                                                                <c:set var="fCate" value="${FCATE}" />
+                                                                <c:set var="category" value="${CATEGORY}" />
 
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Loại <font color="red">*</font></label>

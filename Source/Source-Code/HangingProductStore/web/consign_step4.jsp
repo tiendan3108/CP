@@ -258,17 +258,19 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-<!--                                                                    <div class="form-group">
-                                                                        <label class="control-label col-md-4 col-sm-4">Giờ hẹn</label>
-                                                                        <div class="col-md-4 col-sm-4">
-                                                                            <div class="input-group">
-                                                                                <input id="txtHour" name="txtHour" type="text" class="form-control timepicker timepicker-no-seconds" value="12:00 PM">
-                                                                                <span class="input-group-btn">
-                                                                                    <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
-                                                                                </span>
-                                                                            </div>
+                                                                    
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 col-sm-4">Cách giao hàng</label>
+                                                                        <div class="col-md-8 col-sm-8">
+                                                                            <label class="radio-inline">
+                                                                                    <input type="radio" name="rdIsTakenByStore" value="customer" checked>Tự mang đến</label>
+                                                                                <label class="radio-inline">
+                                                                                    <input type="radio" name="rdIsTakenByStore" value="store">Cửa hàng đến nhận</label>
+
+                                                                            <span class="help-block" id="erIsTakenByStore">
+                                                                            </span>
                                                                         </div>
-                                                                    </div>-->
+                                                                    </div>
 
                                                                     <div class="form-group">
                                                                         <div id="map-canvas"></div>

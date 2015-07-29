@@ -51,7 +51,8 @@ public class ConsignmentDTO implements Serializable {
     private String reason;
     private float negotiatedPrice;
     private String appointmentDate;
-    private String hour;
+    private String hour; //for appointmentDate 
+    private boolean isTakenByStore; // add on 28/7/2015
     // duchc - end
 
     // No Argument Constructor
@@ -400,5 +401,15 @@ public class ConsignmentDTO implements Serializable {
     public void setReviewRequestDate(String reviewRequestDate) {
         this.reviewRequestDate = reviewRequestDate;
     }
+
+    public boolean isIsTakenByStore() {
+        return isTakenByStore;
+    }
+
+    public void setIsTakenByStore(boolean isTakenByStore) {
+        this.isTakenByStore = isTakenByStore;
+    }
+    
+    
 
 }

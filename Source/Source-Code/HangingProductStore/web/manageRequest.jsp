@@ -259,7 +259,7 @@
                                                     </td>
                                                     <td align="center">
 
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequestAccept"
+                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
                                                                 name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                     </td>
@@ -347,7 +347,7 @@
                                                     </td>
                                                     <td align="center">
 
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRequestAccept"
+                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
                                                                 name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                     </td>
@@ -628,7 +628,7 @@
                                                 <td id="r_fromDateToDate"></td>
                                             </tr>
                                             <tr>
-                                                <th>Ngày lấy hàng</th>
+                                                <th>Ngày giao hàng</th>
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
@@ -654,6 +654,15 @@
 
                                                 </td>
 
+                                            </tr>
+                                            <tr>
+                                                <th>Cách giao hàng</th>
+                                                <td>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="r_rdIsTakenByStore" value="customer" checked>Tự mang đến</label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="r_rdIsTakenByStore" value="store">Cửa hàng đến nhận</label>
+                                                </td>
                                             </tr>
 
                                             <tr >
@@ -1394,6 +1403,14 @@
                     //$("#r_phone").html("0" + data.phone.substring(3));
                     //$("#r_address").html(data.address);
                     $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);
+
+                    if (data.isTakenByStore) {
+                        $("input[name='r_rdIsTakenByStore'][value='store']").attr("checked", true).parent().addClass("checked");
+                        $("input[name='r_rdIsTakenByStore'][value='customer']").attr("checked", false).parent().removeClass("checked");
+                    } else {
+                        $("input[name='r_rdIsTakenByStore'][value='customer']").attr("checked", true).parent().addClass("checked");
+                        $("input[name='r_rdIsTakenByStore'][value='store']").attr("checked", false).parent().removeClass("checked");
+                    }
                     //$("#r_hour").val(data.hour);
 
                     if (data.minPrice > 0 && data.maxPrice > 0) {
@@ -1526,6 +1543,8 @@
 
                     }
                 });
+
+                $("#modalRequestAccept").modal("show");
             }
 
             $('button[name="requestAcceptDetails"]').click(function () {
@@ -1588,6 +1607,7 @@
                 }
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
+                        updateRequest();
                         $('form#r_form').submit();
                     } else {
                         alert("Xin nhập đúng giá thỏa thuận!");
@@ -1619,9 +1639,10 @@
                         check = false;
                     }
                 }
-                
+
                 if (check) {
                     updateRequest();
+                    alert("Cập nhật thành công");
                 } else {
                     alert("Xin nhập đầy đủ thông tin");
                 }
@@ -1648,11 +1669,12 @@
                 if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
                     paypalAccount = "";
                 }
+                var isTakenByStore = $("input[name='r_rdIsTakenByStore']:checked").val();
 
                 $.get('ConsignmentRequestReceive',
                         {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName,
                             categoryID: categoryID, brand: brand, description: description,
-                            receivedDate: receivedDate, hour: hour, isSpecial: isSpecial,
+                            receivedDate: receivedDate, hour: hour, isTakenByStore: isTakenByStore, isSpecial: isSpecial,
                             fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
                 function (data) {
                     if (data) {
@@ -1660,9 +1682,9 @@
                         consignmentTD.prev().html(productName);
                         consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
                         $("#r_name").html("<small>Khách hàng: </small> " + fullName);
-                        alert("Cập nhật thành công");
+                        return true;
                     } else {
-                        alert("Cập nhật thất bại");
+                        return false;
                     }
                 });
             }

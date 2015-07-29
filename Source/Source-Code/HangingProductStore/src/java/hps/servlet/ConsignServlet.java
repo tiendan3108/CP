@@ -70,13 +70,12 @@ public class ConsignServlet extends HttpServlet {
             double basicPrice = 0;
             if (action.equals("backstep1")) {
 
-                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
-                    CategoryDAO cateDao = new CategoryDAO();
-                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
-                    List<CategoryDTO> category = cateDao.getAllCategory();
-                    session.setAttribute("FCATE", parentCategories);
-                    session.setAttribute("CATEGORY", category);
-                }
+                CategoryDAO cateDao = new CategoryDAO();
+                List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                List<CategoryDTO> category = cateDao.getAllCategory();
+                request.setAttribute("FCATE", parentCategories);
+                request.setAttribute("CATEGORY", category);
+
                 url = STEP1;
             }
             if (action.equals("backstep2")) {
@@ -92,13 +91,13 @@ public class ConsignServlet extends HttpServlet {
 
             if (action.equals("consign")) {
 
-                if (session.getAttribute("FCATE") == null || session.getAttribute("CATEGORY") == null) {
+                
                     CategoryDAO cateDao = new CategoryDAO();
                     List<CategoryDTO> parentCategories = cateDao.getParentCategory();
                     List<CategoryDTO> category = cateDao.getAllCategory();
-                    session.setAttribute("FCATE", parentCategories);
-                    session.setAttribute("CATEGORY", category);
-                }
+                    request.setAttribute("FCATE", parentCategories);
+                    request.setAttribute("CATEGORY", category);
+                
                 url = STEP1;
             }
             if (action.equals("tostep2")) {
@@ -226,8 +225,6 @@ public class ConsignServlet extends HttpServlet {
                         session.removeAttribute("BASICPRICE");
                         session.removeAttribute("STORE");
                         session.removeAttribute("STORELIST");
-                        session.removeAttribute("FCATE");
-                        session.removeAttribute("CATEGORY");
                         session.removeAttribute("ASIN");
                         session.removeAttribute("AMAZONLIST");
 

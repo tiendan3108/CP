@@ -126,9 +126,14 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     if (paymentMethod.equals("direct")) {
                         paypalAccount = "";
                     }
+                    
+                    boolean isTakenByStore = false;
+                    if(request.getParameter("r_rdIsTakenByStore").equals("store")){
+                        isTakenByStore = true;
+                    }
 
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
+                    consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, isTakenByStore, productName, categoryID, brand, description, isSpecial);
 
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     java.util.Date currentDate = new java.util.Date();
@@ -305,9 +310,13 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String phone = "+84" + request.getParameter("phone").substring(1);
                     String email = request.getParameter("email");
                     String paypalAccount = request.getParameter("paypalAccount");
-
+                    
+                    boolean isTakenByStore = false;
+                    if(request.getParameter("isTakenByStore").equals("store")){
+                        isTakenByStore = true;
+                    }
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, productName, categoryID, brand, description, isSpecial);
+                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, isTakenByStore, productName, categoryID, brand, description, isSpecial);
 
                     String json = new Gson().toJson(result);
                     response.setContentType("application/json;charset=UTF-8");

@@ -238,6 +238,7 @@ public class AddConsignmentServlet extends HttpServlet {
                         address, phone, email, paypalAccount, currentDate, currentDate, 30, minPrice, maxPrice, currentDate, 5);
                 consignment.setReviewProductDate(currentDate);
                 consignment.setNegotiatedPrice(negotiatedPrice);
+                consignment.setIsTakenByStore(true);
                 boolean result = dao.addConsigment(consignment);
                 if (result) {
                     ConsignmentDAO consignmentDAO = new ConsignmentDAO();

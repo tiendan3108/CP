@@ -78,11 +78,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String email = "";
                 String paypalAccount = "";
                 String paymentMethod = "";
+                boolean isTakenByStore = false;
 
                 JavaUltilities ulti = new JavaUltilities();
 
                 //tạo ID cho consigment và dùng cho product Image thêm đa dạng
-                String consigmentID = ulti.randomString(10);
+                String consignmentID = ulti.randomString(10);
 
                 //For parsing request with image
                 List<FileItem> items = null;
@@ -105,12 +106,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "txtFromDate":
                                 fromDate = item.getString().trim();
-                                //fromDate = formatDate(fromDate);
+                                fromDate = formatDate(fromDate);
 
                                 break;
                             case "txtToDate":
                                 toDate = item.getString().trim();
-                                //toDate = formatDate(toDate);
+                                toDate = formatDate(toDate);
 
                                 break;
 //                            case "txtHour":
@@ -134,6 +135,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 break;
                             case "rdPayment":
                                 paymentMethod = item.getString().trim();
+                                break;
+                                case "rdIsTakenByStore":
+                                String takenByStore = item.getString().trim();
+                                if(takenByStore.equals("store")){
+                                    isTakenByStore = true;
+                                }
                                 break;
                             default:
                                 break;
@@ -161,7 +168,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 //if file is uploaded from pc
                                 in = item.getInputStream();
                             }
-                            filename = consigmentID + "_" + filename.replaceAll("[!@#$%^&*?,;/'\" ]", "_");
+                            filename = consignmentID + "_" + filename.replaceAll("[!@#$%^&*?,;/'\" ]", "_");
                             System.out.println("File name after: " + filename);
 
                             //item.write(file); // Write to base place
@@ -225,26 +232,24 @@ public class ConsignCompleteServlet extends HttpServlet {
                         minPrice = Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
                     }
                     // Set created date
-                    Date date = new Date();
-                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-                    String createdDate = dateFormat.format(date);
-
-                    fromDate = formatDate(fromDate);
-                    toDate = formatDate(toDate);
+//                    Date date = new Date();
+//                    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+//                    String createdDate = dateFormat.format(date);
 
                     //set if user choose to paypal account
                     if (paymentMethod.equals("direct")) {
                         paypalAccount = "";
                     }
 
-                    ConsignmentDTO consignment = new ConsignmentDTO(consigmentID, productID, memberID, storeOwnerID, fullName,
-                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, createdDate, 1);
-
+                    ConsignmentDTO consignment = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName,
+                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
+                    consignment.setIsTakenByStore(isTakenByStore);
+                    
                     boolean result = dao.addConsigment(consignment);
                     if (result) {
                         JavaUltilities ultil = new JavaUltilities();
                         String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
-                                + "Mã sản phẩm của bạn là: " + consigmentID + ". \n"
+                                + "Mã sản phẩm của bạn là: " + consignmentID + ". \n"
                                 + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";
                         //send sms and email
                         if (!phone.isEmpty()) {
@@ -272,8 +277,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                         session.removeAttribute("BASICPRICE");
                         session.removeAttribute("STORE");
                         session.removeAttribute("STORELIST");
-                        session.removeAttribute("FCATE");
-                        session.removeAttribute("CATEGORY");
                         session.removeAttribute("ASIN");
                         session.removeAttribute("AMAZONLIST");
                     } else {

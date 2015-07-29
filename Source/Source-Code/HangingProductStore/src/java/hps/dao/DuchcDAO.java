@@ -38,9 +38,9 @@ public class DuchcDAO {
         try {
             con = DBUltilities.makeConnection();
             // add Consigment Values
-            String query = "INSERT INTO Product(ProductName, SerialNumber, PurchasedDate, CategoryID, Brand, Description, "
-                    + " Image, ProductStatusID)\n"
-                    + " VALUES(?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO Product(ProductName, SerialNumber, PurchasedDate, CategoryID, Brand, "
+                    + "Description, Image, ProductStatusID, IsSpecial) "
+                    + " VALUES(?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 //            stm = con.prepareStatement(query);
             stm.setString(1, product.getName());
@@ -70,6 +70,8 @@ public class DuchcDAO {
             stm.setString(7, product.getImage());
 
             stm.setInt(8, product.getProductStatusID());
+            
+            stm.setInt(9, product.getIsSpecial());
 
             int result = stm.executeUpdate();
             if (result > 0) {
@@ -110,9 +112,9 @@ public class DuchcDAO {
             con = DBUltilities.makeConnection();
             // add Consigment Values
             String query = "INSERT INTO Consignment(ConsignmentID, ProductID, MemberID, StoreOwnerID, FullName, Address,"
-                    + " Phone, Email, PaypalAccount,\n"
-                    + "                     FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, ConsignmentStatusID, ReviewProductDate, NegotiatedPrice, AppointmentDate, ReviewRequestDate)\n"
-                    + "                     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + " Phone, Email, PaypalAccount, FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, "
+                    + " ConsignmentStatusID, ReviewProductDate, NegotiatedPrice, AppointmentDate, ReviewRequestDate, IsTakenByStore) "
+                    + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query);
             stm.setString(1, consigment.getConsigmentID());
             stm.setInt(2, consigment.getProductID());
@@ -191,6 +193,8 @@ public class DuchcDAO {
             }else{
                 stm.setNull(20, java.sql.Types.DATE);
             }
+            
+            stm.setBoolean(21, consigment.isIsTakenByStore());
             
             
             int result = stm.executeUpdate();

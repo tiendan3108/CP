@@ -79,6 +79,7 @@ public class TrackProductStatusServlet extends HttpServlet {
                 String searchValue = request.getParameter("searchValue");
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 if (consignment != null) {
+                    dao.populateStoreOwner(consignment);
                     consignment.setPhone("0" + consignment.getPhone().substring(3));
                 }
 
@@ -123,6 +124,7 @@ public class TrackProductStatusServlet extends HttpServlet {
             } else if (action.equals("requestdetails")) {
                 String consignmentID = request.getParameter("id");
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
+                dao.populateStoreOwner(consignment);
                 String json = new Gson().toJson(consignment);
                 response.setContentType("application/json;charset=UTF-8");
                 response.getWriter().write(json);
