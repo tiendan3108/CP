@@ -32,6 +32,9 @@ public class ConsignmentDTO implements Serializable {
     //danqt start change receivedDate to reviewProductDate, add reviewRequestDate
     private String reviewProductDate;
     private String reviewRequestDate;
+    private String agreeCancelDate;
+    private String returnDate;
+    private String receivedDate;
     //danqt end
     private String createdDate;
 
@@ -409,7 +412,47 @@ public class ConsignmentDTO implements Serializable {
     public void setIsTakenByStore(boolean isTakenByStore) {
         this.isTakenByStore = isTakenByStore;
     }
-    
-    
+
+    /**
+     * @return the agreeCancelDate
+     */
+    public String getAgreeCancelDate() {
+        return agreeCancelDate;
+    }
+
+    /**
+     * @param agreeCancelDate the agreeCancelDate to set
+     */
+    public void setAgreeCancelDate(String agreeCancelDate) {
+        this.agreeCancelDate = agreeCancelDate;
+    }
+
+    /**
+     * @return the returnDate
+     */
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    /**
+     * @param returnDate the returnDate to set
+     */
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    /**
+     * @return the receivedDate
+     */
+    public String getReceivedDate() {
+        return receivedDate;
+    }
+
+    /**
+     * @param receivedDate the receivedDate to set
+     */
+    public void setReceivedDate(String receivedDate) {
+        this.receivedDate = receivedDate;
+    }
 
 }
