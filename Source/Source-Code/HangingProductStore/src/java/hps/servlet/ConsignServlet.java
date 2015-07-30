@@ -81,6 +81,11 @@ public class ConsignServlet extends HttpServlet {
             if (action.equals("backstep2")) {
                 if (session.getAttribute("AMAZONLIST") == null) {
                     url = STEP1;
+                    CategoryDAO cateDao = new CategoryDAO();
+                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                    List<CategoryDTO> category = cateDao.getAllCategory();
+                    request.setAttribute("FCATE", parentCategories);
+                    request.setAttribute("CATEGORY", category);
                 } else {
                     url = STEP2;
                 }
@@ -91,13 +96,12 @@ public class ConsignServlet extends HttpServlet {
 
             if (action.equals("consign")) {
 
-                
-                    CategoryDAO cateDao = new CategoryDAO();
-                    List<CategoryDTO> parentCategories = cateDao.getParentCategory();
-                    List<CategoryDTO> category = cateDao.getAllCategory();
-                    request.setAttribute("FCATE", parentCategories);
-                    request.setAttribute("CATEGORY", category);
-                
+                CategoryDAO cateDao = new CategoryDAO();
+                List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                List<CategoryDTO> category = cateDao.getAllCategory();
+                request.setAttribute("FCATE", parentCategories);
+                request.setAttribute("CATEGORY", category);
+
                 url = STEP1;
             }
             if (action.equals("tostep2")) {

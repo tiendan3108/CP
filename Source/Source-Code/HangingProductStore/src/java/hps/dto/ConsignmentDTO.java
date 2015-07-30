@@ -55,7 +55,7 @@ public class ConsignmentDTO implements Serializable {
     private float negotiatedPrice;
     private String appointmentDate;
     private String hour; //for appointmentDate 
-    private boolean isTakenByStore; // add on 28/7/2015
+    private int deliveryMethod; // add on 28/7/2015
     // duchc - end
 
     // No Argument Constructor
@@ -405,12 +405,12 @@ public class ConsignmentDTO implements Serializable {
         this.reviewRequestDate = reviewRequestDate;
     }
 
-    public boolean isIsTakenByStore() {
-        return isTakenByStore;
+    public int getDeliveryMethod() {
+        return deliveryMethod;
     }
 
-    public void setIsTakenByStore(boolean isTakenByStore) {
-        this.isTakenByStore = isTakenByStore;
+    public void setDeliveryMethod(int deliveryMethod) {
+        this.deliveryMethod = deliveryMethod;
     }
 
     /**
@@ -419,7 +419,7 @@ public class ConsignmentDTO implements Serializable {
     public String getAgreeCancelDate() {
         return agreeCancelDate;
     }
-
+    
     /**
      * @param agreeCancelDate the agreeCancelDate to set
      */
@@ -432,7 +432,7 @@ public class ConsignmentDTO implements Serializable {
      */
     public String getReturnDate() {
         return returnDate;
-    }
+}
 
     /**
      * @param returnDate the returnDate to set

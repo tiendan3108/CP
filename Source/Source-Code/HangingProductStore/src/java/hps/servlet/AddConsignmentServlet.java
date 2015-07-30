@@ -238,13 +238,13 @@ public class AddConsignmentServlet extends HttpServlet {
                         address, phone, email, paypalAccount, currentDate, currentDate, 30, minPrice, maxPrice, currentDate, 5);
                 consignment.setReviewProductDate(currentDate);
                 consignment.setNegotiatedPrice(negotiatedPrice);
-                consignment.setIsTakenByStore(true);
+                consignment.setDeliveryMethod(0);
                 boolean result = dao.addConsigment(consignment);
                 if (result) {
                     ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                     CategoryDAO categoryDAO = new CategoryDAO();
 
-                    List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDIsTakenByStore(account.getRoleID(), true);
+                    List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDDeliveryMethod(account.getRoleID(), 0);
 
                     //request.setAttribute("REQUEST", c_request);
                     request.setAttribute("ACCEPT", c_accept);

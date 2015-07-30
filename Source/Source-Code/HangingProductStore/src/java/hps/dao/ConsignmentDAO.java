@@ -312,7 +312,7 @@ public class ConsignmentDAO {
         return result;
     }
     
-    public List<ConsignmentDTO> getListAcceptedRequestByStoreOwnerIDIsTakenByStore(int storeOwnerID, boolean isTakenByStore) {
+    public List<ConsignmentDTO> getListAcceptedRequestByStoreOwnerIDDeliveryMethod(int storeOwnerID, int deliveryMethod) {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -323,11 +323,11 @@ public class ConsignmentDAO {
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID "
                     + " WHERE C.ConsignmentStatusID = 3 AND P.ProductStatusID = 1 "
                     + " AND C.StoreOwnerID = ?  "
-                    //+ " AND C.IsTakenByStore = ? "
+                    //+ " AND C.DeliveryMethod = ? "
                     + " ORDER BY C.ReviewRequestDate DESC, C.AppointmentDate ASC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
-            //stm.setBoolean(2, isTakenByStore);
+            //stm.setInt(2, deliveryMethod);
 
             rs = stm.executeQuery();
             result = new ArrayList<>();
@@ -715,7 +715,7 @@ public class ConsignmentDAO {
 //        return false;
 //    }
     public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address, 
-            String phone, String email, String paypalAccount, String appointmentDate, boolean isTakenByStore,
+            String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
             String productName, int categoryID, String brand, String description, int isSpecial) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -723,7 +723,7 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "UPDATE Consignment "
                     + " SET FullName = ?, Address = ?, Phone = ?, Email = ?, PaypalAccount = ?, "
-                    + " AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?, IsTakenByStore = ? "
+                    + " AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?, DeliveryMethod = ? "
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setString(1, fullName);
@@ -749,7 +749,7 @@ public class ConsignmentDAO {
             stm.setString(6, appointmentDate);
             stm.setString(7, getCurrentDate());
             stm.setInt(8, GlobalVariables.CONSIGNMENT_ACCEPTED);
-            stm.setBoolean(9, isTakenByStore);
+            stm.setInt(9, deliveryMethod);
             stm.setString(10, consignmentID);
 
             int result = stm.executeUpdate();
@@ -933,7 +933,7 @@ public class ConsignmentDAO {
         
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
-        boolean isTakenByStore = rs.getInt("IsTakenByStore") > 0;
+        int deliveryMethod = rs.getInt("DeliveryMethod");
         
         
         ConsignmentDTO consignment = new ConsignmentDTO();
@@ -969,7 +969,7 @@ public class ConsignmentDAO {
         consignment.setReason(reason);
         consignment.setNegotiatedPrice(negotiatedPrice);
 
-        consignment.setIsTakenByStore(isTakenByStore);
+        consignment.setDeliveryMethod(deliveryMethod);
         return consignment;
     }
 

@@ -78,7 +78,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                 String email = "";
                 String paypalAccount = "";
                 String paymentMethod = "";
-                boolean isTakenByStore = false;
+                int deliveryMethod = 0;
 
                 JavaUltilities ulti = new JavaUltilities();
 
@@ -136,10 +136,10 @@ public class ConsignCompleteServlet extends HttpServlet {
                             case "rdPayment":
                                 paymentMethod = item.getString().trim();
                                 break;
-                                case "rdIsTakenByStore":
+                                case "rdDeliveryMethod":
                                 String takenByStore = item.getString().trim();
-                                if(takenByStore.equals("store")){
-                                    isTakenByStore = true;
+                                if(takenByStore.equals("customer")){
+                                    deliveryMethod = 1;
                                 }
                                 break;
                             default:
@@ -243,7 +243,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 
                     ConsignmentDTO consignment = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
-                    consignment.setIsTakenByStore(isTakenByStore);
+                    consignment.setDeliveryMethod(deliveryMethod);
                     
                     boolean result = dao.addConsigment(consignment);
                     if (result) {

@@ -249,7 +249,7 @@
                                                                     maxFractionDigits="1"/> 
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <b><font color="red">Không có giá</font></b>
+                                                                <font color="red">Không có giá</font>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                     </td>
@@ -307,6 +307,9 @@
                                                     Ngày hẹn
                                                 </th>
                                                 <th>
+                                                    Cách giao hàng
+                                                </th>
+                                                <th>
                                                     Chi Tiết
                                                 </th>
                                             </tr>
@@ -324,7 +327,6 @@
                                                     </td>
                                                     <td>
                                                         ${c.reviewRequestDate}
-
                                                     </td>
                                                     <td>
 
@@ -337,13 +339,23 @@
                                                                     maxFractionDigits="1"/> 
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <b><font color="red">Không có giá</font></b>
+                                                                <font color="red">Không có giá</font>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                     </td>
                                                     <td>
 
                                                         ${c.appointmentDate}&nbsp;${c.hour}
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${c.deliveryMethod == 0}">
+                                                                <font color="blue">Cửa hàng đến nhận</font>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <font color="green">Tự mang đến</font>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td align="center">
 
@@ -659,9 +671,10 @@
                                                 <th>Cách giao hàng</th>
                                                 <td>
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="r_rdIsTakenByStore" value="customer" checked>Tự mang đến</label>
+                                                        <input type="radio" name="r_rdDeliveryMethod" value="store"  checked>Cửa hàng đến nhận</label>
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="r_rdIsTakenByStore" value="store">Cửa hàng đến nhận</label>
+                                                        <input type="radio" name="r_rdDeliveryMethod" value="customer">Tự mang đến</label>
+                                                    
                                                 </td>
                                             </tr>
 
@@ -1404,12 +1417,12 @@
                     //$("#r_address").html(data.address);
                     $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);
 
-                    if (data.isTakenByStore) {
-                        $("input[name='r_rdIsTakenByStore'][value='store']").attr("checked", true).parent().addClass("checked");
-                        $("input[name='r_rdIsTakenByStore'][value='customer']").attr("checked", false).parent().removeClass("checked");
+                    if (data.deliveryMethod == 0) {
+                        $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", true).parent().addClass("checked");
+                        $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", false).parent().removeClass("checked");
                     } else {
-                        $("input[name='r_rdIsTakenByStore'][value='customer']").attr("checked", true).parent().addClass("checked");
-                        $("input[name='r_rdIsTakenByStore'][value='store']").attr("checked", false).parent().removeClass("checked");
+                        $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", true).parent().addClass("checked");
+                        $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", false).parent().removeClass("checked");
                     }
                     //$("#r_hour").val(data.hour);
 
@@ -1669,18 +1682,24 @@
                 if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
                     paypalAccount = "";
                 }
-                var isTakenByStore = $("input[name='r_rdIsTakenByStore']:checked").val();
+                var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
 
                 $.get('ConsignmentRequestReceive',
                         {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName,
                             categoryID: categoryID, brand: brand, description: description,
-                            receivedDate: receivedDate, hour: hour, isTakenByStore: isTakenByStore, isSpecial: isSpecial,
+                            receivedDate: receivedDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
                             fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
                 function (data) {
                     if (data) {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
                         consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
+                        if(deliveryMethod == "customer"){
+                            consignmentTD.next().next().next().next().html("<font color='green'>Tự mang đến</font>");
+                        }else{
+                            consignmentTD.next().next().next().next().html("<font color='blue'>Cửa hàng đến nhận</font>");
+                        }
+                        
                         $("#r_name").html("<small>Khách hàng: </small> " + fullName);
                         return true;
                     } else {

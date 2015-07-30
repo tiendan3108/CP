@@ -258,14 +258,15 @@
                                                                             </span>
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Cách giao hàng</label>
                                                                         <div class="col-md-8 col-sm-8">
+
                                                                             <label class="radio-inline">
-                                                                                    <input type="radio" name="rdIsTakenByStore" value="customer" checked>Tự mang đến</label>
-                                                                                <label class="radio-inline">
-                                                                                    <input type="radio" name="rdIsTakenByStore" value="store">Cửa hàng đến nhận</label>
+                                                                                <input type="radio" name="rdDeliveryMethod" value="store" checked>Cửa hàng đến nhận</label>
+                                                                            <label class="radio-inline">
+                                                                                <input type="radio" name="rdDeliveryMethod" value="customer" >Tự mang đến</label>
 
                                                                             <span class="help-block" id="erIsTakenByStore">
                                                                             </span>

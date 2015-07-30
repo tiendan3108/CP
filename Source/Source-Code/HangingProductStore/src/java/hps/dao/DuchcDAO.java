@@ -113,7 +113,7 @@ public class DuchcDAO {
             // add Consigment Values
             String query = "INSERT INTO Consignment(ConsignmentID, ProductID, MemberID, StoreOwnerID, FullName, Address,"
                     + " Phone, Email, PaypalAccount, FromDate, ToDate, Period, MinPrice, MaxPrice, CreatedDate, "
-                    + " ConsignmentStatusID, ReviewProductDate, NegotiatedPrice, AppointmentDate, ReviewRequestDate, IsTakenByStore) "
+                    + " ConsignmentStatusID, ReviewProductDate, NegotiatedPrice, AppointmentDate, ReviewRequestDate, DeliveryMethod) "
                     + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query);
             stm.setString(1, consigment.getConsigmentID());
@@ -194,7 +194,7 @@ public class DuchcDAO {
                 stm.setNull(20, java.sql.Types.DATE);
             }
             
-            stm.setBoolean(21, consigment.isIsTakenByStore());
+            stm.setInt(21, consigment.getDeliveryMethod());
             
             
             int result = stm.executeUpdate();
