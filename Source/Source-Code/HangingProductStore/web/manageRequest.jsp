@@ -250,8 +250,8 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <font color="red">Không có giá</font>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td>
 
@@ -340,8 +340,8 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <font color="red">Không có giá</font>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                     <td>
 
@@ -539,12 +539,7 @@
 
 
                             <h2 class="modal-title" id="r_name"></h2>
-                            <!--                            <div class="row">
-                                                            <div class="col-lg-3 col-md-3"><b>Email: </b><span id="r_email"></span></div>
-                                                            <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="r_phone"></span></div>
-                                                            <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="r_address"></span></div>
-                            
-                                                        </div>-->
+
 
                         </div>
                         <div class="modal-body">
@@ -558,9 +553,9 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="r_image" alt="" style="max-height: 600px">
+                                                    <img id="r_image" alt=""  style="max-height: 350px">
                                                     <div class="carousel-caption">
-                                                        <p></p>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -578,51 +573,65 @@
 
                                     <!-- BEGIN PRODUCT DESCRIPTION -->
                                     <div class="col-lg-8 col-md-8">
+                                        <div class="form-horizontal">
+
+                                            <div class="form-group">
 
 
+                                                
+                                                    <label class="col-md-2 col-sm-2 control-label">Tên sản phẩm</label>
+                                                    <div class="col-md-10 col-sm-10"><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" /></div>
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                    <label class="col-md-2 col-sm-2 control-label">Loại</label>
+                                                    <div class="col-md-10 col-sm-10">
+
+                                                        <select id="r_category" name="txtCategoryID"  class="form-control" >
+                                                            <option value='' disabled selected style='display:none;'>Chọn...</option>
+
+                                                            <c:forEach var="father" items="${fCate}">
+                                                                <optgroup label="${father.categoryName}">
+                                                                    <c:forEach var="child" items="${category}">
+                                                                        <c:if test="${child.parentId == father.categoryId}">
+
+                                                                            <option value="${child.categoryId}">${child.categoryName}</option>
+
+
+
+
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </optgroup>
+
+                                                            </c:forEach>
+
+                                                        </select>
+
+                                                    </div>
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                    <label class="col-md-2 col-sm-2 control-label">Hãng</label>
+                                                    <div class="col-md-10 col-sm-10"><input id="r_brand" name="txtBrand" type="text" class="form-control" ></div>
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <label class="col-md-2 col-sm-2 control-label">Mô tả</label>
+                                                    <div class="col-md-10 col-sm-10">
+                                                        <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
+                                                    </div>
+                                                
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div><div class="row"><div class="col-lg-12 col-md-12">
                                         <table style="font-size: 110%" class="table table-striped table-hover" >
-                                            <tr>
-                                                <th width="30%">Tên sản phẩm</th>
-                                                <td><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" ></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Loại</th>
-                                                <td>
-
-                                                    <select id="r_category" name="txtCategoryID"  class="form-control" >
-                                                        <option value='' disabled selected style='display:none;'>Chọn...</option>
-
-                                                        <c:forEach var="father" items="${fCate}">
-                                                            <optgroup label="${father.categoryName}">
-                                                                <c:forEach var="child" items="${category}">
-                                                                    <c:if test="${child.parentId == father.categoryId}">
-
-                                                                        <option value="${child.categoryId}">${child.categoryName}</option>
-
-
-
-
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </optgroup>
-
-                                                        </c:forEach>
-
-                                                    </select>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Hãng</th>
-                                                <td><input id="r_brand" name="txtBrand" type="text" class="form-control" ></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Mô tả</th>
-                                                <td>
-                                                    <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
-
-                                                </td>
-                                            </tr>
                                             <tr>
                                                 <th>Ngày ký gửi</th>
                                                 <td id='r_createdDate'></td>
@@ -662,8 +671,6 @@
                                                     </div>
 
 
-                                                    <!--                                                    <div id="ar_divReceivedDate"></div>-->
-
                                                 </td>
 
                                             </tr>
@@ -674,7 +681,7 @@
                                                         <input type="radio" name="r_rdDeliveryMethod" value="store"  checked>Cửa hàng đến nhận</label>
                                                     <label class="radio-inline">
                                                         <input type="radio" name="r_rdDeliveryMethod" value="customer">Tự mang đến</label>
-                                                    
+
                                                 </td>
                                             </tr>
 
@@ -690,14 +697,6 @@
                                                 </td>
                                             </tr>
 
-                                            <!--                                            <tr>
-                                                                                            <th>Giờ hẹn</th>
-                                                                                            <td >
-                                            
-                                                                                                <div id="ar_divHour"></div>
-                                                                                            </td>
-                                            
-                                                                                        </tr>-->
                                             <tr>
                                                 <th>Trạng thái</th>
                                                 <td id='r_status'>
@@ -711,7 +710,7 @@
                                             </tr>
 
                                         </table>
-                                        <br/>
+                                    </div> </div><div class="row"><div class="col-lg-12 col-md-12">
                                         <table id="r_divPersonalInfo" style="font-size: 110%" class="table table-striped table-hover">
                                             <tr>
                                                 <th>Họ tên </th>
@@ -752,74 +751,7 @@
                                     <!-- END PRODUCT DESCRIPTION -->
                                 </div>
 
-                                <!--                                <div id="r_divPersonalInfo" class="row" style="display:none;">
-                                                                    <div class="col-md-6 col-sm-6">
-                                                                        <div class="form-horizontal">
-                                
-                                                                            <div class="form-group">
-                                                                                <label for="txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
-                                                                                <div class="col-md-8 col-sm-8">
-                                                                                    <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
-                                
-                                                                                    <p class="help-block" id="r_erFullName"> </p>
-                                                                                </div>
-                                                                            </div>
-                                
-                                
-                                
-                                                                            <div class="form-group" id="divPhone">
-                                                                                <label for="txtPhone" class="col-md-4 col-sm-4 control-label">Điện thoại <font color="red">*</font> </label>
-                                                                                <div class="col-md-4 col-sm-6">
-                                                                                    <input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/>
-                                                                                    <p class="help-block" id="r_erPhone"></p>
-                                
-                                                                                </div>
-                                                                            </div>
-                                
-                                                                            <div class="form-group">
-                                                                                <label for="txtEmail" class="col-md-4 col-sm-4 control-label">Email</label>
-                                                                                <div class="col-md-8 col-sm-8">
-                                                                                    <input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" />
-                                                                                    <p class="help-block" id="r_erEmail"></p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                
-                                                                    <div class="col-md-6 col-sm-6">
-                                                                        <div class="form-horizontal">
-                                
-                                                                            <div class="form-group">
-                                                                                <label for="txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
-                                                                                <div  class="col-md-8 col-sm-8">
-                                                                                    <textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="3"></textarea>
-                                                                                    <span class="help-block" id="r_erAddress">
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                
-                                                                            <div class="form-group">
-                                                                                <label for="" class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
-                                                                                <div class="radio-list col-md-8 col-sm-8">
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="r_rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                                                    <label class="radio-inline">
-                                                                                        <input type="radio" name="r_rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
-                                                                                </div>
-                                                                            </div>
-                                
-                                                                            <div id="r_divCCNumber" class="form-group" style="display: none" >
-                                                                                <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
-                                                                                <div class="col-md-8 col-sm-8">
-                                                                                    <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
-                                
-                                                                                    <p class="help-block" id="r_erPaypalAccount"></p>
-                                                                                </div>
-                                                                            </div>
-                                
-                                                                        </div>
-                                                                    </div>
-                                                                </div>-->
+
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -1694,12 +1626,12 @@
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
                         consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
-                        if(deliveryMethod == "customer"){
+                        if (deliveryMethod == "customer") {
                             consignmentTD.next().next().next().next().html("<font color='green'>Tự mang đến</font>");
-                        }else{
+                        } else {
                             consignmentTD.next().next().next().next().html("<font color='blue'>Cửa hàng đến nhận</font>");
                         }
-                        
+
                         $("#r_name").html("<small>Khách hàng: </small> " + fullName);
                         return true;
                     } else {
