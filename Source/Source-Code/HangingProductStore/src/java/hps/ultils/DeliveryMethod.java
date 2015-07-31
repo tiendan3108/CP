@@ -11,6 +11,6 @@ package hps.ultils;
  */
 public class DeliveryMethod {
 
-    public static int BY_CUSTOMER = 1;
-    public static int BY_STOREOWNER = 0;
+    public static final int BY_CUSTOMER = 1;
+    public static final int BY_STOREOWNER = 0;
 }
