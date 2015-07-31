@@ -9,6 +9,7 @@ import hps.dao.CategoryDAO;
 import hps.dao.ProductDAO;
 import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
+import hps.ultils.DeliveryMethod;
 import hps.ultils.GlobalVariables;
 import hps.ultils.ProductStatus;
 import java.sql.Connection;
@@ -126,11 +127,13 @@ public class ProductDetailDAO {
                     + "And Consignment.StoreOwnerID = ? "
                     + "And Consignment.ConsignmentStatusID = ? "
                     + "And CAST (Consignment.AppointmentDate as DATE) = ? "
+                    + "And Consignment.DeliveryMethod = ? "
                     + "order by Consignment.AppointmentDate asc";
             stm = con.prepareStatement(query);
             stm.setInt(1, memberID);
             stm.setInt(2, ConsignmentStatus.ACCEPTED);
             stm.setString(3, newDate);
+            stm.setInt(4, DeliveryMethod.BY_STOREOWNER);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
