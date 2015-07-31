@@ -51,7 +51,7 @@
                     <ul class="nav navbar-nav pull-right">
                         <li class="dropdown dropdown-user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                <span style="color:white;font-size: 15px" class="username username-hide-on-mobile">StoreOwner1</span>
+                                <span style="color:white;font-size: 15px" class="username username-hide-on-mobile">${ACCOUNT.fullName}</span>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
