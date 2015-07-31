@@ -17,7 +17,6 @@ import hps.ultils.DBUltilities;
 import hps.ultils.JavaUltilities;
 import hps.ultils.OrderStatus;
 import hps.ultils.ProductStatus;
-import hps.ultils.SpecialProduct;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -176,7 +175,7 @@ public class DanqtDAO {
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
                 Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
                 String today = sdf.format(tempDate);
 
                 query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
@@ -367,7 +366,7 @@ public class DanqtDAO {
             resultProduct = stmProduct.executeUpdate();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
             String raiseWebDate = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
@@ -518,7 +517,7 @@ public class DanqtDAO {
         }
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
             Date date = df.parse(source);
             String result = df2.format(date);
             return result;
@@ -820,7 +819,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
             String today = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ? WHERE ConsignmentID = ?";
@@ -1069,7 +1068,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
             String today = sdf.format(tempDate);
 
             String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
@@ -1476,7 +1475,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
             String sellingDate = sdf.format(tempDate);
 
             query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
@@ -1863,8 +1862,7 @@ public class DanqtDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewRequestDate IS NOT NULL ORDER BY ReviewRequestDate";
+            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? ORDER BY CreatedDate, CancelDate, AgreeCancelDate, ReceivedDate, ReviewProductDate, ReviewRequestDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             rs = stm.executeQuery();
@@ -1872,26 +1870,16 @@ public class DanqtDAO {
                 item = new ConsignmentDTO();
                 item.setName(rs.getString("FullName"));
                 item.setConsigmentID(rs.getString("ConsignmentID"));
+                item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));
+                item.setCancelDate(formatDateString(rs.getString("CancelDate")));
+                item.setAgreeCancelDate(formatDateString(rs.getString("AgreeCancelDate")));
+                item.setReceivedDate(formatDateString(rs.getString("ReceivedDate")));
                 item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
-                item.setPhone(convertPhone(rs.getString("Phone")));
-                item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
-                result.add(item);
-            }
-
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ReviewProductDate IS NOT NULL ORDER BY ReviewProductDate";
-            stm = conn.prepareStatement(query);
-            stm.setInt(1, roleID);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                item = new ConsignmentDTO();
-                item.setName(rs.getString("FullName"));
-                item.setConsigmentID(rs.getString("ConsignmentID"));
                 item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 result.add(item);
             }
-
             if (result.isEmpty()) {
                 return null;
             } else {

@@ -10,6 +10,7 @@ import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StatisticDTO;
+import hps.ultils.ConsignmentStatus;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -90,6 +91,7 @@ public class StatisticsServlet extends HttpServlet {
                     String today = sdf.format(tempDate);
 
                     resultC = dao.getConsignmentInforForStatisticPage(user.getRoleID());
+                    System.out.println(resultC.size());
                     request.setAttribute("resultC", resultC);
                     request.setAttribute("currentTab", "consignment");
                     request.setAttribute("fromDate", today);

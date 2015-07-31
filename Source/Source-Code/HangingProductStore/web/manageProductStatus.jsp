@@ -1038,15 +1038,15 @@
             <script src="assets/admin/pages/scripts/table-managed.js"></script>
             <!-- END CORE PLUGINS -->
             <script>
-                                                                                jQuery(document).ready(function () {
-                                                                                    // initiate layout and plugins
-                                                                                    // initiate layout and plugins
-                                                                                    Metronic.init(); // init metronic core components
-                                                                                    Layout.init(); // init current layout
-                                                                                    QuickSidebar.init(); // init quick sidebar
-                                                                                    Demo.init(); // init demo features
-                                                                                    TableManaged.init();
-                                                                                });
+                jQuery(document).ready(function () {
+                    // initiate layout and plugins
+                    // initiate layout and plugins
+                    Metronic.init(); // init metronic core components
+                    Layout.init(); // init current layout
+                    QuickSidebar.init(); // init quick sidebar
+                    Demo.init(); // init demo features
+                    TableManaged.init();
+                });
             </script>
             <script>
                 //script switch tab

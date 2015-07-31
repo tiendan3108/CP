@@ -262,6 +262,15 @@
                                             <input type="text" id="daterangeConsignment">
                                         </div>
                                         <div class="col-md-8 col-sm-8">
+                                            <select id="consignmentOption" style="float: right">
+                                                <option value="Chờ duyệt yêu cầu" selected="selected">Chờ duyệt yêu cầu</option>
+                                                <option value="Từ chối khi duyệt yêu cầu">Từ chối khi duyệt yêu cầu</option>
+                                                <option value="Từ chối khi đến nhận hàng">Từ chối khi đến nhận hàng</option>
+                                                <option value="Đồng ý nhận kí gửi">Đồng ý nhận kí gửi</option>
+                                                <option value="Đã nhận hàng">Đã nhận hàng</option>
+                                                <option value="Hoàn tất">Hoàn tất</option>
+                                            </select>
+                                            <label style="float: right">Trạng thái : </label>
                                         </div>
                                     </div>
                                     <br/>
@@ -271,7 +280,7 @@
                                                 <th>STT</th>
                                                 <th>Tên khách hàng</th>
                                                 <th>Số điện thoại</th>
-                                                <th>Ngày duyệt</th>
+                                                <th id="actionDate">Ngày tạo kí gửi</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Trạng thái</th>
                                             </tr>
@@ -284,23 +293,45 @@
                                                     <td>${item.phone}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
-                                                            <c:otherwise>${item.reviewProductDate}</c:otherwise>
+                                                            <c:when test="${item.consignmentStatusID == 1}">${item.createdDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 3 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 5 && not empty item.reviewProductDate}">${item.reviewProductDate}</c:when>
+                                                            <c:when test="${not empty item.agreeCancelDate}">${item.agreeCancelDate}</c:when>
+                                                            <c:when test="${not empty item.returnDate}">${item.returnDate}</c:when>
+                                                            <c:when test="${not empty item.receivedDate}">${item.receivedDate}</c:when>
                                                         </c:choose>
                                                     </td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <c:choose>
+                                                            <c:when test="${item.consignmentStatusID == 1}">Chờ duyệt yêu cầu</c:when>
                                                             <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
-                                                            <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID != 2}">Đồng ý nhận kí gửi</c:when>
                                                             <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID == 2}">Từ chối khi đến nhận hàng</c:when>
-                                                            <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID != 2}">Đã nhận hàng</c:when>
+                                                            <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID == 3}">Đồng ý nhận kí gửi</c:when>
+                                                            <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
+                                                            <c:otherwise>Hoàn tất</c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="modal fade bs-example-modal-lg" id="detailModal" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                </div>
+                                <div class="modal-body">
+                                </div>
+                                <div class="modal-footer">
+                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
                             </div>
                         </div>
@@ -371,7 +402,8 @@
                 QuickSidebar.init(); // init quick sidebar
                 Demo.init(); // init demo features
                 TableManaged.init();
-            });</script>
+            })
+        </script>
         <script>
             $(document).ready(function () {
                 //script switch tab
@@ -383,6 +415,8 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
+                var table = $('#consignmentTable').DataTable();
+                table.draw();
             });
             //date picker product
             $(document).ready(function () {
@@ -400,6 +434,13 @@
                 $('#fromDate').val(startDate);
                 $('#toDate').val(endDate);
                 table.draw();
+            });
+            $(document).on("click", ".detailModal", function () {
+                var consignmentID = $(this).data('id');
+                $.get('LoadDetailConsignment', {consignmentID: consignmentID}, function (respone) {
+
+                })
+                $('#detailModal').modal('show');
             });
             //date picker consignment
             $(document).ready(function () {
@@ -423,16 +464,49 @@
                     function (settings, data, dataIndex) {
                         var startDate = $('#fromDate').val();
                         var endDate = $('#toDate').val();
+                        var option = $('#consignmentOption').val();
                         var date = data[3]; // use data for the 'Ngày' column
-                        if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                        var status = data[5];
+                        var i = option.localeCompare(status);
+                        console.log(i);
+                        if (i == 0 && compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
                         {
+                            console.log('vao dc ' + i)
                             return true;
+                        } else {
+                            return false;
                         }
-                        return false;
                     }
             );
+            $("#consignmentOption").change(function () {
+                var table = $('#consignmentTable').DataTable();
+                var option = $('#consignmentOption').val();
+                var actionDateName = "";
+                switch (option) {
+                    case "Chờ duyệt yêu cầu":
+                        actionDateName = "Ngày tạo yêu cầu";
+                        break;
+                    case "Từ chối khi duyệt yêu cầu":
+                        actionDateName = "Ngày từ chối";
+                        break;
+                    case "Từ chối khi đến nhận hàng":
+                        actionDateName = "Ngày từ chối";
+                        break;
+                    case "Đồng ý nhận kí gửi":
+                        actionDateName = "Ngày duyệt yêu cầu";
+                        break;
+                    case "Đã nhận hàng":
+                        actionDateName = "Ngày nhận hàng";
+                        break;
+                    case "Hoàn tất":
+                        actionDateName = "Ngày hoàn tất";
+                        break;
+                }
+                $("#actionDate").text(actionDateName);
+                table.draw();
+            })
             function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
-                source = source.substring(6);
+                source = source.substring(8);
                 if (source.substring(6, 10) > target.substring(6, 10)) {
                     return 1;
                 }
