@@ -648,7 +648,7 @@
                                                         </div>
                                                         <div class="col-md-5 col-sm-5">
                                                             <div id="r_divHour" class="input-group">
-                                                                <input id="r_hour" name="txtHour" type="text" class="form-control timepicker timepicker-no-seconds">
+                                                                <input id="r_hour" name="txtHour" type="text" class="form-control timepicker timepicker-24">
                                                                 <span class="input-group-btn">
                                                                     <button class="btn default" type="button"><i class="fa fa-clock-o"></i></button>
                                                                 </span>

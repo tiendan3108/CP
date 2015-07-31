@@ -372,7 +372,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
     private String formatDate(String date) {
         try {
-            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy hh:mm aa");
+            DateFormat format1 = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             DateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date datetime = format1.parse(date);
             return format2.format(datetime);

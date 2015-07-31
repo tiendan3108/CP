@@ -880,8 +880,8 @@ public class ConsignmentDAO {
 
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        DateFormat df2 = new SimpleDateFormat("hh:mm aa|dd-MM-yyyy");
-        DateFormat dfHour = new SimpleDateFormat("hh:mm aa");
+        DateFormat df2 = new SimpleDateFormat("HH:mm|dd-MM-yyyy");
+        DateFormat dfHour = new SimpleDateFormat("HH:mm");
         //JavaUltilities java = new JavaUltilities();
 
         String consignmentID = rs.getString("ConsignmentID");

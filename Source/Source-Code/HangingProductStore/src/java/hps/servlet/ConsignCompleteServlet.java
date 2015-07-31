@@ -161,7 +161,6 @@ public class ConsignCompleteServlet extends HttpServlet {
                             if (filename.trim().isEmpty()) {
 
                                 filename = product.getImage().substring(product.getImage().lastIndexOf("/") + 1);
-                                //filename = filename.replaceAll("[!@#$%^&*.?,;/]", " ");
                                 URL amazonUrl = new URL(product.getImage());
                                 in = amazonUrl.openStream();
                             } else {
