@@ -302,7 +302,8 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
 // get appointmentDate and add hour into it then format to update database
                     String hour = request.getParameter("hour");
-                    String appointmentDate = request.getParameter("receivedDate") + " " + hour;
+                    String preAppointmentDate = request.getParameter("receivedDate");
+                    String appointmentDate = preAppointmentDate + " " + hour;
                     appointmentDate = formatDate(appointmentDate);
 
                     String fullName = request.getParameter("fullName");
@@ -317,7 +318,17 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     }
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
                     boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                    if(result){
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    java.util.Date currentDate = new java.util.Date();
+                    String today = df.format(currentDate);
 
+                    if (preAppointmentDate.equals(today)) {
+                        JavaUltilities java = new JavaUltilities();
+                        String noti = MessageString.titleNofitication;
+                        java.sendNofitiCation(noti , MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
+                    }
+                    }
                     String json = new Gson().toJson(result);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);

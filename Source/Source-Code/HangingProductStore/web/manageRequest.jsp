@@ -345,7 +345,7 @@
                                                     </td>
                                                     <td>
 
-                                                        ${c.appointmentDate}&nbsp;${c.hour}
+                                                        ${c.hour}|${c.appointmentDate}
                                                     </td>
                                                     <td>
                                                         <c:choose>
@@ -540,7 +540,6 @@
 
                             <h2 class="modal-title" id="r_name"></h2>
 
-
                         </div>
                         <div class="modal-body">
                             <form id="r_form" action="ConsignmentRequestReceive" method="POST">
@@ -553,9 +552,9 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="r_image" alt=""  style="max-height: 350px">
+                                                    <img id="r_image" alt="" style="max-height: 600px">
                                                     <div class="carousel-caption">
-
+                                                        <p></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -567,71 +566,58 @@
                                                 <i class="fa fa-angle-right"></i>
                                             </a>
                                         </div>
-
+                                        <br/>
+                                        <h4 id='r_status' align="center"></h4>
                                     </div>
                                     <!-- END CAROUSEL -->
 
                                     <!-- BEGIN PRODUCT DESCRIPTION -->
                                     <div class="col-lg-8 col-md-8">
-                                        <div class="form-horizontal">
-
-                                            <div class="form-group">
 
 
-                                                
-                                                    <label class="col-md-2 col-sm-2 control-label">Tên sản phẩm</label>
-                                                    <div class="col-md-10 col-sm-10"><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" /></div>
-                                                
-                                            </div>
-                                            <div class="form-group">
-                                                
-                                                    <label class="col-md-2 col-sm-2 control-label">Loại</label>
-                                                    <div class="col-md-10 col-sm-10">
-
-                                                        <select id="r_category" name="txtCategoryID"  class="form-control" >
-                                                            <option value='' disabled selected style='display:none;'>Chọn...</option>
-
-                                                            <c:forEach var="father" items="${fCate}">
-                                                                <optgroup label="${father.categoryName}">
-                                                                    <c:forEach var="child" items="${category}">
-                                                                        <c:if test="${child.parentId == father.categoryId}">
-
-                                                                            <option value="${child.categoryId}">${child.categoryName}</option>
-
-
-
-
-                                                                        </c:if>
-                                                                    </c:forEach>
-                                                                </optgroup>
-
-                                                            </c:forEach>
-
-                                                        </select>
-
-                                                    </div>
-                                                
-                                            </div>
-                                            <div class="form-group">
-                                                
-                                                    <label class="col-md-2 col-sm-2 control-label">Hãng</label>
-                                                    <div class="col-md-10 col-sm-10"><input id="r_brand" name="txtBrand" type="text" class="form-control" ></div>
-                                                
-                                            </div>
-                                            <div class="form-group">
-                                                
-                                                <label class="col-md-2 col-sm-2 control-label">Mô tả</label>
-                                                    <div class="col-md-10 col-sm-10">
-                                                        <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
-                                                    </div>
-                                                
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div><div class="row"><div class="col-lg-12 col-md-12">
                                         <table style="font-size: 110%" class="table table-striped table-hover" >
+                                            <tr>
+                                                <th width="30%">Tên sản phẩm</th>
+                                                <td><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" ></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Loại</th>
+                                                <td>
+
+                                                    <select id="r_category" name="txtCategoryID"  class="form-control" >
+                                                        <option value='' disabled selected style='display:none;'>Chọn...</option>
+
+                                                        <c:forEach var="father" items="${fCate}">
+                                                            <optgroup label="${father.categoryName}">
+                                                                <c:forEach var="child" items="${category}">
+                                                                    <c:if test="${child.parentId == father.categoryId}">
+
+                                                                        <option value="${child.categoryId}">${child.categoryName}</option>
+
+
+
+
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </optgroup>
+
+                                                        </c:forEach>
+
+                                                    </select>
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Hãng</th>
+                                                <td><input id="r_brand" name="txtBrand" type="text" class="form-control" ></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Mô tả</th>
+                                                <td>
+                                                    <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="2"></textarea>
+
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <th>Ngày ký gửi</th>
                                                 <td id='r_createdDate'></td>
@@ -697,20 +683,20 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <th>Trạng thái</th>
-                                                <td id='r_status'>
-                                                </td>
-                                            </tr>
-                                            <tr id="r_trReason" style="display: none">
-                                                <th>Lí do</th>
-                                                <td id="r_reason">
-
-                                                </td>
-                                            </tr>
+                                            <!--                                            <tr>
+                                                                                            <th>Trạng thái</th>
+                                                                                            <td id='r_status'>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr id="r_trReason" style="display: none">
+                                                                                            <th>Lí do</th>
+                                                                                            <td id="r_reason">
+                                            
+                                                                                            </td>
+                                                                                        </tr>-->
 
                                         </table>
-                                    </div> </div><div class="row"><div class="col-lg-12 col-md-12">
+                                        <br/>
                                         <table id="r_divPersonalInfo" style="font-size: 110%" class="table table-striped table-hover">
                                             <tr>
                                                 <th>Họ tên </th>
@@ -821,6 +807,33 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         </c:if>
+
+
+
+
+        <!-- -->
+        <div id="modalError" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Xác nhận</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+
+                        <h3>Yêu cầu này đã được xử lý</h3>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button> 
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- -->
+
+
 
         <!--BEGIN MODAL -->
         <!-- Large modal -->
@@ -1378,9 +1391,7 @@
                     $("#r_divPersonalInfo").hide();
 
                     if (data.product.productStatusID == 6) {
-                        $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
-                        $("#r_footer").hide();
-                        $("#ar_footer").hide();
+                        $("#modalError").modal("show");
                     }
                     else {
                         if (data.consignmentStatusID == 1) {
@@ -1413,7 +1424,7 @@
                                 $("#r_divCCNumber").hide();
                             }
 
-
+                            $("#modalRequestAccept").modal("show");
 
                         } else if (data.consignmentStatusID == 3) {
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
@@ -1443,53 +1454,17 @@
                                 $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
                                 $("#r_divCCNumber").hide();
                             }
+                            $("#modalRequestAccept").modal("show");
 
-                        } else if (data.consignmentStatusID == 2) {
-                            $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
-                            $("#r_footer").hide();
-                            $("#ar_footer").hide();
-                            $("#r_trReason").show();
-                            $("#r_reason").html(data.reason);
-                        } else if (data.consignmentStatusID == 4) {
-                            $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                            $("#r_footer").hide();
-                            $("#ar_footer").hide();
-                        } else if (data.consignmentStatusID == 6) {
-                            $("#r_status").html("<b><font color='red'>ĐÃ HẾT HẠN</font></b>");
-                            $("#r_footer").hide();
-                            $("#ar_footer").hide();
-                        }
-                        else if (data.consignmentStatusID == 5) {
-                            if (data.product.productStatusID == 2) {
-                                $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
-                                $("#r_footer").hide();
-                                $("#ar_footer").hide();
-                            }
-                            else if (data.product.productStatusID == 3) {
-                                $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
-                                $("#r_footer").hide();
-                                $("#ar_footer").hide();
-                            }
-                            else if (data.product.productStatusID == 4) {
-                                $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
-                                $("#r_footer").hide();
-                                $("#ar_footer").hide();
-                            }
-                            else if (data.product.productStatusID == 5) {
-                                $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
-                                $("#r_footer").hide();
-                                $("#ar_footer").hide();
-                            }
-                        } else if (data.consignmentStatusID == 7) {
-                            $("#r_status").html("<b><font color='red'>ĐÃ TRẢ HÀNG</font></b>");
-                            $("#r_footer").hide();
-                            $("#ar_footer").hide();
+                        } else {
+                            $("#modalError").modal("show");
                         }
 
                     }
                 });
 
-                $("#modalRequestAccept").modal("show");
+                //$("#modalRequestAccept").modal("show");
+                
             }
 
             $('button[name="requestAcceptDetails"]').click(function () {
