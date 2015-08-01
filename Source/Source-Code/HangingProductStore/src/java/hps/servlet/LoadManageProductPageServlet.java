@@ -79,42 +79,6 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 } else {
                     tab = "available";
                 }
-                String keywork = request.getParameter("txtKeywork");
-                if (keywork != null) {
-                    tab = request.getParameter("txtCurrentTab");
-                }
-                if (keywork != null) {
-                    switch (tab) {
-                        case "expired":
-                            expired = dao.getExpiredProduct(user.getRoleID(), keywork);
-                            request.setAttribute("keywork7", keywork);
-                            break;
-                        case "available":
-                            available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE, keywork);
-                            request.setAttribute("keywork1", keywork);
-                            break;
-                        case "onWeb":
-                            onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB, keywork);
-                            request.setAttribute("keywork2", keywork);
-                            break;
-                        case "ordered":
-                            ordered = dao.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED, keywork);
-                            request.setAttribute("keywork3", keywork);
-                            break;
-                        case "sold":
-                            sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD, keywork);
-                            request.setAttribute("keywork4", keywork);
-                            break;
-                        case "completed":
-                            completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED, keywork);
-                            request.setAttribute("keywork5", keywork);
-                            break;
-                        case "canceled":
-                            canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL, keywork);
-                            request.setAttribute("keywork6", keywork);
-                            break;
-                    }
-                }
 
                 request.setAttribute("available", available);
                 request.setAttribute("onWeb", onWeb);

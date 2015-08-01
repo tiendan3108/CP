@@ -175,7 +175,7 @@ public class DanqtDAO {
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
                 Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String today = sdf.format(tempDate);
 
                 query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
@@ -366,7 +366,7 @@ public class DanqtDAO {
             resultProduct = stmProduct.executeUpdate();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String raiseWebDate = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
@@ -517,7 +517,7 @@ public class DanqtDAO {
         }
         try {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
+            SimpleDateFormat df2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
             Date date = df.parse(source);
             String result = df2.format(date);
             return result;
@@ -718,6 +718,8 @@ public class DanqtDAO {
                 String consignmentID = rs.getString("ConsignmentID");
                 String serialNumber = rs.getString("SerialNumber");
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
+                int isSpecial = rs.getInt("IsSpecial");
+                result.setIsSpecial(isSpecial);
                 result.setConsignmentID(consignmentID);
                 result.setName(productName);
                 result.setSerialNumber(serialNumber);
@@ -819,7 +821,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ? WHERE ConsignmentID = ?";
@@ -863,7 +865,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
             System.out.println("Today : " + today);
             query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email FROM Consignment c, Product p WHERE "
@@ -1068,7 +1070,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
             String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
@@ -1148,7 +1150,7 @@ public class DanqtDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
             String query = "SELECT c.*, p.ProductName, DATEDIFF(day,c.ReviewProductDate,?) AS DiffDate "
@@ -1475,7 +1477,7 @@ public class DanqtDAO {
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm | yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String sellingDate = sdf.format(tempDate);
 
             query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
@@ -1820,6 +1822,7 @@ public class DanqtDAO {
                     fee = expiredFee;
                 }
                 String actionDate = formatDateString(rs.getString("ActionDate"));
+                System.out.println(actionDate);
                 if (fee != 0) {
                     revenue = fee;
                 } else {

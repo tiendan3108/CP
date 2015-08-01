@@ -468,13 +468,21 @@
                         var date = data[3]; // use data for the 'Ngày' column
                         var status = data[5];
                         var i = option.localeCompare(status);
-                        console.log(i);
-                        if (i == 0 && compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
-                        {
-                            console.log('vao dc ' + i)
-                            return true;
+                        var currentTab = $("#currentTab").val();
+                        if (currentTab == 'product') {
+                            if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                            {
+                                return true;
+                            } else {
+                                return false;
+                            }
                         } else {
-                            return false;
+                            if (i == 0 && compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                            {
+                                return true;
+                            } else {
+                                return false;
+                            }
                         }
                     }
             );

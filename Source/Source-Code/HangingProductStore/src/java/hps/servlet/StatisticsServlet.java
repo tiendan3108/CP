@@ -5,12 +5,10 @@
  */
 package hps.servlet;
 
-import com.google.gson.Gson;
 import hps.dao.DanqtDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StatisticDTO;
-import hps.ultils.ConsignmentStatus;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;

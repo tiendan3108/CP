@@ -570,6 +570,7 @@
                                     <div class="modal-header">
                                         <h4>Thông tin đặt hàng</h4>
                                         Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label>
+                                        <i id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></i>
                                     </div>
                                     <div class="modal-body">
                                         <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
@@ -579,6 +580,7 @@
                                                     <th>Tên khách hàng</th>
                                                     <th>Ngày đặt mua</th>
                                                     <th>Thông tin liên hệ</th>
+                                                    <th id="theadDetail">Chi tiết</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="table_body_ordered">
@@ -587,7 +589,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
-                                        <!--                                        <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();">Gửi giá</button>-->
+                                        <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
                                         <button class="btn btn-warning" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
                                         <input class="btn btn-info confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -1038,15 +1040,15 @@
             <script src="assets/admin/pages/scripts/table-managed.js"></script>
             <!-- END CORE PLUGINS -->
             <script>
-                jQuery(document).ready(function () {
-                    // initiate layout and plugins
-                    // initiate layout and plugins
-                    Metronic.init(); // init metronic core components
-                    Layout.init(); // init current layout
-                    QuickSidebar.init(); // init quick sidebar
-                    Demo.init(); // init demo features
-                    TableManaged.init();
-                });
+                                                                                jQuery(document).ready(function () {
+                                                                                    // initiate layout and plugins
+                                                                                    // initiate layout and plugins
+                                                                                    Metronic.init(); // init metronic core components
+                                                                                    Layout.init(); // init current layout
+                                                                                    QuickSidebar.init(); // init quick sidebar
+                                                                                    Demo.init(); // init demo features
+                                                                                    TableManaged.init();
+                                                                                });
             </script>
             <script>
                 //script switch tab
@@ -1095,10 +1097,10 @@
                         $(option).attr("selected", "selected");
                         if (response.isSpecial > 0) {
                             $('#rdIsSpecial1').parent('span').addClass('checked');
-                            $('#rdNotSpecial1').parent('span').removeClass('checked')
+                            $('#rdNotSpecial1').parent('span').removeClass('checked');
                         } else {
-                            $('#rdIsSpecial1').parent('span').removeClass('checked')
-                            $('#rdNotSpecial1').parent('span').addClass('checked')
+                            $('#rdIsSpecial1').parent('span').removeClass('checked');
+                            $('#rdNotSpecial1').parent('span').addClass('checked');
                         }
                     });
                     $('#availableModal').modal('show');
@@ -1128,18 +1130,47 @@
                 $(document).on("click", ".orderedModal", function () {
                     var productID = $(this).data('id');
                     $.get('LoadOrderedProduct', {productID: productID}, function (response) {
+                        var isSpecial = response.isSpecial;
+                        if (isSpecial == 0) {
+                            $("#sendPriceLabel").attr("style", "display:block;");
+                            $("#btnPrice").removeAttr("style");
+                            $("#theadDetail").attr("style", "display:block;");
+                        } else {
+                            $("#sendPriceLabel").attr("style", "display:none;");
+                            $("#btnPrice").attr("style", "display:none;");
+                            $("#theadDetail").attr("style", "display:none;");
+                        }
                         var orderList = response.orderList;
                         $('#ordered_orderID').val(response.orderList[0].orderID);
                         $('#ordered_negotiatedPrice').text(response.negotiatedPrice);
                         $('#listOrderedTable tbody').empty();
                         for (var i = 0, max = orderList.length; i < max; i++) {
-                            var row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
-                                    orderList[i].orderID + '"></td><td>' +
-                                    orderList[i].fullName + '</td><td>' +
-                                    orderList[i].orderedDate + '</td><td>' +
-                                    orderList[i].phone + '</td></tr>';
-                            $('#table_body_ordered').append(row);
+                            var row = "";
+                            if (isSpecial == 0) {
+                                if (orderList[i].sendPrice == 0) {
+                                    row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                                            orderList[i].orderID + '"></td><td>' +
+                                            orderList[i].fullName + '</td><td>' +
+                                            orderList[i].orderedDate + '</td><td>' +
+                                            orderList[i].phone + '</td><td>Chưa gửi giá</td></tr>';
+                                } else {
+                                    row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                                            orderList[i].orderID + '"></td><td>' +
+                                            orderList[i].fullName + '</td><td>' +
+                                            orderList[i].orderedDate + '</td><td>' +
+                                            orderList[i].phone + '</td><td>Đã gửi giá : ' +
+                                            orderList[i].sendPrice + '</td></tr>';
+                                }
+                            }
+                            else {
+                                row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                                        orderList[i].orderID + '"></td><td>' +
+                                        orderList[i].fullName + '</td><td>' +
+                                        orderList[i].orderedDate + '</td><td>' +
+                                        orderList[i].phone + '</td></tr>';
+                            }
                         }
+                        $('#table_body_ordered').append(row);
                     })
                     $('#orderedModal').modal('show');
                 });
@@ -1292,7 +1323,7 @@
                 }
                 function checkCustomer2()
                 {
-                    var n = $("input:checked").length;
+                    var n = $('input[name=chkboxCustomer]:checked').length;
                     var price = $("#sendPrice").val().trim();
                     if (n == 0) {
                         alert('Vui lòng chọn ít nhất một khách hàng.');
@@ -1378,7 +1409,6 @@
                     var dd = today.getDate();
                     var mm = today.getMonth() + 1;
                     var yyyy = today.getFullYear();
-
                     if (dd < 10) {
                         dd = '0' + dd;
                     }
