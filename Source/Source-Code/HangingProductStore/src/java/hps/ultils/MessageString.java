@@ -70,5 +70,5 @@ public class MessageString {
     public static final String newProductNotification(String name){
         return "Bạn có thêm món hàng "+ name + " cần lấy trong ngày hôm nay.";
     }
-    public static final String errorOrder = "Món hàng này đã được bạn đặt rồi.";
+    public static final String errorOrder = "Số điện thoại đã sử dụng để đặt món hàng này";
 }
