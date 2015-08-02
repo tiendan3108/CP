@@ -61,7 +61,7 @@ public class PublishProduct extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null;
+            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null, imagePath = "";
             String tempSeason = "";
             List<String> season = new ArrayList<>();
             int categoryID = 0, productID = 0, special = 2;
@@ -114,16 +114,17 @@ public class PublishProduct extends HttpServlet {
                         }
                     } else {
                         String path = request.getServletContext().getRealPath("/");
-                        String basePath = path.substring(0, path.length() - 10) + "web";
+                        String basePath = path.substring(0, path.length() - 9) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
                         if (!filename.equals("")) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
                             String consignmentID = dao.getConsignmentIDByProductID(productID);
                             filename = consignmentID + filename;
-                            image = "assets/image/" + filename;
-                            File file1 = new File((path + "\\" + image).replaceAll("\\\\", "/")); // deployment place
-                            File file2 = new File((basePath + "\\" + image).replaceAll("\\\\", "/"));//base place
+                            image = "assets\\image\\" + filename;
+                            imagePath = "assets/image/" + filename;
+                            File file1 = new File(path + "\\" + image); // deployment place
+                            File file2 = new File(basePath + "\\" + image);//base place
                             try {
                                 try (InputStream in = item.getInputStream()) {
                                     OutputStream opsBase;
@@ -151,7 +152,7 @@ public class PublishProduct extends HttpServlet {
                     if (isSpecial != null && isSpecial.equals("notSpecial")) {
                         special = SpecialProduct.NOT_SPECIAL;
                     }
-                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, image, special);
+                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, imagePath, special);
                     if (tempSeason.contains("1")) {
                         season.add("1");
                     }

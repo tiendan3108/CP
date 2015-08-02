@@ -63,7 +63,7 @@ public class JavaUltilities {
 
     public static void main(String[] args) {
 
-         JavaUltilities lib = new JavaUltilities();
+        JavaUltilities lib = new JavaUltilities();
         try {
             lib.sendSMS("ab", "+841689191917");
         } catch (TwilioRestException ex) {
@@ -220,7 +220,7 @@ public class JavaUltilities {
     public static void deleteProductImage(String path, int productID) {
         DanqtDAO dao = new DanqtDAO();
         ProductDTO product = dao.getProductByID(productID);
-        File image = new File((path + "\\" + product.getImage()).replaceAll("\\\\", "/"));
+        File image = new File(path + "\\" + product.getImage());
         try {
             image.delete();
             System.out.println("deleted file " + path + "\\" + product.getImage());
