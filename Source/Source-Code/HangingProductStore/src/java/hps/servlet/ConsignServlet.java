@@ -6,8 +6,8 @@
 package hps.servlet;
 
 import hps.dao.AccountDAO;
+import hps.dao.BrandDAO;
 import hps.dao.CategoryDAO;
-import hps.dao.DuchcDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
@@ -38,7 +38,7 @@ public class ConsignServlet extends HttpServlet {
     private static final String STEP4 = "consign_step4.jsp";
     private static final String COMPLETED = "consign_success.jsp";
     private static final String HOME = "HomeServlet";
-    DuchcDAO dDAO = new DuchcDAO();
+    AccountDAO accountDAO = new AccountDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -142,7 +142,7 @@ public class ConsignServlet extends HttpServlet {
                 } //check product using name 
                 else {
 
-                    List<AmazonProduct> list = dDAO.getListAmazonProduct(productName, brand, categoryID);
+                    List<AmazonProduct> list = BrandDAO.getListAmazonProduct(productName, brand, categoryID);
 
                     if (list != null) {
                         if (list.size() > 0) {
@@ -197,7 +197,7 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("BASICPRICE", basicPrice);
 
                 int categoryID = product.getCategoryID();
-                List<AccountDTO> list = dDAO.getListStoreOwnerByCategory(categoryID, basicPrice);
+                List<AccountDTO> list = accountDAO.getListStoreOwnerByCategory(categoryID, basicPrice);
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");

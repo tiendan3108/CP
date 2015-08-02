@@ -5,7 +5,8 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.StatisticDTO;
@@ -46,7 +47,8 @@ public class StatisticsServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession(false);
-            DanqtDAO dao = new DanqtDAO();
+            ProductDAO productDAO = new ProductDAO();
+            ConsignmentDAO consignmentDAO = new ConsignmentDAO();
             AccountDTO user = null;
             if (session != null) {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
@@ -60,7 +62,7 @@ public class StatisticsServlet extends HttpServlet {
             } else {
                 String currentTab = request.getParameter("currentTab");
                 if (currentTab == null || currentTab.equals("product")) {
-                    resultP = dao.getProductInforForStatisticPage(user.getRoleID());
+                    resultP = productDAO.getProductInforForStatisticPage(user.getRoleID());
                     if (resultP != null) {
                         for (StatisticDTO item : resultP) {
                             totalPrice += item.getRevenue();
@@ -88,7 +90,7 @@ public class StatisticsServlet extends HttpServlet {
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     String today = sdf.format(tempDate);
 
-                    resultC = dao.getConsignmentInforForStatisticPage(user.getRoleID());
+                    resultC = consignmentDAO.getConsignmentInforForStatisticPage(user.getRoleID());
                     request.setAttribute("resultC", resultC);
                     request.setAttribute("currentTab", "consignment");
                     request.setAttribute("fromDate", today);

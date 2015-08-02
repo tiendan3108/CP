@@ -7,12 +7,11 @@ package hps.servlet;
 
 import hps.dao.CategoryDAO;
 import hps.dao.ConsignmentDAO;
-import hps.dao.DuchcDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
-import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -220,8 +219,10 @@ public class AddConsignmentServlet extends HttpServlet {
 
             product.setImage(imagePath);
             product.setProductStatusID(2);
-            DuchcDAO dao = new DuchcDAO();
-            int productID = dao.addProduct(product);
+            
+            ProductDAO productDAO = new ProductDAO();
+            ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+            int productID = productDAO.addProduct(product);
             if (productID > 0) {
                 int memberID = 5;
                 int storeOwnerID = account.getRoleID();
@@ -239,9 +240,8 @@ public class AddConsignmentServlet extends HttpServlet {
                 consignment.setReviewProductDate(currentDate);
                 consignment.setNegotiatedPrice(negotiatedPrice);
                 consignment.setDeliveryMethod(0);
-                boolean result = dao.addConsigment(consignment);
+                boolean result = consignmentDAO.addConsigment(consignment);
                 if (result) {
-                    ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                     CategoryDAO categoryDAO = new CategoryDAO();
 
                     List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDDeliveryMethod(account.getRoleID(), 0);

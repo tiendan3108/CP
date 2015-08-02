@@ -5,7 +5,7 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.ProductStatus;
@@ -49,8 +49,8 @@ public class CancelProductOnWeb extends HttpServlet {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
-                DanqtDAO dao = new DanqtDAO();
-                dao.cancelProduct(consignmentID, ProductStatus.COMPLETED);
+                ProductDAO productDAO = new ProductDAO();
+                productDAO.cancelProduct(consignmentID, ProductStatus.COMPLETED);
                 url = GlobalVariables.MANAGERMENT_SERVLET;
                 request.setAttribute("currentTab", "onWeb");
             }

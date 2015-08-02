@@ -6,10 +6,8 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
-import hps.dao.ConsignmentDAO;
 import hps.dao.ProductDAO;
 import hps.dto.CategoryDTO;
-import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.Season;
@@ -17,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;

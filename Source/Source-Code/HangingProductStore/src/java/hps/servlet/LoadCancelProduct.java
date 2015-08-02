@@ -6,10 +6,8 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
-import hps.dao.DanqtDAO;
-import hps.dto.AccountDTO;
+import hps.dao.ConsignmentDAO;
 import hps.dto.ConsignmentDTO;
-import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -56,10 +54,10 @@ public class LoadCancelProduct extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String consignmentID = request.getParameter("consignmentID");
-        DanqtDAO dao = new DanqtDAO();
-        ConsignmentDTO infor = dao.getInforForCancelPage(consignmentID);
+        ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+        ConsignmentDTO infor = consignmentDAO.getInforForCancelPage(consignmentID);
         String json = "";
-        if (infor!=null) {
+        if (infor != null) {
             json = new Gson().toJson(infor);
         }
         response.setContentType("application/json;charset=UTF-8");

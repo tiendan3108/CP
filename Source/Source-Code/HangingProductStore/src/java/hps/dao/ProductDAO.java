@@ -5,17 +5,24 @@
  */
 package hps.dao;
 
+import hps.dto.OrderDTO;
 import hps.dto.ProductDTO;
+import hps.dto.StatisticDTO;
 import hps.dto.productDetailDTO;
 import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
+import hps.ultils.JavaUltilities;
+import hps.ultils.OrderStatus;
 import hps.ultils.ProductStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -1099,4 +1106,728 @@ public class ProductDAO {
         return null;
     }
 
+    //start merge
+    //duchcDAO
+    public int addProduct(ProductDTO product) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            // add Consigment Values
+            String query = "INSERT INTO Product(ProductName, SerialNumber, PurchasedDate, CategoryID, Brand, "
+                    + "Description, Image, ProductStatusID, IsSpecial) "
+                    + " VALUES(?,?,?,?,?,?,?,?,?)";
+            stm = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+//            stm = con.prepareStatement(query);
+            stm.setString(1, product.getName());
+            if (product.getSerialNumber().equals("")) {
+                stm.setNull(2, java.sql.Types.VARCHAR);
+            } else {
+                stm.setString(2, product.getSerialNumber());
+            }
+            if (product.getPurchasedDate().equals("")) {
+                stm.setNull(3, java.sql.Types.DATE);
+            } else {
+                stm.setString(3, product.getPurchasedDate());
+            }
+
+            stm.setInt(4, product.getCategoryID());
+            if (product.getBrand().equals("")) {
+                stm.setNull(5, java.sql.Types.VARCHAR);
+            } else {
+                stm.setString(5, product.getBrand());
+            }
+            if (product.getDescription().equals("")) {
+                stm.setNull(6, java.sql.Types.NVARCHAR);
+            } else {
+                stm.setString(6, product.getDescription());
+            }
+
+            stm.setString(7, product.getImage());
+
+            stm.setInt(8, product.getProductStatusID());
+
+            stm.setInt(9, product.getIsSpecial());
+
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                rs = stm.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    return id;
+                }
+            }
+            return -1;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return -1;
+    }
+
+    //ProductDAO
+    public boolean cancelProduct(String consignmentID, int status) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stmUpdateProduct = null;
+        PreparedStatement stmUpdateConsignment = null;
+        int resultUpdateProduct, resultUpdateConsignment;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+            if (status == ProductStatus.NOT_AVAILABLE) {
+                conn.setAutoCommit(false);
+
+                query = "UPDATE Product SET ProductStatusID = ? WHERE "
+                        + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
+                stmUpdateProduct = conn.prepareStatement(query);
+                stmUpdateProduct.setInt(1, ProductStatus.NOT_AVAILABLE);
+                stmUpdateProduct.setString(2, consignmentID);
+                resultUpdateProduct = stmUpdateProduct.executeUpdate();
+
+                Date tempDate = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String today = sdf.format(tempDate);
+
+                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
+                stmUpdateConsignment = conn.prepareStatement(query);
+                stmUpdateConsignment.setString(1, today);
+                stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
+                stmUpdateConsignment.setString(3, consignmentID);
+                stmUpdateConsignment.setString(4, consignmentID);
+                resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
+
+                if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
+                    conn.commit();
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
+                        + "(SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
+                stmUpdateProduct = conn.prepareStatement(query);
+                stmUpdateProduct.setInt(1, ProductStatus.ON_WEB);
+                stmUpdateProduct.setString(2, consignmentID);
+                resultUpdateProduct = stmUpdateProduct.executeUpdate();
+                return resultUpdateProduct > 0;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmUpdateProduct != null) {
+                    stmUpdateProduct.close();
+                }
+                if (stmUpdateConsignment != null) {
+                    stmUpdateConsignment.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean soldProduct(String consignmentID, float returnPrice) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        int result1 = 0, result2 = 0;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String today = sdf.format(tempDate);
+
+            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentID = ? WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setFloat(1, returnPrice);
+            stm.setString(2, today);
+            stm.setInt(3, ConsignmentStatus.COMPLETED);
+            stm.setString(4, consignmentID);
+            result1 = stm.executeUpdate();
+            query = "UPDATE Product set ProductStatusID = ? WHERE ProductID = "
+                    + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.COMPLETED);
+            stm.setString(2, consignmentID);
+            result2 = stm.executeUpdate();
+            return result1 > 0 && result2 > 0;
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean publishOnWeb(ProductDTO product, List<String> season) {
+        Connection conn = null;
+        PreparedStatement stmProduct = null;
+        PreparedStatement stmConsignment = null;
+        int resultProduct = 0;
+        int resultConsignment = 0;
+        ResultSet rs = null;
+        String query = "";
+        List<String> existSeason = new ArrayList<>();
+        try {
+            conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
+
+            if (product.getIsSpecial() == 2) {
+                query = "SELECT IsSpecial FROM Product WHERE ProductID = ?";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setInt(1, product.getProductID());
+                rs = stmProduct.executeQuery();
+                while (rs.next()) {
+                    product.setIsSpecial(rs.getInt("IsSpecial"));
+                }
+            }
+
+            if (product.getImage() == null) {
+                query = "UPDATE Product SET "
+                        + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
+                        + "Description = ?, ProductStatusID = 3, IsSpecial = ? "
+                        + "WHERE ProductID = ?";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setString(1, product.getName());
+                stmProduct.setString(2, product.getSerialNumber());
+                stmProduct.setInt(3, product.getCategoryID());
+                stmProduct.setString(4, product.getBrand());
+                stmProduct.setString(5, product.getDescription());
+                stmProduct.setInt(6, product.getIsSpecial());
+                stmProduct.setInt(7, product.getProductID());
+            } else {
+                query = "UPDATE Product SET "
+                        + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
+                        + "Description = ?, Image = ?, ProductStatusID = 3 , IsSpecial = ? "
+                        + "WHERE ProductID = ?";
+                stmProduct = conn.prepareStatement(query);
+                stmProduct.setString(1, product.getName());
+                stmProduct.setString(2, product.getSerialNumber());
+                stmProduct.setInt(3, product.getCategoryID());
+                stmProduct.setString(4, product.getBrand());
+                stmProduct.setString(5, product.getDescription());
+                stmProduct.setString(6, product.getImage());
+                stmProduct.setInt(7, product.getIsSpecial());
+                stmProduct.setInt(8, product.getProductID());
+            }
+            resultProduct = stmProduct.executeUpdate();
+
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String raiseWebDate = sdf.format(tempDate);
+
+            query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
+            stmConsignment = conn.prepareStatement(query);
+            stmConsignment.setString(1, raiseWebDate);
+            stmConsignment.setInt(2, product.getProductID());
+            resultConsignment = stmConsignment.executeUpdate();
+            //get exist season of product
+            query = "SELECT SeasonID FROM Product_Season WHERE ProductID = ?";
+            stmProduct = conn.prepareStatement(query);
+            stmProduct.setInt(1, product.getProductID());
+            rs = stmProduct.executeQuery();
+            while (rs.next()) {
+                existSeason.add(rs.getInt("SeasonID") + "");
+            }
+            // insert if not exist
+            for (String item : season) {
+                if (!existSeason.contains(item)) {
+                    query = "INSERT INTO Product_Season VALUES (?,?)";
+                    stmProduct = conn.prepareCall(query);
+                    stmProduct.setInt(1, product.getProductID());
+                    stmProduct.setInt(2, Integer.parseInt(item));
+                    stmProduct.execute();
+                }
+            }
+            //detele if no more remain
+            for (String item : existSeason) {
+                if (!season.contains(item)) {
+                    query = "DELETE Product_Season WHERE ProductID = ? AND SeasonID = ?";
+                    stmProduct = conn.prepareCall(query);
+                    stmProduct.setInt(1, product.getProductID());
+                    stmProduct.setInt(2, Integer.parseInt(item));
+                    stmProduct.execute();
+                }
+            }
+            if (resultProduct > 0 && resultConsignment > 0) {
+                conn.commit();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmProduct != null) {
+                    stmProduct.close();
+                }
+                if (stmConsignment != null) {
+                    stmConsignment.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public ProductDTO getProductByProductID(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO product = new ProductDTO();
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "select * from Product,Category "
+                    + "Where Product.CategoryID = Category.CategoryID "
+                    + "and ProductID = ? ";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String serialNumber = rs.getString("SerialNumber");
+                String purchasedDate = rs.getString("PurchasedDate");
+                int categoryID = rs.getInt("CategoryID");
+                String brand = rs.getString("Brand");
+                String description = rs.getString("Description");
+                String image = rs.getString("Image");
+                int productStatusID = rs.getInt("ProductStatusID");
+                float sellingPrice = rs.getFloat("SellingPrice") / 1000;
+                int parentCategoryID = rs.getInt("ParentID");
+                product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID);
+            }
+            return product;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public ProductDTO getInforForPublishPage(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO result = null;
+        String productName = "", serialNumber = "", purchasedDate = "", brand = "", description = "", image = "";
+        int categoryID = 0, isSpecial = 0;
+        try {
+            con = DBUltilities.makeConnection();
+            String query = "SELECT ProductName, SerialNumber, PurchasedDate, "
+                    + "CategoryID, Brand, Description, Image, IsSpecial "
+                    + "FROM Product WHERE ProductID = ?";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                productName = rs.getString("ProductName");
+                serialNumber = rs.getString("SerialNumber");
+                purchasedDate = formatDateString(rs.getString("PurchasedDate"));
+                brand = rs.getString("Brand");
+                description = rs.getString("Description");
+                image = rs.getString("Image");
+                categoryID = rs.getInt("CategoryID");
+                isSpecial = rs.getInt("IsSpecial");
+                result = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, isSpecial);
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public int getProductIDByConsignmentID(String consignmentID) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+
+            query = "SELECT ProductID FROM Consignment WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("ProductID");
+            }
+            return 0;
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return 0;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private String formatDateString(String source) {
+        if (source == null) {
+            return "";
+        }
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
+            Date date = df.parse(source);
+            String result = df2.format(date);
+            return result;
+        } catch (ParseException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    }
+
+    //used
+    private String convertPhone(String source) {
+        if (source == null) {
+            return "";
+        }
+        return "0" + source.substring(3);
+    }
+
+    public ProductDTO getInforForOrderedPage(int productID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ProductDTO result = new ProductDTO();
+        String query = "";
+        List<OrderDTO> listOrder = new ArrayList<>();
+        try {
+            con = DBUltilities.makeConnection();
+            query = "SELECT * FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            stm.setInt(2, OrderStatus.WAITING);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String orderID = rs.getString("OrderID");
+                String fullName = rs.getString("FullName");
+                String address = rs.getString("Address");
+                String email = rs.getString("Email");
+                String phone = convertPhone(rs.getString("Phone"));
+                String orderDate = formatDateString(rs.getString("Date"));
+                float sendPrice = rs.getFloat("SendPrice") / 1000;
+                OrderDTO item = new OrderDTO(orderID, orderDate, email, fullName, address, phone);
+                item.setSendPrice(sendPrice);
+                listOrder.add(item);
+            }
+            if (!listOrder.isEmpty()) {
+                result.setOrderList(listOrder);
+            }
+            query = "SELECT * FROM Product p , Consignment c WHERE p.ProductID = ? AND p.ProductID = c.ProductID";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String consignmentID = rs.getString("ConsignmentID");
+                String serialNumber = rs.getString("SerialNumber");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
+                int isSpecial = rs.getInt("IsSpecial");
+                result.setIsSpecial(isSpecial);
+                result.setConsignmentID(consignmentID);
+                result.setName(productName);
+                result.setSerialNumber(serialNumber);
+                result.setNegotiatedPrice(negotiatedPrice);
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void ExtendProduct(String consignmentID, float expiredFee) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String today = sdf.format(tempDate);
+
+            String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, today);
+            stm.setInt(2, ConsignmentStatus.EXPIRED);
+            stm.setFloat(3, expiredFee);
+            stm.setString(4, consignmentID);
+            int i = stm.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.NOT_AVAILABLE);
+            stm.setString(2, consignmentID);
+            i = stm.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    //extend consignment period
+    public void ExtendProduct(String consignmentID, int period) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        try {
+            conn = DBUltilities.makeConnection();
+
+            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ConsignmentStatus.RECEIVED);
+            stm.setString(2, consignmentID);
+            stm.setInt(3, period);
+            stm.setString(4, consignmentID);
+            int i = stm.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.ON_WEB);
+            stm.setString(2, consignmentID);
+            i = stm.executeUpdate();
+
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void changeProductStatus(String orderID, float sellingPrice) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String sellingDate = sdf.format(tempDate);
+
+            query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, sellingDate);
+            stm.setFloat(2, sellingPrice);
+            stm.setInt(3, ProductStatus.SOLD);
+            stm.setString(4, orderID);
+            stm.executeUpdate();
+            query = "UPDATE [Order] SET OrderStatusID = ? WHERE OrderID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, OrderStatus.COMPLETED);
+            stm.setString(2, orderID);
+            stm.executeUpdate();
+            query = "UPDATE [Order] SET OrderStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?) AND OrderID != ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, OrderStatus.CANCELED);
+            stm.setString(2, orderID);
+            stm.setString(3, orderID);
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public List<StatisticDTO> getProductInforForStatisticPage(int roleID) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "";
+        List<StatisticDTO> result = new ArrayList<>();
+        try {
+
+            conn = DBUltilities.makeConnection();
+            query = "SELECT c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
+                    + "p.SellingPrice, c.CancelFee, c.AgreeCancelDate, c.ReturnDate, c.ReceivedDate, "
+                    + "CASE WHEN c.AgreeCancelDate IS NOT NULL THEN c.AgreeCancelDate "
+                    + "WHEN c.ReturnDate IS NOT NULL THEN c.ReturnDate "
+                    + "WHEN c.ReceivedDate IS NOT NULL THEN c.ReceivedDate "
+                    + "END AS ActionDate "
+                    + "FROM Product p, Consignment c WHERE "
+                    + "p.ProductID = c.ProductID AND c.StoreOWnerID = ? AND "
+                    + "((c.ConsignmentStatusID = 6 AND p.ProductStatusID = 7) OR "
+                    + "(c.ConsignmentStatusID = 5 AND p.ProductStatusID = 7) OR "
+                    + "(c.ConsignmentStatusID = 7 AND p.ProductStatusID = 7)) "
+                    + "ORDER BY ActionDate";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, roleID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String productName = rs.getString("ProductName");
+                String consignorName = rs.getString("FullName");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
+                float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
+                float sellingPrice = rs.getFloat("SellingPrice") / 1000;
+                float cancelFee = rs.getFloat("CancelFee") / 1000;
+                float expiredFee = rs.getFloat("ExpiredFee") / 1000;
+                float fee = 0;
+                float revenue = 0;
+                if (cancelFee > expiredFee) {
+                    fee = cancelFee;
+                } else {
+                    fee = expiredFee;
+                }
+                String actionDate = formatDateString(rs.getString("ActionDate"));
+                System.out.println(actionDate);
+                if (fee != 0) {
+                    revenue = fee;
+                } else {
+                    revenue = sellingPrice - returnPrice;
+                }
+                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, fee, revenue, sellingPrice, actionDate);
+                result.add(item);
+            }
+            if (result.isEmpty()) {
+                return null;
+            } else {
+                return result;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

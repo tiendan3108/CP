@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import com.twilio.sdk.TwilioRestException;
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
 import hps.dao.OrderDAO;
 import hps.dao.ProductDAO;
 import hps.dto.ConsignmentDTO;
@@ -17,11 +17,9 @@ import hps.ultils.JavaUltilities;
 import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,9 +37,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author HoangNHSE61007
  */
 public class ScheduleTaskServlet extends HttpServlet implements ServletContextListener {
-    
+
     ScheduledExecutorService service;
-    
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 //        Runnable runnable = new Runnable() {
@@ -55,7 +53,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
 //        service = Executors.newSingleThreadScheduledExecutor();
 //        service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
     }
-    
+
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         service.shutdownNow();
@@ -66,10 +64,10 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         }
     }
     public static Timer timer = new Timer(true);
-    
+
     @Override
     public void init() {
-        
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -84,17 +82,17 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         service.scheduleAtFixedRate(runnable, 0, 10, TimeUnit.SECONDS);
         //task();
     }
-    
+
     @Override
     public void destroy() {
-        
+
         service.shutdownNow();
         try {
             service.awaitTermination(10, TimeUnit.SECONDS);
         } catch (InterruptedException ex) {
             Logger.getLogger(ScheduleTaskServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         super.destroy();
     }
 
@@ -148,9 +146,9 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         }
         //System.out.println("12345566");
     }
-    
+
     private void remindConsignor() {
-        DanqtDAO dao = DanqtDAO.getInstance();
+        ConsignmentDAO dao = ConsignmentDAO.getInstance();
         JavaUltilities ulti = new JavaUltilities();
         List<ConsignmentDTO> listConsignor = dao.remindConsignor();
         if (listConsignor != null) {
@@ -180,7 +178,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
             System.out.println("Tong cong co " + listConsignor.size() + " het han");
         }
     }
-    
+
     private void sendNofitication() {
         AccountReceiveNofiticationDAO dao = new AccountReceiveNofiticationDAO();
         JavaUltilities lib = new JavaUltilities();
@@ -193,7 +191,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
             for (int i = 1; i <= 9; i++) {
                 if (seconds == i) {
                     if (accounts != null) {
-                        for (int j = 0; j < accounts.size(); j++) {                            
+                        for (int j = 0; j < accounts.size(); j++) {
                             AccountReceiveNotification account = accounts.get(j);
                             int num = dao.getNumOfProduct(account.getAccountID());
                             lib.sendNofitiCation(MessageString.titleNofitication, MessageString.contenNofitication(num), account.getGcmID());

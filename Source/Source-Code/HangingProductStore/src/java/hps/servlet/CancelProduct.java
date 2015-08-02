@@ -6,7 +6,8 @@
 package hps.servlet;
 
 import com.twilio.sdk.TwilioRestException;
-import hps.dao.DanqtDAO;
+import hps.dao.AccountDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
@@ -89,11 +90,12 @@ public class CancelProduct extends HttpServlet {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String toDay = sdf.format(tempDate);
         JavaUltilities ultil = new JavaUltilities();
-        DanqtDAO dao = new DanqtDAO();
+        ProductDAO productDAO = new ProductDAO();
+        AccountDAO accountDAO = new AccountDAO();
         if (user == null || !user.getRole().equals("storeOwner")) {
             url = GlobalVariables.SESSION_TIME_OUT_PAGE;
         } else {
-            AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
+            AccountDTO consignor = accountDAO.getConsignorInforByConsignmentID(consignmentID);
             // get message
             if (action.equals("cancel")) {//agree cancel product
                 status = ProductStatus.NOT_AVAILABLE;
@@ -117,7 +119,7 @@ public class CancelProduct extends HttpServlet {
                 }
             }
             //update database
-            dao.cancelProduct(consignmentID, status);
+            productDAO.cancelProduct(consignmentID, status);
             //change url
             url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=canceled";
         }

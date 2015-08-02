@@ -5,7 +5,8 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
+import hps.dao.AccountDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
@@ -49,14 +50,15 @@ public class SoldProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                DanqtDAO dao = new DanqtDAO();
+                AccountDAO accountDAO = new AccountDAO();
+                ProductDAO productDAO = new ProductDAO();
                 String paymentMethod = request.getParameter("paymentMethod");
                 String consignmentID = request.getParameter("txtConsignmentID");
                 String tmp_returnPrice = request.getParameter("txtReturnPrice");
                 float returnPrice = Float.parseFloat(tmp_returnPrice) * 1000;
                 if (paymentMethod != null && paymentMethod.equals("paypal")) {
                     JavaUltilities ultil = new JavaUltilities();
-                    AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
+                    AccountDTO consignor = accountDAO.getConsignorInforByConsignmentID(consignmentID);
                     if (consignor.getPhone() != null) {
                         try {
                             ultil.sendSMS(MessageString.notifyConsignorSMS(consignmentID, user.getFullName()), consignor.getPhone());
@@ -69,7 +71,7 @@ public class SoldProduct extends HttpServlet {
                     }
                 }
 
-                dao.soldProduct(consignmentID, returnPrice);
+                productDAO.soldProduct(consignmentID, returnPrice);
                 url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold";
             }
             response.sendRedirect(url);

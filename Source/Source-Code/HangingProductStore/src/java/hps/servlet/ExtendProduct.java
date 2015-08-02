@@ -5,7 +5,7 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
@@ -49,18 +49,18 @@ public class ExtendProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                DanqtDAO dao = new DanqtDAO();
+                ProductDAO productDAO = new ProductDAO();
                 String action = request.getParameter("btnAction");
                 if (action != null) {
                     if (action.equals("receive")) {
                         String consignmentID = request.getParameter("txtConsignmentID");
                         String tempExpiredFee = request.getParameter("txtExpiredFee");
                         float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
-                        dao.ExtendProduct(consignmentID, expiredFee);
+                        productDAO.ExtendProduct(consignmentID, expiredFee);
                     }
                     if (action.equals("extend")) {
                         String consignmentID = request.getParameter("txtConsignmentID");
-                        dao.ExtendProduct(consignmentID, period);
+                        productDAO.ExtendProduct(consignmentID, period);
                     }
                     url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired";
                 } else {

@@ -6,9 +6,10 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
+import hps.dao.AccountDAO;
+import hps.dao.BrandDAO;
 import hps.dao.CategoryDAO;
 import hps.dao.ConsignmentDAO;
-import hps.dao.DuchcDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
@@ -94,7 +95,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                 } else if (action.equals("searchBrand")) {
                     String term = request.getParameter("term");
 
-                    List<String> list = DuchcDAO.autoCompleteBrandName(term);
+                    List<String> list = BrandDAO.autoCompleteBrandName(term);
                     String json = new Gson().toJson(list);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);
@@ -129,7 +130,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                     int deliveryMethod = 0;
                     String method = request.getParameter("r_rdDeliveryMethod");
-                    
+
                     if (method.equals("customer")) {
                         deliveryMethod = 1;
                     }
@@ -141,10 +142,10 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     java.util.Date currentDate = new java.util.Date();
                     String today = df.format(currentDate);
 
-                    if (preAppointmentDate.equals(today)&& method.equals("store")) {                        
+                    if (preAppointmentDate.equals(today) && method.equals("store")) {
                         JavaUltilities java = new JavaUltilities();
                         String noti = MessageString.titleNofitication;
-                        java.sendNofitiCation(noti, MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
+                        java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
                         System.out.println("Send notification");
                     }
 
@@ -239,19 +240,17 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                     int deliveryMethod = 0;
                     String method = request.getParameter("r_rdDeliveryMethod");
-                    
+
                     if (method.equals("customer")) {
                         deliveryMethod = 1;
                     }
-                    
+
                     float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
-                    
 
                     boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
-                    if(result){
+                    if (result) {
                         consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice);
                     }
-                    
 
                     ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                     //send sms and email
@@ -353,7 +352,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         if (preAppointmentDate.equals(today) && method.equals("store")) {
                             JavaUltilities java = new JavaUltilities();
                             String noti = MessageString.titleNofitication;
-                            java.sendNofitiCation(noti, MessageString.newProductNotification(productName), DuchcDAO.getGcmID(storeOwner.getAccountID()));
+                            java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
                             System.out.println("Send notification");
                         }
                     }

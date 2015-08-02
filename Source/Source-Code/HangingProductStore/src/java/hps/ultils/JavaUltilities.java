@@ -9,7 +9,8 @@ import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
 import com.twilio.sdk.resource.factory.MessageFactory;
 import com.twilio.sdk.resource.instance.Message;
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.ProductDAO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import hps.mobile.nofitication.Data;
@@ -218,8 +219,8 @@ public class JavaUltilities {
     }
 
     public static void deleteProductImage(String path, int productID) {
-        DanqtDAO dao = new DanqtDAO();
-        ProductDTO product = dao.getProductByID(productID);
+        ProductDAO productDAO = new ProductDAO();
+        ProductDTO product = productDAO.getProductByProductID(productID);
         File image = new File(path + "\\" + product.getImage());
         try {
             image.delete();
@@ -230,8 +231,8 @@ public class JavaUltilities {
     }
 
     public void sendSMSForExpiredProduct(String storeOwnerName) {
-        DanqtDAO dao = new DanqtDAO();
-        List<ConsignmentDTO> result = dao.remindConsignor();
+        ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+        List<ConsignmentDTO> result = consignmentDAO.remindConsignor();
         String subject = "[HPS] Hết hạn kí gửi";
         for (Iterator<ConsignmentDTO> item = result.iterator(); item.hasNext();) {
             ConsignmentDTO next = item.next();

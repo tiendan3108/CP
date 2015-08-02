@@ -6,9 +6,7 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
-import hps.dao.DanqtDAO;
 import hps.dao.ProductDAO;
-import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,15 +57,15 @@ public class LoadAvailableProduct extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
             int productID;
-            DanqtDAO dao = new DanqtDAO();
+            ProductDAO productDAO = new ProductDAO();
             String tmp_productID = request.getParameter("productID");
             String consignmentID = request.getParameter("consignmentID");
             if (tmp_productID == null) {
-                productID = dao.getProductIDByConsignmentID(consignmentID);
+                productID = productDAO.getProductIDByConsignmentID(consignmentID);
             } else {
                 productID = Integer.parseInt(tmp_productID);
             }
-            ProductDTO infor = dao.getInforForPublishPage(productID);
+            ProductDTO infor = productDAO.getInforForPublishPage(productID);
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);

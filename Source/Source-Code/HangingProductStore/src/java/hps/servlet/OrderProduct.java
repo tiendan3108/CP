@@ -6,7 +6,10 @@
 package hps.servlet;
 
 import com.twilio.sdk.TwilioRestException;
-import hps.dao.DanqtDAO;
+import hps.dao.AccountDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.OrderDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.OrderDTO;
 import hps.ultils.GlobalVariables;
@@ -54,7 +57,10 @@ public class OrderProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                DanqtDAO dao = new DanqtDAO();
+                ProductDAO productDAO = new ProductDAO();
+                AccountDAO accountDAO = new AccountDAO();
+                ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+                OrderDAO orderDAO = new OrderDAO();
                 String orderID = request.getParameter("txtOrderID");
                 JavaUltilities ultil = new JavaUltilities();
                 List<OrderDTO> listCustomer = null;
@@ -62,10 +68,10 @@ public class OrderProduct extends HttpServlet {
                 if (action.equals("order")) {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
                     float sellingPrice = Float.parseFloat(temp_sellingPrice) * 1000;
-                    String consignmentID = dao.getConsignmentIDByOrderID(orderID);
-                    AccountDTO consignor = dao.getConsignorInforByOrderID(orderID);
-                    listCustomer = dao.getListOrderedCustomer(orderID, true);
-                    dao.changeProductStatus(orderID, sellingPrice);
+                    String consignmentID = consignmentDAO.getConsignmentIDByOrderID(orderID);
+                    AccountDTO consignor = accountDAO.getConsignorInforByOrderID(orderID);
+                    listCustomer = orderDAO.getListOrderedCustomer(orderID, true);
+                    productDAO.changeProductStatus(orderID, sellingPrice);
                     if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         try {
                             ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
@@ -80,8 +86,8 @@ public class OrderProduct extends HttpServlet {
                     }
                 }
                 if (action.equals("cancel")) {
-                    dao.cancelAllOrders(orderID);
-                    listCustomer = dao.getListOrderedCustomer(orderID, false);
+                    orderDAO.cancelAllOrders(orderID);
+                    listCustomer = orderDAO.getListOrderedCustomer(orderID, false);
                 }
                 if (action.equals("sendPrice")) {
                     String[] orderIDs = request.getParameterValues("chkboxCustomer");
@@ -93,7 +99,7 @@ public class OrderProduct extends HttpServlet {
                     }
                     if (orderIDs.length > 0) {
                         for (String _orderID : orderIDs) {
-                            String phone = dao.getCustomerInforByOrderID(_orderID, sendPrice);
+                            String phone = orderDAO.getCustomerInforByOrderID(_orderID, sendPrice);
                             if (phone != null && !phone.equals("")) {
                                 try {
                                     ultil.sendSMS(MessageString.sendPriceSMS(_orderID, sendPrice, user.getFullName()), phone);

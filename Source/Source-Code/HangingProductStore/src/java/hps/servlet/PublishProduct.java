@@ -5,7 +5,8 @@
  */
 package hps.servlet;
 
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
 import hps.ultils.GlobalVariables;
@@ -69,7 +70,8 @@ public class PublishProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                DanqtDAO dao = new DanqtDAO();
+                ProductDAO productDAO = new ProductDAO();
+                ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                 try {
                     items = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
                 } catch (FileUploadException e) {
@@ -119,7 +121,7 @@ public class PublishProduct extends HttpServlet {
                         if (!filename.equals("")) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
-                            String consignmentID = dao.getConsignmentIDByProductID(productID);
+                            String consignmentID = consignmentDAO.getConsignmentIDByProductID(productID);
                             filename = consignmentID + filename;
                             image = "assets\\image\\" + filename;
                             imagePath = "assets/image/" + filename;
@@ -165,7 +167,7 @@ public class PublishProduct extends HttpServlet {
                     if (tempSeason.contains("4")) {
                         season.add("4");
                     }
-                    dao.publishOnWeb(product, season);
+                    productDAO.publishOnWeb(product, season);
                     url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action;
                 }
             }

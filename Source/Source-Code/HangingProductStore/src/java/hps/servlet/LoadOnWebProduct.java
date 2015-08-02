@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
 import hps.dto.ConsignmentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,8 +39,8 @@ public class LoadOnWebProduct extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             request.setCharacterEncoding("UTF-8");
             String consignmentID = request.getParameter("consignmentID");
-            DanqtDAO dao = new DanqtDAO();
-            ConsignmentDTO infor = dao.getInforForOnWebPage(consignmentID);
+            ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+            ConsignmentDTO infor = consignmentDAO.getInforForOnWebPage(consignmentID);
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);

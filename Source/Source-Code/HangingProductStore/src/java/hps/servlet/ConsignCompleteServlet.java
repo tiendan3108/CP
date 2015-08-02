@@ -5,7 +5,9 @@
  */
 package hps.servlet;
 
-import hps.dao.DuchcDAO;
+import hps.dao.AccountDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.ProductDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.ProductDTO;
@@ -136,9 +138,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                             case "rdPayment":
                                 paymentMethod = item.getString().trim();
                                 break;
-                                case "rdDeliveryMethod":
+                            case "rdDeliveryMethod":
                                 String takenByStore = item.getString().trim();
-                                if(takenByStore.equals("customer")){
+                                if (takenByStore.equals("customer")) {
                                     deliveryMethod = 1;
                                 }
                                 break;
@@ -206,10 +208,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                 product.setImage(imagePath);
 
                 //product.setImage(imagePath);
-                DuchcDAO dao = new DuchcDAO();
+                ProductDAO productDAO = new ProductDAO();
+                AccountDAO accountDAO = new AccountDAO();
+                ConsignmentDAO consignmentDAO = new ConsignmentDAO();
 
                 //Add new product and get id of it
-                int productID = dao.addProduct(product);
+                int productID = productDAO.addProduct(product);
                 if (productID > 0) {
                     //get memberID if session MEMBER is not null
                     int memberID = 5;
@@ -220,7 +224,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     int storeOwnerID = 0;
 
                     storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
-                    AccountDTO store = dao.getStoreOwnerByID(storeOwnerID);
+                    AccountDTO store = accountDAO.getStoreOwnerByID(storeOwnerID);
                     float maxPrice = 0;
                     float minPrice = 0;
                     //get store de lay fomula va nam cua store
@@ -243,8 +247,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                     ConsignmentDTO consignment = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
                     consignment.setDeliveryMethod(deliveryMethod);
-                    
-                    boolean result = dao.addConsigment(consignment);
+
+                    boolean result = consignmentDAO.addConsigment(consignment);
                     if (result) {
                         JavaUltilities ultil = new JavaUltilities();
                         String msg = "Cám ơn " + fullName + " đã ký gửi. \n"

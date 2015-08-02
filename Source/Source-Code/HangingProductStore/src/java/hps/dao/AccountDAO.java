@@ -8,11 +8,13 @@ package hps.dao;
 import hps.dto.AccountDTO;
 import hps.ultils.DBUltilities;
 import hps.ultils.GlobalVariables;
-import hps.ultils.OrderStatus;
+import hps.ultils.JavaUltilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +63,7 @@ public class AccountDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -74,7 +76,7 @@ public class AccountDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -101,7 +103,7 @@ public class AccountDAO {
                 }
                 return account;
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     if (rs != null) {
@@ -114,7 +116,7 @@ public class AccountDAO {
                         con.close();
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else if (role.equals(GlobalVariables.MEMBER)) {
@@ -131,7 +133,7 @@ public class AccountDAO {
                 }
                 return account;
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
                     if (rs != null) {
@@ -144,7 +146,7 @@ public class AccountDAO {
                         con.close();
                     }
                 } catch (SQLException ex) {
-                    Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -183,7 +185,7 @@ public class AccountDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -196,7 +198,7 @@ public class AccountDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -237,7 +239,7 @@ public class AccountDAO {
             return accounts;
 
         } catch (SQLException ex) {
-            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 if (rs != null) {
@@ -250,7 +252,7 @@ public class AccountDAO {
                     con.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;
@@ -437,6 +439,255 @@ public class AccountDAO {
                 }
                 if (con != null) {
                     con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public AccountDTO getStoreOwnerByID(int storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
+            String query = "SELECT     S.StoreOwnerID, A.FullName, A.Address, A.Phone, A.Email, S.Formula "
+                    + " FROM         dbo.Account AS A INNER JOIN "
+                    + "              dbo.StoreOwner AS S ON A.AccountID = S.AccountID "
+                    + " WHERE     (S.StoreOwnerID = ?)";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, storeOwnerID);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                AccountDTO store = new AccountDTO();
+                store.setRoleID(rs.getInt("StoreOwnerID"));
+                store.setFullName(rs.getString("FullName"));
+                store.setAddress(rs.getString("Address"));
+                store.setPhone(rs.getString("Phone"));
+                store.setEmail(rs.getString("Email"));
+                store.setFormula(rs.getFloat("Formula"));
+                return store;
+            }
+            return null;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return null;
+    }
+
+    public List<AccountDTO> getListStoreOwnerByCategory(int categoryID, double basicPrice) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
+            String query = "SELECT     c.StoreOwnerID, a.FullName, a.Address, a.Phone, a.Email , s.Formula\n"
+                    + "                     FROM         dbo.Account AS a INNER JOIN\n"
+                    + "                                           dbo.StoreOwner AS s ON a.AccountID = s.AccountID INNER JOIN\n"
+                    + "                                           dbo.StoreOwner_Category AS c ON s.StoreOwnerID = c.StoreOwnerID\n"
+                    + "                     WHERE     (c.CategoryID = ?) ORDER BY Formula DESC";
+            stm = con.prepareStatement(query);
+            stm.setInt(1, categoryID);
+            rs = stm.executeQuery();
+            List<AccountDTO> list = new ArrayList<AccountDTO>();
+            while (rs.next()) {
+                AccountDTO store = new AccountDTO();
+                store.setRoleID(rs.getInt("StoreOwnerID"));
+                store.setFullName(rs.getString("FullName"));
+                store.setAddress(rs.getString("Address"));
+                store.setPhone(rs.getString("Phone"));
+                store.setEmail(rs.getString("Email"));
+                store.setFormula(rs.getFloat("Formula"));
+
+                //add MinPrice & MaxPrice
+                store.setMinPrice(Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000));
+                store.setMaxPrice(Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000));
+                list.add(store);
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return null;
+    }
+
+    //begin merge
+    //duchcdao
+    public static String getGcmID(String storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String gcmID = "";
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT GcmID "
+                    + " FROM Account "
+                    + " WHERE AccountID = ? ";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, storeOwnerID);
+
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                gcmID = rs.getString("GcmID");
+            }
+            return gcmID;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    //AccountDAO
+    public AccountDTO getConsignorInforByConsignmentID(String consignmentID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        String fullName = "", address = "", phone = "", email = "", paypalAccount = "";
+        float consignedPrice = 0;
+        try {
+            conn = DBUltilities.makeConnection();
+            String query = "SELECT * FROM Consignment WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                fullName = rs.getString("FullName");
+                address = rs.getString("Address");
+                phone = convertPhone(rs.getString("Phone"));
+                email = rs.getString("Email");
+                consignedPrice = rs.getFloat("ReturnedPrice") / 1000;
+                paypalAccount = rs.getString("PaypalAccount");
+                AccountDTO result = new AccountDTO(fullName, address, phone, email, consignedPrice);
+                result.setPaypalAccount(paypalAccount);
+                return result;
+            }
+            return null;
+        } catch (SQLException e) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private String convertPhone(String source) {
+        if (source == null) {
+            return "";
+        }
+        return "0" + source.substring(3);
+    }
+
+    private String formatDateString(String source) {
+        if (source == null) {
+            return "";
+        }
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
+            Date date = df.parse(source);
+            String result = df2.format(date);
+            return result;
+        } catch (ParseException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
+        }
+    }
+
+    public AccountDTO getConsignorInforByOrderID(String orderID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        AccountDTO result = new AccountDTO();
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+            query = "SELECT DISTINCT c.* FROM [Order] o, Consignment c WHERE c.ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?) AND o.ProductID = c.ProductID";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, orderID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String fullName = rs.getString("FullName");
+                String email = rs.getString("Email");
+                String phone = rs.getString("Phone");
+                result.setFullName(fullName);
+                result.setEmail(email);
+                result.setPhone(phone);
+            }
+            return result;
+        } catch (SQLException e) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);

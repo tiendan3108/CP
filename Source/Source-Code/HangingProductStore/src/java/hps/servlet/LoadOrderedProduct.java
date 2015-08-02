@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
-import hps.dao.DanqtDAO;
+import hps.dao.ProductDAO;
 import hps.dto.ProductDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,8 +58,8 @@ public class LoadOrderedProduct extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             String tmp_productID = request.getParameter("productID");
             int productID = Integer.parseInt(tmp_productID);
-            DanqtDAO dao = new DanqtDAO();
-            ProductDTO infor = dao.getInforForOrderedPage(productID);
+            ProductDAO productDAO = new ProductDAO();
+            ProductDTO infor = productDAO.getInforForOrderedPage(productID);
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);

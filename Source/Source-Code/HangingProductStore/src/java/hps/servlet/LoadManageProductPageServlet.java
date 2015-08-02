@@ -6,7 +6,8 @@
 package hps.servlet;
 
 import hps.dao.CategoryDAO;
-import hps.dao.DanqtDAO;
+import hps.dao.ConsignmentDAO;
+import hps.dao.SeasonDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
@@ -16,7 +17,6 @@ import hps.ultils.ProductStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,8 +46,9 @@ public class LoadManageProductPageServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            DanqtDAO dao = new DanqtDAO();
-            CategoryDAO catDao = new CategoryDAO();
+            ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            SeasonDAO seasonDAO = new SeasonDAO();
             HttpSession session = request.getSession(false);
             AccountDTO user = null;
             if (session != null) {
@@ -58,16 +59,16 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
 
-                List<ConsignmentDTO> available = dao.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
-                List<ConsignmentDTO> onWeb = dao.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
-                List<ConsignmentDTO> ordered = dao.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED);
-                List<ConsignmentDTO> sold = dao.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
-                List<ConsignmentDTO> completed = dao.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
-                List<ConsignmentDTO> canceled = dao.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
-                List<ConsignmentDTO> expired = dao.getExpiredProduct(user.getRoleID());
-                List<CategoryDTO> parentCat = catDao.getParentCategory();
-                List<CategoryDTO> allCat = catDao.getAllCategory();
-                List<SeasonDTO> season = dao.getSeason();
+                List<ConsignmentDTO> available = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
+                List<ConsignmentDTO> onWeb = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
+                List<ConsignmentDTO> ordered = consignmentDAO.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED);
+                List<ConsignmentDTO> sold = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
+                List<ConsignmentDTO> completed = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
+                List<ConsignmentDTO> canceled = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
+                List<ConsignmentDTO> expired = consignmentDAO.getExpiredProduct(user.getRoleID());
+                List<CategoryDTO> parentCat = categoryDAO.getParentCategory();
+                List<CategoryDTO> allCat = categoryDAO.getAllCategory();
+                List<SeasonDTO> season = seasonDAO.getSeason();
 
                 Object currentTab = request.getAttribute("currentTab");
                 String temp_currentTab = request.getParameter("currentTab");

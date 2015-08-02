@@ -8,6 +8,7 @@ package hps.dao;
 import hps.dto.OrderDTO;
 import hps.ultils.DBUltilities;
 import hps.ultils.OrderStatus;
+import hps.ultils.ProductStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -271,6 +272,149 @@ public class OrderDAO {
             }
         }
         return null;
+    }
+
+    public List<OrderDTO> getListOrderedCustomer(String orderID, boolean flag) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        List<OrderDTO> result = new ArrayList<>();
+        String query = "";
+        try {
+            conn = DBUltilities.makeConnection();
+            if (flag) {// sell to 1 customer
+                query = "SELECT * FROM [Order] WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?) AND OrderID != ?";
+            } else {// cancel all orders
+                query = "SELECT * FROM [Order] WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+            }
+            stm = conn.prepareStatement(query);
+            stm.setString(1, orderID);
+            if (flag) {
+                stm.setString(2, orderID);
+            }
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String fullName = rs.getString("FullName");
+                String email = rs.getString("Email");
+                String phone = rs.getString("Phone");
+                String item_orderID = rs.getString("OrderID");
+                OrderDTO item = new OrderDTO();
+                item.setEmail(email);
+                item.setPhone(phone);
+                item.setFullName(fullName);
+                item.setOrderID(item_orderID);
+                result.add(item);
+            }
+            return result;
+        } catch (SQLException e) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void cancelAllOrders(String orderID) {
+        Connection conn = null;
+        PreparedStatement stmO = null, stmP = null;
+        String query = "";
+        try {
+
+            conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
+            query = "UPDATE [Order] SET OrderStatusID = ? WHERE ProductID = "
+                    + "(SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+            stmO = conn.prepareStatement(query);
+            stmO.setInt(1, OrderStatus.EXPIRED);
+            stmO.setString(2, orderID);
+            stmO.executeUpdate();
+
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
+                    + "(SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+            stmP = conn.prepareStatement(query);
+            stmP.setInt(1, ProductStatus.ON_WEB);
+            stmP.setString(2, orderID);
+            stmP.executeUpdate();
+
+            conn.commit();
+        } catch (SQLException e) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (stmO != null) {
+                    stmO.close();
+                }
+                if (stmP != null) {
+                    stmP.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public String getCustomerInforByOrderID(String _orderID, float sendPrice) {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String query = "";
+        try {
+
+            conn = DBUltilities.makeConnection();
+            query = "UPDATE [Order] SET SendPrice = ? WHERE OrderID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setFloat(1, sendPrice);
+            stm.setString(2, _orderID);
+            stm.executeUpdate();
+
+            query = "SELECT * FROM [Order] WHERE OrderID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, _orderID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                return convertPhone(rs.getString("Phone"));
+            }
+            return null;
+        } catch (SQLException e) {
+            Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private String convertPhone(String source) {
+        if (source == null) {
+            return "";
+        }
+        return "0" + source.substring(3);
     }
 
 }

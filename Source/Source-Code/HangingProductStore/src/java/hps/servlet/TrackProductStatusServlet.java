@@ -7,7 +7,6 @@ package hps.servlet;
 
 import com.google.gson.Gson;
 import hps.dao.ConsignmentDAO;
-import hps.dao.DuchcDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
@@ -91,13 +90,12 @@ public class TrackProductStatusServlet extends HttpServlet {
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 request.setAttribute("CONSIGNMENT", consignment);
 
-            }else if (action.equals("extend")) {
+            } else if (action.equals("extend")) {
                 String consignmentID = request.getParameter("consignmentID");
                 dao.ExtendProduct(consignmentID, 30);
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
                 request.setAttribute("CONSIGNMENT", consignment);
-            }
-            else if (action.equals("m_search")) {
+            } else if (action.equals("m_search")) {
                 String searchValue = request.getParameter("searchValue");
                 if (searchValue == null) {
                     searchValue = "";

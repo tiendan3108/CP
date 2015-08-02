@@ -6,7 +6,7 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
-import hps.dao.DuchcDAO;
+import hps.dao.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -38,11 +38,11 @@ public class BrandAutocompleteServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             String term = request.getParameter("term");
-                List<String> list = DuchcDAO.autoCompleteBrandName(term);
-                String json = new Gson().toJson(list);
-                response.setContentType("application/json;charset=UTF-8");
-                response.getWriter().write(json);
-                return;
+            List<String> list = BrandDAO.autoCompleteBrandName(term);
+            String json = new Gson().toJson(list);
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(json);
+            return;
         }
     }
 
