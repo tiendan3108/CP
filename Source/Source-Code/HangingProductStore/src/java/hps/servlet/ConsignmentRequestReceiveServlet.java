@@ -320,7 +320,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         deliveryMethod = 1;
                     }
                     //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                    boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
                     if (result) {
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         java.util.Date currentDate = new java.util.Date();

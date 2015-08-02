@@ -1427,6 +1427,7 @@
                             $("#modalRequestAccept").modal("show");
 
                         } else if (data.consignmentStatusID == 3) {
+                            $('#ar_negotiatedPrice').val("");
                             $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
                             $("#ar_ActionValue_confirm").val(data.consigmentID);
                             $("#r_ActionValue_confirm").val("");
@@ -1522,13 +1523,31 @@
             });
             $('#ar_btnSubmit').click(function () {
                 var check = true;
-                if ($('#r_productName').val().length <= 0 || $('#r_productName').val().length > 100) {
+                if ($('#r_productName').val().length == 0 || $('#r_productName').val().length > 100) {
                     check = false;
+                }
+                if ($('#r_hour').val().length == 0) {
+                    check = false;
+                }
+                if ($('#r_receivedDate').val().length == 0) {
+                    check = false;
+                }
+                if ($('#r_txtFullName').val().length <= 0 || $('#r_txtFullName').val().length > 50) {
+                    check = false;
+                }
+
+                if ($('#r_txtPhone').val().length < 10 || $('#r_txtPhone').val().substring(0, 1) != "0") {
+                    check = false;
+                }
+                if ($("input[name='r_rdPayment'][value='cc']").is(":checked")) {
+                    if ($('#r_txtPaypalAccount').val().length == 0) {
+                        check = false;
+                    }
                 }
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
-                        updateRequest();
-                        $('form#r_form').submit();
+                        updateRequestBeforeAccept();
+                        
                     } else {
                         alert("Xin nhập đúng giá thỏa thuận!");
                     }
@@ -1562,7 +1581,7 @@
 
                 if (check) {
                     updateRequest();
-                    alert("Cập nhật thành công");
+                    //alert("Cập nhật thành công");
                 } else {
                     alert("Xin nhập đầy đủ thông tin");
                 }
@@ -1600,7 +1619,7 @@
                     if (data) {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
-                        consignmentTD.next().next().next().html(receivedDate + "&nbsp;" + hour);
+                        consignmentTD.next().next().next().html(hour + "|" + receivedDate);
                         if (deliveryMethod == "customer") {
                             consignmentTD.next().next().next().next().html("<font color='green'>Tự mang đến</font>");
                         } else {
@@ -1608,9 +1627,46 @@
                         }
 
                         $("#r_name").html("<small>Khách hàng: </small> " + fullName);
-                        return true;
+                        alert("Cập nhật thành công");
                     } else {
-                        return false;
+                        alert("Cập nhật thất bại");
+                    }
+                });
+            }
+            
+            function updateRequestBeforeAccept() {
+                var consignmentID = $("#r_ActionValue").val();
+                var productName = $("#r_productName").val();
+                var categoryID = $("#r_category").val();
+                var brand = $("#r_brand").val();
+                var description = $("#r_description").val();
+                var receivedDate = $("#r_receivedDate").val();
+                var hour = $("#r_hour").val();
+                var isSpecial = 0;
+                if ($("input#r_isSpecial").is(":checked")) {
+                    isSpecial = 1;
+                }
+                var fullName = $("#r_txtFullName").val();
+                var address = $("#r_txtAddress").val();
+                var phone = $("#r_txtPhone").val();
+                var email = $("#r_txtEmail").val();
+                var paypalAccount = $("#r_txtPaypalAccount").val();
+                if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
+                    paypalAccount = "";
+                }
+                var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
+
+                $.get('ConsignmentRequestReceive',
+                        {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName,
+                            categoryID: categoryID, brand: brand, description: description,
+                            receivedDate: receivedDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
+                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
+                function (data) {
+                    if (data) {
+                        $('form#r_form').submit();
+                        
+                    } else {
+                        alert("Không thể chấp nhận sản phẩm");
                     }
                 });
             }

@@ -786,6 +786,78 @@ public class ConsignmentDAO {
         }
         return false;
     }
+    
+    public boolean updateAcceptedrequest(String consignmentID, String fullName, String address, 
+            String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
+            String productName, int categoryID, String brand, String description, int isSpecial) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "UPDATE Consignment "
+                    + " SET FullName = ?, Address = ?, Phone = ?, Email = ?, PaypalAccount = ?, "
+                    + " AppointmentDate = ?, ConsignmentStatusID = ?, DeliveryMethod = ? "
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, fullName);
+            if(address.isEmpty()){
+                stm.setNull(2, java.sql.Types.NVARCHAR);
+            }else{
+                stm.setString(2, address);
+            }
+            stm.setString(3, phone);
+            
+            if(email.isEmpty()){
+                stm.setNull(4, java.sql.Types.VARCHAR);
+            }else{
+                stm.setString(4, email);
+            }
+            
+            if(paypalAccount.isEmpty()){
+                stm.setNull(5, java.sql.Types.VARCHAR);
+            }else{
+                stm.setString(5, paypalAccount);
+            }
+            
+            stm.setString(6, appointmentDate);
+            stm.setInt(7, GlobalVariables.CONSIGNMENT_ACCEPTED);
+            stm.setInt(8, deliveryMethod);
+            stm.setString(9, consignmentID);
+
+            int result = stm.executeUpdate();
+            if (result > 0) {
+                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
+                        + " IsSpecial = ?, ProductStatusID = 1"
+                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, productName);
+                stm.setInt(2, categoryID);
+                stm.setString(3, brand);
+                stm.setString(4, description);
+                stm.setInt(5, isSpecial);
+                stm.setString(6, consignmentID);
+                result = stm.executeUpdate();
+                if (result > 0) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
 
     //cancel Product by change status of product as Canceled and update date on consignment
     public boolean cancelConsignmentInProduct(int productID) {
