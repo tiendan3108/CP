@@ -562,52 +562,9 @@ public class ConsignmentDAO {
         return false;
     }
 
-    // update Consigment Status AS Received and Product Status AS Available
-//    public boolean updateConsignmentStatusAsReceived(String consignmentID,
-//            double minPrice, double maxPrice, int productID) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            String sql = "UPDATE Consignment"
-//                    + " SET MinPrice = ?, MaxPrice = ?, ReviewProductDate = ?, ConsignmentStatusID = 5"
-//                    + " WHERE ConsignmentID = ?";
-//            stm = con.prepareStatement(sql);
-//            stm.setDouble(1, minPrice);
-//            stm.setDouble(2, maxPrice);
-//            stm.setDate(3, new Date(System.currentTimeMillis()));
-//            stm.setString(4, consignmentID);
-//
-//            int result = stm.executeUpdate();
-//            if (result > 0) {
-//                sql = "UPDATE Product SET ProductStatusID = 2 WHERE ProductID = ?";
-//                stm = con.prepareStatement(sql);
-//                stm.setDouble(1, productID);
-//                result = stm.executeUpdate();
-//                if (result > 0) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return false;
-//    }
+
     //update consignment and product status for request management
-    public boolean updateConsignmentWhenAcceptProduct(String consignmentID, float negotiatedPrice, String productName, int categoryID,
-            String brand, String description, int isSpecial) {
+    public boolean updateConsignmentWhenAcceptProduct(String consignmentID , float negotiatedPrice) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
@@ -629,17 +586,13 @@ public class ConsignmentDAO {
 
             int result = stm.executeUpdate();
             if (result > 0) {
-                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
-                        + " ProductStatusID = 2, IsSpecial = ? "
-                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                sql = "UPDATE Product SET ProductStatusID = ? "
+                        + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, productName);
-                stm.setInt(2, categoryID);
-                stm.setString(3, brand);
-                stm.setString(4, description);
-                //stm.setDouble(5, productStatusID);
-                stm.setInt(5, isSpecial);
-                stm.setString(6, consignmentID);
+
+                stm.setInt(1, 2);
+                
+                stm.setString(2, consignmentID);
                 result = stm.executeUpdate();
                 if (result > 0) {
                     return true;
@@ -663,57 +616,7 @@ public class ConsignmentDAO {
         return false;
     }
 
-    //update consignment with date in consignment management 14/7/2015
-//    public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String appointmentDate,
-//            String productName, int categoryID, String brand, String description, int isSpecial) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            String sql = "UPDATE Consignment"
-//                    + " SET  AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?"
-//                    + " WHERE ConsignmentID = ?";
-//            stm = con.prepareStatement(sql);
-//
-//            stm.setString(1, appointmentDate);
-//            stm.setString(2, getCurrentDate());
-//            stm.setInt(3, GlobalVariables.CONSIGNMENT_ACCEPTED);
-//            stm.setString(4, consignmentID);
-//
-//            int result = stm.executeUpdate();
-//            if (result > 0) {
-//                sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
-//                        + " IsSpecial = ?, ProductStatusID = 1"
-//                        + "WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
-//                stm = con.prepareStatement(sql);
-//                stm.setString(1, productName);
-//                stm.setInt(2, categoryID);
-//                stm.setString(3, brand);
-//                stm.setString(4, description);
-//                stm.setInt(5, isSpecial);
-//                stm.setString(6, consignmentID);
-//                result = stm.executeUpdate();
-//                if (result > 0) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return false;
-//    }
+  
     public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address, 
             String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
             String productName, int categoryID, String brand, String description, int isSpecial) {

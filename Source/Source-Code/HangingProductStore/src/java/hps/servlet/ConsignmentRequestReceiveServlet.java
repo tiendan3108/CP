@@ -211,23 +211,47 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                 } else if (action.equals("ar_accept")) {
                     String consignmentID = request.getParameter("consignmentID");
-                    //int productID = Integer.parseInt(request.getParameter("productID"));
                     String productName = request.getParameter("txtProductName");
-                    int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
-                    String brand = request.getParameter("txtBrand");
-                    String description = request.getParameter("txtDescription");
-                    float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
+                    String hour = request.getParameter("txtHour");
+
                     int isSpecial = 0;
                     if (request.getParameter("txtIsSpecial") != null) {
                         isSpecial = 1;
                     }
 
-//                Date date = new Date();
-//                DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-//                String receivedDate = dateFormat.format(date);
-                    //consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, receivedDate, GlobalVariables.CONSIGNMENT_RECEIVED, productID, productName, categoryID, brand, description, 2);
-                    //consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, GlobalVariables.CONSIGNMENT_RECEIVED, productID, productName, categoryID, brand, description, 2);
-                    consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice, productName, categoryID, brand, description, isSpecial);
+// get appointmentDate and add hour into it then format to update database
+                    String preAppointmentDate = request.getParameter("txtReceivedDate");
+                    String appointmentDate = formatDate(preAppointmentDate + " " + hour);
+
+                    int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
+                    String brand = request.getParameter("txtBrand");
+                    String description = request.getParameter("txtDescription");
+                    //int productID = Integer.parseInt(request.getParameter("productID"));
+                    String fullName = request.getParameter("txtFullName");
+                    String address = request.getParameter("txtAddress");
+                    String phone = "+84" + request.getParameter("txtPhone").substring(1);
+                    String email = request.getParameter("txtEmail");
+                    String paymentMethod = request.getParameter("r_rdPayment");
+                    String paypalAccount = request.getParameter("txtPaypalAccount");
+                    if (paymentMethod.equals("direct")) {
+                        paypalAccount = "";
+                    }
+
+                    int deliveryMethod = 0;
+                    String method = request.getParameter("r_rdDeliveryMethod");
+                    
+                    if (method.equals("customer")) {
+                        deliveryMethod = 1;
+                    }
+                    
+                    float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
+                    
+
+                    boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                    if(result){
+                        consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice);
+                    }
+                    
 
                     ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                     //send sms and email

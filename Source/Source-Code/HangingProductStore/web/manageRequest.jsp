@@ -1546,7 +1546,7 @@
                 }
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
-                        updateRequestBeforeAccept();
+                        $('form#r_form').submit();
                         
                     } else {
                         alert("Xin nhập đúng giá thỏa thuận!");
