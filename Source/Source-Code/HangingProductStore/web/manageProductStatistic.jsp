@@ -294,6 +294,7 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${item.consignmentStatusID == 1}">${item.createdDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 2 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
                                                             <c:when test="${item.consignmentStatusID == 3 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
                                                             <c:when test="${item.consignmentStatusID == 5 && not empty item.reviewProductDate}">${item.reviewProductDate}</c:when>
                                                             <c:when test="${not empty item.agreeCancelDate}">${item.agreeCancelDate}</c:when>

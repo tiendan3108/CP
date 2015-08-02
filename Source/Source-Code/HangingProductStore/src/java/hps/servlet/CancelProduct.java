@@ -96,7 +96,7 @@ public class CancelProduct extends HttpServlet {
             AccountDTO consignor = dao.getConsignorInforByConsignmentID(consignmentID);
             // get message
             if (action.equals("cancel")) {//agree cancel product
-                status = ProductStatus.COMPLETED;
+                status = ProductStatus.NOT_AVAILABLE;
             } else {//not agree cancel product
                 status = ProductStatus.ON_WEB;
                 if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {

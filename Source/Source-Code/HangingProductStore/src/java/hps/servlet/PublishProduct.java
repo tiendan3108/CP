@@ -114,14 +114,14 @@ public class PublishProduct extends HttpServlet {
                         }
                     } else {
                         String path = request.getServletContext().getRealPath("/");
-                        String basePath = path.substring(0, path.length() - 9) + "web";
+                        String basePath = path.substring(0, path.length() - 10) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
                         if (!filename.equals("")) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
                             String consignmentID = dao.getConsignmentIDByProductID(productID);
                             filename = consignmentID + filename;
-                            image = "assets\\image\\" + filename;
+                            image = "assets/image/" + filename;
                             File file1 = new File((path + "\\" + image).replaceAll("\\\\", "/")); // deployment place
                             File file2 = new File((basePath + "\\" + image).replaceAll("\\\\", "/"));//base place
                             try {

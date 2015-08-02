@@ -539,7 +539,7 @@
                                             <form action="SoldProduct" method="POST">
                                                 <input type="hidden" name="txtReturnPrice" id="sold_returnPrice1" value=""/>
                                                 <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
-                                                <button class="btn btn-primary" name="btnAction" type="submit" value="pay" onclick="return checkSoldProduct();">Trả tiền</button>
+                                                <button class="btn btn-primary" name="btnAction" type="submit" value="pay">Trả tiền</button>
                                                 <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
                                             </form>
                                         </div>
@@ -1109,7 +1109,7 @@
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            $('#avai_txtImage').attr('src', e.target.result);
+                            $('#avai_Image').attr('src', e.target.result);
                         };
                         reader.readAsDataURL(input.files[0]);
                     }
@@ -1119,7 +1119,7 @@
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
-                            $('#onweb_txtImage').attr('src', e.target.result);
+                            $('#onWeb_Image').attr('src', e.target.result);
                         };
                         reader.readAsDataURL(input.files[0]);
                     }
@@ -1169,8 +1169,8 @@
                                         orderList[i].orderedDate + '</td><td>' +
                                         orderList[i].phone + '</td></tr>';
                             }
+                            $('#table_body_ordered').append(row);
                         }
-                        $('#table_body_ordered').append(row);
                     })
                     $('#orderedModal').modal('show');
                 });
@@ -1211,6 +1211,7 @@
                         $("#sold_paypalAccount").text(response.paypalAccount);
                         $("#soldconsignmentID").val(response.consigmentID);
                         $("#sold_returnPrice").val(price);
+                        $("#sold_returnPrice1").val(price);
                         $("#sold_name").val(product.name);
                         if (typeof response.paypalAccount === "undefined") {
                             $("#paypal_form").hide();
@@ -1227,7 +1228,7 @@
                     $.get('LoadPaypalInformation', function (result) {
                         $("input[name=cmd]").val(result.cmd);
                         $("input[name=business]").val(result.business);
-                        $("input[name=return]").val(result.returnURL + "?txtConsignmentID=" + consignmentID + "&txtReturnPrice=" + price);
+                        $("input[name=return]").val(result.returnURL + "?txtConsignmentID=" + consignmentID + "&txtReturnPrice=" + price + "&paymentMethod=paypal");
                         $("input[name=rm]").val(result.rm);
                         $("input[name=item_name]").val(result.item_name + consignmentID);
                         $("input[name=item_number]").val(result.item_number);
@@ -1342,21 +1343,6 @@
                         return false;
                     }
                     return true;
-                }
-                function checkSoldProduct() {
-                    var price = $('#sold_returnPrice').val().trim();
-                    if (price.length == 0) {
-                        alert('Vui lòng nhập tiền phạt.');
-                        return false;
-                    }
-                    if (isNaN(price) || price < 0) {
-                        alert('Tiền trả khách hàng phải là số dương');
-                        return false;
-                    } else {
-                        $("#sold_returnPrice1").val($("#sold_returnPrice").val());
-                        return false;
-                        //return true;
-                    }
                 }
                 function validateSellingPrice()
                 {

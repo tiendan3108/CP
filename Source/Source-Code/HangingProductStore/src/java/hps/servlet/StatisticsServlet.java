@@ -89,7 +89,6 @@ public class StatisticsServlet extends HttpServlet {
                     String today = sdf.format(tempDate);
 
                     resultC = dao.getConsignmentInforForStatisticPage(user.getRoleID());
-                    System.out.println(resultC.size());
                     request.setAttribute("resultC", resultC);
                     request.setAttribute("currentTab", "consignment");
                     request.setAttribute("fromDate", today);

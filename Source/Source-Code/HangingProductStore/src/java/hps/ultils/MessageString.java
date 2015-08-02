@@ -11,6 +11,16 @@ package hps.ultils;
  */
 public class MessageString {
 
+    public static final String notifyConsignorSMS(String orderID, String storeOwner) {
+        return "Don hang voi ma ki gui " + orderID + " cua ban da duoc thanh toan qua Paypal. Vui long kiem tra tai khoan cua ban hoac lien he voi " + storeOwner + " neu co thac mac.";
+    }
+
+    public static final String notifyConsignorEmail(String orderID, String storeOwner, String consignor) {
+        return "Xin chào " + consignor + "</br>Đơn hàng với mã đơn hàng "
+                + orderID + " Đã được thanh toán qua paypal. Vui lòng kiểm tra tài khoản của bạn hoặc liên hệ với " + storeOwner
+                + " nếu có thắc mắc.</br> Trân trọng</br> HPS System";
+    }
+
     public static final String sendPriceSMS(String orderID, float price, String storeOwner) {
         return "Don hang voi ma " + orderID + " co gia la : " + price + ". Vui long lien he voi chu cua hang " + storeOwner + " de biet them chi tiet";
     }
@@ -43,7 +53,7 @@ public class MessageString {
     public static final String confirmOrder = "Xác nhận đơn hàng";
 
     public static final String orderSuccessSMS(String productName, float price) {
-        return "Mon hang "+productName + " cua ban da dat co gia la " + price 
+        return "Mon hang " + productName + " cua ban da dat co gia la " + price
                 + " .Gia tren co the thoa thuan khi ban den xem hang.";
     }
 
@@ -64,11 +74,13 @@ public class MessageString {
                 + "<br/> <br/>Chủ cửa hàng sẽ liên lạc giá sản phẩm cho bạn sau.";
     }
     public static final String titleNofitication = "Hệ thống HPS";
-    public static final String contenNofitication(int num){
-        return "Hôm nay có "+num +" món hàng cần lấy";
+
+    public static final String contenNofitication(int num) {
+        return "Hôm nay có " + num + " món hàng cần lấy";
     }
-    public static final String newProductNotification(String name){
-        return "Bạn có thêm món hàng "+ name + " cần lấy trong ngày hôm nay.";
+
+    public static final String newProductNotification(String name) {
+        return "Bạn có thêm món hàng " + name + " cần lấy trong ngày hôm nay.";
     }
     public static final String errorOrder = "Số điện thoại đã sử dụng để đặt món hàng này";
 }

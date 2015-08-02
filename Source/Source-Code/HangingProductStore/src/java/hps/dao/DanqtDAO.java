@@ -164,13 +164,13 @@ public class DanqtDAO {
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            if (status == ProductStatus.COMPLETED) {
+            if (status == ProductStatus.NOT_AVAILABLE) {
                 conn.setAutoCommit(false);
 
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
                         + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
-                stmUpdateProduct.setInt(1, ProductStatus.COMPLETED);
+                stmUpdateProduct.setInt(1, ProductStatus.NOT_AVAILABLE);
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
@@ -824,11 +824,12 @@ public class DanqtDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
-            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ? WHERE ConsignmentID = ?";
+            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentID = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setFloat(1, returnPrice);
             stm.setString(2, today);
-            stm.setString(3, consignmentID);
+            stm.setInt(3, ConsignmentStatus.COMPLETED);
+            stm.setString(4, consignmentID);
             result1 = stm.executeUpdate();
             query = "UPDATE Product set ProductStatusID = ? WHERE ProductID = "
                     + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
@@ -1083,7 +1084,7 @@ public class DanqtDAO {
 
             query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
             stm = conn.prepareStatement(query);
-            stm.setInt(1, ProductStatus.COMPLETED);
+            stm.setInt(1, ProductStatus.NOT_AVAILABLE);
             stm.setString(2, consignmentID);
             i = stm.executeUpdate();
 
