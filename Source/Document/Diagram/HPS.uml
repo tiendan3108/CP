@@ -2458,7 +2458,7 @@ Extension point: Cancel Consigned Product
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="XOg/CvBqXE+gMCC65JUvtQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="lCJSqmeMmEWOYIG4pKQVgQAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">View Product Statistic</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">View Sales Statistic</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="J76f/cr2g02wWLbOWGhRUAAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -4756,7 +4756,7 @@ Extension point: Accept Request
 <XPD:REF name="Includers[0]">KOs3Z9MPzkywE4IQc9vGQwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[51]" type="UMLUseCase" guid="/CYHLoiCIkGxmVxRb6H0eQAA">
-<XPD:ATTR name="Name" type="string">View Product Statistic</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">View Sales Statistic</XPD:ATTR>
 <XPD:REF name="Namespace">pxBAillfe0OspB+kTeDmCQAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">juGuBj431EKHnLBVbKuzdAAA</XPD:REF>
