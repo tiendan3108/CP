@@ -326,7 +326,7 @@ public class OrderDAO {
         }
     }
 
-    public void cancelAllOrders(String orderID) {
+    public boolean cancelAllOrders(String orderID) {
         Connection conn = null;
         PreparedStatement stmO = null, stmP = null;
         String query = "";
@@ -349,8 +349,10 @@ public class OrderDAO {
             stmP.executeUpdate();
 
             conn.commit();
+            return true;
         } catch (SQLException e) {
             Logger.getLogger(OrderDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         } finally {
             try {
                 if (stmO != null) {

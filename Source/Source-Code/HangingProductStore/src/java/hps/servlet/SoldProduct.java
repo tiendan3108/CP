@@ -71,8 +71,13 @@ public class SoldProduct extends HttpServlet {
                     }
                 }
 
-                productDAO.soldProduct(consignmentID, returnPrice);
-                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold";
+                boolean flag = productDAO.soldProduct(consignmentID, returnPrice);
+                if (flag) {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=success";
+                } else {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=fail";
+                }
+
             }
             response.sendRedirect(url);
         }

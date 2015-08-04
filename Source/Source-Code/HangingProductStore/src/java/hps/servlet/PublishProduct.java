@@ -62,7 +62,7 @@ public class PublishProduct extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null, imagePath = "";
+            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null, imagePath = null;
             String tempSeason = "";
             List<String> season = new ArrayList<>();
             int categoryID = 0, productID = 0, special = 2;
@@ -167,8 +167,13 @@ public class PublishProduct extends HttpServlet {
                     if (tempSeason.contains("4")) {
                         season.add("4");
                     }
-                    productDAO.publishOnWeb(product, season);
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action;
+                    boolean flag = productDAO.publishOnWeb(product, season);
+                    if (flag) {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";
+                    } else {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=fail";
+                    }
+
                 }
             }
             response.sendRedirect(url);

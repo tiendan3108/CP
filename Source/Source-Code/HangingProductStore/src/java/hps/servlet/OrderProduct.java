@@ -57,6 +57,7 @@ public class OrderProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
+                boolean flag = true;
                 ProductDAO productDAO = new ProductDAO();
                 AccountDAO accountDAO = new AccountDAO();
                 ConsignmentDAO consignmentDAO = new ConsignmentDAO();
@@ -71,7 +72,7 @@ public class OrderProduct extends HttpServlet {
                     String consignmentID = consignmentDAO.getConsignmentIDByOrderID(orderID);
                     AccountDTO consignor = accountDAO.getConsignorInforByOrderID(orderID);
                     listCustomer = orderDAO.getListOrderedCustomer(orderID, true);
-                    productDAO.changeProductStatus(orderID, sellingPrice);
+                    flag = productDAO.changeProductStatus(orderID, sellingPrice);
                     if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         try {
                             ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
@@ -86,7 +87,7 @@ public class OrderProduct extends HttpServlet {
                     }
                 }
                 if (action.equals("cancel")) {
-                    orderDAO.cancelAllOrders(orderID);
+                    flag = orderDAO.cancelAllOrders(orderID);
                     listCustomer = orderDAO.getListOrderedCustomer(orderID, false);
                 }
                 if (action.equals("sendPrice")) {
@@ -129,7 +130,12 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered";
+                if (flag) {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered&status=success";
+                } else {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered&status=fail";
+                }
+
             }
             response.sendRedirect(url);
         }

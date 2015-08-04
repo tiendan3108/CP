@@ -51,18 +51,23 @@ public class ExtendProduct extends HttpServlet {
             } else {
                 ProductDAO productDAO = new ProductDAO();
                 String action = request.getParameter("btnAction");
+                boolean flag = true;
                 if (action != null) {
                     if (action.equals("receive")) {
                         String consignmentID = request.getParameter("txtConsignmentID");
                         String tempExpiredFee = request.getParameter("txtExpiredFee");
                         float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
-                        productDAO.ExtendProduct(consignmentID, expiredFee);
+                        flag = productDAO.ExtendProduct(consignmentID, expiredFee);
                     }
                     if (action.equals("extend")) {
                         String consignmentID = request.getParameter("txtConsignmentID");
-                        productDAO.ExtendProduct(consignmentID, period);
+                        flag = productDAO.ExtendProduct(consignmentID, period);
                     }
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired";
+                    if (flag) {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=success";
+                    } else {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=fail";
+                    }
                 } else {
                     url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                 }

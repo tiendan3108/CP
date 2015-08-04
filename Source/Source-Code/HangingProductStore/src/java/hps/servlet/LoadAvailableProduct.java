@@ -67,6 +67,7 @@ public class LoadAvailableProduct extends HttpServlet {
             }
             ProductDTO infor = productDAO.getInforForPublishPage(productID);
             String json = new Gson().toJson(infor);
+            System.out.println(json);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);
         } catch (NumberFormatException e) {

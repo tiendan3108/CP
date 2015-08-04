@@ -18,19 +18,21 @@ public class StatisticDTO implements Serializable {
     private float consignPrice;
     private float sellingPrice;
     private float returnPrice;
-    private float fee;
-    private float revenue;
+    private float cancelFee;
+    private float expiredFee;
     private String actionDate;
+    private float revenue;
 
-    public StatisticDTO(String productName, String consignorName, float consignPrice, float returnPrice, float fee, float revenue, float sellingPrice, String actionDate) {
+    public StatisticDTO(String productName, String consignorName, float consignPrice, float returnPrice, float cancelFee, float expiredFee, float sellingPrice, String actionDate, float revenue) {
         this.productName = productName;
         this.consignorName = consignorName;
         this.consignPrice = consignPrice;
         this.returnPrice = returnPrice;
-        this.fee = fee;
-        this.revenue = revenue;
+        this.cancelFee = cancelFee;
+        this.expiredFee = expiredFee;
         this.sellingPrice = sellingPrice;
         this.actionDate = actionDate;
+        this.revenue = revenue;
     }
 
     /**
@@ -90,34 +92,6 @@ public class StatisticDTO implements Serializable {
     }
 
     /**
-     * @return the fee
-     */
-    public float getFee() {
-        return fee;
-    }
-
-    /**
-     * @param fee the fee to set
-     */
-    public void setFee(float fee) {
-        this.fee = fee;
-    }
-
-    /**
-     * @return the revenue
-     */
-    public float getRevenue() {
-        return revenue;
-    }
-
-    /**
-     * @param revenue the revenue to set
-     */
-    public void setRevenue(float revenue) {
-        this.revenue = revenue;
-    }
-
-    /**
      * @return the sellingPrice
      */
     public float getSellingPrice() {
@@ -143,6 +117,48 @@ public class StatisticDTO implements Serializable {
      */
     public void setActionDate(String actionDate) {
         this.actionDate = actionDate;
+    }
+
+    /**
+     * @return the cancelFee
+     */
+    public float getCancelFee() {
+        return cancelFee;
+    }
+
+    /**
+     * @param cancelFee the cancelFee to set
+     */
+    public void setCancelFee(float cancelFee) {
+        this.cancelFee = cancelFee;
+    }
+
+    /**
+     * @return the expiredFee
+     */
+    public float getExpiredFee() {
+        return expiredFee;
+    }
+
+    /**
+     * @param expiredFee the expiredFee to set
+     */
+    public void setExpiredFee(float expiredFee) {
+        this.expiredFee = expiredFee;
+    }
+
+    /**
+     * @return the revenue
+     */
+    public float getRevenue() {
+        return revenue;
+    }
+
+    /**
+     * @param revenue the revenue to set
+     */
+    public void setRevenue(float revenue) {
+        this.revenue = revenue;
     }
 
 }

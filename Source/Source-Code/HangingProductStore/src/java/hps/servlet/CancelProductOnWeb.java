@@ -50,15 +50,14 @@ public class CancelProductOnWeb extends HttpServlet {
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
                 ProductDAO productDAO = new ProductDAO();
-                productDAO.cancelProduct(consignmentID, ProductStatus.COMPLETED);
-                url = GlobalVariables.MANAGERMENT_SERVLET;
-                request.setAttribute("currentTab", "onWeb");
+                boolean flag = productDAO.cancelProduct(consignmentID, ProductStatus.COMPLETED);
+                if (flag) {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=onWeb&status=success";
+                } else {
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=onWeb&status=fail";
+                }
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
-                response.sendRedirect(url);
-            } else {
-                request.getRequestDispatcher(url).forward(request, response);
-            }
+            response.sendRedirect(url);
         }
     }
 

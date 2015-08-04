@@ -1218,6 +1218,34 @@ public class ProductDAO {
                 } else {
                     return false;
                 }
+            } else if (status == ProductStatus.COMPLETED) {
+                conn.setAutoCommit(false);
+
+                query = "UPDATE Product SET ProductStatusID = ? WHERE "
+                        + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
+                stmUpdateProduct = conn.prepareStatement(query);
+                stmUpdateProduct.setInt(1, ProductStatus.NOT_AVAILABLE);
+                stmUpdateProduct.setString(2, consignmentID);
+                resultUpdateProduct = stmUpdateProduct.executeUpdate();
+
+                Date tempDate = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String today = sdf.format(tempDate);
+
+                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
+                stmUpdateConsignment = conn.prepareStatement(query);
+                stmUpdateConsignment.setString(1, today);
+                stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
+                stmUpdateConsignment.setString(3, consignmentID);
+                stmUpdateConsignment.setString(4, consignmentID);
+                resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
+
+                if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
+                    conn.commit();
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
                         + "(SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
@@ -1262,7 +1290,7 @@ public class ProductDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
-            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentID = ? WHERE ConsignmentID = ?";
+            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setFloat(1, returnPrice);
             stm.setString(2, today);
@@ -1275,7 +1303,7 @@ public class ProductDAO {
             stm.setInt(1, ProductStatus.COMPLETED);
             stm.setString(2, consignmentID);
             result2 = stm.executeUpdate();
-            return result1 > 0 && result2 > 0;
+            return (result1 > 0 && result2 > 0);
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
@@ -1547,10 +1575,10 @@ public class ProductDAO {
             return "";
         }
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            SimpleDateFormat df2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
-            Date date = df.parse(source);
-            String result = df2.format(date);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
+            Date date = sdf.parse(source);
+            String result = sdf2.format(date);
             return result;
         } catch (ParseException ex) {
             Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
@@ -1632,12 +1660,12 @@ public class ProductDAO {
         }
     }
 
-    public void ExtendProduct(String consignmentID, float expiredFee) {
+    public boolean ExtendProduct(String consignmentID, float expiredFee) {
         Connection conn = null;
         PreparedStatement stm = null;
         try {
             conn = DBUltilities.makeConnection();
-
+            conn.setAutoCommit(false);
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
@@ -1645,7 +1673,7 @@ public class ProductDAO {
             String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
-            stm.setInt(2, ConsignmentStatus.EXPIRED);
+            stm.setInt(2, ConsignmentStatus.COMPLETED);
             stm.setFloat(3, expiredFee);
             stm.setString(4, consignmentID);
             int i = stm.executeUpdate();
@@ -1654,10 +1682,17 @@ public class ProductDAO {
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.NOT_AVAILABLE);
             stm.setString(2, consignmentID);
-            i = stm.executeUpdate();
+            int j = stm.executeUpdate();
+            if (i > 0 && j > 0) {
+                conn.commit();
+                return true;
+            } else {
+                return false;
+            }
 
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         } finally {
             try {
                 if (stm != null) {
@@ -1673,17 +1708,43 @@ public class ProductDAO {
     }
 
     //extend consignment period
-    public void ExtendProduct(String consignmentID, int period) {
+    public boolean ExtendProduct(String consignmentID, int period) {
         Connection conn = null;
         PreparedStatement stm = null;
+        ResultSet rs = null;
+        float expiredFee = 0, productPrice = 0;
+        int datediff = 0, dateFromNow = 0;
         try {
             conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
 
-            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ((SELECT Period FROM Consignment WHERE ConsignmentID = ?) + ? ) WHERE ConsignmentID = ?";
+            Date tempDate = Calendar.getInstance().getTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String today = sdf.format(tempDate);
+
+            String query = "SELECT NegotiatedPrice, (DATEDIFF(day,[RaiseWebDate],?)-(SELECT Period FROM Consignment WHERE ConsignmentID = ?)) "
+                    + "AS DiffDate, DATEDIFF(day,[RaiseWebDate],?) as DayFromNow FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
-            stm.setInt(1, ConsignmentStatus.RECEIVED);
+            stm.setString(1, today);
             stm.setString(2, consignmentID);
-            stm.setInt(3, period);
+            stm.setString(3, today);
+            stm.setString(4, consignmentID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                datediff = rs.getInt("DiffDate");
+                productPrice = rs.getFloat("NegotiatedPrice");
+                dateFromNow = rs.getInt("DayFromNow");
+            }
+            if (productPrice >= 1000000 && datediff > 0) {
+                expiredFee = datediff * 10000;
+            } else if (datediff > 0) {
+                expiredFee = datediff * 5000;
+            }
+            query = "UPDATE Consignment SET ExpiredFee = ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ? WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setFloat(1, expiredFee);
+            stm.setInt(2, ConsignmentStatus.RECEIVED);
+            stm.setInt(3, period + dateFromNow);
             stm.setString(4, consignmentID);
             int i = stm.executeUpdate();
 
@@ -1691,12 +1752,22 @@ public class ProductDAO {
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.ON_WEB);
             stm.setString(2, consignmentID);
-            i = stm.executeUpdate();
+            int j = stm.executeUpdate();
+            if (i > 0 && j > 0) {
+                conn.commit();
+                return true;
+            } else {
+                return false;
+            }
 
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         } finally {
             try {
+                if (rs != null) {
+                    rs.close();
+                }
                 if (stm != null) {
                     stm.close();
                 }
@@ -1709,13 +1780,14 @@ public class ProductDAO {
         }
     }
 
-    public void changeProductStatus(String orderID, float sellingPrice) {
+    public boolean changeProductStatus(String orderID, float sellingPrice) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String sellingDate = sdf.format(tempDate);
@@ -1726,20 +1798,27 @@ public class ProductDAO {
             stm.setFloat(2, sellingPrice);
             stm.setInt(3, ProductStatus.SOLD);
             stm.setString(4, orderID);
-            stm.executeUpdate();
+            int i = stm.executeUpdate();
             query = "UPDATE [Order] SET OrderStatusID = ? WHERE OrderID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, OrderStatus.COMPLETED);
             stm.setString(2, orderID);
-            stm.executeUpdate();
+            int j = stm.executeUpdate();
             query = "UPDATE [Order] SET OrderStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?) AND OrderID != ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, OrderStatus.CANCELED);
             stm.setString(2, orderID);
             stm.setString(3, orderID);
             stm.executeUpdate();
+            if (i > 0 && j > 0) {
+                conn.commit();
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
+            return false;
         } finally {
             try {
                 if (rs != null) {
@@ -1774,9 +1853,8 @@ public class ProductDAO {
                     + "END AS ActionDate "
                     + "FROM Product p, Consignment c WHERE "
                     + "p.ProductID = c.ProductID AND c.StoreOWnerID = ? AND "
-                    + "((c.ConsignmentStatusID = 6 AND p.ProductStatusID = 7) OR "
-                    + "(c.ConsignmentStatusID = 5 AND p.ProductStatusID = 7) OR "
-                    + "(c.ConsignmentStatusID = 7 AND p.ProductStatusID = 7)) "
+                    + "((c.ConsignmentStatusID = 4 AND p.ProductStatusID = 7 AND c.ReturnDate IS NOT NULL) OR "
+                    + "(c.ConsignmentStatusID = 7 AND p.ProductStatusID = 1 AND (c.ReceivedDate IS NOT NULL OR c.AgreeCancelDate IS NOT NULL))) "
                     + "ORDER BY ActionDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
@@ -1789,21 +1867,9 @@ public class ProductDAO {
                 float sellingPrice = rs.getFloat("SellingPrice") / 1000;
                 float cancelFee = rs.getFloat("CancelFee") / 1000;
                 float expiredFee = rs.getFloat("ExpiredFee") / 1000;
-                float fee = 0;
-                float revenue = 0;
-                if (cancelFee > expiredFee) {
-                    fee = cancelFee;
-                } else {
-                    fee = expiredFee;
-                }
                 String actionDate = formatDateString(rs.getString("ActionDate"));
-                System.out.println(actionDate);
-                if (fee != 0) {
-                    revenue = fee;
-                } else {
-                    revenue = sellingPrice - returnPrice;
-                }
-                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, fee, revenue, sellingPrice, actionDate);
+                float revenue = sellingPrice - returnPrice + cancelFee + expiredFee;
+                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, cancelFee, expiredFee, sellingPrice, actionDate, revenue);
                 result.add(item);
             }
             if (result.isEmpty()) {

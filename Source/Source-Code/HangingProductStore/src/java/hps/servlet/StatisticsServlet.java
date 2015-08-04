@@ -63,11 +63,6 @@ public class StatisticsServlet extends HttpServlet {
                 String currentTab = request.getParameter("currentTab");
                 if (currentTab == null || currentTab.equals("product")) {
                     resultP = productDAO.getProductInforForStatisticPage(user.getRoleID());
-                    if (resultP != null) {
-                        for (StatisticDTO item : resultP) {
-                            totalPrice += item.getRevenue();
-                        }
-                    }
 
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(Calendar.DAY_OF_MONTH, 1);
