@@ -203,7 +203,8 @@
                                                 <th>Giá thương lượng</th>
                                                 <th>Giá bán</th>
                                                 <th>Giá trả khách hàng</th>
-                                                <th>Phí phạt</th>
+                                                <th>Phí gia hạn</th>
+                                                <th>Phí hủy hợp đồng</th>
                                                 <th>Lợi nhuận</th>
                                             </tr>
                                         </thead>
@@ -239,8 +240,18 @@
                                                     </td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.fee!=''}">
-                                                                <fmt:formatNumber value="${item.fee}" maxFractionDigits="1"/>
+                                                            <c:when test="${item.expiredFee!=''}">
+                                                                <fmt:formatNumber value="${item.expiredFee}" maxFractionDigits="1"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                Trống
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${item.cancelFee!=''}">
+                                                                <fmt:formatNumber value="${item.cancelFee}" maxFractionDigits="1"/>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 Trống
