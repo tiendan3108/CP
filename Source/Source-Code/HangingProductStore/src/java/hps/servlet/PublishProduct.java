@@ -167,7 +167,11 @@ public class PublishProduct extends HttpServlet {
                     if (tempSeason.contains("4")) {
                         season.add("4");
                     }
-                    boolean flag = productDAO.publishOnWeb(product, season);
+                    boolean isPublish = true;
+                    if (!action.equals("available")) {
+                        isPublish = false;
+                    }
+                    boolean flag = productDAO.publishOnWeb(product, season, isPublish);
                     if (flag) {
                         url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";
                     } else {

@@ -130,9 +130,6 @@
                                 <li id="canceled">
                                     <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
-                                <li id="completed">
-                                    <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
-                                </li>
                                 <li id="expired">
                                     <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
                                 </li>

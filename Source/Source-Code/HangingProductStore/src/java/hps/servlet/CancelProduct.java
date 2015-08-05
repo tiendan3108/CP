@@ -96,7 +96,7 @@ public class CancelProduct extends HttpServlet {
             switch (btnaction) {
                 case "cancel":
                     //agree cancel product
-                    status = ProductStatus.NOT_AVAILABLE;
+                    status = ProductStatus.NOT_YET_RECEIVE;
                     if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy thanh cong."
                                 + " Vui long lien he voi chu cua hang " + user.getFullName() + " de nhan hang va biet them chi tiet";
@@ -136,7 +136,7 @@ public class CancelProduct extends HttpServlet {
                     break;
                 case "receive":
                     //receive product
-                    status = ProductStatus.NOT_YET_RECEIVE;
+                    status = ProductStatus.NOT_AVAILABLE;
                     try {
                         cancelFee = Float.parseFloat(tempCancelFee);
                     } catch (Exception e) {

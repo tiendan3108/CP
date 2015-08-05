@@ -128,9 +128,6 @@
                                 <li id="canceled">
                                     <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
-                                <li id="completed">
-                                    <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
-                                </li>
                                 <li id="expired">
                                     <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
                                 </li>
@@ -1465,7 +1462,7 @@
                 });
 
                 //$("#modalRequestAccept").modal("show");
-                
+
             }
 
             $('button[name="requestAcceptDetails"]').click(function () {
@@ -1547,7 +1544,7 @@
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
                         $('form#r_form').submit();
-                        
+
                     } else {
                         alert("Xin nhập đúng giá thỏa thuận!");
                     }
@@ -1633,7 +1630,7 @@
                     }
                 });
             }
-            
+
             function updateRequestBeforeAccept() {
                 var consignmentID = $("#r_ActionValue").val();
                 var productName = $("#r_productName").val();
@@ -1664,7 +1661,7 @@
                 function (data) {
                     if (data) {
                         $('form#r_form').submit();
-                        
+
                     } else {
                         alert("Không thể chấp nhận sản phẩm");
                     }

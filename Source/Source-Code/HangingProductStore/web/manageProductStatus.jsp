@@ -133,9 +133,6 @@
                                 <li id="canceled">
                                     <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
                                 </li>
-                                <li id="completed">
-                                    <a href="ManageProduct?currentTab=completed">Hoàn tất thanh toán</a>
-                                </li>
                                 <li id="expired">
                                     <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
                                 </li>
@@ -196,9 +193,6 @@
                                             <c:when test="${requestScope.currentTab == 'sold'}">
                                                 đã bán
                                             </c:when>
-                                            <c:when test="${requestScope.currentTab == 'completed'}">
-                                                hoàn tất thanh toán
-                                            </c:when>
                                             <c:when test="${requestScope.currentTab == 'expired'}">
                                                 hết hạn kí gửi
                                             </c:when>
@@ -212,7 +206,7 @@
                                 <div class="portlet-body" id="expired" style="display: none;">
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=completed"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hoàn tất thanh toán</a>
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
                                         </div>
                                     </div>
                                     <br>
@@ -372,7 +366,7 @@
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
                                         </div>
                                         <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=completed">Sản phẩm hoàn tất thanh toán <i class="m-icon-swapright m-icon-white"></i></a>
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
                                     <br>
@@ -411,55 +405,6 @@
                                     </table>
                                 </div>
                                 <!-- END CANCEL TAB-->
-                                <!-- BEGIN COMPLETED TAB-->
-                                <div class="portlet-body" id="completed" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi<i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <table class="table table-striped table-hover" id="completedTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Ngày nhận</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Trạng thái</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.completed}" varStatus="counter">
-                                                <tr>
-                                                    <td>${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td class="center">${item.reviewProductDate}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td><c:choose>
-                                                            <c:when test="${item.consignmentStatusID==4}">
-                                                                Đã bán thành công
-                                                            </c:when>
-                                                            <c:when test="${item.consignmentStatusID==5}">
-                                                                Đã bán thành công
-                                                            </c:when>
-                                                            <c:when test="${item.consignmentStatusID==6}">
-                                                                Khách hàng từ chối gia hạn
-                                                            </c:when>
-                                                            <c:when test="${item.consignmentStatusID==7}">
-                                                                Khách hàng hủy kí gửi
-                                                            </c:when>   
-                                                        </c:choose>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- END COMPLETED TAB-->
                                 <!-- BEGIN SOLD TAB-->
                                 <div class="portlet-body" id="sold" style="display: none;">
                                     <div class="row" >
@@ -556,7 +501,7 @@
                                                 <input type="hidden" name="item_number" value="">
                                                 <input type="hidden" name="amount" value="">
                                                 <input type="hidden" name="currency_code" value="">
-                                                <button class="btn btn-default" type="submit">Thanh toán qua Paypal</button>
+                                                <button class="btn btn-primary" type="submit">Thanh toán qua Paypal</button>
                                             </form>
                                         </div>
                                     </div>
@@ -572,8 +517,8 @@
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header">
                                         <h4>Thông tin đặt hàng</h4>
-                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label>
-                                        <i id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></i>
+                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>
+                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>
                                     </div>
                                     <div class="modal-body">
                                         <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
@@ -1006,6 +951,7 @@
                                         <h5>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h5>
                                     </div>
                                     <div class="modal-footer">
+                                        <input type="hidden" value="" name="txtcurrentTab" id="currentTab_cancel">
                                         <input type="hidden" value="" name="txtConsignmentID" id="confirmCancel_ConsignmentID2">
                                         <button class="btn btn-success" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -1104,6 +1050,7 @@
                         $("#cancel_consignedDate").text(product.receivedDate);
                         $("#cancel_canceledDate").text(product.cancelDate);
                         $("#cancel_ID").val(product.consignmentID);
+                        $("#confirmCancel_ConsignmentID2").val(product.consignmentID);
                         if (response.product.productStatusID < 8) {
                             $("#btnAgree").removeAttr("style");
                             $("#btnDecline").removeAttr("style");
@@ -1172,10 +1119,10 @@
                     var productID = $(this).data('id');
                     $.get('LoadOrderedProduct', {productID: productID}, function (response) {
                         var isSpecial = response.isSpecial;
-                        if (isSpecial == 0) {
-                            $("#sendPriceLabel").attr("style", "display:block;");
+                        if (isSpecial > 0) {// =1 la phai gui gia
+                            $("#sendPriceLabel").removeAttr("style");
                             $("#btnPrice").removeAttr("style");
-                            $("#theadDetail").attr("style", "display:block;");
+                            $("#theadDetail").removeAttr("style");
                         } else {
                             $("#sendPriceLabel").attr("style", "display:none;");
                             $("#btnPrice").attr("style", "display:none;");
@@ -1187,7 +1134,7 @@
                         $('#listOrderedTable tbody').empty();
                         for (var i = 0, max = orderList.length; i < max; i++) {
                             var row = "";
-                            if (isSpecial == 0) {
+                            if (isSpecial > 0) {
                                 if (orderList[i].sendPrice == 0) {
                                     row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
                                             orderList[i].orderID + '"></td><td>' +
@@ -1347,9 +1294,11 @@
                     $('#onWebModal').modal('show');
                 });
                 $(document).on("click", ".confirmOnWebModal", function () {
+                    $('#currentTab_cancel').val('onWeb');
                     $('#confirmOnWebModal').modal('show');
                 });
                 $(document).on("click", ".receiveProductModal", function () {
+                    $('#currentTab_cancel').val('canceled');
                     var negotiatedPrice = $('#cancel_negotiatedPrice').text();
                     $('#confirmCancel_Fee').val((negotiatedPrice * 15 / 100).toFixed(0));
                     $('#confirmOnWebModal').modal('show');

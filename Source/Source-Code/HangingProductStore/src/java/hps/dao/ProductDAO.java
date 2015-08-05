@@ -1186,13 +1186,14 @@ public class ProductDAO {
         ResultSet rs = null;
         PreparedStatement stmUpdateProduct = null;
         PreparedStatement stmUpdateConsignment = null;
+        cancelFee = cancelFee * 1000;
         int resultUpdateProduct, resultUpdateConsignment;
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            if (status == ProductStatus.NOT_AVAILABLE) {// agree cancel product
+            if (status == ProductStatus.NOT_YET_RECEIVE) {// agree cancel product 
                 conn.setAutoCommit(false);
-
+                //update set product to agree cancel but not yet receive by consignor
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
                         + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
@@ -1200,16 +1201,11 @@ public class ProductDAO {
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
-                Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                String today = sdf.format(tempDate);
-
-                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
+                //update set consignment consignment status
+                query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
-                stmUpdateConsignment.setString(1, today);
-                stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
-                stmUpdateConsignment.setString(3, consignmentID);
-                stmUpdateConsignment.setString(4, consignmentID);
+                stmUpdateConsignment.setInt(1, ConsignmentStatus.CANCEL);
+                stmUpdateConsignment.setString(2, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
 
                 if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
@@ -1218,9 +1214,9 @@ public class ProductDAO {
                 } else {
                     return false;
                 }
-            } else if (status == ProductStatus.NOT_YET_RECEIVE) {// receive
+            } else if (status == ProductStatus.NOT_AVAILABLE) {// consignor come and take back product
                 conn.setAutoCommit(false);
-
+                //update set product to not available after consignor take it back
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
                         + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
@@ -1231,12 +1227,12 @@ public class ProductDAO {
                 Date tempDate = Calendar.getInstance().getTime();
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String today = sdf.format(tempDate);
-
-                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = ? WHERE ConsignmentID = ?";
+                //update consignment set cancel date, cancel fee
+                query = "UPDATE Consignment SET AgreeCancelDate = ?, CancelFee = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setString(1, today);
-                stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
-                stmUpdateConsignment.setFloat(3, cancelFee);
+                stmUpdateConsignment.setFloat(2, cancelFee);
+                stmUpdateConsignment.setInt(3, ConsignmentStatus.CANCEL);
                 stmUpdateConsignment.setString(4, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
 
@@ -1247,13 +1243,27 @@ public class ProductDAO {
                     return false;
                 }
             } else {//decline cancel request
+                conn.setAutoCommit(false);
+                //update product to on web
                 query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
                         + "(SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
                 stmUpdateProduct.setInt(1, ProductStatus.ON_WEB);
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
-                return resultUpdateProduct > 0;
+                //update consignment back to received
+                query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
+                stmUpdateConsignment = conn.prepareStatement(query);
+                stmUpdateConsignment.setInt(1, ConsignmentStatus.RECEIVED);
+                stmUpdateConsignment.setString(2, consignmentID);
+                resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
+
+                if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
+                    conn.commit();
+                    return true;
+                } else {
+                    return false;
+                }
             }
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -1321,7 +1331,7 @@ public class ProductDAO {
         }
     }
 
-    public boolean publishOnWeb(ProductDTO product, List<String> season) {
+    public boolean publishOnWeb(ProductDTO product, List<String> season, boolean flag) {
         Connection conn = null;
         PreparedStatement stmProduct = null;
         PreparedStatement stmConsignment = null;
@@ -1329,6 +1339,12 @@ public class ProductDAO {
         int resultConsignment = 0;
         ResultSet rs = null;
         String query = "";
+        int status = 0;
+        if (flag) {
+            status = 2;
+        } else {
+            status = 3;
+        }
         List<String> existSeason = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
@@ -1348,7 +1364,7 @@ public class ProductDAO {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
                         + "Description = ?, ProductStatusID = 3, IsSpecial = ? "
-                        + "WHERE ProductID = ?";
+                        + "WHERE ProductID = ? AND ProductStatusID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
                 stmProduct.setString(2, product.getSerialNumber());
@@ -1357,11 +1373,12 @@ public class ProductDAO {
                 stmProduct.setString(5, product.getDescription());
                 stmProduct.setInt(6, product.getIsSpecial());
                 stmProduct.setInt(7, product.getProductID());
+                stmProduct.setInt(8, status);
             } else {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
                         + "Description = ?, Image = ?, ProductStatusID = 3 , IsSpecial = ? "
-                        + "WHERE ProductID = ?";
+                        + "WHERE ProductID = ? AND ProductStatusID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
                 stmProduct.setString(2, product.getSerialNumber());
@@ -1371,6 +1388,7 @@ public class ProductDAO {
                 stmProduct.setString(6, product.getImage());
                 stmProduct.setInt(7, product.getIsSpecial());
                 stmProduct.setInt(8, product.getProductID());
+                stmProduct.setInt(9, status);
             }
             resultProduct = stmProduct.executeUpdate();
 
