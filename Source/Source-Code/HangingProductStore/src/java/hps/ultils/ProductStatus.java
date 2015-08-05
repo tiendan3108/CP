@@ -18,4 +18,5 @@ public class ProductStatus {
     public static final int SOLD = 5;
     public static final int CANCEL = 6;
     public static final int COMPLETED = 7;
+    public static final int NOT_YET_RECEIVE = 8;
 }

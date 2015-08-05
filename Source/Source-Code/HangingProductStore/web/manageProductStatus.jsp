@@ -211,10 +211,8 @@
                                 <!-- BEGIN EXPIRED TAB-->
                                 <div class="portlet-body" id="expired" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=completed"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hoàn tất thanh toán</a>
-                                        </div>
-                                        <div class="col-md-9 col-sm-9">
                                         </div>
                                     </div>
                                     <br>
@@ -252,11 +250,7 @@
                                 <!-- BEGIN AVAILABLE TAB-->
                                 <div class="portlet-body" id="available" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">Sản phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -296,12 +290,10 @@
                                 <!-- BEGIN ONWEB TAB-->
                                 <div class="portlet-body" id="onWeb" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -335,12 +327,10 @@
                                 <!-- BEGIN ORDERED TAB-->
                                 <div class="portlet-body" id="ordered" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -378,12 +368,10 @@
                                 <!-- BEGIN CANCEL TAB-->
                                 <div class="portlet-body" id="canceled" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=completed">Sản phẩm hoàn tất thanh toán <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -394,7 +382,7 @@
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
                                                 <th>Ngày hủy</th>
-                                                <th>Ngày kí gửi</th>
+                                                <th>Ngày nhận hàng</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>TT liên lạc</th>
                                                 <th>Chi Tiết</th>
@@ -426,12 +414,10 @@
                                 <!-- BEGIN COMPLETED TAB-->
                                 <div class="portlet-body" id="completed" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi<i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -477,12 +463,10 @@
                                 <!-- BEGIN SOLD TAB-->
                                 <div class="portlet-body" id="sold" style="display: none;">
                                     <div class="row" >
-                                        <div class="col-md-3 col-sm-3" align="left">
+                                        <div class="col-md-6 col-sm-6" align="left">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
+                                        <div class="col-md-6 col-sm-6" align="right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
@@ -660,18 +644,25 @@
                                             Tên sản phẩm : <strong id="cancel_productName"></strong><br>
                                             Mã hàng kí gửi : <strong id="cancel_consignmentID"></strong><br>
                                             Giá kí gửi (Ngàn đồng): <strong id="cancel_negotiatedPrice"></strong><br>
-                                            Ngày kí gửi : <strong id="cancel_consignedDate"></strong><br>
+                                            Ngày nhận hàng : <strong id="cancel_consignedDate"></strong><br>
                                             Ngày hủy kí gửi : <strong id="cancel_canceledDate"></strong><br>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <form action="CancelProduct" method="POST">
-                                        <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
-                                        <button class="btn btn-info" name="btnAction" type="submit" value="cancel">Đồng ý hủy</button>
-                                        <button class="btn btn-warning" name="btnAction" type="submit" value="notCancel">Không đồng ý hủy</button>
-                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
-                                    </form>
+                                    <div class="row">
+                                        <div style="float: right; margin-right: 25px">
+                                            <form action="CancelProduct" method="POST">
+                                                <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
+                                                <button id="btnAgree" class="btn btn-info" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
+                                                <button id="btnDecline" class="btn btn-warning" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
+                                                <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                            </form>
+                                        </div>
+                                        <div style="float: right; margin: 0px 5px;">
+                                            <button id="btnReturn" class="btn btn-info receiveProductModal" data-toggle="modal" style="display: none">Trả hàng</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -992,8 +983,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-warning" type="submit">Cập nhật</button>
-                                        <input class="btn btn-info confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
+                                        <input class="btn btn-warning confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
+                                        <button class="btn btn-primary" type="submit">Cập nhật</button>
                                         <input type="hidden" name="txtSeasonList" id="onWeb_seasonID">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
@@ -1006,20 +997,20 @@
                     <div class="modal fade bs-example-modal-lg" id="confirmOnWebModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4>Hủy kí gửi</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h5>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h5>
-                                    <h5>Tiền phạt (Ngàn đồng): <label id="confirmCancel_Fee"></label></h5>
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="CancelProductOnWeb" method="POST">
+                                <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice();">
+                                    <div class="modal-header">
+                                        <h4>Hủy kí gửi</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h5>
+                                        <h5>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h5>
+                                    </div>
+                                    <div class="modal-footer">
                                         <input type="hidden" value="" name="txtConsignmentID" id="confirmCancel_ConsignmentID2">
-                                        <button class="btn btn-success" type="submit">Đồng ý</button>
+                                        <button class="btn btn-success" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -1064,15 +1055,15 @@
             <script src="assets/admin/pages/scripts/table-managed.js"></script>
             <!-- END CORE PLUGINS -->
             <script>
-                                                                                jQuery(document).ready(function () {
-                                                                                    // initiate layout and plugins
-                                                                                    // initiate layout and plugins
-                                                                                    Metronic.init(); // init metronic core components
-                                                                                    Layout.init(); // init current layout
-                                                                                    QuickSidebar.init(); // init quick sidebar
-                                                                                    Demo.init(); // init demo features
-                                                                                    TableManaged.init();
-                                                                                });
+                                    jQuery(document).ready(function () {
+                                        // initiate layout and plugins
+                                        // initiate layout and plugins
+                                        Metronic.init(); // init metronic core components
+                                        Layout.init(); // init current layout
+                                        QuickSidebar.init(); // init quick sidebar
+                                        Demo.init(); // init demo features
+                                        TableManaged.init();
+                                    });
             </script>
             <script>
                 //script switch tab
@@ -1110,9 +1101,21 @@
                         $("#cancel_productName").text(product.name);
                         $("#cancel_consignmentID").text(product.consignmentID);
                         $("#cancel_negotiatedPrice").text(product.negotiatedPrice);
-                        $("#cancel_consignedDate").text(product.reviewProductDate);
+                        $("#cancel_consignedDate").text(product.receivedDate);
                         $("#cancel_canceledDate").text(product.cancelDate);
                         $("#cancel_ID").val(product.consignmentID);
+                        if (response.product.productStatusID < 8) {
+                            $("#btnAgree").removeAttr("style");
+                            $("#btnDecline").removeAttr("style");
+                            $("#btnReturn").removeAttr("style");
+                            $("#btnReturn").attr("style", "display:none;");
+                        } else {
+                            $("#btnReturn").removeAttr("style");
+                            $("#btnDecline").removeAttr("style");
+                            $("#btnDecline").attr("style", "display:none;");
+                            $("#btnAgree").removeAttr("style");
+                            $("#btnAgree").attr("style", "display:none;");
+                        }
                     });
                     $('#cancelModal').modal('show');
                 });
@@ -1321,7 +1324,7 @@
                         var price = (response.negotiatedPrice * 15 / 100).toFixed(0);
                         $("#confirmCancel_ConsignmentID1").text(consignmentID);
                         $("#confirmCancel_ConsignmentID2").val(consignmentID);
-                        $("#confirmCancel_Fee").text(price);
+                        $("#confirmCancel_Fee").val(price);
                     });
                     $.get('LoadAvailableProduct', {consignmentID: consignmentID}, function (response) {
                         $("#onWeb_ProductName").val(response.name);
@@ -1344,6 +1347,11 @@
                     $('#onWebModal').modal('show');
                 });
                 $(document).on("click", ".confirmOnWebModal", function () {
+                    $('#confirmOnWebModal').modal('show');
+                });
+                $(document).on("click", ".receiveProductModal", function () {
+                    var negotiatedPrice = $('#cancel_negotiatedPrice').text();
+                    $('#confirmCancel_Fee').val((negotiatedPrice * 15 / 100).toFixed(0));
                     $('#confirmOnWebModal').modal('show');
                 });
                 //end on web modal
@@ -1409,6 +1417,24 @@
                     }
                     if (isNaN(fee) || fee < 0) {
                         alert('Tiền phạt phải là số dương');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                function validateCancelPrice()
+                {
+                    var fee = $('#confirmCancel_Fee').val().trim();
+                    if (fee.length == 0) {
+                        alert('Vui lòng nhập tiền phạt.');
+                        return false;
+                    }
+                    if (fee < 0) {
+                        alert('Tiền phạt phải là số dương');
+                        return false;
+                    }
+                    if (isNaN(fee)) {
+                        alert('Tiền phạt phải là số');
                         return false;
                     } else {
                         return true;

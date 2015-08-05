@@ -24,8 +24,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "ExtendProduct", urlPatterns = {"/ExtendProduct"})
 public class ExtendProduct extends HttpServlet {
 
-    private static final int period = 30;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,17 +49,18 @@ public class ExtendProduct extends HttpServlet {
             } else {
                 ProductDAO productDAO = new ProductDAO();
                 String action = request.getParameter("btnAction");
+                String tempExpiredFee = request.getParameter("txtExpiredFee");
+                float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
                 boolean flag = true;
                 if (action != null) {
-                    if (action.equals("receive")) {
+                    if (action.equals("receive")) {//nhan hang
                         String consignmentID = request.getParameter("txtConsignmentID");
-                        String tempExpiredFee = request.getParameter("txtExpiredFee");
-                        float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
+
                         flag = productDAO.ExtendProduct(consignmentID, expiredFee);
                     }
-                    if (action.equals("extend")) {
+                    if (action.equals("extend")) {// gia han
                         String consignmentID = request.getParameter("txtConsignmentID");
-                        flag = productDAO.ExtendProduct(consignmentID, period);
+                        flag = productDAO.ExtendProducts(consignmentID, expiredFee);
                     }
                     if (flag) {
                         url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=success";

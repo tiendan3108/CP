@@ -42,6 +42,7 @@ public class CancelProductOnWeb extends HttpServlet {
             HttpSession session = request.getSession(false);
             AccountDTO user = null;
             String url = "";
+            boolean flag = false;
             if (session != null) {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
@@ -49,8 +50,17 @@ public class CancelProductOnWeb extends HttpServlet {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
                 String consignmentID = request.getParameter("txtConsignmentID");
+                String tempCancelFee = request.getParameter("txtCancelFee");
+                float cancelFee = 0;
+                try {
+                    cancelFee = Float.parseFloat(tempCancelFee);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 ProductDAO productDAO = new ProductDAO();
-                boolean flag = productDAO.cancelProduct(consignmentID, ProductStatus.COMPLETED);
+                if (cancelFee != 0) {
+                    flag = productDAO.cancelProduct(consignmentID, ProductStatus.NOT_YET_RECEIVE, cancelFee);
+                }
                 if (flag) {
                     url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=onWeb&status=success";
                 } else {

@@ -1181,7 +1181,7 @@ public class ProductDAO {
     }
 
     //ProductDAO
-    public boolean cancelProduct(String consignmentID, int status) {
+    public boolean cancelProduct(String consignmentID, int status, float cancelFee) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stmUpdateProduct = null;
@@ -1190,13 +1190,13 @@ public class ProductDAO {
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
-            if (status == ProductStatus.NOT_AVAILABLE) {
+            if (status == ProductStatus.NOT_AVAILABLE) {// agree cancel product
                 conn.setAutoCommit(false);
 
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
                         + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
-                stmUpdateProduct.setInt(1, ProductStatus.NOT_AVAILABLE);
+                stmUpdateProduct.setInt(1, ProductStatus.NOT_YET_RECEIVE);
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
@@ -1218,7 +1218,7 @@ public class ProductDAO {
                 } else {
                     return false;
                 }
-            } else if (status == ProductStatus.COMPLETED) {
+            } else if (status == ProductStatus.NOT_YET_RECEIVE) {// receive
                 conn.setAutoCommit(false);
 
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
@@ -1232,11 +1232,11 @@ public class ProductDAO {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String today = sdf.format(tempDate);
 
-                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = (SELECT NegotiatedPrice * 0.15 FROM Consignment WHERE ConsignmentID = ?) WHERE ConsignmentID = ?";
+                query = "UPDATE Consignment SET AgreeCancelDate = ?, ConsignmentStatusID = ?, CancelFee = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setString(1, today);
                 stmUpdateConsignment.setInt(2, ConsignmentStatus.CANCEL);
-                stmUpdateConsignment.setString(3, consignmentID);
+                stmUpdateConsignment.setFloat(3, cancelFee);
                 stmUpdateConsignment.setString(4, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
 
@@ -1246,7 +1246,7 @@ public class ProductDAO {
                 } else {
                     return false;
                 }
-            } else {
+            } else {//decline cancel request
                 query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
                         + "(SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
                 stmUpdateProduct = conn.prepareStatement(query);
@@ -1708,12 +1708,11 @@ public class ProductDAO {
     }
 
     //extend consignment period
-    public boolean ExtendProduct(String consignmentID, int period) {
+    public boolean ExtendProducts(String consignmentID, float expiredFee) {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        float expiredFee = 0, productPrice = 0;
-        int datediff = 0, dateFromNow = 0;
+        int dateFromNow = 0;
         try {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
@@ -1722,30 +1721,27 @@ public class ProductDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
 
-            String query = "SELECT NegotiatedPrice, (DATEDIFF(day,[RaiseWebDate],?)-(SELECT Period FROM Consignment WHERE ConsignmentID = ?)) "
-                    + "AS DiffDate, DATEDIFF(day,[RaiseWebDate],?) as DayFromNow FROM Consignment WHERE ConsignmentID = ?";
+            String query = "SELECT DATEDIFF(day,[RaiseWebDate],?) as DayFromNow FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
             stm.setString(2, consignmentID);
-            stm.setString(3, today);
-            stm.setString(4, consignmentID);
             rs = stm.executeQuery();
             while (rs.next()) {
-                datediff = rs.getInt("DiffDate");
-                productPrice = rs.getFloat("NegotiatedPrice");
                 dateFromNow = rs.getInt("DayFromNow");
             }
-            if (productPrice >= 1000000 && datediff > 0) {
-                expiredFee = datediff * 10000;
-            } else if (datediff > 0) {
-                expiredFee = datediff * 5000;
-            }
-            query = "UPDATE Consignment SET ExpiredFee = ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ? WHERE ConsignmentID = ?";
+
+            query = "UPDATE Consignment SET RemainExtendFee = 0 WHERE ConsignmentID = ? AND RemainExtendFee IS NULL";
             stm = conn.prepareStatement(query);
-            stm.setFloat(1, expiredFee);
-            stm.setInt(2, ConsignmentStatus.RECEIVED);
-            stm.setInt(3, period + dateFromNow);
-            stm.setString(4, consignmentID);
+            stm.setString(1, consignmentID);
+            stm.executeUpdate();
+
+            query = "UPDATE Consignment SET RemainExtendFee = (SELECT RemainExtendFee FROM Consignment WHERE ConsignmentID = ?) + ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ? WHERE ConsignmentID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setString(1, consignmentID);
+            stm.setFloat(2, expiredFee);
+            stm.setInt(3, ConsignmentStatus.RECEIVED);
+            stm.setInt(4, 30 + dateFromNow);
+            stm.setString(5, consignmentID);
             int i = stm.executeUpdate();
 
             query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
