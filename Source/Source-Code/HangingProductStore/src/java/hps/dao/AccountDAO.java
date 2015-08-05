@@ -602,7 +602,7 @@ public class AccountDAO {
             while (rs.next()) {
                 fullName = rs.getString("FullName");
                 address = rs.getString("Address");
-                phone = convertPhone(rs.getString("Phone"));
+                phone = rs.getString("Phone");
                 email = rs.getString("Email");
                 consignedPrice = rs.getFloat("ReturnedPrice") / 1000;
                 paypalAccount = rs.getString("PaypalAccount");

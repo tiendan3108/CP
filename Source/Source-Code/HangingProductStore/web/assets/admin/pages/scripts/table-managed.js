@@ -1404,6 +1404,8 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": true
+                }, {
+                    "orderable": true
                 }],
             "lengthMenu": [
                 [5, 10, 20, -1],

@@ -389,7 +389,7 @@ public class OrderDAO {
             stm.setString(1, _orderID);
             rs = stm.executeQuery();
             if (rs.next()) {
-                return convertPhone(rs.getString("Phone"));
+                return rs.getString("Phone");
             }
             return null;
         } catch (SQLException e) {
