@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
             AccountDAO dao = new AccountDAO();
             AccountDTO account = dao.checkLogin(username, password);
             if (account != null) {
+                account.setPhone("0" + account.getPhone().substring(3));
                 if (!account.getRole().equals(GlobalVariables.ADMIN)) {
                     AccountDTO temp = dao.getRoleInfo(account.getRole(), account.getAccountID());
                     account.setRoleID(temp.getRoleID());
