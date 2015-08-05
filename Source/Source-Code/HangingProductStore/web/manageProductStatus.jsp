@@ -1133,7 +1133,7 @@
                         $("#avai_Image").attr("src", response.image);
                         var option = "option#" + response.categoryID;
                         $(option).attr("selected", "selected");
-                        if (response.isSpecial > 0) {
+                        if (response.isSpecial < 1) {
                             $('#rdIsSpecial1').parent('span').addClass('checked');
                             $('#rdNotSpecial1').parent('span').removeClass('checked');
                         } else {
@@ -1333,7 +1333,7 @@
                         $("#onWeb_Image").attr("src", response.image);
                         var option = "option#onWeb_" + response.categoryID;
                         $(option).attr("selected", "selected");
-                        if (response.isSpecial > 0) {
+                        if (response.isSpecial < 1) {
                             $('#sendPriceTrue_2').parent('span').addClass('checked');
                             $('#sendPriceFalse_2').parent('span').removeClass('checked')
                         } else {

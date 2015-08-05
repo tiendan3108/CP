@@ -149,10 +149,10 @@ public class PublishProduct extends HttpServlet {
                     url = GlobalVariables.SESSION_TIME_OUT_PAGE;
                 } else {
                     if (isSpecial != null && isSpecial.equals("isSpecial")) {
-                        special = SpecialProduct.SPECIAL;
+                        special = SpecialProduct.NOT_SPECIAL;
                     }
                     if (isSpecial != null && isSpecial.equals("notSpecial")) {
-                        special = SpecialProduct.NOT_SPECIAL;
+                        special = SpecialProduct.SPECIAL;
                     }
                     ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, imagePath, special);
                     if (tempSeason.contains("1")) {
