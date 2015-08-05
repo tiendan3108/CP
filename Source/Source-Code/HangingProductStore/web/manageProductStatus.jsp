@@ -572,7 +572,7 @@
                                                 <input type="hidden" name="item_number" value="">
                                                 <input type="hidden" name="amount" value="">
                                                 <input type="hidden" name="currency_code" value="">
-                                                <button class="btn btn-primary" type="submit">Thanh toán qua Paypal</button>
+                                                <button class="btn btn-default" type="submit">Thanh toán qua Paypal</button>
                                             </form>
                                         </div>
                                     </div>
