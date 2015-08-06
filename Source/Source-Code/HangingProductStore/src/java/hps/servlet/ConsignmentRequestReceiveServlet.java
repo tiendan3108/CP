@@ -13,6 +13,7 @@ import hps.dao.ConsignmentDAO;
 import hps.dto.AccountDTO;
 import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
+import hps.ultils.ConsignmentStatus;
 import hps.ultils.GlobalVariables;
 import hps.ultils.JavaUltilities;
 import hps.ultils.MessageString;
@@ -178,143 +179,185 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     currentTab = "request";
 
                 } else if (action.equals("r_refuse")) {
-                    String consignmentID = request.getParameter("r_consignmentID");
-                    String reason = request.getParameter("r_reason");
-                    consignmentDAO.updateConsignmentStatusWhenRefuseRequest(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
-
-//send sms and email
-                    ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
-                    if (consignment != null) {
-                        session.removeAttribute("consignment_details");
-                        String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã bị từ chối. ";
-                        JavaUltilities java = new JavaUltilities();
-
-                        if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
-
-                            try {
-                                java.sendSMS(msg, consignment.getPhone());
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send sms refuse consignment request.");
-                                e.printStackTrace();
-                            }
-                        }
-                        if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
-                            try {
-                                java.sendEmail(consignment.getEmail(), "[HPS] Hủy yêu cầu ký gửi", msg);
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send email refuse consignment request.");
-                                e.printStackTrace();
-                            }
-                        }
-
-                    }
-                    currentTab = "request";
-
-                } else if (action.equals("ar_accept")) {
+                    String message = "";
                     String consignmentID = request.getParameter("consignmentID");
-                    String productName = request.getParameter("txtProductName");
-                    String hour = request.getParameter("txtHour");
+                    if (consignmentDAO.checkIfConsignmentStatusIsWaiting(consignmentID)) {
+                        String reason = request.getParameter("reason");
+                        boolean result = consignmentDAO.updateConsignmentStatusWhenRefuseRequest(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
+                        if (result) {
+                            message = "success";
+                            //send sms and email
+                            ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                            if (consignment != null) {
+                                session.removeAttribute("consignment_details");
+                                String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã bị từ chối. ";
+                                JavaUltilities java = new JavaUltilities();
 
-                    int isSpecial = 0;
-                    if (request.getParameter("txtIsSpecial") != null) {
-                        isSpecial = 1;
+                                if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
+
+                                    try {
+                                        java.sendSMS(msg, consignment.getPhone());
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send sms refuse consignment request.");
+                                        e.printStackTrace();
+                                    }
+                                }
+                                if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
+                                    try {
+                                        java.sendEmail(consignment.getEmail(), "[HPS] Hủy yêu cầu ký gửi", msg);
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send email refuse consignment request.");
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                        } else {
+                            message = "fail";
+                        }
+                    } else {
+                        message = "error";
                     }
+                    String json = new Gson().toJson(message);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(json);
+                    return;
+
+                    //currentTab = "request";
+                } else if (action.equals("ar_accept")) {
+                    String message = "";
+                    String consignmentID = request.getParameter("consignmentID");
+                    if (consignmentDAO.checkIfConsignmentStatusIsAccepted(consignmentID)) {
+                        String productName = request.getParameter("productName");
+                        String hour = request.getParameter("hour");
+
+//                        int isSpecial = 0;
+//                        if (request.getParameter("isSpecial:") != null) {
+//                            isSpecial = 1;
+//                        }
+                        int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
 
 // get appointmentDate and add hour into it then format to update database
-                    String preAppointmentDate = request.getParameter("txtReceivedDate");
-                    String appointmentDate = formatDate(preAppointmentDate + " " + hour);
+                        String preAppointmentDate = request.getParameter("appointmentDate");
+                        String appointmentDate = formatDate(preAppointmentDate + " " + hour);
 
-                    int categoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
-                    String brand = request.getParameter("txtBrand");
-                    String description = request.getParameter("txtDescription");
-                    //int productID = Integer.parseInt(request.getParameter("productID"));
-                    String fullName = request.getParameter("txtFullName");
-                    String address = request.getParameter("txtAddress");
-                    String phone = "+84" + request.getParameter("txtPhone").substring(1);
-                    String email = request.getParameter("txtEmail");
-                    String paymentMethod = request.getParameter("r_rdPayment");
-                    String paypalAccount = request.getParameter("txtPaypalAccount");
-                    if (paymentMethod.equals("direct")) {
-                        paypalAccount = "";
-                    }
+                        int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                        String brand = request.getParameter("brand");
+                        String description = request.getParameter("description");
+                        //int productID = Integer.parseInt(request.getParameter("productID"));
+                        String fullName = request.getParameter("fullName");
+                        String address = request.getParameter("address");
+                        String phone = "+84" + request.getParameter("phone").substring(1);
+                        String email = request.getParameter("email");
 
-                    int deliveryMethod = 0;
-                    String method = request.getParameter("r_rdDeliveryMethod");
+                        String paypalAccount = request.getParameter("paypalAccount");
+                        //String paymentMethod = request.getParameter("r_rdPayment");
+//                        if (paymentMethod.equals("direct")) {
+//                            paypalAccount = "";
+//                        }
 
-                    if (method.equals("customer")) {
-                        deliveryMethod = 1;
-                    }
+                        int deliveryMethod = 0;
+                        String method = request.getParameter("deliveryMethod");
 
-                    float negotiatedPrice = Float.parseFloat(request.getParameter("txtNegotiatedPrice")) * 1000;
-
-                    boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
-                    if (result) {
-                        consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice);
-                    }
-
-                    ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
-                    //send sms and email
-                    if (consignment != null) {
-                        session.removeAttribute("consignment_details");
-                        String msg = "Sản phẩm với mã số " + consignment.getConsigmentID() + " của bạn đã được nhận.";
-                        JavaUltilities java = new JavaUltilities();
-
-                        if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
-
-                            try {
-                                java.sendSMS(msg, consignment.getPhone());
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send sms accept product.");
-                                e.printStackTrace();
-                            }
-                        }
-                        if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
-                            try {
-                                java.sendEmail(consignment.getEmail(), "[HPS] Nhận hàng ký gửi", msg);
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send email accept product.");
-                                e.printStackTrace();
-                            }
+                        if (method.equals("customer")) {
+                            deliveryMethod = 1;
                         }
 
+                        float negotiatedPrice = Float.parseFloat(request.getParameter("negotiatedPrice")) * 1000;
+
+                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                        if (result) {
+
+                            consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice);
+                            message = "success";
+                            ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                            //send sms and email
+                            if (consignment != null) {
+                                session.removeAttribute("consignment_details");
+                                String msg = "San pham voi ma so " + consignment.getConsigmentID() + " cua ban da duoc nhan.";
+                                JavaUltilities java = new JavaUltilities();
+
+                                if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
+
+                                    try {
+                                        java.sendSMS(msg, consignment.getPhone());
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send sms accept product.");
+                                        e.printStackTrace();
+                                    }
+                                }
+                                if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
+                                    try {
+                                        java.sendEmail(consignment.getEmail(), "[HPS] Nhận hàng ký gửi", msg);
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send email accept product.");
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                            }
+                        } else {
+                            message = "fail";
+                        }
+                    } else {
+                        message = "error";
                     }
-                    currentTab = "accepted";
+
+                    //currentTab = "accepted";
+                    String json = new Gson().toJson(message);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(json);
+                    return;
 
                 } else if (action.equals("ar_refuse")) {
-                    String consignmentID = request.getParameter("ar_consignmentID");
-                    String reason = request.getParameter("ar_reason");
-                    System.out.println("reason: " + reason);
-                    consignmentDAO.updateConsignmentStatusWhenRefuseProduct(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
+                    String message = "";
+                    String consignmentID = request.getParameter("consignmentID");
+                    if (consignmentDAO.checkIfConsignmentStatusIsAccepted(consignmentID)) {
+                        String reason = request.getParameter("reason");
+                        System.out.println("reason: " + reason);
 
-                    ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
-                    //send sms and email
-                    if (consignment != null) {
-                        session.removeAttribute("consignment_details");
-                        String msg = "Sản phẩm với mã số " + consignment.getConsigmentID() + " của bạn đã bị từ chối.";
-                        JavaUltilities java = new JavaUltilities();
-                        if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
+                        boolean result = consignmentDAO.updateConsignmentStatusWhenRefuseProduct(consignmentID, GlobalVariables.CONSIGNMENT_REFUSE, reason);
+                        if (result) {
+                            message = "success";
+                            ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                            //send sms and email
+                            if (consignment != null) {
+                                session.removeAttribute("consignment_details");
+                                String msg = "San pham voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi.";
+                                JavaUltilities java = new JavaUltilities();
+                                if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
-                            try {
-                                java.sendSMS(msg, consignment.getPhone());
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send sms refuse product.");
-                                e.printStackTrace();
+                                    try {
+                                        java.sendSMS(msg, consignment.getPhone());
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send sms refuse product.");
+                                        e.printStackTrace();
+                                    }
+                                }
+                                if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
+                                    try {
+                                        java.sendEmail(consignment.getEmail(), "[HPS] Từ chối hàng ký gửi", msg);
+                                    } catch (Exception e) {
+                                        System.out.println("CANNOT send email refuse.");
+                                        e.printStackTrace();
+                                    }
+                                }
+
                             }
-                        }
-                        if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
-                            try {
-                                java.sendEmail(consignment.getEmail(), "[HPS] Từ chối hàng ký gửi", msg);
-                            } catch (Exception e) {
-                                System.out.println("CANNOT send email refuse.");
-                                e.printStackTrace();
-                            }
+                        } else {
+                            message = "fail";
                         }
 
+                    } else {
+                        message = "error";
                     }
-                    String searchValue = request.getParameter("ar_searchValue");
 
-                    currentTab = "accepted";
+                    String json = new Gson().toJson(message);
+                    response.setContentType("application/json;charset=UTF-8");
+                    response.getWriter().write(json);
+                    return;
 
+                    //currentTab = "accepted";
                 } else if (action.equals("updateRequest")) {
                     String msg = "";
                     String consignmentID = request.getParameter("consignmentID");
@@ -329,7 +372,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
 // get appointmentDate and add hour into it then format to update database
                         String hour = request.getParameter("hour");
-                        String preAppointmentDate = request.getParameter("receivedDate");
+                        String preAppointmentDate = request.getParameter("appointmentDate");
                         String appointmentDate = preAppointmentDate + " " + hour;
                         appointmentDate = formatDate(appointmentDate);
 
@@ -358,12 +401,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                                 java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
                                 System.out.println("Send notification");
                             }
-                        }else{
+                        } else {
                             msg = "fail";
                         }
-                        
-                        
-                    }else{
+
+                    } else {
                         msg = "error";
                     }
 
