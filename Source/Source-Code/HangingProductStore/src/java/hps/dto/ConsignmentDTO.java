@@ -419,7 +419,7 @@ public class ConsignmentDTO implements Serializable {
     public String getAgreeCancelDate() {
         return agreeCancelDate;
     }
-    
+
     /**
      * @param agreeCancelDate the agreeCancelDate to set
      */
@@ -432,7 +432,7 @@ public class ConsignmentDTO implements Serializable {
      */
     public String getReturnDate() {
         return returnDate;
-}
+    }
 
     /**
      * @param returnDate the returnDate to set

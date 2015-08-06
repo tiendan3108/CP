@@ -88,7 +88,7 @@
                     <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                         <li class="sidebar-toggler-wrapper" class="sidebar-toggler-wrapper">
                             <div class="sidebar-toggler">
-                            </div>->
+                            </div>
                         </li>
                         <li class="start">
                             <a href="javascript:;">
@@ -160,11 +160,11 @@
                 <div>
                     <div class="alert alert-success" id="success-alert" style="display: none; float: right">
                         <button type="button" class="close" data-dismiss="alert">x</button>
-                        <strong>Thao tác thành công!</strong>
+                        <span>Thao tác thành công!</span>
                     </div>
                     <div class="alert alert-danger" id="fail-alert" style="display: none; float: right">
                         <button type="button" class="close" data-dismiss="alert">x</button>
-                        <strong>Thao tác thất bại!</strong>
+                        <span>Thao tác thất bại!</span>
                     </div>
                 </div>
                 <!-- END ALERT DIALOG -->
@@ -379,6 +379,7 @@
                                                 <th>Ngày nhận hàng</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>TT liên lạc</th>
+                                                <th>Trạng thái</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
                                         </thead>
@@ -396,6 +397,14 @@
                                                         </c:if>
                                                         <c:if test="${item.phone==null && item.email!=null}">
                                                             ${item.email}
+                                                        </c:if>
+                                                    </td>
+                                                    <td>
+                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
+                                                            Chờ nhận hàng
+                                                        </c:if>
+                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 7}">
+                                                            Chờ duyệt
                                                         </c:if>
                                                     </td>
                                                     <td><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
@@ -458,26 +467,26 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4>Thông tin sản phẩm</h4>        
+                                    <h3>Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
-                                            <h5><strong><u>Thông tin người kí gửi</u></strong></h5>
-                                            Họ tên : <strong id="sold_fullName"></strong><br>
-                                            Địa chỉ : <strong id="sold_address"></strong><br>
-                                            Số điện thoại : <strong id="sold_phone"></strong><br>
-                                            Email : <strong id="sold_email"></strong><br>
-                                            Tài khoản Paypal : <strong id="sold_paypalAccount"></strong>
+                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
+                                            <strong>Họ tên : </strong><span id="sold_fullName"></span><br>
+                                            <strong>Địa chỉ : </strong><span id="sold_address"></span><br>
+                                            <strong>Số điện thoại : </strong><span id="sold_phone"></span><br>
+                                            <strong>Email : </strong><span id="sold_email"></span><br>
+                                            <strong>Tài khoản Paypal : </strong><span id="sold_paypalAccount"></span>
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <h5><strong><u>Thông tin sản phẩm</u></strong></h5>
-                                            Tên sản phẩm : <strong id="sold_productName"></strong><br>
-                                            Mã kí gửi : <strong id="sold_consignmentID"></strong><br>
-                                            Giá sản phẩm (Ngàn đồng): <strong id="sold_negotiatedPrice"></strong><br>
-                                            Giá bán (Ngàn đồng): <strong id="sold_sellingPrice"></strong><br>
-                                            Ngày kí gửi : <strong id="sold_receivedDate"></strong><br>
-                                            Tiền trả khách hàng (Ngàn đồng): <input type="text" id="sold_returnPrice" disabled="disabled">
+                                            <h4><span><u>Thông tin sản phẩm</u></span></h4>
+                                            <strong>Tên sản phẩm : </strong><span id="sold_productName"></span><br>
+                                            <strong>Mã kí gửi : </strong><span id="sold_consignmentID"></span><br>
+                                            <strong>Giá sản phẩm (Ngàn đồng): </strong><span id="sold_negotiatedPrice"></span><br>
+                                            <strong>Giá bán (Ngàn đồng): </strong><span id="sold_sellingPrice"></span><br>
+                                            <strong>Ngày kí gửi : </strong><span id="sold_receivedDate"></span><br>
+                                            <strong>Tiền trả khách hàng (Ngàn đồng): </strong><input type="text" id="sold_returnPrice" disabled="disabled">
                                         </div>
                                     </div>
                                 </div>
@@ -487,7 +496,7 @@
                                             <form action="SoldProduct" method="POST">
                                                 <input type="hidden" name="txtReturnPrice" id="sold_returnPrice1" value=""/>
                                                 <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
-                                                <button class="btn btn-primary" name="btnAction" type="submit" value="pay">Trả tiền</button>
+                                                <button class="btn blue" name="btnAction" type="submit" value="pay">Trả tiền</button>
                                                 <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
                                             </form>
                                         </div>
@@ -501,7 +510,7 @@
                                                 <input type="hidden" name="item_number" value="">
                                                 <input type="hidden" name="amount" value="">
                                                 <input type="hidden" name="currency_code" value="">
-                                                <button class="btn btn-primary" type="submit">Thanh toán qua Paypal</button>
+                                                <button class="btn green" type="submit">Thanh toán qua Paypal</button>
                                             </form>
                                         </div>
                                     </div>
@@ -516,7 +525,7 @@
                             <div class="modal-content">
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header">
-                                        <h4>Thông tin đặt hàng</h4>
+                                        <h3>Thông tin đặt hàng</h3>
                                         Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>
                                         <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>
                                     </div>
@@ -537,9 +546,9 @@
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
-                                        <button class="btn btn-primary" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
-                                        <button class="btn btn-warning" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
-                                        <input class="btn btn-info confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
+                                        <button class="btn green" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
+                                        <button class="btn red" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
+                                        <input class="btn blue confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </form>
@@ -553,14 +562,14 @@
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>Thông tin giá bán</h4>        
+                                        <h3>Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <label class="control-label">Giá bán (Ngàn đồng):</label><input id="sellingPrice" type="text" name="txtSellingPrice" value ="" style="width: 300px;">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" id="order_OrderID">
-                                        <button class="btn btn-info" name="btnAction" type="submit" value="order" onclick="return validateSellingPrice();">Đồng ý</button>
+                                        <button class="btn blue" name="btnAction" type="submit" value="order" onclick="return validateSellingPrice();">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -573,24 +582,24 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4>Thông tin hủy kí gửi</h4>        
+                                    <h3>Thông tin hủy kí gửi</h3>        
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row">
+                                    <div class="row" style="font-size: 13">
                                         <div class="col-sm-6">
-                                            <h5><strong><u>Thông tin người kí gửi</u></strong></h5>
-                                            Họ tên : <strong id="cancel_fullName"></strong><br>
-                                            Địa chỉ : <strong id="cancel_address"></strong><br>
-                                            Số điện thoại : <strong id="cancel_phone"></strong><br>
-                                            Email : <strong id="cancel_email"></strong>
+                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
+                                            <strong>Họ tên : </strong><span id="cancel_fullName" style="font-weight: normal"></span><br>
+                                            <strong>Địa chỉ : </strong><span id="cancel_address"></span><br>
+                                            <strong>Số điện thoại : </strong><span id="cancel_phone"></span><br>
+                                            <strong>Email : </strong><span id="cancel_email"></span>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h5><strong><u>Thông tin hàng kí gửi</u></strong></h5>
-                                            Tên sản phẩm : <strong id="cancel_productName"></strong><br>
-                                            Mã hàng kí gửi : <strong id="cancel_consignmentID"></strong><br>
-                                            Giá kí gửi (Ngàn đồng): <strong id="cancel_negotiatedPrice"></strong><br>
-                                            Ngày nhận hàng : <strong id="cancel_consignedDate"></strong><br>
-                                            Ngày hủy kí gửi : <strong id="cancel_canceledDate"></strong><br>
+                                            <h4><span><u>Thông tin hàng kí gửi</u></span></h4>
+                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
+                                            <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
+                                            <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
+                                            <strong>Ngày nhận hàng : </strong><span id="cancel_consignedDate"></span><br>
+                                            <strong>Ngày hủy kí gửi : </strong><span id="cancel_canceledDate"></span><br>
                                         </div>
                                     </div>
                                 </div>
@@ -599,13 +608,13 @@
                                         <div style="float: right; margin-right: 25px">
                                             <form action="CancelProduct" method="POST">
                                                 <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
-                                                <button id="btnAgree" class="btn btn-info" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
-                                                <button id="btnDecline" class="btn btn-warning" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
+                                                <button id="btnAgree" class="btn red" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
+                                                <button id="btnDecline" class="btn blue" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
                                                 <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                             </form>
                                         </div>
                                         <div style="float: right; margin: 0px 5px;">
-                                            <button id="btnReturn" class="btn btn-info receiveProductModal" data-toggle="modal" style="display: none">Trả hàng</button>
+                                            <button id="btnReturn" class="btn blue receiveProductModal" data-toggle="modal" style="display: none">Trả hàng</button>
                                         </div>
                                     </div>
                                 </div>
@@ -621,7 +630,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>Thông tin sản phẩm</h4>        
+                                        <h3>Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -726,7 +735,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btn-info" type="submit">Duyệt</button>
+                                        <button class="btn blue" type="submit">Duyệt</button>
                                         <input type="hidden" name="txtSeasonList" id="avai_seasonID">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
@@ -740,31 +749,31 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4>Thông tin sản phẩm</h4>        
+                                    <h3>Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-6" style="padding-left:45px">
-                                            <h5><strong><u>Thông tin người kí gửi</u></strong></h5>
-                                            Họ tên : <strong id="expired_fullName"></strong><br>
-                                            Địa chỉ : <strong id="expired_address"></strong><br>
-                                            Số điện thoại : <strong id="expired_phone"></strong><br>
-                                            Email : <strong id="expired_email"></strong>
+                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
+                                            <strong>Họ tên : </strong><span id="expired_fullName"></span><br>
+                                            <strong>Địa chỉ : </strong><span id="expired_address"></span><br>
+                                            <strong>Số điện thoại : </strong><span id="expired_phone"></span><br>
+                                            <strong>Email : </strong><span id="expired_email"></span>
                                         </div>
                                         <div class="col-sm-6" style="padding-right:45px">
-                                            <h5><strong><u>Thông tin hàng kí gửi</u></strong></h5>
-                                            Tên sản phẩm : <strong id="expired_productName"></strong><br>
-                                            Mã hàng kí gửi : <strong id="expired_consignmentID"></strong><br>
-                                            Ngày kí gửi : <strong id="expired_consignedDate"></strong><br>
-                                            Giá thỏa thuận (Ngàn đồng): <strong id="expired_negotiatedPrice"></strong><br>
-                                            Số ngày quá hạn: <strong id="expired_days"></strong> ngày
+                                            <h4><span><u>Thông tin hàng kí gửi</u></span></h4>
+                                            <strong>Tên sản phẩm : </strong><span id="expired_productName"></span><br>
+                                            <strong>Mã hàng kí gửi : </strong><span id="expired_consignmentID"></span><br>
+                                            <strong>Ngày kí gửi : </strong><span id="expired_consignedDate"></span><br>
+                                            <strong>Giá thỏa thuận (Ngàn đồng): </strong><span id="expired_negotiatedPrice"></span><br>
+                                            <strong>Số ngày quá hạn: </strong><span id="expired_days"></span> ngày
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <form>
-                                        <input class="btn btn-info confirmExtendModal" type="button" data-togle="modal" value="Gia hạn">
-                                        <input class="btn btn-warning confirmReceiveModal" type="button" data-togle="modal" value="Nhận hàng">
+                                        <input class="btn blue confirmExtendModal" type="button" data-togle="modal" value="Gia hạn">
+                                        <input class="btn red confirmReceiveModal" type="button" data-togle="modal" value="Nhận hàng">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </form>
                                 </div>
@@ -778,15 +787,15 @@
                             <form action="ExtendProduct" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>Thời hạn kí gửi</h4>
+                                        <h3>Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
-                                        Tiền lưu kho trong <strong id="expired_period"></strong> ngày hết hạn là <strong id="expired_fees"></strong> ngàn đồng.<br>
+                                        Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là <span id="expired_fees"></span> ngàn đồng.<br>
                                         Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay. Bạn có chắc chắn muốn gia hạn sản phẩm này?
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtConsignmentID" id="expired_extendConsignmentID" value="">
-                                        <button class="btn btn-info" name="btnAction" type="submit" value="extend">Gia hạn</button>
+                                        <button class="btn blue" name="btnAction" type="submit" value="extend">Gia hạn</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -800,14 +809,14 @@
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>Thông tin tiền phạt</h4>
+                                        <h3>Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
                                         <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
-                                        <button class="btn btn-info" name="btnAction" type="submit" value="receive">Đồng ý</button>
+                                        <button class="btn blue" name="btnAction" type="submit" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </div>
@@ -823,7 +832,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4>Thông tin sản phẩm</h4>        
+                                        <h3>Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -928,8 +937,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input class="btn btn-warning confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
-                                        <button class="btn btn-primary" type="submit">Cập nhật</button>
+                                        <input class="btn red confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
+                                        <button class="btn blue" type="submit">Cập nhật</button>
                                         <input type="hidden" name="txtSeasonList" id="onWeb_seasonID">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
@@ -944,16 +953,16 @@
                             <div class="modal-content">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice();">
                                     <div class="modal-header">
-                                        <h4>Hủy kí gửi</h4>
+                                        <h3>Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
-                                        <h5>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h5>
-                                        <h5>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h5>
+                                        <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h4>
+                                        <h4>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h4>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" value="" name="txtcurrentTab" id="currentTab_cancel">
                                         <input type="hidden" value="" name="txtConsignmentID" id="confirmCancel_ConsignmentID2">
-                                        <button class="btn btn-success" type="submit" name="btnAction" value="receive">Đồng ý</button>
+                                        <button class="btn blue" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                     </div>
                                 </form>
@@ -1241,7 +1250,7 @@
                         $("#expired_consignedDate").text(response.reviewProductDate);
                         $("#expired_negotiatedPrice").text(response.negotiatedPrice);
                         $("#expired_days").text(response.expiredDays);
-                        $("#expired_fee").val(response.expiredFee);
+                        $("#expired_fee").val(response.expiredFee + response.remainExtendFee);
                     });
                     $('#expiredModal').modal('show');
                 });

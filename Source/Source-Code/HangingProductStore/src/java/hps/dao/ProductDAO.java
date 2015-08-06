@@ -1860,7 +1860,7 @@ public class ProductDAO {
         try {
 
             conn = DBUltilities.makeConnection();
-            query = "SELECT c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
+            query = "SELECT c.RemainExtendFee, c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
                     + "p.SellingPrice, c.CancelFee, c.AgreeCancelDate, c.ReturnDate, c.ReceivedDate, "
                     + "CASE WHEN c.AgreeCancelDate IS NOT NULL THEN c.AgreeCancelDate "
                     + "WHEN c.ReturnDate IS NOT NULL THEN c.ReturnDate "
@@ -1882,9 +1882,10 @@ public class ProductDAO {
                 float sellingPrice = rs.getFloat("SellingPrice") / 1000;
                 float cancelFee = rs.getFloat("CancelFee") / 1000;
                 float expiredFee = rs.getFloat("ExpiredFee") / 1000;
+                float remainExtendFee = rs.getFloat("RemainExtendFee") / 1000;
                 String actionDate = formatDateString(rs.getString("ActionDate"));
-                float revenue = sellingPrice - returnPrice + cancelFee + expiredFee;
-                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, cancelFee, expiredFee, sellingPrice, actionDate, revenue);
+                float revenue = sellingPrice - returnPrice + cancelFee + expiredFee + remainExtendFee;
+                StatisticDTO item = new StatisticDTO(productName, consignorName, negotiatedPrice, returnPrice, cancelFee, expiredFee + remainExtendFee, sellingPrice, actionDate, revenue);
                 result.add(item);
             }
             if (result.isEmpty()) {

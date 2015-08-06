@@ -1024,6 +1024,8 @@ var TableManaged = function () {
                 }, {
                     "orderable": false
                 }, {
+                    "orderable": true
+                },{
                     "orderable": false
                 }],
             "lengthMenu": [
@@ -1211,6 +1213,8 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": true
+                }, {
+                    "orderable": false
                 }],
             "lengthMenu": [
                 [5, 10, 20, -1],

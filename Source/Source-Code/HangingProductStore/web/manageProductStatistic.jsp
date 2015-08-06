@@ -85,7 +85,7 @@
                     <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                         <li class="sidebar-toggler-wrapper" class="sidebar-toggler-wrapper">
                             <div class="sidebar-toggler">
-                            </div>->
+                            </div>
                         </li>
                         <li class="start">
                             <a href="javascript:;">
@@ -291,6 +291,7 @@
                                                 <th id="actionDate">Ngày tạo kí gửi</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Trạng thái</th>
+                                                <th>Chi tiết</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -301,26 +302,28 @@
                                                     <td>${item.phone}</td>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.consignmentStatusID == 1}">${item.createdDate}</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 2 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 3 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
-                                                            <c:when test="${item.consignmentStatusID == 5 && not empty item.reviewProductDate}">${item.reviewProductDate}</c:when>
                                                             <c:when test="${not empty item.agreeCancelDate}">${item.agreeCancelDate}</c:when>
                                                             <c:when test="${not empty item.returnDate}">${item.returnDate}</c:when>
                                                             <c:when test="${not empty item.receivedDate}">${item.receivedDate}</c:when>
+                                                            <c:when test="${not empty item.reviewProductDate}">${item.reviewProductDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 1}">${item.createdDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 2 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
+                                                            <c:when test="${item.consignmentStatusID == 3 && not empty item.reviewRequestDate}">${item.reviewRequestDate}</c:when>
                                                         </c:choose>
                                                     </td>
                                                     <td>${item.consigmentID}</td>
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${item.consignmentStatusID == 1}">Chờ duyệt yêu cầu</c:when>
+                                                            <c:when test="${not empty item.returnDate || not empty item.receivedDate || not empty item.agreeCancelDate}">Hoàn tất</c:when>
                                                             <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID == 2}">Từ chối khi đến nhận hàng</c:when>
                                                             <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID == 2}">Từ chối khi duyệt yêu cầu</c:when>
                                                             <c:when test="${not empty item.reviewRequestDate && item.consignmentStatusID == 3}">Đồng ý nhận kí gửi</c:when>
-                                                            <c:when test="${not empty item.returnDate && item.consignmentStatusID == 5}">Hoàn tất</c:when>
-                                                            <c:when test="${not empty item.reviewProductDate && item.consignmentStatusID == 5}">Đã nhận hàng</c:when>
-                                                            <c:otherwise>Hoàn tất</c:otherwise>
+                                                            <c:otherwise>Đã nhận hàng</c:otherwise>
                                                         </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-info detailModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -336,9 +339,24 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-
+                                    <h3>Thông tin yêu cầu kí gửi</h3>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-5 col-md-5">
+                                            Tên người gửi : <span id="consignorName"></span><br>
+                                            Tên sản phẩm : <span id="productName"></span><br>
+                                            Mã kí gửi : <span id="consignmentID"></span>
+                                        </div>
+                                        <div class="col-sm-7 col-md-7">
+                                            Ngày duyệt yêu cầu : <span id="reviewRequestDate"></span><br>
+                                            Ngày từ chối yêu cầu : <span id="refuseReviewRequestDate"></span><br>
+                                            Ngày nhận hàng : <span id="reviewProductDate"></span><br>
+                                            Ngày từ chối nhận hàng : <span id="refuseReviewProductDate"></span><br>
+                                            Ngày bán : <span id="soldDate"></span><br>
+                                            Ngày trả tiền : <span id="returnDate"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -448,8 +466,16 @@
             $(document).on("click", ".detailModal", function () {
                 var consignmentID = $(this).data('id');
                 $.get('LoadDetailConsignment', {consignmentID: consignmentID}, function (respone) {
-
-                })
+                    $('#consignorName').text(respone.name);
+                    $('#productName').text(respone.product.name);
+                    $('#consignmentID').text(respone.consigmentID);
+                    $('#reviewRequestDate').text(respone.reviewRequestDate);
+                    //$('#refuseReviewRequestDate').text(respone.name);
+                    $('#reviewProductDate').text(respone.reviewProductDate);
+                    $('#refuseReviewProductDate').text(respone.name);
+                    //$('#soldDate').text(respone.name);
+                    //$('#returnDate').text(respone.name);
+                });
                 $('#detailModal').modal('show');
             });
             //date picker consignment
