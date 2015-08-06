@@ -1426,7 +1426,7 @@
                             } else {
                                 $("input#r_isSpecial").attr("checked", false).parent().removeClass("checked");
                             }
-                            $("#r_divPersonalInfo").hide();
+                            //$("#r_divPersonalInfo").hide();
 
                             if (data.consignmentStatusID == 1) {
 //                                $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
@@ -1470,7 +1470,7 @@
                                 $("#r_receivedDate").val(data.appointmentDate);
                                 $("#r_hour").val(data.hour);
 
-                                $("#r_divPersonalInfo").show();
+                                //$("#r_divPersonalInfo").show();
                                 $("#r_txtFullName").val(data.name);
                                 $("#r_txtAddress").val(data.address);
                                 $("#r_txtPhone").val("0" + data.phone.substring(3));
@@ -1655,7 +1655,7 @@
                             receivedDate: receivedDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
                             fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
                 function (data) {
-                    if (data) {
+                    if (data == "success") {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
                         consignmentTD.next().next().next().html(hour + "|" + receivedDate);
@@ -1667,8 +1667,11 @@
 
                         $("#r_name").html("<small>Khách hàng: </small> " + fullName);
                         alert("Cập nhật thành công");
-                    } else {
+                    } else if(data == "fail") {
                         alert("Cập nhật thất bại");
+                    }
+                    else if(data == "error") {
+                        alert("Yêu cầu đã được xử lý");
                     }
                 });
             }
