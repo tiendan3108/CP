@@ -89,7 +89,7 @@
 
                             <!-- BEGIN PRODUCT DESCRIPTION -->
                             <div class="col-lg-8 col-md-8">
-                                <table style="font-size: 110%; border: none" class="table table-striped table-hover">
+                                <table style="font-size: 110%; border: none" class="table table-hover">
                                     <tr>
                                         <th width="30%">Tên sản phẩm</th>
                                         <td id='r_productName'><b>${c.product.name}</b></td>
@@ -108,88 +108,86 @@
                                     </tr>
 
                                     <tr >
-                                        <th>Giá (Ngàn đồng)</th>
+                                        <th>Giá</th>
 
                                         <td id="r_price">
                                             <c:choose>
                                                 <c:when test="${c.negotiatedPrice > 0}">
                                                     <fmt:formatNumber type="number"
                                                                       value="${c.negotiatedPrice}" 
-                                                                      maxFractionDigits="0"/>
+                                                                      maxFractionDigits="0"/>&nbsp;(Ngàn đồng)
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <c:if test="${c.minPrice > 0 or c.maxPrice > 0}">
-                                                        <fmt:formatNumber type="number"
-                                                                          value="${c.minPrice}" 
-                                                                          maxFractionDigits="0"/>
-                                                        &nbsp;~&nbsp; <fmt:formatNumber type="number"
-                                                                          value="${c.maxPrice}" 
-                                                                          maxFractionDigits="0"/>
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${c.minPrice > 0 or c.maxPrice > 0}">
+                                                            <fmt:formatNumber type="number"
+                                                                              value="${c.minPrice}" 
+                                                                              maxFractionDigits="0"/>
+                                                            &nbsp;~&nbsp; <fmt:formatNumber type="number"
+                                                                              value="${c.maxPrice}" 
+                                                                              maxFractionDigits="0"/>&nbsp;(Ngàn đồng)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <font color="red"> Chưa có giá </font>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
 
                                         </td> 
                                     </tr>
-                                    <tr>
-                                        <th>Ngày hẹn</th>
-                                        <td id='r_fromDateToDate'>
+
+                                    <th>Trạng thái</th>
+                                    <td id='r_status'> <b>
                                             <c:choose>
-                                                <c:when test="${not empty c.appointmentDate}">
-                                                    ${c.appointmentDate} &nbsp; ${c.hour}
+                                                <c:when test="${c.product.productStatusID == 6}">
+                                                    <font color="red">ĐÃ HỦY</font>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    ${c.fromDate} - ${c.toDate}
+                                                    <c:choose>
+                                                        <c:when test="${c.consignmentStatusID == 1}">
+                                                            <font color="green">CHỜ XỬ LÝ</font>
+                                                        </c:when>
+                                                        <c:when test="${c.consignmentStatusID == 2}">
+                                                            <font color="red">ĐÃ TỪ CHỐI</font>
+                                                        </c:when>
+                                                        <c:when test="${c.consignmentStatusID == 3}">
+                                                            <font color="blue">ĐÃ CHẤP NHẬN YÊU CẦU</font>
+                                                        </c:when>
+                                                        <c:when test="${c.consignmentStatusID == 4}">
+                                                            <font color="blue">HOÀN THÀNH</font>
+                                                        </c:when>
+                                                        <c:when test="${c.consignmentStatusID == 6}">
+                                                            <font color="blue">ĐÃ HẾT HẠN</font>
+                                                        </c:when>
+                                                        <c:when test="${c.consignmentStatusID == 6}">
+                                                            <font color="red">ĐÃ TRẢ HÀNG</font>
+                                                        </c:when>
+
+                                                        <c:when test="${c.consignmentStatusID == 5}">
+                                                            <c:choose>
+                                                                <c:when test="${c.product.productStatusID == 2}">
+                                                                    <font color="blue">ĐÃ NHẬP HÀNG</font>
+                                                                </c:when>
+                                                                <c:when test="${c.product.productStatusID == 3}">
+                                                                    <font color="blue">ĐANG TRÊN WEB</font>
+                                                                </c:when>
+                                                                <c:when test="${c.product.productStatusID == 4}">
+                                                                    <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
+                                                                </c:when>
+                                                                <c:when test="${c.product.productStatusID == 5}">
+                                                                    <font color="blue">ĐÃ BÁN</font>
+                                                                </c:when>
+                                                                <c:when test="${c.product.productStatusID == 7}">
+                                                                    <font color="blue">ĐÃ HOÀN THÀNH</font>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:when>
+                                                    </c:choose>
                                                 </c:otherwise>
                                             </c:choose>
-                                            
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Trạng thái</th>
-                                        <td id='r_status'> <b>
-                                                <c:choose>
-                                                    <c:when test="${c.product.productStatusID == 6}">
-                                                        <font color="red">ĐÃ HỦY</font>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:choose>
-                                                            <c:when test="${c.consignmentStatusID == 1}">
-                                                                <font color="green">CHỜ XỬ LÝ</font>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 2}">
-                                                                <font color="red">ĐÃ TỪ CHỐI</font>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 3}">
-                                                                <font color="blue">ĐÃ CHẤP NHẬN</font>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 4}">
-                                                                <font color="blue">HOÀN THÀNH</font>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 6}">
-                                                                <font color="blue">ĐÃ HẾT HẠN</font>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 5}">
-                                                                <c:choose>
-                                                                    <c:when test="${c.product.productStatusID == 2}">
-                                                                        <font color="blue">ĐÃ NHẬP HÀNG</font>
-                                                                    </c:when>
-                                                                    <c:when test="${c.product.productStatusID == 3}">
-                                                                        <font color="blue">ĐANG TRÊN WEB</font>
-                                                                    </c:when>
-                                                                    <c:when test="${c.product.productStatusID == 4}">
-                                                                        <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
-                                                                    </c:when>
-                                                                    <c:when test="${c.product.productStatusID == 5}">
-                                                                        <font color="blue">ĐÃ BÁN</font>
-                                                                    </c:when>
-                                                                </c:choose>
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </b>
-                                        </td>
+                                        </b>
+                                    </td>
                                     </tr>
                                     <c:if test="${c.consignmentStatusID == 2}">
                                         <tr>

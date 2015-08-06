@@ -190,7 +190,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                             if (consignment != null) {
                                 session.removeAttribute("consignment_details");
-                                String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã bị từ chối. ";
+                                String msg = "Yêu cau ky gui voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi. ";
                                 JavaUltilities java = new JavaUltilities();
 
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {

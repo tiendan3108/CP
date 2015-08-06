@@ -896,7 +896,7 @@ public class ConsignmentDAO {
         try {
             conn = DBUltilities.makeConnection();
 
-            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ((Period) + 30 + (DATEDIFF(day, RaiseWebDate, GetDate())) ) WHERE ConsignmentID = ?";
+            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ( 30 + (DATEDIFF(day, RaiseWebDate, GetDate())) ) WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ConsignmentStatus.RECEIVED);
             stm.setString(2, consignmentID);

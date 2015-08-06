@@ -552,7 +552,7 @@
                                 <div class="row">
 
                                     <!-- BEGIN CAROUSEL -->
-                                    <div class="col-lg-3 col-md-3 front-carousel">
+                                    <div class="col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1 front-carousel">
 
                                         <div class="carousel slide" id="myCarousel">
                                             <!-- Carousel items -->
