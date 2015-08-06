@@ -185,7 +185,7 @@
                                 </div>
 
 
-                                <div class="portlet-body"  id="request" style="display: none">
+                                <div id="request" class="portlet-body" style="display: none">
                                     <div class="row" >
                                         <div class="col-md-9 col-sm-9">
                                         </div>
@@ -193,9 +193,10 @@
                                             <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary">Yêu cầu đã duyệt <i class="m-icon-swapright m-icon-white"></i></a>
                                         </div>
                                     </div>
+
                                     <br/>
 
-                                    <table class="table table-striped table-bordered table-hover" id="requestTable">
+                                    <table id="requestTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>
@@ -256,7 +257,7 @@
                                                     </td>
                                                     <td align="center">
 
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                        <button type="button" class="btn blue" style="width: 70px; height: 30px" 
                                                                 name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                     </td>
@@ -267,7 +268,7 @@
 
                                 </div>
 
-                                <div class="portlet-body"  id="accepted" style="display: none">
+                                <div id="accepted" class="portlet-body" style="display: none">
                                     <div class="row" >
 
                                         <div class="col-md-4 col-sm-4" align="left">
@@ -282,7 +283,14 @@
                                         </div>
                                     </div>
                                     <br/>
-                                    <table class="table table-striped table-bordered table-hover" id="acceptedTable">
+                                    <div class="row" >
+                                        <div class="col-md-4 col-sm-4 input-daterange">
+                                            Yêu cầu từ ngày &nbsp;&nbsp;
+                                            <input type="text" id="daterangeRequest">
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <table id="acceptedTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>
@@ -356,7 +364,7 @@
                                                     </td>
                                                     <td align="center">
 
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                        <button type="button" class="btn green-meadow" style="width: 70px; height: 30px" 
                                                                 name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
                                                     </td>
@@ -367,7 +375,7 @@
 
                                 </div>
 
-                                <div class="portlet-body" id="refuse" style="display: none">
+                                <div id="refuse" class="portlet-body" style="display: none">
                                     <div class="row" >
 
                                         <div class="col-md-4 col-sm-4" align="left">
@@ -381,7 +389,7 @@
                                     </div>
                                     <br/>
 
-                                    <table class="table table-striped table-bordered table-hover" id="refuseTable">
+                                    <table id="refuseTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
                                                 <th>
@@ -444,7 +452,7 @@
                                     </table>
                                 </div>
 
-                                <div class="portlet-body" id="cancel" style="display: none">
+                                <div id="cancel" class="portlet-body" style="display: none">
                                     <div class="row" >
 
                                         <div class="col-md-4 col-sm-4" align="left">
@@ -542,44 +550,46 @@
                             <form id="r_form" action="ConsignmentRequestReceive" method="POST">
                                 <!-- BEGIN PAGE CONTENT-->
                                 <div class="row">
+
                                     <!-- BEGIN CAROUSEL -->
-                                    <div class="col-lg-4 col-md-4 front-carousel">
+                                    <div class="col-lg-3 col-md-3 front-carousel">
 
                                         <div class="carousel slide" id="myCarousel">
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="r_image" alt="" style="max-height: 600px">
+                                                    <img id="r_image" alt="" style="max-height: 200px">
                                                     <div class="carousel-caption">
                                                         <p></p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Carousel nav -->
-                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                                <i class="fa fa-angle-left"></i>
-                                            </a>
-                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
+                                            <!--                                             Carousel nav 
+                                                                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                                                            <i class="fa fa-angle-left"></i>
+                                                                                        </a>
+                                                                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                                                            <i class="fa fa-angle-right"></i>
+                                                                                        </a>-->
                                         </div>
-                                        <br/>
-                                        <h4 id='r_status' align="center"></h4>
+
                                     </div>
                                     <!-- END CAROUSEL -->
-
                                     <!-- BEGIN PRODUCT DESCRIPTION -->
                                     <div class="col-lg-8 col-md-8">
 
-
-                                        <table style="font-size: 110%" class="table table-striped table-hover" >
-                                            <tr>
-                                                <th width="30%">Tên sản phẩm</th>
-                                                <td><input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" ></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Loại</th>
-                                                <td>
+                                        <!--table-striped-->
+                                        <div class="form-horizontal">
+                                            <!--                                        <table class="table table-hover" style="border: none">-->
+                                            <div class="form-group">
+                                                <label for="txtFullName" class="col-md-3 col-sm-3 control-label">Tên sản phẩm</label>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 col-sm-3 control-label">Loại</label>
+                                                <div class="col-md-3 col-sm-3">
 
                                                     <select id="r_category" name="txtCategoryID"  class="form-control" >
                                                         <option value='' disabled selected style='display:none;'>Chọn...</option>
@@ -602,48 +612,74 @@
 
                                                     </select>
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Hãng</th>
-                                                <td><input id="r_brand" name="txtBrand" type="text" class="form-control" ></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Mô tả</th>
-                                                <td>
-                                                    <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="2"></textarea>
+                                                </div>
+                                                <label class="col-md-2 col-sm-2 control-label">Hãng</label>
+                                                <div class="col-md-4 col-sm-4"><input id="r_brand" name="txtBrand" type="text" class="form-control" ></div>
+                                            </div>
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Ngày ký gửi</th>
-                                                <td id='r_createdDate'></td>
-                                            </tr>
-                                            <tr>
-                                                <th>
-                                                    Hàng đặc biệt
-                                                </th>
-                                                <td>
-                                                    <input id="r_isSpecial" type="checkbox" name="txtIsSpecial" value="special"> 
-                                                </td>
-                                            </tr>
-                                            <tr id="r_divFromDateToDate">
-                                                <th>Ngày hẹn</th>
-                                                <td id="r_fromDateToDate"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Ngày giao hàng</th>
-                                                <td>
+                                            <div class="form-group">
+                                                <label class="col-md-3 col-sm-3 control-label">Mô tả</label>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
+
+                                                </div>
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+                                        <!--START HIDDEN ACTION VALUE -->
+                                        <input id="r_ActionValue" type="hidden" name="consignmentID"/>
+                                        <input id="r_productID" type="hidden" name="productID"/>
+                                        <input id="r_btnAction" type="hidden" name="btnAction"/>
+                                        <!--END HIDDEN ACTION VALUE -->
+                                    </div>
+                                    <!-- END PRODUCT DESCRIPTION -->
+
+
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Ngày ký gửi</label>
+                                                <div id='r_createdDate' class="col-md-4 col-sm-4" style="padding-top: 8px; font-size: 110%"></div>
+                                                <label class="col-md-3 col-sm-3 control-label">Đặc biệt</label>
+                                                <div class="col-md-1 col-sm-1 checkbox-list">
+                                                    <label class="checkbox-inline" >
+                                                        <input id="r_isSpecial" type="checkbox" name="txtIsSpecial" value="special"> 
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <!--                                            <div class="form-group">
+                                                                                            <label class="col-md-4 col-sm-4 control-label">Hàng đăt biệt</label>
+                                                                                            <div class="col-md-2 col-sm-2 checkbox-list">
+                                                                                                <label class="checkbox-inline" >
+                                                                                                    <input id="r_isSpecial" type="checkbox" name="txtIsSpecial" value="special"> 
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>-->
+                                            <div class="form-group" id="r_divFromDateToDate">
+                                                <label class="col-md-4 col-sm-4 control-label">Ngày hẹn</label>
+                                                <div class="col-md-8 col-sm-8" id="r_fromDateToDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Ngày giao hàng</label>
+                                                <div class="col-md-8 col-sm-8">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
-                                                            <div id="r_divReceivedDate" class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="0d">
-                                                                <input  id="r_receivedDate" type="text" class="form-control" name="txtReceivedDate" value="">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                </span>
-                                                            </div>
+                                                            <!--                                                            <div id="r_divReceivedDate" class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="0d">-->
+                                                            <input  id="r_receivedDate" type="text" class="form-control form-control-inline input-medium date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="0d" name="txtReceivedDate" value="">
+                                                            <!--                                                                <span class="input-group-btn">
+                                                                                                                                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                                                                                                                            </span>
+                                                                                                                        </div>-->
                                                         </div>
-                                                        <div class="col-md-5 col-sm-5">
+                                                        <div class="col-md-6 col-sm-6">
                                                             <div id="r_divHour" class="input-group">
                                                                 <input id="r_hour" name="txtHour" type="text" class="form-control timepicker timepicker-24">
                                                                 <span class="input-group-btn">
@@ -654,84 +690,78 @@
                                                     </div>
 
 
-                                                </td>
+                                                </div>
 
-                                            </tr>
-                                            <tr>
-                                                <th>Cách giao hàng</th>
-                                                <td>
-                                                    <label class="radio-inline">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Cách giao hàng</label>
+                                                <div class="col-md-8 col-sm-8 radio-list">
+                                                    <label class="radio-list" >
                                                         <input type="radio" name="r_rdDeliveryMethod" value="store"  checked>Cửa hàng đến nhận</label>
-                                                    <label class="radio-inline">
+                                                    <label class="radio-list">
                                                         <input type="radio" name="r_rdDeliveryMethod" value="customer">Tự mang đến</label>
 
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </div>
 
-                                            <tr >
-                                                <th>Giá tham khảo (Ngàn đồng) </th>
-                                                <td id="r_price"></td>
-                                            </tr>
-                                            <tr id="ar_price" style="display: none;">
-                                                <th>Giá thỏa thuận (Ngàn đồng)</th>
-                                                <td>
-                                                    <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" >
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Giá tham khảo</label>
+                                                <div class="col-md-8 col-sm-8" id="r_price" style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
 
-                                                </td>
-                                            </tr>
+                                            <div class="form-group" id="ar_price" style="display: none;">
+                                                <label class="col-md-4 col-sm-4 control-label">Giá thỏa thuận</label>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" > (Ngàn đồng)
 
-                                            <!--                                            <tr>
-                                                                                            <th>Trạng thái</th>
-                                                                                            <td id='r_status'>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                        <tr id="r_trReason" style="display: none">
-                                                                                            <th>Lí do</th>
-                                                                                            <td id="r_reason">
-                                            
-                                                                                            </td>
-                                                                                        </tr>-->
+                                                </div>
+                                            </div>
 
-                                        </table>
-                                        <br/>
-                                        <table id="r_divPersonalInfo" style="font-size: 110%" class="table table-striped table-hover">
-                                            <tr>
-                                                <th>Họ tên </th>
-                                                <td><input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Điện thoại</th>
-                                                <td><input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Email</th>
-                                                <td><input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" /></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Địa chỉ</th>
-                                                <td><textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="3"></textarea></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Cách thanh toán</th>
-                                                <td><div class="radio-list">
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="r_rdPayment"  value="direct" checked> Tiền mặt </label>
-                                                        <label class="radio-inline">
-                                                            <input type="radio" name="r_rdPayment"  value="cc"> Tài khoản paypal </label>
-                                                    </div></td>
-                                            </tr>
-                                            <tr id="r_divCCNumber" style="display: none">
-                                                <th>Mã tài khoản</th>
-                                                <td><input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" /></td>
-                                            </tr>
-                                        </table>
-                                        <!--START HIDDEN ACTION VALUE -->
-                                        <input id="r_ActionValue" type="hidden" name="consignmentID"/>
-                                        <input id="r_productID" type="hidden" name="productID"/>
-                                        <input id="r_btnAction" type="hidden" name="btnAction"/>
-                                        <!--END HIDDEN ACTION VALUE -->
+                                        </div>
                                     </div>
-                                    <!-- END PRODUCT DESCRIPTION -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal" id="r_divPersonalInfo">
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Họ tên</label>
+                                                <div class="col-md-8 col-sm-8">
+                                                    <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Điện thoại</label>
+                                                <div class="col-md-8 col-sm-8">
+                                                    <input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Email</label>
+                                                <div class="col-md-8 col-sm-8">
+                                                    <input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                                <div class="col-md-8 col-sm-8">
+                                                    <textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="2"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
+                                                <div class="col-md-8 col-sm-8 radio-list">
+                                                    <label class="radio-list">
+                                                        <input type="radio" name="r_rdPayment"  value="direct" checked> Tiền mặt </label>
+                                                    <label class="radio-list">
+                                                        <input type="radio" name="r_rdPayment"  value="cc"> Tài khoản paypal </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="r_divCCNumber" style="display: none">
+                                                <label class="col-md-4 col-sm-4 control-label">Mã tài khoản</label>
+                                                <div class="col-md-8 col-sm-8">
+                                                    <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
 
@@ -740,15 +770,15 @@
                         <div class="modal-footer">
                             <div id="r_footer" >
 
-                                <button id="r_btnSubmit" class="btn btn-lg btn-primary">Chấp nhận</button>
-                                <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-lg btn-warning">Từ chối</button>
-                                <button class="btn btn-lg btn-default" data-dismiss="modal">Đóng</button>
+                                <button id="r_btnSubmit" class="btn btn-primary">Chấp nhận</button>
+                                <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-warning">Từ chối</button>
+                                <button class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
                             <div id="ar_footer" style="display: none;">
-                                <button id="ar_btnUpdateRequest" class="btn btn-lg btn-success">Cập nhật</button>
-                                <button id="ar_btnSubmit" class="btn btn-lg btn-primary">Nhận hàng</button>
-                                <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-lg btn-warning">Từ chối</button>
-                                <button class="btn btn-lg btn-default" data-dismiss="modal">Đóng</button>
+                                <button id="ar_btnUpdateRequest" class="btn btn-success">Cập nhật</button>
+                                <button id="ar_btnSubmit" class="btn btn-primary">Nhận hàng</button>
+                                <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="ar_refuse" class="btn btn-warning">Từ chối</button>
+                                <button class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
 
                         </div>
@@ -786,7 +816,8 @@
                         <div class="modal-footer">
                             <div id="r_footer_confirm">
                                 <form action="ConsignmentRequestReceive" method="POST" onsubmit="return r_confirm_validation();">
-                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-default">Xác nhận</button>
+                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-warning">Xác nhận</button>
+                                    <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
                                     <input type="hidden" id="r_inputReason" name="r_reason"/>
                                     <input id="r_ActionValue_confirm" type="hidden" name="r_consignmentID"/>
                                 </form>
@@ -794,6 +825,7 @@
                             <div id="ar_footer_confirm">
                                 <form  action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_confirm_validation();">
                                     <button type="submit" name="btnAction" value="ar_refuse" class="btn btn-default">Xác nhận</button>
+                                    <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
                                     <input type="hidden" id="ar_inputReason" name="ar_reason"/>
                                     <input id="ar_ActionValue_confirm" type="hidden" name="ar_consignmentID"/>
                                 </form>
@@ -814,7 +846,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Xác nhận</h4>
+                        <h4 class="modal-title">Thông báo</h4>
                     </div>
                     <div class="modal-body" align="center">
 
@@ -823,7 +855,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button> 
+                        <button data-dismiss="modal" class="btn btn-default">Đóng</button> 
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -884,7 +916,7 @@
                                     <div class="col-lg-8 col-md-8">
 
 
-                                        <table style="font-size: 110%" class="table table-striped table-hover" >
+                                        <table style="font-size: 110%" class="table table-hover">
                                             <tr>
                                                 <th width="30%">Tên sản phẩm</th>
                                                 <td id="rc_productName"></td>
@@ -928,7 +960,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button>
+                            <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
 
                         </div>
                     </div>
@@ -1159,8 +1191,8 @@
                         </div>
                         <div class="modal-footer">
 
-                            <button id="btnAddConsignment" class="btn btn-lg btn-primary">Thêm</button>
-                            <button  data-dismiss="modal" class="btn btn-lg btn-default">Đóng</button>
+                            <button id="btnAddConsignment" class="btn btn-primary">Thêm</button>
+                            <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
 
 
                         </div>
@@ -1343,118 +1375,128 @@
                     }
                 });
             }
+            function formatDate(date) {
+                var d = new Date(date),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
 
+                if (month.length < 2)
+                    month = '0' + month;
+                if (day.length < 2)
+                    day = '0' + day;
+
+                return [day, month, year].join('-');
+            }
             function loadRequestAcceptDetails(id) {
                 $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
-
-                    $("#r_name").html("<small>Khách hàng: </small> " + data.name);
-                    $("#r_productName").val(data.product.name);
-                    $('#r_category').val(data.product.categoryID).change();
-                    $("#r_brand").val(data.product.brand);
-                    $("#r_image").attr("src", data.product.image.replace(/\\/g, '/'));
-                    $("#r_description").val(data.product.description);
-                    $("#r_createdDate").html(data.createdDate);
-                    //$("#r_email").html(data.email);
-                    //$("#r_phone").html("0" + data.phone.substring(3));
-                    //$("#r_address").html(data.address);
-                    $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);
-
-                    if (data.deliveryMethod == 0) {
-                        $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", true).parent().addClass("checked");
-                        $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", false).parent().removeClass("checked");
-                    } else {
-                        $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", true).parent().addClass("checked");
-                        $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", false).parent().removeClass("checked");
-                    }
-                    //$("#r_hour").val(data.hour);
-
-                    if (data.minPrice > 0 && data.maxPrice > 0) {
-                        $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
-                    } else {
-                        $("#r_price").html("<font color='red'>Không có giá </font>");
-                    }
-
-                    $("#r_productID").val(data.product.productID);
-                    $("#r_ActionValue").val(data.consigmentID);
-                    if (data.product.isSpecial > 0) {
-                        $("input#r_isSpecial").attr("checked", true).parent().addClass("checked");
-                    } else {
-                        $("input#r_isSpecial").attr("checked", false).parent().removeClass("checked");
-                    }
-
-                    $("#r_trReason").hide();
-                    $("#r_reason").html("");
-                    $("#r_divFromDateToDate").hide();
-                    $("#r_divPersonalInfo").hide();
-
                     if (data.product.productStatusID == 6) {
                         $("#modalError").modal("show");
                     }
                     else {
-                        if (data.consignmentStatusID == 1) {
-                            $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
-                            $("#r_ActionValue_confirm").val(data.consigmentID);
-                            $("#ar_ActionValue_confirm").val("");
-                            $("#r_footer").show();
-                            $("#ar_footer").hide();
-                            $("#ar_price").hide();
-                            $("#r_btnAction").val("r_accept");
-                            $("#r_receivedDate").val(getCurrentDate());
+                        if (data.consignmentStatusID == 1 || data.consignmentStatusID == 3) {
+                            $("#r_name").html("<small>Khách hàng: </small> " + data.name);
+                            $("#r_productName").val(data.product.name);
+                            $('#r_category').val(data.product.categoryID).change();
+                            $("#r_brand").val(data.product.brand);
+                            $("#r_image").attr("src", data.product.image.replace(/\\/g, '/'));
+                            $("#r_description").val(data.product.description);
+                            $("#r_createdDate").html(data.createdDate);
+                            $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);
 
-                            $("#r_divFromDateToDate").show();
-
-                            $("#r_divPersonalInfo").show();
-
-                            $("#r_txtFullName").val(data.name);
-                            $("#r_txtAddress").val(data.address);
-                            $("#r_txtPhone").val("0" + data.phone.substring(3));
-                            $("#r_txtEmail").val(data.email);
-                            if (data.paypalAccount != null) {
-                                $("#r_txtPaypalAccount").val(data.paypalAccount);
-                                $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
-                                $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
-                                $("#r_divCCNumber").show();
+                            if (data.deliveryMethod == 0) {
+                                $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", false).parent().removeClass("checked");
                             } else {
-                                $("#r_txtPaypalAccount").val("");
-                                $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
-                                $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
-                                $("#r_divCCNumber").hide();
+                                $("input[name='r_rdDeliveryMethod'][value='customer']").attr("checked", true).parent().addClass("checked");
+                                $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", false).parent().removeClass("checked");
                             }
 
-                            $("#modalRequestAccept").modal("show");
 
-                        } else if (data.consignmentStatusID == 3) {
-                            $('#ar_negotiatedPrice').val("");
-                            $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
-                            $("#ar_ActionValue_confirm").val(data.consigmentID);
-                            $("#r_ActionValue_confirm").val("");
-                            $("#ar_footer").show();
-                            $("#r_footer").hide();
-                            $("#ar_price").show();
-                            $("#r_btnAction").val("ar_accept");
-                            $("#r_receivedDate").val(data.appointmentDate);
-                            $("#r_hour").val(data.hour);
-
-                            $("#r_divPersonalInfo").show();
-                            $("#r_txtFullName").val(data.name);
-                            $("#r_txtAddress").val(data.address);
-                            $("#r_txtPhone").val("0" + data.phone.substring(3));
-                            $("#r_txtEmail").val(data.email);
-
-                            if (data.paypalAccount != null) {
-                                $("#r_txtPaypalAccount").val(data.paypalAccount);
-                                $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
-                                $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
-                                $("#r_divCCNumber").show();
+                            if (data.minPrice > 0 && data.maxPrice > 0) {
+                                $("#r_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice) + " (Ngàn đồng)");
                             } else {
-                                $("#r_txtPaypalAccount").val("");
-                                $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
-                                $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
-                                $("#r_divCCNumber").hide();
+                                $("#r_price").html("<font color='red'>Không có giá </font>");
                             }
-                            $("#modalRequestAccept").modal("show");
 
-                        } else {
+                            $("#r_productID").val(data.product.productID);
+                            $("#r_ActionValue").val(data.consigmentID);
+                            if (data.product.isSpecial > 0) {
+                                $("input#r_isSpecial").attr("checked", true).parent().addClass("checked");
+                            } else {
+                                $("input#r_isSpecial").attr("checked", false).parent().removeClass("checked");
+                            }
+                            $("#r_divPersonalInfo").hide();
+
+                            if (data.consignmentStatusID == 1) {
+//                                $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
+                                $("#r_ActionValue_confirm").val(data.consigmentID);
+                                $("#ar_ActionValue_confirm").val("");
+                                $("#r_footer").show();
+                                $("#ar_footer").hide();
+                                $("#ar_price").hide();
+                                $("#r_btnAction").val("r_accept");
+                                $("#r_receivedDate").val(getCurrentDate());
+
+
+                                $("#r_txtFullName").val(data.name);
+                                $("#r_txtAddress").val(data.address);
+                                $("#r_txtPhone").val("0" + data.phone.substring(3));
+                                $("#r_txtEmail").val(data.email);
+                                if (data.paypalAccount != null) {
+                                    $("#r_txtPaypalAccount").val(data.paypalAccount);
+                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
+                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
+                                    $("#r_divCCNumber").show();
+                                } else {
+                                    $("#r_txtPaypalAccount").val("");
+                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
+                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
+                                    $("#r_divCCNumber").hide();
+                                }
+
+                                $("#modalRequestAccept").modal("show");
+
+                                //$("#r_divPersonalInfo").show();
+                            } else if (data.consignmentStatusID == 3) {
+                                $('#ar_negotiatedPrice').val("");
+//                                $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                                $("#ar_ActionValue_confirm").val(data.consigmentID);
+                                $("#r_ActionValue_confirm").val("");
+                                $("#ar_footer").show();
+                                $("#r_footer").hide();
+                                $("#ar_price").show();
+                                $("#r_btnAction").val("ar_accept");
+                                $("#r_receivedDate").val(data.appointmentDate);
+                                $("#r_hour").val(data.hour);
+
+                                $("#r_divPersonalInfo").show();
+                                $("#r_txtFullName").val(data.name);
+                                $("#r_txtAddress").val(data.address);
+                                $("#r_txtPhone").val("0" + data.phone.substring(3));
+                                $("#r_txtEmail").val(data.email);
+
+                                if (data.paypalAccount != null) {
+                                    $("#r_txtPaypalAccount").val(data.paypalAccount);
+                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
+                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
+                                    $("#r_divCCNumber").show();
+                                } else {
+                                    $("#r_txtPaypalAccount").val("");
+                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
+                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
+                                    $("#r_divCCNumber").hide();
+                                }
+                                if (formatDate(new Date()) == data.appointmentDate) {
+                                    $("#ar_btnUpdateRequest").hide();
+                                } else {
+                                    $("#ar_btnUpdateRequest").show();
+                                }
+                                $("#modalRequestAccept").modal("show");
+
+                            }
+                        }
+                        else {
                             $("#modalError").modal("show");
                         }
 
@@ -1806,6 +1848,58 @@
 
             });
 
+            $(document).ready(function () {
+                $('#daterangeRequest').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    maxDate: moment(),
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+            });
+//            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#consignmentTable').DataTable();
+//                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD-MM-YYYY');
+//                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD-MM-YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $.fn.dataTable.ext.search.push(
+//                    function (settings, data, dataIndex) {
+//                        var startDate = $('#fromDate').val();
+//                        var endDate = $('#toDate').val();
+//                        var date = data[5]; // use data for the 'Ngày' column
+//                        var status = data[5];
+//                        
+//                        var currentTab = $("#currentTab").val();
+//                        if (currentTab == 'accepted') {
+//                            if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+//                            {
+//                                return true;
+//                            } else {
+//                                return false;
+//                            }
+//                        } 
+//                    }
+//            );
+//
+//            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+//                source = source.substring(8);
+//                if (source.substring(6, 10) > target.substring(6, 10)) {
+//                    return 1;
+//                }
+//                if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+//                    return 1;
+//                }
+//                if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+//                    return 1;
+//                }
+//                if (source.localeCompare(target) == 0) {
+//                    return 0;
+//                }
+//                return -1;
+//            }
 
 
         </script> 
