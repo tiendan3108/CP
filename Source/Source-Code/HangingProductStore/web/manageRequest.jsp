@@ -157,6 +157,8 @@
             <div class="page-content-wrapper">
                 <div class="page-content">
                     <input type="hidden" id="currentTab" value="${currentTab}"/>
+                    <input type="hidden" id="fromDate" value="${requestScope.fromDate}">
+                    <input type="hidden" id="toDate" value="${requestScope.toDate}">
                     <!-- BEGIN PAGE CONTENT-->
 
                     <div class="row">
@@ -283,13 +285,21 @@
                                         </div>
                                     </div>
                                     <br/>
-                                    <div class="row" >
-                                        <div class="col-md-4 col-sm-4 input-daterange">
-                                            Yêu cầu từ ngày &nbsp;&nbsp;
-                                            <input type="text" id="daterangeRequest">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+
+                                                    <label for="txtFullName" class=" col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                    <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                        <input type="text" class="form-control" id="daterangeRequest">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+
                                     </div>
-                                    <br/>
                                     <table id="acceptedTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -606,7 +616,7 @@
 
                                                                     </c:if>
                                                                 </c:forEach>
-<!--                                                            <a href="../src/java/hps/servlet/TrackProductStatusServlet.java"></a>-->
+                                                                <!--                                                            <a href="../src/java/hps/servlet/TrackProductStatusServlet.java"></a>-->
                                                             </optgroup>
 
                                                         </c:forEach>
@@ -1308,6 +1318,19 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
+
+                var date = new Date();
+                date.setDate(date.getDate() - 1);
+                $('#fromDate').val(formatDate(date));
+                date.setDate(date.getDate() + 2);
+                $('#toDate').val(formatDate(date));
+                
+                $('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
+                //alert($('#fromDate').val() + " - " + $('#toDate').val());
+                var table = $('#acceptedTable').DataTable();
+                
+                table.draw();
+                
             });
             $(function () {
                 $("#r_brand").autocomplete({
@@ -1486,7 +1509,7 @@
                                     //$("#ar_btnUpdateRequest").hide();
                                     $("#ar_divReceivedDateInput").hide();
                                     $("#ar_divReceivedDate").show();
-                                    $("#ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
+                                    $("#ar_divReceivedDate").html(data.hour + " | " + data.appointmentDate);
 
 
 
@@ -1915,55 +1938,47 @@
             $(document).ready(function () {
                 $('#daterangeRequest').daterangepicker({
                     format: "DD/MM/YYYY",
-                    maxDate: moment(),
                     startDate: moment(),
                     endDate: moment(),
                     locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
                 });
             });
-//            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
-//                var table = $('#consignmentTable').DataTable();
-//                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD-MM-YYYY');
-//                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD-MM-YYYY');
-//                $('#fromDate').val(startDate);
-//                $('#toDate').val(endDate);
-//                table.draw();
-//            });
-//            $.fn.dataTable.ext.search.push(
-//                    function (settings, data, dataIndex) {
-//                        var startDate = $('#fromDate').val();
-//                        var endDate = $('#toDate').val();
-//                        var date = data[5]; // use data for the 'Ngày' column
-//                        var status = data[5];
-//                        
-//                        var currentTab = $("#currentTab").val();
-//                        if (currentTab == 'accepted') {
-//                            if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
-//                            {
-//                                return true;
-//                            } else {
-//                                return false;
-//                            }
-//                        } 
-//                    }
-//            );
-//
-//            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
-//                source = source.substring(8);
-//                if (source.substring(6, 10) > target.substring(6, 10)) {
-//                    return 1;
-//                }
-//                if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
-//                    return 1;
-//                }
-//                if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
-//                    return 1;
-//                }
-//                if (source.localeCompare(target) == 0) {
-//                    return 0;
-//                }
-//                return -1;
-//            }
+            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#acceptedTable').DataTable();
+                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
+                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+            $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var startDate = $('#fromDate').val();
+                        var endDate = $('#toDate').val();
+                        var date = data[5].substring(6); 
+                        if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                        {
+                            return true;
+                        } else {
+                            return false;
+                        }
+
+                    }
+            );
+
+            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+                //source = source.substring(6);
+                if (source.substring(6, 10) > target.substring(6, 10)) {
+                    return 1;
+                }
+                if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+                    return 1;
+                }
+                if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+                    return 1;
+                }
+                return -1;
+            }
 
 
         </script> 

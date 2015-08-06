@@ -251,9 +251,9 @@ public class ConsignCompleteServlet extends HttpServlet {
                     boolean result = consignmentDAO.addConsigment(consignment);
                     if (result) {
                         JavaUltilities ultil = new JavaUltilities();
-                        String msg = "Cám ơn " + fullName + " đã ký gửi. \n"
-                                + "Mã sản phẩm của bạn là: " + consignmentID + ". \n"
-                                + store.getFullName() + " sẽ xem xét yêu cầu ký gửi của bạn.";
+                        String msg = "Cam on " + fullName + " da ky gui. \n"
+                                + "Ma ky gui cua ban la: " + consignmentID + ". \n"
+                                + store.getFullName() + " se xem xet yeu cau cua ban va lien he cho ban sau.";
                         //send sms and email
                         if (!phone.isEmpty()) {
                             try {

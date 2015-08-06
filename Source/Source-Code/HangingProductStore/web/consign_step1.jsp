@@ -83,7 +83,7 @@
                                                 <div class="tab-content">
                                                     <c:if test="${requestScope.UPCERROR != null}">
                                                         <div class="alert alert-danger" style="text-align: center">
-                                                            <strong>${requestScope.UPCERROR}</strong>
+                                                            <i class="fa-lg fa fa-warning"></i><strong>${requestScope.UPCERROR}</strong>
                                                         </div>    
                                                     </c:if>
 
