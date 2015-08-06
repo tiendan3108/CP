@@ -316,47 +316,58 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     currentTab = "accepted";
 
                 } else if (action.equals("updateRequest")) {
+                    String msg = "";
                     String consignmentID = request.getParameter("consignmentID");
-                    String productName = request.getParameter("productName");
-                    int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-                    String brand = request.getParameter("brand");
+                    if (consignmentDAO.checkIfConsignmentStatusIsAccepted(consignmentID)) {
+                        String productName = request.getParameter("productName");
+                        int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                        String brand = request.getParameter("brand");
 
-                    String description = request.getParameter("description");
+                        String description = request.getParameter("description");
 
-                    int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
+                        int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
 
 // get appointmentDate and add hour into it then format to update database
-                    String hour = request.getParameter("hour");
-                    String preAppointmentDate = request.getParameter("receivedDate");
-                    String appointmentDate = preAppointmentDate + " " + hour;
-                    appointmentDate = formatDate(appointmentDate);
+                        String hour = request.getParameter("hour");
+                        String preAppointmentDate = request.getParameter("receivedDate");
+                        String appointmentDate = preAppointmentDate + " " + hour;
+                        appointmentDate = formatDate(appointmentDate);
 
-                    String fullName = request.getParameter("fullName");
-                    String address = request.getParameter("address");
-                    String phone = "+84" + request.getParameter("phone").substring(1);
-                    String email = request.getParameter("email");
-                    String paypalAccount = request.getParameter("paypalAccount");
+                        String fullName = request.getParameter("fullName");
+                        String address = request.getParameter("address");
+                        String phone = "+84" + request.getParameter("phone").substring(1);
+                        String email = request.getParameter("email");
+                        String paypalAccount = request.getParameter("paypalAccount");
 
-                    int deliveryMethod = 0;
-                    String method = request.getParameter("deliveryMethod");
-                    if (method.equals("customer")) {
-                        deliveryMethod = 1;
-                    }
-                    //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                    boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
-                    if (result) {
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        java.util.Date currentDate = new java.util.Date();
-                        String today = df.format(currentDate);
-
-                        if (preAppointmentDate.equals(today) && method.equals("store")) {
-                            JavaUltilities java = new JavaUltilities();
-                            String noti = MessageString.titleNofitication;
-                            java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
-                            System.out.println("Send notification");
+                        int deliveryMethod = 0;
+                        String method = request.getParameter("deliveryMethod");
+                        if (method.equals("customer")) {
+                            deliveryMethod = 1;
                         }
+                        //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                        if (result) {
+                            msg = "success";
+                            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                            java.util.Date currentDate = new java.util.Date();
+                            String today = df.format(currentDate);
+
+                            if (preAppointmentDate.equals(today) && method.equals("store")) {
+                                JavaUltilities java = new JavaUltilities();
+                                String noti = MessageString.titleNofitication;
+                                java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
+                                System.out.println("Send notification");
+                            }
+                        }else{
+                            msg = "fail";
+                        }
+                        
+                        
+                    }else{
+                        msg = "error";
                     }
-                    String json = new Gson().toJson(result);
+
+                    String json = new Gson().toJson(msg);
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);
                     return;

@@ -628,6 +628,44 @@ public class ConsignmentDAO {
         return false;
     }
 
+    public boolean checkIfConsignmentStatusIsAccepted(String consignmentID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT ConsignmentStatusID"
+                    + " FROM Consignment"
+                    + " WHERE ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
+
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int result = rs.getInt("ConsignmentStatusID");
+                if (result == GlobalVariables.CONSIGNMENT_ACCEPTED) {
+                    return true;
+                }
+
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
     public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address,
             String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
             String productName, int categoryID, String brand, String description, int isSpecial) {
