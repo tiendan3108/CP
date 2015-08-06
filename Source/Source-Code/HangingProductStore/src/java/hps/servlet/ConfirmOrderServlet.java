@@ -62,6 +62,7 @@ public class ConfirmOrderServlet extends HttpServlet {
                     }
                 }
                 productDetailDTO product = dao.getProductAndStoreDetailByID(productID);
+                product.setPhone("0"+product.getPhone().substring(3));
                 request.setAttribute("DATA", product);
             }
             RequestDispatcher rd = request.getRequestDispatcher(GlobalVariables.CONFIRM_ORDER_PAGE);

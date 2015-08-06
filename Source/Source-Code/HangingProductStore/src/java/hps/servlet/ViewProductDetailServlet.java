@@ -57,6 +57,7 @@ public class ViewProductDetailServlet extends HttpServlet {
             List<CategoryDTO> category = cateDao.getAllCategory();
             AccountDAO accountDAO = new AccountDAO();
             AccountDTO storeInfo = accountDAO.getInfoByProductID(productID);
+            storeInfo.setPhone("0"+storeInfo.getPhone().substring(3));
             if (product != null) {
                 int categoryID = product.getCategoryID();
                 List<ProductDTO> similarProducts = dao.getSimilarProduct(categoryID, productID);
