@@ -634,19 +634,57 @@ public class ConsignmentDAO {
         ResultSet rs = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "SELECT ConsignmentStatusID"
-                    + " FROM Consignment"
-                    + " WHERE ConsignmentID = ?";
+            String sql = "SELECT     C.ConsignmentStatusID, P.ProductStatusID"
+                    + "   FROM       dbo.Consignment AS C INNER JOIN "
+                    + "              dbo.Product AS P ON C.ProductID = P.ProductID"
+                    + "   WHERE      ConsignmentID = ?";
             stm = con.prepareStatement(sql);
 
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
-            if (rs.next()) {
-                int result = rs.getInt("ConsignmentStatusID");
-                if (result == GlobalVariables.CONSIGNMENT_ACCEPTED) {
+            if (rs.next()) {           
+                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_ACCEPTED && 
+                        rs.getInt("ProductStatusID") == 1) {
                     return true;
                 }
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+    
+    public boolean checkIfConsignmentStatusIsWaiting(String consignmentID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT     C.ConsignmentStatusID, P.ProductStatusID"
+                    + "   FROM       dbo.Consignment AS C INNER JOIN "
+                    + "              dbo.Product AS P ON C.ProductID = P.ProductID"
+                    + "   WHERE      ConsignmentID = ?";
+            stm = con.prepareStatement(sql);
 
+            stm.setString(1, consignmentID);
+            rs = stm.executeQuery();
+            if (rs.next()) {           
+                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_WAITING && 
+                        rs.getInt("ProductStatusID") == 1) {
+                    return true;
+                }
             }
             return false;
         } catch (SQLException ex) {
@@ -850,6 +888,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
+//duchc
 
     public void ExtendProduct(String consignmentID, int period) {
         Connection conn = null;
