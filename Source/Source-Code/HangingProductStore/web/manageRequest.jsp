@@ -606,6 +606,7 @@
 
                                                                     </c:if>
                                                                 </c:forEach>
+<!--                                                            <a href="../src/java/hps/servlet/TrackProductStatusServlet.java"></a>-->
                                                             </optgroup>
 
                                                         </c:forEach>
@@ -1331,7 +1332,7 @@
                     $("#rc_description").html(data.product.description);
                     $("#rc_createdDate").html(data.createdDate);
                     $("#rc_email").html(data.email);
-                    $("#rc_phone").html("0" + data.phone.substring(3));
+                    $("#rc_phone").html(data.phone);
                     $("#rc_address").html(data.address);                     //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
 
                     if (data.minPrice > 0 && data.maxPrice > 0) {
@@ -1434,7 +1435,7 @@
 
                                 $("#r_txtFullName").val(data.name);
                                 $("#r_txtAddress").val(data.address);
-                                $("#r_txtPhone").val("0" + data.phone.substring(3));
+                                $("#r_txtPhone").val(data.phone);
                                 $("#r_txtEmail").val(data.email);
                                 if (data.paypalAccount != null) {
                                     $("#r_txtPaypalAccount").val(data.paypalAccount);
@@ -1466,7 +1467,7 @@
                                 //$("#r_divPersonalInfo").show();
                                 $("#r_txtFullName").val(data.name);
                                 $("#r_txtAddress").val(data.address);
-                                $("#r_txtPhone").val("0" + data.phone.substring(3));
+                                $("#r_txtPhone").val(data.phone);
                                 $("#r_txtEmail").val(data.email);
 
                                 if (data.paypalAccount != null) {

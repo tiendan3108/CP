@@ -12,7 +12,14 @@ import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,22 +86,103 @@ public class TrackProductStatusServlet extends HttpServlet {
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
                 if (consignment != null) {
                     dao.populateStoreOwner(consignment);
-                    consignment.setPhone("0" + consignment.getPhone().substring(3));
+//                    consignment.setPhone("0" + consignment.getPhone().substring(3));
+
+                    if (consignment.getConsignmentStatusID() == 6) {
+                        System.out.println("Raise On Web Date: " + consignment.getRaiseWebDate());
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        Date currentDate = new Date();
+                        try {
+                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+
+                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+
+                            int extraPayment = 0;
+                            if (consignment.getNegotiatedPrice() >= 1000000) {
+                                extraPayment = 10 * result;
+                            } else {
+                                extraPayment = 5 * result;
+                            }
+                            request.setAttribute("extraPayment", extraPayment);
+                            request.setAttribute("overDate", result);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
+                //request.setAttribute("searchValue", searchValue);
             } else if (action.equals("cancel")) {
                 int consignmentID = Integer.parseInt(request.getParameter("consignmentID"));
                 String searchValue = request.getParameter("searchValue");
                 dao.cancelConsignmentInProduct(consignmentID);
+
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
+                if (consignment != null) {
+                    dao.populateStoreOwner(consignment);
+//                    consignment.setPhone("0" + consignment.getPhone().substring(3));
+
+                    if (consignment.getConsignmentStatusID() == 6) {
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        Date currentDate = new Date();
+                        try {
+                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+
+                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+                            int extraPayment = 0;
+                            if (consignment.getNegotiatedPrice() >= 1000000) {
+                                extraPayment = 10 * result;
+                            } else {
+                                extraPayment = 5 * result;
+                            }
+                            request.setAttribute("extraPayment", extraPayment);
+                            request.setAttribute("overDate", result);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+
                 request.setAttribute("CONSIGNMENT", consignment);
+                request.setAttribute("searchValue", consignmentID);
 
             } else if (action.equals("extend")) {
                 String consignmentID = request.getParameter("consignmentID");
                 dao.ExtendProduct(consignmentID, 30);
+
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
+                if (consignment != null) {
+                    dao.populateStoreOwner(consignment);
+//                    consignment.setPhone("0" + consignment.getPhone().substring(3));
+
+                    if (consignment.getConsignmentStatusID() == 6) {
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        Date currentDate = new Date();
+                        try {
+                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+
+                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+                            System.out.println("Diffffffffffffff: " + result);
+                            int extraPayment = 0;
+                            if (consignment.getNegotiatedPrice() >= 1000000) {
+                                extraPayment = 10 * result;
+                            } else {
+                                extraPayment = 5 * result;
+                            }
+                            request.setAttribute("extraPayment", extraPayment);
+                            request.setAttribute("overDate", result);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+
                 request.setAttribute("CONSIGNMENT", consignment);
+                request.setAttribute("searchValue", consignmentID);
             } else if (action.equals("m_search")) {
                 String searchValue = request.getParameter("searchValue");
                 if (searchValue == null) {

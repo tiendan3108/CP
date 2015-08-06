@@ -271,27 +271,33 @@
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
 
-                        <!-- Begin Modal -->
-                        <div id="modalExtend" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Gia hạn</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h2>Bạn có chắc muốn gia hạn sản phẩm không?</h2>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <form action="TrackProductStatus" method="POST">
-                                            <button type="submit" name="btnAction" class="btn btn-primary" value="extend">Đồng ý</button>
-                                            <input type="hidden" name="consignmentID" value="${param.searchValue}"/>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                        </form>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                        <c:if test="${c.consignmentStatusID == 6}">
+                            <!-- Begin Modal -->
+                            
+                            
+                            <div id="modalExtend" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Gia hạn</h4>
+                                        </div>
+                                        <div class="modal-body" align="center">
+                                            <h3>Bạn có chắc muốn gia hạn không?</h3>
+                                            <h3>Bạn đã quá hạn <b>${requestScope.overDate}</b> ngày và phải chịu phạt <b>${requestScope.extraPayment} ngàn đồng.</b></h3>
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="TrackProductStatus" method="POST">
+                                                <button type="submit" name="btnAction" class="btn btn-info" value="extend">Đồng ý</button>
+                                                <input type="hidden" name="consignmentID" value="${param.searchValue}"/>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </c:if>
                     </c:if>
                 </div>
 

@@ -135,6 +135,11 @@ public class ConsignServlet extends HttpServlet {
 
                         url = STEP1;
                         request.setAttribute("UPCERROR", "Không thể tìm thấy sản phẩm với mã số này");
+                        CategoryDAO cateDao = new CategoryDAO();
+                        List<CategoryDTO> parentCategories = cateDao.getParentCategory();
+                        List<CategoryDTO> category = cateDao.getAllCategory();
+                        request.setAttribute("FCATE", parentCategories);
+                        request.setAttribute("CATEGORY", category);
                     }
                     session.removeAttribute("AMAZONLIST");
                     //action = "tostep3";

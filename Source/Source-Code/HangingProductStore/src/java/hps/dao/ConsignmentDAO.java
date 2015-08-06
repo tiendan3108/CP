@@ -642,9 +642,9 @@ public class ConsignmentDAO {
 
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
-            if (rs.next()) {           
-                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_ACCEPTED && 
-                        rs.getInt("ProductStatusID") == 1) {
+            if (rs.next()) {
+                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_ACCEPTED
+                        && rs.getInt("ProductStatusID") == 1) {
                     return true;
                 }
             }
@@ -665,7 +665,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean checkIfConsignmentStatusIsWaiting(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -680,9 +680,9 @@ public class ConsignmentDAO {
 
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
-            if (rs.next()) {           
-                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_WAITING && 
-                        rs.getInt("ProductStatusID") == 1) {
+            if (rs.next()) {
+                if (rs.getInt("ConsignmentStatusID") == GlobalVariables.CONSIGNMENT_WAITING
+                        && rs.getInt("ProductStatusID") == 1) {
                     return true;
                 }
             }
@@ -896,19 +896,45 @@ public class ConsignmentDAO {
         try {
             conn = DBUltilities.makeConnection();
 
-            String query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, Period = ( 30 + (DATEDIFF(day, RaiseWebDate, GetDate())) ) WHERE ConsignmentID = ?";
+            String query = "SELECT (DATEDIFF(day, RaiseWebDate, GetDate())) AS DiffDate,"
+                    + " NegotiatedPrice FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
-            stm.setInt(1, ConsignmentStatus.RECEIVED);
-            stm.setString(2, consignmentID);
-            stm.setInt(3, period);
-            stm.setString(4, consignmentID);
-            int i = stm.executeUpdate();
+            stm.setString(1, consignmentID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                int diffDate = rs.getInt("DiffDate");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
+                
+                int newPeriod = period + diffDate;
+                float extraPayment = 0;
+                if(negotiatedPrice >= 1000000){
+                    extraPayment = 5000 * (diffDate - period);
+                }else{
+                    extraPayment = 10000 * (diffDate - period);
+                }
+                System.out.println("---------------------------------");
+                System.out.println("diffDate: " + diffDate);
+                System.out.println("newPeriod: " + newPeriod);
+                System.out.println("extraPayment: " + extraPayment);
+                System.out.println("---------------------------------");
+                
+                query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, "
+                        + " Period = ?, RemainExtendFee = (ISNULL(RemainExtendFee, 0) + ?) "
+                        + " WHERE ConsignmentID = ?";
+                stm = conn.prepareStatement(query);
+                stm.setInt(1, ConsignmentStatus.RECEIVED);
+                stm.setInt(2, newPeriod);
+                stm.setFloat(3, extraPayment);
+                stm.setString(4, consignmentID);
+                int i = stm.executeUpdate();
 
-            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
-            stm = conn.prepareStatement(query);
-            stm.setInt(1, ProductStatus.ON_WEB);
-            stm.setString(2, consignmentID);
-            i = stm.executeUpdate();
+                query = "UPDATE Product SET ProductStatusID = ? "
+                        + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                stm = conn.prepareStatement(query);
+                stm.setInt(1, ProductStatus.ON_WEB);
+                stm.setString(2, consignmentID);
+                i = stm.executeUpdate();
+            }
 
         } catch (SQLException e) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -954,6 +980,8 @@ public class ConsignmentDAO {
         String fullName = rs.getString("FullName");
         String address = rs.getString("Address");
         String phone = rs.getString("Phone");
+        phone = "0" + phone.substring(3);
+        
         String email = rs.getString("Email");
         String paypalAccount = rs.getString("PaypalAccount");
 
