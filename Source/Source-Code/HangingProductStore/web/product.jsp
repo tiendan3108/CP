@@ -67,13 +67,12 @@
                         </c:if>
                         <c:if test="${not empty data}">
                             <c:forEach var="item" items="${data}">
-                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="col-md-4 col-sm-6 col-xs-12" style="height:450px">
                                     <div class="product-item">
                                         <div class="pi-img-wrapper">
                                             <img src="${item.image}" class="imgCrop2">
                                         </div>
                                         <h3>${item.name}</h3>
-
                                         <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">Xem Chi tiết</a>
                                     </div>
                                 </div>
