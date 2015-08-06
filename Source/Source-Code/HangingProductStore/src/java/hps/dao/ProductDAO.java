@@ -782,7 +782,8 @@ public class ProductDAO {
                     + "And Product.CategoryID = Category.CategoryID "
                     + "And Product_Season.SeasonID = ? "
                     + "And Product.ProductStatusID in (?,?) "
-                    + "And Consignment.ConsignmentStatusID = ? ";
+                    + "And Consignment.ConsignmentStatusID = ? "
+                    + "Order by Product.ProductID desc";
             stm = con.prepareStatement(query);
             stm.setInt(1, seasonId);
             stm.setInt(2, ProductStatus.ON_WEB);
