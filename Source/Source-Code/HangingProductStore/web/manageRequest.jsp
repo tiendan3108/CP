@@ -11,7 +11,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>[HPS]:: Quản lí yêu cầu ký gửi</title>
+        <title>HPS :: Quản lí yêu cầu ký gửi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -285,7 +285,7 @@
                                         </div>
                                     </div>
                                     <br/>
-                                    <div class="row">
+<!--                                    <div class="row">
                                         <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
                                             <div class="form-horizontal">
                                                 <div class="form-group">
@@ -299,7 +299,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div>-->
                                     <table id="acceptedTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -1319,18 +1319,18 @@
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
 
-                var date = new Date();
-                date.setDate(date.getDate() - 1);
-                $('#fromDate').val(formatDate(date));
-                date.setDate(date.getDate() + 2);
-                $('#toDate').val(formatDate(date));
-                
-                $('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
-                //alert($('#fromDate').val() + " - " + $('#toDate').val());
-                var table = $('#acceptedTable').DataTable();
-                
-                table.draw();
-                
+//                var date = new Date();
+//                date.setDate(date.getDate() - 1);
+//                $('#fromDate').val(formatDate(date));
+//                date.setDate(date.getDate() + 2);
+//                $('#toDate').val(formatDate(date));
+//
+//                $('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
+//                //alert($('#fromDate').val() + " - " + $('#toDate').val());
+//                var table = $('#acceptedTable').DataTable();
+//
+//                table.draw();
+
             });
             $(function () {
                 $("#r_brand").autocomplete({
@@ -1445,6 +1445,8 @@
                             }
                             //$("#r_divPersonalInfo").hide();
                             $("#refuse_consignmentID").val(data.consigmentID);
+                            
+                            
                             if (data.consignmentStatusID == 1) {
 //                                $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
 //                                $("#r_ActionValue_confirm").val(data.consigmentID);
@@ -1509,7 +1511,7 @@
                                     //$("#ar_btnUpdateRequest").hide();
                                     $("#ar_divReceivedDateInput").hide();
                                     $("#ar_divReceivedDate").show();
-                                    $("#ar_divReceivedDate").html(data.hour + " | " + data.appointmentDate);
+                                    $("#ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
 
 
 
@@ -1517,7 +1519,7 @@
                                     //$("#ar_btnUpdateRequest").show();
                                     $("#ar_divReceivedDateInput").show();
                                     $("#ar_divReceivedDate").hide();
-                                    //$("ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
+                                    $("ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
                                 }
                                 $("#modalRequestAccept").modal("show");
 
@@ -1568,7 +1570,6 @@
                     alert("Xin nhập lí do");
                     return;
                 }
-                alert("đã bấm từ chối");
                 refuseProduct();
 
             });
@@ -1753,8 +1754,6 @@
                 function (data) {
                     if (data == "success") {
 
-
-                        alert("Đã nhận sản phẩm");
                         location.reload();
                     } else if (data == "fail") {
                         alert("Không thể nhận sản phẩm");
@@ -1935,36 +1934,39 @@
                 return [day, month, year].join('-');
             }
 
-            $(document).ready(function () {
-                $('#daterangeRequest').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    startDate: moment(),
-                    endDate: moment(),
-                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-                });
-            });
-            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
-                var table = $('#acceptedTable').DataTable();
-                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
-                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                $('#fromDate').val(startDate);
-                $('#toDate').val(endDate);
-                table.draw();
-            });
-            $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var startDate = $('#fromDate').val();
-                        var endDate = $('#toDate').val();
-                        var date = data[5].substring(6); 
-                        if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
-                        {
-                            return true;
-                        } else {
-                            return false;
-                        }
-
-                    }
-            );
+//            $(document).ready(function () {
+//                $('#daterangeRequest').daterangepicker({
+//                    format: "DD/MM/YYYY",
+//                    startDate: moment(),
+//                    endDate: moment(),
+//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+//                });
+//            });
+//            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#acceptedTable').DataTable();
+//                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
+//                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $.fn.dataTable.ext.search.push(
+//                    function (settings, data, dataIndex) {
+//                        var startDate = $('#fromDate').val();
+//                        var endDate = $('#toDate').val();
+//                        if ($("#currentTab").val() == "accepted") {
+//                            var date = data[5].substring(6);
+//                            if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+//                            {
+//                                return true;
+//                            } else {
+//                                return false;
+//                            }
+//                        }
+//
+//
+//                    }
+//            );
 
             function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
                 //source = source.substring(6);
