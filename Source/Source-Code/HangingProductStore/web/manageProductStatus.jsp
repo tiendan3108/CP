@@ -178,7 +178,7 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
                             <div class="portlet box blue">
                                 <div class="portlet-title">
-                                    <div class="caption">
+                                    <div class="caption" style="font-weight: bold">
                                         <i class="fa fa-globe"></i>Quản lí sản phẩm 
                                         <c:choose>
                                             <c:when test="${requestScope.currentTab == 'available'}">
@@ -225,7 +225,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.expired}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td class="center">${counter.count}</td>
+                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>${item.name}</td>
                                                     <td class="center">${item.reviewProductDate}</td>
@@ -264,7 +264,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.available}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td class="center">${counter.count}</td>
+                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>${item.name}</td>
                                                     <td class="center">${item.reviewProductDate}</td>
@@ -306,7 +306,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.onWeb}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td style="text-align: center">${counter.count}</td>
+                                                    <td style="text-align: center; font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td class="center">${item.raiseWebDate}</td>
                                                     <td>${item.period}</td>
@@ -343,7 +343,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.ordered}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td class="center">${counter.count}</td>
+                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>
                                                         <fmt:formatNumber 
@@ -386,7 +386,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.canceled}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td class="center">${counter.count}</td>
+                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td class="center">${item.cancelDate}</td>
                                                     <td class="center">${item.reviewProductDate}</td>
@@ -439,7 +439,7 @@
                                         <tbody>
                                             <c:forEach var="item" items="${requestScope.sold}" varStatus="counter">
                                                 <tr>
-                                                    <td class="center">${counter.count}</td>
+                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
                                                     <td>${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
@@ -467,26 +467,89 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3>Thông tin sản phẩm</h3>        
+                                    <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-6">
-                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
-                                            <strong>Họ tên : </strong><span id="sold_fullName"></span><br>
-                                            <strong>Địa chỉ : </strong><span id="sold_address"></span><br>
-                                            <strong>Số điện thoại : </strong><span id="sold_phone"></span><br>
-                                            <strong>Email : </strong><span id="sold_email"></span><br>
-                                            <strong>Tài khoản Paypal : </strong><span id="sold_paypalAccount"></span>
+                                        <div class="col-sm-5 col-md-5">
+                                            <div class="form-horizontal">
+                                                <h4 align="center"><span><b><i>Thông tin người kí gửi</i></b></span></h4>
+
+                                                <!--                                            <strong>Họ tên : </strong><span id="sold_fullName"></span><br>
+                                                                                            <strong>Địa chỉ : </strong><span id="sold_address"></span><br>
+                                                                                            <strong>Số điện thoại : </strong><span id="sold_phone"></span><br>
+                                                                                            <strong>Email : </strong><span id="sold_email"></span><br>    
+                                                                                            <strong>Tài khoản Paypal : </strong><span id="sold_paypalAccount"></span>-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_fullName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Địa chỉ</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_address"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_phone"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Email</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_email"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tài khoản paypal</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-6">
-                                            <h4><span><u>Thông tin sản phẩm</u></span></h4>
-                                            <strong>Tên sản phẩm : </strong><span id="sold_productName"></span><br>
-                                            <strong>Mã kí gửi : </strong><span id="sold_consignmentID"></span><br>
-                                            <strong>Giá sản phẩm (Ngàn đồng): </strong><span id="sold_negotiatedPrice"></span><br>
-                                            <strong>Giá bán (Ngàn đồng): </strong><span id="sold_sellingPrice"></span><br>
-                                            <strong>Ngày kí gửi : </strong><span id="sold_receivedDate"></span><br>
-                                            <strong>Tiền trả khách hàng (Ngàn đồng): </strong><input type="text" id="sold_returnPrice" style="width: 80px">
+                                        <div class="col-sm-7 col-md-7">
+                                            <div class="form-horizontal">
+                                                <h4 align="center"><span><b><i>Thông tin sản phẩm</i></b></span></h4>
+
+                                                <!--                                            <strong>Tên sản phẩm : </strong><span id="sold_productName"></span><br>
+                                                                                            <strong>Mã kí gửi : </strong><span id="sold_consignmentID"></span><br>
+                                                                                            <strong>Giá sản phẩm (Ngàn đồng): </strong><span id="sold_negotiatedPrice"></span><br>
+                                                                                            <strong>Giá bán (Ngàn đồng): </strong><span id="sold_sellingPrice"></span><br>
+                                                                                            <strong>Ngày kí gửi : </strong><span id="sold_receivedDate"></span><br>
+                                                                                            <strong>Tiền trả khách hàng (Ngàn đồng): </strong><input type="text" id="sold_returnPrice" style="width: 80px">-->
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_consignmentID"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá sản phẩm</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá bán</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_sellingPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="sold_receivedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền trả khách hàng</label>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <input type="text" id="sold_returnPrice" class="form-control" > 
+                                                        <span class="help-block">(Ngàn đồng)</span>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -525,28 +588,54 @@
                             <div class="modal-content">
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header">
-                                        <h3>Thông tin đặt hàng</h3>
-                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>
-                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>
+                                        <h3 style="font-weight: bold">Thông tin đặt hàng</h3>
+                                        <!--                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>-->
+                                        <!--                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>-->
                                     </div>
                                     <div class="modal-body">
-                                        <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
-                                            <thead>
-                                                <tr role="row" class="heading">
-                                                    <th></th>
-                                                    <th>Tên khách hàng</th>
-                                                    <th>Ngày đặt mua</th>
-                                                    <th>Thông tin liên hệ</th>
-                                                    <th id="theadDetail">Chi tiết</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="table_body_ordered">
-                                            </tbody>
-                                        </table>
+                                        <div class="row">
+
+                                            <div class="col-sm-7">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label id="sendPriceLabel" class="control-label col-md-4 col-sm-4" style="font-weight: bold">Giá gửi khách hàng:</label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <input id="sendPrice" name="txtSendPrice" type="text" class="form-control" maxlength="50"/>
+
+                                                            <span class="help-block" id="erNegotiatedPrice">(Ngàn đồng)
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá ký gửi:</label>
+                                                        <div class="col-md-7 col-sm-7" id="ordered_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
+                                                <thead>
+                                                    <tr role="row" class="heading">
+                                                        <th></th>
+                                                        <th>Tên khách hàng</th>
+                                                        <th>Ngày đặt mua</th>
+                                                        <th>Thông tin liên hệ</th>
+                                                        <th id="theadDetail">Chi tiết</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table_body_ordered">
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
-                                        <button class="btn green" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
+                                        <button class="btn btn-warning" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
                                         <button class="btn red" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
                                         <input class="btn blue confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -560,12 +649,17 @@
                     <div class="modal fade bs-example-modal-sm" id="confirmOrderedModal" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <form action="OrderProduct" method="POST">
-                                <div class="modal-content" style="width: 500px">
+                                <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3>Thông tin giá bán</h3>        
+                                        <h3 style="font-weight: bold">Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input id="sellingPrice" type="text" name="txtSellingPrice" value ="" style="width: 80px;">
+                                        <div class="row">
+                                            <div class="col-sm-10 col-sm-offset-1" align="center">
+                                                <label class="control-label">Giá bán (Ngàn đồng):</label>
+                                                <input class="form-control" id="sellingPrice" type="text" name="txtSellingPrice" value ="">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" id="order_OrderID">
@@ -582,24 +676,73 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3>Thông tin hủy kí gửi</h3>        
+                                    <h3 style="font-weight: bold">Thông tin hủy kí gửi</h3>        
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row" style="font-size: 13">
+                                    <div class="row">
                                         <div class="col-sm-6">
-                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
-                                            <strong>Họ tên : </strong><span id="cancel_fullName" style="font-weight: normal"></span><br>
-                                            <strong>Địa chỉ : </strong><span id="cancel_address"></span><br>
-                                            <strong>Số điện thoại : </strong><span id="cancel_phone"></span><br>
-                                            <strong>Email : </strong><span id="cancel_email"></span>
+                                            <div class="form-horizontal">
+
+                                                <h4 align="center"><span><b><i>Thông tin người kí gửi</i></b></span></h4>
+                                                <!--                                            <strong>Họ tên : </strong><span id="cancel_fullName" style="font-weight: normal"></span><br>
+                                                                                            <strong>Địa chỉ : </strong><span id="cancel_address"></span><br>
+                                                                                            <strong>Số điện thoại : </strong><span id="cancel_phone"></span><br>
+                                                                                            <strong>Email : </strong><span id="cancel_email"></span>-->
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_fullName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Địa chỉ</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_address"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_phone"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Email</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_email"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <h4><span><u>Thông tin hàng kí gửi</u></span></h4>
-                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
-                                            <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
-                                            <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
-                                            <strong>Ngày nhận hàng : </strong><span id="cancel_consignedDate"></span><br>
-                                            <strong>Ngày hủy kí gửi : </strong><span id="cancel_canceledDate"></span><br>
+                                            <div class="form-horizontal">
+                                            <h4 align="center"><span><b><i>Thông tin hàng kí gửi</i></b></span></h4>
+                                            <!--                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
+                                                                                        <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
+                                                                                        <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
+                                                                                        <strong>Ngày nhận hàng : </strong><span id="cancel_consignedDate"></span><br>
+                                                                                        <strong>Ngày hủy kí gửi : </strong><span id="cancel_canceledDate"></span><br>-->
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                <div class="col-md-8 col-sm-8" id="cancel_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã hàng kí gửi</label>
+                                                <div class="col-md-8 col-sm-8" id="cancel_consignmentID"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá kí gửi</label>
+                                                <div class="col-md-8 col-sm-8" id="cancel_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày nhận hàng</label>
+                                                <div class="col-md-8 col-sm-8" id="cancel_consignedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
+                                                <div class="col-md-8 col-sm-8" id="cancel_canceledDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -630,7 +773,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3>Thông tin sản phẩm</h3>        
+                                        <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -638,20 +781,20 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label for="txtProductName" class="col-sm-4 control-label">Tên sản phẩm</label>
+                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
                                                             <div class="col-sm-8">
                                                                 <input id="avai_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
                                                                 <p class="help-block" id="er_avai_ProductName" style="color: red">  </p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="txtSerial" class="col-sm-4 control-label">Số seri </label>
+                                                            <label for="txtSerial" class="col-sm-4 control-label" style="font-weight: bold">Số seri </label>
                                                             <div class="col-sm-8">
                                                                 <input id="avai_SerialNumber" type="text" class="form-control" name="txtSerialNumber"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Ngày mua hàng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Ngày mua hàng</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group date date-picker">
                                                                     <input id="avai_BoughtDate" type="text" class="form-control" name="txtDate" readonly>
@@ -659,11 +802,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Loại sản phẩm</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm</label>
                                                             <div class="col-sm-8">
                                                                 <c:set var="parentCat" value="${requestScope.parentCat}"/>
                                                                 <c:set var="allCat" value="${requestScope.allCat}"/>
-                                                                <select id="avai_Category" name="txtCategory"style="width: 120px">
+                                                                <select class="form-control" id="avai_Category" name="txtCategory"style="width: 120px">
                                                                     <c:forEach var="parent" items="${parentCat}">
                                                                         <optgroup label="${parent.categoryName}">
                                                                             <c:forEach var="item" items="${allCat}">
@@ -677,14 +820,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Hãng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng</label>
                                                             <div class="col-sm-8">
                                                                 <input id="avai_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
                                                                 <p class="help-block" id="er_avai_Brand"style="color: red">  </p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label  class="col-sm-4 control-label">Mùa </label>
+                                                            <label  class="col-sm-4 control-label" style="font-weight: bold">Mùa </label>
                                                             <div class="col-sm-8">
                                                                 <c:forEach var="item" items="${requestScope.season}">
                                                                     <div class="col-sm-3 seasonDiv">
@@ -696,18 +839,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Tự động gửi giá</label>
-                                                            <div class="col-sm-8">
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Tự động gửi giá</label>
+                                                            <div class="col-sm-8 radio-list">
                                                                 <label class="radio-inline">
                                                                     <input type="radio" name="rdSendPrice_1" id="rdIsSpecial1" value="isSpecial"> Có </label>
                                                                 <label class="radio-inline">
                                                                     <input type="radio" name="rdSendPrice_1" id="rdNotSpecial1" value="notSpecial" checked> Không </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label  class="col-sm-4 control-label">Mô tả </label>
-                                                            <div class="col-sm-8">
-                                                                <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -715,18 +852,29 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm</label>
+                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                     <div class="fileinput-new thumbnail">
-                                                                        <img src="" id="avai_Image"/>
+                                                                        <img src="" id="avai_Image" style="max-height: 200px"/>
                                                                     </div>
+                                                                    <br/>
                                                                     <div >
-                                                                        <span class="btn btn-info btn-file" style="width: 100%">
+                                                                        <span class="btn btn-info btn-file">
+                                                                            <span class="fileinput-new btn " >
+                                                                                CHỌN ẢNH </span>
+                                                                            <span class="fileinput-exists btn">
+                                                                                CHỌN ẢNH </span>
                                                                             <input type="file" accept="image/*" name="avai_txtImage" onchange="readURL1(this);" style="max-width: "/>
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-sm-4 control-label" style="font-weight: bold">Mô tả </label>
+                                                            <div class="col-sm-8">
+                                                                <textarea id="avai_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -749,7 +897,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3>Thông tin sản phẩm</h3>        
+                                    <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -787,7 +935,7 @@
                             <form action="ExtendProduct" method="POST">
                                 <div class="modal-content" style="width: 500px">
                                     <div class="modal-header">
-                                        <h3>Thời hạn kí gửi</h3>
+                                        <h3 style="font-weight: bold">Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là <input type="text" name="txtExpiredFee" id="expired_fees_1" value="" style="width: 60px"> ngàn đồng.<br>
@@ -810,7 +958,7 @@
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content" style="width: 500px">
                                     <div class="modal-header">
-                                        <h3>Thông tin tiền phạt</h3>
+                                        <h3 style="font-weight: bold">Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
                                         <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee" style="width: 80px">
@@ -833,7 +981,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h3>Thông tin sản phẩm</h3>        
+                                        <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -841,20 +989,20 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label for="txtProductName" class="col-sm-4 control-label">Tên sản phẩm</label>
+                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
                                                             <div class="col-sm-8">
                                                                 <input id="onWeb_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
                                                                 <p class="help-block" id="er_OnWeb_ProductName"style="color: red">  </p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="txtSerial" class="col-sm-4 control-label">Số seri </label>
+                                                            <label for="txtSerial" class="col-sm-4 control-label" style="font-weight: bold">Số seri </label>
                                                             <div class="col-sm-8">
                                                                 <input id="onWeb_SerialNumber" type="text" class="form-control" name="txtSerialNumber"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Ngày mua hàng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Ngày mua hàng</label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group date date-picker">
                                                                     <input id="onWeb_BoughtDate" type="text" class="form-control" name="txtDate" readonly>
@@ -862,11 +1010,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Loại sản phẩm</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm</label>
                                                             <div class="col-sm-8">
                                                                 <c:set var="parentCat" value="${requestScope.parentCat}"/>
                                                                 <c:set var="allCat" value="${requestScope.allCat}"/>
-                                                                <select id="onWeb_Category" name="txtCategory"style="width: 120px">
+                                                                <select class="form-control" id="onWeb_Category" name="txtCategory"style="width: 120px">
                                                                     <c:forEach var="parent" items="${parentCat}">
                                                                         <optgroup label="${parent.categoryName}">
                                                                             <c:forEach var="item" items="${allCat}">
@@ -880,14 +1028,14 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Hãng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng</label>
                                                             <div class="col-sm-8">
                                                                 <input id="onWeb_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
                                                                 <p class="help-block" id="er_OnWeb_Brand"style="color: red">  </p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label  class="col-sm-4 control-label">Mùa </label>
+                                                            <label  class="col-sm-4 control-label" style="font-weight: bold">Mùa</label>
                                                             <div class="col-sm-8">
                                                                 <c:forEach var="item" items="${requestScope.season}">
                                                                     <div class="col-sm-3 seasonDiv">
@@ -899,37 +1047,42 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4">Tự động gửi giá</label>
-                                                            <div class="col-sm-8">
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Tự động gửi giá</label>
+                                                            <div class="col-sm-8 radio-list">
                                                                 <label class="radio-inline">
                                                                     <input type="radio" name="rdSendPrice_2" id="sendPriceTrue_2" value="isSpecial"> Có </label>
                                                                 <label class="radio-inline">
                                                                     <input type="radio" name="rdSendPrice_2" id="sendPriceFalse_2" value="notSpecial"> Không </label>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label  class="col-sm-4 control-label">Mô tả </label>
-                                                            <div class="col-sm-8">
-                                                                <textarea id="onWeb_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-4 col-sm-4">Ảnh sản phẩm</label>
+                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                     <div class="fileinput-new thumbnail">
-                                                                        <img src="" id="onWeb_Image"/>
+                                                                        <img src="" id="onWeb_Image" style="max-height: 200px"/>
                                                                     </div>
                                                                     <div >
-                                                                        <span class="btn btn-info btn-file" style="width: 100%">
+                                                                        <span class="btn btn-info btn-file">
+                                                                            <span class="fileinput-new btn " >
+                                                                                CHỌN ẢNH </span>
+                                                                            <span class="fileinput-exists btn">
+                                                                                CHỌN ẢNH </span>
                                                                             <input type="file" name="onweb_txtImage" onchange="readURL2(this);" style="max-width: "/>
                                                                         </span>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="col-sm-4 control-label" style="font-weight: bold">Mô tả </label>
+                                                            <div class="col-sm-8">
+                                                                <textarea id="onWeb_Description" class="form-control" maxlength="225" rows="6" placeholder="" name="txtDescription"></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -954,7 +1107,7 @@
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice2();">
                                     <div class="modal-header">
-                                        <h3>Hủy kí gửi</h3>
+                                        <h3 style="font-weight: bold">Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h4>
@@ -977,7 +1130,7 @@
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
                                     <div class="modal-header">
-                                        <h3>Trả hàng kí gửi</h3>
+                                        <h3 style="font-weight: bold">Trả hàng kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <h4>Bạn có chắc chắn muốn trả sản phẩm với mã kí gửi <label id="returnProduct_ConsignmentID"></label>?</h4>
@@ -1033,6 +1186,12 @@
             <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
             <script src="assets/admin/pages/scripts/table-managed.js"></script>
             <!-- END CORE PLUGINS -->
+
+            <!--BEGIN PAGE CSS -->
+            <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
+
+            <script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
+            <!--END PAGE CSS -->
             <script>
                                     jQuery(document).ready(function () {
                                         // initiate layout and plugins
@@ -1079,7 +1238,7 @@
                         $("#cancel_email").text(response.email);
                         $("#cancel_productName").text(product.name);
                         $("#cancel_consignmentID").text(product.consignmentID);
-                        $("#cancel_negotiatedPrice").text(product.negotiatedPrice);
+                        $("#cancel_negotiatedPrice").text(product.negotiatedPrice + " (Ngàn đồng)");
                         $("#cancel_consignedDate").text(product.receivedDate);
                         $("#cancel_canceledDate").text(product.cancelDate);
                         $("#cancel_ID").val(product.consignmentID);
@@ -1165,7 +1324,7 @@
                         }
                         var orderList = response.orderList;
                         $('#ordered_orderID').val(response.orderList[0].orderID);
-                        $('#ordered_negotiatedPrice').text(response.negotiatedPrice);
+                        $('#ordered_negotiatedPrice').text(response.negotiatedPrice + " (Ngàn đồng)");
                         $('#listOrderedTable tbody').empty();
                         for (var i = 0, max = orderList.length; i < max; i++) {
                             var row = "";
@@ -1228,8 +1387,8 @@
                         $("#sold_email").text(response.email);
                         $("#sold_productName").text(product.name);
                         $("#sold_consignmentID").text(response.consigmentID);
-                        $("#sold_negotiatedPrice").text(response.negotiatedPrice);
-                        $("#sold_sellingPrice").text(response.returnPrice);
+                        $("#sold_negotiatedPrice").text(response.negotiatedPrice + " (Ngàn đồng)");
+                        $("#sold_sellingPrice").text(response.returnPrice + " (Ngàn đồng)");
                         $("#sold_receivedDate").text(response.reviewProductDate);
                         $("#sold_paypalAccount").text(response.paypalAccount);
                         $("#soldconsignmentID").val(response.consigmentID);
