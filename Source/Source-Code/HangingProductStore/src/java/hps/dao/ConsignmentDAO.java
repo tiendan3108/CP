@@ -1008,7 +1008,7 @@ public class ConsignmentDAO {
         }
         String cancelDate = rs.getString("CancelDate");
         if (cancelDate != null) {
-            cancelDate = df.format(rs.getDate("CancelDate"));
+            cancelDate = df2.format(rs.getTimestamp("CancelDate"));
         }
         String appointmentDate = rs.getString("AppointmentDate");
         String hour = "";
