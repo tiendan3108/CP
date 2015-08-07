@@ -1373,20 +1373,20 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
-                if (currentTab == "accepted") {
-                    var table = $('#acceptedTable').DataTable();
-                    table.draw();
-
-                } else if (currentTab == "request") {
-                    var table = $('#requestTable').DataTable();
-                    table.draw();
-                }else if (currentTab == "cancel") {
-                    var table = $('#cancelTable').DataTable();
-                    table.draw();
-                }else if (currentTab == "refuse") {
-                    var table = $('#refuseTable').DataTable();
-                    table.draw();
-                }
+//                if (currentTab == "accepted") {
+//                    var table = $('#acceptedTable').DataTable();
+//                    table.draw();
+//
+//                } else if (currentTab == "request") {
+//                    var table = $('#requestTable').DataTable();
+//                    table.draw();
+//                }else if (currentTab == "cancel") {
+//                    var table = $('#cancelTable').DataTable();
+//                    table.draw();
+//                }else if (currentTab == "refuse") {
+//                    var table = $('#refuseTable').DataTable();
+//                    table.draw();
+//                }
 
 
             });
