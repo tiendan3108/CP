@@ -336,19 +336,19 @@
                 </div>
                 <div>
                     <div class="modal fade bs-example-modal-lg" id="detailModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog modal-scrollable modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h3>Thông tin yêu cầu kí gửi</h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-sm-5 col-md-5">
+                                        <div class="col-sm-7 col-md-7">
                                             Tên người gửi : <span id="consignorName"></span><br>
                                             Tên sản phẩm : <span id="productName"></span><br>
                                             Mã kí gửi : <span id="consignmentID"></span>
                                         </div>
-                                        <div class="col-sm-7 col-md-7">
+                                        <div class="col-sm-5 col-md-5">
                                             Ngày duyệt yêu cầu : <span id="reviewRequestDate"></span><br>
                                             Ngày từ chối yêu cầu : <span id="refuseReviewRequestDate"></span><br>
                                             Ngày nhận hàng : <span id="reviewProductDate"></span><br>
@@ -472,7 +472,7 @@
                     $('#reviewRequestDate').text(respone.reviewRequestDate);
                     //$('#refuseReviewRequestDate').text(respone.name);
                     $('#reviewProductDate').text(respone.reviewProductDate);
-                    $('#refuseReviewProductDate').text(respone.name);
+                    //$('#refuseReviewProductDate').text(respone.name);
                     //$('#soldDate').text(respone.name);
                     //$('#returnDate').text(respone.name);
                 });

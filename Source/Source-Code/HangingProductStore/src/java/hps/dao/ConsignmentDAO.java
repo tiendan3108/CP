@@ -665,7 +665,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-
+    
     public boolean checkIfConsignmentStatusIsWaiting(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -907,9 +907,9 @@ public class ConsignmentDAO {
                 
                 int newPeriod = period + diffDate;
                 float extraPayment = 0;
-                if(negotiatedPrice >= 1000000){
+                if (negotiatedPrice >= 1000000) {
                     extraPayment = 5000 * (diffDate - period);
-                }else{
+                } else {
                     extraPayment = 10000 * (diffDate - period);
                 }
                 System.out.println("---------------------------------");
@@ -927,7 +927,7 @@ public class ConsignmentDAO {
                 stm.setFloat(3, extraPayment);
                 stm.setString(4, consignmentID);
                 int i = stm.executeUpdate();
-            
+                
                 query = "UPDATE Product SET ProductStatusID = ? "
                         + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = conn.prepareStatement(query);
@@ -1202,7 +1202,7 @@ public class ConsignmentDAO {
             String today = sdf.format(tempDate);
             System.out.println("Today : " + today);
             query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email FROM Consignment c, Product p WHERE "
-                    + "DATEDIFF(day,[ReviewProductDate],?) > Period AND p.ProductID = c.ProductID AND "
+                    + "DATEDIFF(day,[RaiseWebDate],?) > Period AND p.ProductID = c.ProductID AND "
                     + "p.ProductStatusID > 1 AND p.ProductStatusID < 4 AND c.isExpiredMessage is NULL";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
@@ -1298,16 +1298,18 @@ public class ConsignmentDAO {
             conn = DBUltilities.makeConnection();
             String query = "";
             if (productStatus == ProductStatus.CANCEL) {
-                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ? OR ProductStatusID = ?) ORDER BY ReviewProductDate";
+                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ? OR ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate";
                 stmC = conn.prepareStatement(query);
                 stmC.setInt(1, storeOwnerID);
                 stmC.setInt(2, ProductStatus.NOT_YET_RECEIVE);
                 stmC.setInt(3, ProductStatus.CANCEL);
+                stmC.setInt(4, ConsignmentStatus.RECEIVED);
             } else {
-                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) ORDER BY ReviewProductDate";
+                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate";
                 stmC = conn.prepareStatement(query);
                 stmC.setInt(1, storeOwnerID);
                 stmC.setInt(2, productStatus);
+                stmC.setInt(3, ConsignmentStatus.RECEIVED);
             }
             rsC = stmC.executeQuery();
             while (rsC.next()) {
@@ -1627,11 +1629,11 @@ public class ConsignmentDAO {
         ResultSet rs = null;
         ConsignmentDTO result = new ConsignmentDTO();
         String consignmentID = "", receivedDate = "", email = "", fullname = "", address = "", phone = "", productName = "", paypalAccount = "";
-        float negotiatedPrice = 0, sellingPrice = 0;
+        float negotiatedPrice = 0, sellingPrice = 0, remainExtendFee = 0;
         int period = 0;
         try {
             con = DBUltilities.makeConnection();
-            String query = "SELECT c.NegotiatedPrice, c.FullName, c.Address, c.Phone, c.Email, c.Period, "
+            String query = "SELECT c.NegotiatedPrice, c.FullName, c.Address, c.Phone, c.Email, c.Period, c.RemainExtendFee, "
                     + "c.PaypalAccount, c.ReviewProductDate, c.ConsignmentID, p.ProductName, p.SellingPrice "
                     + "FROM Consignment c, Product p WHERE c.ProductID = ? AND p.ProductID = ?";
             stm = con.prepareStatement(query);
@@ -1650,6 +1652,8 @@ public class ConsignmentDAO {
                 sellingPrice = rs.getFloat("SellingPrice") / 1000;
                 negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 period = rs.getInt("Period");
+                remainExtendFee = rs.getFloat("RemainExtendFee");
+                
             }
             result.setConsigmentID(consignmentID);
             result.setName(fullname);
@@ -1661,6 +1665,7 @@ public class ConsignmentDAO {
             result.setEmail(email);
             result.setReviewProductDate(receivedDate);
             result.setPeriod(period);
+            result.setRemainExtendFee(remainExtendFee);
             ProductDTO product = new ProductDTO();
             product.setName(productName);
             result.setProduct(product);

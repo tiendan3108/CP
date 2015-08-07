@@ -47,6 +47,7 @@ public class ConsignmentDTO implements Serializable {
     private float expiredFee;
     private int expiredDays;
     private int quantity;
+    private float remainExtendFee;
     //danqt - end
     //duchc - begin 
     private AccountDTO storeOwner;
@@ -453,6 +454,20 @@ public class ConsignmentDTO implements Serializable {
      */
     public void setReceivedDate(String receivedDate) {
         this.receivedDate = receivedDate;
+    }
+
+    /**
+     * @return the remainExtendFee
+     */
+    public float getRemainExtendFee() {
+        return remainExtendFee;
+    }
+
+    /**
+     * @param remainExtendFee the remainExtendFee to set
+     */
+    public void setRemainExtendFee(float remainExtendFee) {
+        this.remainExtendFee = remainExtendFee;
     }
 
 }

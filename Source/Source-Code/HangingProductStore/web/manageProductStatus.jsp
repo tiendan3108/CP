@@ -608,8 +608,8 @@
                                         <div style="float: right; margin-right: 25px">
                                             <form action="CancelProduct" method="POST">
                                                 <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
-                                                <button id="btnAgree" class="btn red" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
-                                                <button id="btnDecline" class="btn blue" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
+                                                <button id="btnAgree" class="btn blue" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
+                                                <button id="btnDecline" class="btn red" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
                                                 <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                             </form>
                                         </div>
@@ -794,6 +794,7 @@
                                         Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay. Bạn có chắc chắn muốn gia hạn sản phẩm này?
                                     </div>
                                     <div class="modal-footer">
+                                        <input type="hidden" name="txtExpiredFee" id="expired_fees_1" value="">
                                         <input type="hidden" name="txtConsignmentID" id="expired_extendConsignmentID" value="">
                                         <button class="btn blue" name="btnAction" type="submit" value="extend">Gia hạn</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -1192,9 +1193,9 @@
                         var product = response.product;
                         var price;
                         if (response.period >= 120) {
-                            price = ((response.negotiatedPrice * 70 / 100)).toFixed(0);
+                            price = ((response.negotiatedPrice * 70 / 100) + response.remainExtendFee).toFixed(0);
                         } else {
-                            price = (((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10))).toFixed(0);
+                            price = (((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10)) + response.remainExtendFee).toFixed(0);
                         }
                         $("#sold_fullName").text(response.name);
                         $("#sold_address").text(response.address);
@@ -1257,6 +1258,7 @@
                 $(document).on("click", ".confirmExtendModal", function () {
                     $("#expired_period").text($("#expired_days").text());
                     $("#expired_fees").text($("#expired_fee").val());
+                    $("#expired_fees_1").val($("#expired_fee").val());
                     $('#confirmExtendModal').modal('show');
                 });
                 $(document).on("click", ".confirmReceiveModal", function () {
