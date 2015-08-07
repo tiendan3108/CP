@@ -403,7 +403,7 @@
                                                         <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
                                                             Chờ nhận hàng
                                                         </c:if>
-                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 7}">
+                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 6}">
                                                             Chờ duyệt
                                                         </c:if>
                                                     </td>
@@ -952,7 +952,7 @@
                     <div class="modal fade bs-example-modal-sm" id="confirmOnWebModal" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content" style="width: 500px">
-                                <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice();">
+                                <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice2();">
                                     <div class="modal-header">
                                         <h3>Hủy kí gửi</h3>
                                     </div>
@@ -961,7 +961,7 @@
                                         <h4>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h4>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="hidden" value="" name="txtcurrentTab" id="currentTab_cancel">
+                                        <input type="hidden" value="onWeb" name="txtcurrentTab">
                                         <input type="hidden" value="" name="txtConsignmentID" id="confirmCancel_ConsignmentID2">
                                         <button class="btn blue" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -971,6 +971,29 @@
                         </div>
                     </div>
                     <!-- CONFIRM CANCEL PRODUCT ONWEB MODAL END-->
+                    <!-- RETURN PRODUCT MODAL BEGIN-->
+                    <div class="modal fade bs-example-modal-sm" id="receiveProductModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content" style="width: 500px">
+                                <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
+                                    <div class="modal-header">
+                                        <h3>Trả hàng kí gửi</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4>Bạn có chắc chắn muốn trả sản phẩm với mã kí gửi <label id="returnProduct_ConsignmentID"></label>?</h4>
+                                        <h4>Tiền phạt (Ngàn đồng): <input id="returnProduct_Fee" name="txtCancelFee"></h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" value="canceled" name="txtcurrentTab">
+                                        <input type="hidden" value="" name="txtConsignmentID" id="returnProduct_ConsignmentID1">
+                                        <button class="btn blue" type="submit" name="btnAction" value="receive">Đồng ý</button>
+                                        <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RETURN PRODUCT MODAL END-->
                 </div>
                 <!-- END ALL MODALS -->
             </div>
@@ -1060,7 +1083,9 @@
                         $("#cancel_consignedDate").text(product.receivedDate);
                         $("#cancel_canceledDate").text(product.cancelDate);
                         $("#cancel_ID").val(product.consignmentID);
-                        $("#confirmCancel_ConsignmentID2").val(product.consignmentID);
+                        $("#returnProduct_ConsignmentID").text(product.consignmentID);
+                        $("#returnProduct_ConsignmentID1").val(product.consignmentID);
+
                         if (response.product.productStatusID < 8) {
                             $("#btnAgree").removeAttr("style");
                             $("#btnDecline").removeAttr("style");
@@ -1280,7 +1305,6 @@
                             $("input#onWeb_chkSeason" + season[i]).parent("span").addClass("checked");
                         }
                         var price = (response.negotiatedPrice * 15 / 100).toFixed(0);
-                        $("#confirmCancel_ConsignmentID1").text(consignmentID);
                         $("#confirmCancel_ConsignmentID2").val(consignmentID);
                         $("#confirmCancel_Fee").val(price);
                     });
@@ -1305,14 +1329,12 @@
                     $('#onWebModal').modal('show');
                 });
                 $(document).on("click", ".confirmOnWebModal", function () {
-                    $('#currentTab_cancel').val('onWeb');
                     $('#confirmOnWebModal').modal('show');
                 });
                 $(document).on("click", ".receiveProductModal", function () {
-                    $('#currentTab_cancel').val('canceled');
                     var negotiatedPrice = $('#cancel_negotiatedPrice').text();
-                    $('#confirmCancel_Fee').val((negotiatedPrice * 15 / 100).toFixed(0));
-                    $('#confirmOnWebModal').modal('show');
+                    $('#returnProduct_Fee').val((negotiatedPrice * 15 / 100).toFixed(0));
+                    $('#receiveProductModal').modal('show');
                 });
                 //end on web modal
                 // validation check customer
@@ -1382,7 +1404,25 @@
                         return true;
                     }
                 }
-                function validateCancelPrice()
+                function validateCancelPrice1()
+                {
+                    var fee = $('#returnProduct_Fee').val().trim();
+                    if (fee.length == 0) {
+                        alert('Vui lòng nhập tiền phạt.');
+                        return false;
+                    }
+                    if (fee < 0) {
+                        alert('Tiền phạt phải là số dương');
+                        return false;
+                    }
+                    if (isNaN(fee)) {
+                        alert('Tiền phạt phải là số');
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                function validateCancelPrice2()
                 {
                     var fee = $('#confirmCancel_Fee').val().trim();
                     if (fee.length == 0) {
