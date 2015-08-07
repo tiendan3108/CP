@@ -1930,7 +1930,7 @@ public class ConsignmentDAO {
         ProductDTO product = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT c.*, p.ProductName, p.Image FROM Consignment c, Product p WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID";
+            query = "SELECT c.*, p.ProductName, p.Image, p.Brand, ca.CategoryName FROM Consignment c, Product p, Category ca WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID AND p.CategoryID = ca.CategoryID";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
@@ -1945,13 +1945,17 @@ public class ConsignmentDAO {
                 item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
                 item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
                 item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
+                item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setEmail(rs.getString("Email"));
+                item.setReturnPrice(rs.getFloat("ReturnedPrice"));
                 item.setPaypalAccount(rs.getString("PaypalAccount"));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 product = new ProductDTO();
                 product.setName(rs.getString("ProductName"));
                 product.setImage(rs.getString("Image"));
+                product.setBrand(rs.getString("Brand"));
+                product.setCategoryName(rs.getString("CategoryName"));
                 item.setProduct(product);
             }
             return item;

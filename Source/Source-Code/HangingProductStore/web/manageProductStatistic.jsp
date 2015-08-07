@@ -284,8 +284,16 @@
                                             <div class="form-horizontal">
                                                 <!--                                        <table class="table table-hover" style="border: none">-->
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Loại sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_productCategory"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Hãng</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_productBrand"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
 
@@ -299,23 +307,23 @@
                                             <div class="form-horizontal">
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Người ký gửi</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_fullName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Người ký gửi</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_fullName"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_phone"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Điện thoại</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_phone"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Email:</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_email"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Email:</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_email"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tài khoản Paypal</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tài khoản Paypal</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
 
@@ -334,27 +342,60 @@
                                             <div class="form-horizontal">
 
                                                 <div class="form-group" id="div_c_createdDate">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày ký gửi</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_createdDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày ký gửi</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_createdDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
-
+                                                <div class="form-group" id="div_c_refuseProductDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày từ chối sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_refuseProductDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group" id="div_c_reviewProductDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày nhận hàng</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_reviewProductDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group" id="div_c_returnDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày trả tiền khách hàng</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_returnDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
 
                                             </div>
                                         </div>
                                         <!--END LEFT TAB -->
-                                        
+
                                         <!--BEGIN RIGHT TAB -->
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-horizontal">
-                                                <div class="form-group" id="div_c_cancelDate">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hủy</label>
-                                                    <div class="col-md-8 col-sm-8" id="c_cancelDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                <div class="form-group" id="div_c_reviewRequestDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày duyệt yêu cầu</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_reviewRequestDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group" id="div_c_refuseRequestDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày từ chối yêu cầu</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_refuseRequestDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group" id="div_c_publishOnWebDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày đăng lên web</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_publishOnWebDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
                                             </div>
-
                                         </div>
                                         <!--END RIGHT TAB -->
+                                    </div>
+                                    <div class="row" id="bonus_infor">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group" id="div_c_returnedPrice">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền trả khách hàng</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_returnedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-horizontal">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -539,7 +580,9 @@
                 $.get('LoadDetailConsignment', {consignmentID: consignmentID}, function (respone) {
                     $('#c_fullName').text(respone.name);
                     $('#c_productName').text(respone.product.name);
-                    $('#c_image').attr("src", respone.product.image.replace(/\\/g, '/'));
+                    $('#c_productCategory').text(respone.product.categoryName);
+                    $('#c_productBrand').text(respone.product.brand);
+                    //$('#c_image').attr("src", respone.product.image.replace(/\\/g, '/'));
 
                     $('#c_phone').text(respone.phone);
                     if (respone.email != null) {
@@ -554,16 +597,60 @@
                         $('#c_paypalAccount').text("Không có");
                     }
 
-
                     $('#c_createdDate').text(respone.createdDate);
-                    //$('#consignmentID').text(respone.consigmentID);
 
-                    //$('#reviewRequestDate').text(respone.createdDate);
-                    //$('#refuseReviewRequestDate').text(respone.name);
-                    //$('#reviewProductDate').text(respone.reviewProductDate);
-                    //$('#refuseReviewProductDate').text(respone.name);
-                    //$('#soldDate').text(respone.name);
-                    //$('#returnDate').text(respone.name);
+                    $("#c_reviewRequestDate").text('');
+                    $("#div_c_reviewRequestDate").attr("style", "display:none;");
+                    $("#div_c_refuseRequestDate").attr("style", "display:none;");
+                    $("#c_refuseRequestDate").text('');
+                    if ((respone.consignmentStatusID != 2 && respone.reviewRequestDate != "") || (respone.consignmentStatusID == 2 && respone.reviewProductDate != "")) {
+                        $("#div_c_reviewRequestDate").removeAttr("style");
+                        $("#div_c_reviewRequestDate").attr("style", "display:block;");
+                        $("#c_reviewRequestDate").text(respone.reviewRequestDate);
+                    } else {
+                        if ((respone.consignmentStatusID == 2 && respone.reviewRequestDate != "")) {
+                            $("#div_c_refuseRequestDate").removeAttr("style");
+                            $("#div_c_refuseRequestDate").attr("style", "display:block;");
+                            $("#c_refuseRequestDate").text(respone.reviewRequestDate);
+                        }
+                    }
+                    $("#div_c_reviewProductDate").attr("style", "display:none;");
+                    $("#c_reviewProductDate").text('');
+                    $("#c_publishOnWebDate").text('');
+                    $("#div_c_publishOnWebDate").attr("style", "display:none;");
+                    if (respone.consignmentStatusID != 2 && respone.reviewProductDate != "") {
+                        $("#div_c_reviewProductDate").removeAttr("style");
+                        $("#div_c_reviewProductDate").attr("style", "display:block;");
+                        $("#c_reviewProductDate").text(respone.reviewProductDate);
+                    } else {
+                        $("#c_refuseProductDate").text('');
+                        $("#div_c_refuseProductDate").attr("style", "display:none;");
+                        if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {
+                            $("#div_c_refuseProductDate").removeAttr("style");
+                            $("#div_c_refuseProductDate").attr("style", "display:block;");
+                            $("#c_refuseProductDate").text(respone.reviewProductDate);
+                        }
+                    }
+                    $("#c_publishOnWebDate").text('');
+                    $("#div_c_publishOnWebDate").attr("style", "display:none;");
+                    if (respone.raiseWebDate != "") {
+                        $("#div_c_publishOnWebDate").removeAttr("style");
+                        $("#div_c_publishOnWebDate").attr("style", "display:block;");
+                        $("#c_publishOnWebDate").text(respone.raiseWebDate);
+                    }
+                    $("#c_returnDate").text('');
+                    $("#div_c_returnDate").attr("style", "display:none;");
+                    if (respone.returnDate != "") {
+                        $("#div_c_returnDate").removeAttr("style");
+                        $("#div_c_returnDate").attr("style", "display:block;");
+                        $("#c_returnDate").text(respone.returnDate);
+                    }
+                    if (respone.returnPrice > 0) {
+                        $("#bonus_infor").show();
+                        $("#c_returnedPrice").text(respone.returnPrice);
+                    } else {
+                        $("#bonus_infor").hide();
+                    }
                 });
                 $('#detailModal').modal('show');
             });
