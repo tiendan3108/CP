@@ -1888,7 +1888,7 @@
                         {btnAction: "r_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
                             if (data == "success") {
-                                alert("Đã nhận từ chối yêu cầu");
+                                alert("Đã từ chối yêu cầu");
                                 location.reload();
                             } else if (data == "fail") {
                                 alert("Có lỗi xảy ra");
