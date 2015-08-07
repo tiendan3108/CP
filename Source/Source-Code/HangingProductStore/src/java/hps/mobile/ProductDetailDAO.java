@@ -128,12 +128,14 @@ public class ProductDetailDAO {
                     + "And Consignment.ConsignmentStatusID = ? "
                     + "And CAST (Consignment.AppointmentDate as DATE) = ? "
                     + "And Consignment.DeliveryMethod = ? "
+                    + "And Product.ProductStatusID = ? "
                     + "order by Consignment.AppointmentDate asc";
             stm = con.prepareStatement(query);
             stm.setInt(1, memberID);
             stm.setInt(2, ConsignmentStatus.ACCEPTED);
             stm.setString(3, newDate);
             stm.setInt(4, DeliveryMethod.BY_STOREOWNER);
+            stm.setInt(5, ProductStatus.NOT_AVAILABLE);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int productID = rs.getInt("ProductID");
