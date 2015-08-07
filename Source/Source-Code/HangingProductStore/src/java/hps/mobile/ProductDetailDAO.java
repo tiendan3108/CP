@@ -200,7 +200,7 @@ public class ProductDetailDAO {
             stm.setString(4, product.getCustomerName());
             stm.setString(5, product.getAddress());
             stm.setString(6, product.getPhone());
-            stm.setString(7, product.getPaypalAccountID());
+            stm.setString(7, product.getPaypalAccount());
             stm.setInt(8, product.getProductID());
             stm.executeUpdate();
             return true;
