@@ -596,7 +596,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
-                            <h2 class="modal-title" id="r_name"></h2>
+                            <h2 class="modal-title" id="r_name" style="font-weight: bold">Thông tin chi tiết</h2>
 
                         </div>
                         <div class="modal-body">
@@ -612,16 +612,16 @@
                                         <div class="form-horizontal">
                                             <!--                                        <table class="table table-hover" style="border: none">-->
                                             <div class="form-group">
-                                                <label for="txtFullName" class="col-md-3 col-sm-3 control-label" style="font-weight: bolder">Tên sản phẩm</label>
+                                                <label for="txtFullName" class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Tên sản phẩm</label>
                                                 <div class="col-md-9 col-sm-9">
                                                     <input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control" >
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bolder">Loại</label>
+                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Loại</label>
                                                 <div class="col-md-3 col-sm-3">
 
-                                                    <select id="r_category" name="txtCategoryID"  class="form-control" style="font-weight: bolder">
+                                                    <select id="r_category" name="txtCategoryID"  class="form-control">
                                                         <option value='' disabled selected style='display:none;'>Chọn...</option>
 
                                                         <c:forEach var="father" items="${fCate}">
@@ -644,12 +644,12 @@
                                                     </select>
 
                                                 </div>
-                                                <label class="col-md-2 col-sm-2 control-label" style="font-weight: bolder">Hãng</label>
+                                                <label class="col-md-2 col-sm-2 control-label" style="font-weight: bold">Hãng</label>
                                                 <div class="col-md-4 col-sm-4"><input id="r_brand" name="txtBrand" type="text" class="form-control" ></div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bolder">Mô tả</label>
+                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Mô tả</label>
                                                 <div class="col-md-9 col-sm-9">
                                                     <textarea id="r_description" name="txtDescription" class="form-control" maxlength="225" rows="3"></textarea>
 
@@ -702,9 +702,9 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-horizontal">
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Ngày ký gửi</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày ký gửi</label>
                                                 <div id='r_createdDate' class="col-md-4 col-sm-4" style="padding-top: 8px; font-size: 110%"></div>
-                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bolder">Đặc biệt</label>
+                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Đặc biệt</label>
                                                 <div class="col-md-1 col-sm-1 checkbox-list">
                                                     <label class="checkbox-inline" >
                                                         <input id="r_isSpecial" type="checkbox" name="txtIsSpecial" value="special"> 
@@ -720,11 +720,11 @@
                                                                                             </div>
                                                                                         </div>-->
                                             <div class="form-group" id="r_divFromDateToDate">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Ngày hẹn</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hẹn</label>
                                                 <div class="col-md-8 col-sm-8" id="r_fromDateToDate"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Ngày giao hàng</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày giao hàng</label>
                                                 <div class="col-md-8 col-sm-8" id="ar_divReceivedDateInput">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
@@ -754,7 +754,7 @@
 
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Cách giao hàng</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Cách giao hàng</label>
                                                 <div class="col-md-8 col-sm-8 radio-list">
                                                     <label class="radio-list" >
                                                         <input type="radio" name="r_rdDeliveryMethod" value="store"  checked>Cửa hàng đến nhận</label>
@@ -765,12 +765,12 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Giá tham khảo</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá tham khảo</label>
                                                 <div class="col-md-8 col-sm-8" id="r_price" style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
 
                                             <div class="form-group" id="ar_price" style="display: none;">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Giá thỏa thuận</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" > (Ngàn đồng)
 
@@ -782,31 +782,31 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-horizontal" id="r_divPersonalInfo">
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Họ tên</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Điện thoại</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Email</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Email</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="r_txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Địa chỉ</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Địa chỉ</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <textarea id="r_txtAddress" name="txtAddress" class="form-control" maxlength="225" rows="2"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Cách thanh toán</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Cách thanh toán</label>
                                                 <div class="col-md-8 col-sm-8 radio-list">
                                                     <label class="radio-list">
                                                         <input type="radio" name="r_rdPayment"  value="direct" checked> Tiền mặt </label>
@@ -815,7 +815,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" id="r_divCCNumber" style="display: none">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bolder">Mã tài khoản</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã tài khoản</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
                                                 </div>
@@ -855,7 +855,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Xác nhận từ chối</h4>
+                            <h4 class="modal-title" style="font-weight: bold">Xác nhận từ chối</h4>
                         </div>
                         <div class="modal-body" align="center">
                             <!--                            <div id="r_body_confirm">
@@ -907,7 +907,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Thông báo</h4>
+                        <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
                     </div>
                     <div class="modal-body" align="center">
 
@@ -935,7 +935,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
-                            <h2 class="modal-title" id="rc_name"></h2>
+                            <h3 class="modal-title" id="rc_name" style="font-weight: bold"></h3>
                             <div class="row">
                                 <div class="col-lg-3 col-md-3"><b>Email: </b><span id="rc_email"></span></div>
                                 <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="rc_phone"></span></div>
@@ -1039,7 +1039,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h2 class="modal-title">Tạo sản phẩm</h2>
+                            <h3 class="modal-title" style="font-weight: bold">Tạo sản phẩm</h3>
                         </div>
                         <div class="modal-body">
 
@@ -1472,7 +1472,7 @@
                     }
                     else {
                         if (data.consignmentStatusID == 1 || data.consignmentStatusID == 3) {
-                            $("#r_name").html("<small>Khách hàng: </small> " + data.name);
+                            //$("#r_name").html("<small>Khách hàng: </small> " + data.name);
                             $("#r_productName").val(data.product.name);
                             $('#r_category').val(data.product.categoryID).change();
                             $("#r_brand").val(data.product.brand);
@@ -1775,7 +1775,7 @@
                             consignmentTD.next().next().next().next().html("<font color='blue'>Cửa hàng đến nhận</font>");
                         }
 
-                        $("#r_name").html("<small>Khách hàng: </small> " + fullName);
+                        //$("#r_name").html("<small>Khách hàng: </small> " + fullName);
                         alert("Cập nhật thành công");
                     } else if (data == "fail") {
                         alert("Cập nhật thất bại");

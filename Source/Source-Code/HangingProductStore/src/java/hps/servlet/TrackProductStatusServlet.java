@@ -88,34 +88,34 @@ public class TrackProductStatusServlet extends HttpServlet {
                     dao.populateStoreOwner(consignment);
 //                    consignment.setPhone("0" + consignment.getPhone().substring(3));
 
-                    if (consignment.getConsignmentStatusID() == 6) {
-                        System.out.println("Raise On Web Date: " + consignment.getRaiseWebDate());
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        Date currentDate = new Date();
-                        try {
-                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
-
-                            long diff = (currentDate.getTime() - raiseWeb.getTime());
-                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
-
-                            int extraPayment = 0;
-                            if (consignment.getNegotiatedPrice() >= 1000000) {
-                                extraPayment = 10 * result;
-                            } else {
-                                extraPayment = 5 * result;
-                            }
-                            request.setAttribute("extraPayment", extraPayment);
-                            request.setAttribute("overDate", result);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+//                    if (consignment.getConsignmentStatusID() == 6) {
+//                        System.out.println("Raise On Web Date: " + consignment.getRaiseWebDate());
+//                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//                        Date currentDate = new Date();
+//                        try {
+//                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+//
+//                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+//                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+//
+//                            int extraPayment = 0;
+//                            if (consignment.getNegotiatedPrice() >= 1000000) {
+//                                extraPayment = 10 * result;
+//                            } else {
+//                                extraPayment = 5 * result;
+//                            }
+//                            request.setAttribute("extraPayment", extraPayment);
+//                            request.setAttribute("overDate", result);
+//                        } catch (ParseException ex) {
+//                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
                 //request.setAttribute("searchValue", searchValue);
             } else if (action.equals("cancel")) {
-                int consignmentID = Integer.parseInt(request.getParameter("consignmentID"));
+                String consignmentID = request.getParameter("consignmentID");
                 String searchValue = request.getParameter("searchValue");
                 dao.cancelConsignmentInProduct(consignmentID);
 
@@ -124,26 +124,26 @@ public class TrackProductStatusServlet extends HttpServlet {
                     dao.populateStoreOwner(consignment);
 //                    consignment.setPhone("0" + consignment.getPhone().substring(3));
 
-                    if (consignment.getConsignmentStatusID() == 6) {
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        Date currentDate = new Date();
-                        try {
-                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
-
-                            long diff = (currentDate.getTime() - raiseWeb.getTime());
-                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
-                            int extraPayment = 0;
-                            if (consignment.getNegotiatedPrice() >= 1000000) {
-                                extraPayment = 10 * result;
-                            } else {
-                                extraPayment = 5 * result;
-                            }
-                            request.setAttribute("extraPayment", extraPayment);
-                            request.setAttribute("overDate", result);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+//                    if (consignment.getConsignmentStatusID() == 6) {
+//                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//                        Date currentDate = new Date();
+//                        try {
+//                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+//
+//                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+//                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+//                            int extraPayment = 0;
+//                            if (consignment.getNegotiatedPrice() >= 1000000) {
+//                                extraPayment = 10 * result;
+//                            } else {
+//                                extraPayment = 5 * result;
+//                            }
+//                            request.setAttribute("extraPayment", extraPayment);
+//                            request.setAttribute("overDate", result);
+//                        } catch (ParseException ex) {
+//                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
@@ -158,27 +158,27 @@ public class TrackProductStatusServlet extends HttpServlet {
                     dao.populateStoreOwner(consignment);
 //                    consignment.setPhone("0" + consignment.getPhone().substring(3));
 
-                    if (consignment.getConsignmentStatusID() == 6) {
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        Date currentDate = new Date();
-                        try {
-                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
-
-                            long diff = (currentDate.getTime() - raiseWeb.getTime());
-                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
-                            System.out.println("Diffffffffffffff: " + result);
-                            int extraPayment = 0;
-                            if (consignment.getNegotiatedPrice() >= 1000000) {
-                                extraPayment = 10 * result;
-                            } else {
-                                extraPayment = 5 * result;
-                            }
-                            request.setAttribute("extraPayment", extraPayment);
-                            request.setAttribute("overDate", result);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+//                    if (consignment.getConsignmentStatusID() == 6) {
+//                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+//                        Date currentDate = new Date();
+//                        try {
+//                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
+//
+//                            long diff = (currentDate.getTime() - raiseWeb.getTime());
+//                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
+//                            System.out.println("Diffffffffffffff: " + result);
+//                            int extraPayment = 0;
+//                            if (consignment.getNegotiatedPrice() >= 1000000) {
+//                                extraPayment = 10 * result;
+//                            } else {
+//                                extraPayment = 5 * result;
+//                            }
+//                            request.setAttribute("extraPayment", extraPayment);
+//                            request.setAttribute("overDate", result);
+//                        } catch (ParseException ex) {
+//                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
@@ -191,7 +191,7 @@ public class TrackProductStatusServlet extends HttpServlet {
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
             } else if (action.equals("m_cancel")) {
-                int actionValue = Integer.parseInt(request.getParameter("actionValue"));
+                String actionValue = request.getParameter("actionValue");
                 String searchValue = request.getParameter("searchValue");
                 dao.cancelConsignmentInProduct(actionValue);
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);

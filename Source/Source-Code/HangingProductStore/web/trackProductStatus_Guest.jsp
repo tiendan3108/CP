@@ -223,13 +223,13 @@
 
                                             </c:when>
                                             <c:when test="${c.consignmentStatusID == 6}">
-                                                <tr>
+<!--                                                <tr>
                                                     <td>
                                                         <button type="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalExtend">
                                                             GIA HẠN
                                                         </button> 
                                                     </td>
-                                                </tr>
+                                                </tr>-->
                                             </c:when>
                                         </c:choose>
                                     </c:if>
@@ -262,7 +262,7 @@
                                     <div class="modal-footer">
                                         <form action="TrackProductStatus" method="POST">
                                             <button type="submit" name="btnAction" class="btn btn-primary" value="cancel">Đồng ý</button>
-                                            <input type="hidden" name="consignmentID" value="${c.product.productID}"/>
+                                            <input type="hidden" name="consignmentID" value="${c.consigmentID}"/>
                                             <input type="hidden" name="searchValue" value="${param.searchValue}"/>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                         </form>
@@ -275,7 +275,7 @@
                             <!-- Begin Modal -->
                             
                             
-                            <div id="modalExtend" class="modal fade">
+<!--                            <div id="modalExtend" class="modal fade">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -294,9 +294,9 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                             </form>
                                         </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
+                                    </div> /.modal-content 
+                                </div> /.modal-dialog 
+                            </div> /.modal -->
                         </c:if>
                     </c:if>
                 </div>
