@@ -87,7 +87,7 @@
                         <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
                             <li class="sidebar-toggler-wrapper">
                                 <div class="sidebar-toggler">
-                                </div>->
+                                </div>
                             </li>
                             <li class="start">
                                 <a href="ViewAccountServlet">
