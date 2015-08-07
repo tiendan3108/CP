@@ -53,8 +53,9 @@ import org.apache.http.message.BasicNameValuePair;
 public class JavaUltilities {
 
     //variable for sendSMS
-    public static final String ACCOUNT_SID = "AC7bdbf5d4a7def7c808c8a2d90c49b490";
-    public static final String AUTH_TOKEN = "5d878616bcd974db726aeff3f85d912c";
+    public static final String ACCOUNT_SID = "AC93bb8d956cfff9b8695cfb88a362e5d1";
+    public static final String AUTH_TOKEN = "72396ffe3df0bea88445e079528fe601";
+    public static final String PHONE_NUMBER = "+19282784562";
     //variable for sendEmail
     private static String USER_NAME = "HangingProductStore@gmail.com";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "hps123456"; // GMail password
@@ -92,7 +93,7 @@ public class JavaUltilities {
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("To", to));
-        params.add(new BasicNameValuePair("From", "+12568417673"));
+        params.add(new BasicNameValuePair("From", PHONE_NUMBER));
         params.add(new BasicNameValuePair("Body", content));
 
         MessageFactory messageFactory = client.getAccount().getMessageFactory();
