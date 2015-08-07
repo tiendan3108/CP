@@ -1505,7 +1505,7 @@
                             $("#refuse_consignmentID").val(data.consigmentID);
 
 
-                            if (data.consignmentStatusID == 1) {
+                            if (data.consignmentStatusID == 1 && $("#currentTab").val() == "request") {
 //                                $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
 //                                $("#r_ActionValue_confirm").val(data.consigmentID);
 //                                $("#ar_ActionValue_confirm").val("");
@@ -1535,7 +1535,7 @@
                                 $("#modalRequestAccept").modal("show");
 
                                 //$("#r_divPersonalInfo").show();
-                            } else if (data.consignmentStatusID == 3) {
+                            } else if (data.consignmentStatusID == 3 && $("#currentTab").val() == "accepted") {
                                 $('#ar_negotiatedPrice').val("");
 //                                $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
 //                                $("#ar_ActionValue_confirm").val(data.consigmentID);
@@ -1581,6 +1581,8 @@
                                 }
                                 $("#modalRequestAccept").modal("show");
 
+                            }else{
+                                $("#modalError").modal("show");
                             }
                         }
                         else {
