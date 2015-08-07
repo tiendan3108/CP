@@ -1658,7 +1658,8 @@
                 }
 
                 if (check) {
-                    $('form#r_form').submit();
+                    //$('form#r_form').submit();
+                    acceptRequest();
                 } else {
                     alert("Xin nhập đúng thông tin");
                 }
@@ -1811,7 +1812,7 @@
                             fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
                 function (data) {
                     if (data == "success") {
-
+                        alert("Đã nhận sản phẩm");
                         location.reload();
                     } else if (data == "fail") {
                         alert("Không thể nhận sản phẩm");
@@ -1829,6 +1830,7 @@
                         {btnAction: "ar_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
                             if (data == "success") {
+                                alert("Đã từ chối sản phẩm");
                                 location.reload();
                             } else if (data == "fail") {
                                 alert("Có lỗi xảy ra");
@@ -1839,7 +1841,43 @@
                         });
             }
             function acceptRequest() {
+                var consignmentID = $("#r_ActionValue").val();
+                var productName = $("#r_productName").val();
+                var categoryID = $("#r_category").val();
+                var brand = $("#r_brand").val();
+                var description = $("#r_description").val();
+                var appointmentDate = $("#r_receivedDate").val();
+                var hour = $("#r_hour").val();
+                var isSpecial = 0;
+                if ($("input#r_isSpecial").is(":checked")) {
+                    isSpecial = 1;
+                }
+                var fullName = $("#r_txtFullName").val();
+                var address = $("#r_txtAddress").val();
+                var phone = $("#r_txtPhone").val();
+                var email = $("#r_txtEmail").val();
+                var paypalAccount = $("#r_txtPaypalAccount").val();
+                if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
+                    paypalAccount = "";
+                }
+                var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
 
+                $.get('ConsignmentRequestReceive',
+                        {btnAction: 'r_accept', consignmentID: consignmentID, productName: productName,
+                            categoryID: categoryID, brand: brand, description: description,
+                            appointmentDate: appointmentDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
+                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
+                function (data) {
+                    if (data == "success") {
+                        alert("Đã chấp nhận yêu cầu");
+                        location.reload();
+                    } else if (data == "fail") {
+                        alert("Cập nhật thất bại");
+                    }
+                    else if (data == "error") {
+                        alert("Yêu cầu đã được xử lý");
+                    }
+                });
             }
             function refuseRequest() {
                 var consignmentID = $("#refuse_consignmentID").val();
@@ -1848,7 +1886,7 @@
                         {btnAction: "r_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
                             if (data == "success") {
-
+                                alert("Đã nhận từ chối yêu cầu");
                                 location.reload();
                             } else if (data == "fail") {
                                 alert("Có lỗi xảy ra");
