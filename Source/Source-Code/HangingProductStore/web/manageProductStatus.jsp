@@ -473,7 +473,7 @@
                                     <div class="row">
                                         <div class="col-sm-5 col-md-5">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i>Thông tin người kí gửi</i></b></span></h4>
+                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
 
                                                 <!--                                            <strong>Họ tên : </strong><span id="sold_fullName"></span><br>
                                                                                             <strong>Địa chỉ : </strong><span id="sold_address"></span><br>
@@ -508,7 +508,7 @@
                                         </div>
                                         <div class="col-sm-7 col-md-7">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i>Thông tin sản phẩm</i></b></span></h4>
+                                                <h4 align="center"><span><b><i><u>Thông tin sản phẩm</u></i></b></span></h4>
 
                                                 <!--                                            <strong>Tên sản phẩm : </strong><span id="sold_productName"></span><br>
                                                                                             <strong>Mã kí gửi : </strong><span id="sold_consignmentID"></span><br>
@@ -683,7 +683,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-horizontal">
 
-                                                <h4 align="center"><span><b><i>Thông tin người kí gửi</i></b></span></h4>
+                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
                                                 <!--                                            <strong>Họ tên : </strong><span id="cancel_fullName" style="font-weight: normal"></span><br>
                                                                                             <strong>Địa chỉ : </strong><span id="cancel_address"></span><br>
                                                                                             <strong>Số điện thoại : </strong><span id="cancel_phone"></span><br>
@@ -711,37 +711,37 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-horizontal">
-                                            <h4 align="center"><span><b><i>Thông tin hàng kí gửi</i></b></span></h4>
-                                            <!--                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
-                                                                                        <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
-                                                                                        <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
-                                                                                        <strong>Ngày nhận hàng : </strong><span id="cancel_consignedDate"></span><br>
-                                                                                        <strong>Ngày hủy kí gửi : </strong><span id="cancel_canceledDate"></span><br>-->
+                                                <h4 align="center"><span><b><i><u>Thông tin hàng kí gửi</u></i></b></span></h4>
+                                                <!--                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
+                                                                                            <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
+                                                                                            <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
+                                                                                            <strong>Ngày nhận hàng : </strong><span id="cancel_consignedDate"></span><br>
+                                                                                            <strong>Ngày hủy kí gửi : </strong><span id="cancel_canceledDate"></span><br>-->
 
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
-                                                <div class="col-md-8 col-sm-8" id="cancel_productName"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã hàng kí gửi</label>
-                                                <div class="col-md-8 col-sm-8" id="cancel_consignmentID"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá kí gửi</label>
-                                                <div class="col-md-8 col-sm-8" id="cancel_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã hàng kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_consignmentID"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày nhận hàng</label>
-                                                <div class="col-md-8 col-sm-8" id="cancel_consignedDate"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
-                                                <div class="col-md-8 col-sm-8" id="cancel_canceledDate"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày nhận hàng</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_consignedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="cancel_canceledDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -901,20 +901,70 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-sm-6" style="padding-left:45px">
-                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
-                                            <strong>Họ tên : </strong><span id="expired_fullName"></span><br>
-                                            <strong>Địa chỉ : </strong><span id="expired_address"></span><br>
-                                            <strong>Số điện thoại : </strong><span id="expired_phone"></span><br>
-                                            <strong>Email : </strong><span id="expired_email"></span>
+                                        <div class="col-sm-6">
+                                            <!--                                            <h4><span><u>Thông tin người kí gửi</u></span></h4>
+                                                                                        <strong>Họ tên : </strong><span id="expired_fullName"></span><br>
+                                                                                        <strong>Địa chỉ : </strong><span id="expired_address"></span><br>
+                                                                                        <strong>Số điện thoại : </strong><span id="expired_phone"></span><br>
+                                                                                        <strong>Email : </strong><span id="expired_email"></span>-->
+                                            <div class="form-horizontal">
+
+                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_fullName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Địa chỉ</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_address"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_phone"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Email</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_email"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6" style="padding-right:45px">
-                                            <h4><span><u>Thông tin hàng kí gửi</u></span></h4>
-                                            <strong>Tên sản phẩm : </strong><span id="expired_productName"></span><br>
-                                            <strong>Mã hàng kí gửi : </strong><span id="expired_consignmentID"></span><br>
-                                            <strong>Ngày kí gửi : </strong><span id="expired_consignedDate"></span><br>
-                                            <strong>Giá thỏa thuận (Ngàn đồng): </strong><span id="expired_negotiatedPrice"></span><br>
-                                            <strong>Số ngày quá hạn: </strong><span id="expired_days"></span> ngày
+                                        <div class="col-sm-6">
+                                            <div class="form-horizontal">
+                                                <h4 align="center"><span><b><i><u>Thông tin hàng kí gửi</u></i></b></span></h4>
+                                                <!--                                            <strong>Tên sản phẩm : </strong><span id="expired_productName"></span><br>
+                                                                                            <strong>Mã hàng kí gửi : </strong><span id="expired_consignmentID"></span><br>
+                                                                                            <strong>Ngày kí gửi : </strong><span id="expired_consignedDate"></span><br>
+                                                                                            <strong>Giá thỏa thuận (Ngàn đồng): </strong><span id="expired_negotiatedPrice"></span><br>
+                                                                                            <strong>Số ngày quá hạn: </strong><span id="expired_days"></span> ngày-->
+                                                
+                                                 <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã hàng kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_consignmentID"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày kí gửi</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_consignedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Số ngày quá hạn</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_days"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1433,7 +1483,7 @@
                         $("#expired_extendConsignmentID").val(consignmentID);
                         $("#expired_receiveConsignmentID").val(consignmentID);
                         $("#expired_consignedDate").text(response.reviewProductDate);
-                        $("#expired_negotiatedPrice").text(response.negotiatedPrice);
+                        $("#expired_negotiatedPrice").text(response.negotiatedPrice + " (Ngàn đồng)");
                         $("#expired_days").text(response.expiredDays);
                         $("#expired_fee").val(response.expiredFee + response.remainExtendFee);
                     });
