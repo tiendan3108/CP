@@ -486,7 +486,7 @@
                                             <strong>Giá sản phẩm (Ngàn đồng): </strong><span id="sold_negotiatedPrice"></span><br>
                                             <strong>Giá bán (Ngàn đồng): </strong><span id="sold_sellingPrice"></span><br>
                                             <strong>Ngày kí gửi : </strong><span id="sold_receivedDate"></span><br>
-                                            <strong>Tiền trả khách hàng (Ngàn đồng): </strong><input type="text" id="sold_returnPrice" disabled="disabled">
+                                            <strong>Tiền trả khách hàng (Ngàn đồng): </strong><input type="text" id="sold_returnPrice" style="width: 80px">
                                         </div>
                                     </div>
                                 </div>
@@ -557,15 +557,15 @@
                     </div>
                     <!-- ORDERED MODAL END-->
                     <!-- CONFIRM ORDERED MODAL BEGIN-->
-                    <div class="modal fade bs-example-modal-lg" id="confirmOrderedModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                    <div class="modal fade bs-example-modal-sm" id="confirmOrderedModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
                             <form action="OrderProduct" method="POST">
-                                <div class="modal-content">
+                                <div class="modal-content" style="width: 500px">
                                     <div class="modal-header">
                                         <h3>Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input id="sellingPrice" type="text" name="txtSellingPrice" value ="" style="width: 300px;">
+                                        <label class="control-label">Giá bán (Ngàn đồng):</label><input id="sellingPrice" type="text" name="txtSellingPrice" value ="" style="width: 80px;">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtOrderID" id="order_OrderID">
@@ -782,15 +782,15 @@
                     </div>
                     <!-- EXPIRED MODAL END-->
                     <!-- CONFIRM EXTEND MODAL BEGIN-->
-                    <div class="modal fade bs-example-modal-lg" id="confirmExtendModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                    <div class="modal fade bs-example-modal-sm" id="confirmExtendModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
                             <form action="ExtendProduct" method="POST">
-                                <div class="modal-content">
+                                <div class="modal-content" style="width: 500px">
                                     <div class="modal-header">
                                         <h3>Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
-                                        Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là <span id="expired_fees"></span> ngàn đồng.<br>
+                                        Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là <input type="text" name="txtExpiredFee" id="expired_fees_1" value="" style="width: 60px"> ngàn đồng.<br>
                                         Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay. Bạn có chắc chắn muốn gia hạn sản phẩm này?
                                     </div>
                                     <div class="modal-footer">
@@ -805,15 +805,15 @@
                     </div>
                     <!-- CONFIRM EXTEND MODAL END-->
                     <!-- CONFIRM RECEIVE MODAL BEGIN-->
-                    <div class="modal fade bs-example-modal-lg" id="confirmReceiveModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                    <div class="modal fade bs-example-modal-sm" id="confirmReceiveModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
-                                <div class="modal-content">
+                                <div class="modal-content" style="width: 500px">
                                     <div class="modal-header">
                                         <h3>Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee">
+                                        <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee" style="width: 80px">
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
@@ -949,9 +949,9 @@
                     </div>
                     <!-- CANCEL PRODUCT ONWEB MODAL END-->
                     <!-- CONFIRM CANCEL PRODUCT ONWEB MODAL BEGIN-->
-                    <div class="modal fade bs-example-modal-lg" id="confirmOnWebModal" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
+                    <div class="modal fade bs-example-modal-sm" id="confirmOnWebModal" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice();">
                                     <div class="modal-header">
                                         <h3>Hủy kí gửi</h3>

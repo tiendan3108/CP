@@ -1228,7 +1228,7 @@ public class ConsignmentDAO {
                 consignmentList.add(rs.getString("ConsignmentID"));
                 String consignmentID = rs.getString("ConsignmentID");
                 String fullName = rs.getString("FullName");
-                String phone = convertPhone(rs.getString("Phone"));
+                String phone = (rs.getString("Phone"));
                 String email = rs.getString("Email");
                 ConsignmentDTO item = new ConsignmentDTO();
                 item.setConsigmentID(consignmentID);
@@ -1314,12 +1314,13 @@ public class ConsignmentDAO {
             conn = DBUltilities.makeConnection();
             String query = "";
             if (productStatus == ProductStatus.CANCEL) {
-                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ? OR ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate";
+                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ? OR ProductStatusID = ?) AND ConsignmentStatusID IN (?,?) ORDER BY ReviewProductDate";
                 stmC = conn.prepareStatement(query);
                 stmC.setInt(1, storeOwnerID);
                 stmC.setInt(2, ProductStatus.NOT_YET_RECEIVE);
                 stmC.setInt(3, ProductStatus.CANCEL);
                 stmC.setInt(4, ConsignmentStatus.RECEIVED);
+                stmC.setInt(5, ConsignmentStatus.CANCEL);
             } else {
                 query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate";
                 stmC = conn.prepareStatement(query);
