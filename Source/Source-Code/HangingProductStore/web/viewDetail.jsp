@@ -20,7 +20,7 @@
     </jsp:attribute>
     <jsp:body>  
         <c:set var="account" value="${sessionScope.ACCOUNT}"/>
-        <div id="wrapper">
+        <div id="wrapper" style="width: 90%">
             <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row margin-bottom-40">
                 <!-- BEGIN SIDEBAR -->
@@ -103,7 +103,7 @@
                 <c:if test="${empty account || account.role == 'member'}">
                     <c:set var="similarProducts" value="${requestScope.SIMILARPRODUCT}"/>
                     <div class="row margin-bottom-40" style="margin-top: 600px">
-                        <div class="col-md-12 col-sm-12">
+                        <div class="col-md-12 col-sm-12" style="margin-left: 20px">
                             <h2>Sản phẩm tương tự</h2>
                             <div class="owl-carousel owl-carousel4">
                                 <c:if test="${not empty similarProducts}">
@@ -113,13 +113,12 @@
                                                 <div class="pi-img-wrapper">
                                                     <img src='${productItem.image}' class="imgCrop3">
                                                 </div>
-                                                <h3 style="color: black">${productItem.name}</h3>
+                                                <h3 style="color: black;height:90px">${productItem.name}</h3>
 
                                                 <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                                     <c:param name="productID" value="${productItem.productID}"/>
                                                 </c:url>
                                                 <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi Tiết</a>
-                                                <div class="sticker sticker-new"></div>
                                             </div>
                                         </div>
                                     </c:forEach>

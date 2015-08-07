@@ -14,7 +14,7 @@
     <jsp:attribute name="extraNavigationContent">
     </jsp:attribute>
     <jsp:body>      
-        <div id="wrapper">
+        <div id="wrapper" style="width: 90%">
             <c:set var="categories" value="${requestScope.CATEGORY}"/>
             <div class="row margin-bottom-40" style="z-index: 5">          
                 <div class="sidebar col-md-3 col-sm-5">  
@@ -67,12 +67,12 @@
                         </c:if>
                         <c:if test="${not empty data}">
                             <c:forEach var="item" items="${data}">
-                                <div class="col-md-4 col-sm-6 col-xs-12" style="height:450px">
-                                    <div class="product-item">
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="product-item" style="height:370px">
                                         <div class="pi-img-wrapper">
                                             <img src="${item.image}" class="imgCrop2">
                                         </div>
-                                        <h3>${item.name}</h3>
+                                            <h3 style="height:73px">${item.name}</h3>
                                         <a href="ViewProductDetailServlet?productID=${item.productID}" class="btn btn-default add2cart">Xem Chi tiết</a>
                                     </div>
                                 </div>

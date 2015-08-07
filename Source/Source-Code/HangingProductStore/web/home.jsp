@@ -14,7 +14,7 @@
     <jsp:attribute name="extraNavigationContent">
     </jsp:attribute>
     <jsp:body>
-        <div id="wrapper">
+        <div id="wrapper" style="width: 90%">
             <c:set var="mess" value="${requestScope.ERROR}"/>
             <c:if test="${not empty mess}">
                 <div class="modal face" id="messModal">   
@@ -87,17 +87,16 @@
                             <div class="owl-carousel owl-carousel4">
                                 <c:forEach var="item" items="${data}">     
                                     <div>
-                                        <div class="product-item">
+                                        <div class="product-item" style="height: 350px">
                                             <div class="pi-img-wrapper">
                                                 <img src='${item.image}' class="imgCrop">
                                             </div>
-                                            <h3 style="color: black">${item.name}</h3>
+                                            <h3 style="color: black;height: 80px">${item.name}</h3>
 
                                             <c:url var="viewDetail" value = "ViewProductDetailServlet">
                                                 <c:param name="productID" value="${item.productID}"/>
                                             </c:url>
                                             <a href="${viewDetail}" class="btn btn-default add2cart">Xem Chi tiết</a>
-                                            <div class="sticker sticker-new"></div>
                                         </div>
                                     </div>
                                 </c:forEach>    
@@ -111,11 +110,11 @@
                             <c:set var="seasonItems" value="${requestScope.SEASONDATA}"/>
                             <c:if test="${not empty seasonItems}">
                                 <c:forEach items="${seasonItems}" var="seasonItem">
-                                    <div class="product-item">
+                                    <div class="product-item" style="height:350px">
                                         <div class="pi-img-wrapper">
                                             <img src="${seasonItem.image}" class="imgCrop">
                                         </div>
-                                        <h3 style="color: black">${seasonItem.name}</h3>
+                                        <h3 style="color: black;height: 80px">${seasonItem.name}</h3>
                                         <c:url var="viewDetail2" value = "ViewProductDetailServlet">
                                             <c:param name="productID" value="${seasonItem.productID}"/>
                                         </c:url>
