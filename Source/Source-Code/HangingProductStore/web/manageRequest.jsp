@@ -2011,10 +2011,10 @@
                         var startDate = $('#fromDate').val();
                         var endDate = $('#toDate').val();
                         if (startDate == "" || endDate == "") {
-
-
                             return true;
-                        }else{
+                            
+                        }
+                        else{
                             
                             if ($("#currentTab").val() == "accepted") {
                                 var date = data[5].substring(6);
@@ -2024,16 +2024,24 @@
                                 } else {
                                     return false;
                                 }
-                            } else if($("#currentTab").val() == "request"){
-                                var date = data[5].substring(0, 10);
+                            } 
+                            else if($("#currentTab").val() == "request"){
+                                var fromDate = data[5].substring(0, 10);
+                                var toDate = data[5].substring(12, 22);
                                 
-                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                                if (compareDate(fromDate, startDate) >= 0 && compareDate(fromDate, endDate) <= 0)
                                 {
                                     return true;
-                                } else {
+                                }
+                                else if(compareDate(toDate, startDate) >= 0 && compareDate(toDate, endDate) <= 0)
+                                {
+                                    return true;
+                                }
+                                else 
+                                {
                                     return false;
                                 }
-                                return true;
+                                
                             }
                         }
 
