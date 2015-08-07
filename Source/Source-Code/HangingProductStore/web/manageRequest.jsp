@@ -197,7 +197,21 @@
                                     </div>
 
                                     <br/>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
 
+                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                    <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                        <input type="text" class="form-control" id="daterangeRequest">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <table id="requestTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -285,21 +299,21 @@
                                         </div>
                                     </div>
                                     <br/>
-<!--                                    <div class="row">
+                                    <div class="row">
                                         <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
                                             <div class="form-horizontal">
                                                 <div class="form-group">
 
-                                                    <label for="txtFullName" class=" col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
                                                     <div class="col-md-5 col-sm-5 input-daterange">
 
-                                                        <input type="text" class="form-control" id="daterangeRequest">
+                                                        <input type="text" class="form-control" id="daterangeAccepted">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                    </div>-->
+                                    </div>
                                     <table id="acceptedTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -1001,28 +1015,34 @@
                             <form id="addConsignment_form" action="AddConsignment" method="POST" enctype="multipart/form-data">
                                 <div class="row">    
 
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-8 col-sm-8">
                                         <div class="form-horizontal">
 
                                             <div class="form-group">
-                                                <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font color="red">*</font></label> <!--<span class="required">*</span> -->
-                                                <div class="col-md-8 col-sm-8">
+                                                <label for="txtProductName" class="col-md-3 col-sm-3 control-label">Tên sản phẩm<font color="red">*</font></label> <!--<span class="required">*</span> -->
+                                                <div class="col-md-9 col-sm-9">
                                                     <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="100" />
                                                     <p class="help-block" id="erProductName">  </p>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số </label>
-                                                <div class="col-md-5 col-sm-6">
+                                                <label for="txtSerial" class="col-md-3 col-sm-3 control-label">Mã số</label>
+                                                <div class="col-md-4 col-sm-4">
                                                     <input id="addConsignment_txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" />
                                                     <p class="help-block" id="erSerialNumber"> </p>
+                                                </div>
+                                                <label class="col-md-2 col-sm-2 control-label">Đặc biệt</label>
+                                                <div class="col-md-2 col-sm-2 checkbox-list">
+                                                    <label class="checkbox-inline" >
+                                                        <input type="checkbox" name="txtIsSpecial" value="special"> 
+                                                    </label>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4">Loại <font color="red">*</font></label>
-                                                <div class="col-md-5 col-sm-6">
+                                                <label class="control-label col-md-3 col-sm-3">Loại <font color="red">*</font></label>
+                                                <div class="col-md-4 col-sm-4">
                                                     <select id="addConsignment_txtCategoryID" name="txtCategoryID"  class="form-control" >
                                                         <option value='' disabled selected style='display:none;'>Chọn...</option>
 
@@ -1046,11 +1066,8 @@
                                                     <span class="help-block" id="erCategoryID">
                                                     </span>
                                                 </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4">Hãng</label>
-                                                <div class="col-md-5 col-sm-6">
+                                                <label class="control-label col-md-1 col-sm-1">Hãng</label>
+                                                <div class="col-md-4 col-sm-4">
                                                     <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
 
                                                     <span class="help-block" id="erBrand">
@@ -1058,11 +1075,21 @@
                                                 </div>
                                             </div>
 
+                                            <!--                                            <div class="form-group">
+                                                                                            <label class="control-label col-md-3 col-sm-3">Hãng</label>
+                                                                                            <div class="col-md-3 col-sm-3">
+                                                                                                <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+                                            
+                                                                                                <span class="help-block" id="erBrand">
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>-->
+
 
                                             <div class="form-group">
-                                                <label  class="col-md-4 col-sm-4 control-label"> Mô tả </label>
-                                                <div class="col-md-8 col-sm-8">
-                                                    <textarea id="addConsignment_txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="6" placeholder="" value="${product.description}"/>${product.description}</textarea>
+                                                <label  class="col-md-3 col-sm-3 control-label"> Mô tả </label>
+                                                <div class="col-md-9 col-sm-9">
+                                                    <textarea id="addConsignment_txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="5" placeholder="" value="${product.description}"/>${product.description}</textarea>
                                                     <span class="help-block" id="erDescription">
                                                     </span>
                                                 </div>
@@ -1071,14 +1098,14 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-4 col-sm-4">
                                         <div class="form-horizontal">
                                             <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4">Hình ảnh <font color="red">*</font></label>
-                                                <div class="col-md-8 col-sm-8" align="center">
+                                                <label class="control-label col-md-1 col-sm-1"><font color="red"></font></label>
+                                                <div class="col-md-10 col-sm-10" align="center">
 
                                                     <div id="addConsignment_divImage" class="fileinput fileinput-new" data-provides="fileinput">
-                                                        <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
+                                                        <div class="fileinput-new thumbnail" style="max-width: 250px; max-height: 200px;">
                                                             <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
                                                         </div>
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
@@ -1105,14 +1132,13 @@
 
                                             <div class="form-group">
                                                 <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
-                                                <div class="col-md-5 col-sm-6">
+                                                <div class="col-md-7 col-sm-7">
                                                     <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
                                                         <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
                                                         <span class="input-group-btn">
                                                             <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
                                                         </span>
                                                     </div>
-                                                    <!--                                                            <input id="addConsignment_txtDate" type="text" class="form-control" name="txtDate"> -->
                                                     <span class="help-block" id="erDate"> </span>
                                                 </div>
                                             </div>
@@ -1127,7 +1153,7 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-horizontal">
                                             <div class="form-group">
-                                                <label for="addConsignment_txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên <font color="red">*</font></label>
+                                                <label for="addConsignment_txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên<font color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="addConsignment_txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="">
 
@@ -1146,7 +1172,7 @@
 
 
                                             <div class="form-group">
-                                                <label for="addConsignment_txtPhone" class="col-md-4 col-sm-4 control-label"> Điện thoại <font color="red">*</font> </label>
+                                                <label for="addConsignment_txtPhone" class="col-md-4 col-sm-4 control-label">Điện thoại<font color="red">*</font> </label>
                                                 <div class="col-md-5 col-sm-7">
                                                     <input type="text" id="addConsignment_txtPhone" name="txtPhone" class="form-control"/>
                                                     <p class="help-block" id="erPhone"></p>
@@ -1155,7 +1181,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="addConsignment_txtEmail" class="col-md-4 col-sm-4 control-label">Email </label>
+                                                <label for="addConsignment_txtEmail" class="col-md-4 col-sm-4 control-label">Email</label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com">
                                                     <p class="help-block" id="erEmail"></p>
@@ -1168,13 +1194,13 @@
                                     <div class="col-md-6 col-sm-6">
                                         <div class="form-horizontal">
                                             <div class="form-group">
-                                                <label for="" class="col-md-4 col-sm-4 control-label"> Cách thanh toán </label>
+                                                <label for="" class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
 
                                                 <div class="radio-list col-md-8 col-sm-8">
 
-                                                    <label class="radio-list">
+                                                    <label class="radio-inline">
                                                         <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                    <label class="radio-list">
+                                                    <label class="radio-inline">
                                                         <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
 
 
@@ -1182,7 +1208,7 @@
                                                 </div>
                                             </div>
                                             <div id="addConsignment_divCCNumber" class="form-group" style="display: none" >
-                                                <label class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                <label class="col-md-4 col-sm-4 control-label">Mã tài khoản<font color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="addConsignment_txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder=""/>
 
@@ -1195,7 +1221,7 @@
                                                 <div class="col-md-5 col-sm-6">
                                                     <input id="addConsignment_txtNegotiatedPrice" name="txtNegotiatedPrice" type="text" class="form-control" maxlength="50"/>
 
-                                                    <span class="help-block" id="erNegotiatedPrice">
+                                                    <span class="help-block" id="erNegotiatedPrice">(Ngàn đồng)
                                                     </span>
                                                 </div>
                                             </div>
@@ -1318,18 +1344,32 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
+                if (currentTab == "accepted") {
+//                    var date = new Date();
+//                    date.setDate(date.getDate() - 1);
+//                    $('#fromDate').val(formatDate(date));
+//                    date.setDate(date.getDate() + 2);
+//                    $('#toDate').val(formatDate(date));
 
-//                var date = new Date();
-//                date.setDate(date.getDate() - 1);
-//                $('#fromDate').val(formatDate(date));
-//                date.setDate(date.getDate() + 2);
-//                $('#toDate').val(formatDate(date));
-//
-//                $('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
-//                //alert($('#fromDate').val() + " - " + $('#toDate').val());
-//                var table = $('#acceptedTable').DataTable();
-//
-//                table.draw();
+                    //$('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
+                    //alert($('#fromDate').val() + " - " + $('#toDate').val());
+                    var table = $('#acceptedTable').DataTable();
+
+                    table.draw();
+
+                } else if (currentTab == "request") {
+//                    var date = new Date();
+//                    date.setDate(date.getDate() - 1);
+//                    $('#fromDate').val(formatDate(date));
+//                    date.setDate(date.getDate() + 2);
+//                    $('#toDate').val(formatDate(date));
+
+                    //$('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
+                    //alert($('#fromDate').val() + " - " + $('#toDate').val());
+                    var table = $('#requestTable').DataTable();
+                    table.draw();
+                }
+
 
             });
             $(function () {
@@ -1445,8 +1485,8 @@
                             }
                             //$("#r_divPersonalInfo").hide();
                             $("#refuse_consignmentID").val(data.consigmentID);
-                            
-                            
+
+
                             if (data.consignmentStatusID == 1) {
 //                                $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
 //                                $("#r_ActionValue_confirm").val(data.consigmentID);
@@ -1934,39 +1974,72 @@
                 return [day, month, year].join('-');
             }
 
-//            $(document).ready(function () {
-//                $('#daterangeRequest').daterangepicker({
-//                    format: "DD/MM/YYYY",
-//                    startDate: moment(),
-//                    endDate: moment(),
-//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-//                });
-//            });
-//            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
-//                var table = $('#acceptedTable').DataTable();
-//                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
-//                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
-//                $('#fromDate').val(startDate);
-//                $('#toDate').val(endDate);
-//                table.draw();
-//            });
-//            $.fn.dataTable.ext.search.push(
-//                    function (settings, data, dataIndex) {
-//                        var startDate = $('#fromDate').val();
-//                        var endDate = $('#toDate').val();
-//                        if ($("#currentTab").val() == "accepted") {
-//                            var date = data[5].substring(6);
-//                            if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
-//                            {
-//                                return true;
-//                            } else {
-//                                return false;
-//                            }
-//                        }
-//
-//
-//                    }
-//            );
+            $(document).ready(function () {
+                $('#daterangeAccepted').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+
+                $('#daterangeRequest').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+            });
+            $('#daterangeAccepted').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#acceptedTable').DataTable();
+                var startDate = $('#daterangeAccepted').data('daterangepicker').startDate.format('DD/MM/YYYY');
+                var endDate = $('#daterangeAccepted').data('daterangepicker').endDate.format('DD/MM/YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#requestTable').DataTable();
+                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
+                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+
+            $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var startDate = $('#fromDate').val();
+                        var endDate = $('#toDate').val();
+                        if (startDate == "" || endDate == "") {
+
+
+                            return true;
+                        }else{
+                            
+                            if ($("#currentTab").val() == "accepted") {
+                                var date = data[5].substring(6);
+                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                                {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else if($("#currentTab").val() == "request"){
+                                var date = data[5].substring(0, 10);
+                                
+                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                                {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                                return true;
+                            }
+                        }
+
+
+                    }
+            );
 
             function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
                 //source = source.substring(6);

@@ -420,7 +420,7 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "SELECT C.*"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE (C.ConsignmentStatusID = 1 OR C.ConsignmentStatusID = 3) AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
+                    + " WHERE C.NegotiatedPrice IS NULL AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
                     + " ORDER BY C.CancelDate DESC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
@@ -860,7 +860,7 @@ public class ConsignmentDAO {
             stm.setInt(1, productID);
             int result = stm.executeUpdate();
             if (result > 0) {
-                sql = "UPDATE Consignment SET CancelDate = GETDATE(), CancelFee = (SELECT ((NegotiatedPrice)*15/100) FROM Consignment WHERE ProductID = ?) "
+                sql = "UPDATE Consignment SET ConsignmentStatusID = 7,CancelDate = GETDATE(), CancelFee = (SELECT ((NegotiatedPrice)*15/100) FROM Consignment WHERE ProductID = ?) "
                         + " WHERE ProductID = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, productID);

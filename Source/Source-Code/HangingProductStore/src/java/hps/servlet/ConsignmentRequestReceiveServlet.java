@@ -150,32 +150,32 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         System.out.println("Send notification");
                     }
 
-                    ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                    //ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                     //send sms and email
-                    if (consignment != null) {
+                    //if (consignment != null) {
                         session.removeAttribute("consignment_details");
-                        String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã được chấp nhận.\n "
-                                + "Cửa hàng sẽ đến nhận hàng vào ngày " + consignment.getAppointmentDate() + " lúc " + consignment.getHour() + ".";
+                        String msg = "Yêu cầu ký gửi với mã số " + consignmentID + " của bạn đã được chấp nhận.\n "
+                                + "Cửa hàng sẽ đến nhận hàng vào ngày " + preAppointmentDate + " lúc " + hour + ".";
                         JavaUltilities java = new JavaUltilities();
-                        if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
+                        if (phone != null && phone.length() > 0) {
 
                             try {
-                                java.sendSMS(msg, consignment.getPhone());
+                                java.sendSMS(msg, phone);
                             } catch (Exception e) {
                                 System.out.println("CANNOT send sms accept consignment request.");
                                 e.printStackTrace();
                             }
                         }
 
-                        if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
+                        if (email != null && email.length() > 0) {
                             try {
-                                java.sendEmail(consignment.getEmail(), "[HPS] Chấp nhận yêu cầu ký gửi", msg);
+                                java.sendEmail(email, "[HPS] Chấp nhận yêu cầu ký gửi", msg);
                             } catch (Exception e) {
                                 System.out.println("CANNOT send email accept consignment request.");
                                 e.printStackTrace();
                             }
                         }
-                    }
+                    //}
                     currentTab = "request";
 
                 } else if (action.equals("r_refuse")) {
@@ -196,7 +196,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
                                     try {
-                                        java.sendSMS(msg, consignment.getPhone());
+                                        java.sendSMS(msg, "+84" + consignment.getPhone().substring(1));
                                     } catch (Exception e) {
                                         System.out.println("CANNOT send sms refuse consignment request.");
                                         e.printStackTrace();
@@ -273,14 +273,14 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                             //send sms and email
                             if (consignment != null) {
-                                session.removeAttribute("consignment_details");
+                                //session.removeAttribute("consignment_details");
                                 String msg = "San pham voi ma so " + consignment.getConsigmentID() + " cua ban da duoc nhan.";
                                 JavaUltilities java = new JavaUltilities();
 
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
                                     try {
-                                        java.sendSMS(msg, consignment.getPhone());
+                                        java.sendSMS(msg, "+84" + consignment.getPhone().substring(1));
                                     } catch (Exception e) {
                                         System.out.println("CANNOT send sms accept product.");
                                         e.printStackTrace();
@@ -328,7 +328,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
                                     try {
-                                        java.sendSMS(msg, consignment.getPhone());
+                                        java.sendSMS(msg, "+84" + consignment.getPhone().substring(1));
                                     } catch (Exception e) {
                                         System.out.println("CANNOT send sms refuse product.");
                                         e.printStackTrace();

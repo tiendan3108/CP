@@ -77,6 +77,7 @@ public class AddConsignmentServlet extends HttpServlet {
             String paypalAccount = "";
             String paymentMethod = "";
             String searchValue = "";
+            int isSpecial = 0;
 
             JavaUltilities ulti = new JavaUltilities();
             AccountDTO account = (AccountDTO) session.getAttribute("ACCOUNT");
@@ -151,6 +152,12 @@ public class AddConsignmentServlet extends HttpServlet {
                             String negotiate = item.getString();
                             negotiatedPrice = Float.parseFloat(negotiate) * 1000;
                             break;
+                            case "txtIsSpecial":
+                            String special = item.getString();
+                            if(special != null){
+                                isSpecial = 1;
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -219,6 +226,7 @@ public class AddConsignmentServlet extends HttpServlet {
 
             product.setImage(imagePath);
             product.setProductStatusID(2);
+            product.setIsSpecial(isSpecial);
             
             ProductDAO productDAO = new ProductDAO();
             ConsignmentDAO consignmentDAO = new ConsignmentDAO();
