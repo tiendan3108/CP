@@ -215,7 +215,7 @@
                                                     <td>${item.consigmentID}</td>
                                                     <td>${item.name}</td>
                                                     <td>${item.createdDate}</td>
-                                                    
+
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${item.product.productStatusID == 6}">
@@ -277,8 +277,8 @@
                                     <div class="row">
 
 
-                                        <!-- BEGIN PRODUCT DESCRIPTION -->
-                                        <div class="col-lg-7 col-md-7">
+                                        <!-- BEGIN LEFT TAB -->
+                                        <div class="col-lg-6 col-md-6">
 
                                             <!--table-striped-->
                                             <div class="form-horizontal">
@@ -287,6 +287,16 @@
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
                                                     <div class="col-md-8 col-sm-8" id="c_productName"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <!-- END LEFT TAB -->
+
+                                        <!-- BEGIN RIGHT TAB -->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-horizontal">
 
                                                 <div class="form-group">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Người ký gửi</label>
@@ -308,42 +318,43 @@
                                                     <div class="col-md-8 col-sm-8" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
+
                                             </div>
 
-                                        </div>
-                                        <!-- END PRODUCT DESCRIPTION -->
-
-                                        <!-- BEGIN CAROUSEL -->
-                                        <div class="col-lg-4 col-md-4 col-lg-offset-1 col-md-offset-1 front-carousel">
-
-                                            <div class="carousel slide" id="myCarousel">
-                                                <!-- Carousel items -->
-                                                <div class="carousel-inner">
-                                                    <div class="item active">
-                                                        <img id="c_image" alt="" style="max-height: 200px">
-                                                        <div class="carousel-caption">
-                                                            <p></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                         </div>
-                                        <!-- END CAROUSEL -->
+                                        <!-- END RIGHT TAB -->
 
 
                                     </div>
                                     <hr/>
                                     <div class="row">
+                                        <!--BEGIN LEFT TAB -->
                                         <div class="col-lg-6 col-md-6">
                                             <div class="form-horizontal">
+
                                                 <div class="form-group" id="div_c_createdDate">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày ký gửi</label>
                                                     <div class="col-md-8 col-sm-8" id="c_createdDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
+
+
                                             </div>
                                         </div>
+                                        <!--END LEFT TAB -->
+                                        
+                                        <!--BEGIN RIGHT TAB -->
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group" id="div_c_cancelDate">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày hủy</label>
+                                                    <div class="col-md-8 col-sm-8" id="c_cancelDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
 
+                                            </div>
+
+                                        </div>
+                                        <!--END RIGHT TAB -->
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -529,24 +540,24 @@
                     $('#c_fullName').text(respone.name);
                     $('#c_productName').text(respone.product.name);
                     $('#c_image').attr("src", respone.product.image.replace(/\\/g, '/'));
-                    
+
                     $('#c_phone').text(respone.phone);
-                    if(respone.email != null){
+                    if (respone.email != null) {
                         $('#c_email').text(respone.email);
-                    }else{
+                    } else {
                         $('#c_email').text("Không có");
                     }
-                    
-                    if(respone.paypalAccount != null){
+
+                    if (respone.paypalAccount != null) {
                         $('#c_paypalAccount').text(respone.paypalAccount);
-                    }else{
+                    } else {
                         $('#c_paypalAccount').text("Không có");
                     }
-                    
-                    
+
+
                     $('#c_createdDate').text(respone.createdDate);
                     //$('#consignmentID').text(respone.consigmentID);
-                    
+
                     //$('#reviewRequestDate').text(respone.createdDate);
                     //$('#refuseReviewRequestDate').text(respone.name);
                     //$('#reviewProductDate').text(respone.reviewProductDate);
