@@ -412,7 +412,21 @@
                                         </div>
                                     </div>
                                     <br/>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
 
+                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                    <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                        <input type="text" class="form-control" id="daterangeRefuse">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <table id="refuseTable" class="table table-bordered table-hover">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -485,6 +499,21 @@
 
                                     </div>
                                     <br/>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+
+                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                    <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                        <input type="text" class="form-control" id="daterangeCancel">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     <table class="table table-striped table-bordered table-hover" id="cancelTable">
                                         <thead>
                                             <tr role="row" class="heading">
@@ -1345,28 +1374,17 @@
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
                 if (currentTab == "accepted") {
-//                    var date = new Date();
-//                    date.setDate(date.getDate() - 1);
-//                    $('#fromDate').val(formatDate(date));
-//                    date.setDate(date.getDate() + 2);
-//                    $('#toDate').val(formatDate(date));
-
-                    //$('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
-                    //alert($('#fromDate').val() + " - " + $('#toDate').val());
                     var table = $('#acceptedTable').DataTable();
-
                     table.draw();
 
                 } else if (currentTab == "request") {
-//                    var date = new Date();
-//                    date.setDate(date.getDate() - 1);
-//                    $('#fromDate').val(formatDate(date));
-//                    date.setDate(date.getDate() + 2);
-//                    $('#toDate').val(formatDate(date));
-
-                    //$('#acceptedTable').val($('#fromDate').val() + " - " + $('#toDate').val());
-                    //alert($('#fromDate').val() + " - " + $('#toDate').val());
                     var table = $('#requestTable').DataTable();
+                    table.draw();
+                }else if (currentTab == "cancel") {
+                    var table = $('#cancelTable').DataTable();
+                    table.draw();
+                }else if (currentTab == "refuse") {
+                    var table = $('#refuseTable').DataTable();
                     table.draw();
                 }
 
@@ -1988,6 +2006,18 @@
                     endDate: moment(),
                     locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
                 });
+                $('#daterangeRefuse').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
+                $('#daterangeCancel').daterangepicker({
+                    format: "DD/MM/YYYY",
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+                });
             });
             $('#daterangeAccepted').on('apply.daterangepicker', function (ev, picker) {
                 var table = $('#acceptedTable').DataTable();
@@ -2001,6 +2031,22 @@
                 var table = $('#requestTable').DataTable();
                 var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
                 var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+            $('#daterangeRefuse').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#refuseTable').DataTable();
+                var startDate = $('#daterangeRefuse').data('daterangepicker').startDate.format('DD/MM/YYYY');
+                var endDate = $('#daterangeRefuse').data('daterangepicker').endDate.format('DD/MM/YYYY');
+                $('#fromDate').val(startDate);
+                $('#toDate').val(endDate);
+                table.draw();
+            });
+            $('#daterangeCancel').on('apply.daterangepicker', function (ev, picker) {
+                var table = $('#cancelTable').DataTable();
+                var startDate = $('#daterangeCancel').data('daterangepicker').startDate.format('DD/MM/YYYY');
+                var endDate = $('#daterangeCancel').data('daterangepicker').endDate.format('DD/MM/YYYY');
                 $('#fromDate').val(startDate);
                 $('#toDate').val(endDate);
                 table.draw();
@@ -2042,6 +2088,23 @@
                                     return false;
                                 }
                                 
+                            }else if ($("#currentTab").val() == "cancel") {
+                                var date = data[4].substring(6);
+                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                                {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            else if ($("#currentTab").val() == "refuse") {
+                                var date = data[4].substring(6);
+                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0)
+                                {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
                             }
                         }
 
