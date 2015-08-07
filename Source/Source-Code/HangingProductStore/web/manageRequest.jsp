@@ -242,7 +242,7 @@
 
                                             <c:forEach var="c" items="${REQUEST}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">${counter.count}</td>
                                                     <td>
                                                         ${c.product.name}
                                                     </td>
@@ -347,7 +347,7 @@
 
                                             <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">${counter.count}</td>
                                                     <td>
                                                         ${c.product.name}
                                                     </td>
@@ -454,7 +454,7 @@
 
                                             <c:forEach var="c" items="${REFUSE}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">${counter.count}</td>
                                                     <td>
                                                         ${c.product.name}
                                                     </td>
@@ -542,7 +542,7 @@
 
                                             <c:forEach var="c" items="${CANCEL}" varStatus="counter">
                                                 <tr class="odd gradeX">
-                                                    <td>${counter.count}</td>
+                                                    <td style="font-weight: bold">${counter.count}</td>
                                                     <td>
                                                         ${c.product.name}
                                                     </td>
