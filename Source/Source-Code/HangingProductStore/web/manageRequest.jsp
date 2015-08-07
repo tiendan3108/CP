@@ -167,8 +167,8 @@
                             <div class="portlet box blue">
 
                                 <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="fa fa-globe"></i>Yêu cầu
+                                    <div class="caption" style="font-weight: bold">
+                                        <i class="fa fa-globe" ></i>Yêu cầu
                                         <c:choose>
                                             <c:when test="${requestScope.currentTab == 'request'}">
                                                 chưa duyệt

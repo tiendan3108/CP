@@ -54,43 +54,22 @@ public class StatisticsServlet extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            List<StatisticDTO> resultP = null;
             List<ConsignmentDTO> resultC = null;
             float totalPrice = 0;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                String currentTab = request.getParameter("currentTab");
-                if (currentTab == null || currentTab.equals("product")) {
-                    resultP = productDAO.getProductInforForStatisticPage(user.getRoleID());
 
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(Calendar.DAY_OF_MONTH, 1);
-                    Date firstDayOfMonth = calendar.getTime();
-                    calendar.add(Calendar.MONTH, 1);
-                    calendar.add(Calendar.DATE, -1);
-                    Date lastDayOfMonth = calendar.getTime();
-                    DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date tempDate = Calendar.getInstance().getTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String today = sdf.format(tempDate);
 
-                    String fromDate = sdf.format(firstDayOfMonth);
-                    String toDate = sdf.format(lastDayOfMonth);
+                resultC = consignmentDAO.getConsignmentInforForStatisticPage(user.getRoleID());
+                request.setAttribute("resultC", resultC);
+                request.setAttribute("currentTab", "consignment");
+//                    request.setAttribute("fromDate", today);
+//                    request.setAttribute("toDate", today);
 
-                    request.setAttribute("totalPrice", totalPrice);
-                    request.setAttribute("resultP", resultP);
-                    request.setAttribute("currentTab", "product");
-                    request.setAttribute("fromDate", fromDate);
-                    request.setAttribute("toDate", toDate);
-                } else {
-                    Date tempDate = Calendar.getInstance().getTime();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                    String today = sdf.format(tempDate);
-
-                    resultC = consignmentDAO.getConsignmentInforForStatisticPage(user.getRoleID());
-                    request.setAttribute("resultC", resultC);
-                    request.setAttribute("currentTab", "consignment");
-                    request.setAttribute("fromDate", today);
-                    request.setAttribute("toDate", today);
-                }
                 url = GlobalVariables.STATISTIC_PAGE;
             }
             if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {

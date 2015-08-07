@@ -1870,7 +1870,11 @@ public class ConsignmentDAO {
         ConsignmentDTO item = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? ORDER BY CancelDate, AgreeCancelDate, ReceivedDate, ReviewProductDate, ReviewRequestDate, CreatedDate";
+            query = "SELECT C.*, P.ProductStatusID "
+                    + " FROM Consignment C, Product P "
+                    + " WHERE StoreOwnerID = ? AND C.ProductID = P.ProductID "
+                    + " ORDER BY C.CancelDate, C.AgreeCancelDate, C.ReceivedDate, "
+                    + " C.ReviewProductDate, C.ReviewRequestDate, C.CreatedDate";
             stm = conn.prepareStatement(query);
             stm.setInt(1, roleID);
             rs = stm.executeQuery();
@@ -1887,6 +1891,9 @@ public class ConsignmentDAO {
                 item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
+                ProductDTO product = new ProductDTO();
+                product.setProductStatusID(rs.getInt("ProductStatusID"));
+                item.setProduct(product);
                 result.add(item);
             }
             if (result.isEmpty()) {
@@ -1923,7 +1930,7 @@ public class ConsignmentDAO {
         ProductDTO product = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT c.*, p.ProductName FROM Consignment c, Product p WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID";
+            query = "SELECT c.*, p.ProductName, p.Image FROM Consignment c, Product p WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
@@ -1939,9 +1946,12 @@ public class ConsignmentDAO {
                 item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
                 item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
+                item.setEmail(rs.getString("Email"));
+                item.setPaypalAccount(rs.getString("PaypalAccount"));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
                 product = new ProductDTO();
                 product.setName(rs.getString("ProductName"));
+                product.setImage(rs.getString("Image"));
                 item.setProduct(product);
             }
             return item;
