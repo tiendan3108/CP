@@ -27,6 +27,8 @@ public class ProductDetail {
     private float negotiatedPrice;
     private String reviewProductDate;
     private String paypalAccount;
+    private int newStatus;
+    private float desirePrice;
 
     public ProductDetail() {
     }
@@ -34,7 +36,8 @@ public class ProductDetail {
     public ProductDetail(int productID, String productName, String serialNumber,
             String brand, String description, String image, String customerName,
             String address, String phone, float maxPrice, float minPrice,
-            String appointmentDate, String reviewProductDate, String paypalAccount) {
+            String appointmentDate, String reviewProductDate, String paypalAccount,
+            int newStatus, float desirePrice) {
         this.productID = productID;
         this.productName = productName;
         this.serialNumber = serialNumber;
@@ -49,6 +52,8 @@ public class ProductDetail {
         this.appointmentDate = appointmentDate;
         this.reviewProductDate = reviewProductDate;
         this.paypalAccount = paypalAccount;
+        this.newStatus = newStatus;
+        this.desirePrice = desirePrice;
     }
 
     /**
@@ -273,6 +278,34 @@ public class ProductDetail {
      */
     public void setPaypalAccountID(String paypalAccount) {
         this.paypalAccount = paypalAccount;
+    }
+
+    /**
+     * @return the newStatus
+     */
+    public int getNewStatus() {
+        return newStatus;
+    }
+
+    /**
+     * @param newStatus the newStatus to set
+     */
+    public void setNewStatus(int newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    /**
+     * @return the desirePrice
+     */
+    public float getDesirePrice() {
+        return desirePrice;
+    }
+
+    /**
+     * @param desirePrice the desirePrice to set
+     */
+    public void setDesirePrice(float desirePrice) {
+        this.desirePrice = desirePrice;
     }
 
 }
