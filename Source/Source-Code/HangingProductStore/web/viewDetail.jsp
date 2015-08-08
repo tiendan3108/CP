@@ -61,17 +61,21 @@
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <h1>${item.name}</h1>
-
                                     <div class="description">
                                         <p>${item.description}</p>
                                     </div>
                                     <div class="product-page-options">
                                         <div class="pull-left">
-                                            <label style="font-size: 14px;" class="control-label">Nhãn hiệu: ${item.brand}</label>
+                                            <label style="font-size: 14px;" class="control-label">Tình trạng: mới ${item.newStatus}%</label>
                                         </div>
                                         <div class="pull-left">
-                                            <label style="font-size: 14px;" class="control-label">Số Serial: ${item.serialNumber}</label>
+                                            <label style="font-size: 14px;" class="control-label">Nhãn hiệu: ${item.brand}</label>
                                         </div>
+                                        <c:if test="${not empty item.serialNumber}">
+                                            <div class="pull-left">
+                                                <label style="font-size: 14px;" class="control-label">Số Serial: ${item.serialNumber}</label>
+                                            </div>
+                                        </c:if>
                                     </div>
                                     <c:set var="store" value="${requestScope.STOREINFO}"/>
                                     <c:if test="${not empty store}">
