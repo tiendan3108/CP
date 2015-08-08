@@ -140,7 +140,9 @@ public class ProductDAO {
                 int productStatusID = rs.getInt("ProductStatusID");
                 float sellingPrice = rs.getFloat("SellingPrice");;
                 int parentCategoryID = rs.getInt("ParentID");
+                int newStatus = rs.getInt("NewStatus");
                 product = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, productStatusID, sellingPrice, parentCategoryID);
+                product.setNewStatus(newStatus);
             }
             return product;
         } catch (SQLException ex) {
