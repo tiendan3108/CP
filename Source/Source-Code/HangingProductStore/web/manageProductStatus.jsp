@@ -939,8 +939,8 @@
                                                                                             <strong>Ngày kí gửi : </strong><span id="expired_consignedDate"></span><br>
                                                                                             <strong>Giá thỏa thuận (Ngàn đồng): </strong><span id="expired_negotiatedPrice"></span><br>
                                                                                             <strong>Số ngày quá hạn: </strong><span id="expired_days"></span> ngày-->
-                                                
-                                                 <div class="form-group">
+
+                                                <div class="form-group">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
                                                     <div class="col-md-8 col-sm-8" id="expired_productName"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
@@ -959,7 +959,7 @@
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                     <div class="col-md-8 col-sm-8" id="expired_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
-                                                
+
                                                 <div class="form-group">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Số ngày quá hạn</label>
                                                     <div class="col-md-8 col-sm-8" id="expired_days"  style="padding-top: 8px; font-size: 110%"></div>
@@ -980,16 +980,35 @@
                     </div>
                     <!-- EXPIRED MODAL END-->
                     <!-- CONFIRM EXTEND MODAL BEGIN-->
-                    <div class="modal fade bs-example-modal-sm" id="confirmExtendModal" aria-hidden="true">
-                        <div class="modal-dialog modal-sm">
+                    <div class="modal fade bs-example-modal-md" id="confirmExtendModal" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
                             <form action="ExtendProduct" method="POST">
-                                <div class="modal-content" style="width: 500px">
+                                <div class="modal-content">
                                     <div class="modal-header">
                                         <h3 style="font-weight: bold">Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
-                                        Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là <input type="text" name="txtExpiredFee" id="expired_fees_1" value="" style="width: 60px"> ngàn đồng.<br>
-                                        Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay. Bạn có chắc chắn muốn gia hạn sản phẩm này?
+                                        <div class="row">
+                                            <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1 form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Số ngày quá hạn</label>
+                                                    <div class="col-md-8 col-sm-8" id="expired_period"  style="padding-top: 8px; font-size: 120%; color: red"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền lưu kho</label>
+                                                    <div class="col-md-8 col-sm-8">
+                                                        <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h4>Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay.</h4> 
+                                                    <h4> Bạn có chắc chắn muốn gia hạn sản phẩm này?</h4>
+                                                </div>
+                                                <!--                                                Tiền lưu kho trong <span id="expired_period"></span> ngày hết hạn là: <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="" style="width: 60px"> ngàn đồng.<br>-->
+                                                <!--                                                Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay. Bạn có chắc chắn muốn gia hạn sản phẩm này?-->
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" name="txtExpiredFee" id="expired_fees_1" value="">
@@ -1006,14 +1025,19 @@
                     <div class="modal fade bs-example-modal-sm" id="confirmReceiveModal" aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
-                                <div class="modal-content" style="width: 500px">
+                                <div class="modal-content">
                                     <div class="modal-header">
                                         <h3 style="font-weight: bold">Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
-                                        <label class="control-label">Tiền phạt (Ngàn đồng):</label><input type="text" id="expired_fee" value="" name="txtExpiredFee" style="width: 80px">
+                                        <div class="row">
+                                            <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1" align="center">
+                                                <label  class="control-label">Tiền phạt (Ngàn đồng)</label>
+                                                <input class="form-control" type="text" id="expired_fee" value="" name="txtExpiredFee">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer" align="center">
                                         <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
                                         <button class="btn blue" name="btnAction" type="submit" value="receive">Đồng ý</button>
                                         <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
