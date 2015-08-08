@@ -58,6 +58,7 @@ public class ConsignmentDTO implements Serializable {
     private String hour; //for appointmentDate 
     private int deliveryMethod; // add on 28/7/2015
     private float desirePrice; // add on 8/8/2015
+    private int  newStatus; // add on 8/8/2015
     // duchc - end
 
     // No Argument Constructor
@@ -477,6 +478,14 @@ public class ConsignmentDTO implements Serializable {
 
     public void setDesirePrice(float desirePrice) {
         this.desirePrice = desirePrice;
+    }
+
+    public int getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(int newStatus) {
+        this.newStatus = newStatus;
     }
 
 }
