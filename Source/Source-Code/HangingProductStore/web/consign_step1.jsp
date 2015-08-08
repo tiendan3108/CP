@@ -160,16 +160,12 @@
                                                             <div class="form-horizontal">
 
                                                                 <div class="form-group">
-                                                                    <label class="control-label col-md-4 col-sm-4">Ngày mua</label>
+                                                                    <label class="control-label col-md-4 col-sm-4">Độ mới <font color="red">*</font></label>
                                                                     <div class="col-md-5 col-sm-6">
-                                                                        <div class="input-group date date-picker" data-date-format="dd-mm-yyyy" data-date-end-date="0d">
-                                                                            <input  id="txtDate" type="text" class="form-control" name="txtDate" readonly value="${product.purchasedDate}">
-                                                                            <span class="input-group-btn">
-                                                                                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
-                                                                            </span>
+                                                                        <div class="input-group">
+                                                                            <input id="txtNewStatus" name="txtNewStatus" maxlength="100" value="${product.newStatus}" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
                                                                         </div>
-  <!--  <input id="txtDate" type="text" class="form-control" name="txtDate" value="${product.purchasedDate}"> -->
-                                                                        <span class="help-block" id="erDate"> </span>
+                                                                        <span class="help-block" id="erNewStatus"> </span>
                                                                     </div>
                                                                 </div>
 
@@ -228,24 +224,24 @@
     $(document).ready(function () {
 
         if ($("#txtProductName").val().length > 0 && $("#txtSerialNumber").val().length == 0) {
-            $("#txtSerialNumber").prop("readonly",true);
+            $("#txtSerialNumber").prop("readonly", true);
             //$("#reSerialNumber").hide();
 
         }
         else if ($("#txtSerialNumber").val().length > 0 && $("#txtProductName").val().length == 0) {
-            $("#txtProductName").prop("readonly",true);
-            $("#txtBrand").prop("readonly",true);
+            $("#txtProductName").prop("readonly", true);
+            $("#txtBrand").prop("readonly", true);
             //$("#reProductName").hide();
 
         }
         else if ($("#txtSerialNumber").val().length == 0 && $("#txtProductName").val().length == 0) {
-            $("#txtSerialNumber").prop("readonly",false);
-            $("#txtProductName").prop("readonly",false);
+            $("#txtSerialNumber").prop("readonly", false);
+            $("#txtProductName").prop("readonly", false);
 
-        }else if ($("#txtSerialNumber").val().length >= 0 && $("#txtProductName").val().length >= 0) {
-            $("#txtSerialNumber").prop("readonly",false);
-            $("#txtProductName").prop("readonly",true);
-            $("#txtBrand").prop("readonly",true);
+        } else if ($("#txtSerialNumber").val().length >= 0 && $("#txtProductName").val().length >= 0) {
+            $("#txtSerialNumber").prop("readonly", false);
+            $("#txtProductName").prop("readonly", true);
+            $("#txtBrand").prop("readonly", true);
             //$("#reProductName").hide();
 
         }
@@ -261,25 +257,25 @@
 
     $('#txtProductName').on('input', function (e) {
         if ($(this).val().length > 0) {
-            $("#txtSerialNumber").prop("readonly",true);
+            $("#txtSerialNumber").prop("readonly", true);
             $("#txtSerialNumber").val("");
             //$("#reSerialNumber").hide();
         } else {
-            $("#txtSerialNumber").prop("readonly",false);
+            $("#txtSerialNumber").prop("readonly", false);
             //$("#reSerialNumber").show();
         }
     });
     $('#txtSerialNumber').on('input', function (e) {
         if ($(this).val().length > 0) {
-            $("#txtProductName").prop("readonly",true);
-            $("#txtBrand").prop("readonly",true);
+            $("#txtProductName").prop("readonly", true);
+            $("#txtBrand").prop("readonly", true);
             $("#txtProductName").val("");
             $("#txtBrand").val("");
-            
+
             //$("#reProductName").hide();
         } else {
-            $("#txtProductName").prop("readonly",false);
-            $("#txtBrand").prop("readonly",false);
+            $("#txtProductName").prop("readonly", false);
+            $("#txtBrand").prop("readonly", false);
             //$("#reProductName").show();
         }
     });
@@ -287,7 +283,7 @@
     function validation() {
         var check = true;
         if ($('#txtProductName').val().length == 0 && $('#txtSerialNumber').val().length == 0) {
-            
+
             $('#erProductName').html("<font color='red'>Xin nhập tên hoặc mã số</font>");
             check = false;
         } else {
@@ -310,6 +306,20 @@
             $('#erCategory').html("");
         }
 
+
+        var newStatus = $('#txtNewStatus').val();
+        if (isNaN(newStatus)) {
+            $('#erNewStatus').html("<font color='red'>Xin nhập số từ 0-100</font>");
+            return false;
+        } else {
+            if (newStatus > 100 || newStatus < 0) {
+                $('#erNewStatus').html("<font color='red'>Xin nhập số từ 0-100</font>");
+                return false;
+            } else {
+                $('#erNewStatus').html("");
+            }
+        }
+        
         return check;
     }
 

@@ -200,9 +200,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     }
                 }
                 // add Purchased date from step1 if user set it
-                if (!product.getPurchasedDate().isEmpty()) {
-                    product.setPurchasedDate(formatDate(product.getPurchasedDate()));
-                }
+                
 
                 //set image link
                 product.setImage(imagePath);

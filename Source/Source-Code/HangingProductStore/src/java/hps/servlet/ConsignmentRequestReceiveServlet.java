@@ -344,8 +344,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         }
 
                         float negotiatedPrice = Float.parseFloat(request.getParameter("negotiatedPrice")) * 1000;
+                        int newStatus = Integer.parseInt(request.getParameter("newStatus"));
 
-                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial, newStatus);
                         if (result) {
 
                             consignmentDAO.updateConsignmentWhenAcceptProduct(consignmentID, negotiatedPrice);
@@ -467,8 +468,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         if (method.equals("customer")) {
                             deliveryMethod = 1;
                         }
+                        int newStatus = Integer.parseInt(request.getParameter("newStatus"));
                         //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                        boolean result = consignmentDAO.updateAcceptedrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial, newStatus);
                         if (result) {
                             msg = "success";
                             DateFormat df = new SimpleDateFormat("dd-MM-yyyy");

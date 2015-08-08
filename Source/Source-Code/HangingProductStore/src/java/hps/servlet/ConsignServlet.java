@@ -109,10 +109,15 @@ public class ConsignServlet extends HttpServlet {
                 String serialNumber = request.getParameter("txtSerialNumber").trim();
                 int categoryID = Integer.parseInt(request.getParameter("txtCategory"));
                 String brand = request.getParameter("txtBrand").trim();
-                String date = request.getParameter("txtDate").trim();
+                //String date = request.getParameter("txtDate").trim();
+                String newStatus = request.getParameter("txtNewStatus").trim();
                 String description = request.getParameter("txtDescription").trim();
 
-                ProductDTO product = new ProductDTO(productName, serialNumber, date, categoryID, brand, description, null, 1);
+                ProductDTO product = new ProductDTO(productName, serialNumber, null, categoryID, brand, description, null, 1);
+                if (!newStatus.equals("")) {
+                    
+                    product.setNewStatus(Integer.parseInt(newStatus));
+                }
 
                 //check product using serial Number
                 if (serialNumber.length() > 0) {

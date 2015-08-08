@@ -1118,7 +1118,7 @@ public class ProductDAO {
         try {
             con = DBUltilities.makeConnection();
             // add Consigment Values
-            String query = "INSERT INTO Product(ProductName, SerialNumber, PurchasedDate, CategoryID, Brand, "
+            String query = "INSERT INTO Product(ProductName, SerialNumber, NewStatus, CategoryID, Brand, "
                     + "Description, Image, ProductStatusID, IsSpecial) "
                     + " VALUES(?,?,?,?,?,?,?,?,?)";
             stm = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -1129,10 +1129,11 @@ public class ProductDAO {
             } else {
                 stm.setString(2, product.getSerialNumber());
             }
-            if (product.getPurchasedDate().equals("")) {
-                stm.setNull(3, java.sql.Types.DATE);
+            if (product.getNewStatus() > 0) {
+                stm.setInt(3, product.getNewStatus());
+                
             } else {
-                stm.setString(3, product.getPurchasedDate());
+                stm.setNull(3, java.sql.Types.INTEGER);
             }
 
             stm.setInt(4, product.getCategoryID());

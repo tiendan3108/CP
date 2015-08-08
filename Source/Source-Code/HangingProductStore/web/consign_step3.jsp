@@ -319,7 +319,7 @@
             } else {
                 if (desirePrice > 0) {
                     if (maxPrice.length > 0) {
-                        alert(maxPrice);
+                        
                         if (desirePrice > maxPrice) {
                             $("#erDesirePrice").html("<font color='red'>Giá bạn chọn phải nhỏ hơn giá tối đa tìm được</font");
                         }else{

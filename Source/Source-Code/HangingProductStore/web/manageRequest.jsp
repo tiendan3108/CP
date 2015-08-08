@@ -621,7 +621,7 @@
 
 
                                     <!-- BEGIN PRODUCT DESCRIPTION -->
-                                    <div class="col-lg-7 col-md-7">
+                                    <div class="col-lg-8 col-md-8">
 
                                         <!--table-striped-->
                                         <div class="form-horizontal">
@@ -675,7 +675,7 @@
                                                 <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Độ mới</label>
                                                 <div class="col-md-3 col-sm-3">
                                                     <div class="input-group">
-                                                        <input id="r_newStatus" name="txtNewStatus" maxlength="100" required="true" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
+                                                        <input id="r_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
                                                     </div>
                                                     </span>
                                                 </div>
@@ -739,10 +739,6 @@
                                                 <div class="col-md-8 col-sm-8" id="r_fromDateToDate"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá tham khảo</label>
-                                                <div class="col-md-8 col-sm-8" id="r_price" style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
 
                                             <div class="form-group">
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Cách giao hàng</label>
@@ -784,7 +780,16 @@
                                                 </div>
 
                                             </div>
-
+                                            
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá tham khảo</label>
+                                                <div class="col-md-8 col-sm-8" id="r_price" style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá mong muốn</label>
+                                                <div class="col-md-8 col-sm-8" id="r_desirePrice" style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            
                                             <div class="form-group" id="ar_price" style="display: none;">
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                 <div class="col-md-6 col-sm-6">
@@ -1488,6 +1493,7 @@
                     $('#r_category').attr("disabled", true);
                     $("#r_brand").attr("disabled", true);
                     $("#r_description").attr("disabled", true);
+                    $("#r_newStatus").attr("disabled", true);
                     $("input[name='r_rdDeliveryMethod']").attr("disabled", true);
 
                     $("#r_txtFullName").attr("disabled", true);
@@ -1507,6 +1513,7 @@
                     $('#r_category').attr("disabled", false);
                     $("#r_brand").attr("disabled", false);
                     $("#r_description").attr("disabled", false);
+                    $("#r_newStatus").attr("disabled", false);
                     $("input[name='r_rdDeliveryMethod']").attr("disabled", false);
 
                     $("#r_txtFullName").attr("disabled", false);
@@ -1538,6 +1545,7 @@
                             $("#r_description").val(data.product.description);
                             $("#r_createdDate").html(data.createdDate);
                             $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);
+                            $("#r_newStatus").val(data.product.newStatus);
 
                             if (data.deliveryMethod == 0) {
                                 $("input[name='r_rdDeliveryMethod'][value='store']").attr("checked", true).parent().addClass("checked");
@@ -1553,6 +1561,8 @@
                             } else {
                                 $("#r_price").html("<font color='red'>Không có giá </font>");
                             }
+                            $("#r_desirePrice").html(formatDollar(data.desirePrice) + " (Ngàn đồng)");
+                            
 
                             $("#r_productID").val(data.product.productID);
                             $("#r_ActionValue").val(data.consigmentID);
@@ -1751,6 +1761,16 @@
                         check = false;
                     }
                 }
+                
+                var newStatus = $('#r_newStatus').val();
+                if (isNaN(newStatus)) {
+                    check = false;
+                } else {
+                    if (newStatus > 100 || newStatus < 0) {
+                        check = false;
+                    }
+                }
+                
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
                         //$('form#r_form').submit();
@@ -1792,6 +1812,15 @@
                     }
                 }
 
+                var newStatus = $('#r_newStatus').val();
+                if (isNaN(newStatus)) {
+                    check = false;
+                } else {
+                    if (newStatus > 100 || newStatus < 0) {
+                        check = false;
+                    }
+                }
+
                 if (check) {
                     updateRequest();
                     //alert("Cập nhật thành công");
@@ -1821,11 +1850,14 @@
                     paypalAccount = "";
                 }
                 var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
+                var newStatus = $("#r_newStatus").val();
 
                 $.get('ConsignmentRequestReceive',
                         {btnAction: 'updateRequest', consignmentID: consignmentID, productName: productName,
-                            categoryID: categoryID, brand: brand, description: description, appointmentDate: appointmentDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
-                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
+                            categoryID: categoryID, brand: brand, description: description,
+                            appointmentDate: appointmentDate, hour: hour, deliveryMethod: deliveryMethod,
+                            isSpecial: isSpecial, fullName: fullName, address: address, phone: phone,
+                            email: email, paypalAccount: paypalAccount, newStatus: newStatus},
                 function (data) {
                     if (data == "success") {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
@@ -1870,10 +1902,15 @@
                 }
                 var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
                 var negotiatedPrice = $("#ar_negotiatedPrice").val();
+
+                var newStatus = $("#r_newStatus").val();
                 $.get('ConsignmentRequestReceive',
                         {btnAction: 'ar_accept', consignmentID: consignmentID, productName: productName,
-                            categoryID: categoryID, brand: brand, description: description, negotiatedPrice: negotiatedPrice, appointmentDate: appointmentDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
-                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
+                            categoryID: categoryID, brand: brand, description: description,
+                            negotiatedPrice: negotiatedPrice, appointmentDate: appointmentDate, hour: hour,
+                            deliveryMethod: deliveryMethod, isSpecial: isSpecial,
+                            fullName: fullName, address: address, phone: phone, email: email,
+                            paypalAccount: paypalAccount, newStatus: newStatus},
                 function (data) {
                     if (data == "success") {
                         alert("Đã nhận sản phẩm");
