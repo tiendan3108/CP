@@ -211,9 +211,10 @@ public class ConsignServlet extends HttpServlet {
 //                request.setAttribute("backlink", url);
             }
             if (action.equals("tostep4")) {
-                String storeOwnerID = request.getParameter("rdStore");
-
+                String storeOwnerID = request.getParameter("txtStore");
+                String desirePrice = request.getParameter("txtDesirePrice");
                 session.setAttribute("STORE", storeOwnerID);
+                session.setAttribute("DESIREPRICE", desirePrice);
                 url = STEP4;
 //                request.setAttribute("backlink", url);
             }

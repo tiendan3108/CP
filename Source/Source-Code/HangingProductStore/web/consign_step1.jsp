@@ -91,20 +91,15 @@
                                                         <div class="col-md-6 col-sm-6">
                                                             <div class="form-horizontal">
                                                                 <div class="form-group">
-                                                                    <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm <font id="reProductName" color="red">*</font></label> <!--<span class="required">*</span> -->
+                                                                    <label for="txtProductName" class="col-md-4 col-sm-4 control-label">Tên sản phẩm</label> <!-- <font id="reProductName" color="red">*</font> -->
                                                                     <div class="col-md-8 col-sm-8">
-
-
                                                                         <input id="txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="100" value="${product.name}"/>
-
-
-
-                                                                        <p class="help-block" id="erProductName">  </p>
+                                                                        <p class="help-block" id="erProductName"></p>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label for="txtSerial" class="col-md-4 col-sm-4 control-label"> Mã số <font id="reSerialNumber" color="red">*</font></label>
+                                                                    <label for="txtSerial" class="col-md-4 col-sm-4 control-label">Mã số</label> <!--<font id="reSerialNumber" color="red">*</font>-->
                                                                     <div class="col-md-5 col-sm-6">
                                                                         <input id="txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                                         <p class="help-block" id="erSerialNumber"> </p>
@@ -151,7 +146,6 @@
                                                                     <label class="control-label col-md-4 col-sm-4">Hãng</label>
                                                                     <div class="col-md-5 col-sm-6">
                                                                         <input id="txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
-
                                                                         <span class="help-block" id="erBrand">
                                                                         </span>
                                                                     </div>
@@ -235,12 +229,13 @@
 
         if ($("#txtProductName").val().length > 0 && $("#txtSerialNumber").val().length == 0) {
             $("#txtSerialNumber").prop("readonly",true);
-            $("#reSerialNumber").hide();
+            //$("#reSerialNumber").hide();
 
         }
         else if ($("#txtSerialNumber").val().length > 0 && $("#txtProductName").val().length == 0) {
             $("#txtProductName").prop("readonly",true);
-            $("#reProductName").hide();
+            $("#txtBrand").prop("readonly",true);
+            //$("#reProductName").hide();
 
         }
         else if ($("#txtSerialNumber").val().length == 0 && $("#txtProductName").val().length == 0) {
@@ -250,7 +245,8 @@
         }else if ($("#txtSerialNumber").val().length >= 0 && $("#txtProductName").val().length >= 0) {
             $("#txtSerialNumber").prop("readonly",false);
             $("#txtProductName").prop("readonly",true);
-            $("#reProductName").hide();
+            $("#txtBrand").prop("readonly",true);
+            //$("#reProductName").hide();
 
         }
     });
@@ -267,20 +263,24 @@
         if ($(this).val().length > 0) {
             $("#txtSerialNumber").prop("readonly",true);
             $("#txtSerialNumber").val("");
-            $("#reSerialNumber").hide();
+            //$("#reSerialNumber").hide();
         } else {
             $("#txtSerialNumber").prop("readonly",false);
-            $("#reSerialNumber").show();
+            //$("#reSerialNumber").show();
         }
     });
     $('#txtSerialNumber').on('input', function (e) {
         if ($(this).val().length > 0) {
             $("#txtProductName").prop("readonly",true);
+            $("#txtBrand").prop("readonly",true);
             $("#txtProductName").val("");
-            $("#reProductName").hide();
+            $("#txtBrand").val("");
+            
+            //$("#reProductName").hide();
         } else {
             $("#txtProductName").prop("readonly",false);
-            $("#reProductName").show();
+            $("#txtBrand").prop("readonly",false);
+            //$("#reProductName").show();
         }
     });
 

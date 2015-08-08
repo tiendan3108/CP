@@ -227,8 +227,12 @@ public class ConsignCompleteServlet extends HttpServlet {
                     AccountDTO store = accountDAO.getStoreOwnerByID(storeOwnerID);
                     float maxPrice = 0;
                     float minPrice = 0;
+                    float desirePrice = 0;
                     //get store de lay fomula va nam cua store
 
+                    if(session.getAttribute("DESIREPRICE") != null){
+                        desirePrice = Float.parseFloat(session.getAttribute("DESIREPRICE").toString()) * 1000;
+                    }
                     if (session.getAttribute("BASICPRICE") != null) {
                         double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
                         maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
@@ -247,6 +251,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     ConsignmentDTO consignment = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName,
                             address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
                     consignment.setDeliveryMethod(deliveryMethod);
+                    consignment.setDesirePrice(desirePrice);
 
                     boolean result = consignmentDAO.addConsigment(consignment);
                     if (result) {
@@ -292,7 +297,7 @@ public class ConsignCompleteServlet extends HttpServlet {
 
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher(COMPLETED);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
             /* 
              //You need this loop if you submitted more than one file

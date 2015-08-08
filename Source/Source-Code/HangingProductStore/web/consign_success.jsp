@@ -93,7 +93,7 @@
                                                         maxFractionDigits="0" />  đồng.
                                                 </c:if>
                                             </h3>
-                                            <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi đến nhận hàng.</h3>
+                                            <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi nhận hàng.</h3>
 
                                             <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consigmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái sản phẩm.</h3>
 

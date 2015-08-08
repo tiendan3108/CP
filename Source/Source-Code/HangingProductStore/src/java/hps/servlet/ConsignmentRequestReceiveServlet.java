@@ -101,40 +101,111 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);
                     return;
-                } else if (action.equals("r_accept")) {
+                } //                else if (action.equals("r_accept")) {
+                //                    String message = "";
+                //                    String consignmentID = request.getParameter("consignmentID");
+                //                    if (consignmentDAO.checkIfConsignmentStatusIsWaiting(consignmentID)) {
+                //
+                //                        String productName = request.getParameter("productName");
+                //                        int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                //                        String brand = request.getParameter("brand");
+                //
+                //                        String description = request.getParameter("description");
+                //
+                //                        int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
+                //
+                //// get appointmentDate and add hour into it then format to update database
+                //                        String hour = request.getParameter("hour");
+                //                        String preAppointmentDate = request.getParameter("appointmentDate");
+                //                        String appointmentDate = preAppointmentDate + " " + hour;
+                //                        appointmentDate = formatDate(appointmentDate);
+                //
+                //                        String fullName = request.getParameter("fullName");
+                //                        String address = request.getParameter("address");
+                //                        String phone = "+84" + request.getParameter("phone").substring(1);
+                //                        String email = request.getParameter("email");
+                //                        String paypalAccount = request.getParameter("paypalAccount");
+                //
+                //                        int deliveryMethod = 0;
+                //                        String method = request.getParameter("deliveryMethod");
+                //                        if (method.equals("customer")) {
+                //                            deliveryMethod = 1;
+                //                        }
+                //
+                //                        //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
+                //                        boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                //                        if (result) {
+                //                            message = "success";
+                //                            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                //                            java.util.Date currentDate = new java.util.Date();
+                //                            String today = df.format(currentDate);
+                //
+                //                            if (preAppointmentDate.equals(today) && method.equals("store")) {
+                //                                JavaUltilities java = new JavaUltilities();
+                //                                String noti = MessageString.titleNofitication;
+                //                                java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
+                //                                System.out.println("Send notification");
+                //                            }
+                //
+                //                    //ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
+                //                            //send sms and email
+                //                            //if (consignment != null) {
+                //                            //session.removeAttribute("consignment_details");
+                //                            String msg = "Yêu cầu ký gửi với mã số " + consignmentID + " của bạn đã được chấp nhận.\n "
+                //                                    + "Cửa hàng sẽ đến nhận hàng vào ngày " + preAppointmentDate + " lúc " + hour + ".";
+                //                            JavaUltilities java = new JavaUltilities();
+                //                            if (phone != null && phone.length() > 0) {
+                //
+                //                                try {
+                //                                    java.sendSMS(msg, phone);
+                //                                } catch (Exception e) {
+                //                                    System.out.println("CANNOT send sms accept consignment request.");
+                //                                    e.printStackTrace();
+                //                                }
+                //                            }
+                //
+                //                            if (email != null && email.length() > 0) {
+                //                                try {
+                //                                    java.sendEmail(email, "[HPS] Chấp nhận yêu cầu ký gửi", msg);
+                //                                } catch (Exception e) {
+                //                                    System.out.println("CANNOT send email accept consignment request.");
+                //                                    e.printStackTrace();
+                //                                }
+                //                            }
+                //                        }else{
+                //                            message = "fail";
+                //                        }
+                //                        //}
+                //                    } else {
+                //                        message = "error";
+                //                    }
+                //
+                //                    String json = new Gson().toJson(message);
+                //                    response.setContentType("application/json;charset=UTF-8");
+                //                    response.getWriter().write(json);
+                //                    return;
+                //
+                //                }
+                else if (action.equals("r_accept")) {
                     String message = "";
                     String consignmentID = request.getParameter("consignmentID");
                     if (consignmentDAO.checkIfConsignmentStatusIsWaiting(consignmentID)) {
 
-                        String productName = request.getParameter("productName");
-                        int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-                        String brand = request.getParameter("brand");
-
-                        String description = request.getParameter("description");
-
-                        int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
-
-// get appointmentDate and add hour into it then format to update database
                         String hour = request.getParameter("hour");
-                        String preAppointmentDate = request.getParameter("appointmentDate");
+                        String preAppointmentDate = preAppointmentDate = request.getParameter("appointmentDate");
                         String appointmentDate = preAppointmentDate + " " + hour;
                         appointmentDate = formatDate(appointmentDate);
-
-                        String fullName = request.getParameter("fullName");
-                        String address = request.getParameter("address");
-                        String phone = "+84" + request.getParameter("phone").substring(1);
-                        String email = request.getParameter("email");
-                        String paypalAccount = request.getParameter("paypalAccount");
-
                         int deliveryMethod = 0;
+
                         String method = request.getParameter("deliveryMethod");
                         if (method.equals("customer")) {
                             deliveryMethod = 1;
                         }
 
                         //consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, appointmentDate, GlobalVariables.CONSIGNMENT_ACCEPTED, productID, productName, categoryID, brand, description, 1);
-                        boolean result = consignmentDAO.updateConsignmentWhenAcceptrequest(consignmentID, fullName, address, phone, email, paypalAccount, appointmentDate, deliveryMethod, productName, categoryID, brand, description, isSpecial);
+                        boolean result = consignmentDAO.updateConsignmentWhenAcceptrequestWithDeliveryMethod(consignmentID, appointmentDate);
                         if (result) {
+                            ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                             message = "success";
                             DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                             java.util.Date currentDate = new java.util.Date();
@@ -143,36 +214,34 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             if (preAppointmentDate.equals(today) && method.equals("store")) {
                                 JavaUltilities java = new JavaUltilities();
                                 String noti = MessageString.titleNofitication;
-                                java.sendNofitiCation(noti, MessageString.newProductNotification(productName), AccountDAO.getGcmID(storeOwner.getAccountID()));
+                                java.sendNofitiCation(noti, MessageString.newProductNotification(consignment.getProduct().getName()), AccountDAO.getGcmID(storeOwner.getAccountID()));
                                 System.out.println("Send notification");
                             }
-
-                    //ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                             //send sms and email
                             //if (consignment != null) {
                             //session.removeAttribute("consignment_details");
-                            String msg = "Yêu cầu ký gửi với mã số " + consignmentID + " của bạn đã được chấp nhận.\n "
+                            String msg = "Yêu cầu ký gửi với mã số " + consignment.getConsigmentID() + " của bạn đã được chấp nhận.\n "
                                     + "Cửa hàng sẽ đến nhận hàng vào ngày " + preAppointmentDate + " lúc " + hour + ".";
                             JavaUltilities java = new JavaUltilities();
-                            if (phone != null && phone.length() > 0) {
+                            if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
                                 try {
-                                    java.sendSMS(msg, phone);
+                                    java.sendSMS(msg, "+84" + consignment.getPhone().substring(1));
                                 } catch (Exception e) {
                                     System.out.println("CANNOT send sms accept consignment request.");
                                     e.printStackTrace();
                                 }
                             }
 
-                            if (email != null && email.length() > 0) {
+                            if (consignment.getEmail() != null && consignment.getEmail().length() > 0) {
                                 try {
-                                    java.sendEmail(email, "[HPS] Chấp nhận yêu cầu ký gửi", msg);
+                                    java.sendEmail(consignment.getEmail(), "[HPS] Chấp nhận yêu cầu ký gửi", msg);
                                 } catch (Exception e) {
                                     System.out.println("CANNOT send email accept consignment request.");
                                     e.printStackTrace();
                                 }
                             }
-                        }else{
+                        } else {
                             message = "fail";
                         }
                         //}
@@ -184,7 +253,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     response.setContentType("application/json;charset=UTF-8");
                     response.getWriter().write(json);
                     return;
-                    //currentTab = "request";
 
                 } else if (action.equals("r_refuse")) {
                     String message = "";
@@ -237,7 +305,6 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                     String consignmentID = request.getParameter("consignmentID");
                     if (consignmentDAO.checkIfConsignmentStatusIsAccepted(consignmentID)) {
                         String productName = request.getParameter("productName");
-                        String hour = request.getParameter("hour");
 
 //                        int isSpecial = 0;
 //                        if (request.getParameter("isSpecial:") != null) {
@@ -246,8 +313,9 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                         int isSpecial = Integer.parseInt(request.getParameter("isSpecial"));
 
 // get appointmentDate and add hour into it then format to update database
-                        String preAppointmentDate = request.getParameter("appointmentDate");
-                        String appointmentDate = formatDate(preAppointmentDate + " " + hour);
+                        String preAppointmentDate = "";
+                        String hour = "";
+                        String appointmentDate = "";
 
                         int categoryID = Integer.parseInt(request.getParameter("categoryID"));
                         String brand = request.getParameter("brand");
@@ -269,6 +337,10 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
                         if (method.equals("customer")) {
                             deliveryMethod = 1;
+                        } else {
+                            preAppointmentDate = request.getParameter("appointmentDate");
+                            hour = request.getParameter("hour");
+                            appointmentDate = formatDate(preAppointmentDate + " " + hour);
                         }
 
                         float negotiatedPrice = Float.parseFloat(request.getParameter("negotiatedPrice")) * 1000;
