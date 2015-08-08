@@ -39,7 +39,7 @@ public class ProductDTO implements Serializable {
     private float negotiatedPrice;
     private List<Integer> seasonList;
     //danqt - end
-
+    private int newStatus;
 //duchc - begin
     private String status; // for showing product status
     private String categoryName; // for showing category Name
@@ -499,6 +499,20 @@ public class ProductDTO implements Serializable {
      */
     public void setSeasonList(List<Integer> seasonList) {
         this.seasonList = seasonList;
+    }
+
+    /**
+     * @return the newStatus
+     */
+    public int getNewStatus() {
+        return newStatus;
+    }
+
+    /**
+     * @param newStatus the newStatus to set
+     */
+    public void setNewStatus(int newStatus) {
+        this.newStatus = newStatus;
     }
 
 }
