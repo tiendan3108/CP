@@ -133,53 +133,60 @@
                                     </tr>
                                     <th>Trạng thái</th>
                                     <td id='r_status'> <b>
+
                                             <c:choose>
-                                                <c:when test="${c.product.productStatusID == 6}">
-                                                    <font color="red">ĐĂNG KÝ HỦY</font>
+                                                <c:when test="${c.consignmentStatusID == 1}">
+                                                    <font color="green">CHỜ XỬ LÝ</font>
                                                 </c:when>
-                                                <c:otherwise>
+                                                <c:when test="${c.consignmentStatusID == 2}">
+
                                                     <c:choose>
-                                                        <c:when test="${c.consignmentStatusID == 1}">
-                                                            <font color="green">CHỜ XỬ LÝ</font>
+                                                        <c:when test="${not empty c.reviewProductDate}">
+                                                            <font color="red">TỪ CHỐI KHI NHẬN HÀNG</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 2}">
-                                                            <font color="red">ĐÃ TỪ CHỐI</font>
+                                                        <c:otherwise>
+                                                            <font color="red">TỪ CHỐI KHI DUYỆT YÊU CẦU</font>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 3}">
+                                                    <font color="blue">ĐÃ CHẤP NHẬN YÊU CẦU</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 4}">
+                                                    <font color="blue">HOÀN THÀNH</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 6}">
+                                                    <font color="blue">ĐÃ HẾT HẠN</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 7}">
+                                                    <font color="red">HOÀN TẤT HỦY</font>
+                                                </c:when>
+
+                                                <c:when test="${c.consignmentStatusID == 5}">
+                                                    <c:choose>
+                                                        <c:when test="${c.product.productStatusID == 2}">
+                                                            <font color="blue">ĐÃ NHẬP HÀNG</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 3}">
-                                                            <font color="blue">ĐÃ CHẤP NHẬN YÊU CẦU</font>
+                                                        <c:when test="${c.product.productStatusID == 3}">
+                                                            <font color="blue">ĐANG TRÊN WEB</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 4}">
-                                                            <font color="blue">HOÀN THÀNH</font>
+                                                        <c:when test="${c.product.productStatusID == 4}">
+                                                            <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 6}">
-                                                            <font color="blue">ĐÃ HẾT HẠN</font>
-                                                        </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 7}">
-                                                            <font color="red">HOÀN TẤT HỦY</font>
+                                                        <c:when test="${c.product.productStatusID == 5}">
+                                                            <font color="blue">ĐÃ BÁN</font>
                                                         </c:when>
 
-                                                        <c:when test="${c.consignmentStatusID == 5}">
-                                                            <c:choose>
-                                                                <c:when test="${c.product.productStatusID == 2}">
-                                                                    <font color="blue">ĐÃ NHẬP HÀNG</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 3}">
-                                                                    <font color="blue">ĐANG TRÊN WEB</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 4}">
-                                                                    <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 5}">
-                                                                    <font color="blue">ĐÃ BÁN</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 7}">
-                                                                    <font color="blue">ĐÃ HOÀN THÀNH</font>
-                                                                </c:when>
-                                                            </c:choose>
+                                                        <c:when test="${c.product.productStatusID == 6}">
+                                                            <font color="red">ĐĂNG KÝ HỦY</font>
+                                                        </c:when>
+                                                        <c:when test="${c.product.productStatusID == 7}">
+                                                            <font color="blue">ĐÃ HOÀN THÀNH</font>
                                                         </c:when>
                                                     </c:choose>
-                                                </c:otherwise>
+                                                </c:when>
                                             </c:choose>
+
                                         </b>
                                     </td>
                                     </tr>
