@@ -1496,6 +1496,9 @@
                     });
                 }
                 ;
+                $("#sold_returnPrice").change(function () {
+                    loadPaypalInformation();
+                });
                 //end sold modal
                 //start expired modal
                 $(document).on("click", ".expiredModal", function () {
