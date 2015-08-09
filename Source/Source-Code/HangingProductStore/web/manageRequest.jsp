@@ -1621,44 +1621,44 @@
 
                                 $("#r_productNameText").html(data.product.name);
                                 $('#r_category').val(data.product.categoryID).change();
-                                
+
                                 $('#r_categoryText').html($('#r_category option:selected').text());
                                 $("#r_brandText").html(data.product.brand);
-                                
+
                                 //$("r_brandText").val(data.product.brand);
                                 $("#r_descriptionText").html(data.product.description);
                                 //alert(data.product.newStatus);
                                 $("#r_newStatusText").html(data.product.newStatus);
-                                
-                                
+
+
                                 $("#r_txtFullNameText").html(data.name);
                                 $("#r_txtPhoneText").html(data.phone);
-                                
+
                                 $("#r_txtEmailText").html(data.email);
-                                if($("#r_txtEmailText").html().length == 0){
+                                if ($("#r_txtEmailText").html().length == 0) {
                                     $("#r_txtEmailText").html("----");
                                 }
                                 $("#r_txtAddressText").html(data.address);
-                                
-                                if($("#r_txtAddressText").html().length == 0){
+
+                                if ($("#r_txtAddressText").html().length == 0) {
                                     $("#r_txtAddressText").html("----");
                                 }
-                                
-                                if(data.paypalAccount != null){
+
+                                if (data.paypalAccount != null) {
                                     $("#r_txtPaypalAccountText").html(data.paypalAccount);
                                     $("#r_divCCNumber").show();
-                                }else{
+                                } else {
                                     $("#r_txtPaypalAccountText").html("");
                                     $("#r_divCCNumber").hide();
                                 }
-                                
-                                if(data.deliveryMethod == 0){
+
+                                if (data.deliveryMethod == 0) {
                                     $("#r_rdDeliveryMethodText").html("<font color='blue'>Cửa hàng đến nhận</font>");
-                                }else{
+                                } else {
                                     $("#r_rdDeliveryMethodText").html("<font color='green'>Tự mang đến</font>");
                                 }
-                                
-                                
+
+
                                 $("#r_footer").show();
                                 $("#ar_footer").hide();
                                 $("#ar_price").hide();
@@ -1885,9 +1885,10 @@
                 }
 
                 if (check) {
-                    if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
+                    var negotiatedPrice = $('#ar_negotiatedPrice').val();
+                    if (!isNaN(negotiatedPrice) && negotiatedPrice.length > 0) {
                         //$('form#r_form').submit();
-                        if ($('#ar_negotiatedPrice').val() > 0) {
+                        if (parseFloat(negotiatedPrice) > 0) {
                             acceptProduct();
                         } else {
                             alert("Giá thỏa thuận phải lớn hơn 0!");
@@ -2276,12 +2277,17 @@
                         }
                     }
                 }
-
-                if ($('#addConsignment_txtNegotiatedPrice').val().length > 0 && !isNaN($('#addConsignment_txtNegotiatedPrice').val())) {
-                    $('#erNegotiatedPrice').html("");
+                var negotiatedPrice = $('#addConsignment_txtNegotiatedPrice').val();
+                if (negotiatedPrice.length > 0 && !isNaN(negotiatedPrice)) {
+                    if (parseFloat(negotiatedPrice) > 0) {
+                        $('#erNegotiatedPrice').html("");
+                    } else {
+                        $('#erNegotiatedPrice').html("<font color='red'>Giá phải lớn hơn 0</font>");
+                        check = false;
+                    }
                 }
                 else {
-                    $('#erNegotiatedPrice').html("<font color='red'>Xin nhập đúng giá</font>");
+                    $('#erNegotiatedPrice').html("<font color='red'>Xin nhập kiểu số</font>");
                     check = false;
                 }
 
