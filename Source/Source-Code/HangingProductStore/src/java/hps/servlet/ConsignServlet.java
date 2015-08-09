@@ -64,6 +64,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("PRODUCT");
                 session.removeAttribute("STOREOWNER");
                 session.removeAttribute("CONSIGNMENT");
+                session.removeAttribute("DESIREPRICE");
 
             }
             String url = "";
@@ -211,6 +212,8 @@ public class ConsignServlet extends HttpServlet {
 
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");
+                session.removeAttribute("DESIREPRICE");
+                
 
                 url = STEP3;
 //                request.setAttribute("backlink", url);
@@ -242,6 +245,7 @@ public class ConsignServlet extends HttpServlet {
                         session.removeAttribute("STORELIST");
                         session.removeAttribute("ASIN");
                         session.removeAttribute("AMAZONLIST");
+                        session.removeAttribute("DESIREPRICE");
 
                         response.sendRedirect(request.getContextPath() + "/ConsignmentRequestReceive");
                         return;
@@ -275,6 +279,7 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("AMAZONLIST");
                 session.removeAttribute("CONSIGNMENT");
                 session.removeAttribute("STOREOWNER");
+                session.removeAttribute("DESIREPRICE");
             }
 //            if (action.equals("getBrand")) {
 //                String term = request.getParameter("term");
