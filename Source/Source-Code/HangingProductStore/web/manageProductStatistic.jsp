@@ -183,15 +183,8 @@
                                                 <option value="Từ chối khi duyệt yêu cầu">Từ chối khi duyệt yêu cầu</option>
                                                 <option value="Từ chối khi đến nhận hàng">Từ chối khi đến nhận hàng</option>
                                                 <option value="Đồng ý nhận kí gửi">Đồng ý nhận kí gửi</option>
-                                                <option value="Đã nhận hàng">Đã nhận hàng</option>
-                                                <option value="Đang trên web">Đang trên web</option>
-                                                <option value="Đã được đặt hàng">Đã được đặt hàng</option>
-                                                <option value="Đã bán">Đã bán</option>
-                                                <option value="Đã hết hạn">Đã hết hạn</option>
-                                                <option value="Đã hủy ký gửi">Đã hủy ký gửi</option>
-                                                <option value="Đăng ký hủy ký gửi">Đăng ký hủy ký gửi</option>
+                                                <option value="Đã nhận hàng kí gửi">Đã nhận hàng kí gửi</option>
                                                 <option value="Hoàn tất">Hoàn tất</option>
-                                                <option value="Khác">Khác</option>
                                             </select>
                                             <label style="float: right">Trạng thái : </label>
                                         </div>
@@ -218,40 +211,24 @@
 
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${item.product.productStatusID == 6}">
-                                                                <c:choose>
-                                                                    <c:when test="${item.consignmentStatusID == 7}">Đã hủy ký gửi</c:when>
-                                                                    <c:otherwise>Đăng ký hủy ký gửi</c:otherwise>
-                                                                </c:choose>
+                                                            <c:when test="${item.consignmentStatusID ==1}">
+                                                                Chờ duyệt yêu cầu
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewProductDate}">
+                                                                Từ chối khi duyệt yêu cầu
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewProductDate}">
+                                                                Từ chối khi đến nhận hàng
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID ==3}">
+                                                                Đồng ý nhận kí gửi
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID ==5}">
+                                                                Đã nhận hàng kí gửi
                                                             </c:when>
                                                             <c:otherwise>
-                                                                <c:choose>
-                                                                    <c:when test="${item.consignmentStatusID == 1}">Chờ duyệt yêu cầu</c:when>
-                                                                    <c:when test="${item.consignmentStatusID == 2}">
-                                                                        <c:choose>
-                                                                            <c:when test="${not empty item.reviewProductDate}">Từ chối khi đến nhận hàng</c:when>
-                                                                            <c:when test="${not empty item.reviewRequestDate}">Từ chối khi duyệt yêu cầu</c:when>
-                                                                        </c:choose>
-                                                                    </c:when>
-
-                                                                    <c:when test="${item.consignmentStatusID == 3 && not empty item.reviewRequestDate}">Đồng ý nhận ký gửi</c:when>
-
-                                                                    <c:when test="${item.consignmentStatusID == 5}">
-                                                                        <c:choose>
-                                                                            <c:when test="${item.product.productStatusID == 2}">Đã nhận hàng</c:when>
-                                                                            <c:when test="${item.product.productStatusID == 3}">Đang trên web</c:when>
-                                                                            <c:when test="${item.product.productStatusID == 4}">Đã được đặt hàng</c:when>
-                                                                            <c:when test="${item.product.productStatusID == 5}">Đã bán</c:when>
-                                                                            <c:when test="${item.product.productStatusID == 7}">Hoàn tất</c:when>
-                                                                        </c:choose>
-                                                                    </c:when>
-                                                                    <c:when test="${item.consignmentStatusID == 4}">Hoàn tất</c:when>
-                                                                    <c:when test="${item.consignmentStatusID == 6}">Đã hết hạn</c:when>
-
-                                                                    <c:otherwise>Khác</c:otherwise>
-                                                                </c:choose>
+                                                                Hoàn tất
                                                             </c:otherwise>
-
                                                         </c:choose>
                                                     </td>
                                                     <td>
