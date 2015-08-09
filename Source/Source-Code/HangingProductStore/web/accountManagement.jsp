@@ -52,12 +52,7 @@
                                     <span class="username username-hide-on-mobile">${account.fullName}</span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-default">
-                                    <li>
-                                        <a href="extra_profile.html">
-                                            <i class="icon-user"></i> thông tin cá nhân </a>
-                                    </li>
-                                </ul>                           
+                    
                             </li>
                             <li class="dropdown dropdown-user">
                                 <a href="LogoutServlet" class="dropdown-toggle">
@@ -111,7 +106,7 @@
                             <div class="col-md-12">                                                                     
                                         <table class="table table-striped table-hover table-bordered">
                                             <thead>
-                                                <tr>
+                                                <tr style="background-color: #bbdefb">
                                                     <th>STT</th>
                                                     <th>Tên đăng nhập</th>
                                                     <th>Status</th>
@@ -164,7 +159,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 class="text-center">Thêm Tài Khoản</h3>
+                                <h3 style="font-weight: bold" class="text-center">Thêm Tài Khoản</h3>
                             </div>
                             <div style="margin-bottom: 50px" class="modal-body">
                                 <div class="row">
@@ -241,7 +236,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h3 id="aTitle" class="text-center">Sửa Tài Khoản</h3>
+                                <h3 style="font-weight: bold" id="aTitle" class="text-center">Sửa Tài Khoản</h3>
                             </div>
                             <div style="margin-bottom: 50px" class="modal-body">
                                 <div class="row">
