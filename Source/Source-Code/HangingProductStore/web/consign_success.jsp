@@ -84,14 +84,9 @@
 
                                         <div class="tab-content" style="text-align: center" >
                                             <h3>
-                                                Sản phẩm <b>${CONSIGNMENT.product.name}</b> đã được ký gửi 
-                                                <c:if test="${CONSIGNMENT.minPrice > 0}">
-                                                    với giá từ <fmt:formatNumber 
-                                                        value="${CONSIGNMENT.minPrice}" 
-                                                        maxFractionDigits="0" />  đến <fmt:formatNumber 
-                                                        value="${CONSIGNMENT.maxPrice}" 
-                                                        maxFractionDigits="0" />  đồng.
-                                                </c:if>
+                                                Sản phẩm <b>${CONSIGNMENT.product.name}</b> đã được ký gửi với giá mong muốn là <b><fmt:formatNumber 
+                                                        value="${CONSIGNMENT.desirePrice}" 
+                                                        maxFractionDigits="0" /></b> đồng.
                                             </h3>
                                             <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi nhận hàng.</h3>
 

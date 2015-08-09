@@ -700,7 +700,7 @@
                                     <!-- END PRODUCT DESCRIPTION -->
 
                                     <!-- BEGIN CAROUSEL -->
-                                    <div class="col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1 front-carousel" align="center">
+                                    <div class="col-lg-3 col-md-3 col-lg-offset-1 col-md-offset-1 front-carousel" align="left">
 
                                         <div class="carousel slide" id="myCarousel">
                                             <!-- Carousel items -->
@@ -780,7 +780,7 @@
                                                 </div>
 
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá tham khảo</label>
                                                 <div class="col-md-8 col-sm-8" id="r_price" style="padding-top: 8px; font-size: 110%"></div>
@@ -789,7 +789,7 @@
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá mong muốn</label>
                                                 <div class="col-md-8 col-sm-8" id="r_desirePrice" style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
-                                            
+
                                             <div class="form-group" id="ar_price" style="display: none;">
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                 <div class="col-md-6 col-sm-6">
@@ -1489,6 +1489,13 @@
             function setEnableFieldWhenLoadRequestAcceptDetails() {
                 var currentTab = $("#currentTab").val();
                 if (currentTab == "request") {
+
+                    $("#r_labelProductName").attr("disabled", true);
+                    $('#r_labelCategory').attr("disabled", true);
+                    $("#r_labelBrand").attr("disabled", true);
+                    $("#r_labelDescription").attr("disabled", true);
+                    $("#r_newStatus").attr("disabled", true);
+
                     $("#r_productName").attr("disabled", true);
                     $('#r_category').attr("disabled", true);
                     $("#r_brand").attr("disabled", true);
@@ -1500,7 +1507,6 @@
                     $("#r_txtAddress").attr("disabled", true);
                     $("#r_txtPhone").attr("disabled", true);
                     $("#r_txtEmail").attr("disabled", true);
-
                     $("#r_txtPaypalAccount").attr("disabled", true);
                     $("input[name='r_rdPayment']").attr("disabled", true);
                     $("#div_r_rdPayment").hide();
@@ -1562,7 +1568,7 @@
                                 $("#r_price").html("<font color='red'>Không có giá </font>");
                             }
                             $("#r_desirePrice").html(formatDollar(data.desirePrice) + " (Ngàn đồng)");
-                            
+
 
                             $("#r_productID").val(data.product.productID);
                             $("#r_ActionValue").val(data.consigmentID);
@@ -1761,16 +1767,25 @@
                         check = false;
                     }
                 }
-                
+
                 var newStatus = $('#r_newStatus').val();
-                if (isNaN(newStatus)) {
+                if (newStatus.length == 0) {
                     check = false;
                 } else {
-                    if (newStatus > 100 || newStatus < 0) {
+                    if (isNaN(newStatus)) {
                         check = false;
+                    } else {
+                        if (newStatus.indexOf(".") > -1) {
+                            check = false;
+                        } else {
+                            var numStatus = parseInt(newStatus);
+                            if (numStatus > 100 || numStatus < 0) {
+                                check = false;
+                            }
+                        }
                     }
                 }
-                
+
                 if (check) {
                     if (!isNaN($('#ar_negotiatedPrice').val()) && $('#ar_negotiatedPrice').val().length > 0) {
                         //$('form#r_form').submit();

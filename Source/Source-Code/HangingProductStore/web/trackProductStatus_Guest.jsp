@@ -95,8 +95,8 @@
                                         <td id='r_productName'><b>${c.product.name}</b></td>
                                     </tr>
                                     <tr>
-                                        <th width="30%">Mô tả</th>
-                                        <td id='r_description'>${c.product.description}</td>
+                                        <th width="30%">Độ mới</th>
+                                        <td id='r_description'>${c.product.newStatus}%</td>
                                     </tr>
                                     <tr>
                                         <th>Cửa hàng ký gửi</th>
@@ -106,37 +106,31 @@
                                         <th>Ngày ký gửi</th>
                                         <td id='r_createdDate'>${c.createdDate}</td>
                                     </tr>
+                                    <tr>
+                                        <c:choose>
 
-                                    <tr >
-                                        <th>Giá</th>
-
-                                        <td id="r_price">
-                                            <c:choose>
-                                                <c:when test="${c.negotiatedPrice > 0}">
+                                            <c:when test="${c.negotiatedPrice > 0}">
+                                                <th>Giá mong muốn</th>
+                                                <td>
                                                     <fmt:formatNumber type="number"
                                                                       value="${c.negotiatedPrice}" 
                                                                       maxFractionDigits="0"/>&nbsp;(Ngàn đồng)
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:choose>
-                                                        <c:when test="${c.minPrice > 0 or c.maxPrice > 0}">
-                                                            <fmt:formatNumber type="number"
-                                                                              value="${c.minPrice}" 
-                                                                              maxFractionDigits="0"/>
-                                                            &nbsp;~&nbsp; <fmt:formatNumber type="number"
-                                                                              value="${c.maxPrice}" 
-                                                                              maxFractionDigits="0"/>&nbsp;(Ngàn đồng)
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <font color="red"> Chưa có giá </font>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:otherwise>
-                                            </c:choose>
+                                                </td>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <th>Giá mong muốn</th>
+                                                <td>
+                                                    <fmt:formatNumber type="number"
+                                                                      value="${c.desirePrice}" 
+                                                                      maxFractionDigits="0"/> (Ngàn đồng)
+                                                </td> 
+                                            </c:otherwise>
 
-                                        </td> 
+
+
+
+                                        </c:choose>
                                     </tr>
-
                                     <th>Trạng thái</th>
                                     <td id='r_status'> <b>
                                             <c:choose>
@@ -213,6 +207,7 @@
 
                                                 <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
                                                     <tr>
+                                                        <td></td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCancel">
                                                                 HỦY KÝ GỬI
@@ -223,13 +218,13 @@
 
                                             </c:when>
                                             <c:when test="${c.consignmentStatusID == 6}">
-<!--                                                <tr>
-                                                    <td>
-                                                        <button type="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalExtend">
-                                                            GIA HẠN
-                                                        </button> 
-                                                    </td>
-                                                </tr>-->
+                                                <!--                                                <tr>
+                                                                                                    <td>
+                                                                                                        <button type="button"  class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalExtend">
+                                                                                                            GIA HẠN
+                                                                                                        </button> 
+                                                                                                    </td>
+                                                                                                </tr>-->
                                             </c:when>
                                         </c:choose>
                                     </c:if>
@@ -273,30 +268,30 @@
 
                         <c:if test="${c.consignmentStatusID == 6}">
                             <!-- Begin Modal -->
-                            
-                            
-<!--                            <div id="modalExtend" class="modal fade">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title">Gia hạn</h4>
-                                        </div>
-                                        <div class="modal-body" align="center">
-                                            <h3>Bạn có chắc muốn gia hạn không?</h3>
-                                            <h3>Bạn đã quá hạn <b>${requestScope.overDate}</b> ngày và phải chịu phạt <b>${requestScope.extraPayment} ngàn đồng.</b></h3>
-                                            
-                                        </div>
-                                        <div class="modal-footer">
-                                            <form action="TrackProductStatus" method="POST">
-                                                <button type="submit" name="btnAction" class="btn btn-info" value="extend">Đồng ý</button>
-                                                <input type="hidden" name="consignmentID" value="${param.searchValue}"/>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                            </form>
-                                        </div>
-                                    </div> /.modal-content 
-                                </div> /.modal-dialog 
-                            </div> /.modal -->
+
+
+                            <!--                            <div id="modalExtend" class="modal fade">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <h4 class="modal-title">Gia hạn</h4>
+                                                                    </div>
+                                                                    <div class="modal-body" align="center">
+                                                                        <h3>Bạn có chắc muốn gia hạn không?</h3>
+                                                                        <h3>Bạn đã quá hạn <b>${requestScope.overDate}</b> ngày và phải chịu phạt <b>${requestScope.extraPayment} ngàn đồng.</b></h3>
+                                                                        
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="TrackProductStatus" method="POST">
+                                                                            <button type="submit" name="btnAction" class="btn btn-info" value="extend">Đồng ý</button>
+                                                                            <input type="hidden" name="consignmentID" value="${param.searchValue}"/>
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div> /.modal-content 
+                                                            </div> /.modal-dialog 
+                                                        </div> /.modal -->
                         </c:if>
                     </c:if>
                 </div>

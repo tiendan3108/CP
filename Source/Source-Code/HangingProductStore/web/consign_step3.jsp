@@ -80,12 +80,12 @@
                                             <c:if test="${not empty data}">
                                                 <c:if test="${basicPrice <= 0}">
                                                     <div class="alert alert-danger" style="text-align: center">
-                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá sản phẩm của bạn khi đến nhận hàng.</strong>
+                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá chính xác tùy theo tình trạng sản phẩm khi nhận hàng.</strong>
                                                     </div>    
                                                 </c:if>
                                                 <c:if test="${basicPrice > 0}">
                                                     <div class="alert alert-warning" style="text-align: center">
-                                                        <strong>Giá cửa hàng đề nghị là giá mới nhất. Cửa hàng sẽ kiểm tra và định giá chính xác khi đến nhận hàng.</strong>
+                                                        <strong>Giá đề nghị là dành cho sản phẩm mới. Cửa hàng sẽ kiểm tra và định giá chính xác tùy theo tình trạng của sản phẩm khi nhận hàng.</strong>
                                                     </div>    
                                                 </c:if>
                                             </c:if>
@@ -315,12 +315,12 @@
             $("#erDesirePrice").html("<font color='red'>Xin nhập giá mong muốn</font");
         } else {
             if (isNaN(desirePrice)) {
-                $("#erDesirePrice").html("<font color='red'>Không phải số</font");
+                $("#erDesirePrice").html("<font color='red'>Xin nhập đúng số</font");
             } else {
                 if (desirePrice > 0) {
                     if (maxPrice.length > 0) {
                         
-                        if (parseInt(desirePrice) > parseInt(maxPrice)) {
+                        if (parseFloat(desirePrice) > parseFloat(maxPrice)) {
                             $("#erDesirePrice").html("<font color='red'>Giá bạn chọn phải nhỏ hơn hoặc bằng giá tối đa tìm được</font");
                         }else{
                             $("#erDesirePrice").html("");
