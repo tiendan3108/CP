@@ -86,7 +86,7 @@ public class MobileService {
         product = gson.fromJson(input, ProductDetail.class);
         ProductDetailDAO dao = new ProductDetailDAO();
         dao.updateConsignment(product);
-        dao.receiveProduct(product.getProductID());
+        dao.receiveProduct(product.getProductID(),product.getNewStatus());
         return "ok";
     }
 

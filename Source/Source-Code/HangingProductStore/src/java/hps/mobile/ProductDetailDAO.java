@@ -223,19 +223,22 @@ public class ProductDetailDAO {
         }
         return false;
     }
+    
 
-    public boolean receiveProduct(int productID) {
+    public boolean receiveProduct(int productID, int newStatus) {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
             String query = "update Product "
-                    + "Set ProductStatusID = ? "
+                    + "Set ProductStatusID = ? , "
+                    + "NewStatus = ? "
                     + "where ProductID = ? ";
             stm = con.prepareStatement(query);
             stm.setInt(1, ProductStatus.AVAILABLE);
-            stm.setInt(2, productID);
+            stm.setInt(2, newStatus);
+            stm.setInt(3, productID);
             stm.executeUpdate();
             return true;
         } catch (SQLException ex) {
