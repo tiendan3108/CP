@@ -145,9 +145,6 @@
                                 <li id="consignment">
                                     <a href="Statistics?currentTab=consignment">Yêu cầu kí gửi</a>
                                 </li>
-                                <li id="product">
-                                    <a href="Statistics?currentTab=product">Sản phẩm ký gửi</a>
-                                </li>
                             </ul>
                         </li>								
                     </ul>

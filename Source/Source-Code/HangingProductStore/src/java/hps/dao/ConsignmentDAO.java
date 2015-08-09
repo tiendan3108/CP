@@ -1989,16 +1989,16 @@ public class ConsignmentDAO {
                 item = new ConsignmentDTO();
                 item.setName(rs.getString("FullName"));
                 item.setConsigmentID(rs.getString("ConsignmentID"));
-                item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));
-                item.setCancelDate(formatDateString(rs.getString("CancelDate")));
-                item.setAgreeCancelDate(formatDateString(rs.getString("AgreeCancelDate")));
-                item.setReceivedDate(formatDateString(rs.getString("ReceivedDate")));
-                item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
-                item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
-                item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
+                item.setCreatedDate(formatDate(rs.getString("CreatedDate")));
+                item.setCancelDate(formatDate(rs.getString("CancelDate")));
+                item.setAgreeCancelDate(formatDate(rs.getString("AgreeCancelDate")));
+                item.setReceivedDate(formatDate(rs.getString("ReceivedDate")));
+                item.setReviewRequestDate(formatDate(rs.getString("ReviewRequestDate")));
+                item.setReviewProductDate(formatDate(rs.getString("ReviewProductDate")));
+                item.setReturnDate(formatDate(rs.getString("ReturnDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
-                item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));
+                item.setRaiseWebDate(formatDate(rs.getString("RaiseWebDate")));
                 ProductDTO product = new ProductDTO();
                 product.setProductStatusID(rs.getInt("ProductStatusID"));
                 item.setProduct(product);
@@ -2085,6 +2085,22 @@ public class ConsignmentDAO {
             } catch (SQLException ex) {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    private String formatDate(String source) {
+        if (source == null) {
+            return "";
+        }
+        try {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = df.parse(source);
+            String result = df2.format(date);
+            return result;
+        } catch (ParseException ex) {
+            Logger.getLogger(JavaUltilities.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
         }
     }
 }

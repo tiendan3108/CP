@@ -55,15 +55,14 @@ public class StatisticsServlet extends HttpServlet {
             }
             String url = "";
             List<ConsignmentDTO> resultC = null;
-            float totalPrice = 0;
+//            float totalPrice = 0;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
 
-                Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                String today = sdf.format(tempDate);
-
+//                Date tempDate = Calendar.getInstance().getTime();
+//                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//                String today = sdf.format(tempDate);
                 resultC = consignmentDAO.getConsignmentInforForStatisticPage(user.getRoleID());
                 request.setAttribute("resultC", resultC);
                 request.setAttribute("currentTab", "consignment");
