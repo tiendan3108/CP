@@ -983,7 +983,7 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="rc_image" alt="" style="max-height: 400px">
+                                                    <img id="rc_image" alt="" style="max-height: 300px">
                                                     <div class="carousel-caption">
                                                         <p></p>
                                                     </div>
@@ -1022,7 +1022,7 @@
                                                 <td id='rc_createdDate'></td>
                                             </tr>
                                             <tr >
-                                                <th>Giá (VND)</th>
+                                                <th>Giá mong muốn</th>
                                                 <td id="rc_price"></td>
                                             </tr>
                                             <!--                                        <tr>
@@ -1443,17 +1443,16 @@
                     $("#rc_phone").html(data.phone);
                     $("#rc_address").html(data.address);                     //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
 
-                    if (data.minPrice > 0 && data.maxPrice > 0) {
-                        $("#rc_price").html(formatDollar(data.minPrice) + "  ~  " + formatDollar(data.maxPrice));
-                    } else {
-                        $("#rc_price").html("<font color='red'>Không có giá </font>");
-                    }
+
+                    $("#rc_price").html(formatDollar(data.desirePrice) + " (Ngàn đồng)");
+
+
 
 
                     $("#rc_trReason").hide();
                     $("#rc_reason").html("");
                     if (data.product.productStatusID == 6) {
-                        $("#rc_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
+                        $("#rc_status").html("<b><font color='red'>ĐĂNG KÝ HỦY</font></b>");
                     }
                     else {
                         if (data.consignmentStatusID == 1) {
@@ -1461,7 +1460,12 @@
                         } else if (data.consignmentStatusID == 3) {
                             $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
                         } else if (data.consignmentStatusID == 2) {
-                            $("#rc_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
+                            if(data.reviewProductDate != null){
+                            $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI NHẬN HÀNG</font></b>");    
+                            }else{
+                                $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI DUYỆT HÀNG</font></b>");
+                            }
+                            
                             $("#rc_trReason").show();
                             $("#rc_reason").html(data.reason);
                         } else if (data.consignmentStatusID == 4) {
@@ -1484,7 +1488,7 @@
                             }
                         }
                         else if (data.consignmentStatusID == 7) {
-                            $("#rc_status").html("<b><font color='red'>ĐÃ TRẢ HÀNG</font></b>");
+                            $("#rc_status").html("<b><font color='red'>HOÀN TẤT HỦY</font></b>");
                         }
                     }
                 });
@@ -1628,7 +1632,7 @@
                                 //$("r_brandText").val(data.product.brand);
                                 $("#r_descriptionText").html(data.product.description);
                                 //alert(data.product.newStatus);
-                                $("#r_newStatusText").html(data.product.newStatus);
+                                $("#r_newStatusText").html(data.product.newStatus + "%");
 
 
                                 $("#r_txtFullNameText").html(data.name);

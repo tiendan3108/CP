@@ -423,7 +423,7 @@ public class ConsignmentDAO {
             con = DBUltilities.makeConnection();
             String sql = "SELECT *"
                     + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-                    + " WHERE C.ConsignmentStatusID = 1 AND C.NegotiatedPrice IS NULL AND C.StoreOwnerID = ? AND P.ProductStatusID = 6 "
+                    + " WHERE (C.ReviewProductDate IS NULL) AND C.ConsignmentStatusID = 7 AND P.ProductStatusID = 1 AND C.NegotiatedPrice IS NULL AND C.StoreOwnerID = ? "
                     + " ORDER BY C.CancelDate DESC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
@@ -913,36 +913,53 @@ public class ConsignmentDAO {
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
-            String sql = "UPDATE Product SET ProductStatusID = 6 "
-                    + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+
+            String sql = "SELECT ConsignmentStatusID FROM Consignment WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setString(1, consignmentID);
-            int result = stm.executeUpdate();
-            if (result > 0) {
-                sql = "SELECT ConsignmentStatusID FROM Consignment WHERE ConsignmentID = ?";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, consignmentID);
-                ResultSet rs = stm.executeQuery();
-                if (rs.next()) {
-                    int consignmentStatusID = rs.getInt("ConsignmentStatusID");
-                    if (consignmentStatusID == GlobalVariables.CONSIGNMENT_WAITING || consignmentStatusID == GlobalVariables.CONSIGNMENT_ACCEPTED) {
-                        sql = "UPDATE Consignment SET ConsignmentStatusID = 1, CancelDate = GETDATE()"
-                                + " WHERE ConsignmentID = ?";
-                        stm = con.prepareStatement(sql);
-                        stm.setString(1, consignmentID);
-                    } else {
-                        sql = "UPDATE Consignment SET ConsignmentStatusID = 7, CancelDate = GETDATE(), CancelFee = (SELECT ((NegotiatedPrice)*15/100) FROM Consignment WHERE ConsignmentID = ?) "
-                                + " WHERE ConsignmentID = ?";
-                        stm = con.prepareStatement(sql);
-                        stm.setString(1, consignmentID);
-                        stm.setString(2, consignmentID);
-                    }
+            ResultSet rs = stm.executeQuery();
+            int result = 0;
+            if (rs.next()) {
+                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
+                if (consignmentStatusID == GlobalVariables.CONSIGNMENT_WAITING || consignmentStatusID == GlobalVariables.CONSIGNMENT_ACCEPTED) {
+                    sql = "UPDATE Consignment SET ConsignmentStatusID = 7, CancelDate = GETDATE()"
+                            + " WHERE ConsignmentID = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, consignmentID);
                     result = stm.executeUpdate();
                     if (result > 0) {
-                        return true;
+                        sql = "UPDATE Product SET ProductStatusID = 1 "
+                                + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                        stm = con.prepareStatement(sql);
+                        stm.setString(1, consignmentID);
+                        result = stm.executeUpdate();
+                        if(result > 0 ){
+                            return true;
+                        }
+                    }
+                } else {
+                    sql = "UPDATE Consignment SET CancelDate = GETDATE(), CancelFee = (SELECT ((NegotiatedPrice)*15/100) FROM Consignment WHERE ConsignmentID = ?) "
+                            + " WHERE ConsignmentID = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, consignmentID);
+                    stm.setString(2, consignmentID);
+
+                    result = stm.executeUpdate();
+                    if (result > 0) {
+                        sql = "UPDATE Product SET ProductStatusID = 6 "
+                                + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                        stm = con.prepareStatement(sql);
+                        stm.setString(1, consignmentID);
+                        result = stm.executeUpdate();
+                        if (result > 0) {
+                            return true;
+                        }
                     }
                 }
-
+//                     result = stm.executeUpdate();
+//                    if (result > 0) {
+//                        return true;
+//                    }
             }
 
             return false;
@@ -1137,7 +1154,6 @@ public class ConsignmentDAO {
         consignment.setDeliveryMethod(deliveryMethod);
         consignment.setDesirePrice(desirePrice);
 
-        
         String productName = rs.getString("ProductName");
         String serialNumber = rs.getString("SerialNumber");
         String purchasedDate = rs.getString("PurchasedDate");
@@ -1158,7 +1174,6 @@ public class ConsignmentDAO {
         int newStatus = rs.getInt("NewStatus");
         product.setNewStatus(newStatus);
 
-        
         consignment.setProduct(product);
         return consignment;
     }

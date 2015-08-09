@@ -110,7 +110,7 @@
                                         <c:choose>
 
                                             <c:when test="${c.negotiatedPrice > 0}">
-                                                <th>Giá mong muốn</th>
+                                                <th>Giá thỏa thuận</th>
                                                 <td>
                                                     <fmt:formatNumber type="number"
                                                                       value="${c.negotiatedPrice}" 
@@ -135,7 +135,7 @@
                                     <td id='r_status'> <b>
                                             <c:choose>
                                                 <c:when test="${c.product.productStatusID == 6}">
-                                                    <font color="red">ĐÃ HỦY</font>
+                                                    <font color="red">ĐĂNG KÝ HỦY</font>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:choose>
@@ -154,8 +154,8 @@
                                                         <c:when test="${c.consignmentStatusID == 6}">
                                                             <font color="blue">ĐÃ HẾT HẠN</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 6}">
-                                                            <font color="red">ĐÃ TRẢ HÀNG</font>
+                                                        <c:when test="${c.consignmentStatusID == 7}">
+                                                            <font color="red">HOÀN TẤT HỦY</font>
                                                         </c:when>
 
                                                         <c:when test="${c.consignmentStatusID == 5}">
