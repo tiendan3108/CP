@@ -62,10 +62,11 @@ public class PublishProduct extends HttpServlet {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null, image = null, action = null, isSpecial = null, imagePath = null;
+            String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null,
+                    image = null, action = null, isSpecial = null, imagePath = null, temp_NewRatio = null;
             String tempSeason = "";
             List<String> season = new ArrayList<>();
-            int categoryID = 0, productID = 0, special = 2;
+            int categoryID = 0, productID = 0, special = 2, newRatio = 0;
             List<FileItem> items = null;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
@@ -82,6 +83,11 @@ public class PublishProduct extends HttpServlet {
                         switch (item.getFieldName()) {
                             case "btnAction":
                                 action = item.getString();
+                                break;
+                            case "txtNewRatio":
+                                temp_NewRatio = item.getString();
+                                newRatio = Integer.parseInt(temp_NewRatio);
+                                break;
                             case "txtProductName":
                                 productName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
@@ -154,7 +160,7 @@ public class PublishProduct extends HttpServlet {
                     if (isSpecial != null && isSpecial.equals("notSpecial")) {
                         special = SpecialProduct.SPECIAL;
                     }
-                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, imagePath, special);
+                    ProductDTO product = new ProductDTO(productID, productName, serialNumber, brand, categoryID, description, imagePath, special, newRatio);
                     if (tempSeason.contains("1")) {
                         season.add("1");
                     }

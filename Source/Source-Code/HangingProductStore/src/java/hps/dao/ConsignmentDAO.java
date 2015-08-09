@@ -1983,6 +1983,7 @@ public class ConsignmentDAO {
                 item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
+                item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));
                 ProductDTO product = new ProductDTO();
                 product.setProductStatusID(rs.getInt("ProductStatusID"));
                 item.setProduct(product);
@@ -2022,7 +2023,7 @@ public class ConsignmentDAO {
         ProductDTO product = null;
         try {
             conn = DBUltilities.makeConnection();
-            query = "SELECT c.*, p.ProductName, p.Image, p.Brand, ca.CategoryName FROM Consignment c, Product p, Category ca WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID AND p.CategoryID = ca.CategoryID";
+            query = "SELECT c.*, p.*, ca.CategoryName FROM Consignment c, Product p, Category ca WHERE c.ConsignmentID = ? AND c.ProductID = p.ProductID AND p.CategoryID = ca.CategoryID";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
@@ -2030,14 +2031,14 @@ public class ConsignmentDAO {
                 item = new ConsignmentDTO();
                 item.setName(rs.getString("FullName"));
                 item.setConsigmentID(rs.getString("ConsignmentID"));
-                item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));
-                item.setCancelDate(formatDateString(rs.getString("CancelDate")));
-                item.setAgreeCancelDate(formatDateString(rs.getString("AgreeCancelDate")));
-                item.setReceivedDate(formatDateString(rs.getString("ReceivedDate")));
-                item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));
-                item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));
-                item.setReturnDate(formatDateString(rs.getString("ReturnDate")));
-                item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));
+                item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));//
+                item.setCancelDate(formatDateString(rs.getString("CancelDate")));//
+                item.setAgreeCancelDate(formatDateString(rs.getString("AgreeCancelDate")));//
+                item.setReceivedDate(formatDateString(rs.getString("ReceivedDate")));//
+                item.setReviewRequestDate(formatDateString(rs.getString("ReviewRequestDate")));//
+                item.setReviewProductDate(formatDateString(rs.getString("ReviewProductDate")));//
+                item.setReturnDate(formatDateString(rs.getString("ReturnDate")));//
+                item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));//
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setEmail(rs.getString("Email"));
                 item.setReturnPrice(rs.getFloat("ReturnedPrice"));
@@ -2048,6 +2049,7 @@ public class ConsignmentDAO {
                 product.setImage(rs.getString("Image"));
                 product.setBrand(rs.getString("Brand"));
                 product.setCategoryName(rs.getString("CategoryName"));
+                product.setSellDate(formatDateString(rs.getString("SellDate")));
                 item.setProduct(product);
             }
             return item;

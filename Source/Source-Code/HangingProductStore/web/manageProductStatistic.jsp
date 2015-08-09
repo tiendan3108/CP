@@ -342,7 +342,7 @@
                                             <div class="form-horizontal">
 
                                                 <div class="form-group" id="div_c_createdDate">
-                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày ký gửi</label>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày tạo ký gửi</label>
                                                     <div class="col-md-7 col-sm-7" id="c_createdDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
                                                 <div class="form-group" id="div_c_refuseProductDate">
@@ -350,14 +350,21 @@
                                                     <div class="col-md-7 col-sm-7" id="c_refuseProductDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
                                                 <div class="form-group" id="div_c_reviewProductDate">
-                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày nhận hàng</label>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày nhận sản phẩm</label>
                                                     <div class="col-md-7 col-sm-7" id="c_reviewProductDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
                                                 <div class="form-group" id="div_c_returnDate">
                                                     <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày trả tiền khách hàng</label>
                                                     <div class="col-md-7 col-sm-7" id="c_returnDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
-
+                                                <div class="form-group" id="div_c_cancelDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_cancelDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                                <div class="form-group" id="div_c_sellDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày bán sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_sellDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--END LEFT TAB -->
@@ -377,7 +384,10 @@
                                                     <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày đăng lên web</label>
                                                     <div class="col-md-7 col-sm-7" id="c_publishOnWebDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
-
+                                                <div class="form-group" id="div_c_receivedDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hoàn trả sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_receivedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--END RIGHT TAB -->
@@ -599,57 +609,64 @@
 
                     $('#c_createdDate').text(respone.createdDate);
 
-                    $("#c_reviewRequestDate").text('');
-                    $("#div_c_reviewRequestDate").attr("style", "display:none;");
-                    $("#div_c_refuseRequestDate").attr("style", "display:none;");
-                    $("#c_refuseRequestDate").text('');
-                    if ((respone.consignmentStatusID != 2 && respone.reviewRequestDate != "") || (respone.consignmentStatusID == 2 && respone.reviewProductDate != "")) {
-                        $("#div_c_reviewRequestDate").removeAttr("style");
-                        $("#div_c_reviewRequestDate").attr("style", "display:block;");
-                        $("#c_reviewRequestDate").text(respone.reviewRequestDate);
-                    } else {
-                        if ((respone.consignmentStatusID == 2 && respone.reviewRequestDate != "")) {
-                            $("#div_c_refuseRequestDate").removeAttr("style");
-                            $("#div_c_refuseRequestDate").attr("style", "display:block;");
-                            $("#c_refuseRequestDate").text(respone.reviewRequestDate);
+                    $('#div_c_refuseProductDate').hide();
+                    $('#div_c_reviewProductDate').hide();
+                    $('#div_c_returnDate').hide();
+                    $('#div_c_cancelDate').hide();
+                    $('#div_c_receivedDate').hide();
+                    $('#div_c_reviewRequestDate').hide();
+                    $('#div_c_refuseRequestDate').hide();
+                    $('#div_c_publishOnWebDate').hide();
+                    $('#div_c_sellDate').hide();
+                    $('#bonus_infor').hide();
+
+                    $('#c_reviewRequestDate').text(respone.reviewRequestDate);
+                    $('#c_reviewProductDate').text(respone.reviewProductDate);
+                    $('#c_refuseRequestDate').text(respone.reviewRequestDate);
+                    $('#c_refuseProductDate').text(respone.reviewProductDate);
+                    $('#c_returnDate').text(respone.returnDate);
+                    $('#c_cancelDate').text(respone.cancelDate);
+                    $('#c_receivedDate').text(respone.agreeCancelDate);
+                    $('#c_sellDate').text(respone.product.sellDate);
+                    $('#c_publishOnWebDate').text(respone.raiseWebDate);
+
+                    if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {//refuse request
+                        $('#div_c_refuseProductDate').show();
+                        $('#div_c_reviewRequestDate').show();
+                    }
+                    if (respone.consignmentStatusID == 2 && respone.reviewProductDate == "") {//retuse product
+                        $('#div_c_refuseRequestDate').show();
+                    }
+                    if (respone.consignmentStatusID == 3) {//accept request
+                        $('#div_c_reviewRequestDate').show();
+                    }
+                    if (respone.consignmentStatusID == 5) {// received product
+                        if (respone.raiseWebDate == "") {
+                            $('#div_c_publishOnWebDate').hide();//not yet raise web
+                        } else {
+                            $('#div_c_publishOnWebDate').show();//raise web
                         }
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
                     }
-                    $("#div_c_reviewProductDate").attr("style", "display:none;");
-                    $("#c_reviewProductDate").text('');
-                    $("#c_publishOnWebDate").text('');
-                    $("#div_c_publishOnWebDate").attr("style", "display:none;");
-                    if (respone.consignmentStatusID != 2 && respone.reviewProductDate != "") {
-                        $("#div_c_reviewProductDate").removeAttr("style");
-                        $("#div_c_reviewProductDate").attr("style", "display:block;");
-                        $("#c_reviewProductDate").text(respone.reviewProductDate);
-                    } else {
-                        $("#c_refuseProductDate").text('');
-                        $("#div_c_refuseProductDate").attr("style", "display:none;");
-                        if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {
-                            $("#div_c_refuseProductDate").removeAttr("style");
-                            $("#div_c_refuseProductDate").attr("style", "display:block;");
-                            $("#c_refuseProductDate").text(respone.reviewProductDate);
+                    if (respone.cancelDate != "") {
+                        if (respone.agreeCancelDate != "") {
+                            $('#div_c_receivedDate').show();
                         }
+                        $('#div_c_cancelDate').show();
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        $('#div_c_publishOnWebDate').show();//raise web
                     }
-                    $("#c_publishOnWebDate").text('');
-                    $("#div_c_publishOnWebDate").attr("style", "display:none;");
-                    if (respone.raiseWebDate != "") {
-                        $("#div_c_publishOnWebDate").removeAttr("style");
-                        $("#div_c_publishOnWebDate").attr("style", "display:block;");
-                        $("#c_publishOnWebDate").text(respone.raiseWebDate);
+                    if (respone.product.sellDate != "") {
+                        $('#div_c_sellDate').show();
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        $('#div_c_publishOnWebDate').show();//raise web
                     }
-                    $("#c_returnDate").text('');
-                    $("#div_c_returnDate").attr("style", "display:none;");
-                    if (respone.returnDate != "") {
-                        $("#div_c_returnDate").removeAttr("style");
-                        $("#div_c_returnDate").attr("style", "display:block;");
-                        $("#c_returnDate").text(respone.returnDate);
-                    }
-                    if (respone.returnPrice > 0) {
-                        $("#bonus_infor").show();
-                        $("#c_returnedPrice").text(respone.returnPrice);
-                    } else {
-                        $("#bonus_infor").hide();
+                    if (respone.returnDate != "" && respone.returnPrice != 0) {
+                        $('#bonus_infor').show();
+                        $('#c_returnedPrice').text(respone.returnPrice);
                     }
                 });
                 $('#detailModal').modal('show');

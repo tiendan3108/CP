@@ -74,7 +74,7 @@ public class ProductDTO implements Serializable {
         this.negotiatedPrice = negotiatedPrice;
     }
 
-    public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image, int isSpecial) {
+    public ProductDTO(int productID, String productName, String serialNumber, String brand, int categoryID, String description, String image, int isSpecial, int newStatus) {
         this.productID = productID;
         this.name = productName;
         this.serialNumber = serialNumber;
@@ -82,6 +82,7 @@ public class ProductDTO implements Serializable {
         this.categoryID = categoryID;
         this.description = description;
         this.image = image;
+        this.newStatus = newStatus;
         this.isSpecial = isSpecial;
     }
 
@@ -127,11 +128,11 @@ public class ProductDTO implements Serializable {
     //danqt - end
 
     //ban cu anh huon DanqtDAO
-    public ProductDTO(int productID, String name, String serialNumber, String purchasedDate, int categoryID, String brand, String description, String image, int isSpecial) {
+    public ProductDTO(int productID, String name, String serialNumber, int newStatus, int categoryID, String brand, String description, String image, int isSpecial) {
         this.productID = productID;
         this.name = name;
         this.serialNumber = serialNumber;
-        this.purchasedDate = purchasedDate;
+        this.newStatus = newStatus;
         this.categoryID = categoryID;
         this.brand = brand;
         this.description = description;

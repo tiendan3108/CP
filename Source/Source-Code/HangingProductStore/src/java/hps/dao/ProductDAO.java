@@ -1131,7 +1131,7 @@ public class ProductDAO {
             }
             if (product.getNewStatus() > 0) {
                 stm.setInt(3, product.getNewStatus());
-                
+
             } else {
                 stm.setNull(3, java.sql.Types.INTEGER);
             }
@@ -1205,7 +1205,7 @@ public class ProductDAO {
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
-                //update set consignment consignment status
+                //update set consignment status
                 query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setInt(1, ConsignmentStatus.CANCEL);
@@ -1256,7 +1256,7 @@ public class ProductDAO {
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
                 //update consignment back to received
-                query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
+                query = "UPDATE Consignment SET CancelDate = NULL, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setInt(1, ConsignmentStatus.RECEIVED);
                 stmUpdateConsignment.setString(2, consignmentID);
@@ -1367,7 +1367,7 @@ public class ProductDAO {
             if (product.getImage() == null) {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
-                        + "Description = ?, ProductStatusID = 3, IsSpecial = ? "
+                        + "Description = ?, ProductStatusID = 3, IsSpecial = ?, NewStatus = ? "
                         + "WHERE ProductID = ? AND ProductStatusID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
@@ -1376,12 +1376,13 @@ public class ProductDAO {
                 stmProduct.setString(4, product.getBrand());
                 stmProduct.setString(5, product.getDescription());
                 stmProduct.setInt(6, product.getIsSpecial());
-                stmProduct.setInt(7, product.getProductID());
-                stmProduct.setInt(8, status);
+                stmProduct.setInt(7, product.getNewStatus());
+                stmProduct.setInt(8, product.getProductID());
+                stmProduct.setInt(9, status);
             } else {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
-                        + "Description = ?, Image = ?, ProductStatusID = 3 , IsSpecial = ? "
+                        + "Description = ?, Image = ?, ProductStatusID = 3 , IsSpecial = ?, NewStatus = ? "
                         + "WHERE ProductID = ? AND ProductStatusID = ?";
                 stmProduct = conn.prepareStatement(query);
                 stmProduct.setString(1, product.getName());
@@ -1391,8 +1392,9 @@ public class ProductDAO {
                 stmProduct.setString(5, product.getDescription());
                 stmProduct.setString(6, product.getImage());
                 stmProduct.setInt(7, product.getIsSpecial());
-                stmProduct.setInt(8, product.getProductID());
-                stmProduct.setInt(9, status);
+                stmProduct.setInt(8, product.getNewStatus());
+                stmProduct.setInt(9, product.getProductID());
+                stmProduct.setInt(10, status);
             }
             resultProduct = stmProduct.executeUpdate();
 
@@ -1514,11 +1516,11 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         ProductDTO result = null;
-        String productName = "", serialNumber = "", purchasedDate = "", brand = "", description = "", image = "";
-        int categoryID = 0, isSpecial = 0;
+        String productName = "", serialNumber = "", brand = "", description = "", image = "";
+        int categoryID = 0, isSpecial = 0, newstatus = 0;
         try {
             con = DBUltilities.makeConnection();
-            String query = "SELECT ProductName, SerialNumber, PurchasedDate, "
+            String query = "SELECT ProductName, SerialNumber, NewStatus, "
                     + "CategoryID, Brand, Description, Image, IsSpecial "
                     + "FROM Product WHERE ProductID = ?";
             stm = con.prepareStatement(query);
@@ -1527,13 +1529,14 @@ public class ProductDAO {
             while (rs.next()) {
                 productName = rs.getString("ProductName");
                 serialNumber = rs.getString("SerialNumber");
-                purchasedDate = formatDateString(rs.getString("PurchasedDate"));
+                newstatus = rs.getInt("NewStatus");
                 brand = rs.getString("Brand");
+                newstatus = rs.getInt("NewStatus");
                 description = rs.getString("Description");
                 image = rs.getString("Image");
                 categoryID = rs.getInt("CategoryID");
                 isSpecial = rs.getInt("IsSpecial");
-                result = new ProductDTO(productID, productName, serialNumber, purchasedDate, categoryID, brand, description, image, isSpecial);
+                result = new ProductDTO(productID, productName, serialNumber, newstatus, categoryID, brand, description, image, isSpecial);
             }
             return result;
         } catch (SQLException ex) {

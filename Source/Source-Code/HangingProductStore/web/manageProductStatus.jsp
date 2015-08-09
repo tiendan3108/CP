@@ -794,10 +794,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Ngày mua hàng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới</label>
                                                             <div class="col-sm-8">
-                                                                <div class="input-group date date-picker">
-                                                                    <input id="avai_BoughtDate" type="text" class="form-control" name="txtDate" readonly>
+                                                                <div class="input-group">
+                                                                    <input id="avai_NewRatio" type="text" class="form-control" name="txtNewRatio">
+                                                                    <p class="help-block" id="er_avai_NewRatio" style="color: red">  </p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1076,10 +1077,11 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Ngày mua hàng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới</label>
                                                             <div class="col-sm-8">
-                                                                <div class="input-group date date-picker">
-                                                                    <input id="onWeb_BoughtDate" type="text" class="form-control" name="txtDate" readonly>
+                                                                <div class="input-group">
+                                                                    <input id="onWeb_NewRatio" type="text" class="form-control" name="txtNewRatio" >
+                                                                    <p class="help-block" id="er_onWeb_NewRatio"style="color: red">  </p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1339,13 +1341,14 @@
                 $(document).on("click", ".availableModal", function () {
                     setSeason();
                     $("#er_avai_ProductName").html('');
+                    $("#er_avai_NewRatio").html('');
                     $("#er_avai_Brand").html('');
                     var productID = $(this).data('id');
                     $.get('LoadAvailableProduct', {productID: productID}, function (response) {
                         $("#avai_ProductName").val(response.name);
                         $("#avai_ProductID").val(response.productID);
                         $("#avai_SerialNumber").val(response.serialNumber);
-                        $("#avai_BoughtDate").val(response.purchasedDate);
+                        $("#avai_NewRatio").val(response.newStatus);
                         $("#avai_Brand").val(response.brand);
                         $("#avai_Description").val(response.description);
                         $("#avai_Image").attr("src", response.image);
@@ -1545,7 +1548,7 @@
                         $("#onWeb_ProductName").val(response.name);
                         $("#onWeb_ProductID").val(response.productID);
                         $("#onWeb_SerialNumber").val(response.serialNumber);
-                        $("#onWeb_BoughtDate").val(response.purchasedDate);
+                        $("#onWeb_NewRatio").val(response.newStatus);
                         $("#onWeb_Brand").val(response.brand);
                         $("#onWeb_Description").val(response.description);
                         $("#onWeb_Image").attr("src", response.image);
@@ -1565,8 +1568,6 @@
                     $('#confirmOnWebModal').modal('show');
                 });
                 $(document).on("click", ".receiveProductModal", function () {
-                    var negotiatedPrice = $('#cancel_negotiatedPrice').text();
-                    $('#returnProduct_Fee').val((negotiatedPrice * 15 / 100).toFixed(0));
                     $('#receiveProductModal').modal('show');
                 });
                 //end on web modal
@@ -1721,13 +1722,24 @@
                     var flag = true;
                     var name = $("#avai_ProductName").val();
                     var brand = $("#avai_Brand").val();
+                    var newRatio = $("#avai_NewRatio").val();
+                    if (isNaN(newRatio) || newRatio <= 0 || newRatio > 100 || newRatio.indexOf(".") != -1 || newRatio.indexOf(",") != -1) {
+                        flag = false;
+                        $("#er_avai_NewRatio").html('Vui lòng nhập độ mới của sản phẩm');
+                    } else {
+                        $("#er_avai_NewRatio").html('');
+                    }
                     if (name.length < 5) {
                         flag = false;
                         $("#er_avai_ProductName").html('Vui lòng nhập tên sản phẩm');
+                    } else {
+                        $("#er_avai_ProductName").html('');
                     }
                     if (brand.length <= 0) {
                         flag = false;
-                        $("#er_avai_Brand").html('Vui lòng nhập tên sản phẩm');
+                        $("#er_avai_Brand").html('Vui lòng nhập hãng sản phẩm');
+                    } else {
+                        $("#er_avai_Brand").html('');
                     }
                     var selected = [];
                     $('#chkSeason1').parent('span').parent('div').parent('label').parent('div').siblings().addBack().each(function () {
@@ -1744,13 +1756,24 @@
                     var flag = true;
                     var name = $("#onWeb_ProductName").val();
                     var brand = $("#onWeb_Brand").val();
+                    var newRatio = $("#onWeb_NewRatio").val();
+                    if (isNaN(newRatio) || newRatio <= 0 || newRatio > 100 || newRatio.indexOf(".") != -1 || newRatio.indexOf(",") != -1) {
+                        flag = false;
+                        $("#er_onWeb_NewRatio").html('Vui lòng nhập độ mới của sản phẩm');
+                    } else {
+                        $("#er_onWeb_NewRatio").html('');
+                    }
                     if (name.length < 5) {
                         flag = false;
                         $("#er_OnWeb_ProductName").html('Vui lòng nhập tên sản phẩm');
+                    } else {
+                        $("#er_OnWeb_ProductName").html('');
                     }
                     if (brand.length <= 0) {
                         flag = false;
                         $("#er_OnWeb_Brand").html('Vui lòng nhập tên sản phẩm');
+                    } else {
+                        $("#er_OnWeb_Brand").html('');
                     }
                     var selected = [];
                     $('#onWeb_chkSeason1').parent('span').parent('div').parent('label').parent('div').siblings().addBack().each(function () {
