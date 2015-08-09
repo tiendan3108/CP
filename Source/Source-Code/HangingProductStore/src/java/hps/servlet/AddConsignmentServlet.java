@@ -67,7 +67,7 @@ public class AddConsignmentServlet extends HttpServlet {
             String serialNumber = "";
             int categoryID = 0;
             String brand = "";
-            String purchasedDate = "";
+            int newStatus = 0;
             String description = "";
             float negotiatedPrice = 0;
             String fullName = "";
@@ -140,8 +140,9 @@ public class AddConsignmentServlet extends HttpServlet {
                             brand = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                             break;
 
-                        case "txtDate":
-                            purchasedDate = item.getString();
+                        case "txtNewStatus":
+                            String numStatus = item.getString();
+                            newStatus = Integer.parseInt(numStatus);
 
                             break;
 
@@ -218,11 +219,8 @@ public class AddConsignmentServlet extends HttpServlet {
             product.setSerialNumber(serialNumber);
             product.setCategoryID(categoryID);
             product.setBrand(brand);
-            product.setPurchasedDate(purchasedDate);
             product.setDescription(description);
-            if (!purchasedDate.isEmpty()) {
-                product.setPurchasedDate(formatDate(product.getPurchasedDate()));
-            }
+            product.setNewStatus(newStatus);
 
             product.setImage(imagePath);
             product.setProductStatusID(2);
