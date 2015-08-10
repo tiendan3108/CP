@@ -676,7 +676,7 @@
                                                 <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Độ mới</label>
                                                 <div class="col-md-3 col-sm-3" id="r_newStatusInput">
                                                     <div class="input-group">
-                                                        <input id="r_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
+                                                        <input id="r_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
                                                     </div>
                                                 </div>
                                                 <div id="r_newStatusText" class="col-md-3 col-sm-3" style="padding-top: 8px; font-size: 110%; display: none"></div>
@@ -1190,7 +1190,7 @@
                                                 <label class="control-label col-md-4 col-sm-4">Độ mới <font color="red">*</font></label>
                                                 <div class="col-md-7 col-sm-7">
                                                     <div class="input-group">
-                                                        <input id="addConsignment_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
+                                                        <input id="addConsignment_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
                                                     </div>
                                                     <span class="help-block" id="erNewStatus"> </span>
                                                 </div>
