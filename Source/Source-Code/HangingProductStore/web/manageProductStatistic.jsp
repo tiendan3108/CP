@@ -686,7 +686,9 @@
                     }
                     if (respone.consignmentStatusID == 7) {
                         $('#div_c_reviewRequestDate').show();
-                        $('#div_c_reviewProductDate').show();
+                        if (respone.reviewProductDate != "") {
+                            $('#div_c_reviewProductDate').show();
+                        }
                         if (respone.raiseWebDate != "") {
                             $('#div_c_publishOnWebDate').show();
                         }
@@ -702,6 +704,8 @@
                             $('#div_c_returnDate').show();
                         }
                     }
+                    console.log(respone.consignmentStatusID);
+                    console.log(respone.product.productStatusID);
                 });
                 $('#detailModal').modal('show');
             });
