@@ -177,10 +177,16 @@
                                             <select id="consignmentOption" style="float: right">
                                                 <option value="all" selected="selected">Tất cả</option>
                                                 <option value="Chờ duyệt yêu cầu">Chờ duyệt yêu cầu</option>
+                                                <option value="Đồng ý nhận kí gửi">Đồng ý nhận kí gửi</option>
                                                 <option value="Từ chối khi duyệt yêu cầu">Từ chối khi duyệt yêu cầu</option>
                                                 <option value="Từ chối khi đến nhận hàng">Từ chối khi đến nhận hàng</option>
-                                                <option value="Đồng ý nhận kí gửi">Đồng ý nhận kí gửi</option>
                                                 <option value="Đã nhận hàng kí gửi">Đã nhận hàng kí gửi</option>
+                                                <option value="Đang trên web">Đang trên web</option>
+                                                <option value="Đăng kí hủy kí gửi">Đăng kí hủy kí gửi</option>
+                                                <option value="Đồng ý hủy kí gửi">Đồng ý hủy kí gửi</option>
+                                                <option value="Đã được đặt mua">Đã được đặt mua</option>
+                                                <option value="Đã bán">Đã bán</option>
+                                                <option value="Đã hết hạn kí gửi">Đã hết hạn kí gửi</option>
                                                 <option value="Hoàn tất">Hoàn tất</option>
                                             </select>
                                             <label style="float: right">Trạng thái : </label>
@@ -211,21 +217,48 @@
                                                             <c:when test="${item.consignmentStatusID ==1}">
                                                                 Chờ duyệt yêu cầu
                                                             </c:when>
-                                                            <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewProductDate}">
-                                                                Từ chối khi duyệt yêu cầu
+                                                            <c:when test="${item.consignmentStatusID ==3}">
+                                                                Đồng ý nhận kí gửi
                                                             </c:when>
                                                             <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewProductDate}">
                                                                 Từ chối khi đến nhận hàng
                                                             </c:when>
-                                                            <c:when test="${item.consignmentStatusID ==3}">
-                                                                Đồng ý nhận kí gửi
+                                                            <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewRequestDate}">
+                                                                Từ chối khi duyệt yêu cầu
                                                             </c:when>
                                                             <c:when test="${item.consignmentStatusID ==5}">
-                                                                Đã nhận hàng kí gửi
+                                                                <c:choose>
+                                                                    <c:when test="${item.product.productStatusID==2}">
+                                                                        Đã nhận hàng kí gửi
+                                                                    </c:when>
+                                                                    <c:when test="${item.product.productStatusID==3}">
+                                                                        Đang trên web
+                                                                    </c:when>
+                                                                    <c:when test="${item.product.productStatusID==4}">
+                                                                        Đã được đặt mua
+                                                                    </c:when>
+                                                                    <c:when test="${item.product.productStatusID==5}">
+                                                                        Đã bán
+                                                                    </c:when>
+                                                                    <c:when test="${item.product.productStatusID==6}">
+                                                                        Đăng kí hủy kí gửi
+                                                                    </c:when>
+                                                                </c:choose>
                                                             </c:when>
-                                                            <c:otherwise>
+                                                            <c:when test="${item.consignmentStatusID ==6}">
+                                                                Đã hết hạn kí gửi
+                                                            </c:when>
+                                                            <c:when test="${(item.consignmentStatusID ==4 && item.product.productStatusID == 1) || (item.consignmentStatusID ==4 && item.product.productStatusID == 7)}">
                                                                 Hoàn tất
-                                                            </c:otherwise>
+                                                            </c:when>
+                                                            <c:when test="${item.consignmentStatusID ==7}">
+                                                                <c:choose>
+                                                                    <c:when test="${item.product.productStatusID == 8}">
+                                                                        Đồng ý hủy kí gửi
+                                                                    </c:when>
+                                                                    <c:otherwise>Hoàn tất</c:otherwise>
+                                                                </c:choose>
+                                                            </c:when>
                                                         </c:choose>
                                                     </td>
                                                     <td>
@@ -335,10 +368,6 @@
                                                     <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
                                                     <div class="col-md-7 col-sm-7" id="c_cancelDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
-                                                <div class="form-group" id="div_c_sellDate">
-                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày bán sản phẩm</label>
-                                                    <div class="col-md-7 col-sm-7" id="c_sellDate"  style="padding-top: 8px; font-size: 110%"></div>
-                                                </div>
                                             </div>
                                         </div>
                                         <!--END LEFT TAB -->
@@ -362,6 +391,10 @@
                                                     <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hoàn trả sản phẩm</label>
                                                     <div class="col-md-7 col-sm-7" id="c_receivedDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
+                                                <div class="form-group" id="div_c_sellDate">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày bán sản phẩm</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_sellDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--END RIGHT TAB -->
@@ -372,6 +405,12 @@
                                                 <div class="form-group" id="div_c_returnedPrice">
                                                     <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền trả khách hàng</label>
                                                     <div class="col-md-7 col-sm-7" id="c_returnedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-horizontal">
+                                                <div class="form-group" id="div_c_reason">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Lý do từ chối</label>
+                                                    <div class="col-md-7 col-sm-7" id="c_reason"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -566,9 +605,8 @@
                     $('#c_productName').text(respone.product.name);
                     $('#c_productCategory').text(respone.product.categoryName);
                     $('#c_productBrand').text(respone.product.brand);
-                    //$('#c_image').attr("src", respone.product.image.replace(/\\/g, '/'));
-
                     $('#c_phone').text(respone.phone);
+
                     if (respone.email != null) {
                         $('#c_email').text(respone.email);
                     } else {
@@ -592,7 +630,8 @@
                     $('#div_c_refuseRequestDate').hide();
                     $('#div_c_publishOnWebDate').hide();
                     $('#div_c_sellDate').hide();
-                    $('#bonus_infor').hide();
+                    $('#div_c_reason').hide();
+                    $('#div_c_returnedPrice').hide();
 
                     $('#c_reviewRequestDate').text(respone.reviewRequestDate);
                     $('#c_reviewProductDate').text(respone.reviewProductDate);
@@ -603,6 +642,8 @@
                     $('#c_receivedDate').text(respone.agreeCancelDate);
                     $('#c_sellDate').text(respone.product.sellDate);
                     $('#c_publishOnWebDate').text(respone.raiseWebDate);
+                    $('#c_reason').text(respone.reason);
+                    $('#c_returnedPrice').text(respone.returnPrice);
 
                     if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {//refuse request
                         $('#div_c_refuseProductDate').show();
@@ -611,36 +652,52 @@
                     if (respone.consignmentStatusID == 2 && respone.reviewProductDate == "") {//retuse product
                         $('#div_c_refuseRequestDate').show();
                     }
-                    if (respone.consignmentStatusID == 3) {//accept request
+                    if (respone.consignmentStatusID == 3) {
                         $('#div_c_reviewRequestDate').show();
-                    }
-                    if (respone.consignmentStatusID == 5) {// received product
-                        if (respone.raiseWebDate == "") {
-                            $('#div_c_publishOnWebDate').hide();//not yet raise web
-                        } else {
-                            $('#div_c_publishOnWebDate').show();//raise web
+                        if (respone.product.productStatusID == 6) {
+                            if (respone.reviewProductDate != "") {
+                                $('#div_c_reviewProductDate').show();
+                            }
+                            $('#div_c_cancelDate').show();
                         }
+                    }
+                    if (respone.consignmentStatusID == 5) {
                         $('#div_c_reviewRequestDate').show();
                         $('#div_c_reviewProductDate').show();
+                        if (respone.product.productStatusID == 3 || respone.product.productStatusID == 4) {
+                            $('#div_c_publishOnWebDate').show();
+                        }
+                        if (respone.product.productStatusID == 5) {
+                            $('#div_c_publishOnWebDate').show();
+                            $('#div_c_sellDate').show();
+                        }
+                        if (respone.product.productStatusID == 6) {
+                            $('#div_c_cancelDate').show();
+                            $('#div_c_publishOnWebDate').show();
+                        }
                     }
-                    if (respone.cancelDate != "") {
-                        if (respone.agreeCancelDate != "") {
-                            $('#div_c_receivedDate').show();
+                    if (respone.consignmentStatusID == 6) {
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        $('#div_c_publishOnWebDate').show();
+                    }
+                    if (respone.consignmentStatusID == 7) {
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        if (respone.raiseWebDate != "") {
+                            $('#div_c_publishOnWebDate').show();
                         }
                         $('#div_c_cancelDate').show();
+                    }
+                    if (respone.consignmentStatusID == 4) {
                         $('#div_c_reviewRequestDate').show();
                         $('#div_c_reviewProductDate').show();
-                        $('#div_c_publishOnWebDate').show();//raise web
-                    }
-                    if (respone.product.sellDate != "") {
-                        $('#div_c_sellDate').show();
-                        $('#div_c_reviewRequestDate').show();
-                        $('#div_c_reviewProductDate').show();
-                        $('#div_c_publishOnWebDate').show();//raise web
-                    }
-                    if (respone.returnDate != "" && respone.returnPrice != 0) {
-                        $('#bonus_infor').show();
-                        $('#c_returnedPrice').text(respone.returnPrice);
+                        $('#div_c_publishOnWebDate').show();
+                        if (respone.product.productStatusID == 7) {
+                            $('#div_c_sellDate').show();
+                            $('#div_c_returnedPrice').show();
+                            $('#div_c_returnDate').show();
+                        }
                     }
                 });
                 $('#detailModal').modal('show');

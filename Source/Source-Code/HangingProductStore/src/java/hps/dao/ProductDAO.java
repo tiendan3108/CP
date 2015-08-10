@@ -1601,7 +1601,7 @@ public class ProductDAO {
         }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
+            SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
             Date date = sdf.parse(source);
             String result = sdf2.format(date);
             return result;
