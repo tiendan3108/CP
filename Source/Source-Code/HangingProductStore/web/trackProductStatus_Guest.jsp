@@ -165,10 +165,10 @@
                                                 <c:when test="${c.consignmentStatusID == 5}">
                                                     <c:choose>
                                                         <c:when test="${c.product.productStatusID == 2}">
-                                                            <font color="blue">ĐÃ NHẬP HÀNG</font>
+                                                            <font color="blue">ĐÃ NHẬN HÀNG</font>
                                                         </c:when>
                                                         <c:when test="${c.product.productStatusID == 3}">
-                                                            <font color="blue">ĐANG TRÊN WEB</font>
+                                                            <font color="blue">TRÊN WEB</font>
                                                         </c:when>
                                                         <c:when test="${c.product.productStatusID == 4}">
                                                             <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
@@ -182,6 +182,9 @@
                                                         </c:when>
                                                         <c:when test="${c.product.productStatusID == 7}">
                                                             <font color="blue">ĐÃ HOÀN THÀNH</font>
+                                                        </c:when>
+                                                            <c:when test="${c.product.productStatusID == 8}">
+                                                            <font color="blue">CHỜ TRẢ HÀNG</font>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:when>

@@ -45,7 +45,7 @@
                 </div>
                 <!-- END SIDEBAR -->
 
-                <div class="col-md-9 col-sm-8">
+                <div class="col-md-9 col-sm-8" style="background-color: white; padding-top: 30px ">
 
                     <form class="form-horizontal" role="form" action="TrackProductStatus">
                         <div class="form-body">
@@ -74,7 +74,7 @@
                                     Ngày Gửi
                                 </th>
                                 <th>
-                                    Giá (VND)
+                                    Giá (Ngàn đồng)
                                 </th>
                                 <th>
                                     Ngày hẹn
@@ -127,47 +127,72 @@
                                             </c:choose>
                                     </td>
                                     <td>
+                                        <c:choose>
+                                            <c:when test="${not empty c.appointmentDate}">
+                                                ${c.hour}|${c.appointmentDate}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                        ${c.fromDate} - ${c.toDate}
                                     </td>
                                     <td>
                                         <b>
                                             <c:choose>
-                                                <c:when test="${c.product.productStatusID == 6}">
-                                                    <font color="red">ĐÃ HỦY</font>
+                                                <c:when test="${c.consignmentStatusID == 1}">
+                                                    <font color="green">CHỜ XỬ LÝ</font>
                                                 </c:when>
-                                                <c:otherwise>
+                                                <c:when test="${c.consignmentStatusID == 2}">
+
                                                     <c:choose>
-                                                        <c:when test="${c.consignmentStatusID == 1}">
-                                                            <font color="green">CHỜ XỬ LÝ</font>
+                                                        <c:when test="${not empty c.reviewProductDate}">
+                                                            <font color="red">TỪ CHỐI KHI NHẬN HÀNG</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 2}">
-                                                            <font color="red">ĐÃ TỪ CHỐI</font>
+                                                        <c:otherwise>
+                                                            <font color="red">TỪ CHỐI KHI DUYỆT YÊU CẦU</font>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 3}">
+                                                    <font color="blue">ĐÃ CHẤP NHẬN YÊU CẦU</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 4}">
+                                                    <font color="blue">HOÀN THÀNH</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 6}">
+                                                    <font color="blue">ĐÃ HẾT HẠN</font>
+                                                </c:when>
+                                                <c:when test="${c.consignmentStatusID == 7}">
+                                                    <font color="red">HOÀN TẤT HỦY</font>
+                                                </c:when>
+
+                                                <c:when test="${c.consignmentStatusID == 5}">
+                                                    <c:choose>
+                                                        <c:when test="${c.product.productStatusID == 2}">
+                                                            <font color="blue">ĐÃ NHẬN HÀNG</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 3}">
-                                                            <font color="blue">ĐÃ CHẤP NHẬN</font>
+                                                        <c:when test="${c.product.productStatusID == 3}">
+                                                            <font color="blue">TRÊN WEB</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 4}">
-                                                            <font color="blue">HOÀN THÀNH</font>
+                                                        <c:when test="${c.product.productStatusID == 4}">
+                                                            <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
                                                         </c:when>
-                                                        <c:when test="${c.consignmentStatusID == 5}">
-                                                            <c:choose>
-                                                                <c:when test="${c.product.productStatusID == 2}">
-                                                                    <font color="blue">ĐÃ NHẬP HÀNG</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 3}">
-                                                                    <font color="blue">ĐANG TRÊN WEB</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 4}">
-                                                                    <font color="blue">ĐÃ ĐƯỢC ĐẶT</font>
-                                                                </c:when>
-                                                                <c:when test="${c.product.productStatusID == 5}">
-                                                                    <font color="blue">ĐÃ BÁN</font>
-                                                                </c:when>
-                                                            </c:choose>
+                                                        <c:when test="${c.product.productStatusID == 5}">
+                                                            <font color="blue">ĐÃ BÁN</font>
+                                                        </c:when>
+
+                                                        <c:when test="${c.product.productStatusID == 6}">
+                                                            <font color="red">ĐĂNG KÝ HỦY</font>
+                                                        </c:when>
+                                                        <c:when test="${c.product.productStatusID == 7}">
+                                                            <font color="blue">ĐÃ HOÀN THÀNH</font>
+                                                        </c:when>
+                                                        <c:when test="${c.product.productStatusID == 8}">
+                                                            <font color="blue">CHỜ TRẢ HÀNG</font>
                                                         </c:when>
                                                     </c:choose>
-                                                </c:otherwise>
+                                                </c:when>
                                             </c:choose>
                                         </b>
                                     </td>
@@ -223,12 +248,12 @@
                                                     </div>
                                                 </div>
                                                 <!-- Carousel nav -->
-                                                <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                                    <i class="fa fa-angle-left"></i>
-                                                </a>
-                                                <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                                    <i class="fa fa-angle-right"></i>
-                                                </a>
+                                                <!--                                                <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                                                                    <i class="fa fa-angle-left"></i>
+                                                                                                </a>
+                                                                                                <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                                                                    <i class="fa fa-angle-right"></i>
+                                                                                                </a>-->
                                             </div>
 
                                         </div>
@@ -244,6 +269,10 @@
                                                     <td id='r_productName'></td>
                                                 </tr>
                                                 <tr>
+                                                    <th width="30%">Độ mới</th>
+                                                    <td id='r_newStatus'></td>
+                                                </tr>
+                                                <tr>
                                                     <th width="30%">Mô tả</th>
                                                     <td id='r_description'></td>
                                                 </tr>
@@ -252,7 +281,7 @@
                                                     <td id='r_createdDate'></td>
                                                 </tr>
                                                 <tr >
-                                                    <th>Giá</th>
+                                                    <th id="r_priceLabel">Giá</th>
                                                     <td id="r_price"></td>
                                                 </tr>
                                                 <tr>
@@ -262,8 +291,11 @@
                                                 <tr>
                                                     <th>Trạng thái</th>
                                                     <td id='r_status'>
-
-
+                                                    </td>
+                                                </tr>
+                                                <tr id="div_r_reason">
+                                                    <th>Lí do</th>
+                                                    <td id='r_reason'>
                                                     </td>
                                                 </tr>
 
@@ -278,8 +310,8 @@
                                 <div  class="modal-footer">
                                     <div id="r_footer">
                                         <form action="TrackProductStatus" method="POST">
-                                            <button type="submit" name="btnAction" value="m_cancel" class="btn btn-lg btn-primary">HỦY KÝ GỬI</button>
-                                            <!--                                    <button type="submit" name="btnAction" value="r_refuse" class="btn btn-lg btn-default">Từ chối</button>-->
+                                            <button id="btnCancel" type="submit" name="btnAction" value="m_cancel" class="btn btn-primary">HỦY KÝ GỬI</button>
+                                            <button class="btn btn-default" data-dismiss="modal">Đóng</button>
                                             <input id="r_ActionValue" type="hidden" name="actionValue"/>
                                             <input type="hidden" name="searchValue" value="${param.searchValue}"/>
                                         </form>
@@ -297,6 +329,9 @@
             <!-- END SIDEBAR & CONTENT -->
 
         </div>
+
+        <script type="text/javascript" src="assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     </jsp:body>
 </template:shopbasic>
 <script type="text/javascript">
@@ -308,69 +343,114 @@
             }
         });
 
+        $("#datatable_ajax").dataTable();
     });
+
+
 
     function loadDetails(id) {
         $.get('TrackProductStatus', {btnAction: 'requestdetails', id: id}, function (data) {
             $("#r_name").html("<small>Từ khách hàng</small> " + data.name);
             $("#r_productName").html("<b>" + data.product.name + "</b>");
+            $("#r_newStatus").html(data.newStatus + "%");
             $("#r_image").attr("src", data.product.image);
             $("#r_description").html(data.product.description);
             $("#r_createdDate").html(data.createdDate);
             $("#r_email").html(data.email);
             $("#r_phone").html(data.phone);
             $("#r_address").html(data.address);
-            $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-            if(data.minPrice > 0 && data.maxPrice > 0){
-                $("#r_price").html(data.minPrice.toFixed(0) + "  ~  " + data.maxPrice.toFixed(0) + " VND");
-            }else{
-                $("#r_price").html("");
+
+            if (data.appointmentDate != null) {
+                $("#r_fromDateToDate").html(data.hour + "|" + data.appointmentDate);
+            } else {
+                $("#r_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
+            }
+
+            if (data.negotiatedPrice > 0) {
+                $("#r_priceLabel").html("Giá thương lượng");
+                $("#r_price").html(formatDollar(data.negotiatedPrice) + " (Ngàn đồng)");
+            } else {
+                $("#r_priceLabel").html("Giá mong muốn");
+                $("#r_price").html(formatDollar(data.desirePrice) + " (Ngàn đồng)");
+            }
+            $("#r_ActionValue").val(data.consigmentID);
+
+            $("#div_r_reason").hide();
+            if (data.consignmentStatusID == 1) {
+                $("#r_status").html("<b><font color='green'>CHỜ XỬ LÝ</font></b>");
+                $("#btnCancel").show();
+
+            } else if (data.consignmentStatusID == 3) {
+                $("#r_status").html("<b><font color='blue'>ĐÃ CHẤP NHẬN YÊU CẦU</font></b>");
+                $("#btnCancel").show();
+            }
+            else if (data.consignmentStatusID == 2) {
+                if (data.reviewProductDate != null) {
+                    $("#r_status").html("<b><font color='red'>TỪ CHỐI KHI NHẬN HÀNG</font></b>");
+                } else {
+                    $("#r_status").html("<b><font color='red'>TỪ CHỐI KHI DUYỆT YÊU CẦU</font></b>");
+                }
+
+                $("#div_r_reason").show();
+                $("#r_reason").html(data.reason);
+
+                $("#btnCancel").hide();
+            }
+            else if (data.consignmentStatusID == 4) {
+                $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
+                $("#btnCancel").hide();
+            }
+
+            else if (data.consignmentStatusID == 6) {
+                $("#r_status").html("<b><font color='purple'>ĐÃ HẾT HẠN</font></b>");
+                $("#btnCancel").hide();
+            }
+            else if (data.consignmentStatusID == 4) {
+                $("#r_status").html("<b><font color='blue'>HOÀN TẤT</font></b>");
+                $("#btnCancel").hide();
             }
             
-            $("#r_ActionValue").val(data.product.productID);
-            if (data.product.productStatusID == 6) {
-                $("#r_status").html("<b><font color='red'>ĐÃ HỦY</font></b>");
-                $("#r_footer").hide();
+            else if (data.consignmentStatusID == 7) {
+                $("#r_status").html("<b><font color='red'>HOÀN TẤT HỦY</font></b>");
+                $("#btnCancel").hide();
             }
-            else {
-                if (data.consignmentStatusID == 1) {
-                    $("#r_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
-                    $("#r_footer").show();
+            
+            else if (data.consignmentStatusID == 5) {
+                if (data.product.productStatusID == 2) {
+                    $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
+                    $("#btnCancel").show();
+                }
+                else if (data.product.productStatusID == 3) {
+                    $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
+                    $("#btnCancel").show();
+                }
+                else if (data.product.productStatusID == 4) {
+                    $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
+                    $("#btnCancel").hide();
+                }
+                else if (data.product.productStatusID == 5) {
+                    $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
+                    $("#btnCancel").hide();
+                }
 
-                } else if (data.consignmentStatusID == 3) {
-                    $("#r_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
-                    $("#r_footer").show();
-                }
-                else if (data.consignmentStatusID == 2) {
-                    $("#r_status").html("<b><font color='red'>ĐÃ TỪ CHỐI</font></b>");
-                    $("#r_footer").hide();
-                }
-                else if (data.consignmentStatusID == 4) {
-                    $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                    $("#r_footer").hide();
-                }
-                else if (data.consignmentStatusID == 5) {
-                    if (data.product.productStatusID == 2) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");
-                        $("#r_footer").show();
-                    }
-                    else if (data.product.productStatusID == 3) {
-                        $("#r_status").html("<b><font color='blue'>ĐAND TRÊN WEB</font></b>");
-                        $("#r_footer").show();
-                    }
-                    else if (data.product.productStatusID == 4) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
-                        $("#r_footer").hide();
-                    }
-                    else if (data.product.productStatusID == 5) {
-                        $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
-                        $("#r_footer").hide();
-                    }
-
+                else if (data.product.productStatusID == 6) {
+                    $("#r_status").html("<b><font color='orange'>ĐĂNG KÝ HỦY</font></b>");
+                    $("#btnCancel").hide();
+                } else if (data.product.productStatusID == 8) {
+                    $("#r_status").html("<b><font color='purple'>CHỜ TRẢ HÀNG LẠI</font></b>");
+                    $("#btnCancel").hide();
                 }
             }
+
 
         });
+    }
+
+    function formatDollar(num) {
+        var p = num.toFixed(0);
+        return  p.split("").reverse().reduce(function (acc, num, i, orig) {
+            return  num + (i && !(i % 3) ? "," : "") + acc;
+        }, "");
     }
 
     $('button[name="requestDetails"]').click(function () {

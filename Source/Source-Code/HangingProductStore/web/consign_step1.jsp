@@ -161,10 +161,12 @@
 
                                                                 <div class="form-group">
                                                                     <label class="control-label col-md-4 col-sm-4">Độ mới <font color="red">*</font></label>
-                                                                    <div class="col-md-5 col-sm-5">
+                                                                    <div class="col-md-3 col-sm-3">
                                                                         <div class="input-group">
-                                                                            <input id="txtNewStatus" name="txtNewStatus" maxlength="100" value="${product.newStatus}" type="text" class="form-control"/> <span class="input-group-addon"><i class="fa fa-pencil"></i>
-                                                                        </div>
+                                                                            <input id="txtNewStatus" name="txtNewStatus" maxlength="100" value="${product.newStatus}" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
+                                                                        </div>                    
+                                                                    </div>
+                                                                    <div class="col-md-5 col-sm-5">
                                                                         <span class="help-block" id="erNewStatus"> </span>
                                                                     </div>
                                                                 </div>
