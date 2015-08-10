@@ -1297,6 +1297,22 @@
         </c:if>
         <!-- END MODAL -->
 
+        <!--BEGIN MODAL-->
+        <div id="modalAlert" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- dialog body -->
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        Hello world!
+                    </div>
+                    <!-- dialog buttons -->
+                    <div class="modal-footer"><button type="button" class="btn btn-primary">OK</button></div>
+                </div>
+            </div>
+        </div>
+        <!--END MODAL-->
+
 
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
@@ -1457,12 +1473,12 @@
                         } else if (data.consignmentStatusID == 3) {
                             $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
                         } else if (data.consignmentStatusID == 2) {
-                            if(data.reviewProductDate != null){
-                            $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI NHẬN HÀNG</font></b>");    
-                            }else{
+                            if (data.reviewProductDate != null) {
+                                $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI NHẬN HÀNG</font></b>");
+                            } else {
                                 $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI DUYỆT HÀNG</font></b>");
                             }
-                            
+
                             $("#rc_trReason").show();
                             $("#rc_reason").html(data.reason);
                         } else if (data.consignmentStatusID == 4) {

@@ -156,7 +156,7 @@
                                                     <font color="blue">HOÀN THÀNH</font>
                                                 </c:when>
                                                 <c:when test="${c.consignmentStatusID == 6}">
-                                                    <font color="blue">ĐÃ HẾT HẠN</font>
+                                                    <font color="purple">ĐÃ HẾT HẠN</font>
                                                 </c:when>
                                                 <c:when test="${c.consignmentStatusID == 7}">
                                                     <font color="red">HOÀN TẤT HỦY</font>
@@ -178,13 +178,13 @@
                                                         </c:when>
 
                                                         <c:when test="${c.product.productStatusID == 6}">
-                                                            <font color="red">ĐĂNG KÝ HỦY</font>
+                                                            <font color="orange">ĐĂNG KÝ HỦY</font>
                                                         </c:when>
                                                         <c:when test="${c.product.productStatusID == 7}">
                                                             <font color="blue">ĐÃ HOÀN THÀNH</font>
                                                         </c:when>
                                                             <c:when test="${c.product.productStatusID == 8}">
-                                                            <font color="blue">CHỜ TRẢ HÀNG</font>
+                                                            <font color="purple">CHỜ TRẢ HÀNG</font>
                                                         </c:when>
                                                     </c:choose>
                                                 </c:when>

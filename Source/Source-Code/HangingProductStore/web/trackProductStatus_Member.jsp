@@ -376,6 +376,8 @@
             $("#r_ActionValue").val(data.consigmentID);
 
             $("#div_r_reason").hide();
+            $("#btnCancel").hide();
+            
             if (data.consignmentStatusID == 1) {
                 $("#r_status").html("<b><font color='green'>CHỜ XỬ LÝ</font></b>");
                 $("#btnCancel").show();
@@ -393,26 +395,20 @@
 
                 $("#div_r_reason").show();
                 $("#r_reason").html(data.reason);
-
-                $("#btnCancel").hide();
             }
             else if (data.consignmentStatusID == 4) {
-                $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
-                $("#btnCancel").hide();
+                $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");             
             }
 
             else if (data.consignmentStatusID == 6) {
                 $("#r_status").html("<b><font color='purple'>ĐÃ HẾT HẠN</font></b>");
-                $("#btnCancel").hide();
             }
             else if (data.consignmentStatusID == 4) {
                 $("#r_status").html("<b><font color='blue'>HOÀN TẤT</font></b>");
-                $("#btnCancel").hide();
             }
             
             else if (data.consignmentStatusID == 7) {
                 $("#r_status").html("<b><font color='red'>HOÀN TẤT HỦY</font></b>");
-                $("#btnCancel").hide();
             }
             
             else if (data.consignmentStatusID == 5) {
@@ -426,23 +422,17 @@
                 }
                 else if (data.product.productStatusID == 4) {
                     $("#r_status").html("<b><font color='blue'>ĐÃ ĐƯỢC ĐẶT</font></b>");
-                    $("#btnCancel").hide();
                 }
                 else if (data.product.productStatusID == 5) {
                     $("#r_status").html("<b><font color='blue'>ĐÃ BÁN</font></b>");
-                    $("#btnCancel").hide();
                 }
 
                 else if (data.product.productStatusID == 6) {
                     $("#r_status").html("<b><font color='orange'>ĐĂNG KÝ HỦY</font></b>");
-                    $("#btnCancel").hide();
                 } else if (data.product.productStatusID == 8) {
                     $("#r_status").html("<b><font color='purple'>CHỜ TRẢ HÀNG LẠI</font></b>");
-                    $("#btnCancel").hide();
                 }
             }
-
-
         });
     }
 
