@@ -218,7 +218,10 @@
                                                                 Chờ duyệt yêu cầu
                                                             </c:when>
                                                             <c:when test="${item.consignmentStatusID ==3}">
-                                                                Đồng ý nhận kí gửi
+                                                                <c:choose>
+                                                                    <c:when test="${item.product.productStatusID == 6}">Hoàn tất</c:when>
+                                                                    <c:otherwise>Đồng ý nhận kí gửi</c:otherwise>
+                                                                </c:choose>
                                                             </c:when>
                                                             <c:when test="${item.consignmentStatusID ==2 && not empty item.reviewProductDate}">
                                                                 Từ chối khi đến nhận hàng
