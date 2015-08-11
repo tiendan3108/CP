@@ -82,19 +82,21 @@
                                                 </div>
                                         </div> -->
 
-                                        <div class="tab-content" style="text-align: center" >
-                                            <h3>
-                                                Sản phẩm <b>${CONSIGNMENT.product.name}</b> đã được ký gửi với giá mong muốn là <b><fmt:formatNumber 
+                                        <div class="tab-content" style="text-align: justify" >
+                                            <h3 class="alert alert-success" align="center" style="color: green"><b>GỬI YÊU CẦU KÝ GỬI THÀNH CÔNG</b></h3>
+                                            <h3 style="padding-left: 20%"><b>Sản phẩm:</b> ${CONSIGNMENT.product.name}</h3>
+                                                <h3 style="padding-left: 20%"><b>Giá mong muốn:</b> <fmt:formatNumber 
                                                         value="${CONSIGNMENT.desirePrice}" 
-                                                        maxFractionDigits="0" /></b> đồng.
-                                            </h3>
-                                            <h3><b>${STOREOWNER.fullName}</b> sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi nhận hàng.</h3>
+                                                        maxFractionDigits="0" /> đồng.</h3>
+                                                <h3 style="padding-left: 20%"><b>Mã ký gửi:</b> <b>[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</b>.</h3>
+                                                <h3 style="padding-left: 20%"><b>Cửa hàng ký gửi:</b> ${STOREOWNER.fullName}.</h3>
+                                            <h3 align="center">Cửa hàng sẽ xem xét yêu cầu của bạn và định giá sản phẩm chính xác khi nhận hàng.</h3>
 
-                                            <h3>Mã ký gửi của bạn là <b>[${CONSIGNMENT.consigmentID}]</b>. Bạn có thể dùng mã này để kiểm tra trạng thái sản phẩm.</h3>
+                                            
 
-                                            <h3>Nhấn vào <a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a> để kiểm tra.</h3>
-                                            <h3>Nhấn vào <a href="ConsignServlet"><font color="blue">đây </font></a> để ký gửi món khác.</h3>
-
+<!--                                            <h3>Nhấn vào <b><a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a></b> để kiểm tra.</h3>-->
+                                            <h3 align="center">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
+                                            </div>
                                         </div>
                                     </div>
                                     

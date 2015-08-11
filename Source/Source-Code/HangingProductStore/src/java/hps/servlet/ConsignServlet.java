@@ -116,7 +116,7 @@ public class ConsignServlet extends HttpServlet {
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, null, categoryID, brand, description, null, 1);
                 if (!newStatus.equals("")) {
-                    
+
                     product.setNewStatus(Integer.parseInt(newStatus));
                 }
 
@@ -128,9 +128,22 @@ public class ConsignServlet extends HttpServlet {
                         basicPrice = amazonProduct.getPrice();
                         product.setImage(amazonProduct.getImage());
 
-                        String formatName = amazonProduct.getName().trim().replaceAll("[!@#$%^&*.?,;/]", " ");
-                        if (formatName.length() > 100) {
-                            product.setName(formatName.substring(0, 100));
+                        String formatName = amazonProduct.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
+                        if (formatName.contains("#")) {
+                            formatName = formatName.substring(0, formatName.indexOf("#"));
+                        }
+                        if (formatName.contains("/")) {
+                            formatName = formatName.substring(0, formatName.indexOf("/"));
+                        }
+                        if (formatName.contains("-")) {
+                            formatName = formatName.substring(0, formatName.indexOf("-"));
+                        }
+                        if (formatName.contains(",")) {
+                            formatName = formatName.substring(0, formatName.indexOf(","));
+                        }
+                        formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
+                        if (formatName.length() > 50) {
+                            product.setName(formatName.substring(0, 50));
 
                         } else {
                             product.setName(formatName);
@@ -185,9 +198,23 @@ public class ConsignServlet extends HttpServlet {
                     for (AmazonProduct a : list) {
                         if (a.getASIN().equals(ASIN)) {
                             basicPrice = a.getPrice();
-                            String formatName = a.getName().trim().replaceAll("[!@#$%^&*.?,;]", " ");
-                            if (formatName.length() > 100) {
-                                product.setName(formatName.substring(0, 100));
+                            String formatName = a.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
+
+                            if (formatName.contains("#")) {
+                                formatName = formatName.substring(0, formatName.indexOf("#"));
+                            }
+                            if (formatName.contains("/")) {
+                                formatName = formatName.substring(0, formatName.indexOf("/"));
+                            }
+                            if (formatName.contains("-")) {
+                                formatName = formatName.substring(0, formatName.indexOf("-"));
+                            }
+                            if (formatName.contains(",")) {
+                                formatName = formatName.substring(0, formatName.indexOf(","));
+                            }
+                            formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
+                            if (formatName.length() > 50) {
+                                product.setName(formatName.substring(0, 50));
 
                             } else {
                                 product.setName(formatName);
@@ -202,6 +229,9 @@ public class ConsignServlet extends HttpServlet {
                 } else {
 
                     //product.setImage(null);
+                    if (product.getName().length() > 100) {
+                        product.setName(product.getName().substring(0, 100 - 1));
+                    }
                     session.setAttribute("PRODUCT", product);
                 }
                 basicPrice = (basicPrice * GlobalVariables.VND_CURRENCY);
@@ -213,7 +243,6 @@ public class ConsignServlet extends HttpServlet {
                 session.setAttribute("STORELIST", list);
                 session.removeAttribute("STORE");
                 session.removeAttribute("DESIREPRICE");
-                
 
                 url = STEP3;
 //                request.setAttribute("backlink", url);

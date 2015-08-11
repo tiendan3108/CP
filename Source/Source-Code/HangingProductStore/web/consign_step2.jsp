@@ -86,17 +86,16 @@
                                                 <c:if test="${not empty data}">
 
                                                     <!--                                                    <form id="form2"  action="ConsignServlet" method="POST">-->
-                                                    <table class="table table-striped table-hover">
-                                                        <thead>
+                                                    <table class="table table-hover" style="font-size: 110%">
+                                                        <thead style="border-bottom-style: solid">
                                                             <tr>
-                                                                <th>STT</th>
-                                                                <th style="width: 50%">
-                                                                    Tên sản phẩm
-                                                                </th>
-                                                                <th>
+                                                                <th style="width: 10px">STT</th>
+                                                                <th align="center" style="width: 200px">
                                                                     Hình ảnh
                                                                 </th>
-
+                                                                <th >
+                                                                    Tên sản phẩm
+                                                                </th>
 
                                                                 <th style="text-align:center">
 
@@ -110,14 +109,15 @@
                                                                 <!--                                                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation(this)">-->
 
                                                                 <tr>
-                                                                    <td><c:out value="${count.count}" /></td>
+                                                                    <td style="font-weight: bold"><c:out value="${count.count}" /></td>
+                                                                    
+                                                                    <td>
+<!--                                                                        <a name="amazonImage" style="color:blue" data-id="${item.image}" data-toggle="modal" data-target="#amazonModal">Xem ảnh</a>-->
+                                                                        <img name="amazonImage"  src="${item.image}" alt="64x64" data-src="${item.image}" style="width: 64px; height: 64px;">
+                                                                    </td>
                                                                     <td>
                                                                         ${item.name}
                                                                     </td>
-                                                                    <td>
-                                                                        <a name="amazonImage" style="color:blue" data-id="${item.image}" data-toggle="modal" data-target="#amazonModal">Xem ảnh</a>
-                                                                    </td>
-
 
                                                                     <td align="center">
 
@@ -157,14 +157,14 @@
                                                     <div id="amazonModal" class="modal fade">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
-                                                                <div class="modal-header">
+                                                                <div class="modal-header" style="background-color: ivory">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title">Ảnh sản phẩm</h4>
+                                                                    <h3 class="modal-title"><b>Ảnh sản phẩm</b></h3>
                                                                 </div>
                                                                 <div class="modal-body" align="center">
                                                                     <img id="modalImage" style="max-height: 400px"/>
                                                                 </div>
-                                                                <div class="modal-footer">
+                                                                <div class="modal-footer" style="background-color: ivory">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
 
                                                                 </div>
@@ -247,9 +247,15 @@
     });
 
 
-    $('a[name="amazonImage"]').click(function () {
-        var link = $(this).data('id');
-        $("#modalImage").attr("src", link);
+    $('img[name="amazonImage"]').click(function () {
+//        alert($(this).data('src'));
+//        var link = $(this).data('src');
+        $("#modalImage").attr("src", $(this).data('src'));
+        $("#amazonModal").modal("show");
+    });
+    
+    $("table tr").click(function(){
+        $(this).children("td:last").children("input").attr("checked", true);
     });
 
 

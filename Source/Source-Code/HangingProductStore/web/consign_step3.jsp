@@ -96,8 +96,8 @@
                                                 <c:if test="${not empty data}">
 
                                                     <!--                                                    <form id="form3"  action="ConsignServlet" method="POST">-->
-                                                    <table class="table table-striped table-hover">
-                                                        <thead>
+                                                    <table class="table table-hover" style="font-size: 110%">
+                                                        <thead style="border-bottom-style: solid">
                                                             <tr>
                                                                 <th>STT</th>
                                                                 <th>
@@ -230,7 +230,7 @@
                 <div id="modalDesirePrice" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header" style="background-color: ivory">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" style="font-weight: bold">NHẬP GIÁ MONG MUỐN</h4>
                             </div>
@@ -239,15 +239,17 @@
                                     <div class="form-horizontal">
 
                                         <div class="form-group">
-                                            <label class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1 control-label">Giá mong muốn <p>(Ngàn đồng)</p>
-                                            </label>
+                                            <label class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1 control-label">Giá mong muốn <font color="red"> </font></label>
                                             <div class="col-md-5 col-sm-5">
                                                 <input id="inputDesirePrice" name="txtDesirePrice" type="text" class="form-control" value="${DESIREPRICE}"/>
                                                 <p class="help-block" id="erDesirePrice">
                                                 </p>
                                             </div>
                                             <div class="col-md-3 col-sm-3" style="padding-top: 8px; font-size: 110%">
-                                                
+                                                Ngàn đồng
+                                            </div>
+                                            <div class="col-md-3 col-sm-3" style="padding-top: 8px; font-size: 110%">
+
                                             </div>
                                         </div>
                                     </div>
@@ -257,7 +259,7 @@
                                 </form>
                             </div>
 
-                            <div class="modal-footer">
+                            <div class="modal-footer" style="background-color: ivory">
                                 <input id="maxPrice" type="hidden"/>
                                 <button id="btnConfirm" class="btn btn-info">Xác nhận</button>
                                 <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
@@ -319,10 +321,10 @@
             } else {
                 if (desirePrice > 0) {
                     if (maxPrice.length > 0) {
-                        
+
                         if (parseFloat(desirePrice) > parseFloat(maxPrice)) {
                             $("#erDesirePrice").html("<font color='red'>Giá bạn chọn phải nhỏ hơn hoặc bằng giá tối đa tìm được</font");
-                        }else{
+                        } else {
                             $("#erDesirePrice").html("");
                             $("#formDesirePrice").submit();
                         }
@@ -339,7 +341,9 @@
 //    $('input[type=radio][name="rdStore"]').click(function () {
 //        $(this).closest("form").submit();
 //    });
-
+    $("table tr").click(function () {
+        $(this).children("td:last").children("input").attr("checked", true);
+    });
 
 </script>
 

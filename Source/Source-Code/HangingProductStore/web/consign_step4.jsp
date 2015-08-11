@@ -212,8 +212,8 @@
                                                                                                     THAY ẢNH </span>
                                                                                                 <input  type="file" name="txtImage" accept='image/*' value="${PRODUCT.image}" />
                                                                                             </span>
-                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                                                XÓA </a>
+<!--                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                                XÓA </a>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </c:when>
