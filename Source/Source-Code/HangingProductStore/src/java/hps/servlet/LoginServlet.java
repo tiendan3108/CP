@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
                 }
             } else {
                 request.setAttribute("ERR", MessageString.loginFail);
-                url = GlobalVariables.HOME_SERVLET;
+                url = "login.jsp";
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
