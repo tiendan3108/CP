@@ -46,7 +46,7 @@
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
             <form class="login-form" action="LoginServlet" method="POST">
-                <h3 style="color:#4db3a5;font-size: 30px;font-weight: 500" class="form-title">Đăng Nhập</h3>
+                <h3 style="color:#01579b;font-size: 30px;font-weight: 500" class="form-title">Đăng Nhập</h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>
                     <span style="font-weight: bold">
@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <label>Tên Đăng Nhập</label>
                     <label class="control-label visible-ie8 visible-ie9">Tên Đăng Nhập</label>
-                    <div class="input-icon">
+                    <div class="input-icon" style="border-left: 2px solid #01579b !important;">
                         <i class="fa fa-user"></i>
                         <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Tên Đăng Nhập" name="username"/>
                     </div>
@@ -63,13 +63,13 @@
                 <div class="form-group">
                     <label>Mật Khẩu</label>
                     <label class="control-label visible-ie8 visible-ie9">Password</label>
-                    <div class="input-icon">
+                    <div class="input-icon" style="border-left: 2px solid #01579b !important;">
                         <i class="fa fa-lock"></i>
                         <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Mật Khẩu" name="password"/>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn green-haze pull-right">
+                    <button type="submit" class="btn green-haze pull-right" style="background-color: #01579b">
                         Đăng Nhập <i class="m-icon-swapright m-icon-white"></i>
                     </button>
                 </div>
