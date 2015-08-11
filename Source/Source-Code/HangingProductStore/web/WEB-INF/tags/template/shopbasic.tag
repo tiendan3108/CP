@@ -152,7 +152,7 @@
         </c:if>
         <c:set var="account" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${empty account}">
-            <li><a data-toggle="modal" data-target="#loginModal">Đăng Nhập</a></li>
+            <li><a href="login.jsp">Đăng Nhập</a></li>
             <li><a href="TrackProductStatus">Kiểm tra</a></li>
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
