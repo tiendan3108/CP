@@ -42,7 +42,7 @@
                                             <li class="done">
                                                 <a class="step" >
                                                     <span class="number">
-                                                        1 </span>
+                                                        <b>1</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin sản phẩm </span>
@@ -51,7 +51,7 @@
                                             <li class="done">
                                                 <a class="step" >
                                                     <span class="number">
-                                                        2 </span>
+                                                        <b>2</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Kiểm tra sản phẩm </span>
@@ -60,7 +60,7 @@
                                             <li class="done">
                                                 <a class="step">
                                                     <span class="number">
-                                                        3 </span>
+                                                        <b>3</b> </span>
                                                     <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i> Chọn cửa hàng </span>
@@ -69,7 +69,7 @@
                                             <li class="done">
                                                 <a class="step">
                                                     <span class="number">
-                                                        4 </span>
+                                                        <b>4</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin chi tiết </span>
@@ -84,17 +84,17 @@
 
                                         <div class="tab-content" style="text-align: justify" >
                                             <h4 class="alert alert-info" style="font-weight: bold;width: 800px;margin:auto">Yêu cầu ký gửi của bạn đã được gửi, cửa hàng sẽ xem xét yêu cầu của bạn và định giá khi đến kiểm tra sản phẩm.</h4>
-                                            <h4 style="padding-left: 10%"><b style="margin-right: 80px">Sản phẩm:</b> ${CONSIGNMENT.product.name}</h4>
-                                            <h4 style="padding-left: 10%"><b style="margin-right: 25px">Giá mong muốn:</b> 
+                                            <h4 style="padding-left: 15%"><b style="margin-right: 80px">Sản phẩm:</b> ${CONSIGNMENT.product.name}</h4>
+                                            <h4 style="padding-left: 15%"><b style="margin-right: 25px">Giá mong muốn:</b> 
                                                     <fmt:formatNumber 
                                                         value="${CONSIGNMENT.desirePrice}" 
                                                         maxFractionDigits="0" /> đồng</h4>
-                                                    <h4 style="padding-left: 10%"><b style="margin-right: 81px">Mã ký gửi:</b> <b>[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</b>.</h4>
-                                                <h4 style="padding-left: 10%"><b style="margin-right: 24px">Cửa hàng ký gửi:</b> ${STOREOWNER.fullName}</h4>
+                                                    <h4 style="padding-left: 15%"><b style="margin-right: 81px">Mã ký gửi:</b> <b>[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</b>.</h4>
+                                                <h4 style="padding-left: 15%"><b style="margin-right: 24px">Cửa hàng ký gửi:</b> ${STOREOWNER.fullName}</h4>
 
                                    
 <!--                                            <h3>Nhấn vào <b><a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a></b> để kiểm tra.</h3>-->
-                                                <h3 style="padding-left: 10%">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
+                                                <h3 style="padding-left: 15%">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
                                             </div>
                                         </div>
                                     </div>

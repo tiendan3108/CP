@@ -36,7 +36,7 @@
                                             <li class="done">
                                                 <a id="ltap1"  class="step" >
                                                     <span class="number">
-                                                        1 </span>
+                                                        <b>1</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin sản phẩm</span>
@@ -45,7 +45,7 @@
                                             <li class="done">
                                                 <a class="step">
                                                     <span class="number">
-                                                        2 </span>
+                                                        <b>2</b> </span>
                                                     <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
@@ -54,7 +54,7 @@
                                             <li class="active">
                                                 <a id="ltap3" class="step">
                                                     <span class="number">
-                                                        3 </span>
+                                                        <b>3</b> </span>
                                                     <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i><b> Chọn cửa hàng</b></span>
@@ -63,7 +63,7 @@
                                             <li >
                                                 <a id="ltap4" class="step">
                                                     <span class="number">
-                                                        4 </span>
+                                                        <b>4</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin chi tiết</span>
@@ -194,29 +194,24 @@
 
                                         </div>
                                     </div>
-                                    <div style="
-                                         padding-top: 5px;
-                                         padding-bottom: 5px;
-                                         padding-right: 5px;
-                                         padding-left: 5px;
-                                         ">
+                                    
 
                                         <div class="row">
 
                                             <div class="col-md-4 col-sm-4"> 
                                                 <form id="form3"  action="ConsignServlet" method="POST">
-                                                    <button id="btnBack"  name="btnAction" type="submit" value="backstep2" class="btn-block btn-lg btn btn-warning"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
+                                                    <button id="btnBack"  name="btnAction" type="submit" value="backstep2" class="btn-block btn-lg btn btn-warning"><i class="m-icon-big-swapleft m-icon-white"></i>  QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
                                                 </form>
                                             </div>
                                             <c:if test="${not empty sessionScope.STORELIST}">
                                                 <div class="col-md-4 col-sm-4"> </div>
                                                 <div class="col-md-4 col-sm-4">
-                                                    <button id="btnNext" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+                                                    <button id="btnNext" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <i class="m-icon-big-swapright m-icon-white"></i> </button>
                                                 </div>
                                             </c:if>
                                         </div>
 
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

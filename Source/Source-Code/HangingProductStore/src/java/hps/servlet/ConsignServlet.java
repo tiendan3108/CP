@@ -122,6 +122,8 @@ public class ConsignServlet extends HttpServlet {
 
                 //check product using serial Number
                 if (serialNumber.length() > 0) {
+                    product.setName("");
+                    product.setBrand("");
                     AmazonService amazon = new AmazonService();
                     AmazonProduct amazonProduct = amazon.getProductByUPC(serialNumber);
                     if (amazonProduct != null) {
@@ -135,9 +137,7 @@ public class ConsignServlet extends HttpServlet {
                         if (formatName.contains("/")) {
                             formatName = formatName.substring(0, formatName.indexOf("/"));
                         }
-                        if (formatName.contains("-")) {
-                            formatName = formatName.substring(0, formatName.indexOf("-"));
-                        }
+                        
                         if (formatName.contains(",")) {
                             formatName = formatName.substring(0, formatName.indexOf(","));
                         }
@@ -151,7 +151,6 @@ public class ConsignServlet extends HttpServlet {
 
                         action = "tostep3";
                     } else {
-
                         url = STEP1;
                         request.setAttribute("UPCERROR", "Không thể tìm thấy sản phẩm với mã số này");
                         CategoryDAO cateDao = new CategoryDAO();
@@ -165,7 +164,7 @@ public class ConsignServlet extends HttpServlet {
 
                 } //check product using name 
                 else {
-
+                    product.setSerialNumber("");
                     List<AmazonProduct> list = BrandDAO.getListAmazonProduct(productName, brand, categoryID);
 
                     if (list != null) {
@@ -206,9 +205,7 @@ public class ConsignServlet extends HttpServlet {
                             if (formatName.contains("/")) {
                                 formatName = formatName.substring(0, formatName.indexOf("/"));
                             }
-                            if (formatName.contains("-")) {
-                                formatName = formatName.substring(0, formatName.indexOf("-"));
-                            }
+                            
                             if (formatName.contains(",")) {
                                 formatName = formatName.substring(0, formatName.indexOf(","));
                             }

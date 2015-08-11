@@ -40,8 +40,7 @@
 
                                                 <li class="done">
                                                     <a class="step">
-                                                        <span class="number">
-                                                            1 </span>
+                                                        <span class="number">1</span>
                                                         <br/>
                                                         <span class="desc">
                                                             <i class="fa fa-check"></i> Thông tin sản phẩm</span>
@@ -50,7 +49,7 @@
                                                 <li class="done">
                                                     <a class="step">
                                                         <span class="number">
-                                                            2 </span>
+                                                            <b>2</b> </span>
                                                         <br/>
                                                         <span class="desc">
                                                             <i class="fa fa-check"></i> Kiểm tra sản phẩm</span>
@@ -59,7 +58,7 @@
                                                 <li class="done">
                                                     <a class="step">
                                                         <span class="number">
-                                                            3 </span>
+                                                            <b>3</b> </span>
                                                         <br/>
                                                         <span class="desc">
                                                             <i class="fa fa-check"></i> Chọn cửa hàng</span>
@@ -68,7 +67,7 @@
                                                 <li class="active">
                                                     <a class="step">
                                                         <span class="number">
-                                                            4 </span>
+                                                            <b>4</b> </span>
                                                         <br/>
                                                         <span class="desc" >
                                                             <i class="fa fa-check"></i><b> Thông tin chi tiết</b></span>
@@ -212,8 +211,8 @@
                                                                                                     THAY ẢNH </span>
                                                                                                 <input  type="file" name="txtImage" accept='image/*' value="${PRODUCT.image}" />
                                                                                             </span>
-<!--                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                                                XÓA </a>-->
+                                                                                            <!--                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
+                                                                                                                                                                                            XÓA </a>-->
                                                                                         </div>
                                                                                     </div>
                                                                                 </c:when>
@@ -289,27 +288,22 @@
                                             </form>                              
 
                                         </div>
-                                        <div class="form-actions" style="
-                                             padding-top: 30px;
-                                             padding-bottom: 5px;
-                                             padding-right: 5px;
-                                             padding-left: 5px;
-                                             ">
-                                            <div class="row">
-                                                <form action="ConsignServlet" method="POST">
-                                                    <div class="col-md-4 col-sm-4"> 
-                                                        <button  name="btnAction" value="backstep3" class=" btn-block btn-lg btn btn-warning">
-                                                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> TRỞ VỀ</button>
-                                                    </div>
-                                                </form>
-                                                <div class="col-md-4 col-sm-4"> </div>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <button id="btnComplete" name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >
-                                                        KÝ GỬI <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
-                                                </div>
 
+                                        <div class="row">
+                                            <form action="ConsignServlet" method="POST">
+                                                <div class="col-md-4 col-sm-4"> 
+                                                    <button  name="btnAction" value="backstep3" class=" btn-block btn-lg btn btn-warning">
+                                                        <i class="m-icon-big-swapleft m-icon-white"></i>  TRỞ VỀ</button>
+                                                </div>
+                                            </form>
+                                            <div class="col-md-4 col-sm-4"> </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <button id="btnComplete" name="btnAction" value="complete" type="submit" class="btn-block btn-lg btn btn-info" >
+                                                    KÝ GỬI <i class="m-icon-big-swapright m-icon-white"></i> </button>
                                             </div>
+
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

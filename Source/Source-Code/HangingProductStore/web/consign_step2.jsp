@@ -25,7 +25,7 @@
 
                 <!-- BEGIN DIV STEP2 -->
 
-                <div id="divStep2" class="row" >
+                <div id="divStep2" class="row">
                     <!--                    <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation();">-->
                     <div class="portlet box" id="form_wizard_1">
 
@@ -37,7 +37,7 @@
                                             <li class="done">
                                                 <a id="ltap1"  class="step" >
                                                     <span class="number">
-                                                        1 </span>
+                                                        <b>1</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin sản phẩm</span>
@@ -46,7 +46,7 @@
                                             <li class="active">
                                                 <a id="ltap2" class="step">
                                                     <span class="number">
-                                                        2 </span>
+                                                        <b>2</b> </span>
                                                     <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i><b> Kiểm tra sản phẩm</b></span>
@@ -55,7 +55,7 @@
                                             <li>
                                                 <a class="step">
                                                     <span class="number">
-                                                        3 </span>
+                                                        <b>3</b> </span>
                                                     <br/>
                                                     <span class="desc" >
                                                         <i class="fa fa-check"></i> Chọn cửa hàng</span>
@@ -64,7 +64,7 @@
                                             <li >
                                                 <a class="step">
                                                     <span class="number">
-                                                        4 </span>
+                                                        <b>4</b> </span>
                                                     <br/>
                                                     <span class="desc">
                                                         <i class="fa fa-check"></i> Thông tin chi tiết</span>
@@ -110,7 +110,7 @@
 
                                                                 <tr>
                                                                     <td style="font-weight: bold"><c:out value="${count.count}" /></td>
-                                                                    
+
                                                                     <td>
 <!--                                                                        <a name="amazonImage" style="color:blue" data-id="${item.image}" data-toggle="modal" data-target="#amazonModal">Xem ảnh</a>-->
                                                                         <img name="amazonImage"  src="${item.image}" alt="64x64" data-src="${item.image}" style="width: 64px; height: 64px;">
@@ -183,26 +183,20 @@
 
                                         </div>
                                     </div>
-                                    <div class="form-actions" style="
-                                         padding-top: 5px;
-                                         padding-bottom: 5px;
-                                         padding-right: 5px;
-                                         padding-left: 5px;
-                                         ">
+                                    <div class="row">
                                         <form id="form2"  action="ConsignServlet" method="POST" onsubmit="return validation()">
-                                            <div class="row">
-                                                <div class="col-sm-4"> 
-                                                    <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning">
-                                                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> QUAY LẠI</button> 
-                                                </div>
-                                                <div class="col-sm-4"> </div>
-                                                <div class="col-sm-4">
-                                                    <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <span class="glyphicon glyphicon-arrow-right" aria-hidden="true">
-                                                        </span></button> <i class="m-icon-big-swapright m-icon-white"></i> 
-                                                </div>
-                                                <input type="hidden" id="txtAmazon" name="rdAmazon" value="${ASIN}"/>
 
+                                            <div class="col-sm-4"> 
+                                                <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning">
+                                                     <i class="m-icon-big-swapleft m-icon-white"></i> QUAY LẠI</button> 
                                             </div>
+                                            <div class="col-sm-4"> </div>
+                                            <div class="col-sm-4">
+                                                <button id="btnNext"  name="btnAction" value="tostep3" type="submit" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <i class="m-icon-big-swapright m-icon-white"></i></button> 
+                                            </div>
+                                            <input type="hidden" id="txtAmazon" name="rdAmazon" value="${ASIN}"/>
+
+
                                         </form>
                                     </div>
                                 </div>
@@ -253,8 +247,8 @@
         $("#modalImage").attr("src", $(this).data('src'));
         $("#amazonModal").modal("show");
     });
-    
-    $("table tr").click(function(){
+
+    $("table tr").click(function () {
         $(this).children("td:last").children("input").attr("checked", true);
     });
 

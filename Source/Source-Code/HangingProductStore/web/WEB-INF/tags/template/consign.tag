@@ -28,14 +28,15 @@
         <link href="assets/style/myStyle.css" rel="stylesheet">
 
         <!-- Xài bootstrap template đẹp hơn -->
-<!--                <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>-->
+                        <link href="assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
 
         <link href="assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
         <!-- Theme styles END -->  
 
         <!-- BEGIN PAGE LEVEL STYLES -->
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/select2/select2.css"/>
-        <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
+<!--                <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">-->
+        <link href="assets/frontend/layout/css/themes/blue.css" rel="stylesheet" id="style-color">
 
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css"/>
@@ -129,11 +130,12 @@
                 ComponentsPickers.init();
 
             });
-            
-                if ($("#txtErr").html() != "") {;
-                    $("#loginModal2").modal("show");
-                }
-            
+
+            if ($("#txtErr").html() != "") {
+                ;
+                $("#loginModal2").modal("show");
+            }
+
         </script>
         <script type="text/javascript">
 
@@ -142,40 +144,41 @@
     </jsp:attribute>
     <jsp:attribute name="navigationContent">
         <c:if test="${empty member}">
-            <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h1 class="text-center">Đăng Nhập</h1>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <form class="form col-md-12 center-block" action="ConsignServlet" method="POST">
-                                    <div class="form-group">
-                                        <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập" value="${username}"/>
+            <!--            <div id="loginModal2" class="modal face bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h1 class="text-center">Đăng Nhập</h1>
                                     </div>
-                                    <div class="form-group">
-                                        <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu" value="${password}"/>
-                                        <input type="hidden" name="backlink" value="${backlink}"/>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form class="form col-md-12 center-block" action="ConsignServlet" method="POST">
+                                                <div class="form-group">
+                                                    <input required="true" name="username" type="text" class="form-control input-lg" placeholder="Tên Đăng Nhập" value="${username}"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input required="true" name="password" type="password" class="form-control input-lg" placeholder="Mật Khẩu" value="${password}"/>
+                                                    <input type="hidden" name="backlink" value="${backlink}"/>
+                                                </div>
+                                                <div>
+                                                    <h5 id="txtErr" style="color:red">${err}</h5>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" name="btnAction" value="login" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
+                                                    <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5 id="txtErr" style="color:red">${err}</h5>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" name="btnAction" value="login" class="btn btn-primary btn-lg btn-block">Đăng Nhập</button>
-                                        <span class="pull-right"><a href="#">Đăng Kí</a></span><span><a href="#">Giúp Đỡ?</a></span>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </div>-->
         </c:if>
         <c:set var="account" value="${sessionScope.ACCOUNT}"/>
         <c:if test="${empty account}">
-            <li><a data-toggle="modal" data-target="#loginModal2">Đăng Nhập</a></li>
+            <!--            <li><a data-toggle="modal" data-target="#loginModal2">Đăng Nhập</a></li>-->
+            <li><a href="login.jsp">Đăng Nhập</a></li>
             <li><a href="TrackProductStatus">Kiểm tra</a></li>
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
