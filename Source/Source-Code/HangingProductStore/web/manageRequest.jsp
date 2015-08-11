@@ -158,430 +158,406 @@
                     <input type="hidden" id="toDate" value="${requestScope.toDate}">
                     <!-- BEGIN PAGE CONTENT-->
 
+
+                    <h2>
+                        Yêu cầu
+                        <c:choose>
+                            <c:when test="${requestScope.currentTab == 'request'}">
+                                chưa duyệt
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'accepted'}">
+                                đã duyệt 
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'refuse'}">
+                                đã từ chối
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'cancel'}">
+                                đã hủy
+                            </c:when>
+                        </c:choose>
+                        <c:if test="${requestScope.currentTab == 'accepted'}">
+
+                            <button data-toggle="modal" data-target="#modalAddConsignment"
+                                    class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
+
+                        </c:if>
+
+                    </h2>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
-                            <div class="portlet box blue">
-
-                                <div class="portlet-title">
-                                    <div class="caption col-lg-6 col-md-6" style="font-weight: bold">
-                                        <i class="fa fa-globe" ></i>Yêu cầu
-                                        <c:choose>
-                                            <c:when test="${requestScope.currentTab == 'request'}">
-                                                chưa duyệt
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'accepted'}">
-                                                đã duyệt 
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'refuse'}">
-                                                đã từ chối
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'cancel'}">
-                                                đã hủy
-                                            </c:when>
-                                        </c:choose>
-                                    </div>
-                                    <c:if test="${requestScope.currentTab == 'accepted'}">
-                                        <div align="right">
-                                            <button data-toggle="modal" data-target="#modalAddConsignment"
-                                                    class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
-                                        </div>
-                                    </c:if>
-
-                                </div>
+                            <div id="request" style="display: none">
 
 
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
 
-                                <div id="request" class="portlet-body" style="display: none">
-                                    <div class="row" >
-                                        <div class="col-md-9 col-sm-9">
-                                        </div>
-                                        <div class="col-md-3 col-sm-3" align="right">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary">Yêu cầu đã duyệt <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                <div class="col-md-5 col-sm-5 input-daterange">
 
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
-
-                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                    <div class="col-md-5 col-sm-5 input-daterange">
-
-                                                        <input type="text" class="form-control" id="daterangeRequest">
-                                                    </div>
+                                                    <input type="text" class="form-control" id="daterangeRequest">
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                    <table id="requestTable" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr role="row" class="heading">
-                                                <th>
-                                                    STT
-                                                </th>
-                                                <th>
-                                                    Tên Sản Phẩm
-                                                </th>
-                                                <th>
-                                                    Mã ký gửi
-                                                </th>
-                                                <th>
-                                                    Ngày tạo yêu cầu
-                                                </th>
-                                                <th>
-                                                    Giá (Ngàn đồng)
-                                                </th>
-                                                <th>
-                                                    Ngày hẹn
-                                                </th>
-                                                <th>
-                                                    Chi Tiết
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <c:forEach var="c" items="${REQUEST}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td style="font-weight: bold">${counter.count}</td>
-                                                    <td>
-                                                        ${c.product.name}
-                                                    </td>
-                                                    <td>
-                                                        ${c.consigmentID}
-                                                    </td>
-                                                    <td>
-                                                        ${c.createdDate}
-
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
-                                                                <fmt:formatNumber 
-                                                                    value="${c.minPrice}" 
-                                                                    maxFractionDigits="1"/>&nbsp; ~ &nbsp;<fmt:formatNumber 
-                                                                    value="${c.maxPrice}" 
-                                                                    maxFractionDigits="1"/> 
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <font color="red">Không có giá</font>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td>
-
-                                                        ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
-                                                    </td>
-                                                    <td align="center">
-
-                                                        <button type="button" class="btn blue" style="width: 70px; height: 30px" 
-                                                                name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
-
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
 
                                 </div>
+                                <table id="requestTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày tạo yêu cầu
+                                            </th>
+                                            <th>
+                                                Giá (Ngàn đồng)
+                                            </th>
+                                            <th>
+                                                Ngày hẹn
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <div id="accepted" class="portlet-body" style="display: none">
-                                    <div class="row">
+                                        <c:forEach var="c" items="${REQUEST}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td style="font-weight: bold">${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.createdDate}
 
-                                        <div class="col-md-4 col-sm-4" align="left">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu chưa duyệt</a>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4" align="center">
-                                            <!--                                            <button data-toggle="modal" data-target="#modalAddConsignment"
-                                                                                                class="btn green "><i class="fa fa-plus"></i> Tạo mới ký gửi</button>-->
-                                        </div>
-                                        <div class="col-md-4 col-sm-4" align="right">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-primary">Yêu cầu đã từ chối <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
+                                                </td>
+                                                <td>
+                                                   <fmt:formatNumber 
+                                                                value="${c.desirePrice}" 
+                                                                maxFractionDigits="1"/>
+                                                </td>
+                                                <td>
+
+                                                    ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <div class="col-md-9 col-sm-9">
                                     </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-3" align="right">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary">Yêu cầu đã duyệt <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
 
-                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                    <div class="col-md-5 col-sm-5 input-daterange">
+                            </div>
 
-                                                        <input type="text" class="form-control" id="daterangeAccepted">
-                                                    </div>
+                            <div id="accepted" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                    <input type="text" class="form-control" id="daterangeAccepted">
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-                                    <table id="acceptedTable" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr role="row" class="heading">
-                                                <th>
-                                                    STT
-                                                </th>
-                                                <th>
-                                                    Tên Sản Phẩm
-                                                </th>
-                                                <th>
-                                                    Mã ký gửi
-                                                </th>
-                                                <th>
-                                                    Ngày duyệt yêu cầu
-                                                </th>
-                                                <th>
-                                                    Giá (Ngàn đồng)
-                                                </th>
-                                                <th>
-                                                    Ngày đến nhận
-                                                </th>
-                                                <th>
-                                                    Cách giao hàng
-                                                </th>
-                                                <th>
-                                                    Chi Tiết
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td style="font-weight: bold">${counter.count}</td>
-                                                    <td>
-                                                        ${c.product.name}
-                                                    </td>
-                                                    <td>
-                                                        ${c.consigmentID}
-                                                    </td>
-                                                    <td>
-                                                        ${c.reviewRequestDate}
-                                                    </td>
-                                                    <td>
-
-                                                        <c:choose>
-                                                            <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
-                                                                <fmt:formatNumber 
-                                                                    value="${c.minPrice}" 
-                                                                    maxFractionDigits="1"/>&nbsp; ~ &nbsp;<fmt:formatNumber 
-                                                                    value="${c.maxPrice}" 
-                                                                    maxFractionDigits="1"/> 
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <font color="red">Không có giá</font>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td align="center">
-                                                        <c:choose>
-                                                            <c:when test="${not empty c.appointmentDate}">
-                                                                ${c.hour}|${c.appointmentDate}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ---
-                                                            </c:otherwise>
-                                                        </c:choose>
-
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${c.deliveryMethod == 0}">
-                                                                <font color="blue">Cửa hàng đến nhận</font>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <font color="green">Tự mang đến</font>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
-                                                    <td align="center">
-
-                                                        <button type="button" class="btn blue" style="width: 70px; height: 30px" 
-                                                                name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
-
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
 
                                 </div>
+                                <table id="acceptedTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày duyệt yêu cầu
+                                            </th>
+                                            <th>
+                                                Giá (Ngàn đồng)
+                                            </th>
+                                            <th>
+                                                Ngày đến nhận
+                                            </th>
+                                            <th>
+                                                Cách giao hàng
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <div id="refuse" class="portlet-body" style="display: none">
-                                    <div class="row" >
+                                        <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td style="font-weight: bold">${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.reviewRequestDate}
+                                                </td>
+                                                <td>
 
-                                        <div class="col-md-4 col-sm-4" align="left">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã duyệt</a>
-                                        </div>
-                                        <div class="col-md-4 col-sm-4" align="center">
-                                        </div>
-                                        <div class="col-md-4 col-sm-4" align="right">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel" class="btn  btn-primary">Yêu cầu đã hủy <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
+                                                    <fmt:formatNumber 
+                                                                value="${c.desirePrice}" 
+                                                                maxFractionDigits="1"/>
+                                                </td>
+                                                <td align="center">
+                                                    <c:choose>
+                                                        <c:when test="${not empty c.appointmentDate}">
+                                                            ${c.hour}|${c.appointmentDate}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ---
+                                                        </c:otherwise>
+                                                    </c:choose>
 
-                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                    <div class="col-md-5 col-sm-5 input-daterange">
+                                                </td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${c.deliveryMethod == 0}">
+                                                            <font color="blue">Cửa hàng đến nhận</font>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <font color="green">Tự mang đến</font>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                                <td align="center">
 
-                                                        <input type="text" class="form-control" id="daterangeRefuse">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
 
-                                    </div>
-                                    <table id="refuseTable" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr role="row" class="heading">
-                                                <th>
-                                                    STT
-                                                </th>
-                                                <th>
-                                                    Tên Sản Phẩm
-                                                </th>
-                                                <th>
-                                                    Mã ký gửi
-                                                </th>
-                                                <th>
-                                                    Ngày tạo yêu cầu
-                                                </th>
-                                                <th>
-                                                    Ngày từ chối
-                                                </th>
-                                                <th>
-                                                    Chi Tiết
-                                                </th>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <div class="row">
 
-                                            <c:forEach var="c" items="${REFUSE}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td style="font-weight: bold">${counter.count}</td>
-                                                    <td>
-                                                        ${c.product.name}
-                                                    </td>
-                                                    <td>
-                                                        ${c.consigmentID}
-                                                    </td>
-                                                    <td>
-                                                        ${c.createdDate}
-
-                                                    </td>
-                                                    <td>
-                                                        <c:choose>
-                                                            <c:when test="${not empty c.reviewProductDate}">
-                                                                ${c.reviewProductDate}        
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${c.reviewRequestDate}
-                                                            </c:otherwise>
-                                                        </c:choose>
-
-
-                                                    </td>
-
-                                                    <td align="center">
-
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                                name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
-
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div id="cancel" class="portlet-body" style="display: none">
-                                    <div class="row" >
-
-                                        <div class="col-md-4 col-sm-4" align="left">
-                                            <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-primary"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã từ chối</a>
-                                        </div>
-
+                                    <div class="col-md-4 col-sm-4" align="left">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request" class="btn btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu chưa duyệt</a>
                                     </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                            <div class="form-horizontal">
-                                                <div class="form-group">
-
-                                                    <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                    <div class="col-md-5 col-sm-5 input-daterange">
-
-                                                        <input type="text" class="form-control" id="daterangeCancel">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    <div class="col-md-4 col-sm-4" align="center">
+                                        <!--                                            <button data-toggle="modal" data-target="#modalAddConsignment"
+                                                                                            class="btn green "><i class="fa fa-plus"></i> Tạo mới ký gửi</button>-->
                                     </div>
-                                    <table class="table table-striped table-bordered table-hover" id="cancelTable">
-                                        <thead>
-                                            <tr role="row" class="heading">
-                                                <th>
-                                                    STT
-                                                </th>
-                                                <th>
-                                                    Tên Sản Phẩm
-                                                </th>
-                                                <th>
-                                                    Mã ký gửi
-                                                </th>
-                                                <th>
-                                                    Ngày tạo yêu cầu
-                                                </th>
-
-                                                <th>
-                                                    Ngày hủy
-                                                </th>
-                                                <th>
-                                                    Chi Tiết
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <c:forEach var="c" items="${CANCEL}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td style="font-weight: bold">${counter.count}</td>
-                                                    <td>
-                                                        ${c.product.name}
-                                                    </td>
-                                                    <td>
-                                                        ${c.consigmentID}
-                                                    </td>
-                                                    <td>
-                                                        ${c.createdDate}
-
-                                                    </td>
-
-                                                    <td>
-
-                                                        ${c.cancelDate}
-                                                    </td>
-                                                    <td align="center">
-
-                                                        <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                                name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
-
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
+                                    <div class="col-md-4 col-sm-4" align="right">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn btn-primary">Yêu cầu đã từ chối <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div id="refuse" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                    <input type="text" class="form-control" id="daterangeRefuse">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <table id="refuseTable" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày tạo yêu cầu
+                                            </th>
+                                            <th>
+                                                Ngày từ chối
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <c:forEach var="c" items="${REFUSE}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td style="font-weight: bold">${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.createdDate}
+
+                                                </td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty c.reviewProductDate}">
+                                                            ${c.reviewProductDate}        
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${c.reviewRequestDate}
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+
+                                                </td>
+
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4" align="left">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã duyệt</a>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4" align="center">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4" align="right">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel" class="btn  btn-primary">Yêu cầu đã hủy <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="cancel" style="display: none">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
+                                                <div class="col-md-5 col-sm-5 input-daterange">
+
+                                                    <input type="text" class="form-control" id="daterangeCancel">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <table class="table table-bordered table-hover" id="cancelTable">
+                                    <thead style="background-color: black">
+                                        <tr role="row" class="heading">
+                                            <th>
+                                                STT
+                                            </th>
+                                            <th>
+                                                Tên Sản Phẩm
+                                            </th>
+                                            <th>
+                                                Mã ký gửi
+                                            </th>
+                                            <th>
+                                                Ngày tạo yêu cầu
+                                            </th>
+
+                                            <th>
+                                                Ngày hủy
+                                            </th>
+                                            <th>
+                                                Chi Tiết
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <c:forEach var="c" items="${CANCEL}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td style="font-weight: bold">${counter.count}</td>
+                                                <td>
+                                                    ${c.product.name}
+                                                </td>
+                                                <td>
+                                                    ${c.consigmentID}
+                                                </td>
+                                                <td>
+                                                    ${c.createdDate}
+
+                                                </td>
+
+                                                <td>
+
+                                                    ${c.cancelDate}
+                                                </td>
+                                                <td align="center">
+
+                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
+
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <div class="row">
+
+                                    <div class="col-md-4 col-sm-4" align="left">
+                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã từ chối</a>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <!-- END PAGE CONTENT-->
@@ -1008,6 +984,12 @@
                                                 <td id="rc_productName"></td>
                                             </tr>
 
+                                            <tr>
+                                                <th>Độ mới</th>
+                                                <td id="rc_newStatus">
+
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <th>Mô tả</th>
                                                 <td id="rc_description">
@@ -1450,6 +1432,7 @@
                     $("#rc_name").html("<small>Khách hàng: </small> " + data.name);
                     $("#rc_productName").html(data.product.name);
                     $("#rc_image").attr("src", data.product.image.replace(/\\/g, '/'));
+                    $("#rc_newStatus").html(data.product.newStatus + "%");
                     $("#rc_description").html(data.product.description);
                     $("#rc_createdDate").html(data.createdDate);
                     $("#rc_email").html(data.email);
@@ -2206,7 +2189,7 @@
 
             function getCurrentDate() {
                 var d = new Date(), month = '' + (d.getMonth() + 1),
-                        day = '' + d.getDate(),
+                        day = '' + (d.getDate() + 1),
                         year = d.getFullYear();
 
                 if (month.length < 2)
