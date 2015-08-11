@@ -127,23 +127,23 @@
 
                                                                         <div class="radio-list col-md-8 col-sm-8">
                                                                             <c:if test="${empty member}">
-                                                                                <label class="radio-inline">
+                                                                                <label class="radio-list">
                                                                                     <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                                                <label class="radio-inline">
+                                                                                <label class="radio-list">
                                                                                     <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
                                                                                 </c:if>
                                                                                 <c:if test="${not empty member}">
                                                                                     <c:if test="${not empty member.paypalAccount}">
-                                                                                    <label class="radio-inline">
+                                                                                    <label class="radio-list">
                                                                                         <input type="radio" name="rdPayment" id="optionsRadios7" value="direct"> Tiền mặt </label>
-                                                                                    <label class="radio-inline">
+                                                                                    <label class="radio-list">
                                                                                         <input type="radio" name="rdPayment" id="optionsRadios8" value="cc" checked> Tài khoản paypal </label>
 
                                                                                 </c:if>
                                                                                 <c:if test="${empty member.paypalAccount}">
-                                                                                    <label class="radio-inline">
+                                                                                    <label class="radio-list">
                                                                                         <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                                                    <label class="radio-inline">
+                                                                                    <label class="radio-list">
                                                                                         <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
                                                                                     </c:if>
                                                                                 </c:if>
@@ -260,12 +260,12 @@
 
                                                                     <div class="form-group">
                                                                         <label class="control-label col-md-4 col-sm-4">Cách giao hàng</label>
-                                                                        <div class="col-md-8 col-sm-8">
+                                                                        <div class="col-md-8 col-sm-8 radio-list">
 
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdDeliveryMethod" value="store" checked>Cửa hàng đến nhận</label>
-                                                                            <label class="radio-inline">
-                                                                                <input type="radio" name="rdDeliveryMethod" value="customer" >Tự mang đến</label>
+                                                                            <label class="radio-list">
+                                                                                <input type="radio" name="rdDeliveryMethod" value="store" checked> Cửa hàng đến nhận</label>
+                                                                            <label class="radio-list">
+                                                                                <input type="radio" name="rdDeliveryMethod" value="customer"> Tự mang đến</label>
 
                                                                             <span class="help-block" id="erIsTakenByStore">
                                                                             </span>

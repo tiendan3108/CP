@@ -113,6 +113,14 @@ public class ConsignServlet extends HttpServlet {
                 //String date = request.getParameter("txtDate").trim();
                 String newStatus = request.getParameter("txtNewStatus").trim();
                 String description = request.getParameter("txtDescription").trim();
+                
+                String method = request.getParameter("txtSearchMethod");
+                if(method.equals("name")){
+                    serialNumber = "";
+                }else{
+                    productName = "";
+                    brand = "";
+                }
 
                 ProductDTO product = new ProductDTO(productName, serialNumber, null, categoryID, brand, description, null, 1);
                 if (!newStatus.equals("")) {

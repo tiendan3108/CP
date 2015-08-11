@@ -71,12 +71,14 @@
                         </ul>
                     </div>
                     <div id="divheader" class="row"> 
-                        <div class="col-md-3 col-sm-3 col-md-offset-3 col-sm-offset-3">
-                            <button name="btnChange" value="name" type="button" class="btn btn-lg btn-block btn-circle btn-default">Tìm bằng tên</button>
+                        <div class="col-md-4 col-sm-4" style="font-size: 120%; font-weight: bold; text-align: right; margin-top: 10px">Chọn cách ký gửi</div>
+                        <div class="col-md-3 col-sm-3">
+                            <button name="btnChange" value="name" type="button" class="btn btn-lg btn-block btn-circle btn-default">Tên sản phẩm</button>
                         </div>
                         <div class="col-md-3 col-sm-3">
-                            <button name="btnChange" value="serial" type="button" class="btn btn-lg btn-block btn-circle btn-default">Tìm bằng mã số</button>
+                            <button name="btnChange" value="serial" type="button" class="btn btn-lg btn-block btn-circle btn-default">Mã sản phẩm</button>
                         </div>
+                        <input type="hidden" name="txtSearchMethod" id="searchMethod"/>
                     </div>
                     <c:set var="product" value="${sessionScope.PRODUCT}" />
                     <br/> <br/>
@@ -102,7 +104,7 @@
 
                                             <div class="form-group" id="div_txtSerialNumber" style="display: none">
                                                 <label for="txtSerialNumber" class="col-md-4 col-sm-4 control-label">Mã số <font id="reProductName" color="red">*</font></label> <!--<font id="reSerialNumber" color="red">*</font>-->
-                                                <div class="col-md-5 col-sm-6">
+                                                <div class="col-md-6 col-sm-6">
                                                     <input id="txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" value="${product.serialNumber}"/>
                                                     <p class="help-block" id="erSerialNumber"> </p>
                                                 </div>
@@ -114,7 +116,7 @@
 
                                             <div class="form-group">
                                                 <label class="control-label col-md-4 col-sm-4">Loại <font color="red">*</font></label>
-                                                <div class="col-md-5 col-sm-6">
+                                                <div class="col-md-6 col-sm-6">
                                                     <select id="txtCategory" name="txtCategory"  class="form-control" >
                                                         <option value='' disabled selected style='display:none;'>Chọn...</option>
 
@@ -231,6 +233,7 @@
             $("#div_txtBrand").show();
             $("button[name='btnChange'][value='serial']").removeClass("green").addClass("btn-default");
             $("button[name='btnChange'][value='name']").removeClass("btn-default").addClass("green");
+            $("#searchMethod").val("name");
         } else {
 
 
@@ -241,6 +244,7 @@
 
                 $("button[name='btnChange'][value='name']").removeClass("green").addClass("btn-default");
                 $("button[name='btnChange'][value='serial']").removeClass("btn-default").addClass("green");
+                $("#searchMethod").val("serial");
 
             } else {
                 $("#div_txtSerialNumber").hide();
@@ -248,6 +252,7 @@
                 $("#div_txtBrand").show();
                 $("button[name='btnChange'][value='serial']").removeClass("green").addClass("btn-default");
                 $("button[name='btnChange'][value='name']").removeClass("btn-default").addClass("green");
+                $("#searchMethod").val("name");
             }
         }
 //        else if ($("#txtSerialNumber").val().length > 0 && $("#txtProductName").val().length == 0) {
@@ -376,14 +381,15 @@
     }
 
     $("button[name='btnChange']").click(function () {
-
+        var method = $(this).val();
         $("#erSerialNumber").html("");
         $("#erProductName").html("");
         $("#erCategory").html("");
-        $("#txtSerialNumber").val("");
-        $("#txtProductName").val("");
-
-        if ($(this).val() == "name") {
+        //$("#txtSerialNumber").val("");
+        //$("#txtProductName").val("");
+        
+        $("#searchMethod").val(method);
+        if (method == "name") {
             $("#div_txtSerialNumber").hide();
             $("#div_txtProductName").show();
             $("#div_txtBrand").show();
