@@ -16,7 +16,7 @@
         <link href="assets/frontend/pages/css/style-shop.css" rel="stylesheet" type="text/css">
         <link href="assets/frontend/pages/css/style-layer-slider.css" rel="stylesheet">
         <link href="assets/frontend/layout/css/style-responsive.css" rel="stylesheet">
-        <link href="assets/frontend/layout/css/themes/red.css" rel="stylesheet" id="style-color">
+        <link href="assets/frontend/layout/css/themes/blue.css" rel="stylesheet" id="style-color">
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
         <!-- Theme styles END -->        
         <jsp:invoke fragment="extraHeadContent" />
