@@ -111,10 +111,6 @@
                                                     <th>Tên đăng nhập</th>
                                                     <th>Status</th>
                                                     <th>Tên</th>
-                                                    <th>Địa chỉ</th>
-                                                    <th>Điện thoại</th>
-                                                    <th>Email</th>
-                                                    <th>Tài khoản Paypal</th>
                                                     <th>Quyền hạn</th>
                                                     <th></th>
                                                 </tr>
@@ -126,10 +122,6 @@
                                                             <td>${counter.count}</td>
                                                             <td>${account.accountID}</td> 
                                                             <td>${account.status}</td>
-                                                            <td>${account.fullName}</td>
-                                                            <td>${account.address}</td>
-                                                            <td>${account.phone}</td>
-                                                            <td>${account.email}</td>
                                                             <td>${account.paypalAccount}</td>
                                                             <td>
                                                                 <c:if test="${account.role == 'storeOwner'}">
