@@ -247,9 +247,9 @@
 
                                                 </td>
                                                 <td>
-                                                   <fmt:formatNumber 
-                                                                value="${c.desirePrice}" 
-                                                                maxFractionDigits="1"/>
+                                                    <fmt:formatNumber 
+                                                        value="${c.desirePrice}" 
+                                                        maxFractionDigits="1"/>
                                                 </td>
                                                 <td>
 
@@ -265,7 +265,7 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-
+                                <br/>
                                 <div class="row">
                                     <div class="col-md-9 col-sm-9">
                                     </div>
@@ -304,12 +304,12 @@
                                             <th>
                                                 Mã ký gửi
                                             </th>
-                                            <th>
-                                                Ngày duyệt yêu cầu
-                                            </th>
-                                            <th>
-                                                Giá (Ngàn đồng)
-                                            </th>
+                                            <!--                                            <th>
+                                                                                            Ngày duyệt yêu cầu
+                                                                                        </th>
+                                                                                        <th>
+                                                                                            Giá (Ngàn đồng)
+                                                                                        </th>-->
                                             <th>
                                                 Ngày đến nhận
                                             </th>
@@ -332,15 +332,15 @@
                                                 <td>
                                                     ${c.consigmentID}
                                                 </td>
-                                                <td>
-                                                    ${c.reviewRequestDate}
-                                                </td>
-                                                <td>
+                                                <!--                                                <td>
+                                                ${c.reviewRequestDate}
+                                            </td>
+                                            <td>
 
-                                                    <fmt:formatNumber 
-                                                                value="${c.desirePrice}" 
-                                                                maxFractionDigits="1"/>
-                                                </td>
+                                                <fmt:formatNumber 
+                                                    value="${c.desirePrice}" 
+                                                    maxFractionDigits="1"/>
+                                    </td>-->
                                                 <td align="center">
                                                     <c:choose>
                                                         <c:when test="${not empty c.appointmentDate}">
@@ -355,12 +355,12 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${c.deliveryMethod == 0}">
-                                                            <font color="blue">Cửa hàng đến nhận</font>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <font color="green">Tự mang đến</font>
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                            <b><font color="blue">Cửa hàng đến nhận</b></font>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            <b><font color="green">Tự mang đến</b></font>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                 </td>
                                                 <td align="center">
 
@@ -580,7 +580,7 @@
             <div id="modalRequestAccept" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color: snow ">
+                        <div class="modal-header" style="background-color: #89C4F4 ">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
@@ -600,14 +600,14 @@
                                         <div class="form-horizontal">
                                             <!--                                        <table class="table table-hover" style="border: none">-->
                                             <div class="form-group">
-                                                <label for="txtFullName" class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                <label for="txtFullName" class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Tên sản phẩm <font id="re_r_productName" color="red">*</font></label>
                                                 <div id='r_productNameInput' class="col-md-9 col-sm-9">
                                                     <input id="r_productName" name="txtProductName" maxlength="100" required="true" type="text" class="form-control"/>
                                                 </div>
-                                                <div id='r_productNameText' class="col-md-9 col-sm-9" style="padding-top: 8px; font-size: 120%; display: none"></div>
+                                                <div id='r_productNameText' class="col-md-9 col-sm-9" style="padding-top: 8px; font-size: 115%; display: none"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Loại</label>
+                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Loại <font id="re_r_category" color="red">*</font></label>
                                                 <div class="col-md-3 col-sm-3" id="r_categoryInput">
 
                                                     <select id="r_category" name="txtCategoryID"  class="form-control">
@@ -649,7 +649,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Độ mới</label>
+                                                <label class="col-md-3 col-sm-3 control-label" style="font-weight: bold">Độ mới <font id="re_r_newStatus" color="red">*</font></label>
                                                 <div class="col-md-3 col-sm-3" id="r_newStatusInput">
                                                     <div class="input-group">
                                                         <input id="r_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
@@ -728,7 +728,7 @@
                                                 <div id="r_rdDeliveryMethodText" class="col-md-8 col-sm-8" style="padding-top: 8px; font-size: 110%; display: none"></div>
                                             </div>
                                             <div class="form-group" id="div_r_receivedDate">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày giao hàng</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Ngày giao hàng <font id="re_r_receivedDate" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="ar_divReceivedDateInput">
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-6">
@@ -766,7 +766,7 @@
                                             </div>
 
                                             <div class="form-group" id="ar_price" style="display: none;">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận <font id="re_ar_negotiatedPrice" color="red">*</font></label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input type="text" id="ar_negotiatedPrice" name="txtNegotiatedPrice" class="form-control" > (Ngàn đồng)
 
@@ -778,14 +778,14 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-horizontal" id="r_divPersonalInfo" >
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên <font id="re_r_txtFullName" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="r_txtFullNameInput">
                                                     <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
                                                 </div>
                                                 <div id='r_txtFullNameText' class="col-md-8 col-sm-8" style="padding-top: 8px; font-size: 110%; display: none"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Điện thoại <font id="re_r_phone" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="r_txtPhoneInput">
                                                     <input type="text" id="r_txtPhone" name="txtPhone" class="form-control"/>
                                                 </div>
@@ -828,10 +828,10 @@
 
                             </form>
                         </div>
-                        <div class="modal-footer" style="background-color: snow ">
+                        <div class="modal-footer">
                             <div id="r_footer" >
 
-                                <button id="r_btnSubmit" class="btn btn-primary">Chấp nhận</button>
+                                <button id="r_btnSubmit" class="btn btn-primary">Đồng ý</button>
                                 <button name="btnRefuse" data-toggle="modal" data-target="#modalConfirm" value="r_refuse" class="btn btn-warning">Từ chối</button>
                                 <button class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
@@ -854,7 +854,7 @@
             <div id="modalConfirm" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="background-color: #dfba49 ">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h3 class="modal-title" style="font-weight: bold">XÁC NHẬN TỪ CHỐI</h3>
                         </div>
@@ -865,7 +865,7 @@
                             <div id="ar_body_confirm" class="form-horizontal">
 
                                 <div class="form-group">
-                                    <label class="col-md-2 col-sm-3  control-label" style="font-weight: bold">Lí do: </label>
+                                    <label class="col-md-2 col-sm-3  control-label" style="font-weight: bold">Lí do <font color="red">*</font></label>
                                     <div class="col-md-8 col-sm-7">
                                         <textarea id="refuse_reason" type="text" class="form-control" rows="3"></textarea>
                                         <span id="ar_erReason" class="help-block">
@@ -877,20 +877,12 @@
                         </div>
                         <div class="modal-footer">
                             <div id="r_footer_confirm">
-                                <!--                                <form action="ConsignmentRequestReceive" method="POST" onsubmit="return r_confirm_validation();">-->
                                 <button id="r_btnRefuse" value="r_refuse" class="btn btn-warning">Xác nhận</button>
                                 <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
-                                <!--                                    <input type="hidden" id="r_inputReason" name="r_reason"/>
-                                                                    <input id="r_ActionValue_confirm" type="hidden" name="r_consignmentID"/>-->
-                                <!--                                </form>-->
                             </div>
                             <div id="ar_footer_confirm">
-                                <!--                                <form  action="ConsignmentRequestReceive" method="POST" onsubmit="return ar_confirm_validation();">-->
                                 <button id="ar_btnRefuse" value="ar_refuse" class="btn btn-warning">Xác nhận</button>
                                 <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
-                                <!--                                    <input type="hidden" id="ar_inputReason" name="ar_reason"/>
-                                                                    <input id="ar_ActionValue_confirm" type="hidden" name="ar_consignmentID"/>-->
-                                <!--                                </form>-->
                             </div>
 
                         </div>
@@ -906,7 +898,7 @@
         <div id="modalError" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="background-color: #dfba49">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
                     </div>
@@ -932,7 +924,7 @@
             <div id="modalRefuseCancel" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="background-color: snow">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
@@ -1044,7 +1036,7 @@
             <div id="modalAddConsignment" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="background-color: #89C4F4">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h3 class="modal-title" style="font-weight: bold">Tạo sản phẩm</h3>
                         </div>
@@ -1280,19 +1272,23 @@
         <!-- END MODAL -->
 
         <!--BEGIN MODAL-->
-        <div id="modalAlert" class="modal fade">
+        <div id="modalAlert" data-backdrop="static" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <!-- dialog body -->
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        Hello world!
+                    <div class="modal-header" style="background-color: #dfba49">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
                     </div>
-                    <!-- dialog buttons -->
-                    <div class="modal-footer"><button type="button" class="btn btn-primary">OK</button></div>
-                </div>
-            </div>
-        </div>
+                    <div class="modal-body" align="center">
+                        <h3 id="alert_content"></h3>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button id="btnReload" data-dismiss="modal" class="btn btn-warning">OK</button> 
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <!--END MODAL-->
 
 
@@ -1363,11 +1359,11 @@
         <!-- START AUTO COMPLETE CSS AND JS -->
 
         <link rel="stylesheet" href="js/jquery-ui.css">
-        <style>
-            .ui-autocomplete-loading {
-                background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
-            }
-        </style>
+        <!--        <style>
+                    .ui-autocomplete-loading {
+                        background: white url("images/ui-anim_basic_16x16.gif") right center no-repeat;
+                    }
+                </style>-->
         <script src="js/jquery-2.1.1.min.js"></script>
         <script src="js/jquery-ui.min.js"></script>
         <!-- END AUTO COMPLETE -->
@@ -1625,10 +1621,16 @@
                                 $('#r_categoryText').html($('#r_category option:selected').text());
                                 $("#r_brandText").html(data.product.brand);
 
-                                //$("r_brandText").val(data.product.brand);
+                                if ($("#r_brandText").html() == "") {
+                                    $("#r_brandText").html("---");
+                                }
+
                                 $("#r_descriptionText").html(data.product.description);
+                                if ($("#r_descriptionText").html() == "") {
+                                    $("#r_descriptionText").html("---");
+                                }
                                 //alert(data.product.newStatus);
-                                $("#r_newStatusText").html(data.product.newStatus + "%");
+                                $("#r_newStatusText").html("<b>" + data.product.newStatus + "%</b>");
 
 
                                 $("#r_txtFullNameText").html(data.name);
@@ -1790,7 +1792,6 @@
 
             $('#r_btnRefuse').click(function () {
                 if ($("#refuse_reason").val().trim() == "") {
-                    //alert("Xin nhập lí do");
                     $("#ar_erReason").html("<font color='red'>Xin nhập lí do</font>");
                     return;
                 }
@@ -1838,7 +1839,7 @@
                     //$('form#r_form').submit();
                     acceptRequest();
                 } else {
-                    alert("Xin nhập đúng thông tin");
+                    showAlert("Xin nhập đúng thông tin");
                 }
 
             });
@@ -1891,15 +1892,16 @@
                         if (parseFloat(negotiatedPrice) > 0) {
                             acceptProduct();
                         } else {
-                            alert("Giá thỏa thuận phải lớn hơn 0!");
+                            showAlert("Giá thỏa thuận phải lớn hơn 0!");
                         }
 
 
                     } else {
-                        alert("Xin nhập đúng giá thỏa thuận!");
+                        showAlert("Xin nhập đúng giá thỏa thuận!")
                     }
                 } else {
-                    alert("Xin nhập đầy đủ thông tin");
+
+                    showAlert("Xin nhập đầy đủ thông tin");
                 }
             });
             $('#ar_btnUpdateRequest').click(function () {
@@ -1946,13 +1948,13 @@
 
                 if (check) {
                     updateRequest();
-                    //alert("Cập nhật thành công");
                 } else {
-                    alert("Xin nhập đầy đủ thông tin");
+                    showAlert("Xin nhập đầy đủ thông tin")
                 }
             });
 
             function updateRequest() {
+                showAlert("Đang xử lí...");
                 var consignmentID = $("#r_ActionValue").val();
                 var productName = $("#r_productName").val();
                 var categoryID = $("#r_category").val();
@@ -1985,25 +1987,25 @@
                     if (data == "success") {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
-                        consignmentTD.next().next().next().html(hour + "|" + appointmentDate);
+                        consignmentTD.next().html(hour + "|" + appointmentDate);
                         if (deliveryMethod == "customer") {
-                            consignmentTD.next().next().next().next().html("<font color='green'>Tự mang đến</font>");
+                            consignmentTD.next().next().html("<b><font color='green'>Tự mang đến</font></b>");
                         } else {
-                            consignmentTD.next().next().next().next().html("<font color='blue'>Cửa hàng đến nhận</font>");
+                            consignmentTD.next().next().html("<b><font color='blue'>Cửa hàng đến nhận</font></b>");
                         }
-                        consignmentTD.next().next().next().html(hour + "|" + appointmentDate);
-                        alert("Cập nhật thành công");
-                        //$("#r_name").html("<small>Khách hàng: </small> " + fullName);                         alert("Cập nhật thành công");
+                        //consignmentTD.next().next().next().html(hour + "|" + appointmentDate);
+                        changeContentAlert("Cập nhật thành công");
                     } else if (data == "fail") {
-                        alert("Cập nhật thất bại");
+                        changeContentAlert("Cập nhật thất bại");
                     }
                     else if (data == "error") {
-                        alert("Yêu cầu đã được xử lý");
+                        changeContentAlert("Yêu cầu đã được xử lý");
                     }
                 });
             }
 
             function acceptProduct() {
+                showAlert("Đang xử lí...");
                 var consignmentID = $("#r_ActionValue").val();
                 var productName = $("#r_productName").val();
                 var categoryID = $("#r_category").val();
@@ -2036,35 +2038,37 @@
                             paypalAccount: paypalAccount, newStatus: newStatus},
                 function (data) {
                     if (data == "success") {
-                        alert("Đã nhận sản phẩm");
+                        changeContentAlert("Đã nhận sản phẩm");
                         location.reload();
                     } else if (data == "fail") {
-                        alert("Không thể nhận sản phẩm");
+                        changeContentAlert("Không thể nhận sản phẩm");
                     }
                     else if (data == "error") {
-                        alert("Yêu cầu đã được xử lý");
+                        changeContentAlert("Yêu cầu đã được xử lý");
                     }
                 });
             }
 
             function refuseProduct() {
+                showAlert("Đang xử lí...");
                 var consignmentID = $("#refuse_consignmentID").val();
                 var reason = $("#refuse_reason").val();
                 $.get('ConsignmentRequestReceive',
                         {btnAction: "ar_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
                             if (data == "success") {
-                                alert("Đã từ chối sản phẩm");
+                                showAlert("Đã từ chối sản phẩm");
                                 location.reload();
                             } else if (data == "fail") {
-                                alert("Có lỗi xảy ra");
+                                showAlert("Có lỗi xảy ra");
                             }
                             else if (data == "error") {
-                                alert("Yêu cầu đã được xử lý");
+                                showAlert("Yêu cầu đã được xử lý");
                             }
                         });
             }
             function acceptRequest() {
+                showAlert("Đang xử lí...");
                 var consignmentID = $("#r_ActionValue").val();
                 var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
                 var appointmentDate = $("#r_receivedDate").val();
@@ -2074,13 +2078,13 @@
                             appointmentDate: appointmentDate, hour: hour},
                 function (data) {
                     if (data == "success") {
-                        alert("Đã chấp nhận yêu cầu");
+                        changeContentAlert("Đã chấp nhận yêu cầu");
                         location.reload();
                     } else if (data == "fail") {
-                        alert("Cập nhật thất bại");
+                        changeContentAlert("Cập nhật thất bại");
                     }
                     else if (data == "error") {
-                        alert("Yêu cầu đã được xử lý");
+                        changeContentAlert("Yêu cầu đã được xử lý");
                     }
                 });
             }
@@ -2123,35 +2127,23 @@
 //                });
 //            }
             function refuseRequest() {
+                showAlert("Đang xử lí...");
                 var consignmentID = $("#refuse_consignmentID").val();
                 var reason = $("#refuse_reason").val();
                 $.get('ConsignmentRequestReceive',
                         {btnAction: "r_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
                             if (data == "success") {
-                                alert("Đã từ chối yêu cầu");
+                                changeContentAlert("Đã từ chối yêu cầu");
                                 location.reload();
                             } else if (data == "fail") {
-                                alert("Có lỗi xảy ra");
+                                changeContentAlert("Có lỗi xảy ra");
                             }
                             else if (data == "error") {
-                                alert("Yêu cầu đã được xử lý");
+                                changeContentAlert("Yêu cầu đã được xử lý");
                             }
                         });
             }
-
-            //            function ar_validation() {
-            //                var minPrice = $("#ar_minPrice").val();
-            //                var maxPrice = $("#ar_maxPrice").val();
-            //                if (minPrice == "" || maxPrice == "") {
-            //                    alert("Xin nhập giá.");
-            //                    return false;
-            //                }
-            //                $("#ar_inputMinPrice").val(minPrice);
-            //                $("#ar_inputMaxPrice").val(maxPrice);
-            //                return true;
-            //            }
-
 
             $('input:radio[name="rdPayment"]').change(function () {
                 if ($(this).val() == "cc") {
@@ -2161,15 +2153,6 @@
                     $("#addConsignment_divCCNumber").hide();
                 }
             });
-
-//            $('input:radio[name="r_rdDeliveryMethod"]').change(function () {
-//                if ($(this).val() == "store") {
-//                    $("#div_r_receivedDate").show();
-//                }
-//                else {
-//                    $("#div_r_receivedDate").hide();
-//                }
-//            });
 
             $('input:radio[name="r_rdPayment"]').change(function () {
                 if ($(this).val() == "cc") {
@@ -2436,6 +2419,18 @@
                     return 1;
                 }
                 return -1;
+            }
+            function showAlert(content) {
+                $("#modalAlert").modal("show");
+                $("#alert_content").html(content);
+            }
+
+            function changeContentAlert(content) {
+                $("#alert_content").html(content);
+            }
+            
+            function showRequireOnRequestAcceptModal(){
+                
             }
 
 

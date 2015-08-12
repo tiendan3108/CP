@@ -227,7 +227,7 @@
                 <div id="modalDesirePrice" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header" style="background-color: #418bca">
+                            <div class="modal-header" style="background-color: #89C4F4">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" style="font-weight: bold">NHẬP GIÁ MONG MUỐN</h4>
                             </div>

@@ -30,22 +30,10 @@
         <div id="wrapper_manage">
             <div class="row margin-bottom-40">
                 <!--BEGIN SIDEBAR -->
-                <div class="sidebar col-md-3 col-sm-4">
-                    <ul class="list-group sidebar-menu">
-                        <li class="list-group-item clearfix dropdown">
-                            <a href="#"><i class="fa fa-angle-right"></i>Cá nhân</a>
-                        </li>
-                        <li class="list-group-item clearfix dropdown active">
-                            <a href="TrackProductProduct"><i class="fa fa-angle-right"></i>Ký gửi</a>
-                        </li>
-                        <li class="list-group-item clearfix dropdown">
-                            <a href="#"><i class="fa fa-angle-right"></i>Mua bán</a>
-                        </li>
-                    </ul>
-                </div>
+                
                 <!-- END SIDEBAR -->
 
-                <div class="col-md-9 col-sm-8" style="background-color: white; padding-top: 30px ">
+                <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1" style="background-color: white; padding-top: 30px ">
 
                     <form class="form-horizontal" role="form" action="TrackProductStatus">
                         <div class="form-body">
@@ -112,17 +100,15 @@
                                     <td>
 
                                         <c:choose>
-                                            <c:when test="${c.minPrice > 0 and c.maxPrice > 0}">
+                                            <c:when test="${c.negotiatedPrice > 0}">
                                                 <fmt:formatNumber 
-                                                    value="${c.minPrice}" 
+                                                    value="${c.negotiatedPrice}" 
                                                     maxFractionDigits="1"/>
-                                                &nbsp; ~ &nbsp;
-                                                <fmt:formatNumber 
-                                                    value="${c.maxPrice}" 
-                                                    maxFractionDigits="1"/> 
                                             </c:when>
                                             <c:otherwise>
-                                                <b><font color="red">Chưa có giá</font></b>
+                                                <b><fmt:formatNumber 
+                                                    value="${c.desirePrice}" 
+                                                    maxFractionDigits="1"/></b>
                                                 </c:otherwise>
                                             </c:choose>
                                     </td>

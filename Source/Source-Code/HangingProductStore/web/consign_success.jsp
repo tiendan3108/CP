@@ -77,41 +77,60 @@
                                             </li>
 
                                         </ul>
-                                        <!-- <div id="bar" class="progress progress-striped" role="progressbar">
-                                                <div class="progress-bar progress-bar-success">
+
+                                        <div class="tab-content">
+                                            <div class="form-horizontal" style="font-size: 120%">
+                                                <h4 class="alert alert-success" style="text-align: center; font-weight: bold;width: 800px;margin:auto">ĐÃ GỬI YÊU CẦU THÀNH CÔNG.</h4>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1" style="text-align: right; font-weight: bold">Sản phẩm</div>
+                                                    <div class="col-md-8 col-sm-8"><span style="font-weight: 600">${CONSIGNMENT.product.name}</span></div>
                                                 </div>
-                                        </div> -->
-
-                                        <div class="tab-content" style="text-align: justify" >
-                                            <h4 class="alert alert-info" style="font-weight: bold;width: 800px;margin:auto">Yêu cầu ký gửi của bạn đã được gửi, cửa hàng sẽ xem xét yêu cầu của bạn và định giá khi đến kiểm tra sản phẩm.</h4>
-                                            <h4 style="padding-left: 15%"><b style="margin-right: 80px">Sản phẩm:</b> ${CONSIGNMENT.product.name}</h4>
-                                            <h4 style="padding-left: 15%"><b style="margin-right: 25px">Giá mong muốn:</b> 
-                                                    <fmt:formatNumber 
-                                                        value="${CONSIGNMENT.desirePrice}" 
-                                                        maxFractionDigits="0" /> đồng</h4>
-                                                    <h4 style="padding-left: 15%"><b style="margin-right: 81px">Mã ký gửi:</b> <b>[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</b>.</h4>
-                                                <h4 style="padding-left: 15%"><b style="margin-right: 24px">Cửa hàng ký gửi:</b> ${STOREOWNER.fullName}</h4>
-
-                                   
-<!--                                            <h3>Nhấn vào <b><a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a></b> để kiểm tra.</h3>-->
-                                                <h3 style="padding-left: 15%">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1" style="text-align: right; font-weight: bold">Giá mong muốn</div>
+                                                    <div class="col-md-8 col-sm-8"><span style="font-weight: 600"><fmt:formatNumber 
+                                                                value="${CONSIGNMENT.desirePrice}" 
+                                                                maxFractionDigits="0" /> đồng</span></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1" style="text-align: right; font-weight: bold">Mã ký gửi</div>
+                                                    <div class="col-md-8 col-sm-8"><span style="font-weight: 600">[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</span></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1" style="text-align: right; font-weight: bold">Cửa hàng ký gửi</div>
+                                                    <div class="col-md-9 col-sm-9"><span style="font-weight: 600">${STOREOWNER.fullName}</span></div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--                                        <div class="tab-content" style="text-align: justify" >
+                                                                                    <h4 class="alert alert-success" style="text-align: center; font-weight: bold;width: 800px;margin:auto">ĐÃ GỬI YÊU CẦU THÀNH CÔNG.</h4>
+                                                                                    <h4 style="padding-left: 15%"><b style="margin-right: 80px">Sản phẩm:</b> <span style="font-weight: 600">${CONSIGNMENT.product.name}</span></h4>
+                                                                                    <h4 style="padding-left: 15%"><b style="margin-right: 25px">Giá mong muốn:</b> 
+                                                                                            <span style="font-weight: 600"><fmt:formatNumber 
+                                            value="${CONSIGNMENT.desirePrice}" 
+                                            maxFractionDigits="0" /> đồng</span></h4>
+                                        <h4 style="padding-left: 15%"><b style="margin-right: 81px">Mã ký gửi:</b> <span style="font-weight: 600">[<a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">${CONSIGNMENT.consigmentID}</font></a>]</span></h4>
+                                        <h4 style="padding-left: 15%"><b style="margin-right: 24px">Cửa hàng ký gửi:</b> <span style="font-weight: 600">${STOREOWNER.fullName}</span></h4>
+
+                       
+                                <h3>Nhấn vào <b><a href="TrackProductStatus?searchValue=${CONSIGNMENT.consigmentID}&btnAction=search"><font color="blue">đây </font></a></b> để kiểm tra.</h3>
+                                    <h3 style="padding-left: 15%; font-weight: 500">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
+                                </div>-->
                                     </div>
-                                    
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- END DIV STEP2 -->
-
-
             </div>
+
+
+            <!-- END DIV STEP2 -->
+
+
         </div>
-    </jsp:body>
+    </div>
+</jsp:body>
 </template:consign>
 <script type="text/javascript">
     var RecaptchaOptions = {
