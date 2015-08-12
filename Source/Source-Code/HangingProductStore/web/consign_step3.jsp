@@ -103,6 +103,7 @@
                                                                 <th>
                                                                     Tên cửa hàng
                                                                 </th>
+                                                                <th>Điện thoại</th>
                                                                 <th>
                                                                     Địa chỉ
                                                                 </th>
@@ -129,6 +130,7 @@
                                                                     <td>
                                                                         ${item.fullName}
                                                                     </td>
+                                                                    <td>${item.phone}</td>
                                                                     <td>
                                                                         ${item.address}
                                                                     </td>
@@ -225,7 +227,7 @@
                 <div id="modalDesirePrice" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header" style="background-color: ivory">
+                            <div class="modal-header" style="background-color: #418bca">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" style="font-weight: bold">NHẬP GIÁ MONG MUỐN</h4>
                             </div>
@@ -254,7 +256,7 @@
                                 </form>
                             </div>
 
-                            <div class="modal-footer" style="background-color: ivory">
+                            <div class="modal-footer">
                                 <input id="maxPrice" type="hidden"/>
                                 <button id="btnConfirm" class="btn btn-info">Xác nhận</button>
                                 <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
@@ -308,16 +310,18 @@
     $('#btnConfirm').click(function () {
         var desirePrice = $("#inputDesirePrice").val();
         var maxPrice = $("#maxPrice").val();
-        if (desirePrice.length == 0) {
+        if ($("#inputDesirePrice").val().length == 0) {
             $("#erDesirePrice").html("<font color='red'>Xin nhập giá mong muốn</font");
         } else {
+            
             if (isNaN(desirePrice)) {
                 $("#erDesirePrice").html("<font color='red'>Xin nhập đúng số</font");
             } else {
-                if (desirePrice > 0) {
-                    if (maxPrice.length > 0) {
-
-                        if (parseFloat(desirePrice) > parseFloat(maxPrice)) {
+                var desireNum = parseFloat(desirePrice);
+                if (desireNum > 0) {
+                    if (maxPrice.length > 0 && !isNaN(maxPrice)) {
+                        var maxNum = parseFloat(maxPrice);
+                        if (desireNum > maxNum) {
                             $("#erDesirePrice").html("<font color='red'>Giá bạn chọn phải nhỏ hơn hoặc bằng giá tối đa tìm được</font");
                         } else {
                             $("#erDesirePrice").html("");

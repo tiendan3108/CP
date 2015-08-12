@@ -139,16 +139,18 @@ public class ConsignServlet extends HttpServlet {
                         product.setImage(amazonProduct.getImage());
 
                         String formatName = amazonProduct.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
-                        if (formatName.contains("#")) {
-                            formatName = formatName.substring(0, formatName.indexOf("#"));
-                        }
-                        if (formatName.contains("/")) {
-                            formatName = formatName.substring(0, formatName.indexOf("/"));
-                        }
                         
                         if (formatName.contains(",")) {
-                            formatName = formatName.substring(0, formatName.indexOf(","));
+                            formatName = formatName.substring(0, formatName.lastIndexOf(","));
                         }
+                        
+                        if (formatName.contains("/")) {
+                            formatName = formatName.substring(0, formatName.lastIndexOf("/"));
+                        }
+                        if (formatName.contains("#")) {
+                            formatName = formatName.substring(0, formatName.lastIndexOf("#"));
+                        }
+                        
                         formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
                         if (formatName.length() > 50) {
                             product.setName(formatName.substring(0, 50));
@@ -207,16 +209,16 @@ public class ConsignServlet extends HttpServlet {
                             basicPrice = a.getPrice();
                             String formatName = a.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
 
-                            if (formatName.contains("#")) {
-                                formatName = formatName.substring(0, formatName.indexOf("#"));
+                            if (formatName.contains(",")) {
+                                formatName = formatName.substring(0, formatName.lastIndexOf(","));
                             }
                             if (formatName.contains("/")) {
-                                formatName = formatName.substring(0, formatName.indexOf("/"));
+                                formatName = formatName.substring(0, formatName.lastIndexOf("/"));
+                            }
+                            if (formatName.contains("#")) {
+                                formatName = formatName.substring(0, formatName.lastIndexOf("#"));
                             }
                             
-                            if (formatName.contains(",")) {
-                                formatName = formatName.substring(0, formatName.indexOf(","));
-                            }
                             formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
                             if (formatName.length() > 50) {
                                 product.setName(formatName.substring(0, 50));

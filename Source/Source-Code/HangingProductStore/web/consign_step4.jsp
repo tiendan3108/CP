@@ -311,6 +311,37 @@
                     </div>
                 </div>
                 <!-- END DIV STEP3 -->
+                <div id="modalConfirm" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: thistle">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" style="font-weight: bold">LƯU Ý</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal">
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Yêu cầu ký gửi này sẽ được gửi đến chủ cửa hàng</b></h4>
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Chủ cửa hàng có thể đồng ý hoặc từ chối yêu cầu của bạn.</b></h4>
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Nếu đồng ý, sản phẩm sẽ được chủ cửa hàng định giá khi nhận hàng.</b></h4>
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Khi đã nhận hàng, nếu món hàng chưa được đặt, bạn có thể yêu cầu hủy ký gửi nhưng chịu phạt một mức phí do chủ cửa hàng quy định</b></h4>
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Khi món hàng hết hạng, cửa hàng sẽ thông báo cho bạn. Bạn có thể nhận lại hàng trong 3 ngày, sau 3 ngày, cửa hàng sẽ tính phí lưu kho. Bạn cũng có thể yêu cầu gia hạn ký gửi.</b></h4>
+                                    <h4 style="padding-left: 10%"><b style="margin-right: 80px">Nếu món hàng bị hư hỏng sau khi cửa hàng đã nhận hàng, cửa hàng sẽ đền bù cho bạn bằng với số tiền đã thỏa thuận</b></h4>
+                                    <h4>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button id="btnConfirm" class="btn btn-info">Xác nhận</button>
+                                <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
+
+
+
+
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
 
 
             </div>
@@ -341,7 +372,8 @@
     });
 
     $("#btnComplete").click(function () {
-        $("#form3").submit();
+        //$("#form3").submit();
+        $("#modalConfirm").modal("show");
     });
     function formatDate(date) {
         var d = new Date(date),
