@@ -1033,7 +1033,7 @@
             <div id="modalAddConsignment" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color: #89C4F4">
+                        <div class="modal-header" style="background-color: #35aa47">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h3 class="modal-title" style="font-weight: bold">Tạo sản phẩm</h3>
                         </div>
@@ -1145,8 +1145,7 @@
                                                                     THAY ẢNH </span>
                                                                 <input  type="file" accept='image/*' name="txtImage" />
                                                             </span>
-                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                XÓA </a>
+                                                           
                                                         </div>
                                                     </div>
 
@@ -1257,7 +1256,7 @@
                         </div>
                         <div class="modal-footer">
 
-                            <button id="btnAddConsignment" class="btn btn-primary">Thêm</button>
+                            <button id="btnAddConsignment" class="btn green">Thêm</button>
                             <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
 
 
@@ -1281,7 +1280,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button id="btnReload" data-dismiss="modal" class="btn btn-warning">OK</button> 
+                        <button id="btnOK" data-dismiss="modal" class="btn btn-warning">OK</button> 
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -1736,7 +1735,8 @@
                                     //$("#ar_btnUpdateRequest").show();
                                     $("#ar_divReceivedDateInput").show();
                                     $("#ar_divReceivedDate").hide();
-                                    $("ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
+                                    //$("ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
+                                    $("#re_r_receivedDate").show();
                                     //$("input[name='r_rdDeliveryMethod']").attr("disabled", false);
                                 }
 
@@ -1941,6 +1941,7 @@
 
             function updateRequest() {
                 showAlert("Đang xử lí...");
+                $("#btnOK").hide();
                 var consignmentID = $("#r_ActionValue").val();
                 var productName = $("#r_productName").val();
                 var categoryID = $("#r_category").val();
@@ -1987,11 +1988,13 @@
                     else if (data == "error") {
                         changeContentAlert("Yêu cầu đã được xử lý");
                     }
+                   $("#btnOK").show();
                 });
             }
 
             function acceptProduct() {
                 showAlert("Đang xử lí...");
+                $("#btnOK").hide();
                 var consignmentID = $("#r_ActionValue").val();
                 var productName = $("#r_productName").val();
                 var categoryID = $("#r_category").val();
@@ -2023,6 +2026,7 @@
                             fullName: fullName, address: address, phone: phone, email: email,
                             paypalAccount: paypalAccount, newStatus: newStatus},
                 function (data) {
+                    $("#btnOK").show();
                     if (data == "success") {
                         changeContentAlert("Đã nhận sản phẩm");
                         location.reload();
@@ -2037,11 +2041,13 @@
 
             function refuseProduct() {
                 showAlert("Đang xử lí...");
+                $("#btnOK").hide();
                 var consignmentID = $("#refuse_consignmentID").val();
                 var reason = $("#refuse_reason").val();
                 $.get('ConsignmentRequestReceive',
                         {btnAction: "ar_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
+                            $("#btnOK").show();
                             if (data == "success") {
                                 showAlert("Đã từ chối sản phẩm");
                                 location.reload();
@@ -2055,6 +2061,7 @@
             }
             function acceptRequest() {
                 showAlert("Đang xử lí...");
+                $("#btnOK").hide();
                 var consignmentID = $("#r_ActionValue").val();
                 var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
                 var appointmentDate = $("#r_receivedDate").val();
@@ -2063,6 +2070,7 @@
                         {btnAction: 'r_accept', consignmentID: consignmentID, deliveryMethod: deliveryMethod,
                             appointmentDate: appointmentDate, hour: hour},
                 function (data) {
+                    $("#btnOK").show();
                     if (data == "success") {
                         changeContentAlert("Đã chấp nhận yêu cầu");
                         location.reload();
@@ -2074,51 +2082,16 @@
                     }
                 });
             }
-//            function acceptRequest() {
-//                var consignmentID = $("#r_ActionValue").val();
-//                var productName = $("#r_productName").val();
-//                var categoryID = $("#r_category").val();
-//                var brand = $("#r_brand").val();
-//                var description = $("#r_description").val();
-//                var appointmentDate = $("#r_receivedDate").val();
-//                var hour = $("#r_hour").val();
-//                var isSpecial = 0;
-//                if ($("input#r_isSpecial").is(":checked")) {
-//                    isSpecial = 1;
-//                }
-//                var fullName = $("#r_txtFullName").val();
-//                var address = $("#r_txtAddress").val();
-//                var phone = $("#r_txtPhone").val();
-//                var email = $("#r_txtEmail").val();
-//                var paypalAccount = $("#r_txtPaypalAccount").val();
-//                if ($("input[name='r_rdPayment'][value='direct']").is(":checked")) {
-//                    paypalAccount = "";
-//                }
-//                var deliveryMethod = $("input[name='r_rdDeliveryMethod']:checked").val();
-//
-//                $.get('ConsignmentRequestReceive',
-//                        {btnAction: 'r_accept', consignmentID: consignmentID, productName: productName,
-//                            categoryID: categoryID, brand: brand, description: description, appointmentDate: appointmentDate, hour: hour, deliveryMethod: deliveryMethod, isSpecial: isSpecial,
-//                            fullName: fullName, address: address, phone: phone, email: email, paypalAccount: paypalAccount},
-//                function (data) {
-//                    if (data == "success") {
-//                        alert("Đã chấp nhận yêu cầu");
-//                        location.reload();
-//                    } else if (data == "fail") {
-//                        alert("Cập nhật thất bại");
-//                    }
-//                    else if (data == "error") {
-//                        alert("Yêu cầu đã được xử lý");
-//                    }
-//                });
-//            }
+
             function refuseRequest() {
                 showAlert("Đang xử lí...");
+                $("#btnOK").hide();
                 var consignmentID = $("#refuse_consignmentID").val();
                 var reason = $("#refuse_reason").val();
                 $.get('ConsignmentRequestReceive',
                         {btnAction: "r_refuse", consignmentID: consignmentID, reason: reason, },
                         function (data) {
+                            $("#btnOK").show();
                             if (data == "success") {
                                 changeContentAlert("Đã từ chối yêu cầu");
                                 location.reload();
