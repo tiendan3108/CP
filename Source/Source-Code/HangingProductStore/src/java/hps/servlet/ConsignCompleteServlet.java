@@ -31,6 +31,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -274,6 +275,28 @@ public class ConsignCompleteServlet extends HttpServlet {
                                 e.printStackTrace();
                             }
 
+                        }
+                        
+                        if(session.getAttribute("ACCOUNT") == null){
+                            Cookie cookie = new Cookie("gName", fullName);
+                            cookie.setMaxAge(30*60);
+                            response.addCookie(cookie);
+                            
+                            cookie = new Cookie("gAddress", address);
+                            cookie.setMaxAge(30*60);
+                            response.addCookie(cookie);
+                            
+                            cookie = new Cookie("gPhone", phone);
+                            cookie.setMaxAge(30*60);
+                            response.addCookie(cookie);
+                            
+                            cookie = new Cookie("gEmail", email);
+                            cookie.setMaxAge(30*60);
+                            response.addCookie(cookie);
+                            
+                            cookie = new Cookie("gPaypalAccount", paypalAccount);
+                            cookie.setMaxAge(30*60);
+                            response.addCookie(cookie);
                         }
                         consignment.setProduct(product);
                         session.setAttribute("CONSIGNMENT", consignment);

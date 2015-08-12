@@ -77,7 +77,15 @@
                                             </ul>
 
                                             <form id='form3' action="ConsignCompleteServlet" method="POST" onsubmit="return validation()" enctype="multipart/form-data">
-                                                <c:set var="member" value="${sessionScope.ACCOUNT}"/>
+                                                <c:choose>
+                                                    <c:when test="${not empty emptysessionScope.ACCOUNT}">
+                                                        <c:set var="member" value="${sessionScope.ACCOUNT}"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="member" value="${requestScope.GUEST}"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                
                                                 <div class="tab-content">
 
                                                     <div>

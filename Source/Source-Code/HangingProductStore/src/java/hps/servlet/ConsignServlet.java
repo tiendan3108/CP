@@ -11,6 +11,7 @@ import hps.dao.CategoryDAO;
 import hps.dto.CategoryDTO;
 import hps.dto.AccountDTO;
 import hps.dto.ProductDTO;
+import hps.mobile.Account;
 import hps.ultils.AmazonProduct;
 import hps.ultils.AmazonService;
 import hps.ultils.GlobalVariables;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,11 +115,11 @@ public class ConsignServlet extends HttpServlet {
                 //String date = request.getParameter("txtDate").trim();
                 String newStatus = request.getParameter("txtNewStatus").trim();
                 String description = request.getParameter("txtDescription").trim();
-                
+
                 String method = request.getParameter("txtSearchMethod");
-                if(method.equals("name")){
+                if (method.equals("name")) {
                     serialNumber = "";
-                }else{
+                } else {
                     productName = "";
                     brand = "";
                 }
@@ -139,18 +141,18 @@ public class ConsignServlet extends HttpServlet {
                         product.setImage(amazonProduct.getImage());
 
                         String formatName = amazonProduct.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
-                        
+
                         if (formatName.contains(",")) {
                             formatName = formatName.substring(0, formatName.lastIndexOf(","));
                         }
-                        
+
                         if (formatName.contains("/")) {
                             formatName = formatName.substring(0, formatName.lastIndexOf("/"));
                         }
                         if (formatName.contains("#")) {
                             formatName = formatName.substring(0, formatName.lastIndexOf("#"));
                         }
-                        
+
                         formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
                         if (formatName.length() > 50) {
                             product.setName(formatName.substring(0, 50));
@@ -218,7 +220,7 @@ public class ConsignServlet extends HttpServlet {
                             if (formatName.contains("#")) {
                                 formatName = formatName.substring(0, formatName.lastIndexOf("#"));
                             }
-                            
+
                             formatName = formatName.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
                             if (formatName.length() > 50) {
                                 product.setName(formatName.substring(0, 50));
@@ -252,15 +254,52 @@ public class ConsignServlet extends HttpServlet {
                 session.removeAttribute("DESIREPRICE");
 
                 url = STEP3;
-//                request.setAttribute("backlink", url);
             }
             if (action.equals("tostep4")) {
                 String storeOwnerID = request.getParameter("txtStore");
                 String desirePrice = request.getParameter("txtDesirePrice");
                 session.setAttribute("STORE", storeOwnerID);
                 session.setAttribute("DESIREPRICE", desirePrice);
+
+                if (session.getAttribute("ACCOUNT") == null) {
+
+                    Cookie[] cookieBox = request.getCookies();
+                    boolean check = false;
+                    for (Cookie cookie : cookieBox) {
+                        if (cookie.getName().equals("gName")) {
+                            check = true;
+                            break;
+                        } else if (cookie.getName().equals("gPhone")) {
+                            check = true;
+                            break;
+                        }
+                    }
+                    if (check) {
+                        AccountDTO guest = new AccountDTO();
+                        for (Cookie cookie : cookieBox) {
+                            switch (cookie.getName()) {
+                                case "gName":
+                                    guest.setFullName(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    break;
+                                case "gAddress":
+                                    guest.setAddress(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    break;
+                                case "gPhone":
+                                    guest.setPhone(cookie.getValue());
+                                    break;
+                                case "gEmail":
+                                    guest.setEmail(cookie.getValue());
+                                    break;
+                                case "gPaypalAccount":
+                                    guest.setPaypalAccount(cookie.getValue());
+                                    break;
+                            }
+                        }
+
+                        request.setAttribute("GUEST", guest);
+                    }
+                }
                 url = STEP4;
-//                request.setAttribute("backlink", url);
             }
 
             if (action.equals("login")) {
