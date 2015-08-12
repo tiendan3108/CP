@@ -51,7 +51,7 @@
                         <p><i style="color: white" class="fa fa-phone"></i>
                             090966668888</p>
                         <p><i style="color: white" class="fa fa-map-marker"></i>
-                            123 Quang Trung, 12 District, HCM c.</p>
+                            123 Quang Trung, Quận 12,Tp. HCM</p>
                         <p><i style="color: white" class="fa fa-envelope"></i>
                             hangingproductstorevn@gmail.com</p>
                     </div>
@@ -133,13 +133,13 @@
                         <p style="margin-top: 10px" class="grey-text text-lighten-4">
                             <i style="padding-left: 30px" class="fa fa-phone"></i>&nbsp;&nbsp;090966668888 <br/>
                             <i style="padding-left: 30px" class="fa fa-map-marker"></i>
-                            &nbsp;123 Quang Trung, 12 District, Ho Chi Minh c. <br/>
+                            &nbsp;123 Quang Trung, Quận 12,Tp. HCM <br/>
                             <i style="padding-left: 30px" class="fa fa-envelope"></i>
                             &nbsp;&nbsp;hangingproductstorevn@gmail.com<br/>
                         </p>
                     </div>
                     <div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-12">
-                        <p class="footerTitle">Follow Us</p>
+                        <p class="footerTitle">Theo Dõi</p>
                         <ul>
                             <li><a style="color: white;text-decoration: none" href="#!">Facebook</a></li>
                             <li><a style="color: white;text-decoration: none" href="#!">Twitter</a></li>
