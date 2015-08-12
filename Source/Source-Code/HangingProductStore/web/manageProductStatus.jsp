@@ -853,9 +853,12 @@
                                                             <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                    <div class="fileinput-new thumbnail">
+                                                                    <div class="thumbnail">
                                                                         <img src="" id="avai_Image" style="max-height: 200px"/>
                                                                     </div>
+<!--                                                                    <div class="fileinput-exists thumbnail">
+                                                                        <img src="" id="avai_Image2" style="max-height: 200px"/>
+                                                                    </div>-->
                                                                     <br/>
                                                                     <div >
                                                                         <span class="btn btn-info btn-file">
@@ -1137,7 +1140,7 @@
                                                             <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                    <div class="fileinput-new thumbnail">
+                                                                    <div class="thumbnail">
                                                                         <img src="" id="onWeb_Image" style="max-height: 200px"/>
                                                                     </div>
                                                                     <div >
@@ -1349,6 +1352,7 @@
                         $("#avai_Brand").val(response.brand);
                         $("#avai_Description").val(response.description);
                         $("#avai_Image").attr("src", response.image);
+                        //$("#avai_Image2").attr("src", response.image);
                         var option = "option#" + response.categoryID;
                         $(option).attr("selected", "selected");
                         if (response.isSpecial < 1) {
