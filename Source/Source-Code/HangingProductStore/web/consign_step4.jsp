@@ -153,7 +153,7 @@
                                                                     </div>
                                                                     <c:if test="${empty member}">
                                                                         <div id="divCCNumber" class="form-group" style="display: none" >
-                                                                            <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Mã tài khoản <font color="red">*</font></label>
+                                                                            <label for="txtPaypalAccount" class="col-md-4 col-sm-4 control-label">Tên tài khoản <font color="red">*</font></label>
                                                                             <div class="col-md-8 col-sm-8">
                                                                                 <input type="text" id="txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder="" value="${member.paypalAccount}"/>
 

@@ -223,9 +223,9 @@
                                             <th>
                                                 Giá (Ngàn đồng)
                                             </th>
-                                            <th>
+<!--                                            <th>
                                                 Ngày hẹn
-                                            </th>
+                                            </th>-->
                                             <th>
                                                 Chi Tiết
                                             </th>
@@ -251,10 +251,7 @@
                                                         value="${c.desirePrice}" 
                                                         maxFractionDigits="1"/>
                                                 </td>
-                                                <td>
-
-                                                    ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
-                                                </td>
+                                                
                                                 <td align="center">
 
                                                     <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
@@ -778,7 +775,7 @@
                                     <div class="col-lg-6 col-md-6">
                                         <div class="form-horizontal" id="r_divPersonalInfo" >
                                             <div class="form-group">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên <font id="re_r_txtFullName" color="red">*</font></label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên <font id="re_r_fullName" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="r_txtFullNameInput">
                                                     <input type="text" id="r_txtFullName" name="txtFullName"  class="form-control" maxlength="50"/>
                                                 </div>
@@ -815,7 +812,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" id="r_divCCNumber" style="display: none">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã tài khoản</label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã tài khoản <font id="re_r_paypalAccount" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="r_txtPaypalAccountInput">
                                                     <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
                                                 </div>
@@ -1235,7 +1232,7 @@
                                                 </div>
                                             </div>
                                             <div id="addConsignment_divCCNumber" class="form-group" style="display: none" >
-                                                <label class="col-md-4 col-sm-4 control-label">Mã tài khoản<font color="red">*</font></label>
+                                                <label class="col-md-4 col-sm-4 control-label">Tên tài khoản<font color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8">
                                                     <input type="text" id="addConsignment_txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder=""/>
 
@@ -1391,22 +1388,10 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
-                //                if (currentTab == "accepted") {
-                //                    var table = $('#acceptedTable').DataTable();
-                //                    table.draw();
-                //
-                //                } else if (currentTab == "request") {
-                //                    var table = $('#requestTable').DataTable();
-                //                    table.draw();
-                //                }else if (currentTab == "cancel") {
-                //                    var table = $('#cancelTable').DataTable();
-                //                    table.draw();
-                //                }else if (currentTab == "refuse") {
-                //                    var table = $('#refuseTable').DataTable();
-                //                    table.draw();
-                //                }
+               
 
                 setEnableFieldWhenLoadRequestAcceptDetails();
+                setRequireOnRequestAcceptModal();
             });
             $(function () {
                 $("#r_brand").autocomplete({
@@ -1744,6 +1729,7 @@
                                     $("#ar_divReceivedDateInput").hide();
                                     $("#ar_divReceivedDate").show();
                                     $("#ar_divReceivedDate").html(data.hour + "|" + data.appointmentDate);
+                                    $("#re_r_receivedDate").hide();
                                     //$("input[name='r_rdDeliveryMethod']").attr("disabled", true);
 
                                 } else {
@@ -2403,7 +2389,6 @@
                             }
                         }
 
-
                     }
             );
 
@@ -2428,12 +2413,27 @@
             function changeContentAlert(content) {
                 $("#alert_content").html(content);
             }
-            
-            function showRequireOnRequestAcceptModal(){
-                
+
+            function setRequireOnRequestAcceptModal() {
+                if ($("#currentTab").val() == "accepted") {
+                    $("#re_r_productName").show();
+                    $("#re_r_category").show();
+                    $("#re_r_newStatus").show();
+                    $("#re_r_receivedDate").show();
+                    $("#re_r_fullName").show();
+                    $("#re_r_phone").show();
+                    $("#re_r_paypalAccount").show();
+                } else {
+                    $("#re_r_productName").hide();
+                    $("#re_r_category").hide();
+                    $("#re_r_newStatus").hide();
+                    $("#re_r_receivedDate").hide();
+                    $("#re_r_fullName").hide();
+                    
+                    $("#re_r_phone").hide();
+                    $("#re_r_paypalAccount").hide();
+                }
             }
-
-
         </script> 
 
 

@@ -97,8 +97,9 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-3 col-sm-3 col-md-offset-1 col-sm-offset-1" style="text-align: right; font-weight: bold">Cửa hàng ký gửi</div>
-                                                    <div class="col-md-9 col-sm-9"><span style="font-weight: 600">${STOREOWNER.fullName}</span></div>
+                                                    <div class="col-md-8 col-sm-8"><span style="font-weight: 600">${STOREOWNER.fullName}</span></div>
                                                 </div>
+                                                <h3 style="padding-left: 15%; font-weight: 500">Nhấn vào <b><a href="ConsignServlet"><font color="blue">đây </font></a></b>để ký gửi món khác.</h3>
                                             </div>
                                         </div>
                                         <!--                                        <div class="tab-content" style="text-align: justify" >
