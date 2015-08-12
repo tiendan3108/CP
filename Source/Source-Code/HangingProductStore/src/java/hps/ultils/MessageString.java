@@ -21,8 +21,8 @@ public class MessageString {
                 + " nếu có thắc mắc.</br> Trân trọng</br> HPS System";
     }
 
-    public static final String sendPriceSMS(String orderID, float price, String storeOwner) {
-        return "Don hang voi ma " + orderID + " co gia la : " + price + ". Vui long lien he voi chu cua hang " + storeOwner + " de biet them chi tiet";
+    public static final String sendPriceSMS(String orderID, int price, String storeOwner) {
+        return "Don hang voi ma " + orderID + " co gia la : " + price + " ngan dong. Vui long lien he voi chu cua hang " + storeOwner + " de biet them chi tiet";
     }
 
     public static final String cancelOrderSMS(String orderID, String storeOwner) {

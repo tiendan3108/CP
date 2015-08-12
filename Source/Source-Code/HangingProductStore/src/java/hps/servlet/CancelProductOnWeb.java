@@ -58,12 +58,14 @@ public class CancelProductOnWeb extends HttpServlet {
                     e.printStackTrace();
                 }
                 ProductDAO productDAO = new ProductDAO();
-                if (cancelFee != 0) {
-                    flag = productDAO.cancelProduct(consignmentID, ProductStatus.NOT_AVAILABLE, cancelFee);
-                }
                 String currentTab = request.getParameter("txtcurrentTab");
-                if (flag) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + currentTab + "&status=success";
+                if (cancelFee > 0) {
+                    flag = productDAO.cancelProduct(consignmentID, ProductStatus.NOT_AVAILABLE, cancelFee);
+                    if (flag) {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + currentTab + "&status=success";
+                    } else {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + currentTab + "&status=fail";
+                    }
                 } else {
                     url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + currentTab + "&status=fail";
                 }

@@ -370,17 +370,18 @@ public class OrderDAO {
         }
     }
 
-    public String getCustomerInforByOrderID(String _orderID, float sendPrice) {
+    public String getCustomerInforByOrderID(String _orderID, int sendPrice) {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String query = "";
+        float price = sendPrice * 1000;
         try {
 
             conn = DBUltilities.makeConnection();
             query = "UPDATE [Order] SET SendPrice = ? WHERE OrderID = ?";
             stm = conn.prepareStatement(query);
-            stm.setFloat(1, sendPrice);
+            stm.setFloat(1, price);
             stm.setString(2, _orderID);
             stm.executeUpdate();
 

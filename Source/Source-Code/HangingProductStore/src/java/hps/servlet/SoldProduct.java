@@ -55,29 +55,35 @@ public class SoldProduct extends HttpServlet {
                 String paymentMethod = request.getParameter("paymentMethod");
                 String consignmentID = request.getParameter("txtConsignmentID");
                 String tmp_returnPrice = request.getParameter("txtReturnPrice");
-                float returnPrice = Float.parseFloat(tmp_returnPrice) * 1000;
-                if (paymentMethod != null && paymentMethod.equals("paypal")) {
-                    JavaUltilities ultil = new JavaUltilities();
-                    AccountDTO consignor = accountDAO.getConsignorInforByConsignmentID(consignmentID);
-                    if (consignor.getPhone() != null) {
-                        try {
-                            ultil.sendSMS(MessageString.notifyConsignorSMS(consignmentID, user.getFullName()), consignor.getPhone());
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                float returnPrice = 0;
+                try {
+                    returnPrice = Float.parseFloat(tmp_returnPrice) * 1000;
+                } catch (Exception e) {
+                }
+                if (returnPrice > 0) {
+                    boolean flag = productDAO.soldProduct(consignmentID, returnPrice);
+                    if (flag) {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=success";
+                    } else {
+                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=fail";
+                    }
+                    if (paymentMethod != null && paymentMethod.equals("paypal")) {
+                        JavaUltilities ultil = new JavaUltilities();
+                        AccountDTO consignor = accountDAO.getConsignorInforByConsignmentID(consignmentID);
+                        if (consignor.getPhone() != null) {
+                            try {
+                                ultil.sendSMS(MessageString.notifyConsignorSMS(consignmentID, user.getFullName()), consignor.getPhone());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (consignor.getEmail() != null) {
+                            ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.notifyConsignorEmail(consignmentID, user.getFullName(), consignor.getFullName()));
                         }
                     }
-                    if (consignor.getEmail() != null) {
-                        ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.notifyConsignorEmail(consignmentID, user.getFullName(), consignor.getFullName()));
-                    }
-                }
-
-                boolean flag = productDAO.soldProduct(consignmentID, returnPrice);
-                if (flag) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=success";
                 } else {
                     url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=sold&status=fail";
                 }
-
             }
             response.sendRedirect(url);
         }

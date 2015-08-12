@@ -38,7 +38,7 @@
             <c:redirect url="./HomeServlet"/>
         </c:if>
         <input type="hidden" id="currentTab" value="${requestScope.currentTab}">
-        <input type="hidden" id="status" value="${requestScope.status}">
+        <input type="hidden" id="status" value="${param.status}">
         <c:set var="account" value="${sessionScope.ACCOUNT}"></c:set>
             <!-- END SET PARAMETER -->
             <!-- BEGIN HEADER -->
@@ -153,18 +153,6 @@
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>
-                <!-- BEGIN ALERT DIALOG -->
-                <div>
-                    <div class="alert alert-success" id="success-alert" style="display: none; float: right">
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                        <span>Thao tác thành công!</span>
-                    </div>
-                    <div class="alert alert-danger" id="fail-alert" style="display: none; float: right">
-                        <button type="button" class="close" data-dismiss="alert">x</button>
-                        <span>Thao tác thất bại!</span>
-                    </div>
-                </div>
-                <!-- END ALERT DIALOG -->
             </div>
             <!-- END SIDEBAR -->
             <!-- BEGIN CONTENT -->
@@ -198,24 +186,28 @@
                                             </c:when>
                                         </c:choose>
                                     </div>
+                                    <!-- BEGIN ALERT DIALOG -->
+                                    <div>
+                                        <div class="alert alert-success" id="success-alert" style="display: none; float: right">
+                                            <button type="button" class="close" data-dismiss="alert">x</button>
+                                            <span>Thao tác thành công!</span>
+                                        </div>
+                                        <div class="alert alert-danger" id="fail-alert" style="display: none; float: right">
+                                            <button type="button" class="close" data-dismiss="alert">x</button>
+                                            <span>Thao tác thất bại!</span>
+                                        </div>
+                                    </div>
+                                    <!-- END ALERT DIALOG -->
                                 </div>
                                 <!-- BEGIN EXPIRED TAB-->
                                 <div class="portlet-body" id="expired" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="expiredTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Tên khách hàng</th>
-                                                <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi (Ngàn đồng)</th>
+                                                <th>Ngày hết hạn</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
                                         </thead>
@@ -224,13 +216,8 @@
                                                 <tr class="odd gradeX">
                                                     <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td>${item.name}</td>
-                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
-                                                    <td><fmt:formatNumber 
-                                                            value="${item.negotiatedPrice}" 
-                                                            maxFractionDigits="1"/>
-                                                    </td>
+                                                    <td>${item.raiseWebDate}</td>
                                                     <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -240,21 +227,12 @@
                                 <!-- END EXPIRED TAB-->
                                 <!-- BEGIN AVAILABLE TAB-->
                                 <div class="portlet-body" id="available" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">Sản phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="availableTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Tên khách hàng</th>
-                                                <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá kí gửi (Ngàn đồng)</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
                                         </thead>
@@ -263,14 +241,7 @@
                                                 <tr class="odd gradeX">
                                                     <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td>${item.name}</td>
-                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
-                                                    <td>
-                                                        <fmt:formatNumber 
-                                                            value="${item.negotiatedPrice}" 
-                                                            maxFractionDigits="1"/>
-                                                    </td>
                                                     <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -280,22 +251,11 @@
                                 <!-- END AVAILABLE TAB-->
                                 <!-- BEGIN ONWEB TAB-->
                                 <div class="portlet-body" id="onWeb" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="onWebTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày đăng lên web</th>
-                                                <th>Thời gian kí gửi</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
@@ -305,8 +265,6 @@
                                                 <tr class="odd gradeX">
                                                     <td style="text-align: center; font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td class="center">${item.raiseWebDate}</td>
-                                                    <td>${item.period}</td>
                                                     <td>${item.consigmentID}</td>
                                                     <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                                 </tr>
@@ -317,21 +275,11 @@
                                 <!-- END ONWEB TAB-->
                                 <!-- BEGIN ORDERED TAB-->
                                 <div class="portlet-body" id="ordered" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="orderedTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Giá sản phẩm (Ngàn đồng)</th>
                                                 <th>Mã kí gửi</th>
                                                 <th>Số người đặt</th>
                                                 <th>Chi Tiết</th>
@@ -342,11 +290,6 @@
                                                 <tr class="odd gradeX">
                                                     <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td>
-                                                        <fmt:formatNumber 
-                                                            value="${item.product.negotiatedPrice}" 
-                                                            maxFractionDigits="1"/>
-                                                    </td>
                                                     <td>${item.product.consignmentID}</td>
                                                     <td>${item.quantity}</td>
                                                     <td><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.product.productID}">Xem</button></td>
@@ -358,24 +301,12 @@
                                 <!-- END ORDERED TAB-->
                                 <!-- BEGIN CANCEL TAB-->
                                 <div class="portlet-body" id="canceled" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="canceledTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày hủy</th>
-                                                <th>Ngày nhận hàng</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>TT liên lạc</th>
                                                 <th>Trạng thái</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
@@ -385,17 +316,7 @@
                                                 <tr class="odd gradeX">
                                                     <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td class="center">${item.cancelDate}</td>
-                                                    <td class="center">${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
-                                                    <td>
-                                                        <c:if test="${item.phone!=null}">
-                                                            ${item.phone}
-                                                        </c:if>
-                                                        <c:if test="${item.phone==null && item.email!=null}">
-                                                            ${item.email}
-                                                        </c:if>
-                                                    </td>
                                                     <td>
                                                         <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
                                                             Chờ nhận hàng
@@ -413,23 +334,12 @@
                                 <!-- END CANCEL TAB-->
                                 <!-- BEGIN SOLD TAB-->
                                 <div class="portlet-body" id="sold" style="display: none;">
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                    <br>
                                     <table class="table table-striped table-hover" id="soldTable">
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
                                                 <th>Tên sản phẩm</th>
-                                                <th>Ngày nhận</th>
                                                 <th>Mã kí gửi</th>
-                                                <th>Giá bán (Ngàn đồng)</th>
                                                 <th>Chi Tiết</th>
                                             </tr>
                                         </thead>
@@ -438,13 +348,7 @@
                                                 <tr>
                                                     <td class="center" style="font-weight: bold">${counter.count}</td>
                                                     <td>${item.product.name}</td>
-                                                    <td>${item.reviewProductDate}</td>
                                                     <td>${item.consigmentID}</td>
-                                                    <td>
-                                                        <fmt:formatNumber 
-                                                            value="${item.product.sellingPrice}" 
-                                                            maxFractionDigits="1"/>
-                                                    </td>
                                                     <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                                 </tr>
                                             </c:forEach>
@@ -463,14 +367,14 @@
                     <div class="modal fade bs-example-modal-lg" id="soldModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: snow">
                                     <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-5 col-md-5">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin người kí gửi</u></b></span></h4>
 
                                                 <!--                                            <strong>Họ tên : </strong><span id="sold_fullName"></span><br>
                                                                                             <strong>Địa chỉ : </strong><span id="sold_address"></span><br>
@@ -505,7 +409,7 @@
                                         </div>
                                         <div class="col-sm-7 col-md-7">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i><u>Thông tin sản phẩm</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin sản phẩm</u></b></span></h4>
 
                                                 <!--                                            <strong>Tên sản phẩm : </strong><span id="sold_productName"></span><br>
                                                                                             <strong>Mã kí gửi : </strong><span id="sold_consignmentID"></span><br>
@@ -584,7 +488,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <form action="OrderProduct" method="POST">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thông tin đặt hàng</h3>
                                         <!--                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>-->
                                         <!--                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>-->
@@ -595,12 +499,9 @@
                                             <div class="col-sm-7">
                                                 <div class="form-horizontal">
                                                     <div class="form-group">
-                                                        <label id="sendPriceLabel" class="control-label col-md-4 col-sm-4" style="font-weight: bold">Giá gửi khách hàng:</label>
-                                                        <div class="col-md-6 col-sm-6">
-                                                            <input id="sendPrice" name="txtSendPrice" type="text" class="form-control" maxlength="50"/>
-
-                                                            <span class="help-block" id="erNegotiatedPrice">(Ngàn đồng)
-                                                            </span>
+                                                        <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá gửi khách hàng:</label>
+                                                        <div class="col-md-8 col-sm-8">
+                                                            <input style="width: 120px" id="sendPrice" name="txtSendPrice" class="form-control" type="text" maxlength="50"/><span>(Ngàn đồng)</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -647,7 +548,7 @@
                         <div class="modal-dialog modal-sm">
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -680,7 +581,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-horizontal">
 
-                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin người kí gửi</u></b></span></h4>
                                                 <!--                                            <strong>Họ tên : </strong><span id="cancel_fullName" style="font-weight: normal"></span><br>
                                                                                             <strong>Địa chỉ : </strong><span id="cancel_address"></span><br>
                                                                                             <strong>Số điện thoại : </strong><span id="cancel_phone"></span><br>
@@ -708,7 +609,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i><u>Thông tin hàng kí gửi</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin hàng kí gửi</u></b></span></h4>
                                                 <!--                                            <strong>Tên sản phẩm : </strong><span id="cancel_productName" style="font-weight: normal"></span><br>
                                                                                             <strong>Mã hàng kí gửi : </strong><span id="cancel_consignmentID"></span><br>
                                                                                             <strong>Giá kí gửi (Ngàn đồng): </strong><span id="cancel_negotiatedPrice"></span><br>
@@ -769,7 +670,7 @@
                             <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -897,7 +798,7 @@
                     <div class="modal fade bs-example-modal-lg" id="expiredModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: snow">
                                     <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
@@ -910,7 +811,7 @@
                                                                                         <strong>Email : </strong><span id="expired_email"></span>-->
                                             <div class="form-horizontal">
 
-                                                <h4 align="center"><span><b><i><u>Thông tin người kí gửi</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin người kí gửi</u></b></span></h4>
                                                 <div class="form-group">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Họ tên</label>
                                                     <div class="col-md-8 col-sm-8" id="expired_fullName"  style="padding-top: 8px; font-size: 110%"></div>
@@ -934,7 +835,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-horizontal">
-                                                <h4 align="center"><span><b><i><u>Thông tin hàng kí gửi</u></i></b></span></h4>
+                                                <h4 align="center"><span><b><u>Thông tin hàng kí gửi</u></b></span></h4>
                                                 <!--                                            <strong>Tên sản phẩm : </strong><span id="expired_productName"></span><br>
                                                                                             <strong>Mã hàng kí gửi : </strong><span id="expired_consignmentID"></span><br>
                                                                                             <strong>Ngày kí gửi : </strong><span id="expired_consignedDate"></span><br>
@@ -985,7 +886,7 @@
                         <div class="modal-dialog modal-md">
                             <form action="ExtendProduct" method="POST">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1027,7 +928,7 @@
                         <div class="modal-dialog modal-sm">
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1055,7 +956,7 @@
                             <input type="hidden" id="onWeb_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -1149,7 +1050,7 @@
                                                                                 CHỌN ẢNH </span>
                                                                             <span class="fileinput-exists btn">
                                                                                 CHỌN ẢNH </span>
-                                                                            <input type="file" name="onweb_txtImage" onchange="readURL2(this);" style="max-width: "/>
+                                                                            <input type="file" accept="image/*" name="onweb_txtImage" onchange="readURL2(this);" style="max-width: "/>
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -1182,7 +1083,7 @@
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice2();">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1205,7 +1106,7 @@
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: snow">
                                         <h3 style="font-weight: bold">Trả hàng kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1292,11 +1193,12 @@
                     $('html,body').scrollTop(0);
                     var status = $("#status").val();
                     if (status.length > 0) {
-                        if (status.localeCompare('success')) {
+                        if (status.localeCompare('success') == 0) {
                             $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
                                 $("#success-alert").alert('close');
                             });
-                        } else {
+                        }
+                        if (status.localeCompare('fail') == 0) {
                             $("#fail-alert").fadeTo(2000, 500).slideUp(500, function () {
                                 $("#success-alert").alert('close');
                             });
@@ -1419,7 +1321,7 @@
                                             orderList[i].fullName + '</td><td>' +
                                             orderList[i].orderedDate + '</td><td>' +
                                             orderList[i].phone + '</td><td>Đã gửi giá : ' +
-                                            orderList[i].sendPrice + '</td></tr>';
+                                            orderList[i].sendPrice + ' ngàn đồng</td></tr>';
                                 }
                             }
                             else {

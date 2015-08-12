@@ -646,7 +646,7 @@
                     $('#c_sellDate').text(respone.product.sellDate);
                     $('#c_publishOnWebDate').text(respone.raiseWebDate);
                     $('#c_reason').text(respone.reason);
-                    $('#c_returnedPrice').text(respone.returnPrice);
+                    $('#c_returnedPrice').text(respone.returnPrice + ' (ngàn đồng)');
 
                     if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {//refuse request
                         $('#div_c_refuseProductDate').show();
@@ -704,8 +704,9 @@
                             $('#div_c_returnDate').show();
                         }
                     }
-                    console.log(respone.consignmentStatusID);
-                    console.log(respone.product.productStatusID);
+                    if (respone.reason != "") {
+                        $('#div_c_reason').show();
+                    }
                 });
                 $('#detailModal').modal('show');
             });

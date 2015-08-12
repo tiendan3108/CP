@@ -645,14 +645,10 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": false
-                }, {
-                    "orderable": true
-                }, {
-                    "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -737,17 +733,11 @@ var TableManaged = function () {
                 }, {
                     "orderable": true
                 }, {
-                    "orderable": true
-                }, {
-                    "orderable": false
-                }, {
-                    "orderable": true
-                }, {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -833,14 +823,10 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": false
-                }, {
-                    "orderable": false
-                }, {
-                    "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -923,17 +909,15 @@ var TableManaged = function () {
                 }, {
                     "orderable": true
                 }, {
-                    "orderable": false
+                    "orderable": true
                 }, {
-                    "orderable": false
-                }, {
-                    "orderable": false
+                    "orderable": true
                 }, {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -1021,16 +1005,10 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": false
-                }, {
-                    "orderable": false
-                }, {
-                    "orderable": true
-                },{
-                    "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -1116,14 +1094,10 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": false
-                }, {
-                    "orderable": false
-                }, {
-                    "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -1215,8 +1189,8 @@ var TableManaged = function () {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -1319,8 +1293,8 @@ var TableManaged = function () {
                     "orderable": true
                 }],
             "lengthMenu": [
-                [5, 10, 20, -1],
-                [5, 10, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,

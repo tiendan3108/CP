@@ -1429,7 +1429,7 @@ public class ConsignmentDAO {
                 stmC.setInt(4, ConsignmentStatus.RECEIVED);
                 stmC.setInt(5, ConsignmentStatus.CANCEL);
             } else {
-                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate";
+                query = "SELECT * FROM Consignment WHERE StoreOwnerID = ? AND ProductID IN (SELECT ProductID FROM Product WHERE ProductStatusID = ?) AND ConsignmentStatusID = ? ORDER BY ReviewProductDate DESC";
                 stmC = conn.prepareStatement(query);
                 stmC.setInt(1, storeOwnerID);
                 stmC.setInt(2, productStatus);
@@ -1709,13 +1709,27 @@ public class ConsignmentDAO {
                 int productID = rs.getInt("ProductID");
                 String productName = rs.getString("ProductName");
                 String consignmentID = rs.getString("ConsignmentID");
-                String receivedDate = formatDateString(rs.getString("ReviewProductDate"));
+                int period = rs.getInt("Period");
+                
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date raiseWebDate = null;
+                try {
+                    raiseWebDate = df.parse(rs.getString("RaiseWebDate"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(raiseWebDate);
+                cal.add(Calendar.DATE, period);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                
+                String expiredDate = sdf.format(cal.getTime());
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 String fullName = rs.getString("FullName");
                 item = new ConsignmentDTO();
+                item.setRaiseWebDate(expiredDate);
                 item.setProductID(productID);
                 item.setConsigmentID(consignmentID);
-                item.setReviewProductDate(receivedDate);
                 item.setNegotiatedPrice(negotiatedPrice);
                 item.setName(fullName);
                 product = new ProductDTO();
@@ -2056,10 +2070,15 @@ public class ConsignmentDAO {
                 item.setRaiseWebDate(formatDateString(rs.getString("RaiseWebDate")));//
                 item.setPhone(convertPhone(rs.getString("Phone")));
                 item.setEmail(rs.getString("Email"));
-                item.setReturnPrice(rs.getFloat("ReturnedPrice"));
+                item.setReturnPrice(rs.getFloat("ReturnedPrice") / 1000);
                 item.setPaypalAccount(rs.getString("PaypalAccount"));
                 item.setConsignmentStatusID(rs.getInt("ConsignmentStatusID"));
-                item.setReason(rs.getString("Reason"));
+                String temp = rs.getString("Reason");
+                if (temp == null) {
+                    item.setReason("");
+                } else {
+                    item.setReason(temp);
+                }
                 product = new ProductDTO();
                 product.setName(rs.getString("ProductName"));
                 product.setImage(rs.getString("Image"));

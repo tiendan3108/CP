@@ -50,9 +50,13 @@ public class ExtendProduct extends HttpServlet {
                 ProductDAO productDAO = new ProductDAO();
                 String action = request.getParameter("btnAction");
                 String tempExpiredFee = request.getParameter("txtExpiredFee");
-                float expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
+                float expiredFee = 0;
+                try {
+                    expiredFee = Float.parseFloat(tempExpiredFee) * 1000;
+                } catch (Exception e) {
+                }
                 boolean flag = true;
-                if (action != null) {
+                if (action != null && expiredFee > 0) {
                     if (action.equals("receive")) {//nhan hang
                         String consignmentID = request.getParameter("txtConsignmentID");
 
@@ -68,7 +72,7 @@ public class ExtendProduct extends HttpServlet {
                         url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=fail";
                     }
                 } else {
-                    url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=fail";
                 }
             }
             response.sendRedirect(url);

@@ -57,7 +57,7 @@ public class OrderProduct extends HttpServlet {
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
-                boolean flag = true;
+                boolean flag = false;
                 ProductDAO productDAO = new ProductDAO();
                 AccountDAO accountDAO = new AccountDAO();
                 ConsignmentDAO consignmentDAO = new ConsignmentDAO();
@@ -65,25 +65,34 @@ public class OrderProduct extends HttpServlet {
                 String orderID = request.getParameter("txtOrderID");
                 JavaUltilities ultil = new JavaUltilities();
                 List<OrderDTO> listCustomer = null;
+                boolean isValid = false;
                 String action = request.getParameter("btnAction");
                 if (action.equals("order")) {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
-                    float sellingPrice = Float.parseFloat(temp_sellingPrice) * 1000;
-                    String consignmentID = consignmentDAO.getConsignmentIDByOrderID(orderID);
-                    AccountDTO consignor = accountDAO.getConsignorInforByOrderID(orderID);
-                    listCustomer = orderDAO.getListOrderedCustomer(orderID, true);
-                    flag = productDAO.changeProductStatus(orderID, sellingPrice);
-                    if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
-                        try {
-                            ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
-                        } catch (TwilioRestException ex) {
-                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (Exception ex) {
-                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                    float sellingPrice = 0;
+                    try {
+                        sellingPrice = Float.parseFloat(temp_sellingPrice) * 1000;
+                        isValid = true;
+                    } catch (Exception e) {
+                        isValid = false;
                     }
-                    if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
-                        ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
+                    if (isValid) {
+                        String consignmentID = consignmentDAO.getConsignmentIDByOrderID(orderID);
+                        AccountDTO consignor = accountDAO.getConsignorInforByOrderID(orderID);
+                        listCustomer = orderDAO.getListOrderedCustomer(orderID, true);
+                        flag = productDAO.changeProductStatus(orderID, sellingPrice);
+                        if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
+                            try {
+                                ultil.sendSMS(MessageString.soldProductSMS(consignmentID, user.getFullName()), consignor.getPhone());
+                            } catch (TwilioRestException ex) {
+                                Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                        if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
+                            ultil.sendEmail(consignor.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(consignor.getFullName(), consignmentID, user.getFullName()));
+                        }
                     }
                 }
                 if (action.equals("cancel")) {
@@ -93,12 +102,14 @@ public class OrderProduct extends HttpServlet {
                 if (action.equals("sendPrice")) {
                     String[] orderIDs = request.getParameterValues("chkboxCustomer");
                     String temp_sendPrice = request.getParameter("txtSendPrice");
-                    float sendPrice = 0;
+                    int sendPrice = 0;
                     try {
-                        sendPrice = Float.parseFloat(temp_sendPrice) * 1000;
+                        sendPrice = Integer.parseInt(temp_sendPrice);
+                        isValid = true;
                     } catch (Exception e) {
+                        isValid = false;
                     }
-                    if (orderIDs.length > 0) {
+                    if (orderIDs !=null && orderIDs.length > 0 && isValid) {
                         for (String _orderID : orderIDs) {
                             String phone = orderDAO.getCustomerInforByOrderID(_orderID, sendPrice);
                             if (phone != null && !phone.equals("")) {

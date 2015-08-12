@@ -51,6 +51,17 @@ public class PublishProduct extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private boolean isImageType(String source) {
+        int lastDot = source.lastIndexOf(".");
+        String type = source.substring(lastDot);
+        if (type.toLowerCase().equals(".jpg") || type.toLowerCase().equals(".tif") || type.toLowerCase().equals(".gif")
+                || type.toLowerCase().equals(".png") || type.toLowerCase().equals(".bmp") || type.toLowerCase().equals(".jpeg")
+                || type.toLowerCase().equals(".jpe") || type.toLowerCase().equals(".dib") || type.toLowerCase().equals(".jfif")) {
+            return true;
+        }
+        return false;
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -66,8 +77,9 @@ public class PublishProduct extends HttpServlet {
                     image = null, action = null, isSpecial = null, imagePath = null, temp_NewRatio = null;
             String tempSeason = "";
             List<String> season = new ArrayList<>();
-            int categoryID = 0, productID = 0, special = 2, newRatio = 0;
+            int categoryID = 0, productID = 0, special = 2, newRatio = -1;
             List<FileItem> items = null;
+            boolean isvalid = false;
             if (user == null || !user.getRole().equals("storeOwner")) {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
@@ -86,7 +98,10 @@ public class PublishProduct extends HttpServlet {
                                 break;
                             case "txtNewRatio":
                                 temp_NewRatio = item.getString();
-                                newRatio = Integer.parseInt(temp_NewRatio);
+                                try {
+                                    newRatio = Integer.parseInt(temp_NewRatio);
+                                } catch (Exception e) {
+                                }
                                 break;
                             case "txtProductName":
                                 productName = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
@@ -124,7 +139,8 @@ public class PublishProduct extends HttpServlet {
                         String path = request.getServletContext().getRealPath("/");
                         String basePath = path.substring(0, path.length() - 9) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                        if (!filename.equals("")) {
+                        isvalid = isImageType(filename);
+                        if (!filename.equals("") && isvalid) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
                             String consignmentID = consignmentDAO.getConsignmentIDByProductID(productID);
@@ -177,9 +193,13 @@ public class PublishProduct extends HttpServlet {
                     if (!action.equals("available")) {
                         isPublish = false;
                     }
-                    boolean flag = productDAO.publishOnWeb(product, season, isPublish);
-                    if (flag) {
-                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";
+                    if ((newRatio >= 0 || newRatio <= 100) && isvalid) {
+                        boolean flag = productDAO.publishOnWeb(product, season, isPublish);
+                        if (flag) {
+                            url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";
+                        } else {
+                            url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=fail";
+                        }
                     } else {
                         url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=fail";
                     }
