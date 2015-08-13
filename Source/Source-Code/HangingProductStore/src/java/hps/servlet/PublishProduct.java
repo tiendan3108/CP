@@ -140,11 +140,6 @@ public class PublishProduct extends HttpServlet {
                         String basePath = path.substring(0, path.length() - 9) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
                         if (!filename.equals("")) {
-                            isvalid = isImageType(filename);
-                        } else {
-                            isvalid = true;
-                        }
-                        if (isvalid) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
                             String consignmentID = consignmentDAO.getConsignmentIDByProductID(productID);
