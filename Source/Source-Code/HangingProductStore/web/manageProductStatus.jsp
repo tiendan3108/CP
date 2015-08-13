@@ -223,6 +223,12 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END EXPIRED TAB-->
                                 <!-- BEGIN AVAILABLE TAB-->
@@ -247,6 +253,12 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">Sản phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END AVAILABLE TAB-->
                                 <!-- BEGIN ONWEB TAB-->
@@ -271,6 +283,15 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END ONWEB TAB-->
                                 <!-- BEGIN ORDERED TAB-->
@@ -297,6 +318,15 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END ORDERED TAB-->
                                 <!-- BEGIN CANCEL TAB-->
@@ -330,6 +360,15 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END CANCEL TAB-->
                                 <!-- BEGIN SOLD TAB-->
@@ -354,6 +393,15 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>
+                                    </br>
+                                    <div class="row" >
+                                        <div class="col-md-6 col-sm-6" align="left">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6" align="right">
+                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- END SOLD TAB-->
                             </div>
@@ -757,9 +805,9 @@
                                                                     <div class="thumbnail">
                                                                         <img src="" id="avai_Image" style="max-height: 200px"/>
                                                                     </div>
-<!--                                                                    <div class="fileinput-exists thumbnail">
-                                                                        <img src="" id="avai_Image2" style="max-height: 200px"/>
-                                                                    </div>-->
+                                                                    <!--                                                                    <div class="fileinput-exists thumbnail">
+                                                                                                                                            <img src="" id="avai_Image2" style="max-height: 200px"/>
+                                                                                                                                        </div>-->
                                                                     <br/>
                                                                     <div >
                                                                         <span class="btn btn-info btn-file">
