@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="botdetect.web.Captcha"%>
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý ký gửi" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
@@ -183,7 +184,7 @@
                                                         <c:when test="${c.product.productStatusID == 7}">
                                                             <font color="blue">ĐÃ HOÀN THÀNH</font>
                                                         </c:when>
-                                                            <c:when test="${c.product.productStatusID == 8}">
+                                                        <c:when test="${c.product.productStatusID == 8}">
                                                             <font color="purple">CHỜ TRẢ HÀNG</font>
                                                         </c:when>
                                                     </c:choose>
@@ -224,6 +225,12 @@
                                                             </button> 
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td>
+                                                            
+                                                        </td>
+                                                    </tr>
                                                 </c:if>
 
                                             </c:when>
@@ -257,7 +264,6 @@
                                     <div class="modal-body">
                                         <h2 id="r_message" align="center">Bạn có chắc chắn muốn hủy ký gửi này không?</h2>
                                         <c:if test="${c.consignmentStatusID == 5}">
-
                                             <c:if test="${c.product.productStatusID == 2 or c.product.productStatusID == 3}">
                                                 <h2 id="ar_message" align="center">Bạn sẽ chịu một khoản tiền phạt cho việc này.</h2>
                                             </c:if>

@@ -80,7 +80,7 @@
                                             <c:if test="${not empty data}">
                                                 <c:if test="${basicPrice <= 0}">
                                                     <div class="alert alert-danger" style="text-align: center">
-                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không thể tìm thấy sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá chính xác tùy theo tình trạng sản phẩm khi nhận hàng.</strong>
+                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không thể định sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá chính xác tùy theo tình trạng sản phẩm khi nhận hàng.</strong>
                                                     </div>    
                                                 </c:if>
                                                 <c:if test="${basicPrice > 0}">

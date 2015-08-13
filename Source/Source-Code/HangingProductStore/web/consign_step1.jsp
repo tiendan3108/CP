@@ -180,7 +180,7 @@
                                                     </c:choose>
 
                                                 </div>
-                                                <div class="col-md-5 col-sm-5">
+                                                <div class="col-md-4 col-sm-4">
                                                     <span class="help-block" id="erNewStatus"> </span>
                                                 </div>
                                             </div>
@@ -385,6 +385,7 @@
         $("#erSerialNumber").html("");
         $("#erProductName").html("");
         $("#erCategory").html("");
+        $("#erNewStatus").html("");
         //$("#txtSerialNumber").val("");
         //$("#txtProductName").val("");
         

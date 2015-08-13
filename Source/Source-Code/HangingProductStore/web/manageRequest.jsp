@@ -158,38 +158,36 @@
                     <input type="hidden" id="toDate" value="${requestScope.toDate}">
                     <!-- BEGIN PAGE CONTENT-->
 
+                    <div class="row" style="background-color: #01579b; ">
+                        <h3 style="font-weight: bold; color: white;">
+                            &nbsp;<i class="icon-rocket icon-lg"></i> Yêu cầu
+                            <c:choose>
+                                <c:when test="${requestScope.currentTab == 'request'}">
+                                    chưa duyệt
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'accepted'}">
+                                    đã duyệt 
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'refuse'}">
+                                    đã từ chối
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'cancel'}">
+                                    đã hủy
+                                </c:when>
+                            </c:choose>
+                            <c:if test="${requestScope.currentTab == 'accepted'}">
 
-                    <h2>
-                        Yêu cầu
-                        <c:choose>
-                            <c:when test="${requestScope.currentTab == 'request'}">
-                                chưa duyệt
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'accepted'}">
-                                đã duyệt 
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'refuse'}">
-                                đã từ chối
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'cancel'}">
-                                đã hủy
-                            </c:when>
-                        </c:choose>
-                        <c:if test="${requestScope.currentTab == 'accepted'}">
+                                <button data-toggle="modal" data-target="#modalAddConsignment"
+                                        class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
 
-                            <button data-toggle="modal" data-target="#modalAddConsignment"
-                                    class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
+                            </c:if>
 
-                        </c:if>
-
-                    </h2>
+                        </h3>
+                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
                             <div id="request" style="display: none">
-
-
-                                <br/>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
                                         <div class="form-horizontal">
@@ -223,9 +221,9 @@
                                             <th>
                                                 Giá (Ngàn đồng)
                                             </th>
-<!--                                            <th>
-                                                Ngày hẹn
-                                            </th>-->
+                                            <!--                                            <th>
+                                                                                            Ngày hẹn
+                                                                                        </th>-->
                                             <th>
                                                 Chi Tiết
                                             </th>
@@ -251,7 +249,7 @@
                                                         value="${c.desirePrice}" 
                                                         maxFractionDigits="1"/>
                                                 </td>
-                                                
+
                                                 <td align="center">
 
                                                     <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
@@ -1145,7 +1143,7 @@
                                                                     THAY ẢNH </span>
                                                                 <input  type="file" accept='image/*' name="txtImage" />
                                                             </span>
-                                                           
+
                                                         </div>
                                                     </div>
 
@@ -1387,7 +1385,7 @@
                 $('div.portlet-title').show();
                 $('li#' + currentTab).addClass('open').siblings().removeClass('open');
                 $('html,body').scrollTop(0);
-               
+
 
                 setEnableFieldWhenLoadRequestAcceptDetails();
                 setRequireOnRequestAcceptModal();
@@ -1988,7 +1986,7 @@
                     else if (data == "error") {
                         changeContentAlert("Yêu cầu đã được xử lý");
                     }
-                   $("#btnOK").show();
+                    $("#btnOK").show();
                 });
             }
 
@@ -2320,7 +2318,7 @@
                         } else {
 
                             if ($("#currentTab").val() == "accepted") {
-                                var date = data[5].substring(6);
+                                var date = data[3].substring(6);
                                 if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
                                     return true;
                                 } else {
@@ -2328,17 +2326,12 @@
                                 }
                             }
                             else if ($("#currentTab").val() == "request") {
-                                var fromDate = data[5].substring(0, 10);
-                                var toDate = data[5].substring(12, 22);
+                                var date = data[3].substring(6);
+                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
 
-                                if (compareDate(fromDate, startDate) >= 0 && compareDate(fromDate, endDate) <= 0)
-                                {
                                     return true;
                                 }
-                                else if (compareDate(toDate, startDate) >= 0 && compareDate(toDate, endDate) <= 0)
-                                {
-                                    return true;
-                                }
+
                                 else
                                 {
                                     return false;
@@ -2370,11 +2363,14 @@
                 if (source.substring(6, 10) > target.substring(6, 10)) {
                     return 1;
                 }
-                if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+
+                else if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) == target.substring(6, 10)) {
                     return 1;
                 }
-                if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) >= target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+                else if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) == target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
                     return 1;
+                } else if (source.substring(0, 2) == target.substring(0, 2)) {
+
                 }
                 return -1;
             }
@@ -2402,7 +2398,7 @@
                     $("#re_r_newStatus").hide();
                     $("#re_r_receivedDate").hide();
                     $("#re_r_fullName").hide();
-                    
+
                     $("#re_r_phone").hide();
                     $("#re_r_paypalAccount").hide();
                 }
