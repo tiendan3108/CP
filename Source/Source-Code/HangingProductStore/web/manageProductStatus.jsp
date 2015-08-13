@@ -158,253 +158,259 @@
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <div class="page-content">
+
+                    <div class="row" style="background-color: #01579b; height: 40px" >
+                        <div class="col-lg-12 col-md-12" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
+                        <i class="fa fa-globe"></i> Quản lí sản phẩm 
+                        <c:choose>
+                            <c:when test="${requestScope.currentTab == 'available'}">
+                                chờ duyệt
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'onWeb'}">
+                                trên web
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'ordered'}">
+                                đã được đặt
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'sold'}">
+                                đã bán
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'expired'}">
+                                hết hạn kí gửi
+                            </c:when>
+                            <c:when test="${requestScope.currentTab == 'canceled'}">
+                                đăng kí hủy kí gửi
+                            </c:when>
+                        </c:choose>
+                                </div>
+                    </div>
+                    
+                    <!-- BEGIN ALERT DIALOG -->
+                    <div>
+                        <div class="alert alert-success" id="success-alert" style="display: none; float: right">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <span>Thao tác thành công!</span>
+                        </div>
+                        <div class="alert alert-danger" id="fail-alert" style="display: none; float: right">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <span>Thao tác thất bại!</span>
+                        </div>
+                    </div>
+                    <br/>
+                    <!-- END ALERT DIALOG -->
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
-                            <div class="portlet box blue">
-                                <div class="portlet-title">
-                                    <div class="caption" style="font-weight: bold">
-                                        <i class="fa fa-globe"></i>Quản lí sản phẩm 
-                                        <c:choose>
-                                            <c:when test="${requestScope.currentTab == 'available'}">
-                                                chờ duyệt
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'onWeb'}">
-                                                trên web
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'ordered'}">
-                                                đã được đặt
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'sold'}">
-                                                đã bán
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'expired'}">
-                                                hết hạn kí gửi
-                                            </c:when>
-                                            <c:when test="${requestScope.currentTab == 'canceled'}">
-                                                đăng kí hủy kí gửi
-                                            </c:when>
-                                        </c:choose>
-                                    </div>
-                                    <!-- BEGIN ALERT DIALOG -->
-                                    <div>
-                                        <div class="alert alert-success" id="success-alert" style="display: none; float: right">
-                                            <button type="button" class="close" data-dismiss="alert">x</button>
-                                            <span>Thao tác thành công!</span>
-                                        </div>
-                                        <div class="alert alert-danger" id="fail-alert" style="display: none; float: right">
-                                            <button type="button" class="close" data-dismiss="alert">x</button>
-                                            <span>Thao tác thất bại!</span>
-                                        </div>
-                                    </div>
-                                    <!-- END ALERT DIALOG -->
-                                </div>
-                                <!-- BEGIN EXPIRED TAB-->
-                                <div class="portlet-body" id="expired" style="display: none;">
-                                    <table class="table table-striped table-hover" id="expiredTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Ngày hết hạn</th>
-                                                <th>Chi Tiết</th>
+
+
+
+
+                            <!-- BEGIN EXPIRED TAB-->
+                            <div class="portlet-body" id="expired" style="display: none;">
+                                <table class="table table-striped table-hover" id="expiredTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Ngày hết hạn</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.expired}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td class="center" style="font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.consigmentID}</td>
+                                                <td>${item.raiseWebDate}</td>
+                                                <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.expired}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td>${item.raiseWebDate}</td>
-                                                    <td><button class="btn btn-info expiredModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
-                                        </div>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="left">
+                                        <a class="btn  btn-warning" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
                                     </div>
                                 </div>
-                                <!-- END EXPIRED TAB-->
-                                <!-- BEGIN AVAILABLE TAB-->
-                                <div class="portlet-body" id="available" style="display: none;">
-                                    <table class="table table-striped table-hover" id="availableTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Chi Tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.available}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">Sản phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END AVAILABLE TAB-->
-                                <!-- BEGIN ONWEB TAB-->
-                                <div class="portlet-body" id="onWeb" style="display: none;">
-                                    <table class="table table-striped table-hover" id="onWebTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Chi Tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.onWeb}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td style="text-align: center; font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END ONWEB TAB-->
-                                <!-- BEGIN ORDERED TAB-->
-                                <div class="portlet-body" id="ordered" style="display: none;">
-                                    <table class="table table-striped table-hover" id="orderedTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Số người đặt</th>
-                                                <th>Chi Tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.ordered}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.product.consignmentID}</td>
-                                                    <td>${item.quantity}</td>
-                                                    <td><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.product.productID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END ORDERED TAB-->
-                                <!-- BEGIN CANCEL TAB-->
-                                <div class="portlet-body" id="canceled" style="display: none;">
-                                    <table class="table table-striped table-hover" id="canceledTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Trạng thái</th>
-                                                <th>Chi Tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.canceled}" varStatus="counter">
-                                                <tr class="odd gradeX">
-                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td>
-                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
-                                                            Chờ nhận hàng
-                                                        </c:if>
-                                                        <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 6}">
-                                                            Chờ duyệt
-                                                        </c:if>
-                                                    </td>
-                                                    <td><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right" style="float: right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END CANCEL TAB-->
-                                <!-- BEGIN SOLD TAB-->
-                                <div class="portlet-body" id="sold" style="display: none;">
-                                    <table class="table table-striped table-hover" id="soldTable">
-                                        <thead>
-                                            <tr>
-                                                <th>STT</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Mã kí gửi</th>
-                                                <th>Chi Tiết</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="item" items="${requestScope.sold}" varStatus="counter">
-                                                <tr>
-                                                    <td class="center" style="font-weight: bold">${counter.count}</td>
-                                                    <td>${item.product.name}</td>
-                                                    <td>${item.consigmentID}</td>
-                                                    <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                    </br>
-                                    <div class="row" >
-                                        <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6" align="right">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END SOLD TAB-->
                             </div>
+                            <!-- END EXPIRED TAB-->
+                            <!-- BEGIN AVAILABLE TAB-->
+                            <div class="portlet-body" id="available" style="display: none;">
+                                <table class="table table-striped table-hover" id="availableTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.available}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td class="center" style="font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.consigmentID}</td>
+                                                <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                        <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb">Sản phẩm trên web <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END AVAILABLE TAB-->
+                            <!-- BEGIN ONWEB TAB-->
+                            <div class="portlet-body" id="onWeb" style="display: none;">
+                                <table class="table table-striped table-hover" id="onWebTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.onWeb}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td style="text-align: center; font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.consigmentID}</td>
+                                                <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="left">
+                                        <a class="btn  btn-warning" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                        <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ONWEB TAB-->
+                            <!-- BEGIN ORDERED TAB-->
+                            <div class="portlet-body" id="ordered" style="display: none;">
+                                <table class="table table-striped table-hover" id="orderedTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Số người đặt</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.ordered}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td class="center" style="font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.product.consignmentID}</td>
+                                                <td>${item.quantity}</td>
+                                                <td><button class="btn btn-info orderedModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.product.productID}">Xem</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="left">
+                                        <a class="btn  btn-warning" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                        <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END ORDERED TAB-->
+                            <!-- BEGIN CANCEL TAB-->
+                            <div class="portlet-body" id="canceled" style="display: none;">
+                                <table class="table table-striped table-hover" id="canceledTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Trạng thái</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.canceled}" varStatus="counter">
+                                            <tr class="odd gradeX">
+                                                <td class="center" style="font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.consigmentID}</td>
+                                                <td>
+                                                    <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
+                                                        Chờ nhận hàng
+                                                    </c:if>
+                                                    <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 6}">
+                                                        Chờ duyệt
+                                                    </c:if>
+                                                </td>
+                                                <td><button class="btn btn-info cancelModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="left">
+                                        <a class="btn  btn-warning" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" align="right" style="float: right">
+                                        <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END CANCEL TAB-->
+                            <!-- BEGIN SOLD TAB-->
+                            <div class="portlet-body" id="sold" style="display: none;">
+                                <table class="table table-striped table-hover" id="soldTable">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Mã kí gửi</th>
+                                            <th>Chi Tiết</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="item" items="${requestScope.sold}" varStatus="counter">
+                                            <tr>
+                                                <td class="center" style="font-weight: bold">${counter.count}</td>
+                                                <td>${item.product.name}</td>
+                                                <td>${item.consigmentID}</td>
+                                                <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </br>
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-6" align="left">
+                                        <a class="btn  btn-warning" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6" align="right">
+                                        <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SOLD TAB-->
+
                             <!-- END EXAMPLE TABLE PORTLET-->
                         </div>
                     </div>

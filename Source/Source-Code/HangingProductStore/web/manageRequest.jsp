@@ -81,7 +81,7 @@
             <div class="page-sidebar-wrapper">
                 <div class="page-sidebar navbar-collapse collapse">
                     <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-                        <li style="margin-bottom: 20px" class="sidebar-toggler-wrapper">
+                        <li  class="sidebar-toggler-wrapper">
                             <div class="sidebar-toggler">
                             </div>
                         </li>
@@ -1654,7 +1654,8 @@
                                 $("#ar_price").hide();
                                 $("#r_btnAction").val("r_accept");
 
-                                $("#r_receivedDate").val(getCurrentDate());
+                                //$("#r_receivedDate").val(getCurrentDate());
+                                $("#r_receivedDate").val(data.fromDate);
                                 $("#div_r_receivedDate").show();
 
 //                                $("#r_txtFullName").val(data.name);
