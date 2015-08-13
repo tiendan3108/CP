@@ -1193,6 +1193,9 @@ public class ProductDAO {
         cancelFee = cancelFee * 1000;
         int resultUpdateProduct, resultUpdateConsignment;
         String query = "";
+        Date tempDate = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String today = sdf.format(tempDate);
         try {
             conn = DBUltilities.makeConnection();
             if (status == ProductStatus.NOT_YET_RECEIVE) {// agree cancel product 
@@ -1228,9 +1231,6 @@ public class ProductDAO {
                 stmUpdateProduct.setString(2, consignmentID);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
-                Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String today = sdf.format(tempDate);
                 //update consignment set cancel date, cancel fee
                 query = "UPDATE Consignment SET AgreeCancelDate = ?, CancelFee = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
@@ -1261,7 +1261,11 @@ public class ProductDAO {
                 stmUpdateConsignment.setInt(1, ConsignmentStatus.RECEIVED);
                 stmUpdateConsignment.setString(2, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
-
+                query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ConsignmentID = ? AND RaiseWebDate IS NULL";
+                stmUpdateConsignment = conn.prepareStatement(query);
+                stmUpdateConsignment.setString(1, today);
+                stmUpdateConsignment.setString(2, consignmentID);
+                stmUpdateConsignment.executeUpdate();
                 if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
                     conn.commit();
                     return true;

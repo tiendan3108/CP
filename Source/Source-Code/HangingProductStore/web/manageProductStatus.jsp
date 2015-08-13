@@ -38,7 +38,8 @@
             <c:redirect url="./HomeServlet"/>
         </c:if>
         <input type="hidden" id="currentTab" value="${requestScope.currentTab}">
-        <input type="hidden" id="status" value="${param.status}">
+        <input type="hidden" id="fromDate" value="">
+        <input type="hidden" id="toDate" value="">
         <c:set var="account" value="${sessionScope.ACCOUNT}"></c:set>
             <!-- END SET PARAMETER -->
             <!-- BEGIN HEADER -->
@@ -813,7 +814,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
+                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm <font color="red">*</font></label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                     <div class="thumbnail">
@@ -1100,7 +1101,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm</label>
+                                                            <label class="control-label col-md-4 col-sm-4" style="font-weight: bold">Ảnh sản phẩm <font color="red">*</font></label>
                                                             <div class="col-md-8 col-sm-8" align="center">
                                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                     <div class="thumbnail">
@@ -1763,14 +1764,6 @@
                     });
                     $('#onWeb_seasonID').val(selected);
                     return flag;
-                }
-                function showAlert(content) {
-                    $("#modalAlert").modal("show");
-                    $("#alert_content").html(content);
-                }
-
-                function changeContentAlert(content) {
-                    $("#alert_content").html(content);
                 }
             </script>
     </body>

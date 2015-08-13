@@ -59,12 +59,11 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 url = GlobalVariables.SESSION_TIME_OUT_PAGE;
             } else {
 
-                List<ConsignmentDTO> available = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.AVAILABLE);
-                List<ConsignmentDTO> onWeb = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.ON_WEB);
+                List<ConsignmentDTO> available = consignmentDAO.getAvailableProduct(user.getRoleID(), ProductStatus.AVAILABLE);
+                List<ConsignmentDTO> onWeb = consignmentDAO.getOnWebProduct(user.getRoleID(), ProductStatus.ON_WEB);
                 List<ConsignmentDTO> ordered = consignmentDAO.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED);
-                List<ConsignmentDTO> sold = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.SOLD);
-                List<ConsignmentDTO> completed = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.COMPLETED);
-                List<ConsignmentDTO> canceled = consignmentDAO.getProductStatus(user.getRoleID(), ProductStatus.CANCEL);
+                List<ConsignmentDTO> sold = consignmentDAO.getSoldProduct(user.getRoleID(), ProductStatus.SOLD);
+                List<ConsignmentDTO> canceled = consignmentDAO.getCanceledProduct(user.getRoleID(), ProductStatus.CANCEL);
                 List<ConsignmentDTO> expired = consignmentDAO.getExpiredProduct(user.getRoleID());
                 List<CategoryDTO> parentCat = categoryDAO.getParentCategory();
                 List<CategoryDTO> allCat = categoryDAO.getAllCategory();
@@ -85,7 +84,6 @@ public class LoadManageProductPageServlet extends HttpServlet {
                 request.setAttribute("onWeb", onWeb);
                 request.setAttribute("ordered", ordered);
                 request.setAttribute("sold", sold);
-                request.setAttribute("completed", completed);
                 request.setAttribute("canceled", canceled);
                 request.setAttribute("expired", expired);
                 request.setAttribute("currentTab", tab);
