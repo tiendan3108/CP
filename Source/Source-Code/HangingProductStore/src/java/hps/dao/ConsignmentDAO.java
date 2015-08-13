@@ -1321,7 +1321,7 @@ public class ConsignmentDAO {
         try {
             conn = DBUltilities.makeConnection();
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
             System.out.println("Today : " + today);
             query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email FROM Consignment c, Product p WHERE "
@@ -1399,7 +1399,7 @@ public class ConsignmentDAO {
             return "";
         }
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat df2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
             Date date = df.parse(source);
             String result = df2.format(date);

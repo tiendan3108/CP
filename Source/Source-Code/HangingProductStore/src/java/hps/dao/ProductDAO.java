@@ -1229,7 +1229,7 @@ public class ProductDAO {
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
                 Date tempDate = Calendar.getInstance().getTime();
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String today = sdf.format(tempDate);
                 //update consignment set cancel date, cancel fee
                 query = "UPDATE Consignment SET AgreeCancelDate = ?, CancelFee = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
@@ -1301,7 +1301,7 @@ public class ProductDAO {
             conn = DBUltilities.makeConnection();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
@@ -1399,7 +1399,7 @@ public class ProductDAO {
             resultProduct = stmProduct.executeUpdate();
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String raiseWebDate = sdf.format(tempDate);
 
             query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
@@ -1600,7 +1600,7 @@ public class ProductDAO {
             return "";
         }
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
             Date date = sdf.parse(source);
             String result = sdf2.format(date);
@@ -1692,7 +1692,7 @@ public class ProductDAO {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
 
             String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
@@ -1743,7 +1743,7 @@ public class ProductDAO {
             conn.setAutoCommit(false);
 
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
 
             String query = "SELECT DATEDIFF(day,[RaiseWebDate],?) as DayFromNow FROM Consignment WHERE ConsignmentID = ?";
@@ -1810,7 +1810,7 @@ public class ProductDAO {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
             Date tempDate = Calendar.getInstance().getTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String sellingDate = sdf.format(tempDate);
 
             query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";

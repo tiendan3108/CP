@@ -648,8 +648,8 @@ public class AccountDAO {
             return "";
         }
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            SimpleDateFormat df2 = new SimpleDateFormat("hh:mm | dd-MM-yyyy");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("HH:mm | dd-MM-yyyy");
             Date date = df.parse(source);
             String result = df2.format(date);
             return result;

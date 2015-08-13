@@ -161,30 +161,30 @@
 
                     <div class="row" style="background-color: #01579b; height: 40px" >
                         <div class="col-lg-12 col-md-12" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
-                        <i class="fa fa-globe"></i> Quản lí sản phẩm 
-                        <c:choose>
-                            <c:when test="${requestScope.currentTab == 'available'}">
-                                chờ duyệt
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'onWeb'}">
-                                trên web
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'ordered'}">
-                                đã được đặt
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'sold'}">
-                                đã bán
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'expired'}">
-                                hết hạn kí gửi
-                            </c:when>
-                            <c:when test="${requestScope.currentTab == 'canceled'}">
-                                đăng kí hủy kí gửi
-                            </c:when>
-                        </c:choose>
-                                </div>
+                            <i class="fa fa-globe"></i> Quản lí sản phẩm 
+                            <c:choose>
+                                <c:when test="${requestScope.currentTab == 'available'}">
+                                    chờ duyệt
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'onWeb'}">
+                                    trên web
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'ordered'}">
+                                    đã được đặt
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'sold'}">
+                                    đã bán
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'expired'}">
+                                    hết hạn kí gửi
+                                </c:when>
+                                <c:when test="${requestScope.currentTab == 'canceled'}">
+                                    đăng kí hủy kí gửi
+                                </c:when>
+                            </c:choose>
+                        </div>
                     </div>
-                    
+
                     <!-- BEGIN ALERT DIALOG -->
                     <div>
                         <div class="alert alert-success" id="success-alert" style="display: none; float: right">
@@ -1141,7 +1141,7 @@
                                         <h3 class="modal-title" style="font-weight: bold">Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
-                                        <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h4>
+                                        <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label style="font-weight: bold" id="confirmCancel_ConsignmentID1"></label>?</h4>
                                         <h4>Tiền phạt (Ngàn đồng):  <font color="red">*</font><input id="confirmCancel_Fee" name="txtCancelFee"></h4>
                                     </div>
                                     <div class="modal-footer">
@@ -1413,12 +1413,7 @@
                     $("#sold_name").val("");
                     $.get('LoadSoldProduct', {productID: productID}, function (response) {
                         var product = response.product;
-                        var price;
-                        if (response.period >= 120) {
-                            price = ((response.negotiatedPrice * 70 / 100) + response.remainExtendFee).toFixed(0);
-                        } else {
-                            price = (((response.negotiatedPrice / 100) * (100 - (response.period / 30) * 10)) + response.remainExtendFee).toFixed(0);
-                        }
+                        var price = (response.negotiatedPrice * 9 / 10).toFixed(0);
                         $("#sold_fullName").text(response.name);
                         $("#sold_address").text(response.address);
                         $("#sold_phone").text(response.phone);
@@ -1516,6 +1511,7 @@
                         $("#onWeb_Brand").val(response.brand);
                         $("#onWeb_Description").val(response.description);
                         $("#onWeb_Image").attr("src", response.image);
+                        $("#confirmCancel_ConsignmentID1").text(consignmentID);
                         var option = "option#onWeb_" + response.categoryID;
                         $(option).attr("selected", "selected");
                         if (response.isSpecial < 1) {
