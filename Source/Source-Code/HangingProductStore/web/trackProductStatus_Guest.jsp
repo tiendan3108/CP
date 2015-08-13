@@ -208,7 +208,7 @@
                                                 <tr>
                                                     <td></td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCancel">
+                                                        <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#modalCancel">
                                                             HỦY KÝ GỬI
                                                         </button> 
                                                     </td>
@@ -220,7 +220,7 @@
                                                     <tr>
                                                         <td></td>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCancel">
+                                                            <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#modalCancel">
                                                                 HỦY KÝ GỬI
                                                             </button> 
                                                         </td>
@@ -257,7 +257,7 @@
                         <div id="modalCancel" class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header" style="background-color: #dfba49">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <h4 class="modal-title">Thông báo</h4>
                                     </div>

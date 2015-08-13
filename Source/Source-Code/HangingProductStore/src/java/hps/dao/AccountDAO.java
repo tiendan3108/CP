@@ -515,6 +515,11 @@ public class AccountDAO {
                 store.setFullName(rs.getString("FullName"));
                 store.setAddress(rs.getString("Address"));
                 store.setPhone(rs.getString("Phone"));
+                if(store.getPhone()!= null){
+                    if(store.getPhone().contains("+84")){
+                        store.setPhone("0" + store.getPhone().substring(3));
+                    }
+                }
                 store.setEmail(rs.getString("Email"));
                 store.setFormula(rs.getFloat("Formula"));
 
