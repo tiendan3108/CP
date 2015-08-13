@@ -179,13 +179,13 @@
         <c:if test="${empty account}">
             <!--            <li><a data-toggle="modal" data-target="#loginModal2">Đăng Nhập</a></li>-->
             <li><a href="login.jsp">Đăng Nhập</a></li>
-            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="TrackProductStatus">Kiểm Tra</a></li>
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
             <c:if test="${not empty account && account.role == 'member'}">
             <li><a href="LogoutServlet">Đăng Xuất</a></li>
             <li><a href="#">${account.fullName}</a></li>
-            <li><a href="TrackProductStatus">Kiểm tra</a></li>
+            <li><a href="TrackProductStatus">Kiểm Tra</a></li>
             <li><a href="ConsignServlet">Kí Gửi</a></li>
             </c:if>
             <c:if test="${not empty account && account.role == 'storeOwner'}">
