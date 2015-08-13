@@ -272,8 +272,8 @@ var TableManaged = function () {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -369,8 +369,8 @@ var TableManaged = function () {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -462,8 +462,8 @@ var TableManaged = function () {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -555,8 +555,8 @@ var TableManaged = function () {
                     "orderable": false
                 }],
             "lengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "pageLength": 10,
@@ -732,6 +732,8 @@ var TableManaged = function () {
                 }, {
                     "orderable": true
                 }, {
+                    "orderable": true
+                }, {
                     "orderable": false
                 }],
             "lengthMenu": [
@@ -816,6 +818,8 @@ var TableManaged = function () {
 
             "columns": [{
                     "orderable": false
+                }, {
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {
@@ -1003,6 +1007,8 @@ var TableManaged = function () {
                 }, {
                     "orderable": true
                 }, {
+                    "orderable": true
+                }, {
                     "orderable": false
                 }],
             "lengthMenu": [
@@ -1087,6 +1093,8 @@ var TableManaged = function () {
 
             "columns": [{
                     "orderable": false
+                }, {
+                    "orderable": true
                 }, {
                     "orderable": true
                 }, {

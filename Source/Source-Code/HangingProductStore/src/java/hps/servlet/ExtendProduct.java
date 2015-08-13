@@ -56,7 +56,7 @@ public class ExtendProduct extends HttpServlet {
                 } catch (Exception e) {
                 }
                 boolean flag = true;
-                if (action != null && expiredFee > 0) {
+                if (action != null && expiredFee >= 0) {
                     if (action.equals("receive")) {//nhan hang
                         String consignmentID = request.getParameter("txtConsignmentID");
 

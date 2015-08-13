@@ -161,7 +161,7 @@
 
                     <div class="row" style="background-color: #01579b; height: 40px" >
                         <div class="col-lg-12 col-md-12" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
-                            <i class="fa fa-globe"></i> Quản lí sản phẩm 
+                            <i class="fa fa-globe"></i> Sản phẩm 
                             <c:choose>
                                 <c:when test="${requestScope.currentTab == 'available'}">
                                     chờ duyệt
@@ -245,6 +245,7 @@
                                             <th>STT</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Mã kí gửi</th>
+                                            <th>Ngày nhận hàng</th>
                                             <th>Chi Tiết</th>
                                         </tr>
                                     </thead>
@@ -254,6 +255,7 @@
                                                 <td class="center" style="font-weight: bold">${counter.count}</td>
                                                 <td>${item.product.name}</td>
                                                 <td>${item.consigmentID}</td>
+                                                <td>${item.reviewProductDate}</td>
                                                 <td><button class="btn btn-info availableModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                             </tr>
                                         </c:forEach>
@@ -275,6 +277,7 @@
                                             <th>STT</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Mã kí gửi</th>
+                                            <th>Ngày đăng lên web</th>
                                             <th>Chi Tiết</th>
                                         </tr>
                                     </thead>
@@ -284,6 +287,7 @@
                                                 <td style="text-align: center; font-weight: bold">${counter.count}</td>
                                                 <td>${item.product.name}</td>
                                                 <td>${item.consigmentID}</td>
+                                                <td>${item.raiseWebDate}</td>
                                                 <td><button class="btn btn-info onWebModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
                                             </tr>
                                         </c:forEach>
@@ -343,6 +347,7 @@
                                             <th>STT</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Mã kí gửi</th>
+                                            <th>Ngày đăng kí hủy kí gửi</th>
                                             <th>Trạng thái</th>
                                             <th>Chi Tiết</th>
                                         </tr>
@@ -353,6 +358,7 @@
                                                 <td class="center" style="font-weight: bold">${counter.count}</td>
                                                 <td>${item.product.name}</td>
                                                 <td>${item.consigmentID}</td>
+                                                <td>${item.cancelDate}</td>
                                                 <td>
                                                     <c:if test="${item.product.productStatusID!=null && item.product.productStatusID == 8}">
                                                         Chờ nhận hàng
@@ -385,6 +391,7 @@
                                             <th>STT</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Mã kí gửi</th>
+                                            <th>Ngày bán sản phẩm</th>
                                             <th>Chi Tiết</th>
                                         </tr>
                                     </thead>
@@ -394,6 +401,7 @@
                                                 <td class="center" style="font-weight: bold">${counter.count}</td>
                                                 <td>${item.product.name}</td>
                                                 <td>${item.consigmentID}</td>
+                                                <td>${item.product.sellDate}</td>
                                                 <td><button class="btn btn-info soldModal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.productID}">Xem</button></td>
                                             </tr>
                                         </c:forEach>
@@ -483,7 +491,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá sản phẩm</label>
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                     <div class="col-md-8 col-sm-8" id="sold_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
@@ -563,7 +571,7 @@
                                             <div class="col-sm-5">
                                                 <div class="form-horizontal">
                                                     <div class="form-group">
-                                                        <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá ký gửi:</label>
+                                                        <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá thỏa thuận:</label>
                                                         <div class="col-md-7 col-sm-7" id="ordered_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
                                                     </div>
                                                 </div>
@@ -681,7 +689,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá kí gửi</label>
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá thỏa thuận</label>
                                                     <div class="col-md-8 col-sm-8" id="cancel_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
 
@@ -735,14 +743,14 @@
                                                         <div class="form-group">
                                                             <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm <font color="red">*</font></label>
                                                             <div class="col-sm-8">
-                                                                <input id="avai_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
+                                                                <input id="avai_ProductName" type="text" class="form-control" maxlength="100" name="txtProductName"/>
                                                                 <p class="help-block" id="er_avai_ProductName" style="color: red">  </p>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="txtSerial" class="col-sm-4 control-label" style="font-weight: bold">Số seri </label>
                                                             <div class="col-sm-8">
-                                                                <input id="avai_SerialNumber" type="text" class="form-control" name="txtSerialNumber"/>
+                                                                <input id="avai_SerialNumber" type="text" class="form-control" maxlength="20" name="txtSerialNumber"/>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
