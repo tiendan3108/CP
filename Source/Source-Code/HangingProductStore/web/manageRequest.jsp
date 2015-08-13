@@ -1276,7 +1276,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #dfba49">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        
                         <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
                     </div>
                     <div class="modal-body" align="center">
