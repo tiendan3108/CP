@@ -416,7 +416,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -491,14 +491,13 @@
                                                     <div class="col-md-8 col-sm-8" id="sold_receivedDate"  style="padding-top: 8px; font-size: 110%"></div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền trả khách hàng</label>
+                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền trả khách hàng <font color="red">*</font></label>
                                                     <div class="col-md-6 col-sm-6">
                                                         <input type="text" id="sold_returnPrice" class="form-control" > 
                                                         <span class="help-block">(Ngàn đồng)</span>
                                                         <p class="help-block" id="er_sold_returnPrice" style="color: red">  </p>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -538,7 +537,7 @@
                             <div class="modal-content">
                                 <form action="OrderProduct" method="POST">
                                     <div class="modal-header" style="background-color: #89C4F4 ">
-                                        <h3 style="font-weight: bold">Thông tin đặt hàng</h3>
+                                        <h3 class="modal-title" style="font-weight: bold">Thông tin đặt hàng</h3>
                                         <!--                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>-->
                                         <!--                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>-->
                                     </div>
@@ -598,12 +597,12 @@
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #dfba49 ">
-                                        <h3 style="font-weight: bold">Thông tin giá bán</h3>        
+                                        <h3 class="modal-title" style="font-weight: bold">Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-10 col-sm-offset-1" align="center">
-                                                <label class="control-label">Giá bán (Ngàn đồng):</label>
+                                                <label class="control-label">Giá bán (Ngàn đồng): <font color="red">*</font></label>
                                                 <input class="form-control" id="sellingPrice" type="text" name="txtSellingPrice" value ="">
                                             </div>
                                         </div>
@@ -623,7 +622,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 style="font-weight: bold">Thông tin hủy kí gửi</h3>        
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin hủy kí gửi</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -720,7 +719,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #89C4F4 ">
-                                        <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                        <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -728,7 +727,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <input id="avai_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
                                                                 <p class="help-block" id="er_avai_ProductName" style="color: red">  </p>
@@ -741,7 +740,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
                                                                     <input id="avai_NewRatio" type="text" class="form-control" name="txtNewRatio">
@@ -750,7 +749,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <c:set var="parentCat" value="${requestScope.parentCat}"/>
                                                                 <c:set var="allCat" value="${requestScope.allCat}"/>
@@ -768,7 +767,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <input id="avai_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
                                                                 <p class="help-block" id="er_avai_Brand"style="color: red">  </p>
@@ -848,7 +847,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -936,7 +935,7 @@
                             <form action="ExtendProduct" method="POST">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #dfba49 ">
-                                        <h3 style="font-weight: bold">Thời hạn kí gửi</h3>
+                                        <h3 class="modal-title" style="font-weight: bold">Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
@@ -947,7 +946,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền lưu kho (Ngàn đồng)</label>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền lưu kho (Ngàn đồng) <font color="red">*</font></label>
                                                     <div class="col-md-7 col-sm-7">
                                                         <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="">
                                                     </div>
@@ -978,12 +977,12 @@
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #dfba49 ">
-                                        <h3 style="font-weight: bold">Thông tin tiền phạt</h3>
+                                        <h3 class="modal-title" style="font-weight: bold">Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1" align="center">
-                                                <label  class="control-label">Tiền phạt (Ngàn đồng)</label>
+                                                <label  class="control-label">Tiền phạt (Ngàn đồng) <font color="red">*</font></label>
                                                 <input class="form-control" type="text" id="expired_fee" value="" name="txtExpiredFee">
                                             </div>
                                         </div>
@@ -1006,7 +1005,7 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #89C4F4 ">
-                                        <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                        <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
                                         <div class="tab-content">
@@ -1014,7 +1013,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-horizontal">
                                                         <div class="form-group">
-                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                            <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <input id="onWeb_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
                                                                 <p class="help-block" id="er_OnWeb_ProductName"style="color: red">  </p>
@@ -1027,7 +1026,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Độ mới <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <div class="input-group">
                                                                     <input id="onWeb_NewRatio" type="text" class="form-control" name="txtNewRatio" >
@@ -1036,7 +1035,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Loại sản phẩm <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <c:set var="parentCat" value="${requestScope.parentCat}"/>
                                                                 <c:set var="allCat" value="${requestScope.allCat}"/>
@@ -1054,7 +1053,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng</label>
+                                                            <label class="control-label col-sm-4" style="font-weight: bold">Hãng <font color="red">*</font></label>
                                                             <div class="col-sm-8">
                                                                 <input id="onWeb_Brand" type="text" class="form-control" maxlength="26" name="txtBrand"/>
                                                                 <p class="help-block" id="er_OnWeb_Brand"style="color: red">  </p>
@@ -1133,11 +1132,11 @@
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice2();">
                                     <div class="modal-header" style="background-color: #dfba49 ">
-                                        <h3 style="font-weight: bold">Hủy kí gửi</h3>
+                                        <h3 class="modal-title" style="font-weight: bold">Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm với mã kí gửi <label id="confirmCancel_ConsignmentID1"></label>?</h4>
-                                        <h4>Tiền phạt (Ngàn đồng): <input id="confirmCancel_Fee" name="txtCancelFee"></h4>
+                                        <h4>Tiền phạt (Ngàn đồng):  <font color="red">*</font><input id="confirmCancel_Fee" name="txtCancelFee"></h4>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" value="onWeb" name="txtcurrentTab">
@@ -1156,11 +1155,11 @@
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
                                     <div class="modal-header" style="background-color: #dfba49 ">
-                                        <h3 style="font-weight: bold">Trả hàng kí gửi</h3>
+                                        <h3 class="modal-title" style="font-weight: bold">Trả hàng kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <h4>Bạn có chắc chắn muốn trả sản phẩm với mã kí gửi <label id="returnProduct_ConsignmentID"></label>?</h4>
-                                        <h4>Tiền phạt (Ngàn đồng): <input id="returnProduct_Fee" name="txtCancelFee"></h4>
+                                        <h4>Tiền phạt (Ngàn đồng):  <font color="red">*</font><input id="returnProduct_Fee" name="txtCancelFee"></h4>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="hidden" value="canceled" name="txtcurrentTab">
@@ -1476,7 +1475,7 @@
                     $('#expiredModal').modal('show');
                 });
                 $(document).on("click", ".confirmExtendModal", function () {
-                    $("#expired_period").text($("#expired_days").text() + ' ngày');
+                    $("#expired_period").text($("#expired_days").text());
                     $("#expired_fees").text($("#expired_fee").val());
                     $("#expired_fees_1").val($("#expired_fee").val());
                     $('#confirmExtendModal').modal('show');
