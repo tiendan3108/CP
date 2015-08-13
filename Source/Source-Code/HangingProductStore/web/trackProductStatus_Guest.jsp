@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="botdetect.web.Captcha"%>
+
 <%--@elvariable id="c" type="hps.dtl.Consignment"--%>
 <template:shopbasic htmlTitle="Quản lý ký gửi" bodyTitle="">
     <jsp:attribute name="extraHeadContent">
