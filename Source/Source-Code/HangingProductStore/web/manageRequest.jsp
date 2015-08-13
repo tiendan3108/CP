@@ -142,6 +142,7 @@
                             <ul class="sub-menu">
                                 <li id="consignment">
                                     <a href="Statistics?currentTab=consignment">Yêu cầu kí gửi</a>
+
                                 </li>
                             </ul>
                         </li>								
@@ -158,9 +159,10 @@
                     <input type="hidden" id="toDate" value="${requestScope.toDate}">
                     <!-- BEGIN PAGE CONTENT-->
 
-                    <div class="row" style="background-color: #01579b; ">
-                        <h3 style="font-weight: bold; color: white;">
-                            &nbsp;<i class="icon-rocket icon-lg"></i> Yêu cầu
+                    <div class="row" style="background-color: #01579b; height: 40px" >
+                        <div class="col-lg-8 col-md-8" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
+
+                            <i class="icon-rocket icon-lg"></i> Yêu cầu
                             <c:choose>
                                 <c:when test="${requestScope.currentTab == 'request'}">
                                     chưa duyệt
@@ -175,15 +177,20 @@
                                     đã hủy
                                 </c:when>
                             </c:choose>
-                            <c:if test="${requestScope.currentTab == 'accepted'}">
 
+
+
+                        </div>
+                        <c:if test="${requestScope.currentTab == 'accepted'}">
+                            <div class="col-lg-4 col-md-4" align="right">
                                 <button data-toggle="modal" data-target="#modalAddConsignment"
                                         class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
+                            </div>
 
-                            </c:if>
 
-                        </h3>
+                        </c:if>
                     </div>
+                    <br/>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
@@ -543,7 +550,6 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <br/>
                                 <div class="row">
 
                                     <div class="col-md-4 col-sm-4" align="left">
@@ -579,7 +585,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
-                            <h3 class="modal-title" id="r_name" style="font-weight: bold">THÔNG TIN CHI TIẾT</h3>
+                            <h3 class="modal-title" id="r_name" style="font-weight: bold">Thông tin chi tiết</h3>
 
                         </div>
                         <div class="modal-body">
@@ -851,7 +857,7 @@
                     <div class="modal-content">
                         <div class="modal-header" style="background-color: #dfba49 ">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title" style="font-weight: bold">XÁC NHẬN TỪ CHỐI</h3>
+                            <h3 class="modal-title" style="font-weight: bold">Xác nhận từ chối</h3>
                         </div>
                         <div class="modal-body">
                             <!--                            <div id="r_body_confirm">
