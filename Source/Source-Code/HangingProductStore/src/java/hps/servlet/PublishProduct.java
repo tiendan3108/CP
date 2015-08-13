@@ -139,8 +139,12 @@ public class PublishProduct extends HttpServlet {
                         String path = request.getServletContext().getRealPath("/");
                         String basePath = path.substring(0, path.length() - 9) + "web";
                         String filename = FilenameUtils.getName(item.getName()); // Get filename.
-                        isvalid = isImageType(filename);
-                        if (!filename.equals("") && isvalid) {
+                        if (!filename.equals("")) {
+                            isvalid = isImageType(filename);
+                        } else {
+                            isvalid = true;
+                        }
+                        if (isvalid) {
                             JavaUltilities.deleteProductImage(path, productID);//delete deployment file
                             JavaUltilities.deleteProductImage(basePath, productID);// delete base file
                             String consignmentID = consignmentDAO.getConsignmentIDByProductID(productID);
@@ -193,7 +197,7 @@ public class PublishProduct extends HttpServlet {
                     if (!action.equals("available")) {
                         isPublish = false;
                     }
-                    if ((newRatio >= 0 || newRatio <= 100) && isvalid) {
+                    if ((newRatio >= 0 || newRatio <= 100)) {
                         boolean flag = productDAO.publishOnWeb(product, season, isPublish);
                         if (flag) {
                             url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";

@@ -226,7 +226,7 @@
                                     </br>
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
+                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=canceled"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm hủy kí gửi</a>
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                     </br>
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
+                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=available"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm chờ duyệt</a>
                                         </div>
                                         <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered">Sản phẩm đã được đặt <i class="m-icon-swapright m-icon-white"></i></a>
@@ -321,7 +321,7 @@
                                     </br>
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
+                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=onWeb"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm trên web</a>
                                         </div>
                                         <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=sold">Sản phẩm đã bán <i class="m-icon-swapright m-icon-white"></i></a>
@@ -363,7 +363,7 @@
                                     </br>
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
+                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=sold"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã bán</a>
                                         </div>
                                         <div class="col-md-6 col-sm-6" align="right" style="float: right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=expired">Sản phẩm hết hạn kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
@@ -396,7 +396,7 @@
                                     </br>
                                     <div class="row" >
                                         <div class="col-md-6 col-sm-6" align="left">
-                                            <a class="btn  btn-primary" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
+                                            <a class="btn  btn-warning" href="ManageProduct?currentTab=ordered"><i class="m-icon-swapleft m-icon-white"></i> Sản phẩm đã được đặt</a>
                                         </div>
                                         <div class="col-md-6 col-sm-6" align="right">
                                             <a class="btn  btn-primary" href="ManageProduct?currentTab=canceled">Sản phẩm hủy kí gửi <i class="m-icon-swapright m-icon-white"></i></a>
@@ -415,7 +415,7 @@
                     <div class="modal fade bs-example-modal-lg" id="soldModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color: snow">
+                                <div class="modal-header" style="background-color: #89C4F4 ">
                                     <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
@@ -495,6 +495,7 @@
                                                     <div class="col-md-6 col-sm-6">
                                                         <input type="text" id="sold_returnPrice" class="form-control" > 
                                                         <span class="help-block">(Ngàn đồng)</span>
+                                                        <p class="help-block" id="er_sold_returnPrice" style="color: red">  </p>
                                                     </div>
                                                 </div>
 
@@ -505,7 +506,7 @@
                                 <div class="modal-footer">
                                     <div class="row">
                                         <div style="float: right; margin: 0px 5px;">
-                                            <form action="SoldProduct" method="POST">
+                                            <form action="SoldProduct" method="POST" onsubmit="return checkPaymentValue();">
                                                 <input type="hidden" name="txtReturnPrice" id="sold_returnPrice1" value=""/>
                                                 <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
                                                 <button class="btn blue" name="btnAction" type="submit" value="pay">Trả tiền</button>
@@ -513,7 +514,7 @@
                                             </form>
                                         </div>
                                         <div style="float: right" style="display: none" id="paypal_form">
-                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="POST">
+                                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="POST" onsubmit="return checkPaymentValue();">
                                                 <input type="hidden" name="cmd" value="">
                                                 <input type="hidden" name="business" value="">
                                                 <input type="hidden" name="return" value="">
@@ -536,7 +537,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <form action="OrderProduct" method="POST">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #89C4F4 ">
                                         <h3 style="font-weight: bold">Thông tin đặt hàng</h3>
                                         <!--                                        Giá kí gửi (Ngàn đồng) : <label id="ordered_negotiatedPrice"></label><br>-->
                                         <!--                                        <label id="sendPriceLabel">Giá gửi khách hàng (Ngàn đồng) : <input type="text" id="sendPrice" name="txtSendPrice"></label>-->
@@ -596,7 +597,7 @@
                         <div class="modal-dialog modal-sm">
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #dfba49 ">
                                         <h3 style="font-weight: bold">Thông tin giá bán</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -621,7 +622,7 @@
                     <div class="modal fade bs-example-modal-lg" id="cancelModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: #89C4F4 ">
                                     <h3 style="font-weight: bold">Thông tin hủy kí gửi</h3>        
                                 </div>
                                 <div class="modal-body">
@@ -718,7 +719,7 @@
                             <input type="hidden" id="avai_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #89C4F4 ">
                                         <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -846,7 +847,7 @@
                     <div class="modal fade bs-example-modal-lg" id="expiredModal" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
-                                <div class="modal-header" style="background-color: snow">
+                                <div class="modal-header" style="background-color: #89C4F4 ">
                                     <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                 </div>
                                 <div class="modal-body">
@@ -934,20 +935,20 @@
                         <div class="modal-dialog modal-md">
                             <form action="ExtendProduct" method="POST">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #dfba49 ">
                                         <h3 style="font-weight: bold">Thời hạn kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1 form-horizontal">
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Số ngày quá hạn</label>
-                                                    <div class="col-md-8 col-sm-8" id="expired_period"  style="padding-top: 8px; font-size: 120%; color: red"></div>
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Số ngày quá hạn</label>
+                                                    <div class="col-md-7 col-sm-7" id="expired_period"  style="padding-top: 8px; font-size: 120%; color: red"></div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền lưu kho</label>
-                                                    <div class="col-md-8 col-sm-8">
+                                                    <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền lưu kho (Ngàn đồng)</label>
+                                                    <div class="col-md-7 col-sm-7">
                                                         <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="">
                                                     </div>
                                                 </div>
@@ -976,7 +977,7 @@
                         <div class="modal-dialog modal-sm">
                             <form action="ExtendProduct" method="POST" onsubmit="return validationPrice();">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #dfba49 ">
                                         <h3 style="font-weight: bold">Thông tin tiền phạt</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1004,7 +1005,7 @@
                             <input type="hidden" id="onWeb_ProductID" value="" name="txtProductID">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #89C4F4 ">
                                         <h3 style="font-weight: bold">Thông tin sản phẩm</h3>        
                                     </div>
                                     <div class="modal-body">
@@ -1131,7 +1132,7 @@
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice2();">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #dfba49 ">
                                         <h3 style="font-weight: bold">Hủy kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1154,7 +1155,7 @@
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content" style="width: 500px">
                                 <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
-                                    <div class="modal-header" style="background-color: snow">
+                                    <div class="modal-header" style="background-color: #dfba49 ">
                                         <h3 style="font-weight: bold">Trả hàng kí gửi</h3>
                                     </div>
                                     <div class="modal-body">
@@ -1171,6 +1172,23 @@
                             </div>
                         </div>
                     </div>
+                    <div id="modalAlert" data-backdrop="static" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #dfba49">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
+                                </div>
+                                <div class="modal-body" align="center">
+                                    <h3 id="alert_content"></h3>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button id="btnOK" data-dismiss="modal" class="btn btn-warning">OK</button> 
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
                     <!-- RETURN PRODUCT MODAL END-->
                 </div>
                 <!-- END ALL MODALS -->
@@ -1239,19 +1257,6 @@
                     $('div.portlet-title').show();
                     $('li#' + currentTab).addClass('open active').siblings().removeClass('open active');
                     $('html,body').scrollTop(0);
-                    var status = $("#status").val();
-                    if (status.length > 0) {
-                        if (status.localeCompare('success') == 0) {
-                            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
-                                $("#success-alert").alert('close');
-                            });
-                        }
-                        if (status.localeCompare('fail') == 0) {
-                            $("#fail-alert").fadeTo(2000, 500).slideUp(500, function () {
-                                $("#success-alert").alert('close');
-                            });
-                        }
-                    }
                 });
                 //start cancel modal
                 $(document).on("click", ".cancelModal", function () {
@@ -1465,13 +1470,13 @@
                         $("#expired_receiveConsignmentID").val(consignmentID);
                         $("#expired_consignedDate").text(response.reviewProductDate);
                         $("#expired_negotiatedPrice").text(response.negotiatedPrice + " (Ngàn đồng)");
-                        $("#expired_days").text(response.expiredDays);
+                        $("#expired_days").text(response.expiredDays + ' ngày');
                         $("#expired_fee").val(response.expiredFee + response.remainExtendFee);
                     });
                     $('#expiredModal').modal('show');
                 });
                 $(document).on("click", ".confirmExtendModal", function () {
-                    $("#expired_period").text($("#expired_days").text());
+                    $("#expired_period").text($("#expired_days").text() + ' ngày');
                     $("#expired_fees").text($("#expired_fee").val());
                     $("#expired_fees_1").val($("#expired_fee").val());
                     $('#confirmExtendModal').modal('show');
@@ -1670,6 +1675,18 @@
                         $("input#chkSeason4").parent("span").addClass("checked");
                     }
                 }
+                function checkPaymentValue() {
+                    var price = $('#sold_returnPrice').val();
+                    var result = true;
+                    if (isNaN(price) || price <= 0) {
+                        result = false;
+                        $("#er_sold_returnPrice").html('Vui lòng nhập tiền trả khách hàng');
+                    } else {
+                        $("#er_sold_returnPrice").html('');
+                    }
+                    return result;
+                }
+                ;
                 //get season checkbox
                 function getSeasonAvai()
                 {
@@ -1737,6 +1754,14 @@
                     });
                     $('#onWeb_seasonID').val(selected);
                     return flag;
+                }
+                function showAlert(content) {
+                    $("#modalAlert").modal("show");
+                    $("#alert_content").html(content);
+                }
+
+                function changeContentAlert(content) {
+                    $("#alert_content").html(content);
                 }
             </script>
     </body>
