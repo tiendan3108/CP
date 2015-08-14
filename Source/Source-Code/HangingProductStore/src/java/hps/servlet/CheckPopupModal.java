@@ -7,12 +7,8 @@ package hps.servlet;
 
 import com.google.gson.Gson;
 import hps.dao.ConsignmentDAO;
-import hps.dao.ProductDAO;
-import hps.dto.ConsignmentDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "LoadSoldProduct", urlPatterns = {"/LoadSoldProduct"})
-public class LoadSoldProduct extends HttpServlet {
+@WebServlet(name = "CheckPopupModal", urlPatterns = {"/CheckPopupModal"})
+public class CheckPopupModal extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,6 +36,15 @@ public class LoadSoldProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String consignmentID = request.getParameter("consignmentID");
+            ConsignmentDAO dao = new ConsignmentDAO();
+            int result = -1;
+            if (consignmentID != null) {
+                result = dao.checkProductStatusByConsignmentID(consignmentID);
+            }
+            String json = new Gson().toJson(result);
+            System.out.println(json);
+            response.getWriter().write(json);
         }
     }
 
@@ -55,25 +60,7 @@ public class LoadSoldProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            request.setCharacterEncoding("UTF-8");
-            int productID;
-            ProductDAO productDAO = new ProductDAO();
-            String tmp_productID = request.getParameter("productID");
-            String consignmentID = request.getParameter("consignmentID");
-            if (tmp_productID == null) {
-                productID = productDAO.getProductIDByConsignmentID(consignmentID);
-            } else {
-                productID = Integer.parseInt(tmp_productID);
-            }
-            ConsignmentDAO consignmentDAO = new ConsignmentDAO();
-            ConsignmentDTO infor = consignmentDAO.getInforForSoldPage(productID);
-            String json = new Gson().toJson(infor);
-            response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(json);
-        } catch (NumberFormatException e) {
-            Logger.getLogger(LoadAvailableProduct.class.getName()).log(Level.SEVERE, null, e);
-        }
+        processRequest(request, response);
     }
 
     /**

@@ -5,18 +5,16 @@
  */
 package hps.servlet;
 
+import hps.dao.CategoryDAO;
 import hps.dao.ConsignmentDAO;
-import hps.dao.ProductDAO;
+import hps.dao.SeasonDAO;
 import hps.dto.AccountDTO;
+import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
-import hps.dto.StatisticDTO;
+import hps.dto.SeasonDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +27,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "StatisticsServlet", urlPatterns = {"/Statistics"})
-public class StatisticsServlet extends HttpServlet {
+@WebServlet(name = "LoadProductPage", urlPatterns = {"/LoadProductPage"})
+public class LoadProductPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,32 +44,30 @@ public class StatisticsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HttpSession session = request.getSession(false);
-            ProductDAO productDAO = new ProductDAO();
             ConsignmentDAO consignmentDAO = new ConsignmentDAO();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            SeasonDAO seasonDAO = new SeasonDAO();
+            HttpSession session = request.getSession(false);
             AccountDTO user = null;
             if (session != null) {
                 user = (AccountDTO) session.getAttribute("ACCOUNT");
             }
             String url = "";
-            List<ConsignmentDTO> resultC = null;
-//            float totalPrice = 0;
             if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                url = GlobalVariables.LOGIN_PAGE;
             } else {
+                List<ConsignmentDTO> result = consignmentDAO.getProductForManageProductPage(user.getRoleID());
+                List<CategoryDTO> parentCat = categoryDAO.getParentCategory();
+                List<CategoryDTO> allCat = categoryDAO.getAllCategory();
+                List<SeasonDTO> season = seasonDAO.getSeason();
 
-//                Date tempDate = Calendar.getInstance().getTime();
-//                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//                String today = sdf.format(tempDate);
-                resultC = consignmentDAO.getConsignmentInforForStatisticPage(user.getRoleID());
-                request.setAttribute("resultC", resultC);
-                request.setAttribute("currentTab", "consignment");
-//                    request.setAttribute("fromDate", today);
-//                    request.setAttribute("toDate", today);
-
-                url = GlobalVariables.STATISTIC_PAGE;
+                request.setAttribute("result", result);
+                request.setAttribute("parentCat", parentCat);
+                request.setAttribute("allCat", allCat);
+                request.setAttribute("season", season);
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE;
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+            if (url.equals(GlobalVariables.LOGIN_PAGE)) {
                 response.sendRedirect(url);
             } else {
                 request.getRequestDispatcher(url).forward(request, response);
@@ -79,7 +75,7 @@ public class StatisticsServlet extends HttpServlet {
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

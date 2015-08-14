@@ -106,46 +106,18 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="javascript:;">
-                                <i class="icon-basket"></i>
-                                <span class="title">Quản lí hàng kí gửi</span>
-                                <span class="arrow "></span>
+                        <li class="start">
+                            <a href="LoadProductPage">
+                                <i class="icon-handbag"></i>
+                                <span class="title">Quản lí sản phẩm</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li id="available">
-                                    <a href="ManageProduct?currentTab=available">Chờ duyệt</a>
-                                </li>
-                                <li id="onWeb">
-                                    <a href="ManageProduct?currentTab=onWeb">Trên web</a>
-                                </li>
-                                <li id="ordered">
-                                    <a href="ManageProduct?currentTab=ordered">Đã được đặt</a>
-                                </li>
-                                <li id="sold">
-                                    <a href="ManageProduct?currentTab=sold">Đã bán</a>
-                                </li>
-                                <li id="canceled">
-                                    <a href="ManageProduct?currentTab=canceled">Đăng kí hủy kí gửi</a>
-                                </li>
-                                <li id="expired">
-                                    <a href="ManageProduct?currentTab=expired">Hết hạn kí gửi</a>
-                                </li>
-                            </ul>
                         </li>
-                        <li class="last">
-                            <a href="javascript:;">
-                                <i class="icon-bar-chart"></i>
-                                <span class="title">Thống kê</span>
-                                <span class="arrow "></span>
+                        <li class="start">
+                            <a href="LoadSalesPage">
+                                <i class="icon-basket"></i>
+                                <span class="title">Quản lí bán hàng</span>
                             </a>
-                            <ul class="sub-menu">
-                                <li id="consignment">
-                                    <a href="Statistics?currentTab=consignment">Yêu cầu kí gửi</a>
-
-                                </li>
-                            </ul>
-                        </li>								
+                        </li>
                     </ul>
                     <!-- END SIDEBAR MENU -->
                 </div>

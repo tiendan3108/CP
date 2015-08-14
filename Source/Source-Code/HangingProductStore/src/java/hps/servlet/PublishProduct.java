@@ -81,7 +81,7 @@ public class PublishProduct extends HttpServlet {
             List<FileItem> items = null;
             boolean isvalid = false;
             if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                url = GlobalVariables.LOGIN_PAGE;
             } else {
                 ProductDAO productDAO = new ProductDAO();
                 ConsignmentDAO consignmentDAO = new ConsignmentDAO();
@@ -195,12 +195,12 @@ public class PublishProduct extends HttpServlet {
                     if ((newRatio >= 0 || newRatio <= 100)) {
                         boolean flag = productDAO.publishOnWeb(product, season, isPublish);
                         if (flag) {
-                            url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=success";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=success";
                         } else {
-                            url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=fail";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=fail";
                         }
                     } else {
-                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=" + action + "&status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=fail";
                     }
 
                 }

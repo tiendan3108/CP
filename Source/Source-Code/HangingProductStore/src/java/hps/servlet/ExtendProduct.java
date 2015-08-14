@@ -45,7 +45,7 @@ public class ExtendProduct extends HttpServlet {
             }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                url = GlobalVariables.LOGIN_PAGE;
             } else {
                 ProductDAO productDAO = new ProductDAO();
                 String action = request.getParameter("btnAction");
@@ -67,12 +67,12 @@ public class ExtendProduct extends HttpServlet {
                         flag = productDAO.ExtendProducts(consignmentID, expiredFee);
                     }
                     if (flag) {
-                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=success";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=success";
                     } else {
-                        url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=fail";
                     }
                 } else {
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=expired&status=fail";
+                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "status=fail";
                 }
             }
             response.sendRedirect(url);

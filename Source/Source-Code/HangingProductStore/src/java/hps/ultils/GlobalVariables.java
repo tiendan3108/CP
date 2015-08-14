@@ -11,6 +11,10 @@ package hps.ultils;
  */
 public class GlobalVariables {
 
+    public static final String LOGIN_PAGE = "login.jsp";
+    public static final String MANAGE_AVAILABLE_PRODUCT_PAGE = "manageAvailableProduct.jsp";
+    public static final String MANAGE_SOLD_PRODUCT_PAGE = "manageSoldProduct.jsp";
+
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
@@ -29,17 +33,17 @@ public class GlobalVariables {
     public static final String SESSION_TIME_OUT_PAGE = "HomeServlet";
 
     public static final String MANAGERMENT_SERVLET = "ManageProduct";
-    
+
     public static final int CONSIGNMENT_WAITING = 1;
     public static final int CONSIGNMENT_REFUSE = 2;
     public static final int CONSIGNMENT_ACCEPTED = 3;
     public static final int CONSIGNMENT_COMPLETED = 4;
     public static final int CONSIGNMENT_RECEIVED = 5;
-    
+
     /*
-    Servlet and jsp
-         HoangNH  
-    */
+     Servlet and jsp
+     HoangNH  
+     */
     //servlet
     public static final String LOGIN_SERVLET = "LoginServlet";
     public static final String LOGOUT_SERVLET = "LogoutServlet";
@@ -55,6 +59,5 @@ public class GlobalVariables {
     public static final String CONFIRM_ORDER_PAGE = "confirmOrder.jsp";
     public static final String COMPLETE_ODER_PAGE = "completeOrder.jsp";
     public static final int VND_CURRENCY = 22000;
-    
 
 }

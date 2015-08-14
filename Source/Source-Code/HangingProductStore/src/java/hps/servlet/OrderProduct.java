@@ -55,7 +55,7 @@ public class OrderProduct extends HttpServlet {
             }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                url = GlobalVariables.LOGIN_PAGE;
             } else {
                 boolean flag = false;
                 ProductDAO productDAO = new ProductDAO();
@@ -109,7 +109,7 @@ public class OrderProduct extends HttpServlet {
                     } catch (Exception e) {
                         isValid = false;
                     }
-                    if (orderIDs !=null && orderIDs.length > 0 && isValid) {
+                    if (orderIDs != null && orderIDs.length > 0 && isValid) {
                         for (String _orderID : orderIDs) {
                             String phone = orderDAO.getCustomerInforByOrderID(_orderID, sendPrice);
                             if (phone != null && !phone.equals("")) {
@@ -142,9 +142,9 @@ public class OrderProduct extends HttpServlet {
                     }
                 }
                 if (flag) {
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered&status=success";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "?status=success";
                 } else {
-                    url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=ordered&status=fail";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "?status=fail";
                 }
 
             }

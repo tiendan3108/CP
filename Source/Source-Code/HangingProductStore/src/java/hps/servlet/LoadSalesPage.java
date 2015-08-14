@@ -13,7 +13,6 @@ import hps.dto.CategoryDTO;
 import hps.dto.ConsignmentDTO;
 import hps.dto.SeasonDTO;
 import hps.ultils.GlobalVariables;
-import hps.ultils.ProductStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -28,8 +27,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tien Dan
  */
-@WebServlet(name = "ManageProductServlet", urlPatterns = {"/ManageProduct"})
-public class LoadManageProductPageServlet extends HttpServlet {
+@WebServlet(name = "LoadSalesPage", urlPatterns = {"/LoadSalesPage"})
+public class LoadSalesPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +42,6 @@ public class LoadManageProductPageServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             ConsignmentDAO consignmentDAO = new ConsignmentDAO();
@@ -56,43 +54,20 @@ public class LoadManageProductPageServlet extends HttpServlet {
             }
             String url = "";
             if (user == null || !user.getRole().equals("storeOwner")) {
-                url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+                url = GlobalVariables.LOGIN_PAGE;
             } else {
-
-                List<ConsignmentDTO> available = consignmentDAO.getAvailableProduct(user.getRoleID(), ProductStatus.AVAILABLE);
-                List<ConsignmentDTO> onWeb = consignmentDAO.getOnWebProduct(user.getRoleID(), ProductStatus.ON_WEB);
-                List<ConsignmentDTO> ordered = consignmentDAO.getOrderedProduct(user.getRoleID(), ProductStatus.ORDERED);
-                List<ConsignmentDTO> sold = consignmentDAO.getSoldProduct(user.getRoleID(), ProductStatus.SOLD);
-                List<ConsignmentDTO> canceled = consignmentDAO.getCanceledProduct(user.getRoleID(), ProductStatus.CANCEL);
-                List<ConsignmentDTO> expired = consignmentDAO.getExpiredProduct(user.getRoleID());
+                List<ConsignmentDTO> result = consignmentDAO.getProductForManageSalesPage(user.getRoleID());
                 List<CategoryDTO> parentCat = categoryDAO.getParentCategory();
                 List<CategoryDTO> allCat = categoryDAO.getAllCategory();
                 List<SeasonDTO> season = seasonDAO.getSeason();
 
-                Object currentTab = request.getAttribute("currentTab");
-                String temp_currentTab = request.getParameter("currentTab");
-                String tab = "";
-                if (currentTab != null) {
-                    tab = (String) currentTab;
-                } else if (temp_currentTab != null) {
-                    tab = temp_currentTab;
-                } else {
-                    tab = "available";
-                }
-
-                request.setAttribute("available", available);
-                request.setAttribute("onWeb", onWeb);
-                request.setAttribute("ordered", ordered);
-                request.setAttribute("sold", sold);
-                request.setAttribute("canceled", canceled);
-                request.setAttribute("expired", expired);
-                request.setAttribute("currentTab", tab);
+                request.setAttribute("result", result);
                 request.setAttribute("parentCat", parentCat);
                 request.setAttribute("allCat", allCat);
                 request.setAttribute("season", season);
-                url = GlobalVariables.MANAGERMENT_PAGE;
+                url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE;
             }
-            if (url.equals(GlobalVariables.SESSION_TIME_OUT_PAGE)) {
+            if (url.equals(GlobalVariables.LOGIN_PAGE)) {
                 response.sendRedirect(url);
             } else {
                 request.getRequestDispatcher(url).forward(request, response);

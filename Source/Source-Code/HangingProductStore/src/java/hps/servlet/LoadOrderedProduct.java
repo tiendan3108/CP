@@ -56,9 +56,15 @@ public class LoadOrderedProduct extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            String tmp_productID = request.getParameter("productID");
-            int productID = Integer.parseInt(tmp_productID);
+            int productID;
             ProductDAO productDAO = new ProductDAO();
+            String tmp_productID = request.getParameter("productID");
+            String consignmentID = request.getParameter("consignmentID");
+            if (tmp_productID == null) {
+                productID = productDAO.getProductIDByConsignmentID(consignmentID);
+            } else {
+                productID = Integer.parseInt(tmp_productID);
+            }
             ProductDTO infor = productDAO.getInforForOrderedPage(productID);
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");

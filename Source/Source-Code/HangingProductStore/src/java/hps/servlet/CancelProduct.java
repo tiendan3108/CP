@@ -89,7 +89,7 @@ public class CancelProduct extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         AccountDAO accountDAO = new AccountDAO();
         if (user == null || !user.getRole().equals("storeOwner")) {
-            url = GlobalVariables.SESSION_TIME_OUT_PAGE;
+            url = GlobalVariables.LOGIN_PAGE;
         } else {
             AccountDTO consignor = accountDAO.getConsignorInforByConsignmentID(consignmentID);
             // get message
@@ -148,9 +148,9 @@ public class CancelProduct extends HttpServlet {
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
             //change url
             if (flag) {
-                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=canceled&status=success";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=success";
             } else {
-                url = GlobalVariables.MANAGERMENT_SERVLET + "?currentTab=canceled&status=fail";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=fail";
             }
 
         }

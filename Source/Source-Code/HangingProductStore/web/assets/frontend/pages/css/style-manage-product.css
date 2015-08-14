@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 14, 2015, 8:35:11 PM
+    Author     : Tien Dan
+*/
+.my-form-control{
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    background-color: #fff;
+    border: none;
+}

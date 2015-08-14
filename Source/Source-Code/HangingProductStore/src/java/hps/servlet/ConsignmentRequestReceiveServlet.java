@@ -211,7 +211,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             java.util.Date currentDate = new java.util.Date();
                             String today = df.format(currentDate);
 
-                            if (preAppointmentDate.equals(today) && method.equals("store")) {
+                            if (preAppointmentDate.equals(today) && consignment.getDeliveryMethod() != 1) {
                                 JavaUltilities java = new JavaUltilities();
                                 String noti = MessageString.titleNofitication;
                                 java.sendNofitiCation(noti, MessageString.newProductNotification(consignment.getProduct().getName()), AccountDAO.getGcmID(storeOwner.getAccountID()));
