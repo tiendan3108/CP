@@ -216,7 +216,7 @@
                                                                                                 <span class="fileinput-new btn " >
                                                                                                     CHỌN ẢNH </span>
                                                                                                 <span class="fileinput-exists btn">
-                                                                                                    THAY ẢNH </span>
+                                                                                                    CHỌN ẢNH </span>
                                                                                                 <input  type="file" name="txtImage" accept='image/*' value="${PRODUCT.image}" />
                                                                                             </span>
                                                                                             <!--                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
@@ -236,11 +236,10 @@
                                                                                                 <span class="fileinput-new btn " >
                                                                                                     CHỌN ẢNH </span>
                                                                                                 <span class="fileinput-exists btn">
-                                                                                                    THAY ẢNH </span>
+                                                                                                    CHỌN ẢNH </span>
                                                                                                 <input  type="file" name="txtImage" accept='image/*' />
                                                                                             </span>
-                                                                                            <a href="#" class="btn btn-lg btn-warning fileinput-exists" data-dismiss="fileinput">
-                                                                                                XÓA </a>
+                                                                                            
                                                                                         </div>
                                                                                     </div>
                                                                                 </c:otherwise>
@@ -466,7 +465,7 @@
         }
 
         if (fromDate.length > 0 && toDate.length > 0) {
-            if (compareDate(fromDate, toDate)) {
+            if (!compareDate(fromDate, toDate)) {
                 dateError = '<font color="red">"Đến ngày" phải lớn hơn "Từ ngày"</font>';
             }
         }
@@ -598,10 +597,10 @@
                 toParts[0]); // day   
 
         if (date1 > date2) {
-            return true;
+            return false;
         }
         else {
-            return false;
+            return true;
         }
     }
 

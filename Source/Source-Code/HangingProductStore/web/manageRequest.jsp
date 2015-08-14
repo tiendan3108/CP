@@ -1276,7 +1276,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #dfba49">
-                        
+
                         <h3 class="modal-title" style="font-weight: bold">Thông báo</h3>
                     </div>
                     <div class="modal-body" align="center">
@@ -1601,11 +1601,8 @@
                             $("#refuse_consignmentID").val(data.consigmentID);
 
                             if (data.consignmentStatusID == 1 && $("#currentTab").val() == "request") {
-                                //setEnableFieldWhenLoadRequestAcceptDetails();
-
                                 $("#r_productNameText").html(data.product.name);
                                 $('#r_category').val(data.product.categoryID).change();
-
                                 $('#r_categoryText').html($('#r_category option:selected').text());
                                 $("#r_brandText").html(data.product.brand);
 
@@ -1655,32 +1652,23 @@
                                 $("#r_btnAction").val("r_accept");
 
                                 //$("#r_receivedDate").val(getCurrentDate());
-                                $("#r_receivedDate").val(data.fromDate);
+                                if (compareToCurrentDate(data.fromDate)) {
+                                    $("#r_receivedDate").val(data.fromDate);
+                                } else {
+                                    if (compareToCurrentDate(data.toDate)) {
+                                        $("#r_receivedDate").val(data.fromDate);
+                                    } else {
+                                        $("#r_receivedDate").val(getCurrentDate());
+                                    }
+                                }
+
                                 $("#div_r_receivedDate").show();
 
-//                                $("#r_txtFullName").val(data.name);
-//                                $("#r_txtAddress").val(data.address);
-//                                $("#r_txtPhone").val(data.phone);
-//                                $("#r_txtEmail").val(data.email);
-//                                if (data.paypalAccount != null) {
-//                                    $("#r_txtPaypalAccount").val(data.paypalAccount);
-//                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", true).parent().addClass("checked");
-//                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", false).parent().removeClass("checked");
-//                                    $("#r_divCCNumber").show();
-//                                } else {
-//                                    $("#r_txtPaypalAccount").val("");
-//                                    $("input[name='r_rdPayment'][value='direct']").attr("checked", true).parent().addClass("checked");
-//                                    $("input[name='r_rdPayment'][value='cc']").attr("checked", false).parent().removeClass("checked");
-//                                    $("#r_divCCNumber").hide();
-//                                }
 
                                 $("#modalRequestAccept").modal("show");
 
                                 //$("#r_divPersonalInfo").show();
                             } else if (data.consignmentStatusID == 3 && $("#currentTab").val() == "accepted") {
-                                //setEnableFieldWhenLoadRequestAcceptDetails();
-
-
                                 $("#r_productName").val(data.product.name);
                                 $('#r_category').val(data.product.categoryID).change();
                                 $("#r_brand").val(data.product.brand);
@@ -2136,7 +2124,7 @@
 
             function getCurrentDate() {
                 var d = new Date(), month = '' + (d.getMonth() + 1),
-                        day = '' + (d.getDate() + 1),
+                        day = '' + (d.getDate()),
                         year = d.getFullYear();
 
                 if (month.length < 2)
@@ -2377,7 +2365,7 @@
                 else if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) == target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
                     return 1;
                 } else if (source.substring(0, 2) == target.substring(0, 2)) {
-
+                    return 1;
                 }
                 return -1;
             }
@@ -2408,6 +2396,23 @@
 
                     $("#re_r_phone").hide();
                     $("#re_r_paypalAccount").hide();
+                }
+            }
+
+            function compareToCurrentDate(target) {
+                var fromParts = target.split("-");
+
+                var date1 = new Date(fromParts[2], // year
+                        fromParts[1] - 1, // month, starts with 0
+                        fromParts[0]); // day
+
+                var currentDate = new Date();
+
+                if (date1 < currentDate) {
+                    return false;
+                }
+                else {
+                    return true;
                 }
             }
         </script> 
