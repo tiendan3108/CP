@@ -149,6 +149,12 @@
 
                                                             </c:forEach>
                                                             <!--                                                            <input type="hidden" name="btnAction" value="tostep3"/>-->
+
+                                                            <tr>
+                                                        <form action="ConsignServlet" method="POST">
+                                                            <td colspan="4"><button name="btnAction" value="tostep3" class="btn btn-block blue-dark">Không phải sản phẩm của bạn?</button></td>
+                                                        </form> 
+                                                        </tr>
                                                         </tbody>
                                                     </table>
                                                     <!--                                                    </form>-->
@@ -188,7 +194,7 @@
 
                                             <div class="col-sm-4"> 
                                                 <button id="btnBack"  name="btnAction" type="submit" value="backstep1" class="btn-block btn-lg btn btn-warning">
-                                                     <i class="m-icon-big-swapleft m-icon-white"></i> QUAY LẠI</button> 
+                                                    <i class="m-icon-big-swapleft m-icon-white"></i> QUAY LẠI</button> 
                                             </div>
                                             <div class="col-sm-4"> </div>
                                             <div class="col-sm-4">

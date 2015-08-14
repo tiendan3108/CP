@@ -391,12 +391,13 @@
     $("#btnComplete").click(function () {
         //$("#form3").submit();
         if (validation()) {
-            $("#modalConfirm").modal("show");
+            //$("#modalConfirm").modal("show");
+            $("#form3").submit();
         }
 
     });
     $("#btnConfirm").click(function () {
-        $("#form3").submit();
+        //$("#form3").submit();
         //$("#modalConfirm").modal("show");
     });
     function formatDate(date) {

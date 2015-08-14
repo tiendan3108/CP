@@ -80,7 +80,7 @@
                                             <c:if test="${not empty data}">
                                                 <c:if test="${basicPrice <= 0}">
                                                     <div class="alert alert-danger" style="text-align: center">
-                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không thể định sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá chính xác tùy theo tình trạng sản phẩm khi nhận hàng.</strong>
+                                                        <i class="fa-lg fa fa-warning"></i><strong>Chúng tôi không xác định sản phẩm của bạn. Cửa hàng sẽ lưu lại yêu cầu ký gửi này và định giá chính xác tùy theo tình trạng sản phẩm khi nhận hàng.</strong>
                                                     </div>    
                                                 </c:if>
                                                 <c:if test="${basicPrice > 0}">
@@ -196,35 +196,82 @@
 
                                         </div>
                                     </div>
-                                    
 
-                                        <div class="row">
 
-                                            <div class="col-md-4 col-sm-4"> 
-                                                <form id="form3"  action="ConsignServlet" method="POST">
-                                                    <button id="btnBack"  name="btnAction" type="submit" value="backstep2" class="btn-block btn-lg btn btn-warning"><i class="m-icon-big-swapleft m-icon-white"></i>  QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
-                                                </form>
-                                            </div>
-                                            <c:if test="${not empty sessionScope.STORELIST}">
-                                                <div class="col-md-4 col-sm-4"> </div>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <button id="btnNext" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <i class="m-icon-big-swapright m-icon-white"></i> </button>
-                                                </div>
-                                            </c:if>
+                                    <div class="row">
+
+                                        <div class="col-md-4 col-sm-4"> 
+                                            <form id="form3"  action="ConsignServlet" method="POST">
+                                                <button id="btnBack"  name="btnAction" type="submit" value="backstep2" class="btn-block btn-lg btn btn-warning"><i class="m-icon-big-swapleft m-icon-white"></i>  QUAY LẠI</button> <!--<i class="m-icon-big-swapleft m-icon-white"></i> -->
+                                            </form>
                                         </div>
+                                        <c:if test="${not empty sessionScope.STORELIST}">
+                                            <div class="col-md-4 col-sm-4"> </div>
+                                            <div class="col-md-4 col-sm-4">
+                                                <button id="btnNext" class="btn-block btn-lg btn btn-info" >BƯỚC KẾ <i class="m-icon-big-swapright m-icon-white"></i> </button>
+                                            </div>
+                                        </c:if>
+                                    </div>
 
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--                    </form>-->
                 </div>
+
+
+                <div id="modalConfirm" data-backdrop="static" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #89C4F4">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" style="font-weight: bold">LƯU Ý</h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-horizontal" style="font-size: 120%">
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Yêu cầu ký gửi này sẽ được gửi đến chủ cửa hàng.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Chủ cửa hàng có thể <b>đồng ý</b> hoặc <b>từ chối</b> yêu cầu của bạn.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Nếu đồng ý, sản phẩm sẽ được chủ cửa hàng định giá khi nhận hàng.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Khi đã nhận hàng, nếu món hàng chưa được đặt, bạn có thể yêu cầu hủy ký gửi nhưng phải <b>trả phí lưu kho</b> do chủ cửa hàng quy định.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Khi món hàng hết hạn, cửa hàng sẽ thông báo cho bạn. Bạn có thể nhận lại hàng trong <b>3 ngày</b>. Sau <b>3 ngày</b>, cửa hàng sẽ tính phí lưu kho. Bạn cũng có thể yêu cầu gia hạn ký gửi.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
+                                        <div class="col-md-9 col-sm-9">Nếu món hàng bị hư hỏng sau khi cửa hàng đã nhận hàng, cửa hàng sẽ đền bù cho bạn bằng với số tiền đã thỏa thuận.</div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnConfirmRule" class="btn btn-info">Đồng ý</button>
+                                <button  data-dismiss="modal" class="btn btn-default">Đóng</button> 
+
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal --> 
                 <!-- END DIV STEP2 -->
 
                 <!--BEGIN MODAL-->
 
-                <div id="modalDesirePrice" class="modal fade">
+                <div id="modalDesirePrice" data-backdrop="static" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #89C4F4">
@@ -300,7 +347,8 @@
                 $("#maxPrice").val("");
             }
 
-            $("#modalDesirePrice").modal("show");
+            //$("#modalDesirePrice").modal("show");
+            $("#modalConfirm").modal("show");   
 
         } else {
             alert("Xin chọn cửa hàng");
@@ -313,7 +361,7 @@
         if ($("#inputDesirePrice").val().length == 0) {
             $("#erDesirePrice").html("<font color='red'>Xin nhập giá mong muốn</font");
         } else {
-            
+
             if (isNaN(desirePrice)) {
                 $("#erDesirePrice").html("<font color='red'>Xin nhập đúng số</font");
             } else {
@@ -326,16 +374,23 @@
                         } else {
                             $("#erDesirePrice").html("");
                             $("#formDesirePrice").submit();
+                            //$("#modalConfirm").modal("show");
                         }
                     } else {
                         $("#erDesirePrice").html("");
                         $("#formDesirePrice").submit();
+                        //$("#modalConfirm").modal("show");
                     }
                 } else {
                     $("#erDesirePrice").html("<font color='red'>Giá phải lớn hơn 0</font");
                 }
             }
         }
+    });
+    
+    $("#btnConfirmRule").click(function () {
+        //$("#formDesirePrice").submit();
+            $("#modalDesirePrice").modal("show");
     });
 //    $('input[type=radio][name="rdStore"]').click(function () {
 //        $(this).closest("form").submit();

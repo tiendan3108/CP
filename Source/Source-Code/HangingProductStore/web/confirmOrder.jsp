@@ -58,7 +58,7 @@
                         <span id="err" style="color:red"></span>
                         <c:if test="${not empty acc}">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Tên <div style="color:red">*</div></label>
                                 <div class="col-lg-3 col-md-4">
                                     <input required="true" value="${acc.fullName}" name="name" type="text" class="form-control">
                                 </div>
@@ -72,7 +72,7 @@
                                 <div class="col-lg-3 col-md-4">
                                     <textarea  rows="3" name="address" type="text" class="form-control">${acc.address}</textarea>
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2">Sồ điện thoại <span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Sồ điện thoại <font color="red">*</font></label>
                                 <div class="col-md-3">
                                     <input value="${acc.phone}" name="phone" required="true" type="text" id="first-name" class="form-control">
                                 </div>
