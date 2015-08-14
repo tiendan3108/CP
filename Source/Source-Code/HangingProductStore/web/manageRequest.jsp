@@ -1656,7 +1656,7 @@
                                     $("#r_receivedDate").val(data.fromDate);
                                 } else {
                                     if (compareToCurrentDate(data.toDate)) {
-                                        $("#r_receivedDate").val(data.fromDate);
+                                        $("#r_receivedDate").val(data.toDate);
                                     } else {
                                         $("#r_receivedDate").val(getCurrentDate());
                                     }
