@@ -1,0 +1,37 @@
+tien_dan2006-facilitator@yahoo.com
+
+sp tim thay ko phai cua toi thi lam sao-> chon cai khac  ->ok
+show len cai bang-> ok moi nhap thong tin khach hang  ->ok
+highlight nhung thu quan trong  ->ok
+algorithm cung phai show ra
+ngay toi nhan, hinh thuc toi nhan, ngay tao yeu cau
+ko can gia, ma ki gui
+cu nhat len dau
+neu tu choi roi`, nhap thong tin y het cung cua hang thi tu choi luon
+tao 2 tab, cach nhan : tu mang den va cua hang toi nhan
+tach 2 trang login cua store owner rieng va customer rieng.
+thanh toan = : paypal, tien mat
+bo het, de? 1 cai bang thoi, gom thanh 1 cai luoi(co filter): gui yeu cau -> da nhan hang-> phan con lai
+cho duyet product o mot tab, phan con lai trong 1 tab #
+tuong tu cho request
+status diagram
+moi thang 1 cai ok
+ko can check, ma gui luon cung dc
+thieu cai quay
+quan ly yeu cau 1 luoi: +pending
+						+approve,refuse
+quan ly hang ki gui:    available
+						onweb
+						order
+						sold
+						cancel
+						finish
+ma ki gui ko hien ra dua
+ngay tao ki gui
+ten khach hang
+ten mon hang
+gia mong muon/gia de xuat
+2 cai nut -> viewdetail hoac refuse luon. View detail roi` accept hoac refuse
+icon cho view detail hoac refuse
+tin nhan-> san pham tuong
+nhan huy ki gui.
