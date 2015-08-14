@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -278,11 +279,11 @@ public class ConsignCompleteServlet extends HttpServlet {
                         }
                         
                         if(session.getAttribute("ACCOUNT") == null){
-                            Cookie cookie = new Cookie("gName", fullName);
+                            Cookie cookie = new Cookie("gName", URLEncoder.encode(fullName, "UTF-8"));
                             cookie.setMaxAge(30*60);
                             response.addCookie(cookie);
                             
-                            cookie = new Cookie("gAddress", address);
+                            cookie = new Cookie("gAddress", URLEncoder.encode(address, "UTF-8"));
                             cookie.setMaxAge(30*60);
                             response.addCookie(cookie);
                             

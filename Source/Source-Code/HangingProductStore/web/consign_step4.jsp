@@ -85,7 +85,7 @@
                                                         <c:set var="member" value="${requestScope.GUEST}"/>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                
+
                                                 <div class="tab-content">
 
                                                     <div>
@@ -352,7 +352,7 @@
                                         <div class="col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1"><i class="fa fa-asterisk"></i></div>
                                         <div class="col-md-9 col-sm-9">Nếu món hàng bị hư hỏng sau khi cửa hàng đã nhận hàng, cửa hàng sẽ đền bù cho bạn bằng với số tiền đã thỏa thuận.</div>
                                     </div>
-                                    
+
 
                                 </div>
                             </div>
@@ -375,15 +375,12 @@
         theme: 'custom',
         custom_theme_widget: 'recaptcha_widget'
     };
-
     $(document).ready(function () {
         var date = new Date();
         date.setDate(date.getDate() + 1);
         $('#txtFromDate').val(formatDate(date));
         date.setDate(date.getDate() + 3);
         $('#txtToDate').val(formatDate(date));
-
-
     });
     $(function () {
         if ($('#txtPhone').val().indexOf("+84") > -1) {
@@ -392,7 +389,6 @@
             $('#txtPhone').val(phone);
         }
     });
-
     $("#btnComplete").click(function () {
         //$("#form3").submit();
         if (validation()) {
@@ -404,18 +400,15 @@
         $("#form3").submit();
         //$("#modalConfirm").modal("show");
     });
-
     function formatDate(date) {
         var d = new Date(date),
                 month = '' + (d.getMonth() + 1),
                 day = '' + d.getDate(),
                 year = d.getFullYear();
-
         if (month.length < 2)
             month = '0' + month;
         if (day.length < 2)
             day = '0' + day;
-
         return [day, month, year].join('-');
     }
 
@@ -428,14 +421,14 @@
 //        else if ($(this).val() == "email") {
 //            $("#divPhone").hide();
 //            $("#divPhone").val() == "";
-//            $("#divEmail").show();
+    //            $("#divEmail").show();
 //        }
-//        else {
-//            $("#divPhone").show();
-//            $("#divEmail").show();
-//        }
+    //        else {
+    //            $("#divPhone").show();
+    //            $("#divEmail").show();
+    //        }
 //
-//    });
+    //    });
 
     $('input:radio[name="rdPayment"]').change(function () {
         if ($(this).val() == "cc") {
@@ -443,17 +436,14 @@
         }
         else {
             $("#divCCNumber").hide();
-
         }
     });
-
     function validation() {
         if (jQuery("#form3").context.activeElement.value == 'backstep2') {
             return true;
         }
         var check = true;
         var dateError = "";
-
         if ($('#txtFullName').val().trim().length < 5 || $('#txtFullName').val().trim().length > 50) {
             $('#erFullName').html("<font color='red'>Yêu cầu 5-50 ký tự</font>");
             check = false;
@@ -469,9 +459,15 @@
         }
         if (toDate.length == 0) {
             if (dateError.length > 0) {
-                dateError += '<font color="red">và "ngày cuối"</font>';
+                dateError += '<font color="red">và "đến ngày"</font>';
             } else {
-                dateError += '<font color="red">Xin chọn "đến ngày"</font>';
+                dateError = '<font color="red">Xin chọn "đến ngày"</font>';
+            }
+        }
+
+        if (fromDate.length > 0 && toDate.length > 0) {
+            if (compareDate(fromDate, toDate)) {
+                dateError = '<font color="red">"Đến ngày" phải lớn hơn "Từ ngày"</font>';
             }
         }
         if (dateError.length > 0) {
@@ -500,12 +496,12 @@
             }
         }
 
-//        if ($('#txtImage').val() == "") {
-//            $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
-//            check = false;
+        //        if ($('#txtImage').val() == "") {
+        //            $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
+        //            check = false;
 //        } else {
-//            $('#erImage').html("");
-//        }
+        //            $('#erImage').html("");
+        //        }
 
         if ($('#divImage').attr("class") == "fileinput fileinput-new") {
             $('#erImage').html("<font color='red'>Xin đăng ảnh thật của sản phẩm</font>");
@@ -519,7 +515,7 @@
 
     // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
+    // pick list containing a mix of places and predicted search terms.
 
 </script>
 <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
@@ -538,16 +534,14 @@
         country: 'long_name',
         postal_code: 'short_name'
     };
-
     function initialize_googleMap() {
         // Create the autocomplete object, restricting the search
         // to geographical location types.
         autocomplete = new google.maps.places.Autocomplete(
                 /** @type {HTMLInputElement} */(document.getElementById('addressInput')),
                 {types: ['geocode']});
-        // When the user selects an address from the dropdown,
-        // populate the address fields in the form.
-//        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        // When the user selects an address from the dropdown,                     // populate the address fields in the form.
+        //        google.maps.event.addListener(autocomplete, 'place_changed', function () {
 //            fillInAddress();
 //        });
     }
@@ -556,7 +550,6 @@
     function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-
         for (var component in componentForm) {
             document.getElementById(component).value = '';
             document.getElementById(component).disabled = false;
@@ -591,5 +584,26 @@
         }
     }
     // [END region_geolocation]
+    function compareDate(fromDate, toDate) {
+        var fromParts = fromDate.split("-");
+        
+        var date1 = new Date(fromParts[2], // year
+                fromParts[1] - 1, // month, starts with 0
+                fromParts[0]); // day
+
+        var toParts = toDate.split("-");
+        
+        var date2 = new Date(toParts[2], // year
+                toParts[1] - 1, // month, starts with 0
+                toParts[0]); // day   
+
+        if (date1 > date2) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 
 </script>

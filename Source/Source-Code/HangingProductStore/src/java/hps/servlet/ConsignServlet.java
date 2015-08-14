@@ -17,6 +17,7 @@ import hps.ultils.AmazonService;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -279,10 +280,12 @@ public class ConsignServlet extends HttpServlet {
                         for (Cookie cookie : cookieBox) {
                             switch (cookie.getName()) {
                                 case "gName":
-                                    guest.setFullName(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    //guest.setFullName(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    guest.setFullName(URLDecoder.decode(cookie.getValue(), "UTF-8"));
                                     break;
                                 case "gAddress":
-                                    guest.setAddress(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    //guest.setAddress(new String(cookie.getValue().getBytes("iso-8859-1"), "utf-8").trim());
+                                    guest.setAddress(URLDecoder.decode(cookie.getValue(), "UTF-8"));
                                     break;
                                 case "gPhone":
                                     guest.setPhone(cookie.getValue());
