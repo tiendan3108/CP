@@ -11,7 +11,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>HPS :: Quản lí yêu cầu ký gửi</title>
+        <title>Quản lí yêu cầu ký gửi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -86,25 +86,10 @@
                             </div>
                         </li>
                         <li class="start active">
-                            <a href="javascript:;">
+                            <a href="ConsignmentRequestReceive">
                                 <i class="icon-rocket"></i>
                                 <span class="title">Quản lí yêu cầu</span>
-                                <span class="arrow open"></span>
-                            </a>
-                            <ul class="sub-menu">
-                                <li id="request">
-                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request">Chưa duyệt</a>
-                                </li>
-                                <li id="accepted">
-                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted">Đã duyệt</a>
-                                </li>
-                                <li id="refuse">
-                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse">Từ chối</a>
-                                </li>
-                                <li id="cancel">
-                                    <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel">Đã hủy</a>
-                                </li>
-                            </ul>
+                            </a>                             
                         </li>
                         <li class="start">
                             <a href="LoadProductPage">
@@ -134,48 +119,34 @@
                     <div class="row" style="background-color: #01579b; height: 40px" >
                         <div class="col-lg-8 col-md-8" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
 
-                            <i class="icon-rocket icon-lg"></i> Yêu cầu
-                            <c:choose>
-                                <c:when test="${requestScope.currentTab == 'request'}">
-                                    chưa duyệt
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'accepted'}">
-                                    đã duyệt 
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'refuse'}">
-                                    đã từ chối
-                                </c:when>
-                                <c:when test="${requestScope.currentTab == 'cancel'}">
-                                    đã hủy
-                                </c:when>
-                            </c:choose>
-
-
-
+                            <i class="icon-rocket icon-lg"></i> Quản lí yêu cầu
                         </div>
-                        <c:if test="${requestScope.currentTab == 'accepted'}">
-                            <div class="col-lg-4 col-md-4" align="right">
-                                <button data-toggle="modal" data-target="#modalAddConsignment"
-                                        class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
-                            </div>
-
-
-                        </c:if>
+                        <div class="col-lg-4 col-md-4" align="right">
+                            <button data-toggle="modal" data-target="#modalAddConsignment"
+                                    class="btn green" style="margin-top: 3px"><i class="fa fa-plus"></i> Tạo mới ký gửi</button>
+                        </div>
                     </div>
                     <br/>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
-                            <div id="request" style="display: none">
+                            <div id="request">
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
                                         <div class="form-horizontal">
                                             <div class="form-group">
 
-                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                <div class="col-md-5 col-sm-5 input-daterange">
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Trạng thái:</label>
+                                                <div class="col-md-5 col-sm-5">
 
-                                                    <input type="text" class="form-control" id="daterangeRequest">
+                                                    <select class="form-control" id="searchStatus">
+                                                        <option value="Tất cả" selected>Tất cả</option>
+                                                        <option value="Chờ xử lý">Chờ xử lý</option>
+                                                        <option value="Chấp nhận yêu cầu">Chấp nhận yêu cầu</option>
+                                                        <option value="Từ chối yêu cầu">Từ chối yêu cầu</option>
+                                                        <option value="Từ chối nhận hàng">Từ chối nhận hàng</option>
+                                                        <option value="Yêu cầu đã hủy">Yêu cầu đã hủy</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -191,18 +162,21 @@
                                             <th>
                                                 Tên Sản Phẩm
                                             </th>
-                                            <th>
+                                            <th style="display: none">
                                                 Mã ký gửi
                                             </th>
                                             <th>
-                                                Ngày tạo yêu cầu
+                                                Tên khách hàng
+                                            </th>
+                                            <th>
+                                                Ngày hẹn
                                             </th>
                                             <th>
                                                 Giá (Ngàn đồng)
                                             </th>
-                                            <!--                                            <th>
-                                                                                            Ngày hẹn
-                                                                                        </th>-->
+                                            <th>
+                                                Trạng thái
+                                            </th>
                                             <th>
                                                 Chi Tiết
                                             </th>
@@ -216,11 +190,21 @@
                                                 <td>
                                                     ${c.product.name}
                                                 </td>
-                                                <td>
+                                                <td style="display: none">
                                                     ${c.consigmentID}
                                                 </td>
                                                 <td>
-                                                    ${c.createdDate}
+                                                    ${c.name}
+                                                </td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty c.appointmentDate}">
+                                                            ${c.hour}|${c.appointmentDate}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
+                                                        </c:otherwise>
+                                                    </c:choose>
 
                                                 </td>
                                                 <td>
@@ -228,307 +212,51 @@
                                                         value="${c.desirePrice}" 
                                                         maxFractionDigits="1"/>
                                                 </td>
-
-                                                <td align="center">
-
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
-                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
-
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <br/>
-                                <div class="row">
-                                    <div class="col-md-9 col-sm-9">
-                                    </div>
-                                    <div class="col-md-3 col-sm-3" align="right">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-primary">Yêu cầu đã duyệt <i class="m-icon-swapright m-icon-white"></i></a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div id="accepted" style="display: none">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-
-                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                <div class="col-md-5 col-sm-5 input-daterange">
-
-                                                    <input type="text" class="form-control" id="daterangeAccepted">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <table id="acceptedTable" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr role="row" class="heading">
-                                            <th>
-                                                STT
-                                            </th>
-                                            <th>
-                                                Tên Sản Phẩm
-                                            </th>
-                                            <th>
-                                                Mã ký gửi
-                                            </th>
-                                            <!--                                            <th>
-                                                                                            Ngày duyệt yêu cầu
-                                                                                        </th>
-                                                                                        <th>
-                                                                                            Giá (Ngàn đồng)
-                                                                                        </th>-->
-                                            <th>
-                                                Ngày đến nhận
-                                            </th>
-                                            <th>
-                                                Cách giao hàng
-                                            </th>
-                                            <th>
-                                                Chi Tiết
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <c:forEach var="c" items="${ACCEPT}" varStatus="counter">
-                                            <tr class="odd gradeX">
-                                                <td style="font-weight: bold">${counter.count}</td>
-                                                <td>
-                                                    ${c.product.name}
-                                                </td>
-                                                <td>
-                                                    ${c.consigmentID}
-                                                </td>
-                                                <!--                                                <td>
-                                                ${c.reviewRequestDate}
-                                            </td>
-                                            <td>
-
-                                                <fmt:formatNumber 
-                                                    value="${c.desirePrice}" 
-                                                    maxFractionDigits="1"/>
-                                    </td>-->
-                                                <td align="center">
-                                                    <c:choose>
-                                                        <c:when test="${not empty c.appointmentDate}">
-                                                            ${c.hour}|${c.appointmentDate}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ---
-                                                        </c:otherwise>
-                                                    </c:choose>
-
-                                                </td>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${c.deliveryMethod == 0}">
-                                                            <b><font color="blue">Cửa hàng đến nhận</b></font>
+                                                        <c:when test="${c.consignmentStatusID == 1}">
+                                                            <b><font color="green">Chờ xử lý</font></b>
                                                             </c:when>
-                                                            <c:otherwise>
-                                                            <b><font color="green">Tự mang đến</b></font>
-                                                            </c:otherwise>
-                                                        </c:choose>
+
+                                                        <c:when test="${c.consignmentStatusID == 2}">
+                                                            <c:choose>
+                                                                <c:when test="${not empty c.reviewProductDate}">
+                                                                    <b><font color="red">Từ chối nhận hàng</font></b>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                    <b><font color="red">Từ chối yêu cầu</font></b>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:when>
+
+                                                        <c:when test="${c.consignmentStatusID == 3}">
+                                                            <b><font color="blue">Chấp nhận yêu cầu</font></b>
+                                                            </c:when>
+                                                            <c:when test="${c.consignmentStatusID == 7}">
+                                                            <b><font color="red">Yêu cầu đã hủy</font></b>
+                                                            </c:when>
+
+                                                    </c:choose>
                                                 </td>
+
                                                 <td align="center">
-
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
-                                                            name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>
-
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <br/>
-                                <div class="row">
-
-                                    <div class="col-md-4 col-sm-4" align="left">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=request" class="btn btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu chưa duyệt</a>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4" align="center">
-                                        <!--                                            <button data-toggle="modal" data-target="#modalAddConsignment"
-                                                                                            class="btn green "><i class="fa fa-plus"></i> Tạo mới ký gửi</button>-->
-                                    </div>
-                                    <div class="col-md-4 col-sm-4" align="right">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn btn-primary">Yêu cầu đã từ chối <i class="m-icon-swapright m-icon-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="refuse" style="display: none">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-
-                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                <div class="col-md-5 col-sm-5 input-daterange">
-
-                                                    <input type="text" class="form-control" id="daterangeRefuse">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <table id="refuseTable" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr role="row" class="heading">
-                                            <th>
-                                                STT
-                                            </th>
-                                            <th>
-                                                Tên Sản Phẩm
-                                            </th>
-                                            <th>
-                                                Mã ký gửi
-                                            </th>
-                                            <th>
-                                                Ngày tạo yêu cầu
-                                            </th>
-                                            <th>
-                                                Ngày từ chối
-                                            </th>
-                                            <th>
-                                                Chi Tiết
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <c:forEach var="c" items="${REFUSE}" varStatus="counter">
-                                            <tr class="odd gradeX">
-                                                <td style="font-weight: bold">${counter.count}</td>
-                                                <td>
-                                                    ${c.product.name}
-                                                </td>
-                                                <td>
-                                                    ${c.consigmentID}
-                                                </td>
-                                                <td>
-                                                    ${c.createdDate}
-
-                                                </td>
-                                                <td>
                                                     <c:choose>
-                                                        <c:when test="${not empty c.reviewProductDate}">
-                                                            ${c.reviewProductDate}        
+                                                        <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
+                                                            <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                                    name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>        
                                                         </c:when>
                                                         <c:otherwise>
-                                                            ${c.reviewRequestDate}
+                                                            <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                                    name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
                                                         </c:otherwise>
                                                     </c:choose>
 
 
                                                 </td>
-
-                                                <td align="center">
-
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
-
-                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <br/>
-                                <div class="row">
-                                    <div class="col-md-4 col-sm-4" align="left">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=accepted" class="btn  btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã duyệt</a>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4" align="center">
-                                    </div>
-                                    <div class="col-md-4 col-sm-4" align="right">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=cancel" class="btn  btn-primary">Yêu cầu đã hủy <i class="m-icon-swapright m-icon-white"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="cancel" style="display: none">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-
-                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Lọc ngày:</label>
-                                                <div class="col-md-5 col-sm-5 input-daterange">
-
-                                                    <input type="text" class="form-control" id="daterangeCancel">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <table class="table table-bordered table-hover" id="cancelTable">
-                                    <thead style="background-color: black">
-                                        <tr role="row" class="heading">
-                                            <th>
-                                                STT
-                                            </th>
-                                            <th>
-                                                Tên Sản Phẩm
-                                            </th>
-                                            <th>
-                                                Mã ký gửi
-                                            </th>
-                                            <th>
-                                                Ngày tạo yêu cầu
-                                            </th>
-
-                                            <th>
-                                                Ngày hủy
-                                            </th>
-                                            <th>
-                                                Chi Tiết
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <c:forEach var="c" items="${CANCEL}" varStatus="counter">
-                                            <tr class="odd gradeX">
-                                                <td style="font-weight: bold">${counter.count}</td>
-                                                <td>
-                                                    ${c.product.name}
-                                                </td>
-                                                <td>
-                                                    ${c.consigmentID}
-                                                </td>
-                                                <td>
-                                                    ${c.createdDate}
-
-                                                </td>
-
-                                                <td>
-
-                                                    ${c.cancelDate}
-                                                </td>
-                                                <td align="center">
-
-                                                    <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                            name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
-
-                                                </td>
-                                            </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
-                                <div class="row">
-
-                                    <div class="col-md-4 col-sm-4" align="left">
-                                        <a href="ConsignmentRequestReceive?btnAction=changeTab&tab=refuse" class="btn  btn-warning"><i class="m-icon-swapleft m-icon-white"></i> Yêu cầu đã từ chối</a>
-                                    </div>
-
-                                </div>
                             </div>
 
                         </div>
@@ -548,7 +276,7 @@
         <!--BEGIN MODAL -->
         <!-- Large modal -->
 
-        <c:if test="${not empty requestScope.REQUEST or not empty requestScope.ACCEPT}">
+        <c:if test="${not empty requestScope.REQUEST}">
 
             <div id="modalRequestAccept" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -662,13 +390,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--                                             Carousel nav 
-                                                                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                                                                            <i class="fa fa-angle-left"></i>
-                                                                                        </a>
-                                                                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                                                                            <i class="fa fa-angle-right"></i>
-                                                                                        </a>-->
+
                                         </div>
 
                                     </div>
@@ -823,7 +545,7 @@
         <!-- END MODAL -->
 
         <!-- BEGIN MODAL -->
-        <c:if test="${not empty requestScope.REQUEST or not empty requestScope.ACCEPT}">
+        <c:if test="${not empty requestScope.REQUEST}">
             <div id="modalConfirm" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -893,7 +615,7 @@
 
         <!--BEGIN MODAL -->
         <!-- Large modal -->
-        <c:if test="${not empty requestScope.REFUSE or not empty requestScope.CANCEL}">
+        <c:if test="${not empty requestScope.REQUEST}">
             <div id="modalRefuseCancel" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -1005,242 +727,242 @@
 
         <!--BEGIN MODAL -->
         <!-- Large modal -->
-        <c:if test="${currentTab == 'accepted'}">
-            <div id="modalAddConsignment" class="modal fade bs-example-modal-lg" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #35aa47">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h3 class="modal-title" style="font-weight: bold">Tạo sản phẩm</h3>
-                        </div>
-                        <div class="modal-body">
 
-                            <form id="addConsignment_form" action="AddConsignment" method="POST" enctype="multipart/form-data">
-                                <div class="row">    
+        <div id="modalAddConsignment" class="modal fade bs-example-modal-lg" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #35aa47">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" style="font-weight: bold">Tạo sản phẩm</h3>
+                    </div>
+                    <div class="modal-body">
 
-                                    <div class="col-md-7 col-sm-7">
-                                        <div class="form-horizontal">
+                        <form id="addConsignment_form" action="AddConsignment" method="POST" enctype="multipart/form-data">
+                            <div class="row">    
 
-                                            <div class="form-group">
-                                                <label for="txtProductName" class="col-md-3 col-sm-3 control-label">Tên sản phẩm<font color="red">*</font></label> <!--<span class="required">*</span> -->
-                                                <div class="col-md-9 col-sm-9">
-                                                    <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="100" />
-                                                    <p class="help-block" id="erProductName">  </p>
-                                                </div>
+                                <div class="col-md-7 col-sm-7">
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+                                            <label for="txtProductName" class="col-md-3 col-sm-3 control-label">Tên sản phẩm<font color="red">*</font></label> <!--<span class="required">*</span> -->
+                                            <div class="col-md-9 col-sm-9">
+                                                <input id="addConsignment_txtProductName"  name="txtProductName" type="text" class="form-control" maxlength="100" />
+                                                <p class="help-block" id="erProductName">  </p>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="txtSerial" class="col-md-3 col-sm-3 control-label">Mã số</label>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <input id="addConsignment_txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" />
-                                                    <p class="help-block" id="erSerialNumber"> </p>
-                                                </div>
-                                                <label class="col-md-2 col-sm-2 control-label">Đặc biệt</label>
-                                                <div class="col-md-2 col-sm-2 checkbox-list">
-                                                    <label class="checkbox-inline" >
-                                                        <input type="checkbox" name="txtIsSpecial" value="special"> 
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3 col-sm-3">Loại <font color="red">*</font></label>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <select id="addConsignment_txtCategoryID" name="txtCategoryID"  class="form-control" >
-                                                        <option value='' disabled selected style='display:none;'>Chọn...</option>
-
-                                                        <c:forEach var="father" items="${fCate}">
-                                                            <optgroup label="${father.categoryName}">
-                                                                <c:forEach var="child" items="${category}">
-                                                                    <c:if test="${child.parentId == father.categoryId}">
-
-                                                                        <option value="${child.categoryId}">${child.categoryName}</option>
-
-
-
-
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </optgroup>
-
-                                                        </c:forEach>
-
-                                                    </select>
-                                                    <span class="help-block" id="erCategoryID">
-                                                    </span>
-                                                </div>
-                                                <label class="control-label col-md-1 col-sm-1">Hãng</label>
-                                                <div class="col-md-4 col-sm-4">
-                                                    <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
-
-                                                    <span class="help-block" id="erBrand">
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <!--                                            <div class="form-group">
-                                                                                            <label class="control-label col-md-3 col-sm-3">Hãng</label>
-                                                                                            <div class="col-md-3 col-sm-3">
-                                                                                                <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
-                                            
-                                                                                                <span class="help-block" id="erBrand">
-                                                                                                </span>
-                                                                                            </div>
-                                                                                        </div>-->
-
-
-                                            <div class="form-group">
-                                                <label  class="col-md-3 col-sm-3 control-label"> Mô tả </label>
-                                                <div class="col-md-9 col-sm-9">
-                                                    <textarea id="addConsignment_txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="5" placeholder="" value="${product.description}"/>${product.description}</textarea>
-                                                    <span class="help-block" id="erDescription">
-                                                    </span>
-                                                </div>
-                                            </div>
-
-
                                         </div>
-                                    </div>
-                                    <div class="col-md-5 col-sm-5">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-                                                <label class="control-label col-md-1 col-sm-1"><font color="red"></font></label>
-                                                <div class="col-md-10 col-sm-10" align="center">
 
-                                                    <div id="addConsignment_divImage" class="fileinput fileinput-new" data-provides="fileinput">
-                                                        <div class="fileinput-new thumbnail" style="max-width: 250px; max-height: 200px;">
-                                                            <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
-                                                        </div>
-                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
-                                                        </div>
-                                                        <div >
-                                                            <span class="btn btn-info btn-file">
-                                                                <span class="fileinput-new btn " >
-                                                                    CHỌN ẢNH </span>
-                                                                <span class="fileinput-exists btn">
-                                                                    THAY ẢNH </span>
-                                                                <input  type="file" accept='image/*' name="txtImage" />
-                                                            </span>
-
-                                                        </div>
-                                                    </div>
-
-
-                                                    <span class="help-block" id="erImage">
-
-                                                    </span>
-                                                </div>
+                                        <div class="form-group">
+                                            <label for="txtSerial" class="col-md-3 col-sm-3 control-label">Mã số</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input id="addConsignment_txtSerialNumber" type="text" class="form-control" name="txtSerialNumber" />
+                                                <p class="help-block" id="erSerialNumber"> </p>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4">Độ mới <font color="red">*</font></label>
-                                                <div class="col-md-7 col-sm-7">
-                                                    <div class="input-group">
-                                                        <input id="addConsignment_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
-                                                    </div>
-                                                    <span class="help-block" id="erNewStatus"> </span>
-                                                </div>
+                                            <label class="col-md-2 col-sm-2 control-label">Đặc biệt</label>
+                                            <div class="col-md-2 col-sm-2 checkbox-list">
+                                                <label class="checkbox-inline" >
+                                                    <input type="checkbox" name="txtIsSpecial" value="special"> 
+                                                </label>
                                             </div>
-
-
                                         </div>
-                                    </div>
 
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3 col-sm-3">Loại <font color="red">*</font></label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <select id="addConsignment_txtCategoryID" name="txtCategoryID"  class="form-control" >
+                                                    <option value='' disabled selected style='display:none;'>Chọn...</option>
+
+                                                    <c:forEach var="father" items="${fCate}">
+                                                        <optgroup label="${father.categoryName}">
+                                                            <c:forEach var="child" items="${category}">
+                                                                <c:if test="${child.parentId == father.categoryId}">
+
+                                                                    <option value="${child.categoryId}">${child.categoryName}</option>
+
+
+
+
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </optgroup>
+
+                                                    </c:forEach>
+
+                                                </select>
+                                                <span class="help-block" id="erCategoryID">
+                                                </span>
+                                            </div>
+                                            <label class="control-label col-md-1 col-sm-1">Hãng</label>
+                                            <div class="col-md-4 col-sm-4">
+                                                <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+
+                                                <span class="help-block" id="erBrand">
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!--                                            <div class="form-group">
+                                                                                        <label class="control-label col-md-3 col-sm-3">Hãng</label>
+                                                                                        <div class="col-md-3 col-sm-3">
+                                                                                            <input id="addConsignment_txtBrand" name="txtBrand" type="text" class="form-control" maxlength="50" value="${product.brand}"/>
+                                        
+                                                                                            <span class="help-block" id="erBrand">
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>-->
+
+
+                                        <div class="form-group">
+                                            <label  class="col-md-3 col-sm-3 control-label"> Mô tả </label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <textarea id="addConsignment_txtDescription" name="txtDescription" class="form-control" maxlength="225" rows="5" placeholder="" value="${product.description}"/>${product.description}</textarea>
+                                                <span class="help-block" id="erDescription">
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
                                 </div>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="addConsignment_txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên<font color="red">*</font></label>
-                                                <div class="col-md-8 col-sm-8">
-                                                    <input type="text" id="addConsignment_txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="">
+                                <div class="col-md-5 col-sm-5">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-1 col-sm-1"><font color="red"></font></label>
+                                            <div class="col-md-10 col-sm-10" align="center">
 
-                                                    <p class="help-block" id="erFullName"> </p>
+                                                <div id="addConsignment_divImage" class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <div class="fileinput-new thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjkzIiB5PSIxMDAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTFwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4yNDJ4MjAwPC90ZXh0PjwvZz48L3N2Zz4=" alt=""/>
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 250px; max-height: 200px;">
+                                                    </div>
+                                                    <div >
+                                                        <span class="btn btn-info btn-file">
+                                                            <span class="fileinput-new btn " >
+                                                                CHỌN ẢNH </span>
+                                                            <span class="fileinput-exists btn">
+                                                                THAY ẢNH </span>
+                                                            <input  type="file" accept='image/*' name="txtImage" />
+                                                        </span>
+
+                                                    </div>
                                                 </div>
+
+
+                                                <span class="help-block" id="erImage">
+
+                                                </span>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="addConsignment_txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
-                                                <div  class="col-md-8 col-sm-8">
-                                                    <textarea id="addressInput" name="txtAddress" class="form-control" maxlength="225" rows="3"  placeholder="" ></textarea>
-                                                    <span class="help-block" id="erAddress">
-                                                    </span>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="addConsignment_txtPhone" class="col-md-4 col-sm-4 control-label">Điện thoại<font color="red">*</font> </label>
-                                                <div class="col-md-5 col-sm-7">
-                                                    <input type="text" id="addConsignment_txtPhone" name="txtPhone" class="form-control"/>
-                                                    <p class="help-block" id="erPhone"></p>
-
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="addConsignment_txtEmail" class="col-md-4 col-sm-4 control-label">Email</label>
-                                                <div class="col-md-8 col-sm-8">
-                                                    <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com">
-                                                    <p class="help-block" id="erEmail"></p>
-                                                </div>
-                                            </div>
-
-
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4">Độ mới <font color="red">*</font></label>
+                                            <div class="col-md-7 col-sm-7">
+                                                <div class="input-group">
+                                                    <input id="addConsignment_newStatus" name="txtNewStatus" maxlength="100" type="text" class="form-control"/> <span class="input-group-addon"><b>%</b>
+                                                </div>
+                                                <span class="help-block" id="erNewStatus"> </span>
+                                            </div>
+                                        </div>
+
+
                                     </div>
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="" class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
-
-                                                <div class="radio-list col-md-8 col-sm-8">
-
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
-
-
-
-                                                </div>
-                                            </div>
-                                            <div id="addConsignment_divCCNumber" class="form-group" style="display: none" >
-                                                <label class="col-md-4 col-sm-4 control-label">Tên tài khoản<font color="red">*</font></label>
-                                                <div class="col-md-8 col-sm-8">
-                                                    <input type="text" id="addConsignment_txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder=""/>
-
-                                                    <p class="help-block" id="erPaypalAccount"></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="control-label col-md-4 col-sm-4">Giá thỏa thuận</label>
-                                                <div class="col-md-5 col-sm-6">
-                                                    <input id="addConsignment_txtNegotiatedPrice" name="txtNegotiatedPrice" type="text" class="form-control" maxlength="50"/>
-
-                                                    <span class="help-block" id="erNegotiatedPrice">(Ngàn đồng)
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div></div>            
                                 </div>
-                                <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
-                            </form> 
 
-                        </div>
-                        <div class="modal-footer">
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="addConsignment_txtFullName" class="col-md-4 col-sm-4 control-label">Họ tên<font color="red">*</font></label>
+                                            <div class="col-md-8 col-sm-8">
+                                                <input type="text" id="addConsignment_txtFullName" name="txtFullName"  class="form-control" maxlength="50"  placeholder="">
 
-                            <button id="btnAddConsignment" class="btn green">Thêm</button>
-                            <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
+                                                <p class="help-block" id="erFullName"> </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="addConsignment_txtAddress" class="col-md-4 col-sm-4 control-label">Địa chỉ</label>
+                                            <div  class="col-md-8 col-sm-8">
+                                                <textarea id="addressInput" name="txtAddress" class="form-control" maxlength="225" rows="3"  placeholder="" ></textarea>
+                                                <span class="help-block" id="erAddress">
+                                                </span>
+                                            </div>
+                                        </div>
 
 
-                        </div>
+                                        <div class="form-group">
+                                            <label for="addConsignment_txtPhone" class="col-md-4 col-sm-4 control-label">Điện thoại<font color="red">*</font> </label>
+                                            <div class="col-md-5 col-sm-7">
+                                                <input type="text" id="addConsignment_txtPhone" name="txtPhone" class="form-control"/>
+                                                <p class="help-block" id="erPhone"></p>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="addConsignment_txtEmail" class="col-md-4 col-sm-4 control-label">Email</label>
+                                            <div class="col-md-8 col-sm-8">
+                                                <input type="text" id="txtEmail" name="txtEmail" class="form-control"  placeholder="example@abc.com">
+                                                <p class="help-block" id="erEmail"></p>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="" class="col-md-4 col-sm-4 control-label">Cách thanh toán</label>
+
+                                            <div class="radio-list col-md-8 col-sm-8">
+
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="rdPayment" id="optionsRadios7" value="direct" checked> Tiền mặt </label>
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="rdPayment" id="optionsRadios8" value="cc"> Tài khoản paypal </label>
+
+
+
+                                            </div>
+                                        </div>
+                                        <div id="addConsignment_divCCNumber" class="form-group" style="display: none" >
+                                            <label class="col-md-4 col-sm-4 control-label">Tên tài khoản<font color="red">*</font></label>
+                                            <div class="col-md-8 col-sm-8">
+                                                <input type="text" id="addConsignment_txtPaypalAccount" name="txtPaypalAccount" class="form-control"   placeholder=""/>
+
+                                                <p class="help-block" id="erPaypalAccount"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-4">Giá thỏa thuận</label>
+                                            <div class="col-md-5 col-sm-6">
+                                                <input id="addConsignment_txtNegotiatedPrice" name="txtNegotiatedPrice" type="text" class="form-control" maxlength="50"/>
+
+                                                <span class="help-block" id="erNegotiatedPrice">(Ngàn đồng)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div></div>            
+                            </div>
+                            <input type="hidden" name="ar_searchValue" value="${param.ar_searchValue}"/>
+                        </form> 
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button id="btnAddConsignment" class="btn green">Thêm</button>
+                        <button  data-dismiss="modal" class="btn btn-default">Đóng</button>
+
+
                     </div>
                 </div>
             </div>
-        </c:if>
+        </div>
+
         <!-- END MODAL -->
 
         <!--BEGIN MODAL-->
@@ -1355,18 +1077,18 @@
 
             $(document).ready(function () {
 
-                var currentTab = window.location.hash.substring(1);
-                if (currentTab == "") {
-                    currentTab = $('#currentTab').val();
-                }
-                $('div#' + currentTab).fadeIn(400).siblings().hide();
-                $('div.portlet-title').show();
-                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
-                $('html,body').scrollTop(0);
+//                var currentTab = window.location.hash.substring(1);
+//                if (currentTab == "") {
+//                    currentTab = $('#currentTab').val();
+//                }
+//                $('div#' + currentTab).fadeIn(400).siblings().hide();
+//                $('div.portlet-title').show();
+//                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
+//                $('html,body').scrollTop(0);
 
 
-                setEnableFieldWhenLoadRequestAcceptDetails();
-                setRequireOnRequestAcceptModal();
+                //setEnableFieldWhenLoadRequestAcceptDetails();
+                //setRequireOnRequestAcceptModal();
             });
             $(function () {
                 $("#r_brand").autocomplete({
@@ -1446,102 +1168,80 @@
                 });
             }
 
-            function setEnableFieldWhenLoadRequestAcceptDetails() {
-                var currentTab = $("#currentTab").val();
-                if (currentTab == "request") {
+            function setEnableFieldForNewRequest() {
+                $("#r_productNameText").show();
+                $('#r_categoryText').show();
+                $("#r_brandText").show();
+                $("#r_descriptionText").show();
+                $("#r_newStatusText").show();
+                $("#r_rdDeliveryMethodText").show();
 
-                    $("#r_productNameText").show();
-                    $('#r_categoryText').show();
-                    $("#r_brandText").show();
-                    $("#r_descriptionText").show();
-                    $("#r_newStatusText").show();
-                    $("#r_rdDeliveryMethodText").show();
-
-                    $("#r_newStatusInput").hide();
-                    $("#r_productNameInput").hide();
-                    $('#r_categoryInput').hide();
-                    $("#r_brandInput").hide();
-                    $("#r_descriptionInput").hide();
-                    //$("#r_newStatusInput").hide();
-                    //$("input[name='r_rdDeliveryMethod']").attr("disabled", true);
-                    $("#r_rdDeliveryMethodInput").hide();
+                $("#r_newStatusInput").hide();
+                $("#r_productNameInput").hide();
+                $('#r_categoryInput').hide();
+                $("#r_brandInput").hide();
+                $("#r_descriptionInput").hide();
+                //$("#r_newStatusInput").hide();
+                //$("input[name='r_rdDeliveryMethod']").attr("disabled", true);
+                $("#r_rdDeliveryMethodInput").hide();
 
 
-                    $("#r_txtFullNameText").show();
-                    $("#r_txtAddressText").show();
-                    $("#r_txtPhoneText").show();
-                    $("#r_txtEmailText").show();
-                    $("#r_txtPaypalAccountText").show();
+                $("#r_txtFullNameText").show();
+                $("#r_txtAddressText").show();
+                $("#r_txtPhoneText").show();
+                $("#r_txtEmailText").show();
+                $("#r_txtPaypalAccountText").show();
 
-                    $("#r_txtFullNameInput").hide();
-                    $("#r_txtAddressInput").hide();
-                    $("#r_txtPhoneInput").hide();
-                    $("#r_txtEmailInput").hide();
-                    $("#r_txtPaypalAccountInput").hide();
-                    //$("input[name='r_rdPayment']").attr("disabled", true);
+                $("#r_txtFullNameInput").hide();
+                $("#r_txtAddressInput").hide();
+                $("#r_txtPhoneInput").hide();
+                $("#r_txtEmailInput").hide();
+                $("#r_txtPaypalAccountInput").hide();
+                //$("input[name='r_rdPayment']").attr("disabled", true);
 
-                    $("#div_r_rdPayment").hide();
-
-
-                    $("#div_r_isSpecial").hide();
-                    $("#label_r_isSpecial").hide();
-                } else {
-
-                    $("#r_productNameText").hide();
-                    $('#r_categoryText').hide();
-                    $("#r_brandText").hide();
-                    $("#r_descriptionText").hide();
-                    $("#r_newStatusText").hide();
-                    $("#r_rdDeliveryMethodText").hide();
-
-                    $("#r_newStatusInput").show();
-                    $("#r_productNameInput").show();
-                    $('#r_categoryInput').show();
-                    $("#r_brandInput").show();
-                    $("#r_descriptionInput").show();
-                    $("#r_newStatusInput").show();
-                    //$("input[name='r_rdDeliveryMethod']").attr("disabled", true);
-                    $("#r_rdDeliveryMethodInput").show();
+                $("#div_r_rdPayment").hide();
 
 
-                    $("#r_txtFullNameText").hide();
-                    $("#r_txtAddressText").hide();
-                    $("#r_txtPhoneText").hide();
-                    $("#r_txtEmailText").hide();
-                    $("#r_txtPaypalAccountText").hide();
+                $("#div_r_isSpecial").hide();
+                $("#label_r_isSpecial").hide();
+            }
 
-                    $("#r_txtFullNameInput").show();
-                    $("#r_txtAddressInput").show();
-                    $("#r_txtPhoneInput").show();
-                    $("#r_txtEmailInput").show();
-                    $("#r_txtPaypalAccountInput").show();
-                    //$("input[name='r_rdPayment']").attr("disabled", true);
+            function setEnableFieldForAcceptedRequest() {
+                $("#r_productNameText").hide();
+                $('#r_categoryText').hide();
+                $("#r_brandText").hide();
+                $("#r_descriptionText").hide();
+                $("#r_newStatusText").hide();
+                $("#r_rdDeliveryMethodText").hide();
 
-                    $("#div_r_rdPayment").show();
+                $("#r_newStatusInput").show();
+                $("#r_productNameInput").show();
+                $('#r_categoryInput').show();
+                $("#r_brandInput").show();
+                $("#r_descriptionInput").show();
+                $("#r_newStatusInput").show();
+                //$("input[name='r_rdDeliveryMethod']").attr("disabled", true);
+                $("#r_rdDeliveryMethodInput").show();
 
 
-                    $("#div_r_isSpecial").show();
-                    $("#label_r_isSpecial").show();
+                $("#r_txtFullNameText").hide();
+                $("#r_txtAddressText").hide();
+                $("#r_txtPhoneText").hide();
+                $("#r_txtEmailText").hide();
+                $("#r_txtPaypalAccountText").hide();
 
-//                    $("#r_productName").attr("disabled", false);
-//                    $('#r_category').attr("disabled", false);
-//                    $("#r_brand").attr("disabled", false);
-//                    $("#r_description").attr("disabled", false);
-//                    $("#r_newStatus").attr("disabled", false);
-//                    $("input[name='r_rdDeliveryMethod']").attr("disabled", false);
-//
-//                    $("#r_txtFullName").attr("disabled", false);
-//                    $("#r_txtAddress").attr("disabled", false);
-//                    $("#r_txtPhone").attr("disabled", false);
-//                    $("#r_txtEmail").attr("disabled", false);
-//
-//                    $("#r_txtPaypalAccount").attr("disabled", false);
-//                    $("input[name='r_rdPayment']").attr("disabled", false);
-//                    $("#div_r_rdPayment").show();
-//
-//                    $("#div_r_isSpecial").show();
-//                    $("#label_r_isSpecial").show();
-                }
+                $("#r_txtFullNameInput").show();
+                $("#r_txtAddressInput").show();
+                $("#r_txtPhoneInput").show();
+                $("#r_txtEmailInput").show();
+                $("#r_txtPaypalAccountInput").show();
+                //$("input[name='r_rdPayment']").attr("disabled", true);
+
+                $("#div_r_rdPayment").show();
+
+
+                $("#div_r_isSpecial").show();
+                $("#label_r_isSpecial").show();
             }
 
             function loadRequestAcceptDetails(id) {
@@ -1572,7 +1272,9 @@
                             //$("#r_divPersonalInfo").hide();
                             $("#refuse_consignmentID").val(data.consigmentID);
 
-                            if (data.consignmentStatusID == 1 && $("#currentTab").val() == "request") {
+                            if (data.consignmentStatusID == 1 && data.product.productStatusID == 1) {
+                                setEnableFieldForNewRequest();
+                                setRequireOnRequestdModal();
                                 $("#r_productNameText").html(data.product.name);
                                 $('#r_category').val(data.product.categoryID).change();
                                 $('#r_categoryText').html($('#r_category option:selected').text());
@@ -1640,7 +1342,9 @@
                                 $("#modalRequestAccept").modal("show");
 
                                 //$("#r_divPersonalInfo").show();
-                            } else if (data.consignmentStatusID == 3 && $("#currentTab").val() == "accepted") {
+                            } else if (data.consignmentStatusID == 3 && data.product.productStatusID == 1) {
+                                setEnableFieldForAcceptedRequest();
+                                setRequireOnAcceptedModal();
                                 $("#r_productName").val(data.product.name);
                                 $('#r_category').val(data.product.categoryID).change();
                                 $("#r_brand").val(data.product.brand);
@@ -2218,129 +1922,129 @@
                 return [day, month, year].join('-');
             }
 
-            $(document).ready(function () {
-                $('#daterangeAccepted').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    startDate: moment(),
-                    endDate: moment(),
-                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-                });
-                $('#daterangeRequest').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    startDate: moment(),
-                    endDate: moment(),
-                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-                });
-                $('#daterangeRefuse').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    startDate: moment(),
-                    endDate: moment(),
-                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-                });
-                $('#daterangeCancel').daterangepicker({
-                    format: "DD/MM/YYYY",
-                    startDate: moment(),
-                    endDate: moment(),
-                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
-                });
-            });
-            $('#daterangeAccepted').on('apply.daterangepicker', function (ev, picker) {
-                var table = $('#acceptedTable').DataTable();
-                var startDate = $('#daterangeAccepted').data('daterangepicker').startDate.format('DD/MM/YYYY');
-                var endDate = $('#daterangeAccepted').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                $('#fromDate').val(startDate);
-                $('#toDate').val(endDate);
-                table.draw();
-            });
-            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
-                var table = $('#requestTable').DataTable();
-                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
-                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                $('#fromDate').val(startDate);
-                $('#toDate').val(endDate);
-                table.draw();
-            });
-            $('#daterangeRefuse').on('apply.daterangepicker', function (ev, picker) {
-                var table = $('#refuseTable').DataTable();
-                var startDate = $('#daterangeRefuse').data('daterangepicker').startDate.format('DD/MM/YYYY');
-                var endDate = $('#daterangeRefuse').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                $('#fromDate').val(startDate);
-                $('#toDate').val(endDate);
-                table.draw();
-            });
-            $('#daterangeCancel').on('apply.daterangepicker', function (ev, picker) {
-                var table = $('#cancelTable').DataTable();
-                var startDate = $('#daterangeCancel').data('daterangepicker').startDate.format('DD/MM/YYYY');
-                var endDate = $('#daterangeCancel').data('daterangepicker').endDate.format('DD/MM/YYYY');
-                $('#fromDate').val(startDate);
-                $('#toDate').val(endDate);
-                table.draw();
-            });
-            $.fn.dataTable.ext.search.push(
-                    function (settings, data, dataIndex) {
-                        var startDate = $('#fromDate').val();
-                        var endDate = $('#toDate').val();
-                        if (startDate == "" || endDate == "") {
-                            return true;
-                        } else {
+//            $(document).ready(function () {
+//                $('#daterangeAccepted').daterangepicker({
+//                    format: "DD/MM/YYYY",
+//                    startDate: moment(),
+//                    endDate: moment(),
+//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+//                });
+//                $('#daterangeRequest').daterangepicker({
+//                    format: "DD/MM/YYYY",
+//                    startDate: moment(),
+//                    endDate: moment(),
+//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+//                });
+//                $('#daterangeRefuse').daterangepicker({
+//                    format: "DD/MM/YYYY",
+//                    startDate: moment(),
+//                    endDate: moment(),
+//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+//                });
+//                $('#daterangeCancel').daterangepicker({
+//                    format: "DD/MM/YYYY",
+//                    startDate: moment(),
+//                    endDate: moment(),
+//                    locale: {cancelLabel: 'Đóng', applyLabel: 'Lọc', fromLabel: 'Từ ngày', toLabel: 'Đến ngày'}
+//                });
+//            });
+//            $('#daterangeAccepted').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#acceptedTable').DataTable();
+//                var startDate = $('#daterangeAccepted').data('daterangepicker').startDate.format('DD/MM/YYYY');
+//                var endDate = $('#daterangeAccepted').data('daterangepicker').endDate.format('DD/MM/YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $('#daterangeRequest').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#requestTable').DataTable();
+//                var startDate = $('#daterangeRequest').data('daterangepicker').startDate.format('DD/MM/YYYY');
+//                var endDate = $('#daterangeRequest').data('daterangepicker').endDate.format('DD/MM/YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $('#daterangeRefuse').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#refuseTable').DataTable();
+//                var startDate = $('#daterangeRefuse').data('daterangepicker').startDate.format('DD/MM/YYYY');
+//                var endDate = $('#daterangeRefuse').data('daterangepicker').endDate.format('DD/MM/YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $('#daterangeCancel').on('apply.daterangepicker', function (ev, picker) {
+//                var table = $('#cancelTable').DataTable();
+//                var startDate = $('#daterangeCancel').data('daterangepicker').startDate.format('DD/MM/YYYY');
+//                var endDate = $('#daterangeCancel').data('daterangepicker').endDate.format('DD/MM/YYYY');
+//                $('#fromDate').val(startDate);
+//                $('#toDate').val(endDate);
+//                table.draw();
+//            });
+//            $.fn.dataTable.ext.search.push(
+//                    function (settings, data, dataIndex) {
+//                        var startDate = $('#fromDate').val();
+//                        var endDate = $('#toDate').val();
+//                        if (startDate == "" || endDate == "") {
+//                            return true;
+//                        } else {
+//
+//                            if ($("#currentTab").val() == "accepted") {
+//                                var date = data[3].substring(6);
+//                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
+//                                    return true;
+//                                } else {
+//                                    return false;
+//                                }
+//                            }
+//                            else if ($("#currentTab").val() == "request") {
+//                                var date = data[3].substring(6);
+//                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
+//
+//                                    return true;
+//                                }
+//
+//                                else
+//                                {
+//                                    return false;
+//                                }
+//
+//                            } else if ($("#currentTab").val() == "cancel") {
+//                                var date = data[4].substring(6);
+//                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
+//                                    return true;
+//                                } else {
+//                                    return false;
+//                                }
+//                            }
+//                            else if ($("#currentTab").val() == "refuse") {
+//                                var date = data[4].substring(6);
+//                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
+//                                    return true;
+//                                } else {
+//                                    return false;
+//                                }
+//                            }
+//                        }
+//
+//                    }
+//            );
 
-                            if ($("#currentTab").val() == "accepted") {
-                                var date = data[3].substring(6);
-                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                            else if ($("#currentTab").val() == "request") {
-                                var date = data[3].substring(6);
-                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
-
-                                    return true;
-                                }
-
-                                else
-                                {
-                                    return false;
-                                }
-
-                            } else if ($("#currentTab").val() == "cancel") {
-                                var date = data[4].substring(6);
-                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                            else if ($("#currentTab").val() == "refuse") {
-                                var date = data[4].substring(6);
-                                if (compareDate(date, startDate) >= 0 && compareDate(date, endDate) <= 0) {
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
-                        }
-
-                    }
-            );
-
-            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
-                //source = source.substring(6);
-                if (source.substring(6, 10) > target.substring(6, 10)) {
-                    return 1;
-                }
-
-                else if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) == target.substring(6, 10)) {
-                    return 1;
-                }
-                else if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) == target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
-                    return 1;
-                } else if (source.substring(0, 2) == target.substring(0, 2)) {
-                    return 1;
-                }
-                return -1;
-            }
+//            function compareDate(source, target) {//return -1 if source < target, 1 if source > target and 0 if source = target
+//                //source = source.substring(6);
+//                if (source.substring(6, 10) > target.substring(6, 10)) {
+//                    return 1;
+//                }
+//
+//                else if (source.substring(3, 5) > target.substring(3, 5) && source.substring(6, 10) == target.substring(6, 10)) {
+//                    return 1;
+//                }
+//                else if (source.substring(0, 2) > target.substring(0, 2) && source.substring(3, 5) == target.substring(3, 5) && source.substring(6, 10) >= target.substring(6, 10)) {
+//                    return 1;
+//                } else if (source.substring(0, 2) == target.substring(0, 2)) {
+//                    return 1;
+//                }
+//                return -1;
+//            }
             function showAlert(content) {
                 $("#modalAlert").modal("show");
                 $("#alert_content").html(content);
@@ -2350,36 +2054,34 @@
                 $("#alert_content").html(content);
             }
 
-            function setRequireOnRequestAcceptModal() {
-                if ($("#currentTab").val() == "accepted") {
-                    $("#re_r_productName").show();
-                    $("#re_r_category").show();
-                    $("#re_r_newStatus").show();
-                    $("#re_r_receivedDate").show();
-                    $("#re_r_fullName").show();
-                    $("#re_r_phone").show();
-                    $("#re_r_paypalAccount").show();
-                } else {
-                    $("#re_r_productName").hide();
-                    $("#re_r_category").hide();
-                    $("#re_r_newStatus").hide();
-                    $("#re_r_receivedDate").hide();
-                    $("#re_r_fullName").hide();
+            function setRequireOnAcceptedModal() {
+                $("#re_r_productName").show();
+                $("#re_r_category").show();
+                $("#re_r_newStatus").show();
+                $("#re_r_receivedDate").show();
+                $("#re_r_fullName").show();
+                $("#re_r_phone").show();
+                $("#re_r_paypalAccount").show();
+            }
 
-                    $("#re_r_phone").hide();
-                    $("#re_r_paypalAccount").hide();
-                }
+            function setRequireOnRequestdModal() {
+
+                $("#re_r_productName").hide();
+                $("#re_r_category").hide();
+                $("#re_r_newStatus").hide();
+                $("#re_r_receivedDate").hide();
+                $("#re_r_fullName").hide();
+                $("#re_r_phone").hide();
+                $("#re_r_paypalAccount").hide();
             }
 
             function compareToCurrentDate(target) {
                 var fromParts = target.split("-");
-
                 var date1 = new Date(fromParts[2], // year
                         fromParts[1] - 1, // month, starts with 0
                         fromParts[0]); // day
 
                 var currentDate = new Date();
-
                 if (date1 < currentDate) {
                     return false;
                 }
@@ -2387,6 +2089,27 @@
                     return true;
                 }
             }
+
+            $("#searchStatus").change(function () {
+                var table = $('#requestTable').DataTable();
+                table.draw();
+            });
+
+            $.fn.dataTable.ext.search.push(
+                    function (settings, data, dataIndex) {
+                        var searchStatus = $("#searchStatus").val();
+                        var status = data[6];
+
+                        if(searchStatus == "Tất cả"){
+                            return true;
+                        }else if (status == searchStatus) {
+                            return true;
+                        }else{
+                            return false;
+                        }
+
+                    }
+            );
         </script> 
 
 

@@ -243,6 +243,7 @@ public class ConsignServlet extends HttpServlet {
                         product.setName(product.getName().substring(0, 100 - 1));
                     }
                     session.setAttribute("PRODUCT", product);
+                    session.removeAttribute("ASIN");
                 }
                 basicPrice = (basicPrice * GlobalVariables.VND_CURRENCY);
                 session.setAttribute("BASICPRICE", basicPrice);

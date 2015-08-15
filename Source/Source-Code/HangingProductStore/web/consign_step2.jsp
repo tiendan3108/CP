@@ -152,7 +152,7 @@
 
                                                             <tr>
                                                         <form action="ConsignServlet" method="POST">
-                                                            <td colspan="4"><button name="btnAction" value="tostep3" class="btn btn-block blue-dark">Không phải sản phẩm của bạn?</button></td>
+                                                            <td colspan="4"><button name="btnAction" value="tostep3" class="btn btn-block btn-lg blue-dark"><b>Không phải sản phẩm của bạn?</b></button></td>
                                                         </form> 
                                                         </tr>
                                                         </tbody>
