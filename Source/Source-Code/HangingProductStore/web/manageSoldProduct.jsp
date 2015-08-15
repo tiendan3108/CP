@@ -90,7 +90,7 @@
                             </div>
                         </li>
                         <li class="start">
-                            <a href="">
+                            <a href="ConsignmentRequestReceive">
                                 <i class="icon-tag"></i>
                                 <span class="title">Quản lí yêu cầu</span>
                             </a>
