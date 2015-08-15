@@ -195,12 +195,12 @@ public class PublishProduct extends HttpServlet {
                     if ((newRatio >= 0 || newRatio <= 100)) {
                         boolean flag = productDAO.publishOnWeb(product, season, isPublish);
                         if (flag) {
-                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=success";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
                         } else {
-                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=fail";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
                         }
                     } else {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
                     }
 
                 }

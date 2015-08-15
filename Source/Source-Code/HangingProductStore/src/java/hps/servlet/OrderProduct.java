@@ -142,9 +142,9 @@ public class OrderProduct extends HttpServlet {
                     }
                 }
                 if (flag) {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "?status=success";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success";
                 } else {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "?status=fail";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail";
                 }
 
             }

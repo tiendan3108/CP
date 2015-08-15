@@ -63,9 +63,9 @@ public class SoldProduct extends HttpServlet {
                 if (returnPrice > 0) {
                     boolean flag = productDAO.soldProduct(consignmentID, returnPrice);
                     if (flag) {
-                        url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "status=success";
+                        url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success";
                     } else {
-                        url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "status=fail";
+                        url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail";
                     }
                     if (paymentMethod != null && paymentMethod.equals("paypal")) {
                         JavaUltilities ultil = new JavaUltilities();
@@ -82,7 +82,7 @@ public class SoldProduct extends HttpServlet {
                         }
                     }
                 } else {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_PAGE + "status=fail";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail";
                 }
             }
             response.sendRedirect(url);

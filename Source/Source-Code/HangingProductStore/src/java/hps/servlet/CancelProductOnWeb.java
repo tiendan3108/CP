@@ -61,12 +61,12 @@ public class CancelProductOnWeb extends HttpServlet {
                 if (cancelFee > 0) {
                     flag = productDAO.cancelProduct(consignmentID, ProductStatus.NOT_AVAILABLE, cancelFee);
                     if (flag) {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=success";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
                     } else {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
                     }
                 } else {
-                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "&status=fail";
+                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
                 }
             }
             response.sendRedirect(url);

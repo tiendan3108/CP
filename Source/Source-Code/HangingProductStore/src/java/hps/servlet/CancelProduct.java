@@ -148,9 +148,9 @@ public class CancelProduct extends HttpServlet {
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
             //change url
             if (flag) {
-                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=success";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
             } else {
-                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_PAGE + "?status=fail";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
             }
 
         }
