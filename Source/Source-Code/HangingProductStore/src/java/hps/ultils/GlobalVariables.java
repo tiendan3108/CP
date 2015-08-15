@@ -14,6 +14,8 @@ public class GlobalVariables {
     public static final String LOGIN_PAGE = "login.jsp";
     public static final String MANAGE_AVAILABLE_PRODUCT_PAGE = "manageAvailableProduct.jsp";
     public static final String MANAGE_SOLD_PRODUCT_PAGE = "manageSoldProduct.jsp";
+    public static final String MANAGE_AVAILABLE_PRODUCT_SERVLET = "LoadProductPage";
+    public static final String MANAGE_SOLD_PRODUCT_SERVLET = "LoadSalesPage";
 
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key

@@ -250,13 +250,20 @@ public class AddConsignmentServlet extends HttpServlet {
                 if (result) {
                     CategoryDAO categoryDAO = new CategoryDAO();
 
-                    List<ConsignmentDTO> c_accept = consignmentDAO.getListRequestByStoreOwnerID(account.getRoleID());
+                    List<ConsignmentDTO> c_accept = consignmentDAO.getListAcceptedRequestByStoreOwnerIDDeliveryMethod(account.getRoleID(), 0);
 
-                    request.setAttribute("REQUEST", c_accept);
+                    //request.setAttribute("REQUEST", c_request);
+                    request.setAttribute("ACCEPT", c_accept);
+//                    request.setAttribute("REFUSE", c_refuse);
+//                    request.setAttribute("CANCEL", c_cancel);
+
                     List<CategoryDTO> parentCategories = categoryDAO.getParentCategory();
                     List<CategoryDTO> category = categoryDAO.getAllCategory();
                     request.setAttribute("FCATE", parentCategories);
                     request.setAttribute("CATEGORY", category);
+
+                    request.setAttribute("currentTab", "accepted");
+
                     RequestDispatcher rd = request.getRequestDispatcher("manageRequest.jsp");
                     rd.forward(request, response);
                 }
