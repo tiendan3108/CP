@@ -243,49 +243,6 @@ public class ConsignmentDAO {
         return result;
     }
 
-//    public List<ConsignmentDTO> findRequestByStoreOwnerIDProductNameAndStatus(int storeOwnerID, String productName, int status) {
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        List<ConsignmentDTO> result = null;
-//        try {
-//            con = DBUltilities.makeConnection();
-//            String sql = "SELECT *"
-//                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID"
-//                    + " WHERE C.ConsignmentStatusID = ? AND C.StoreOwnerID = ? AND P.ProductName LIKE ?"
-//                    + " AND P.ProductStatusID = 1 "
-//                    + " ORDER BY C.CreatedDate DESC";
-//            stm = con.prepareStatement(sql);
-//            stm.setInt(1, status);
-//            stm.setInt(2, storeOwnerID);
-//            stm.setString(3, "%" + productName + "%");
-//
-//            rs = stm.executeQuery();
-//            result = new ArrayList<>();
-//            while (rs.next()) {
-//                ConsignmentDTO consignment = getConsignment(rs);
-//                populateProduct(consignment);
-//                result.add(consignment);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//        } finally {
-//            try {
-//                if (rs != null) {
-//                    rs.close();
-//                }
-//                if (stm != null) {
-//                    stm.close();
-//                }
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return result;
-//    }
     public List<ConsignmentDTO> getListNewRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -298,6 +255,54 @@ public class ConsignmentDAO {
                     + " WHERE C.ConsignmentStatusID = 1 AND P.ProductStatusID = 1 "
                     + " AND C.StoreOwnerID = ? "
                     + " ORDER BY C.CreatedDate DESC, C.FromDate ASC, C.ToDate ASC";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, storeOwnerID);
+
+            rs = stm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                ConsignmentDTO consignment = getConsignment(rs);
+                //populateProduct(consignment);
+                result.add(consignment);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+    
+    public List<ConsignmentDTO> getListRequestByStoreOwnerID(int storeOwnerID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ConsignmentDTO> result = null;
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT * "
+                    + " FROM Consignment AS C JOIN Product AS P ON C.ProductID = P.ProductID "
+                    + " WHERE (C.ConsignmentStatusID = 1 OR C.ConsignmentStatusID = 3 OR "
+                    + " C.ConsignmentStatusID = 2 OR "
+                    + " (C.ConsignmentStatusID = 7 AND C.ReviewProductDate IS NULL)) "
+                    + " AND P.ProductStatusID = 1 AND C.StoreOwnerID = ? "
+                    + " ORDER BY CASE C.ConsignmentStatusID WHEN 1 THEN 1 "
+                    + " WHEN 3 THEN 2 "
+                    + " WHEN 2 THEN 3 "
+                    + " WHEN 7 THEN 4 "
+                    + " END, C.ReviewRequestDate ASC,  C.CreatedDate ASC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
 

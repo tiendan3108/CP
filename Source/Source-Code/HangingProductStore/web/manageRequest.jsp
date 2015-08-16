@@ -1021,23 +1021,17 @@
         <script src="assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
         <script src="assets/admin/pages/scripts/table-managed.js"></script>
 
-
         <!--BEGIN PAGE CSS -->
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css"/>
 
         <script type="text/javascript" src="assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
         <!--END PAGE CSS -->
-
-
-
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/clockface/css/clockface.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datepicker/css/datepicker3.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-colorpicker/css/colorpicker.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
         <link rel="stylesheet" type="text/css" href="assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
-
-
 
         <script type="text/javascript" src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
@@ -1076,7 +1070,24 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-
+                var currentTab = window.location.hash.substring(1);
+                if (currentTab.length > 0 && currentTab != "all") {
+                    if (currentTab == "all") {
+                        $('#searchStatus').val("Tất cả").change();
+                    } else if (currentTab == "waiting") {
+                        $('#searchStatus').val("Chờ xử lý").change();
+                    } else if (currentTab == "accept") {
+                        $('#searchStatus').val("Chấp nhận yêu cầu").change();
+                    } else if (currentTab == "refuseRequest") {
+                        $('#searchStatus').val("Từ chối yêu cầu").change();
+                    } else if (currentTab == "refuseProduct") {
+                        $('#searchStatus').val("Từ chối nhận hàng").change();
+                    } else if (currentTab == "cancel") {
+                        $('#searchStatus').val("Yêu cầu đã hủy").change();
+                    }
+                    var table = $('#requestTable').DataTable();
+                    table.draw();
+                }
 //                var currentTab = window.location.hash.substring(1);
 //                if (currentTab == "") {
 //                    currentTab = $('#currentTab').val();
@@ -2065,7 +2076,6 @@
             }
 
             function setRequireOnRequestdModal() {
-
                 $("#re_r_productName").hide();
                 $("#re_r_category").hide();
                 $("#re_r_newStatus").hide();
@@ -2091,6 +2101,24 @@
             }
 
             $("#searchStatus").change(function () {
+                var searchStatus = $(this).val();
+                if (searchStatus == "Tất cả") {
+                    window.location.hash = "all";
+                }
+                else if (searchStatus == "Chờ xử lý") {
+                    window.location.hash = "waiting";
+                } else if (searchStatus == "Chấp nhận yêu cầu") {
+                    window.location.hash = "accept";
+                }
+                else if (searchStatus == "Từ chối nhận hàng") {
+                    window.location.hash = "refuseProduct";
+                }
+                else if (searchStatus == "Từ chối yêu cầu") {
+                    window.location.hash = "refuseRequest";
+                } else if (searchStatus == "Yêu cầu đã hủy") {
+                    window.location.hash = "cancel";
+                }
+
                 var table = $('#requestTable').DataTable();
                 table.draw();
             });
@@ -2100,11 +2128,11 @@
                         var searchStatus = $("#searchStatus").val();
                         var status = data[6];
 
-                        if(searchStatus == "Tất cả"){
+                        if (searchStatus == "Tất cả") {
                             return true;
-                        }else if (status == searchStatus) {
+                        } else if (status == searchStatus) {
                             return true;
-                        }else{
+                        } else {
                             return false;
                         }
 
