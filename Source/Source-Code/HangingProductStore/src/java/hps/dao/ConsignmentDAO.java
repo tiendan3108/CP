@@ -1804,6 +1804,7 @@ public class ConsignmentDAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 item = new ConsignmentDTO();
+                item.setNegotiatedPrice(rs.getFloat("NegotiatedPrice") / 1000);
                 item.setName(rs.getString("FullName"));
                 item.setConsigmentID(rs.getString("ConsignmentID"));
                 item.setCreatedDate(formatDateString(rs.getString("CreatedDate")));//
@@ -1878,13 +1879,11 @@ public class ConsignmentDAO {
         List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT c.*, p.* FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND (p.ProductStatusID NOT IN (?,?,?) AND (c.ConsignmentStatusID != ?)) ORDER BY p.ProductStatusID";
+            String query = "SELECT c.*, p.* FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND p.ProductStatusID NOT IN (?,?) AND (c.ConsignmentStatusID >= 4) ORDER BY p.ProductStatusID";
             stm = conn.prepareStatement(query);
             stm.setInt(1, storeOwnerID);
             stm.setInt(2, ProductStatus.ORDERED);
             stm.setInt(3, ProductStatus.SOLD);
-            stm.setInt(4, ProductStatus.NOT_AVAILABLE);
-            stm.setInt(5, ConsignmentStatus.REFUSE);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String productName = rs.getString("ProductName");

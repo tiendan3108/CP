@@ -125,6 +125,7 @@
                                         <option value="Chờ duyệt">Chờ duyệt lên web</option>
                                         <option value="Trên web">Đang trên web</option>
                                         <option value="Hủy kí gửi">Đăng kí hủy kí gửi</option>
+                                        <option value="Chờ nhận hàng">Chờ nhận hàng</option>
                                         <option value="Hết hạn">Đã hết hạn kí gửi</option>
                                         <option value="Hoàn tất">Hoàn tất</option>
                                     </select>
@@ -138,7 +139,8 @@
                                         <th>Tên khách hàng</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Trạng thái</th>
-                                        <th>Chi Tiết</th>
+                                        <th class="col-sm-2">Chi Tiết</th>
+                                        <th style="display: none"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,27 +149,39 @@
                                             <td class="center" style="font-weight: bold">${counter.count}</td>
                                             <td>${item.name}</td>
                                             <td>${item.product.name}</td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 <c:choose>
                                                     <c:when test="${item.consignmentStatusID == 5 && item.product.productStatusID == 2}">
-                                                        Chờ duyệt
+                                                        <font style="color: #7fcc7f; font-weight: bold">Chờ duyệt</font>
                                                     </c:when>
                                                     <c:when test="${item.consignmentStatusID == 5 && item.product.productStatusID == 3}">
-                                                        Trên web
+                                                        <font style="color: #2175d9; font-weight: bold">Trên web</font>
                                                     </c:when>
                                                     <c:when test="${item.consignmentStatusID == 5 && item.product.productStatusID == 6}">
-                                                        Hủy kí gửi
+                                                        <font style="color: #ffd700; font-weight: bold">Hủy kí gửi</font>
                                                     </c:when>
                                                     <c:when test="${item.consignmentStatusID == 7 && item.product.productStatusID == 8}">
-                                                        Hủy kí gửi
+                                                        <font style="color: #ff9900; font-weight: bold">Chờ nhận hàng</font>
                                                     </c:when>
                                                     <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
                                                                     (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
-                                                            Hoàn tất
+                                                            <font style="color: #006633; font-weight: bold">Hoàn tất</font>
                                                     </c:when>
                                                 </c:choose>
                                             </td>
-                                            <td><button class="btn btn-info btn-open-modal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
+                                                                    (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
+                                                            <button style="width: 95%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Chi tiết</button>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <button style="width: 46%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                        <button style="width: 46%;margin-right: 0px;" class="btn btn-link btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}">Chi tiết</button>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td style="display: none">${item.consigmentID}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -184,7 +198,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #89C4F4 ">
-                                <h3 class="modal-title" style="font-weight: bold">Thông tin hủy kí gửi</h3>        
+                                <h3 class="modal-title" style="font-weight: bold">Thông tin hủy kí gửi - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>        
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -263,7 +277,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="tab-content">
@@ -388,7 +402,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #89C4F4 ">
-                                <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>        
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -524,7 +538,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>        
                                 </div>
                                 <div class="modal-body">
                                     <div class="tab-content">
@@ -671,7 +685,9 @@
                 <div class="modal fade bs-example-modal-sm" id="receiveProductModal" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content" style="width: 500px">
-                            <form action="CancelProductOnWeb" method="POST" onsubmit="return validateCancelPrice1();">
+                            <form action="CancelProductOnWeb" method="POST" onsubmit="ret
+                                    urn
+                                    validateCancelPrice1();">
                                 <div class="modal-header" style="background-color: #dfba49 ">
                                     <h3 class="modal-title" style="font-weight: bold">Trả hàng kí gửi</h3>
                                 </div>
@@ -710,8 +726,8 @@
                 <div class="modal fade bs-example-modal-lg" id="detailModal" aria-hidden="true">
                     <div class="modal-dialog modal-scrollable modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h3 class="modal-title" style="font-weight: bold">Thông tin chi tiết</h3>
+                            <div class="modal-header" style="background-color: #89C4F4 ">
+                                <h3 class="modal-title" style="font-weight: bold">Thông tin chi tiết  - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -735,7 +751,10 @@
                                                 <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Hãng</label>
                                                 <div class="col-md-7 col-sm-7" id="c_productBrand"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
-
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá thỏa thuận</label>
+                                                <div class="col-md-7 col-sm-7" id="c_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
 
                                         </div>
 
@@ -751,10 +770,6 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Điện thoại</label>
                                                 <div class="col-md-7 col-sm-7" id="c_phone"  style="padding-top: 8px; font-size: 110%"></div>
-                                            </div>
-                                            <div class="form-group" id="div_c_email">
-                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Email</label>
-                                                <div class="col-md-7 col-sm-7" id="c_email"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Cách thức thanh toán</label>
@@ -926,10 +941,19 @@
         </script>
         <script>
             // main script
+            $(document).on("click", ".btn-detail-modal", function () {
+                var consignmentID = $(this).data('id');
+                $("font.consignmentIDHeader").each(function () {
+                    $(this).text(consignmentID);
+                })
+                loadCompletedProduct(consignmentID);
+            })
             $(document).on("click", ".btn-open-modal", function () {
                 var consignmentID = $(this).data('id');
+                $("font.consignmentIDHeader").each(function () {
+                    $(this).text(consignmentID);
+                })
                 $.get('CheckPopupModal', {consignmentID: consignmentID}, function (response) {
-                    console.log(response);
                     if (response == 1) {
                         loadAvailableProduct(consignmentID);
                     }
@@ -956,7 +980,7 @@
                     $("#cancel_email").text(response.email);
                     $("#cancel_productName").text(product.name);
                     $("#cancel_consignmentID").text(product.consignmentID);
-                    $("#cancel_negotiatedPrice").text(product.negotiatedPrice + " (Ngàn đồng)");
+                    $("#cancel_negotiatedPrice").text(product.negotiatedPrice.toMoney(0) + " (ngàn đồng)");
                     $("#cancel_consignedDate").text(product.receivedDate);
                     $("#cancel_canceledDate").text(product.cancelDate);
                     $("#cancel_ID").val(product.consignmentID);
@@ -1042,7 +1066,7 @@
                     $("#expired_extendConsignmentID").val(consignmentID);
                     $("#expired_receiveConsignmentID").val(consignmentID);
                     $("#expired_consignedDate").text(response.reviewProductDate);
-                    $("#expired_negotiatedPrice").text(response.negotiatedPrice + " (Ngàn đồng)");
+                    $("#expired_negotiatedPrice").text(response.negotiatedPrice.toMoney(0) + " (ngàn đồng)");
                     $("#expired_days").text(response.expiredDays + ' ngày');
                     $("#expired_fee").val(response.expiredFee + response.remainExtendFee);
                 });
@@ -1102,18 +1126,12 @@
                     $('#c_productBrand').text(respone.product.brand);
                     $('#c_phone').text(respone.phone);
 
-                    if (typeof respone.email === "undefined" || respone.email == '') {
-                        $('#c_email').text(respone.email);
-                    } else {
-                        $('#div_c_email').hide();
-                    }
-
-                    if (typeof respone.paypalAccount === "undefined" || respone.paypalAccount == '') {
+                    if (typeof respone.paypalAccount === "undefined" || respone.paypalAccount === '') {
                         $('#c_paypalAccount').text("Tiền mặt");
                     } else {
                         $('#c_paypalAccount').text("Chuyển tiền qua tài khoản " + respone.paypalAccount);
                     }
-
+                    $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' ngàn đồng');
                     $('#c_createdDate').text(respone.createdDate);
 
                     $('#div_c_refuseProductDate').hide();
@@ -1138,7 +1156,7 @@
                     $('#c_sellDate').text(respone.product.sellDate);
                     $('#c_publishOnWebDate').text(respone.raiseWebDate);
                     $('#c_reason').text(respone.reason);
-                    $('#c_returnedPrice').text(respone.returnPrice + ' (ngàn đồng)');
+                    $('#c_returnedPrice').text(respone.returnPrice.toMoney(0) + ' (ngàn đồng)');
 
                     if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {//refuse request
                         $('#div_c_refuseProductDate').show();
@@ -1322,7 +1340,6 @@
                 var selected = [];
                 $('#chkSeason1').parent('span').parent('div').parent('label').parent('div').siblings().addBack().each(function () {
                     if ($(this).children('label').children('div').children('span').hasClass('checked')) {
-                        console.log($(this).children('label').children('div').children('span').children('input').attr('value'));
                         selected += ($(this).children('label').children('div').children('span').children('input').attr('value'));
                     }
                 });
@@ -1377,6 +1394,17 @@
                             return false;
                         }
                     });
+            Number.prototype.toMoney = function (decimals, decimal_sep, thousands_sep)
+            {
+                var n = this,
+                        c = isNaN(decimals) ? 2 : Math.abs(decimals),
+                        d = decimal_sep || '.',
+                        t = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                        sign = (n < 0) ? '-' : '',
+                        i = parseInt(n = Math.abs(n).toFixed(c)) + '',
+                        j = ((j = i.length) > 3) ? j % 3 : 0;
+                return sign + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+            }
         </script>
     </body>
     <!-- END BODY -->

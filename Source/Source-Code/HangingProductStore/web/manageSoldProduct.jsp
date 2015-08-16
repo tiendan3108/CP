@@ -137,6 +137,7 @@
                                         <th>Tên sản phẩm</th>
                                         <th>Trạng thái</th>
                                         <th>Chi Tiết</th>
+                                        <th style="display: none"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,17 +146,21 @@
                                             <td class="center" style="font-weight: bold">${counter.count}</td>
                                             <td>${item.name}</td>
                                             <td>${item.product.name}</td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 <c:choose>
                                                     <c:when test="${item.product.productStatusID == 4}">
-                                                        Đã được đặt
+                                                        <font style="color: #7fcc7f; font-weight: bold">Đã được đặt</font>
                                                     </c:when>
                                                     <c:when test="${item.product.productStatusID == 5}">
-                                                        Đã bán
+                                                        <font style="color: #bb0000; font-weight: bold">Đã bán</font>
                                                     </c:when>
                                                 </c:choose>
                                             </td>
-                                            <td><button class="btn btn-info btn-open-modal" style="width: 70px; height: 30px" data-toggle="modal" data-id="${item.consigmentID}">Xem</button></td>
+                                            <td>
+                                                <button style="width: 46%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                <button style="width: 46%;margin-right: 0px;" class="btn btn-link btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}">Chi tiết</button>
+                                            </td>
+                                            <td style="display: none">${item.consigmentID}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -172,7 +177,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #89C4F4 ">
-                                <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm</h3>        
+                                <h3 class="modal-title" style="font-weight: bold">Thông tin sản phẩm - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>        
                             </div>
                             <div class="modal-body">
                                 <div class="row">
@@ -232,7 +237,7 @@
                                                 <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tiền trả khách hàng <font color="red">*</font></label>
                                                 <div class="col-md-6 col-sm-6">
                                                     <input type="text" id="sold_returnPrice" class="form-control" > 
-                                                    <span class="help-block">(Ngàn đồng)</span>
+                                                    <span class="help-block">(ngàn đồng)</span>
                                                     <p class="help-block" id="er_sold_returnPrice" style="color: red">  </p>
                                                 </div>
                                             </div>
@@ -275,7 +280,7 @@
                         <div class="modal-content">
                             <form action="OrderProduct" method="POST">
                                 <div class="modal-header" style="background-color: #89C4F4 ">
-                                    <h3 class="modal-title" style="font-weight: bold">Thông tin đặt hàng</h3>
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin đặt hàng - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
@@ -285,7 +290,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Giá gửi khách hàng:</label>
                                                     <div class="col-md-8 col-sm-8">
-                                                        <input style="width: 120px" id="sendPrice" name="txtSendPrice" class="form-control" type="text" maxlength="50"/><span>(Ngàn đồng)</span>
+                                                        <input style="width: 120px" id="sendPrice" name="txtSendPrice" type="text" maxlength="50"/><span>&nbsp;&nbsp;(ngàn đồng)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,7 +308,7 @@
                                         <table class="table table-striped table-bordered table-hover" id="listOrderedTable">
                                             <thead>
                                                 <tr role="row" class="heading">
-                                                    <th></th>
+                                                    <th style="text-align: center"><input type="checkbox" class="checkAll"></th>
                                                     <th>Tên khách hàng</th>
                                                     <th>Ngày đặt mua</th>
                                                     <th>Thông tin liên hệ</th>
@@ -338,7 +343,7 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-10 col-sm-offset-1" align="center">
-                                            <label class="control-label">Giá bán (Ngàn đồng): <font color="red">*</font></label>
+                                            <label class="control-label">Giá bán (ngàn đồng): <font color="red">*</font></label>
                                             <input class="form-control" id="sellingPrice" type="text" name="txtSellingPrice" value ="">
                                         </div>
                                     </div>
@@ -353,6 +358,147 @@
                     </div>
                 </div>
                 <!-- CONFIRM ORDERED MODAL END-->
+                <div class="modal fade bs-example-modal-lg" id="detailModal" aria-hidden="true">
+                    <div class="modal-dialog modal-scrollable modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #89C4F4 ">
+                                <h3 class="modal-title" style="font-weight: bold">Thông tin chi tiết  - <font class="consignmentIDHeader" style="color: #080b3b"></font></h3>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+
+                                    <!-- BEGIN LEFT TAB -->
+                                    <div class="col-lg-6 col-md-6">
+
+                                        <!--table-striped-->
+                                        <div class="form-horizontal">
+                                            <!--                                        <table class="table table-hover" style="border: none">-->
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tên sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_productName"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Loại sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_productCategory"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Hãng</label>
+                                                <div class="col-md-7 col-sm-7" id="c_productBrand"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá thỏa thuận</label>
+                                                <div class="col-md-7 col-sm-7" id="c_negotiatedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!-- END LEFT TAB -->
+                                    <!-- BEGIN RIGHT TAB -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Người ký gửi</label>
+                                                <div class="col-md-7 col-sm-7" id="c_fullName"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Điện thoại</label>
+                                                <div class="col-md-7 col-sm-7" id="c_phone"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Cách thức thanh toán</label>
+                                                <div class="col-md-7 col-sm-7" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END RIGHT TAB -->
+                                </div>
+                                <hr/>
+                                <div class="row">
+                                    <!--BEGIN LEFT TAB -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+
+                                            <div class="form-group" id="div_c_createdDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày tạo ký gửi</label>
+                                                <div class="col-md-7 col-sm-7" id="c_createdDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_refuseProductDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày từ chối sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_refuseProductDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_reviewProductDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày nhận sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_reviewProductDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_returnDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày trả tiền khách hàng</label>
+                                                <div class="col-md-7 col-sm-7" id="c_returnDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_cancelDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hủy kí gửi</label>
+                                                <div class="col-md-7 col-sm-7" id="c_cancelDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--END LEFT TAB -->
+
+                                    <!--BEGIN RIGHT TAB -->
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group" id="div_c_reviewRequestDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày duyệt yêu cầu</label>
+                                                <div class="col-md-7 col-sm-7" id="c_reviewRequestDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_refuseRequestDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày từ chối yêu cầu</label>
+                                                <div class="col-md-7 col-sm-7" id="c_refuseRequestDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_publishOnWebDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày đăng lên web</label>
+                                                <div class="col-md-7 col-sm-7" id="c_publishOnWebDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_receivedDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày hoàn trả sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_receivedDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group" id="div_c_sellDate">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Ngày bán sản phẩm</label>
+                                                <div class="col-md-7 col-sm-7" id="c_sellDate"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--END RIGHT TAB -->
+                                </div>
+                                <div class="row" id="bonus_infor">
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+                                            <div class="form-group" id="div_c_returnedPrice">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền trả khách hàng</label>
+                                                <div class="col-md-7 col-sm-7" id="c_returnedPrice"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-horizontal">
+                                            <div class="form-group" id="div_c_reason">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Lý do từ chối</label>
+                                                <div class="col-md-7 col-sm-7" id="c_reason"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="form-horizontal">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- END CONTAINER -->
@@ -428,10 +574,19 @@
                                         });
         </script>
         <script>
+            $(document).on("click", ".btn-detail-modal", function () {
+                var consignmentID = $(this).data('id');
+                $("font.consignmentIDHeader").each(function () {
+                    $(this).text(consignmentID);
+                })
+                loadCompletedProduct(consignmentID);
+            })
             $(document).on("click", ".btn-open-modal", function () {
                 var consignmentID = $(this).data('id');
+                $("font.consignmentIDHeader").each(function () {
+                    $(this).text(consignmentID);
+                })
                 $.get('CheckPopupModal', {consignmentID: consignmentID}, function (response) {
-                    console.log(response);
                     if (response == 5) {
                         loadOrderedProduct(consignmentID);
                     }
@@ -526,8 +681,8 @@
                     $("#sold_email").text(response.email);
                     $("#sold_productName").text(product.name);
                     $("#sold_consignmentID").text(response.consigmentID);
-                    $("#sold_negotiatedPrice").text(response.negotiatedPrice + " (Ngàn đồng)");
-                    $("#sold_sellingPrice").text(response.returnPrice + " (Ngàn đồng)");
+                    $("#sold_negotiatedPrice").text(response.negotiatedPrice.toMoney(0) + " (ngàn đồng)");
+                    $("#sold_sellingPrice").text(response.returnPrice.toMoney(0) + " (ngàn đồng)");
                     $("#sold_receivedDate").text(response.reviewProductDate);
                     $("#sold_paypalAccount").text(response.paypalAccount);
                     $("#soldconsignmentID").val(response.consigmentID);
@@ -564,27 +719,27 @@
                     }
                     var orderList = response.orderList;
                     $('#ordered_orderID').val(response.orderList[0].orderID);
-                    $('#ordered_negotiatedPrice').text(response.negotiatedPrice + " (Ngàn đồng)");
+                    $('#ordered_negotiatedPrice').text(response.negotiatedPrice.toMoney(0) + " (ngàn đồng)");
                     $('#listOrderedTable tbody').empty();
                     for (var i = 0, max = orderList.length; i < max; i++) {
                         var row = "";
                         if (isSpecial > 0) {
                             if (orderList[i].sendPrice == 0) {
-                                row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                                row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
                                         orderList[i].orderID + '"></td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' +
                                         orderList[i].phone + '</td><td>Chưa gửi giá</td></tr>';
                             } else {
-                                row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                                row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
                                         orderList[i].orderID + '"></td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' + orderList[i].phone + '</td><td>Đã gửi giá : ' +
-                                        orderList[i].sendPrice + ' ngàn đồng</td></tr>';
+                                        orderList[i].sendPrice.toMoney(0) + ' ngàn đồng</td></tr>';
                             }
                         }
                         else {
-                            row = '<tr><td><input type="checkbox" name="chkboxCustomer" value="' +
+                            row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
                                     orderList[i].orderID + '"></td><td>' +
                                     orderList[i].fullName + '</td><td>' +
                                     orderList[i].orderedDate + '</td><td>' +
@@ -611,6 +766,125 @@
                             return false;
                         }
                     });
+            function loadCompletedProduct(consignmentID) {
+                $.get('LoadDetailConsignment', {consignmentID: consignmentID}, function (respone) {
+                    $('#c_fullName').text(respone.name);
+                    $('#c_productName').text(respone.product.name);
+                    $('#c_productCategory').text(respone.product.categoryName);
+                    $('#c_productBrand').text(respone.product.brand);
+                    $('#c_phone').text(respone.phone);
+
+                    if (typeof respone.paypalAccount === "undefined" || respone.paypalAccount === '') {
+                        $('#c_paypalAccount').text("Tiền mặt");
+                    } else {
+                        $('#c_paypalAccount').text("Chuyển tiền qua tài khoản " + respone.paypalAccount);
+                    }
+                    $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' ngàn đồng');
+                    $('#c_createdDate').text(respone.createdDate);
+
+                    $('#div_c_refuseProductDate').hide();
+                    $('#div_c_reviewProductDate').hide();
+                    $('#div_c_returnDate').hide();
+                    $('#div_c_cancelDate').hide();
+                    $('#div_c_receivedDate').hide();
+                    $('#div_c_reviewRequestDate').hide();
+                    $('#div_c_refuseRequestDate').hide();
+                    $('#div_c_publishOnWebDate').hide();
+                    $('#div_c_sellDate').hide();
+                    $('#div_c_reason').hide();
+                    $('#div_c_returnedPrice').hide();
+
+                    $('#c_reviewRequestDate').text(respone.reviewRequestDate);
+                    $('#c_reviewProductDate').text(respone.reviewProductDate);
+                    $('#c_refuseRequestDate').text(respone.reviewRequestDate);
+                    $('#c_refuseProductDate').text(respone.reviewProductDate);
+                    $('#c_returnDate').text(respone.returnDate);
+                    $('#c_cancelDate').text(respone.cancelDate);
+                    $('#c_receivedDate').text(respone.agreeCancelDate);
+                    $('#c_sellDate').text(respone.product.sellDate);
+                    $('#c_publishOnWebDate').text(respone.raiseWebDate);
+                    $('#c_reason').text(respone.reason);
+                    $('#c_returnedPrice').text(respone.returnPrice.toMoney(0) + ' (ngàn đồng)');
+
+                    if (respone.consignmentStatusID == 2 && respone.reviewProductDate != "") {//refuse request
+                        $('#div_c_refuseProductDate').show();
+                        $('#div_c_reviewRequestDate').show();
+                    }
+                    if (respone.consignmentStatusID == 2 && respone.reviewProductDate == "") {//retuse product
+                        $('#div_c_refuseRequestDate').show();
+                    }
+                    if (respone.consignmentStatusID == 3) {
+                        $('#div_c_reviewRequestDate').show();
+                        if (respone.product.productStatusID == 6) {
+                            if (respone.reviewProductDate != "") {
+                                $('#div_c_reviewProductDate').show();
+                            }
+                            $('#div_c_cancelDate').show();
+                        }
+                    }
+                    if (respone.consignmentStatusID == 5) {
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        if (respone.product.productStatusID == 3 || respone.product.productStatusID == 4) {
+                            $('#div_c_publishOnWebDate').show();
+                        }
+                        if (respone.product.productStatusID == 5) {
+                            $('#div_c_publishOnWebDate').show();
+                            $('#div_c_sellDate').show();
+                        }
+                        if (respone.product.productStatusID == 6) {
+                            $('#div_c_cancelDate').show();
+                            $('#div_c_publishOnWebDate').show();
+                        }
+                    }
+                    if (respone.consignmentStatusID == 6) {
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        $('#div_c_publishOnWebDate').show();
+                    }
+                    if (respone.consignmentStatusID == 7) {
+                        $('#div_c_reviewRequestDate').show();
+                        if (respone.reviewProductDate != "") {
+                            $('#div_c_reviewProductDate').show();
+                        }
+                        if (respone.raiseWebDate != "") {
+                            $('#div_c_publishOnWebDate').show();
+                        }
+                        $('#div_c_cancelDate').show();
+                    }
+                    if (respone.consignmentStatusID == 4) {
+                        $('#div_c_reviewRequestDate').show();
+                        $('#div_c_reviewProductDate').show();
+                        $('#div_c_publishOnWebDate').show();
+                        if (respone.product.productStatusID == 7) {
+                            $('#div_c_sellDate').show();
+                            $('#div_c_returnedPrice').show();
+                            $('#div_c_returnDate').show();
+                        }
+                    }
+                    if (respone.reason != "") {
+                        $('#div_c_reason').show();
+                    }
+                });
+                $('#detailModal').modal('show');
+            }
+            Number.prototype.toMoney = function (decimals, decimal_sep, thousands_sep)
+            {
+                var n = this,
+                        c = isNaN(decimals) ? 2 : Math.abs(decimals),
+                        d = decimal_sep || '.',
+                        t = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                        sign = (n < 0) ? '-' : '',
+                        i = parseInt(n = Math.abs(n).toFixed(c)) + '',
+                        j = ((j = i.length) > 3) ? j % 3 : 0;
+                return sign + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+            }
+            $('input.checkAll').on("click", function () {
+                var all = $(this);
+                $('input[name=chkboxCustomer]').each(function () {
+                    $(this).prop("checked", all.prop("checked"));
+                });
+            })
         </script>
     </body>
     <!-- END BODY -->

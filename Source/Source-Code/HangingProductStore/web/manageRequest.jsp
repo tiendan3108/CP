@@ -98,7 +98,7 @@
                             </a>
                         </li>
                         <li class="start">
-                            <a href="LoadSoldPage">
+                            <a href="LoadSalesPage">
                                 <i class="icon-basket"></i>
                                 <span class="title">Quản lí bán hàng</span>
                             </a>

@@ -647,6 +647,8 @@ var TableManaged = function () {
                     "orderable": true
                 }, {
                     "orderable": false
+                }, {
+                    "orderable": false
                 }],
             "lengthMenu": [
                 [10, 15, 20, -1],
@@ -717,7 +719,6 @@ var TableManaged = function () {
             initTable4_Request();
             initProductTable();
         }
-
     };
 
 }();
