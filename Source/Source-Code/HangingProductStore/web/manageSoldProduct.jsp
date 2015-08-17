@@ -763,7 +763,7 @@
                 $('#orderedModal').modal('show');
             }
             $("#consignmentOption").change(function () {
-                var table = $("#productTable").DataTable();
+                var table = $("#saleTable").DataTable();
                 table.draw();
             })
             $.fn.dataTable.ext.search.push(
