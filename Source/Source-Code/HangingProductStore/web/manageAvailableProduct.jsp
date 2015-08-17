@@ -124,10 +124,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN ALL TAB-->
-                            <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                            <div class="col-md-9 col-sm-6 col-md-offset-3 col-sm-offset-6">
                                 <div class="form-horizontal">
                                     <div class="form-group">
-                                        <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Trạng thái:</label>
+                                        <label class="col-md-3 col-sm-3 col-sm-offset-4 control-label">Trạng thái:</label>
                                         <div class="col-md-5 col-sm-5">
                                             <select class="form-control" id="consignmentOption">
                                                 <option value="all" selected="selected">Tất cả</option>

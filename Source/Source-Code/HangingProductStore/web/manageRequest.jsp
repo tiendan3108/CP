@@ -132,13 +132,12 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
                             <div id="request">
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                    <div class="col-md-9 col-sm-6 col-md-offset-3 col-sm-offset-6">
                                         <div class="form-horizontal">
                                             <div class="form-group">
 
-                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Trạng thái:</label>
-                                                <div class="col-md-5 col-sm-5">
-
+                                                <label class="col-md-3 col-sm-3 col-sm-offset-4 control-label">Trạng thái:</label>
+                                                <div class="col-md-5 col-sm-8">
                                                     <select class="form-control" id="searchStatus">
                                                         <option value="Tất cả" selected>Tất cả</option>
                                                         <option value="Chờ xử lý">Chờ xử lý</option>
