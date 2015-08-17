@@ -5,6 +5,7 @@
  */
 package hps.servlet;
 
+import hps.dto.AccountDTO;
 import hps.ultils.GlobalVariables;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,10 +37,18 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
-            if(session != null){
+            String url = "HomeServlet";
+            if (session != null) {
+                AccountDTO acc = (AccountDTO) session.getAttribute("ACCOUNT");
+                if (acc != null) {
+                    String role = acc.getRole();
+                    if (role.equals(GlobalVariables.STORE_OWNER)) {
+                        url = "login.jsp";
+                    }
+                }
                 session.removeAttribute("ACCOUNT");
             }
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(url);
         }
     }
 
