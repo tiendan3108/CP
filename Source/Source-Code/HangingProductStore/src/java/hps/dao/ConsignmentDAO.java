@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -284,7 +285,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1872,26 +1873,27 @@ public class ConsignmentDAO {
         }
     }
 
-    public List<ConsignmentDTO> getProductForManageProductPage(int storeOwnerID) {
+    private List<ConsignmentDTO> getProduct(int storeOwnerID, int productStatusID, int consignmentStatusID, String orderCollumn) {
         Connection conn = null;
         ResultSet rs = null;
         PreparedStatement stm = null;
         List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            String query = "SELECT c.*, p.* FROM Consignment c, Product p WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND p.ProductStatusID NOT IN (?,?) AND (c.ConsignmentStatusID >= 4) ORDER BY p.ProductStatusID";
+
+            String query = "SELECT c.*, p.* FROM Consignment c, Product p "
+                    + "WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND "
+                    + "p.ProductStatusID = ? AND c.ConsignmentStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, storeOwnerID);
-            stm.setInt(2, ProductStatus.ORDERED);
-            stm.setInt(3, ProductStatus.SOLD);
+            stm.setInt(2, productStatusID);
+            stm.setInt(3, consignmentStatusID);
             rs = stm.executeQuery();
             while (rs.next()) {
                 String productName = rs.getString("ProductName");
                 int productID = rs.getInt("ProductID");
                 String consignorName = rs.getString("FullName");
                 String consignmentID = rs.getString("ConsignmentID");
-                int productStatusID = rs.getInt("ProductStatusID");
-                int consignmentStatusID = rs.getInt("ConsignmentStatusID");
                 String reviewProductDate = formatDateString(rs.getString("ReviewProductDate"));
                 ProductDTO product = new ProductDTO();
                 product.setProductID(productID);
@@ -1908,7 +1910,7 @@ public class ConsignmentDAO {
             return result;
         } catch (Exception e) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
-            return null;
+            return new ArrayList<>();
         } finally {
             try {
                 if (rs != null) {
@@ -1924,6 +1926,105 @@ public class ConsignmentDAO {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
             }
         }
+    }
+
+    private List<ConsignmentDTO> getCancelProduct(int storeOwnerID) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        List<ConsignmentDTO> result = new ArrayList<>();
+        try {
+            conn = DBUltilities.makeConnection();
+
+            String query = "SELECT c.*, p.* FROM Consignment c, Product p "
+                    + "WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND "
+                    + "p.ProductStatusID = ? AND c.ConsignmentStatusID = ? AND c.RaiseWebDate IS NOT NULL";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, storeOwnerID);
+            stm.setInt(2, ProductStatus.NOT_AVAILABLE);
+            stm.setInt(3, ConsignmentStatus.CANCEL);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String productName = rs.getString("ProductName");
+                int productID = rs.getInt("ProductID");
+                String consignorName = rs.getString("FullName");
+                String consignmentID = rs.getString("ConsignmentID");
+                String reviewProductDate = formatDateString(rs.getString("ReviewProductDate"));
+                ProductDTO product = new ProductDTO();
+                product.setProductID(productID);
+                product.setProductStatusID(ProductStatus.NOT_AVAILABLE);
+                product.setName(productName);
+                ConsignmentDTO item = new ConsignmentDTO();
+                item.setName(consignorName);
+                item.setProduct(product);
+                item.setConsigmentID(consignmentID);
+                item.setReviewProductDate(reviewProductDate);
+                item.setConsignmentStatusID(ConsignmentStatus.CANCEL);
+                result.add(item);
+            }
+            return result;
+        } catch (Exception e) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
+            return new ArrayList<>();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+
+    public List<ConsignmentDTO> getProductForManageProductPage(int storeOwnerID) {
+        List<ConsignmentDTO> result = new ArrayList<>();
+        List<ConsignmentDTO> temp = new ArrayList<>();
+        // available product
+        temp = getProduct(storeOwnerID, ProductStatus.AVAILABLE, ConsignmentStatus.RECEIVED, "ReviewProductDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        // on web product
+        temp = getProduct(storeOwnerID, ProductStatus.ON_WEB, ConsignmentStatus.RECEIVED, "RaiseWebDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        // request cancel
+        temp = getProduct(storeOwnerID, ProductStatus.CANCEL, ConsignmentStatus.RECEIVED, "CancelDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        // wait receive product
+        temp = getProduct(storeOwnerID, ProductStatus.NOT_YET_RECEIVE, ConsignmentStatus.CANCEL, "CancelDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        // expired
+        temp = getProduct(storeOwnerID, ProductStatus.AVAILABLE, ConsignmentStatus.EXPIRED, "CancelDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        // completed
+        temp = getProduct(storeOwnerID, ProductStatus.NOT_AVAILABLE, ConsignmentStatus.COMPLETED, "ReceivedDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        temp = getProduct(storeOwnerID, ProductStatus.COMPLETED, ConsignmentStatus.COMPLETED, "ReturnDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        temp = getCancelProduct(storeOwnerID);
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        return result;
     }
 
     public List<ConsignmentDTO> getProductForManageSalesPage(int storeOwnerID) {

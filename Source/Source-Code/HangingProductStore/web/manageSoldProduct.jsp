@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover" id="productTable">
+                            <table class="table table-bordered table-hover" id="saleTable">
                                 <thead>
                                     <tr class="heading">
                                         <th>STT</th>
