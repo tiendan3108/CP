@@ -41,6 +41,7 @@ public class ConsignServlet extends HttpServlet {
     private static final String STEP4 = "consign_step4.jsp";
     private static final String COMPLETED = "consign_success.jsp";
     private static final String HOME = "HomeServlet";
+    private static final String LOGIN = "login.jsp";
     AccountDAO accountDAO = new AccountDAO();
 
     /**
@@ -346,7 +347,7 @@ public class ConsignServlet extends HttpServlet {
 
                 session.removeAttribute("ACCOUNT");
                 request.setAttribute("backlink", backlink);
-                url = HOME;
+                url = LOGIN;
                 session.removeAttribute("PRODUCT");
                 session.removeAttribute("BASICPRICE");
                 session.removeAttribute("STORE");

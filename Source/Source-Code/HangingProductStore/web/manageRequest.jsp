@@ -132,12 +132,12 @@
                             <!-- BEGIN EXAMPLE TABLE PORTLET HERE we Go-->
                             <div id="request">
                                 <div class="row">
-                                    <div class="col-md-9 col-sm-6 col-md-offset-3 col-sm-offset-6">
+                                    <div class="col-md-9 col-sm-9 col-md-offset-3 col-sm-offset-3">
                                         <div class="form-horizontal">
                                             <div class="form-group">
 
-                                                <label class="col-md-3 col-sm-3 col-sm-offset-4 control-label">Trạng thái:</label>
-                                                <div class="col-md-5 col-sm-8">
+                                                <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Trạng thái:</label>
+                                                <div class="col-md-5 col-sm-5">
                                                     <select class="form-control" id="searchStatus">
                                                         <option value="Tất cả" selected>Tất cả</option>
                                                         <option value="Chờ xử lý">Chờ xử lý</option>
@@ -152,110 +152,117 @@
                                     </div>
 
                                 </div>
-                                <table id="requestTable" class="table table-bordered table-hover">
-                                    <thead>
-                                        <tr role="row" class="heading">
-                                            <th>
-                                                STT
-                                            </th>
-                                            <th>
-                                                Tên Sản Phẩm
-                                            </th>
-                                            <th style="display: none">
-                                                Mã ký gửi
-                                            </th>
-                                            <th>
-                                                Tên khách hàng
-                                            </th>
-                                            <th>
-                                                Ngày hẹn
-                                            </th>
-                                            <th>
-                                                Giá (Ngàn đồng)
-                                            </th>
-                                            <th>
-                                                Trạng thái
-                                            </th>
-                                            <th>
-                                                Chi Tiết
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <c:forEach var="c" items="${REQUEST}" varStatus="counter">
-                                            <tr class="odd gradeX">
-                                                <td style="font-weight: bold">${counter.count}</td>
-                                                <td>
-                                                    ${c.product.name}
-                                                </td>
-                                                <td style="display: none">
-                                                    ${c.consigmentID}
-                                                </td>
-                                                <td>
-                                                    ${c.name}
-                                                </td>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${not empty c.appointmentDate}">
-                                                            ${c.hour}|${c.appointmentDate}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
-                                                        </c:otherwise>
-                                                    </c:choose>
-
-                                                </td>
-                                                <td>
-                                                    <fmt:formatNumber 
-                                                        value="${c.desirePrice}" 
-                                                        maxFractionDigits="1"/>
-                                                </td>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${c.consignmentStatusID == 1}">
-                                                            <b><font color="green">Chờ xử lý</font></b>
-                                                            </c:when>
-
-                                                        <c:when test="${c.consignmentStatusID == 2}">
-                                                            <c:choose>
-                                                                <c:when test="${not empty c.reviewProductDate}">
-                                                                    <b><font color="red">Từ chối nhận hàng</font></b>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                    <b><font color="red">Từ chối yêu cầu</font></b>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:when>
-
-                                                        <c:when test="${c.consignmentStatusID == 3}">
-                                                            <b><font color="blue">Chấp nhận yêu cầu</font></b>
-                                                            </c:when>
-                                                            <c:when test="${c.consignmentStatusID == 7}">
-                                                            <b><font color="red">Yêu cầu đã hủy</font></b>
-                                                            </c:when>
-
-                                                    </c:choose>
-                                                </td>
-
-                                                <td align="center">
-                                                    <c:choose>
-                                                        <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
-                                                            <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
-                                                                    name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>        
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                                    name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
-                                                        </c:otherwise>
-                                                    </c:choose>
-
-
-                                                </td>
+                                <div id="requestTableDiv" style="display: none">
+                                    <table id="requestTable" class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr role="row" class="heading">
+                                                <th>
+                                                    STT
+                                                </th>
+                                                <th>
+                                                    Tên Sản Phẩm
+                                                </th>
+                                                <th style="display: none">
+                                                    Mã ký gửi
+                                                </th>
+                                                <th>
+                                                    Tên khách hàng
+                                                </th>
+                                                <th>
+                                                    Ngày hẹn
+                                                </th>
+                                                <th>
+                                                    Giá (Ngàn đồng)
+                                                </th>
+                                                <th>
+                                                    Trạng thái
+                                                </th>
+                                                <th>
+                                                    Chi Tiết
+                                                </th>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+
+                                            <c:forEach var="c" items="${REQUEST}" varStatus="counter">
+                                                <tr class="odd gradeX">
+                                                    <td style="font-weight: bold">${counter.count}</td>
+                                                    <td>
+                                                        ${c.product.name}
+                                                    </td>
+                                                    <td style="display: none">
+                                                        ${c.consigmentID}
+                                                    </td>
+                                                    <td>
+                                                        ${c.name}
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${not empty c.appointmentDate}">
+                                                                ${c.hour}|${c.appointmentDate}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${c.fromDate}&nbsp;<i class="fa fa-long-arrow-right"></i>&nbsp;${c.toDate}
+                                                            </c:otherwise>
+                                                        </c:choose>
+
+                                                    </td>
+                                                    <td>
+                                                        <b><fmt:formatNumber 
+                                                                value="${c.desirePrice}" 
+                                                                maxFractionDigits="1"/></b>
+                                                        <c:if test="${c.maxPrice > 0 or c.minPrice > 0}"> /
+                                                            <fmt:formatNumber 
+                                                                value="${c.maxPrice}" 
+                                                                maxFractionDigits="1"/>
+                                                        </c:if>
+                                                    </td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${c.consignmentStatusID == 1}">
+                                                                <b><font color="green">Chờ xử lý</font></b>
+                                                                </c:when>
+
+                                                            <c:when test="${c.consignmentStatusID == 2}">
+                                                                <c:choose>
+                                                                    <c:when test="${not empty c.reviewProductDate}">
+                                                                        <b><font color="red">Từ chối nhận hàng</font></b>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                        <b><font color="red">Từ chối yêu cầu</font></b>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:when>
+
+                                                            <c:when test="${c.consignmentStatusID == 3}">
+                                                                <b><font color="blue">Chấp nhận yêu cầu</font></b>
+                                                                </c:when>
+                                                                <c:when test="${c.consignmentStatusID == 7}">
+                                                                <b><font color="red">Yêu cầu đã hủy</font></b>
+                                                                </c:when>
+
+                                                        </c:choose>
+                                                    </td>
+
+                                                    <td align="center">
+                                                        <c:choose>
+                                                            <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
+                                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                                        name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>        
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                                        name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
+                                                            </c:otherwise>
+                                                        </c:choose>
+
+
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
@@ -284,7 +291,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
 
-                            <h3 class="modal-title" id="r_name" style="font-weight: bold">Thông tin chi tiết</h3>
+                            <h3 class="modal-title" id="r_name" style="font-weight: bold">Thông tin chi tiết - <font id="r_consignmentID"> </font></h3>
 
                         </div>
                         <div class="modal-body">
@@ -618,18 +625,17 @@
             <div id="modalRefuseCancel" class="modal fade bs-example-modal-lg" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header" style="background-color: snow">
+                        <div class="modal-header" style="background-color: #89C4F4">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-
-                            <h3 class="modal-title" id="rc_name" style="font-weight: bold"></h3>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3"><b>Email: </b><span id="rc_email"></span></div>
-                                <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="rc_phone"></span></div>
-                                <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="rc_address"></span></div>
-
-                            </div>
-
+                            <h3 style="font-weight: bold">Thông tin chi tiết - <font id="rc_consignmentID"> </font></h3>
+                            <!--                            <h3 class="modal-title" id="rc_name" style="font-weight: bold"></h3>
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-md-3"><b>Email: </b><span id="rc_email"></span></div>
+                                                            <div class="col-lg-3 col-md-3"><b>ĐT: </b><span id="rc_phone"></span></div>
+                                                            <div class="col-lg-5 col-md-5"><b>Địa chỉ: </b><span id="rc_address"></span></div>
+                            
+                                                        </div>-->
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -649,12 +655,12 @@
                                                 </div>
                                             </div>
                                             <!-- Carousel nav -->
-                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                                <i class="fa fa-angle-left"></i>
-                                            </a>
-                                            <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                                <i class="fa fa-angle-right"></i>
-                                            </a>
+                                            <!--                                            <a data-slide="prev" href="#myCarousel" class="carousel-control left">
+                                                                                            <i class="fa fa-angle-left"></i>
+                                                                                        </a>
+                                                                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
+                                                                                            <i class="fa fa-angle-right"></i>
+                                                                                        </a>-->
                                         </div>
 
                                     </div>
@@ -686,9 +692,21 @@
                                                 <th>Ngày ký gửi</th>
                                                 <td id='rc_createdDate'></td>
                                             </tr>
+                                            <tr>
+                                                <th>Khách hàng</th>
+                                                <td id='rc_name'></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Điện thoại</th>
+                                                <td id='rc_phone'></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Email</th>
+                                                <td id='rc_email'></td>
+                                            </tr>
                                             <tr >
-                                                <th>Giá mong muốn</th>
-                                                <td id="rc_price"></td>
+                                                <th>Địa chỉ</th>
+                                                <td id="rc_address"></td>
                                             </tr>
                                             <!--                                        <tr>
                                                                                         <th>Ngày hẹn</th>
@@ -1070,7 +1088,7 @@
 
             $(document).ready(function () {
                 var currentTab = window.location.hash.substring(1);
-                if (currentTab.length > 0 && currentTab != "all") {
+                if (currentTab.length > 0) {
                     if (currentTab == "all") {
                         $('#searchStatus').val("Tất cả").change();
                     } else if (currentTab == "waiting") {
@@ -1086,19 +1104,12 @@
                     }
                     var table = $('#requestTable').DataTable();
                     table.draw();
+                } else {
+                    $('#searchStatus').val("Chờ xử lý").change();
+                    var table = $('#requestTable').DataTable();
+                    table.draw();
                 }
-//                var currentTab = window.location.hash.substring(1);
-//                if (currentTab == "") {
-//                    currentTab = $('#currentTab').val();
-//                }
-//                $('div#' + currentTab).fadeIn(400).siblings().hide();
-//                $('div.portlet-title').show();
-//                $('li#' + currentTab).addClass('open').siblings().removeClass('open');
-//                $('html,body').scrollTop(0);
-
-
-                //setEnableFieldWhenLoadRequestAcceptDetails();
-                //setRequireOnRequestAcceptModal();
+                $("#requestTableDiv").show();
             });
             $(function () {
                 $("#r_brand").autocomplete({
@@ -1116,17 +1127,22 @@
             });
             function loadRefuseCancelDetails(id) {
                 $.get('ConsignmentRequestReceive', {btnAction: 'consignmentdetails', id: id}, function (data) {
-
-                    $("#rc_name").html("<small>Khách hàng: </small> " + data.name);
+                    $("#rc_consignmentID").html(data.consigmentID);
+                    $("#rc_name").html(data.name);
                     $("#rc_productName").html(data.product.name);
                     $("#rc_image").attr("src", data.product.image.replace(/\\/g, '/'));
                     $("#rc_newStatus").html(data.product.newStatus + "%");
                     $("#rc_description").html(data.product.description);
                     $("#rc_createdDate").html(data.createdDate);
                     $("#rc_email").html(data.email);
+                    if ($("#rc_email").html() == "") {
+                        $("#rc_email").html("---");
+                    }
                     $("#rc_phone").html(data.phone);
                     $("#rc_address").html(data.address);                     //$("#rc_fromDateToDate").html(data.fromDate + "  ~  " + data.toDate);
-
+                    if ($("#rc_address").html() == "") {
+                        $("#rc_address").html("---");
+                    }
 
                     $("#rc_price").html(formatDollar(data.desirePrice) + " (Ngàn đồng)");
 
@@ -1142,7 +1158,7 @@
                         if (data.consignmentStatusID == 1) {
                             $("#rc_status").html("<b><font color='blue'>CHỜ XỬ LÝ</font></b>");
                         } else if (data.consignmentStatusID == 3) {
-                            $("#rc_status").html("<b><font color='green'>ĐÃ CHẤP NHẬN</font></b>");
+                            $("#rc_status").html("<b><font color='green'>CHẤP NHẬN YÊU CẦU</font></b>");
                         } else if (data.consignmentStatusID == 2) {
                             if (data.reviewProductDate != null) {
                                 $("#rc_status").html("<b><font color='red'>TỪ CHỐI KHI NHẬN HÀNG</font></b>");
@@ -1172,7 +1188,7 @@
                             }
                         }
                         else if (data.consignmentStatusID == 7) {
-                            $("#rc_status").html("<b><font color='red'>HOÀN TẤT HỦY</font></b>");
+                            $("#rc_status").html("<b><font color='red'>YÊU CẦU ĐÃ HỦY</font></b>");
                         }
                     }
                 });
@@ -1262,7 +1278,7 @@
                     else {
                         if (data.consignmentStatusID == 1 || data.consignmentStatusID == 3) {
                             //$("#r_name").html("<small>Khách hàng: </small> " + data.name);
-
+                            $("#r_consignmentID").html(data.consigmentID);
                             $("#r_image").attr("src", data.product.image.replace(/\\/g, '/'));
                             $("#r_createdDate").html(data.createdDate);
                             $("#r_fromDateToDate").html(data.fromDate + "&nbsp;<i class='fa fa-long-arrow-right'></i>&nbsp;" + data.toDate);

@@ -124,20 +124,22 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN ALL TAB-->
-                            <div class="col-md-9 col-sm-6 col-md-offset-3 col-sm-offset-6">
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <label class="col-md-3 col-sm-3 col-sm-offset-4 control-label">Trạng thái:</label>
-                                        <div class="col-md-5 col-sm-5">
-                                            <select class="form-control" id="consignmentOption">
-                                                <option value="all" selected="selected">Tất cả</option>
-                                                <option value="Chờ duyệt">Chờ duyệt lên web</option>
-                                                <option value="Trên web">Đang trên web</option>
-                                                <option value="Hủy kí gửi">Đăng kí hủy kí gửi</option>
-                                                <option value="Chờ nhận hàng">Chờ nhận hàng</option>
-                                                <option value="Hết hạn">Đã hết hạn kí gửi</option>
-                                                <option value="Hoàn tất">Hoàn tất</option>
-                                            </select>
+                            <div class="row">
+                                <div class="col-md-9 col-sm-9 col-md-offset-3 col-sm-offset-3">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4  control-label">Trạng thái:</label>
+                                            <div class="col-md-5 col-sm-5">
+                                                <select class="form-control" id="consignmentOption">
+                                                    <option value="all" selected="selected">Tất cả</option>
+                                                    <option value="Chờ duyệt">Chờ duyệt lên web</option>
+                                                    <option value="Trên web">Đang trên web</option>
+                                                    <option value="Hủy kí gửi">Đăng kí hủy kí gửi</option>
+                                                    <option value="Chờ nhận hàng">Chờ nhận hàng</option>
+                                                    <option value="Hết hạn">Đã hết hạn kí gửi</option>
+                                                    <option value="Hoàn tất">Hoàn tất</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +161,7 @@
                                             <td class="center" style="font-weight: bold">${counter.count}</td>
                                             <td>${item.name}</td>
                                             <td>${item.product.name}</td>
-                                            <td style="text-align: center">
+                                            <td>
                                                 <c:choose>
                                                     <c:when test="${item.consignmentStatusID == 5 && item.product.productStatusID == 2}">
                                                         <font style="color: #7fcc7f; font-weight: bold">Chờ duyệt</font>
@@ -183,11 +185,11 @@
                                                 <c:choose>
                                                     <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
                                                                     (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
-                                                            <button style="width: 95%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Chi tiết</button>
+                                                            <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <button style="width: 46%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
-                                                        <button style="width: 46%;margin-right: 0px;" class="btn btn-link btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}">Chi tiết</button>
+                                                        <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>

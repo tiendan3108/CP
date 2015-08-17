@@ -42,6 +42,7 @@ import javax.servlet.http.HttpSession;
 public class ConsignmentRequestReceiveServlet extends HttpServlet {
 
     private static final String HOME = "HomeServlet";
+    private static final String LOGIN = "login.jsp";
     private static final String CONSIGNMENT_SITE = "manageRequest.jsp";
 
     /**
@@ -63,11 +64,11 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             HttpSession session = request.getSession();
             if (session.getAttribute("ACCOUNT") == null) {
-                response.sendRedirect(HOME);
+                response.sendRedirect(LOGIN);
                 return;
             } else {
                 if (!((AccountDTO) session.getAttribute("ACCOUNT")).getRole().equals(GlobalVariables.STORE_OWNER)) {
-                    response.sendRedirect(HOME);
+                    response.sendRedirect(LOGIN);
                     return;
                 }
             }
