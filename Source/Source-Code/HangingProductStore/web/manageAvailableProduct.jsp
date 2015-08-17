@@ -4,7 +4,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>Quản lí sản phẩm</title>
+        <title>Quản lý sản phẩm</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -92,19 +92,19 @@
                         <li class="start">
                             <a href="ConsignmentRequestReceive">
                                 <i class="icon-tag"></i>
-                                <span class="title">Quản lí yêu cầu</span>
+                                <span class="title">Quản lý yêu cầu</span>
                             </a>
                         </li>
                         <li class="active">
                             <a href="LoadProductPage">
                                 <i class="icon-handbag"></i>
-                                <span class="title">Quản lí sản phẩm</span>
+                                <span class="title">Quản lý sản phẩm</span>
                             </a>
                         </li>
                         <li class="start">
                             <a href="LoadSalesPage">
                                 <i class="icon-basket"></i>
-                                <span class="title">Quản lí bán hàng</span>
+                                <span class="title">Quản lý bán hàng</span>
                             </a>
                         </li>
                     </ul>
@@ -115,21 +115,31 @@
             <!-- BEGIN CONTENT -->
             <div class="page-content-wrapper">
                 <div class="page-content">
+                    <div class="row" style="background-color: #01579b; height: 40px" >
+                        <div class="col-lg-8 col-md-8" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
+                            <i class="icon-handbag icon-lg"></i> Quản lý sản phẩm
+                        </div>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col-md-12">
                             <!-- BEGIN ALL TAB-->
-                            <div class="row" style="margin-bottom: 7px;">
-                                <div class="my-form-control">
-                                    <select id="consignmentOption" style="float: right; font-size: 14">
-                                        <option value="all" selected="selected">Tất cả</option>
-                                        <option value="Chờ duyệt">Chờ duyệt lên web</option>
-                                        <option value="Trên web">Đang trên web</option>
-                                        <option value="Hủy kí gửi">Đăng kí hủy kí gửi</option>
-                                        <option value="Chờ nhận hàng">Chờ nhận hàng</option>
-                                        <option value="Hết hạn">Đã hết hạn kí gửi</option>
-                                        <option value="Hoàn tất">Hoàn tất</option>
-                                    </select>
-                                    <label style="float: right">Trạng thái :&nbsp;&nbsp;</label>
+                            <div class="col-md-6 col-sm-6 col-md-offset-6 col-sm-offset-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-md-3 col-sm-3 col-md-offset-4 col-sm-offset-4 control-label">Trạng thái:</label>
+                                        <div class="col-md-5 col-sm-5">
+                                            <select class="form-control" id="consignmentOption">
+                                                <option value="all" selected="selected">Tất cả</option>
+                                                <option value="Chờ duyệt">Chờ duyệt lên web</option>
+                                                <option value="Trên web">Đang trên web</option>
+                                                <option value="Hủy kí gửi">Đăng kí hủy kí gửi</option>
+                                                <option value="Chờ nhận hàng">Chờ nhận hàng</option>
+                                                <option value="Hết hạn">Đã hết hạn kí gửi</option>
+                                                <option value="Hoàn tất">Hoàn tất</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <table class="table table-bordered table-hover" id="productTable">
@@ -1131,7 +1141,7 @@
                     } else {
                         $('#c_paypalAccount').text("Chuyển tiền qua tài khoản " + respone.paypalAccount);
                     }
-                    $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' ngàn đồng');
+                    $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' (ngàn đồng)');
                     $('#c_createdDate').text(respone.createdDate);
 
                     $('#div_c_refuseProductDate').hide();

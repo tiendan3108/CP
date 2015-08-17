@@ -11,7 +11,7 @@
     <!-- BEGIN HEAD -->
     <head>
         <meta charset="utf-8"/>
-        <title>Quản lí yêu cầu ký gửi</title>
+        <title>Quản lý yêu cầu ký gửi</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -88,19 +88,19 @@
                         <li class="start active">
                             <a href="ConsignmentRequestReceive">
                                 <i class="icon-rocket"></i>
-                                <span class="title">Quản lí yêu cầu</span>
+                                <span class="title">Quản lý yêu cầu</span>
                             </a>                             
                         </li>
                         <li class="start">
                             <a href="LoadProductPage">
                                 <i class="icon-handbag"></i>
-                                <span class="title">Quản lí sản phẩm</span>
+                                <span class="title">Quản lý sản phẩm</span>
                             </a>
                         </li>
                         <li class="start">
                             <a href="LoadSalesPage">
                                 <i class="icon-basket"></i>
-                                <span class="title">Quản lí bán hàng</span>
+                                <span class="title">Quản lý bán hàng</span>
                             </a>
                         </li>
                     </ul>
@@ -119,7 +119,7 @@
                     <div class="row" style="background-color: #01579b; height: 40px" >
                         <div class="col-lg-8 col-md-8" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
 
-                            <i class="icon-rocket icon-lg"></i> Quản lí yêu cầu
+                            <i class="icon-rocket icon-lg"></i> Quản lý yêu cầu
                         </div>
                         <div class="col-lg-4 col-md-4" align="right">
                             <button data-toggle="modal" data-target="#modalAddConsignment"
