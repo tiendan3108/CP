@@ -41,7 +41,7 @@
           font-weight: 400;
           font-stretch: normal;
           line-height: normal;" class="ecommerce" onload="initialize_googleMap()">
-        <div id="top" style="height:90px">
+        <div id="top" style="height:80px">
             <div class="contain">
                 <div class="row">
                     <div class="col-md-8" style="line-height: 70px">
