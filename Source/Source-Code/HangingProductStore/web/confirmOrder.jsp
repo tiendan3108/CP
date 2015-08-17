@@ -80,7 +80,7 @@
                         </c:if>
                         <c:if test="${empty acc}">
                             <div class="form-group">
-                                <label class="col-lg-2 control-label col-md-2">Tên<span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2">Tên<font color="red">*</font></label>
                                 <div class="col-lg-3 col-md-4">
                                     <input id="name" name="name" type="text" class="form-control">
                                 </div>
@@ -94,7 +94,7 @@
                                 <div class="col-lg-3 col-md-4">
                                     <textarea id="addressInput" rows="3" name="address" type="text" class="form-control"></textarea>
                                 </div>
-                                <label class="col-lg-2 control-label col-md-2" for="first-name">Số điện thoại <span class="require">*</span></label>
+                                <label class="col-lg-2 control-label col-md-2" for="first-name">Số điện thoại <font color="red">*</font></label>
                                 <div class="col-lg-4 col-md-4">
                                     <input id="phone" name="phone" class="form-control">
                                 </div>
