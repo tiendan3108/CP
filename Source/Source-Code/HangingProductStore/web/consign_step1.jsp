@@ -354,20 +354,20 @@
 
         var newStatus = $('#txtNewStatus').val();
         if (newStatus.length == 0) {
-            $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-100</font>");
+            $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-99</font>");
             check = false;
         } else {
             if (isNaN(newStatus)) {
-                $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-100</font>");
+                $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-99</font>");
                 check = false;
             } else {
                 if (newStatus.indexOf(".") > -1) {
-                    $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-100</font>");
+                    $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-99</font>");
                     check = false;
                 } else {
                     var numStatus = parseInt(newStatus);
-                    if (numStatus > 100 || numStatus < 1) {
-                        $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-100</font>");
+                    if (numStatus > 99 || numStatus < 1) {
+                        $('#erNewStatus').html("<font color='red'>Xin nhập số nguyên từ 1-99</font>");
                         check = false;
                     } else {
                         $('#erNewStatus').html("");

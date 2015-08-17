@@ -247,7 +247,7 @@
                                                     <td align="center">
                                                         <c:choose>
                                                             <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
-                                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" 
+                                                                <button type="butMton" class="btn btn-info" style="width: 70px; height: 30px" 
                                                                         name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>        
                                                             </c:when>
                                                             <c:otherwise>
@@ -516,7 +516,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group" id="r_divCCNumber" style="display: none">
-                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Mã tài khoản <font id="re_r_paypalAccount" color="red">*</font></label>
+                                                <label class="col-md-4 col-sm-4 control-label" style="font-weight: bold">Tài khoản <font id="re_r_paypalAccount" color="red">*</font></label>
                                                 <div class="col-md-8 col-sm-8" id="r_txtPaypalAccountInput">
                                                     <input type="text" id="r_txtPaypalAccount" name="txtPaypalAccount" class="form-control" />
                                                 </div>
