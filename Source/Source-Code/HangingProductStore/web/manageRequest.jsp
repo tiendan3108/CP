@@ -1669,12 +1669,12 @@
                     if (data == "success") {
                         var consignmentTD = $("td:contains('" + consignmentID + "')");
                         consignmentTD.prev().html(productName);
-                        consignmentTD.next().html(hour + "|" + appointmentDate);
-                        if (deliveryMethod == "customer") {
-                            consignmentTD.next().next().html("<b><font color='green'>Tự mang đến</font></b>");
-                        } else {
-                            consignmentTD.next().next().html("<b><font color='blue'>Cửa hàng đến nhận</font></b>");
-                        }
+                        consignmentTD.next().next().html(hour + "|" + appointmentDate);
+//                        if (deliveryMethod == "customer") {
+//                            consignmentTD.next().next().html("<b><font color='green'>Tự mang đến</font></b>");
+//                        } else {
+//                            consignmentTD.next().next().html("<b><font color='blue'>Cửa hàng đến nhận</font></b>");
+//                        }
                         //consignmentTD.next().next().next().html(hour + "|" + appointmentDate);
                         changeContentAlert("Cập nhật thành công");
                     } else if (data == "fail") {
