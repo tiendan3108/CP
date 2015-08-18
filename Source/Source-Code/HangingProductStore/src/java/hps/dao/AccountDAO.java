@@ -515,8 +515,8 @@ public class AccountDAO {
                 store.setFullName(rs.getString("FullName"));
                 store.setAddress(rs.getString("Address"));
                 store.setPhone(rs.getString("Phone"));
-                if(store.getPhone()!= null){
-                    if(store.getPhone().contains("+84")){
+                if (store.getPhone() != null) {
+                    if (store.getPhone().contains("+84")) {
                         store.setPhone("0" + store.getPhone().substring(3));
                     }
                 }
@@ -564,6 +564,47 @@ public class AccountDAO {
                     + " WHERE AccountID = ? ";
             stm = con.prepareStatement(sql);
             stm.setString(1, storeOwnerID);
+
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                gcmID = rs.getString("GcmID");
+            }
+            return gcmID;
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public static String getGcmIDOfStoreOwnerByConsignmentID(String consignmentID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String gcmID = "";
+        try {
+            con = DBUltilities.makeConnection();
+            String sql = "SELECT     A.GcmID "
+                    + "FROM         dbo.Account AS A INNER JOIN "
+                    + "             dbo.StoreOwner AS S ON A.AccountID = S.AccountID INNER JOIN "
+                    + "             dbo.Consignment AS C ON S.StoreOwnerID = C.StoreOwnerID "
+                    + "WHERE     (C.ConsignmentID =  ?) ";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, consignmentID);
 
             rs = stm.executeQuery();
 

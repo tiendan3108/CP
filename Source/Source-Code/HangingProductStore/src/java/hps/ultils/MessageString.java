@@ -82,5 +82,9 @@ public class MessageString {
     public static final String newProductNotification(String name) {
         return "Bạn có thêm món hàng " + name + " cần lấy trong ngày hôm nay.";
     }
+    public static final String cancelProductNotification(String name, String consignmentID) {
+        return "Món hàng " + name + " với mã số '" + consignmentID + "' cần lấy trong ngày hôm nay đã bị hủy.";
+    }
+    
     public static final String errorOrder = "Số điện thoại đã sử dụng để đặt món hàng này";
 }

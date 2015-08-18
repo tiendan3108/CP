@@ -6,10 +6,13 @@
 package hps.servlet;
 
 import com.google.gson.Gson;
+import hps.dao.AccountDAO;
 import hps.dao.ConsignmentDAO;
 import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
 import hps.ultils.GlobalVariables;
+import hps.ultils.JavaUltilities;
+import hps.ultils.MessageString;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -119,31 +122,20 @@ public class TrackProductStatusServlet extends HttpServlet {
                 String searchValue = request.getParameter("searchValue");
                 dao.cancelConsignmentInProduct(consignmentID);
 
-                ConsignmentDTO consignment = dao.getConsignment(searchValue);
+                ConsignmentDTO consignment = dao.getConsignment(consignmentID);
                 if (consignment != null) {
                     dao.populateStoreOwner(consignment);
-//                    consignment.setPhone("0" + consignment.getPhone().substring(3));
-
-//                    if (consignment.getConsignmentStatusID() == 6) {
-//                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-//                        Date currentDate = new Date();
-//                        try {
-//                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
-//
-//                            long diff = (currentDate.getTime() - raiseWeb.getTime());
-//                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
-//                            int extraPayment = 0;
-//                            if (consignment.getNegotiatedPrice() >= 1000000) {
-//                                extraPayment = 10 * result;
-//                            } else {
-//                                extraPayment = 5 * result;
-//                            }
-//                            request.setAttribute("extraPayment", extraPayment);
-//                            request.setAttribute("overDate", result);
-//                        } catch (ParseException ex) {
-//                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
+                    if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        java.util.Date currentDate = new java.util.Date();
+                        String today = df.format(currentDate);
+                        if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
+                            JavaUltilities java = new JavaUltilities();
+                            String noti = MessageString.titleNofitication;
+                            java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
+                            System.out.println("Send cancel notification");
+                        }
+                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
@@ -156,29 +148,7 @@ public class TrackProductStatusServlet extends HttpServlet {
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
                 if (consignment != null) {
                     dao.populateStoreOwner(consignment);
-//                    consignment.setPhone("0" + consignment.getPhone().substring(3));
 
-//                    if (consignment.getConsignmentStatusID() == 6) {
-//                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-//                        Date currentDate = new Date();
-//                        try {
-//                            Date raiseWeb = df.parse(consignment.getRaiseWebDate());
-//
-//                            long diff = (currentDate.getTime() - raiseWeb.getTime());
-//                            int result = (int) (diff / (24 * 60 * 60 * 1000)) - consignment.getPeriod();
-//                            System.out.println("Diffffffffffffff: " + result);
-//                            int extraPayment = 0;
-//                            if (consignment.getNegotiatedPrice() >= 1000000) {
-//                                extraPayment = 10 * result;
-//                            } else {
-//                                extraPayment = 5 * result;
-//                            }
-//                            request.setAttribute("extraPayment", extraPayment);
-//                            request.setAttribute("overDate", result);
-//                        } catch (ParseException ex) {
-//                            Logger.getLogger(TrackProductStatusServlet.class.getName()).log(Level.SEVERE, null, ex);
-//                        }
-//                    }
                 }
 
                 request.setAttribute("CONSIGNMENT", consignment);
@@ -194,6 +164,21 @@ public class TrackProductStatusServlet extends HttpServlet {
                 String actionValue = request.getParameter("actionValue");
                 String searchValue = request.getParameter("searchValue");
                 dao.cancelConsignmentInProduct(actionValue);
+                ConsignmentDTO consignment = dao.getConsignment(searchValue);
+                if (consignment != null) {
+                    dao.populateStoreOwner(consignment);
+                    if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        java.util.Date currentDate = new java.util.Date();
+                        String today = df.format(currentDate);
+                        if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
+                            JavaUltilities java = new JavaUltilities();
+                            String noti = MessageString.titleNofitication;
+                            java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
+                            System.out.println("Send cancel notification");
+                        }
+                    }
+                }
                 List<ConsignmentDTO> list = dao.getConsignmentByMemberIDAndProductName(member.getRoleID(), searchValue);
                 request.setAttribute("CONSIGNMENT", list);
 
