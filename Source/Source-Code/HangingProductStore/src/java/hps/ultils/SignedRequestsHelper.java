@@ -85,7 +85,7 @@ public class SignedRequestsHelper {
         if (null == awsSecretKey || awsSecretKey.length() == 0) {
             throw new IllegalArgumentException("awsSecretKey is null or empty");
         }
-        if (null == awsSecretKey || awsSecretKey.length() == 0) {
+        if (null == associateTag || associateTag.length() == 0) {
             throw new IllegalArgumentException("associateTag is null or empty");
         }
 

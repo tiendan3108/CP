@@ -188,7 +188,7 @@
                                                             <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <button style="width: 46%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                        <button style="width: 70%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
                                                         <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
                                                     </c:otherwise>
                                                 </c:choose>
