@@ -185,11 +185,11 @@
                                                 <c:choose>
                                                     <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
                                                                     (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
-                                                            <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
+                                                            <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <button style="width: 70%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
-                                                        <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
+                                                        <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                        <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
