@@ -39,6 +39,7 @@
             <c:redirect url="./login.jsp"/>
         </c:if>
         <c:set var="account" value="${sessionScope.ACCOUNT}"></c:set>
+            <input type="hidden" class="currentTab" name="currentTab" value="">
             <!-- END SET PARAMETER -->
             <!-- BEGIN HEADER -->
             <div class="page-header navbar navbar-fixed-top">
@@ -186,12 +187,12 @@
                                                     <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
                                                                     (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
                                                             <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
-                                                        <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                            <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
+                                                            </c:otherwise>
+                                                    </c:choose>
                                             </td>
                                             <td style="display: none">${item.consigmentID}</td>
                                         </tr>
@@ -268,6 +269,7 @@
                                         <form action="CancelProduct" method="POST">
                                             <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
                                             <button id="btnAgree" class="btn blue" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
+                                            <input type="hidden" class="currentTab" name="currentTab" value="">
                                             <button id="btnDecline" class="btn red" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
                                             <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                         </form>
@@ -401,6 +403,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn blue" type="submit">Duyệt</button>
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" name="txtSeasonList" id="avai_seasonID">
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -507,6 +510,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" name="txtExpiredFee" id="expired_fees_1" value="">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" name="txtConsignmentID" id="expired_extendConsignmentID" value="">
                                     <button class="btn blue" name="btnAction" type="submit" value="extend">Gia hạn</button>
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -534,6 +538,7 @@
                                 </div>
                                 <div class="modal-footer" align="center">
                                     <input type="hidden" name="txtConsignmentID" id="expired_receiveConsignmentID" value="">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <button class="btn blue" name="btnAction" type="submit" value="receive">Đồng ý</button>
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -662,6 +667,7 @@
                                 <div class="modal-footer">
                                     <input class="btn red confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
                                     <button class="btn blue" type="submit">Cập nhật</button>
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" name="txtSeasonList" id="onWeb_seasonID">
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -683,7 +689,7 @@
                                     <h4>Tiền phạt (Ngàn đồng):  <font color="red">*</font><input id="confirmCancel_Fee" name="txtCancelFee"></h4>
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="hidden" value="onWeb" name="txtcurrentTab">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" value="" name="txtConsignmentID" id="confirmCancel_ConsignmentID2">
                                     <button class="btn blue" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -709,6 +715,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" value="canceled" name="txtcurrentTab">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" value="" name="txtConsignmentID" id="returnProduct_ConsignmentID1">
                                     <button class="btn blue" type="submit" name="btnAction" value="receive">Đồng ý</button>
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
@@ -1391,9 +1398,54 @@
                 return flag;
             }
             $("#consignmentOption").change(function () {
+                var currentTab = $("#consignmentOption").val();
+                $(".currentTab").each(function () {
+                    $(this).val(currentTab)
+                })
+                if (currentTab == "all") {
+                    window.location.hash = "all";
+                } else if (currentTab == "Chờ duyệt") {
+                    window.location.hash = "available";
+                } else if (currentTab == "Trên web") {
+                    window.location.hash = "onweb";
+                } else if (currentTab == "Hủy kí gửi") {
+                    window.location.hash = "requestCancel";
+                } else if (currentTab == "Chờ nhận hàng") {
+                    window.location.hash = "agreeCancel";
+                } else if (currentTab == "Hết hạn") {
+                    window.location.hash = "expired";
+                } else if (currentTab == "Hoàn tất") {
+                    window.location.hash = "completed";
+                }
                 var table = $("#productTable").DataTable();
                 table.draw();
             })
+            $(document).ready(function () {
+                var currentTab = window.location.hash.substring(1);
+                if (currentTab.length > 0) {
+                    if (currentTab == "all") {
+                        $('#consignmentOption').val("all").change();
+                    } else if (currentTab == "available") {
+                        $('#consignmentOption').val("Chờ duyệt").change();
+                    } else if (currentTab == "onweb") {
+                        $('#consignmentOption').val("Trên web").change();
+                    } else if (currentTab == "requestCancel") {
+                        $('#consignmentOption').val("Hủy kí gửi").change();
+                    } else if (currentTab == "agreeCancel") {
+                        $('#consignmentOption').val("Chờ nhận hàng").change();
+                    } else if (currentTab == "expired") {
+                        $('#consignmentOption').val("Hết hạn").change();
+                    } else if (currentTab == "completed") {
+                        $('#consignmentOption').val("Hoàn tất").change();
+                    }
+                    var table = $('#productTable').DataTable();
+                    table.draw();
+                } else {
+                    $('#consignmentOption').val("all").change();
+                    var table = $('#productTable').DataTable();
+                    table.draw();
+                }
+            });
             $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
                         var option = $('#consignmentOption').val();

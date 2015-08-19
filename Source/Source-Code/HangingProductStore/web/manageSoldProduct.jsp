@@ -262,6 +262,7 @@
                                     <div style="float: right; margin: 0px 5px;">
                                         <form action="SoldProduct" method="POST" onsubmit="return checkPaymentValue();">
                                             <input type="hidden" name="txtReturnPrice" id="sold_returnPrice1" value=""/>
+                                            <input type="hidden" class="currentTab" name="currentTab" value="">
                                             <input type="hidden" name="txtConsignmentID" id="soldconsignmentID" value=""/>
                                             <button class="btn blue" name="btnAction" type="submit" value="pay">Trả tiền</button>
                                             <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px"/>
@@ -336,6 +337,7 @@
                                     <input type="hidden" name="txtOrderID" value="" id="ordered_orderID">
                                     <button class="btn btn-warning" name="btnAction" type="submit" value="sendPrice" onclick="return checkCustomer2();" id="btnPrice">Gửi giá</button>
                                     <button class="btn red" name="btnAction" type="submit" value="cancel">Hủy đơn hàng</button>
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input class="btn blue confirmOrderedModal" type="button" data-togle="modal" value="Hoàn tất thanh toán" onclick="return checkCustomer1();">
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -362,6 +364,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <input type="hidden" name="txtOrderID" id="order_OrderID">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <button class="btn blue" name="btnAction" type="submit" value="order" onclick="return validateSellingPrice();">Đồng ý</button>
                                     <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                 </div>
@@ -662,7 +665,7 @@
                 $.get('LoadPaypalInformation', function (result) {
                     $("input[name=cmd]").val(result.cmd);
                     $("input[name=business]").val(result.business);
-                    $("input[name=return]").val(result.returnURL + "?txtConsignmentID=" + consignmentID + "&txtReturnPrice=" + price + "&paymentMethod=paypal");
+                    $("input[name=return]").val(result.returnURL + "?txtConsignmentID=" + consignmentID + "&txtReturnPrice=" + price + "&paymentMethod=paypal&currentTab=sold");
                     $("input[name=rm]").val(result.rm);
                     $("input[name=item_name]").val(result.item_name + consignmentID);
                     $("input[name=item_number]").val(result.item_number);
@@ -763,9 +766,50 @@
                 $('#orderedModal').modal('show');
             }
             $("#consignmentOption").change(function () {
+                var currentTab = $("#consignmentOption").val();
+                console.log(currentTab);
+                if (currentTab == "Đã được đặt") {
+                    currentTab = "ordered";
+                }
+                if (currentTab == "Đã bán") {
+                    currentTab = "sold";
+                }
+                if (currentTab == "all") {
+                    currentTab = "all";
+                }
+                console.log(currentTab);
+                $(".currentTab").each(function () {
+                    $(this).val(currentTab)
+                })
+                console.log(currentTab);
+                if (currentTab == "all") {
+                    window.location.hash = "all";
+                } else if (currentTab == "ordered") {
+                    window.location.hash = "ordered";
+                } else if (currentTab == "sold") {
+                    window.location.hash = "sold";
+                }
                 var table = $("#saleTable").DataTable();
                 table.draw();
             })
+            $(document).ready(function () {
+                var currentTab = window.location.hash.substring(1);
+                if (currentTab.length > 0) {
+                    if (currentTab == "all") {
+                        $('#consignmentOption').val("all").change();
+                    } else if (currentTab == "ordered") {
+                        $('#consignmentOption').val("Đã được đặt").change();
+                    } else if (currentTab == "sold") {
+                        $('#consignmentOption').val("Đã bán").change();
+                    }
+                    var table = $('#saleTable').DataTable();
+                    table.draw();
+                } else {
+                    $('#consignmentOption').val("all").change();
+                    var table = $('#saleTable').DataTable();
+                    table.draw();
+                }
+            });
             $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
                         var option = $('#consignmentOption').val();

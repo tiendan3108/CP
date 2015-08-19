@@ -57,16 +57,22 @@ public class CancelProductOnWeb extends HttpServlet {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                String currentTab = request.getParameter("currentTab");
+                if (currentTab == null) {
+                    currentTab = "all";
+                } else {
+                    currentTab = "onweb";
+                }
                 ProductDAO productDAO = new ProductDAO();
                 if (cancelFee > 0) {
                     flag = productDAO.cancelProduct(consignmentID, ProductStatus.NOT_AVAILABLE, cancelFee);
                     if (flag) {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success#" + currentTab;
                     } else {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                     }
                 } else {
-                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                 }
             }
             response.sendRedirect(url);

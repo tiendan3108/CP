@@ -74,7 +74,7 @@ public class PublishProduct extends HttpServlet {
             }
             String url = "";
             String productName = null, serialNumber = null, category = null, brand = null, description = null, tmp_productID = null,
-                    image = null, action = null, isSpecial = null, imagePath = null, temp_NewRatio = null;
+                    image = null, action = null, isSpecial = null, imagePath = null, temp_NewRatio = null, currentTab = null;
             String tempSeason = "";
             List<String> season = new ArrayList<>();
             int categoryID = 0, productID = 0, special = 2, newRatio = -1;
@@ -131,6 +131,9 @@ public class PublishProduct extends HttpServlet {
                                 break;
                             case "rdSendPrice_2":
                                 isSpecial = item.getString();
+                                break;
+                            case "currentTab":
+                                currentTab = new String(item.getString().getBytes("iso-8859-1"), "utf-8");
                                 break;
                             default:
                                 break;
@@ -192,15 +195,24 @@ public class PublishProduct extends HttpServlet {
                     if (!action.equals("available")) {
                         isPublish = false;
                     }
+                    if (currentTab == null) {
+                        currentTab = "all";
+                    } else {
+                        if (currentTab.equals("Trên web")) {
+                            currentTab = "onweb";
+                        } else {
+                            currentTab = "available";
+                        }
+                    }
                     if ((newRatio >= 0 || newRatio <= 100)) {
                         boolean flag = productDAO.publishOnWeb(product, season, isPublish);
                         if (flag) {
-                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success#" + currentTab;
                         } else {
-                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                            url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                         }
                     } else {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                     }
 
                 }

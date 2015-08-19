@@ -146,11 +146,21 @@ public class CancelProduct extends HttpServlet {
             }
             //update database
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
+            String currentTab = request.getParameter("currentTab");
+            if (currentTab == null) {
+                currentTab = "all";
+            } else if (currentTab.equals("Trên web")) {
+                currentTab = "onweb";
+            } else if (currentTab.equals("Hủy kí gửi")) {
+                currentTab = "requestCancel";
+            } else {
+                currentTab = "agreeCancel";
+            }
             //change url
             if (flag) {
-                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success#" + currentTab;
             } else {
-                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
             }
 
         }

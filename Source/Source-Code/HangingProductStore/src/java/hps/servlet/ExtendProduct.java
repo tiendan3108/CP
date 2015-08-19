@@ -56,6 +56,12 @@ public class ExtendProduct extends HttpServlet {
                 } catch (Exception e) {
                 }
                 boolean flag = true;
+                String currentTab = request.getParameter("currentTab");
+                if (currentTab == null) {
+                    currentTab = "all";
+                }else{
+                    currentTab = "expired";
+                }
                 if (action != null && expiredFee >= 0) {
                     if (action.equals("receive")) {//nhan hang
                         String consignmentID = request.getParameter("txtConsignmentID");
@@ -67,12 +73,12 @@ public class ExtendProduct extends HttpServlet {
                         flag = productDAO.ExtendProducts(consignmentID, expiredFee);
                     }
                     if (flag) {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success#" + currentTab;
                     } else {
-                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                        url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                     }
                 } else {
-                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail";
+                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                 }
             }
             response.sendRedirect(url);

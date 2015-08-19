@@ -141,10 +141,11 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
+                String currentTab = request.getParameter("currentTab");
                 if (flag) {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success#"+currentTab;
                 } else {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail";
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail#"+currentTab;
                 }
 
             }
