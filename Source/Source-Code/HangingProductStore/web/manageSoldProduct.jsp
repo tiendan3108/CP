@@ -169,8 +169,8 @@
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <button style="width: 70%;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
-                                                <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-file-o"></i></button>
+                                                <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                             </td>
                                             <td style="display: none">${item.consigmentID}</td>
                                         </tr>
