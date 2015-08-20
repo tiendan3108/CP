@@ -87,7 +87,7 @@
                         </li>
                         <li class="start active">
                             <a href="ConsignmentRequestReceive">
-                                <i class="icon-rocket"></i>
+                                <i class="icon-tag"></i>
                                 <span class="title">Quản lý yêu cầu</span>
                             </a>                             
                         </li>
@@ -119,7 +119,7 @@
                     <div class="row" style="background-color: #01579b; height: 40px" >
                         <div class="col-lg-8 col-md-8" style="font-weight: bold; color: white; font-size: 150%; margin-top: 5px">
 
-                            <i class="icon-rocket icon-lg"></i> Quản lý yêu cầu
+                            <i class="icon-tag icon-lg"></i> Quản lý yêu cầu
                         </div>
                         <div class="col-lg-4 col-md-4" align="right">
                             <button data-toggle="modal" data-target="#modalAddConsignment"
@@ -390,7 +390,7 @@
                                             <!-- Carousel items -->
                                             <div class="carousel-inner">
                                                 <div class="item active">
-                                                    <img id="r_image" alt="" style="max-height: 220px">
+                                                    <img id="r_image" alt="" style="max-height: 200px">
                                                     <div class="carousel-caption">
                                                         <p></p>
                                                     </div>
@@ -983,7 +983,7 @@
         <!-- END MODAL -->
 
         <!--BEGIN MODAL-->
-        <div id="modalAlert" data-backdrop="static" class="modal fade">
+        <div id="modalAlert" data-backdrop="static" class="modal collapse">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #dfba49">
