@@ -147,14 +147,8 @@ public class CancelProduct extends HttpServlet {
             //update database
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
             String currentTab = request.getParameter("currentTab");
-            if (currentTab == null) {
-                currentTab = "all";
-            } else if (currentTab.equals("Trên web")) {
-                currentTab = "onweb";
-            } else if (currentTab.equals("Hủy kí gửi")) {
+            if (currentTab!=null && !currentTab.equals("all")) {
                 currentTab = "requestCancel";
-            } else {
-                currentTab = "agreeCancel";
             }
             //change url
             if (flag) {

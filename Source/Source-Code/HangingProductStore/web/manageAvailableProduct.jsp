@@ -145,14 +145,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-bordered table-hover" id="productTable">
+                            <table class="table table-bordered table-hover" id="productTable" style="display:none">
                                 <thead>
                                     <tr class="heading">
                                         <th>STT</th>
                                         <th>Tên khách hàng</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Trạng thái</th>
-                                        <th class="col-sm-2">Chi Tiết</th>
+                                        <th style="width: 110px">Chi Tiết</th>
                                         <th style="display: none"></th>
                                     </tr>
                                 </thead>
@@ -186,7 +186,7 @@
                                                 <c:choose>
                                                     <c:when test="${(item.consignmentStatusID == 4 && item.product.productStatusID == 7) || 
                                                                     (item.consignmentStatusID == 4 && item.product.productStatusID == 1) || (item.consignmentStatusID == 7 && item.product.productStatusID == 1 && item.reviewProductDate !='')}">
-                                                            <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
+                                                            <button style="margin-right: 0px;width: 100%" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                                             </c:when>
                                                             <c:otherwise>
                                                             <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
@@ -1445,6 +1445,7 @@
                     var table = $('#productTable').DataTable();
                     table.draw();
                 }
+                $('#productTable').show();
             });
             $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {

@@ -148,7 +148,7 @@
                                         <th>Tên khách hàng</th>
                                         <th>Tên sản phẩm</th>
                                         <th>Trạng thái</th>
-                                        <th>Chi Tiết</th>
+                                        <th style="width: 110px">Chi Tiết</th>
                                         <th style="display: none"></th>
                                     </tr>
                                 </thead>

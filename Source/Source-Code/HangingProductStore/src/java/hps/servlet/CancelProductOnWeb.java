@@ -60,8 +60,12 @@ public class CancelProductOnWeb extends HttpServlet {
                 String currentTab = request.getParameter("currentTab");
                 if (currentTab == null) {
                     currentTab = "all";
-                } else {
+                } else if (currentTab.equals("TrÃªn web")) {
                     currentTab = "onweb";
+                } else if (currentTab.equals("all")) {
+                    currentTab = "all";
+                } else {
+                    currentTab = "agreeCancel";
                 }
                 ProductDAO productDAO = new ProductDAO();
                 if (cancelFee > 0) {
