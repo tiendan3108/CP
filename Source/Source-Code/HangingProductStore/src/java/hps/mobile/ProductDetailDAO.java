@@ -153,7 +153,7 @@ public class ProductDetailDAO {
                 String reviewProductDate = rs.getString("ReviewProductDate");
                 String paypalAccount = rs.getString("PaypalAccount");
                 int newStatus = rs.getInt("NewStatus");
-                float desirePrice = rs.getFloat("DesirePrice");
+                float desirePrice = rs.getFloat("DesirePrice")/1000;
                 ProductDetail product = new ProductDetail(productID, productName, serialNumber, brand, description, 
                                                           image, customerName, address, phone, maxPrice, minPrice, 
                                                           appointmentDate,reviewProductDate,paypalAccount,
