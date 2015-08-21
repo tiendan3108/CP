@@ -177,7 +177,7 @@
                                                 <th>
                                                     Trạng thái
                                                 </th>
-                                                <th>
+                                                <th style="width: 90px">
                                                     Chi Tiết
                                                 </th>
                                             </tr>
@@ -244,15 +244,21 @@
                                                         </c:choose>
                                                     </td>
 
-                                                    <td align="center">
+                                                    <td>
                                                         <c:choose>
                                                             <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
-                                                                <button type="butMton" class="btn btn-info" style="width: 70px; height: 30px" 
-                                                                        name="requestAcceptDetails" value="${c.consigmentID}">Xem</button>        
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                <button type="button" class="btn btn-info" style="width: 70px; height: 30px" data-toggle="modal" data-target="#modalRefuseCancel"
-                                                                        name="refuseCancelDetails" value="${c.consigmentID}">Xem</button>
+                                                                <button type="button" class="btn btn-info" style="margin-right: 0px; color: black" 
+                                                                        name="requestAcceptDetails" value="${c.consigmentID}"><i class="fa fa-eye"></i></button>       
+                                                                <c:if test="${c.consignmentStatusID == 1}">
+                                                                    <button name="btnRefuseRequest" value="${c.consigmentID}" style="margin-right: 0px" class="btn yellow"><i class="fa fa-remove"></i></button>
+                                                                    </c:if>
+                                                                    <c:if test="${c.consignmentStatusID == 3}">
+                                                                    <button name="btnRefuseProduct" value="${c.consigmentID}" style="margin-right: 0px;"  class="btn yellow"><i class="fa fa-remove"></i></button>
+                                                                    </c:if>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                <button type="button" class="btn btn-info" style="margin-right: 0px; color: black" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                                        name="refuseCancelDetails" value="${c.consigmentID}"><i class="fa fa-eye"></i></button>
                                                             </c:otherwise>
                                                         </c:choose>
 
@@ -1451,6 +1457,24 @@
                 //$("#modalRequestAccept").modal("show");
 
             }
+
+            $('button[name="btnRefuseRequest"]').click(function () {
+                var id = $(this).val();
+                //alert(id);
+                $("#refuse_consignmentID").val(id);
+                $("#modalConfirm").modal("show");
+                $('#ar_footer_confirm').hide();
+                $('#r_footer_confirm').show();
+            });
+
+            $('button[name="btnRefuseProduct"]').click(function () {
+                var id = $(this).val();
+                //alert(id);
+                $("#refuse_consignmentID").val(id);
+                $("#modalConfirm").modal("show");
+                $('#ar_footer_confirm').show();
+                $('#r_footer_confirm').hide();
+            });
 
             $('button[name="requestAcceptDetails"]').click(function () {
                 var id = $(this).val();
