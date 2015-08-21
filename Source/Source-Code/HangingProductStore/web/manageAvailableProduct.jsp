@@ -173,6 +173,9 @@
                                                     <c:when test="${item.consignmentStatusID == 5 && item.product.productStatusID == 6}">
                                                         <font style="color: #ffd700; font-weight: bold">Hủy kí gửi</font>
                                                     </c:when>
+                                                    <c:when test="${item.consignmentStatusID == 6 && item.product.productStatusID == 2}">
+                                                        <font style="color: #ee0930; font-weight: bold">Hết hạn</font>
+                                                    </c:when>
                                                     <c:when test="${item.consignmentStatusID == 7 && item.product.productStatusID == 8}">
                                                         <font style="color: #ff9900; font-weight: bold">Chờ nhận hàng</font>
                                                     </c:when>
@@ -189,7 +192,7 @@
                                                             <button style="margin-right: 0px;width: 100%" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                                             </c:when>
                                                             <c:otherwise>
-                                                            <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                            <button style="width: 60px;margin-right: 0px; color: black" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-eye"></i></button>
                                                             <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                                             </c:otherwise>
                                                     </c:choose>
@@ -506,7 +509,7 @@
                 <!-- CONFIRM EXTEND MODAL BEGIN-->
                 <div class="modal fade bs-example-modal-md" id="confirmExtendModal" aria-hidden="true">
                     <div class="modal-dialog modal-md">
-                        <form action="ExtendProduct" method="POST">
+                        <form action="ExtendProduct" method="POST" onsubmit="return checkNegotiatedPrice()">
                             <div class="modal-content">
                                 <div class="modal-header" style="background-color: #dfba49 ">
                                     <h3 class="modal-title" style="font-weight: bold">Thời hạn kí gửi</h3>
@@ -519,20 +522,32 @@
                                                 <div class="col-md-7 col-sm-7" id="expired_period"  style="padding-top: 8px; font-size: 120%; color: red"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền lưu kho (Ngàn đồng) <font color="red">*</font></label>
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Tiền lưu kho <br>(Ngàn đồng) <font color="red">*</font></label>
                                                 <div class="col-md-7 col-sm-7">
-                                                    <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="">
+                                                    <input class="form-control" type="text" name="txtExpiredFee" id="expired_fees_1" value="" style="width: 130px">
+                                                    <p class="help-block" id="er_expired_expiredFee"style="color: red">  </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="amazon_div">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá tham khảo trên Amazon (Ngàn đồng) </label>
+                                                <div class="col-md-7 col-sm-7" id="amazonPrice" style="padding-top: 8px; font-size: 120%;">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <h4>Sản phẩm sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay.</h4> 
-                                                <h4> Bạn có chắc chắn muốn gia hạn sản phẩm này?</h4>
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Giá thỏa thuận mới (Ngàn đồng) <font color="red">*</font></label>
+                                                <div class="col-md-7 col-sm-7">
+                                                    <input class="form-control" id="new_negotiatedPrice"type="text" name="txtNegotiatedPrice" value="" style="width: 130px">
+                                                    <p class="help-block" id="er_expired_NegotiatedPrice"style="color: red">  </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <h4>Đơn hàng sẽ được gia hạn thêm 30 ngày kể từ ngày hôm nay.</h4> 
+                                                <h4>Bạn có chắc chắn muốn gia hạn đơn hàng này?</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <input type="hidden" name="txtExpiredFee" id="expired_fees_1" value="">
                                     <input type="hidden" class="currentTab" name="currentTab" value="">
                                     <input type="hidden" name="txtConsignmentID" id="expired_extendConsignmentID" value="">
                                     <button class="btn blue" name="btnAction" type="submit" value="extend">Gia hạn</button>
@@ -816,6 +831,10 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Cách thức thanh toán</label>
                                                 <div class="col-md-7 col-sm-7" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Thời gian kí gửi</label>
+                                                <div class="col-md-7 col-sm-7" id="c_period"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1101,6 +1120,18 @@
                 }
             }
             function loadExpiredProduct(consignmentID) {
+                $("#expired_fullName").text('');
+                $("#expired_address").text('');
+                $("#expired_phone").text('');
+                $("#expired_email").text('');
+                $("#expired_productName").text('');
+                $("#expired_consignmentID").text(consignmentID);
+                $("#expired_extendConsignmentID").val(consignmentID);
+                $("#expired_receiveConsignmentID").val(consignmentID);
+                $("#expired_consignedDate").text('');
+                $("#expired_negotiatedPrice").text('');
+                $("#expired_days").text('');
+                $("#amazonPrice").text('');
                 $.get('LoadExpiredProduct', {consignmentID: consignmentID}, function (response) {
                     $("#expired_fullName").text(response.name);
                     $("#expired_address").text(response.address);
@@ -1113,6 +1144,12 @@
                     $("#expired_consignedDate").text(response.reviewProductDate);
                     $("#expired_negotiatedPrice").text(response.negotiatedPrice.toMoney(0) + " (ngàn đồng)");
                     $("#expired_days").text(response.expiredDays + ' ngày');
+                    $("#amazonPrice").text(response.minPrice.toMoney(0) + ' ~ ' + response.maxPrice.toMoney(0) + " (ngàn đồng)");
+                    if (response.minPrice == 0) {
+                        $("#amazon_div").hide();
+                    } else {
+                        $("#amazon_div").show();
+                    }
                     $("#expired_fee").val(response.expiredFee + response.remainExtendFee);
                 });
                 $('#expiredModal').modal('show');
@@ -1176,6 +1213,7 @@
                     } else {
                         $('#c_paypalAccount').text("Chuyển tiền qua tài khoản " + respone.paypalAccount);
                     }
+                    $('#c_period').text(respone.period + ' ngày');
                     $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' (ngàn đồng)');
                     $('#c_createdDate').text(respone.createdDate);
 
@@ -1515,6 +1553,24 @@
                         i = parseInt(n = Math.abs(n).toFixed(c)) + '',
                         j = ((j = i.length) > 3) ? j % 3 : 0;
                 return sign + (j ? i.substr(0, j) + t : '') + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : '');
+            }
+            function checkNegotiatedPrice() {
+                var flag = true;
+                var negotiatedPrice = $("#new_negotiatedPrice").val();
+                var expiredFee = $("#expired_fees_1").val();
+                if (isNaN(negotiatedPrice) || negotiatedPrice <= 0) {
+                    flag = false;
+                    $("#er_expired_NegotiatedPrice").html('Vui lòng nhập giá thỏa thuận mới');
+                } else {
+                    $("#er_expired_NegotiatedPrice").html('');
+                }
+                if (isNaN(expiredFee) || expiredFee <= 0) {
+                    flag = false;
+                    $("#er_expired_expiredFee").html('Vui lòng nhập tiền lưu kho');
+                } else {
+                    $("#er_expired_expiredFee").html('');
+                }
+                return flag;
             }
         </script>
     </body>

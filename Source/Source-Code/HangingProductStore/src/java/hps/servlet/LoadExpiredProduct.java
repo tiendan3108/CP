@@ -7,14 +7,20 @@ package hps.servlet;
 
 import com.google.gson.Gson;
 import hps.dao.ConsignmentDAO;
+import hps.dto.AccountDTO;
 import hps.dto.ConsignmentDTO;
+import hps.dto.ProductDTO;
+import hps.ultils.AmazonProduct;
+import hps.ultils.AmazonService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -41,6 +47,25 @@ public class LoadExpiredProduct extends HttpServlet {
             String consignmentID = request.getParameter("consignmentID");
             ConsignmentDAO consignmentDAO = new ConsignmentDAO();
             ConsignmentDTO infor = consignmentDAO.getInforForExpiredPage(consignmentID);
+            ProductDTO temp = infor.getProduct();
+            AmazonService service = new AmazonService();
+            float price = 0;
+            int quantity = 0;
+            List<AmazonProduct> amazonProduct = service.getProduct(temp.getName(), temp.getBrand(), temp.getCategoryName());
+            if (amazonProduct != null && !amazonProduct.isEmpty()) {
+                System.out.println("we have " + amazonProduct.size());
+                for (AmazonProduct item : amazonProduct) {
+                    price += item.getPrice();
+                    quantity++;
+                }
+                price = price / quantity;
+                float minprice = (float) ((price * 60 / 100) * (1 - 0.1)) * 22;
+                float maxprice = (float) ((price * 60 / 100) * (1 + 0.1)) * 22;
+                infor.setMinPrice(minprice);
+                infor.setMaxPrice(maxprice);
+            } else {
+                System.out.println("we have nothing");
+            }
             String json = new Gson().toJson(infor);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(json);

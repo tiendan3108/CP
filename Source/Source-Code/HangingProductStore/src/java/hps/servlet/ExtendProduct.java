@@ -59,18 +59,23 @@ public class ExtendProduct extends HttpServlet {
                 String currentTab = request.getParameter("currentTab");
                 if (currentTab == null) {
                     currentTab = "all";
-                }else{
+                } else {
                     currentTab = "expired";
                 }
                 if (action != null && expiredFee >= 0) {
                     if (action.equals("receive")) {//nhan hang
                         String consignmentID = request.getParameter("txtConsignmentID");
-
                         flag = productDAO.ExtendProduct(consignmentID, expiredFee);
                     }
                     if (action.equals("extend")) {// gia han
                         String consignmentID = request.getParameter("txtConsignmentID");
-                        flag = productDAO.ExtendProducts(consignmentID, expiredFee);
+                        String temp_negotiatedPrice = request.getParameter("txtNegotiatedPrice");
+                        float negotiatedPrice = 0;
+                        try {
+                            negotiatedPrice = Float.parseFloat(temp_negotiatedPrice);
+                        } catch (Exception e) {
+                        }
+                        flag = productDAO.ExtendProducts(consignmentID, expiredFee, negotiatedPrice);
                     }
                     if (flag) {
                         url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=success#" + currentTab;

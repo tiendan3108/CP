@@ -169,7 +169,7 @@
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <button style="width: 60px;margin-right: 0px;" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}">Xem</button>
+                                                <button style="width: 60px;margin-right: 0px; color: black" class="btn btn-info btn-open-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-eye"></i></button>
                                                 <button style="margin-right: 0px;" class="btn yellow btn-detail-modal" data-toggle="modal" data-id="${item.consigmentID}"><i class="fa fa-history"></i></button>
                                             </td>
                                             <td style="display: none">${item.consigmentID}</td>
@@ -424,6 +424,10 @@
                                             <div class="form-group">
                                                 <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Cách thức thanh toán</label>
                                                 <div class="col-md-7 col-sm-7" id="c_paypalAccount"  style="padding-top: 8px; font-size: 110%"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-5 col-sm-5 control-label" style="font-weight: bold">Thời gian kí gửi</label>
+                                                <div class="col-md-7 col-sm-7" id="c_period"  style="padding-top: 8px; font-size: 110%"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -835,6 +839,7 @@
                     } else {
                         $('#c_paypalAccount').text("Chuyển tiền qua tài khoản " + respone.paypalAccount);
                     }
+                    $('#c_period').text(respone.period + ' ngày');
                     $('#c_negotiatedPrice').text(respone.negotiatedPrice.toMoney(0) + ' (ngàn đồng)');
                     $('#c_createdDate').text(respone.createdDate);
 
