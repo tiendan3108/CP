@@ -1456,7 +1456,7 @@ public class ConsignmentDAO {
         ConsignmentDTO result = null;
         try {
             con = DBUltilities.makeConnection();
-            String query = "SELECT c.FullName, c.Address, c.Phone, c.Email FROM Consignment c "
+            String query = "SELECT c.CancelFee, c.FullName, c.Address, c.Phone, c.Email FROM Consignment c "
                     + "WHERE c.ConsignmentID = ?";
             stm = con.prepareStatement(query);
             stm.setString(1, consignmentID);
@@ -1467,6 +1467,8 @@ public class ConsignmentDAO {
                 phone = convertPhone(rs.getString("Phone"));
                 email = rs.getString("Email");
                 result = new ConsignmentDTO(fullName, phone, address, email);
+                float cancelFee = rs.getFloat("CancelFee") / 1000;
+                result.setMaxPrice(cancelFee);
             }
             if (result != null) {
                 query = "SELECT p.ProductStatusID, p.ProductName, c.ConsignmentID, c.ReviewProductDate, c.NegotiatedPrice, "

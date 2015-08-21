@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  * @author Tien Dan
  */
 public class AmazonService {
-
+    
     public static final String AWS_ACCESS_KEY_ID = "AKIAJQUQ7BS6CDFYFMLA";// access key id from amazon
     public static final String AWS_SECRET_KEY = "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";// secret key from amazon, pair with access key
     public static final String ENDPOINT = "ecs.amazonaws.com";// location
@@ -47,7 +47,7 @@ public class AmazonService {
 //        }
 //        List<AmazonProduct> result = test.getProduct("Crawford Boyfriend Watch-Chocolate", "Geneva", "Watches");
     }
-
+    
     public List<AmazonProduct> getProduct(String keywords, String brand, String type) {
         List<AmazonProduct> result = new ArrayList<>();
         try {
@@ -57,9 +57,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-
+            
             String requestUrl = null;
-
+            
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemSearch");
@@ -69,7 +69,7 @@ public class AmazonService {
             params.put("MerchantId", "All");
             params.put("SearchIndex", type);
             params.put("Brand", brand);
-
+            
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             result = fetchProduct(requestUrl);
@@ -79,7 +79,7 @@ public class AmazonService {
             return result;
         }
     }
-
+    
     private List<AmazonProduct> fetchProduct(String requestUrl) {
         List<AmazonProduct> temp_result = new ArrayList<>();
         List<AmazonProduct> result = new ArrayList<>();
@@ -130,7 +130,7 @@ public class AmazonService {
         }
         return result;
     }
-
+    
     private AmazonProduct getProductDetail(AmazonProduct product) {
         SignedRequestsHelper helper;
         try {
@@ -139,9 +139,9 @@ public class AmazonService {
             e.printStackTrace();
             return null;
         }
-
+        
         String requestUrl = null;
-
+        
         Map<String, String> params = new HashMap<String, String>();
         params.put("Service", "AWSECommerceService");//ok
         params.put("Operation", "ItemLookup");
@@ -149,12 +149,12 @@ public class AmazonService {
         params.put("Condition", "New");
         params.put("ItemId", product.getASIN());
         params.put("MerchantId", "All");
-
+        
         requestUrl = helper.sign(params);
         System.out.println("Child url : " + requestUrl);
         return fetchProductDetail(product, requestUrl);
     }
-
+    
     private AmazonProduct fetchProductDetail(AmazonProduct product, String requestUrl) {
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -243,7 +243,7 @@ public class AmazonService {
             return null;
         }
     }
-
+    
     public AmazonProduct getProductByUPC(String upc) {
         try {
             SignedRequestsHelper helper;
@@ -252,9 +252,9 @@ public class AmazonService {
             } catch (IllegalArgumentException | UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException ex) {
                 return null;
             }
-
+            
             String requestUrl = null;
-
+            
             Map<String, String> params = new HashMap<>();
             params.put("Service", "AWSECommerceService");//ok
             params.put("Operation", "ItemLookup");
@@ -262,7 +262,7 @@ public class AmazonService {
             params.put("SearchIndex", "All");
             params.put("IdType", "UPC");
             params.put("ItemId", upc);
-
+            
             requestUrl = helper.sign(params);
             System.out.println(requestUrl);
             return fetchProductByUPC(requestUrl);
@@ -270,7 +270,7 @@ public class AmazonService {
             return null;
         }
     }
-
+    
     private AmazonProduct fetchProductByUPC(String requestUrl) {
         AmazonProduct product = null;
         try {
@@ -354,12 +354,20 @@ public class AmazonService {
                         }
                     }
                 }
+                NodeList BrandContent = doc.getElementsByTagName("Brand");
+                if (BrandContent != null) {
+                    Node BrandNode = BrandContent.item(0);
+                    if (BrandNode != null) {
+                        String brand = BrandNode.getTextContent();
+                        product.setBrand(brand);
+                    }
+                }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {
             Logger.getLogger(AmazonService.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-
+        System.out.println(product.toString());
         return product;
     }
 }

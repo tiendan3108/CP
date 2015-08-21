@@ -268,13 +268,13 @@
                                     <div style="float: right; margin-right: 25px">
                                         <form action="CancelProduct" method="POST">
                                             <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
-                                            <button id="btnAgree" class="btn blue" name="btnAction" type="submit" value="cancel" style="display: none">Đồng ý hủy</button>
                                             <input type="hidden" class="currentTab" name="currentTab" value="">
                                             <button id="btnDecline" class="btn red" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
                                             <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                         </form>
                                     </div>
                                     <div style="float: right; margin: 0px 5px;">
+                                        <button id="btnAgree" class="btn blue agreeCancelProductModal" style="display: none">Đồng ý hủy</button>
                                         <button id="btnReturn" class="btn blue receiveProductModal" data-toggle="modal" style="display: none">Trả hàng</button>
                                     </div>
                                 </div>
@@ -283,6 +283,29 @@
                     </div>
                 </div>
                 <!-- CANCEL MODAL END-->
+                <div class="modal fade bs-example-modal-sm" id="agreeCancelProductModal" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content" style="width: 500px">
+                            <form action="CancelProduct" method="POST" onsubmit="ret
+                                    urn
+                                    validateCancelPrice4();">
+                                <div class="modal-header" style="background-color: #dfba49 ">
+                                    <h3 class="modal-title" style="font-weight: bold">Hủy kí gửi</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Bạn có chắc chắn muốn hủy kí gửi sản phẩm này ?</h4>
+                                    <h4>Tiền phạt (Ngàn đồng):  <font color="red">*</font><input id="agreeCancelFee" name="txtCancelFee"></h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="hidden" class="currentTab" name="currentTab" value="">
+                                    <input type="hidden" value="" name="txtConsignmentID" id="agreeCancel_consignmentID2">
+                                    <button class="btn blue" name="btnAction" type="submit" value="cancel">Đồng ý</button>
+                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <!-- AVAILABLE MODAL BEGIN-->
                 <div class="modal fade bs-example-modal-lg" id="availableModal" aria-hidden="true">
                     <form action="PublishProduct" method="POST" enctype="multipart/form-data" onsubmit="return getSeasonAvai();">
@@ -1005,6 +1028,9 @@
                     $("#cancel_ID").val(product.consignmentID);
                     $("#returnProduct_ConsignmentID").text(product.consignmentID);
                     $("#returnProduct_ConsignmentID1").val(product.consignmentID);
+                    $("#agreeCancel_consignmentID1").val(product.consignmentID);
+                    $("#agreeCancel_consignmentID2").val(product.consignmentID);
+                    $("#returnProduct_Fee").val(response.maxPrice);
                     if (typeof response.email === "undefined" || response.email == '') {
                         $("#d_cancel_email").hide();
                     } else {
@@ -1245,6 +1271,9 @@
             $(document).on("click", ".receiveProductModal", function () {
                 $('#receiveProductModal').modal('show');
             });
+            $(document).on("click", ".agreeCancelProductModal", function () {
+                $('#agreeCancelProductModal').modal('show');
+            });
             function validationPrice() {
                 var fee = $('#expired_fee').val().trim();
                 if (fee.length == 0) {
@@ -1277,6 +1306,23 @@
             }
             function validateCancelPrice2() {
                 var fee = $('#confirmCancel_Fee').val().trim();
+                if (fee.length == 0) {
+                    alert('Vui lòng nhập tiền phạt.');
+                    return false;
+                }
+                if (fee < 0) {
+                    alert('Tiền phạt phải là số dương');
+                    return false;
+                }
+                if (isNaN(fee)) {
+                    alert('Tiền phạt phải là số');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            function validateCancelPrice4() {
+                var fee = $('#agreeCancelFee').val().trim();
                 if (fee.length == 0) {
                     alert('Vui lòng nhập tiền phạt.');
                     return false;

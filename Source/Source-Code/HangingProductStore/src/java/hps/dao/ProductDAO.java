@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * @author HoangNHSE61007
  */
 public class ProductDAO {
-
+    
     private SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private Date date = new Date();
     private String newDate = df.format(date);
@@ -49,7 +49,7 @@ public class ProductDAO {
         }
         return productDAO;
     }
-
+    
     public List<ProductDTO> getNewData() {
         Connection con = null;
         PreparedStatement stm = null;
@@ -239,7 +239,7 @@ public class ProductDAO {
         ResultSet rs = null;
         int next = (page - 1) * 6;
         List<ProductDTO> products = new ArrayList<ProductDTO>();
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -323,7 +323,7 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         int total = 0;
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -459,7 +459,7 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         int total = 0;
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -513,7 +513,7 @@ public class ProductDAO {
         ResultSet rs = null;
         int next = (page - 1) * 6;
         List<ProductDTO> products = new ArrayList<ProductDTO>();
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -587,7 +587,7 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         int total = 0;
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -639,7 +639,7 @@ public class ProductDAO {
         ResultSet rs = null;
         int next = (page - 1) * 6;
         List<ProductDTO> products = new ArrayList<ProductDTO>();
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -720,7 +720,7 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         int total = 0;
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -773,7 +773,7 @@ public class ProductDAO {
         PreparedStatement stm = null;
         ResultSet rs = null;
         List<ProductDTO> products = new ArrayList<ProductDTO>();
-
+        
         try {
             DBUltilities db = new DBUltilities();
             con = db.makeConnection();
@@ -860,7 +860,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public ProductDTO getProductByIDNoStatus(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -914,7 +914,7 @@ public class ProductDAO {
         }
         return null;
     }
-
+    
     public boolean makeProductAsStatus(int productId, int status) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -926,7 +926,7 @@ public class ProductDAO {
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setInt(2, productId);
-
+            
             int result = stm.executeUpdate();
             while (result > 0) {
                 return true;
@@ -988,7 +988,7 @@ public class ProductDAO {
         }
         return false;
     }
-
+    
     public boolean updateProductWhenOrderExpired(int productId) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1018,7 +1018,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public productDetailDTO getProductAndStoreDetailByID(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1065,7 +1065,7 @@ public class ProductDAO {
         }
         return null;
     }
-
+    
     public ProductDTO getDetailByID(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1131,11 +1131,11 @@ public class ProductDAO {
             }
             if (product.getNewStatus() > 0) {
                 stm.setInt(3, product.getNewStatus());
-
+                
             } else {
                 stm.setNull(3, java.sql.Types.INTEGER);
             }
-
+            
             stm.setInt(4, product.getCategoryID());
             if (product.getBrand().equals("")) {
                 stm.setNull(5, java.sql.Types.VARCHAR);
@@ -1147,13 +1147,13 @@ public class ProductDAO {
             } else {
                 stm.setString(6, product.getDescription());
             }
-
+            
             stm.setString(7, product.getImage());
-
+            
             stm.setInt(8, product.getProductStatusID());
-
+            
             stm.setInt(9, product.getIsSpecial());
-
+            
             int result = stm.executeUpdate();
             if (result > 0) {
                 rs = stm.getGeneratedKeys();
@@ -1179,7 +1179,7 @@ public class ProductDAO {
             } catch (SQLException ex) {
                 Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         }
         return -1;
     }
@@ -1209,12 +1209,13 @@ public class ProductDAO {
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
                 //update set consignment status
-                query = "UPDATE Consignment SET ConsignmentStatusID = ? WHERE ConsignmentID = ?";
+                query = "UPDATE Consignment SET ConsignmentStatusID = ?, CancelFee = ? WHERE ConsignmentID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setInt(1, ConsignmentStatus.CANCEL);
-                stmUpdateConsignment.setString(2, consignmentID);
+                stmUpdateConsignment.setFloat(2, cancelFee);
+                stmUpdateConsignment.setString(3, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
-
+                
                 if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
                     conn.commit();
                     return true;
@@ -1239,7 +1240,7 @@ public class ProductDAO {
                 stmUpdateConsignment.setInt(3, ConsignmentStatus.CANCEL);
                 stmUpdateConsignment.setString(4, consignmentID);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
-
+                
                 if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
                     conn.commit();
                     return true;
@@ -1295,7 +1296,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public boolean soldProduct(String consignmentID, float returnPrice) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1303,11 +1304,11 @@ public class ProductDAO {
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
-
+            
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
-
+            
             query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setFloat(1, returnPrice);
@@ -1338,7 +1339,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public boolean publishOnWeb(ProductDTO product, List<String> season, boolean flag) {
         Connection conn = null;
         PreparedStatement stmProduct = null;
@@ -1357,7 +1358,7 @@ public class ProductDAO {
         try {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
-
+            
             if (product.getIsSpecial() == 2) {
                 query = "SELECT IsSpecial FROM Product WHERE ProductID = ?";
                 stmProduct = conn.prepareStatement(query);
@@ -1367,7 +1368,7 @@ public class ProductDAO {
                     product.setIsSpecial(rs.getInt("IsSpecial"));
                 }
             }
-
+            
             if (product.getImage() == null) {
                 query = "UPDATE Product SET "
                         + "ProductName = ?, SerialNumber = ?, CategoryID = ?, Brand = ?, "
@@ -1401,11 +1402,11 @@ public class ProductDAO {
                 stmProduct.setInt(10, status);
             }
             resultProduct = stmProduct.executeUpdate();
-
+            
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String raiseWebDate = sdf.format(tempDate);
-
+            
             query = "UPDATE Consignment SET RaiseWebDate = ? WHERE ProductID = ?";
             stmConsignment = conn.prepareStatement(query);
             stmConsignment.setString(1, raiseWebDate);
@@ -1467,7 +1468,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public ProductDTO getProductByProductID(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1514,7 +1515,7 @@ public class ProductDAO {
         }
         return null;
     }
-
+    
     public ProductDTO getInforForPublishPage(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1562,7 +1563,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public int getProductIDByConsignmentID(String consignmentID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1570,7 +1571,7 @@ public class ProductDAO {
         String query = "";
         try {
             conn = DBUltilities.makeConnection();
-
+            
             query = "SELECT ProductID FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
@@ -1598,7 +1599,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     private String formatDateString(String source) {
         if (source == null) {
             return "";
@@ -1622,7 +1623,7 @@ public class ProductDAO {
         }
         return "0" + source.substring(3);
     }
-
+    
     public ProductDTO getInforForOrderedPage(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1688,7 +1689,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public boolean ExtendProduct(String consignmentID, float expiredFee) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1698,7 +1699,7 @@ public class ProductDAO {
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
-
+            
             String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
@@ -1706,7 +1707,7 @@ public class ProductDAO {
             stm.setFloat(3, expiredFee);
             stm.setString(4, consignmentID);
             int i = stm.executeUpdate();
-
+            
             query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.NOT_AVAILABLE);
@@ -1718,7 +1719,7 @@ public class ProductDAO {
             } else {
                 return false;
             }
-
+            
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
@@ -1745,11 +1746,11 @@ public class ProductDAO {
         try {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
-
+            
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
-
+            
             String query = "SELECT DATEDIFF(day,[RaiseWebDate],?) as DayFromNow FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
@@ -1758,12 +1759,12 @@ public class ProductDAO {
             while (rs.next()) {
                 dateFromNow = rs.getInt("DayFromNow");
             }
-
+            
             query = "UPDATE Consignment SET RemainExtendFee = 0 WHERE ConsignmentID = ? AND RemainExtendFee IS NULL";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
             stm.executeUpdate();
-
+            
             query = "UPDATE Consignment SET RemainExtendFee = (SELECT RemainExtendFee FROM Consignment WHERE ConsignmentID = ?) + ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ? WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
@@ -1772,7 +1773,7 @@ public class ProductDAO {
             stm.setInt(4, 30 + dateFromNow);
             stm.setString(5, consignmentID);
             int i = stm.executeUpdate();
-
+            
             query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.ON_WEB);
@@ -1784,7 +1785,7 @@ public class ProductDAO {
             } else {
                 return false;
             }
-
+            
         } catch (SQLException e) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, e);
             return false;
@@ -1804,7 +1805,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public boolean changeProductStatus(String orderID, float sellingPrice) {
         Connection conn = null;
         ResultSet rs = null;
@@ -1816,7 +1817,7 @@ public class ProductDAO {
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String sellingDate = sdf.format(tempDate);
-
+            
             query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
             stm = conn.prepareStatement(query);
             stm.setString(1, sellingDate);
@@ -1860,7 +1861,7 @@ public class ProductDAO {
             }
         }
     }
-
+    
     public List<StatisticDTO> getProductInforForStatisticPage(int roleID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1868,7 +1869,7 @@ public class ProductDAO {
         String query = "";
         List<StatisticDTO> result = new ArrayList<>();
         try {
-
+            
             conn = DBUltilities.makeConnection();
             query = "SELECT c.RemainExtendFee, c.ExpiredFee, p.ProductName, c.FullName, c.NegotiatedPrice, c.ReturnedPrice, "
                     + "p.SellingPrice, c.CancelFee, c.AgreeCancelDate, c.ReturnDate, c.ReceivedDate, "

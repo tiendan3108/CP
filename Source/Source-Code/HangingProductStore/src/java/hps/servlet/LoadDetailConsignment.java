@@ -38,7 +38,6 @@ public class LoadDetailConsignment extends HttpServlet {
         String consignmentID = request.getParameter("consignmentID");
         ConsignmentDTO detail = dao.getDetailConsignment(consignmentID);
         String json = new Gson().toJson(detail);
-        System.out.println(json);
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write(json);
     }

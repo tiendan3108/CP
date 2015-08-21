@@ -19,10 +19,11 @@ public class AmazonProduct implements Serializable {
     private float newPrice;
     private String image;
     private String url;
+    private String brand;
 
     @Override
     public String toString() {
-        return name + " " + ASIN + " " + price + " " + newPrice + " " + image + " " + url;
+        return name + " " + ASIN + " " + price + " " + newPrice + " " + image + " " + url + " " + brand;
     }
 
     /**
@@ -107,6 +108,20 @@ public class AmazonProduct implements Serializable {
      */
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    /**
+     * @return the brand
+     */
+    public String getBrand() {
+        return brand;
+    }
+
+    /**
+     * @param brand the brand to set
+     */
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
 }

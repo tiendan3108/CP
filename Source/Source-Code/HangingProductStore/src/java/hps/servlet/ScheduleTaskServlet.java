@@ -71,11 +71,11 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                System.out.println("start task");
+                //System.out.println("start task");
                 remindConsignor();
                 checkOrder();
                 sendNofitication();
-                System.out.println("end task");
+                //System.out.println("end task");
             }
         };
         service = Executors.newSingleThreadScheduledExecutor();

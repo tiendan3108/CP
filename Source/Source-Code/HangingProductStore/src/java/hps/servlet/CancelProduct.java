@@ -96,10 +96,15 @@ public class CancelProduct extends HttpServlet {
             switch (btnaction) {
                 case "cancel":
                     //agree cancel product
+                    try {
+                        cancelFee = Float.parseFloat(tempCancelFee);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     status = ProductStatus.NOT_YET_RECEIVE;
                     if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
-                        sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy thanh cong."
-                                + " Vui long lien he voi chu cua hang " + user.getFullName() + " de nhan hang va biet them chi tiet";
+                        sms = "Mon hang voi ma ki gui " + consignmentID + " cua ban huy thanh cong. Tien phat cua ban la " + tempCancelFee
+                                + " ngan dong. Vui long lien he voi chu cua hang " + user.getFullName() + " de nhan hang va biet them chi tiet";
                         try {
                             ultil.sendSMS(sms, consignor.getPhone());
                         } catch (TwilioRestException ex) {
@@ -109,7 +114,7 @@ public class CancelProduct extends HttpServlet {
                         }
                     }
                     if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
-                        email = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công.</br>"
+                        email = "Xin chào " + consignor.getFullName() + "</br> Món hàng với mã kí gửi " + consignmentID + " của bạn đã được hủy thành công.</br> Tiền phạt cho việc hủy kí gửi là " + tempCancelFee + ".000 đồng</br>"
                                 + " Vui lòng liên hệ chủ cửa hàng " + user.getFullName() + " để nhận hàng và biết thêm chi tiết" + "</br> Trân trọng</br> HPS System";
                         ultil.sendEmail(consignor.getEmail(), subject, email);
                     }
@@ -147,7 +152,7 @@ public class CancelProduct extends HttpServlet {
             //update database
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
             String currentTab = request.getParameter("currentTab");
-            if (currentTab!=null && !currentTab.equals("all")) {
+            if (currentTab != null && !currentTab.equals("all")) {
                 currentTab = "requestCancel";
             }
             //change url
