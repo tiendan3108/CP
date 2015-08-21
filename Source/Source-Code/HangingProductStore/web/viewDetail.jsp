@@ -9,12 +9,6 @@
         <!-- Nơi để khai báo page level css, theme, style -->
     </jsp:attribute>        
     <jsp:attribute name="extraBottomContent">
-        <script src='assets/global/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script>
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                Layout.initImageZoom();
-            });
-        </script>
     </jsp:attribute>
     <jsp:attribute name="extraNavigationContent">
     </jsp:attribute>
