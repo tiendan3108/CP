@@ -141,7 +141,7 @@ public class ConsignServlet extends HttpServlet {
                     if (amazonProduct != null) {
                         basicPrice = amazonProduct.getPrice();
                         product.setImage(amazonProduct.getImage());
-
+                        product.setBrand(amazonProduct.getBrand() != null ? amazonProduct.getBrand(): "");
                         String formatName = amazonProduct.getName();//.trim().replaceAll("[!@#$%^&*.?,;/]", " ");
 
                         if (formatName.contains(",")) {
