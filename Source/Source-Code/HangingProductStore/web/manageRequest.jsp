@@ -257,7 +257,7 @@
                                                                     </c:if>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                <button type="button" class="btn btn-info" style="margin-right: 0px; color: black" data-toggle="modal" data-target="#modalRefuseCancel"
+                                                                <button type="button" class="btn btn-info btn-block" style="margin-right: 0px; color: black" data-toggle="modal" data-target="#modalRefuseCancel"
                                                                         name="refuseCancelDetails" value="${c.consigmentID}"><i class="fa fa-eye"></i></button>
                                                             </c:otherwise>
                                                         </c:choose>
