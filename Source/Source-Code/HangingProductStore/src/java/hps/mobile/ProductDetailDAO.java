@@ -148,8 +148,8 @@ public class ProductDetailDAO {
                 String address = rs.getString("Address");
                 String phone = rs.getString("Phone");
                 String appointmentDate = rs.getString("AppointmentDate");
-                float maxPrice = rs.getFloat("MaxPrice");
-                float minPrice = rs.getFloat("MinPrice");
+                float maxPrice = rs.getFloat("MaxPrice")/1000;
+                float minPrice = rs.getFloat("MinPrice")/1000;
                 String reviewProductDate = rs.getString("ReviewProductDate");
                 String paypalAccount = rs.getString("PaypalAccount");
                 int newStatus = rs.getInt("NewStatus");
