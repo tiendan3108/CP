@@ -183,7 +183,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             ConsignmentDTO consignment = consignmentDAO.getConsignment(consignmentID);
                             if (consignment != null) {
                                 session.removeAttribute("consignment_details");
-                                String msg = "Yêu cau ky gui voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi. ";
+                                String msg = "Yêu cau ky gui voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi voi li do: " + reason + ".";
                                 JavaUltilities java = new JavaUltilities();
 
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
@@ -321,7 +321,7 @@ public class ConsignmentRequestReceiveServlet extends HttpServlet {
                             //send sms and email
                             if (consignment != null) {
                                 session.removeAttribute("consignment_details");
-                                String msg = "San pham voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi.";
+                                String msg = "San pham voi ma so " + consignment.getConsigmentID() + " cua ban da bi tu choi voi li do: " + reason + ".";
                                 JavaUltilities java = new JavaUltilities();
                                 if (consignment.getPhone() != null && consignment.getPhone().length() > 0) {
 
