@@ -1111,7 +1111,7 @@
                     var table = $('#requestTable').DataTable();
                     table.draw();
                 } else {
-                    $('#searchStatus').val("Chờ xử lý").change();
+                    $('#searchStatus').val("Tất cả").change();
                     var table = $('#requestTable').DataTable();
                     table.draw();
                 }
