@@ -147,6 +147,7 @@
                                         <th>STT</th>
                                         <th>Tên khách hàng</th>
                                         <th>Tên sản phẩm</th>
+                                        <th>Số người đặt</th>
                                         <th>Trạng thái</th>
                                         <th style="width: 110px">Chi Tiết</th>
                                         <th style="display: none"></th>
@@ -158,6 +159,7 @@
                                             <td class="center" style="font-weight: bold">${counter.count}</td>
                                             <td>${item.name}</td>
                                             <td>${item.product.name}</td>
+                                            <td>${item.quantity}</td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${item.product.productStatusID == 4}">
@@ -631,6 +633,14 @@
             }
             function checkCustomer2() {
                 var n = $('input[name=chkboxCustomer]:checked').length;
+                $('input[name=chkboxCustomer]:checked').each(function () {
+                    var id = $(this).val();
+                    var sendPrice = $('#' + id).val().trim();
+                    if (sendPrice.length == 0) {
+                        alert('Vui lòng nhập giá để gửi cho khách hàng.');
+                        return false;
+                    }
+                })
                 var price = $("#sendPrice").val().trim();
                 if (n == 0) {
                     alert('Vui lòng chọn ít nhất một khách hàng.');
@@ -648,7 +658,7 @@
                     alert('Giá gửi khách hàng phải là số.');
                     return false;
                 }
-                return true;
+                return false;
             }
             function validateSellingPrice() {
                 var fee = $('#sellingPrice').val().trim();
@@ -745,13 +755,13 @@
                         if (isSpecial > 0) {
                             if (orderList[i].sendPrice == 0) {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"></td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id=' + orderList[i].orderID + ' name=' + orderList[i].orderID + '</td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' +
                                         orderList[i].phone + '</td><td>Chưa gửi giá</td></tr>';
                             } else {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"></td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id=' + orderList[i].orderID + ' name=' + orderList[i].orderID + '</td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' + orderList[i].phone + '</td><td>Đã gửi giá : ' +
                                         orderList[i].sendPrice.toMoney(0) + ' (ngàn đồng)</td></tr>';
@@ -771,7 +781,6 @@
             }
             $("#consignmentOption").change(function () {
                 var currentTab = $("#consignmentOption").val();
-                console.log(currentTab);
                 if (currentTab == "Đã được đặt") {
                     currentTab = "ordered";
                 }
@@ -781,7 +790,6 @@
                 if (currentTab == "all") {
                     currentTab = "all";
                 }
-                console.log(currentTab);
                 $(".currentTab").each(function () {
                     $(this).val(currentTab)
                 })
@@ -817,7 +825,7 @@
             $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
                         var option = $('#consignmentOption').val();
-                        var status = data[3];
+                        var status = data[4];
                         if (option.localeCompare('all') == 0) {
                             return true;
                         } else if (option.localeCompare(status) == 0) {
@@ -945,8 +953,7 @@
                 $('input[name=chkboxCustomer]').each(function () {
                     $(this).prop("checked", all.prop("checked"));
                 });
-            })
-        </script>
+            })</script>
     </body>
     <!-- END BODY -->
 </html>

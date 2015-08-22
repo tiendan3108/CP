@@ -273,6 +273,7 @@
                                             <input type="hidden" name="txtConsignmentID" id="cancel_ID" value="">
                                             <input type="hidden" class="currentTab" name="currentTab" value="">
                                             <button id="btnDecline" class="btn red" name="btnAction" type="submit" value="notCancel" style="display: none">Không đồng ý hủy</button>
+                                            <button id="btnRefuse" class="btn red" name="btnAction" type="submit" value="refuse" style="display: none">Từ chối nhận hàng</button>
                                             <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
                                         </form>
                                     </div>
@@ -703,6 +704,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <input class="btn green confirmOrderedModal" type="button" data-togle="modal" value="Bán hàng">
                                     <input class="btn red confirmOnWebModal" type="button" data-togle="modal" value="Hủy kí gửi">
                                     <button class="btn blue" type="submit">Cập nhật</button>
                                     <input type="hidden" class="currentTab" name="currentTab" value="">
@@ -925,6 +927,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade bs-example-modal-sm" id="confirmOrderedModal" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <form action="OrderProduct" method="POST">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #dfba49 ">
+                                    <h3 class="modal-title" style="font-weight: bold">Thông tin giá bán</h3>        
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-10 col-sm-offset-1" align="center">
+                                            <label class="control-label">Giá bán (ngàn đồng): <font color="red">*</font></label>
+                                            <input class="form-control" id="sellingPrice" type="text" name="txtSellingPrice" value ="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <input name="btnAction" type="hidden" value="onweb">
+                                    <input type="hidden" id="onweb_consignmentID" name="txtProductID">
+                                    <button class="btn blue" name="btnAction" type="submit" value="order" onclick="return validateSellingPrice();">Đồng ý</button>
+                                    <input class="btn btn-default" type="button" data-dismiss="modal" value="Đóng" style="width: 80px">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <!-- END ALL MODALS -->
         </div>
@@ -990,17 +1017,30 @@
         <script src="js/jquery-ui.min.js"></script>
         <!--END PAGE CSS -->
         <script>
-                                jQuery(document).ready(function () {
-                                    // initiate layout and plugins
-                                    // initiate layout and plugins
-                                    Metronic.init(); // init metronic core components
-                                    Layout.init(); // init current layout
-                                    QuickSidebar.init(); // init quick sidebar
-                                    Demo.init(); // init demo features
-                                    TableManaged.init();
-                                });
+                                        jQuery(document).ready(function () {
+                                            // initiate layout and plugins
+                                            // initiate layout and plugins
+                                            Metronic.init(); // init metronic core components
+                                            Layout.init(); // init current layout
+                                            QuickSidebar.init(); // init quick sidebar
+                                            Demo.init(); // init demo features
+                                            TableManaged.init();
+                                        });
         </script>
         <script>
+            function validateSellingPrice() {
+                var fee = $('#sellingPrice').val().trim();
+                if (fee.length == 0) {
+                    alert('Vui lòng nhập giá bán.');
+                    return false;
+                }
+                if (isNaN(fee) || fee < 0) {
+                    alert('Tiền bán phải là số dương');
+                    return false;
+                } else {
+                    return true;
+                }
+            }
             // main script
             $(document).on("click", ".btn-detail-modal", function () {
                 var consignmentID = $(this).data('id');
@@ -1065,8 +1105,11 @@
                         $("#btnDecline").removeAttr("style");
                         $("#btnReturn").removeAttr("style");
                         $("#btnReturn").attr("style", "display:none;");
+                        $("#btnRefuse").removeAttr("style");
+                        $("#btnRefuse").attr("style", "display:none;");
                     } else {
                         $("#btnReturn").removeAttr("style");
+                        $("#btnRefuse").removeAttr("style");
                         $("#btnDecline").removeAttr("style");
                         $("#btnDecline").attr("style", "display:none;");
                         $("#btnAgree").removeAttr("style");
@@ -1180,6 +1223,7 @@
                     $("#confirmCancel_Fee").val(price);
                 });
                 $.get('LoadAvailableProduct', {consignmentID: consignmentID}, function (response) {
+                    $("#onweb_consignmentID").val(response.productID);
                     $("#onWeb_ProductName").val(response.name);
                     $("#onWeb_ProductID").val(response.productID);
                     $("#onWeb_SerialNumber").val(response.serialNumber);
@@ -1311,6 +1355,9 @@
             });
             $(document).on("click", ".agreeCancelProductModal", function () {
                 $('#agreeCancelProductModal').modal('show');
+            });
+            $(document).on("click", ".confirmOrderedModal", function () {
+                $('#confirmOrderedModal').modal('show');
             });
             function validationPrice() {
                 var fee = $('#expired_fee').val().trim();

@@ -63,10 +63,36 @@ public class OrderProduct extends HttpServlet {
                 ConsignmentDAO consignmentDAO = new ConsignmentDAO();
                 OrderDAO orderDAO = new OrderDAO();
                 String orderID = request.getParameter("txtOrderID");
+                String currentTab = request.getParameter("currentTab");
                 JavaUltilities ultil = new JavaUltilities();
                 List<OrderDTO> listCustomer = null;
                 boolean isValid = false;
                 String action = request.getParameter("btnAction");
+                if (action.equals("onweb")) {
+                    String temp_sellingPrice = request.getParameter("txtSellingPrice");
+                    String temp_productID = request.getParameter("txtProductID");
+                    int productID = 0;
+                    float sellingPrice = 0;
+                    try {
+                        sellingPrice = Float.parseFloat(temp_sellingPrice);
+                        productID = Integer.parseInt(temp_productID);
+                    } catch (Exception e) {
+                    }
+                    currentTab = action;
+                    AccountDTO result = consignmentDAO.sellProductOnWeb(productID, sellingPrice);
+                    if (result != null) {
+                        try {
+                            ultil.sendSMS(MessageString.soldProductSMS(result.getAccountID(), user.getFullName()), result.getPhone());
+                        } catch (TwilioRestException ex) {
+                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (Exception ex) {
+                            Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        if (result.getEmail() != null && !result.getEmail().equals("")) {
+                            ultil.sendEmail(result.getEmail(), MessageString.Subject(), MessageString.soldProductEmail(result.getFullName(), result.getAccountID(), user.getFullName()));
+                        }
+                    }
+                }
                 if (action.equals("order")) {
                     String temp_sellingPrice = request.getParameter("txtSellingPrice");
                     float sellingPrice = 0;
@@ -124,7 +150,6 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-
                 if (listCustomer != null && !listCustomer.isEmpty()) {
                     for (OrderDTO order : listCustomer) {
                         if (order.getPhone() != null && !order.getPhone().equals("")) {
@@ -141,11 +166,13 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-                String currentTab = request.getParameter("currentTab");
                 if (flag) {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success#"+currentTab;
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success#" + currentTab;
                 } else {
-                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail#"+currentTab;
+                    url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail#" + currentTab;
+                }
+                if (action.equals("onweb")) {
+                    url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "#" + currentTab;
                 }
 
             }

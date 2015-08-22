@@ -29,16 +29,16 @@ import java.util.logging.Logger;
  * @author PhucTQSE60993
  */
 public class ConsignmentDAO {
-    
+
     static ConsignmentDAO dao;
-    
+
     public static ConsignmentDAO getInstance() {
         if (dao == null) {
             dao = new ConsignmentDAO();
         }
         return dao;
     }
-    
+
     public ConsignmentDTO getConsignment(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -51,7 +51,7 @@ public class ConsignmentDAO {
                     + " WHERE C.ConsignmentID = ? ";
             stm = con.prepareStatement(sql);
             stm.setString(1, consignmentID);
-            
+
             rs = stm.executeQuery();
             if (rs.next()) {
                 result = getConsignment(rs);
@@ -77,7 +77,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getConsignmentByStoreOwnerIDAndStatus(int storeOwnerId, int status) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -92,7 +92,7 @@ public class ConsignmentDAO {
             stm = con.prepareStatement(sql);
             stm.setInt(1, status);
             stm.setInt(2, storeOwnerId);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -119,7 +119,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getConsignmentByStoreOwnerID(int storeOwnerId) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -133,7 +133,7 @@ public class ConsignmentDAO {
                     + " ORDER BY C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerId);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -160,7 +160,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getConsignmentByMemberIDAndProductName(int MemberID, String productName) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -175,7 +175,7 @@ public class ConsignmentDAO {
             stm = con.prepareStatement(sql);
             stm.setInt(1, MemberID);
             stm.setString(2, "%" + productName + "%");
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -203,7 +203,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<String> autoCompleteConsignmentByMemberIDAndProductName(int memberId, String productName) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -218,7 +218,7 @@ public class ConsignmentDAO {
             stm = con.prepareStatement(sql);
             stm.setInt(1, memberId);
             stm.setString(2, "%" + productName + "%");
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -243,7 +243,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListNewRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -258,7 +258,7 @@ public class ConsignmentDAO {
                     + " ORDER BY C.CreatedDate DESC, C.FromDate ASC, C.ToDate ASC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -285,7 +285,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -306,7 +306,7 @@ public class ConsignmentDAO {
                     + " END, C.ReviewRequestDate ASC,  C.CreatedDate ASC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -333,7 +333,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListAcceptedRequestByStoreOwnerIDDeliveryMethod(int storeOwnerID, int deliveryMethod) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -377,7 +377,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListRefusedRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -392,7 +392,7 @@ public class ConsignmentDAO {
                     + " ORDER BY C.ReviewProductDate DESC, C.ReviewRequestDate DESC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -419,7 +419,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getListCanceledRequestByStoreOwnerID(int storeOwnerID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -433,7 +433,7 @@ public class ConsignmentDAO {
                     + " ORDER BY C.CancelDate DESC, C.CreatedDate DESC";
             stm = con.prepareStatement(sql);
             stm.setInt(1, storeOwnerID);
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -460,7 +460,7 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<String> autoCompleteConsignmentByStoreOwnerIDAndProductNameAndStatus(int storeOwnerId, String productName, int status) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -476,7 +476,7 @@ public class ConsignmentDAO {
             stm.setInt(1, status);
             stm.setInt(2, storeOwnerId);
             stm.setString(3, "%" + productName + "%");
-            
+
             rs = stm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
@@ -518,11 +518,11 @@ public class ConsignmentDAO {
             } else {
                 stm.setString(2, reason);
             }
-            
+
             stm.setString(3, getCurrentDate());
-            
+
             stm.setString(4, consignmentID);
-            
+
             int result = stm.executeUpdate();
             while (result > 0) {
                 return true;
@@ -543,7 +543,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean updateConsignmentStatusWhenRefuseProduct(String consignmentID, int status, String reason) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -559,10 +559,10 @@ public class ConsignmentDAO {
             } else {
                 stm.setString(2, reason);
             }
-            
+
             stm.setString(3, getCurrentDate());
             stm.setString(4, consignmentID);
-            
+
             int result = stm.executeUpdate();
             while (result > 0) {
                 return true;
@@ -599,20 +599,20 @@ public class ConsignmentDAO {
             } else {
                 stm.setNull(1, java.sql.Types.FLOAT);
             }
-            
+
             stm.setString(2, getCurrentDate());
-            
+
             stm.setInt(3, GlobalVariables.CONSIGNMENT_RECEIVED);
             stm.setString(4, consignmentID);
-            
+
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET ProductStatusID = ? "
                         + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = con.prepareStatement(sql);
-                
+
                 stm.setInt(1, 2);
-                
+
                 stm.setString(2, consignmentID);
                 result = stm.executeUpdate();
                 if (result > 0) {
@@ -636,7 +636,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean checkIfConsignmentStatusIsAccepted(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -648,7 +648,7 @@ public class ConsignmentDAO {
                     + "              dbo.Product AS P ON C.ProductID = P.ProductID"
                     + "   WHERE      ConsignmentID = ?";
             stm = con.prepareStatement(sql);
-            
+
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
             if (rs.next()) {
@@ -674,7 +674,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean checkIfConsignmentStatusIsWaiting(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -686,7 +686,7 @@ public class ConsignmentDAO {
                     + "              dbo.Product AS P ON C.ProductID = P.ProductID"
                     + "   WHERE      ConsignmentID = ?";
             stm = con.prepareStatement(sql);
-            
+
             stm.setString(1, consignmentID);
             rs = stm.executeQuery();
             if (rs.next()) {
@@ -712,7 +712,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean updateConsignmentWhenAcceptrequest(String consignmentID, String fullName, String address,
             String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
             String productName, int categoryID, String brand, String description, int isSpecial) {
@@ -732,25 +732,25 @@ public class ConsignmentDAO {
                 stm.setString(2, address);
             }
             stm.setString(3, phone);
-            
+
             if (email.isEmpty()) {
                 stm.setNull(4, java.sql.Types.VARCHAR);
             } else {
                 stm.setString(4, email);
             }
-            
+
             if (paypalAccount.isEmpty()) {
                 stm.setNull(5, java.sql.Types.VARCHAR);
             } else {
                 stm.setString(5, paypalAccount);
             }
-            
+
             stm.setString(6, appointmentDate);
             stm.setString(7, getCurrentDate());
             stm.setInt(8, GlobalVariables.CONSIGNMENT_ACCEPTED);
             stm.setInt(9, deliveryMethod);
             stm.setString(10, consignmentID);
-            
+
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
@@ -785,7 +785,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean updateConsignmentWhenAcceptrequestWithDeliveryMethod(String consignmentID, String appointmentDate) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -795,17 +795,17 @@ public class ConsignmentDAO {
                     + " SET AppointmentDate = ?, ReviewRequestDate = ?, ConsignmentStatusID = ?"
                     + " WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
-            
+
             if (appointmentDate.equals("")) {
                 stm.setNull(1, java.sql.Types.DATE);
             } else {
                 stm.setString(1, appointmentDate);
             }
-            
+
             stm.setString(2, getCurrentDate());
             stm.setInt(3, GlobalVariables.CONSIGNMENT_ACCEPTED);
             stm.setString(4, consignmentID);
-            
+
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET  ProductStatusID = 1 "
@@ -834,7 +834,7 @@ public class ConsignmentDAO {
         }
         return false;
     }
-    
+
     public boolean updateAcceptedrequest(String consignmentID, String fullName, String address,
             String phone, String email, String paypalAccount, String appointmentDate, int deliveryMethod,
             String productName, int categoryID, String brand, String description, int isSpecial, int newStatus) {
@@ -854,29 +854,29 @@ public class ConsignmentDAO {
                 stm.setString(2, address);
             }
             stm.setString(3, phone);
-            
+
             if (email.isEmpty()) {
                 stm.setNull(4, java.sql.Types.VARCHAR);
             } else {
                 stm.setString(4, email);
             }
-            
+
             if (paypalAccount.isEmpty()) {
                 stm.setNull(5, java.sql.Types.VARCHAR);
             } else {
                 stm.setString(5, paypalAccount);
             }
-            
+
             if (appointmentDate.length() > 0) {
                 stm.setString(6, appointmentDate);
             } else {
                 stm.setNull(6, java.sql.Types.DATE);
             }
-            
+
             stm.setInt(7, GlobalVariables.CONSIGNMENT_ACCEPTED);
             stm.setInt(8, deliveryMethod);
             stm.setString(9, consignmentID);
-            
+
             int result = stm.executeUpdate();
             if (result > 0) {
                 sql = "UPDATE Product SET ProductName = ?, CategoryID = ?, Brand = ?, Description = ?, "
@@ -919,7 +919,7 @@ public class ConsignmentDAO {
         PreparedStatement stm = null;
         try {
             con = DBUltilities.makeConnection();
-            
+
             String sql = "SELECT ConsignmentStatusID FROM Consignment WHERE ConsignmentID = ?";
             stm = con.prepareStatement(sql);
             stm.setString(1, consignmentID);
@@ -949,7 +949,7 @@ public class ConsignmentDAO {
                     stm = con.prepareStatement(sql);
                     stm.setString(1, consignmentID);
                     stm.setString(2, consignmentID);
-                    
+
                     result = stm.executeUpdate();
                     if (result > 0) {
                         sql = "UPDATE Product SET ProductStatusID = 6 "
@@ -967,7 +967,7 @@ public class ConsignmentDAO {
 //                        return true;
 //                    }
             }
-            
+
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -992,7 +992,7 @@ public class ConsignmentDAO {
         PreparedStatement stm = null;
         try {
             conn = DBUltilities.makeConnection();
-            
+
             String query = "SELECT (DATEDIFF(day, RaiseWebDate, GetDate())) AS DiffDate,"
                     + " NegotiatedPrice FROM Consignment WHERE ConsignmentID = ?";
             stm = conn.prepareStatement(query);
@@ -1001,7 +1001,7 @@ public class ConsignmentDAO {
             if (rs.next()) {
                 int diffDate = rs.getInt("DiffDate");
                 float negotiatedPrice = rs.getFloat("NegotiatedPrice");
-                
+
                 int newPeriod = period + diffDate;
                 float extraPayment = 0;
                 if (negotiatedPrice >= 1000000) {
@@ -1014,7 +1014,7 @@ public class ConsignmentDAO {
                 System.out.println("newPeriod: " + newPeriod);
                 System.out.println("extraPayment: " + extraPayment);
                 System.out.println("---------------------------------");
-                
+
                 query = "UPDATE Consignment SET isExpiredMessage = null, ConsignmentStatusID = ?, "
                         + " Period = ?, RemainExtendFee = (ISNULL(RemainExtendFee, 0) + ?) "
                         + " WHERE ConsignmentID = ?";
@@ -1024,7 +1024,7 @@ public class ConsignmentDAO {
                 stm.setFloat(3, extraPayment);
                 stm.setString(4, consignmentID);
                 int i = stm.executeUpdate();
-                
+
                 query = "UPDATE Product SET ProductStatusID = ? "
                         + " WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
                 stm = conn.prepareStatement(query);
@@ -1032,7 +1032,7 @@ public class ConsignmentDAO {
                 stm.setString(2, consignmentID);
                 i = stm.executeUpdate();
             }
-            
+
         } catch (SQLException e) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
         } finally {
@@ -1052,7 +1052,7 @@ public class ConsignmentDAO {
     //used for getting product info from consignment table and insert into ConsignmentDTO
     public void populateProduct(ConsignmentDTO consignment) {
         ProductDAO dao = new ProductDAO();
-        
+
         ProductDTO product = dao.getProductByIDNoStatus(consignment.getProductID());
         consignment.setProduct(product);
     }
@@ -1063,7 +1063,7 @@ public class ConsignmentDAO {
         AccountDTO storeOwner = dao.getStoreOwnerByID(consignment.getStoreOwnerID());
         consignment.setStoreOwner(storeOwner);
     }
-    
+
     private ConsignmentDTO getConsignment(ResultSet rs) throws SQLException {
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         DateFormat df2 = new SimpleDateFormat("HH:mm|dd-MM-yyyy");
@@ -1078,13 +1078,13 @@ public class ConsignmentDAO {
         String address = rs.getString("Address");
         String phone = rs.getString("Phone");
         phone = "0" + phone.substring(3);
-        
+
         String email = rs.getString("Email");
         String paypalAccount = rs.getString("PaypalAccount");
-        
+
         String fromDate = df.format(rs.getDate("FromDate"));
         String toDate = df.format(rs.getDate("ToDate"));
-        
+
         String raiseWebDate = rs.getString("RaiseWebDate");
         if (raiseWebDate != null) {
             raiseWebDate = df.format(rs.getDate("RaiseWebDate"));
@@ -1095,7 +1095,7 @@ public class ConsignmentDAO {
         float returnPrice = rs.getFloat("ReturnedPrice") / 1000;
         float negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
         float desirePrice = rs.getFloat("DesirePrice") / 1000;
-        
+
         String reviewProductDate = rs.getString("ReviewProductDate");
         if (reviewProductDate != null) {
             reviewProductDate = df2.format(rs.getTimestamp("ReviewProductDate"));
@@ -1114,16 +1114,16 @@ public class ConsignmentDAO {
             appointmentDate = df.format(rs.getDate("AppointmentDate"));
             hour = dfHour.format(rs.getTimestamp("AppointmentDate"));
         }
-        
+
         String reviewRequestDate = rs.getString("ReviewRequestDate");
         if (reviewRequestDate != null) {
             reviewRequestDate = df2.format(rs.getTimestamp("ReviewRequestDate"));
         }
-        
+
         int consignmentStatusID = rs.getInt("ConsignmentStatusID");
         String reason = rs.getString("Reason");
         int deliveryMethod = rs.getInt("DeliveryMethod");
-        
+
         ConsignmentDTO consignment = new ConsignmentDTO();
         consignment.setConsigmentID(consignmentID);
         consignment.setProductID(productID);
@@ -1136,17 +1136,17 @@ public class ConsignmentDAO {
         consignment.setPhone(phone);
         consignment.setEmail(email);
         consignment.setPaypalAccount(paypalAccount);
-        
+
         consignment.setFromDate(fromDate);
         consignment.setToDate(toDate);
-        
+
         consignment.setRaiseWebDate(raiseWebDate);
-        
+
         consignment.setPeriod(period);
         consignment.setMinPrice(minPrice);
         consignment.setMaxPrice(maxPrice);
         consignment.setReturnPrice(returnPrice);
-        
+
         consignment.setReviewProductDate(reviewProductDate);
         consignment.setCreatedDate(createdDate);
         consignment.setCancelDate(cancelDate);
@@ -1156,10 +1156,10 @@ public class ConsignmentDAO {
         consignment.setConsignmentStatusID(consignmentStatusID);
         consignment.setReason(reason);
         consignment.setNegotiatedPrice(negotiatedPrice);
-        
+
         consignment.setDeliveryMethod(deliveryMethod);
         consignment.setDesirePrice(desirePrice);
-        
+
         String productName = rs.getString("ProductName");
         String serialNumber = rs.getString("SerialNumber");
         String purchasedDate = rs.getString("PurchasedDate");
@@ -1179,16 +1179,16 @@ public class ConsignmentDAO {
         product.setIsSpecial(isSpecial);
         int newStatus = rs.getInt("NewStatus");
         product.setNewStatus(newStatus);
-        
+
         consignment.setProduct(product);
         return consignment;
     }
-    
+
     private String getCurrentDate() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         java.util.Date currentDate = new java.util.Date();
         return df.format(currentDate);
-        
+
     }
 
     //begin merge
@@ -1208,17 +1208,17 @@ public class ConsignmentDAO {
             stm = con.prepareStatement(query);
             stm.setString(1, consigment.getConsigmentID());
             stm.setInt(2, consigment.getProductID());
-            
+
             if (consigment.getMemberID() > 0) {
                 stm.setInt(3, consigment.getMemberID());
             } else {
                 stm.setNull(3, java.sql.Types.INTEGER);
             }
-            
+
             stm.setInt(4, consigment.getStoreOwnerID());
-            
+
             stm.setString(5, consigment.getName());
-            
+
             if (consigment.getAddress().equals("")) {
                 stm.setNull(6, java.sql.Types.NVARCHAR);
             } else {
@@ -1234,7 +1234,7 @@ public class ConsignmentDAO {
             } else {
                 stm.setString(8, consigment.getEmail());
             }
-            
+
             if (consigment.getPaypalAccount().equals("")) {
                 stm.setNull(9, java.sql.Types.VARCHAR);
             } else {
@@ -1243,7 +1243,7 @@ public class ConsignmentDAO {
             stm.setString(10, consigment.getFromDate());
             stm.setString(11, consigment.getToDate());
             stm.setInt(12, consigment.getPeriod());
-            
+
             if (consigment.getMinPrice() > 0) {
                 stm.setDouble(13, consigment.getMinPrice());
             } else {
@@ -1257,9 +1257,9 @@ public class ConsignmentDAO {
 
             //stm.setString(15, consigment.getCreatedDate());
             stm.setString(15, getCurrentDate());
-            
+
             stm.setInt(16, consigment.getConsignmentStatusID());
-            
+
             if (consigment.getReviewProductDate() != null) {
                 stm.setString(17, consigment.getReviewProductDate());
             } else {
@@ -1270,28 +1270,28 @@ public class ConsignmentDAO {
             } else {
                 stm.setNull(18, java.sql.Types.FLOAT);
             }
-            
+
             if (consigment.getAppointmentDate() != null) {
                 stm.setString(19, consigment.getAppointmentDate());
             } else {
                 stm.setNull(19, java.sql.Types.DATE);
             }
-            
+
             if (consigment.getReviewRequestDate() != null) {
                 stm.setString(20, consigment.getReviewRequestDate());
             } else {
                 stm.setNull(20, java.sql.Types.DATE);
             }
-            
+
             stm.setInt(21, consigment.getDeliveryMethod());
-            
+
             if (consigment.getDesirePrice() > 0) {
                 stm.setDouble(22, consigment.getDesirePrice());
             } else {
                 stm.setNull(22, java.sql.Types.FLOAT);
-                
+
             }
-            
+
             int result = stm.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
@@ -1310,7 +1310,7 @@ public class ConsignmentDAO {
             } catch (SQLException ex) {
                 Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         }
         return false;
     }
@@ -1392,14 +1392,14 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     private String convertPhone(String source) {
         if (source == null) {
             return "";
         }
         return "0" + source.substring(3);
     }
-    
+
     private String formatDateString(String source) {
         if (source == null) {
             return "";
@@ -1415,7 +1415,7 @@ public class ConsignmentDAO {
             return "";
         }
     }
-    
+
     public String getConsignmentIDByProductID(int productID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1447,7 +1447,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public ConsignmentDTO getInforForCancelPage(String consignmentID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1509,7 +1509,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public ConsignmentDTO getInforForSoldPage(int productID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -1540,7 +1540,7 @@ public class ConsignmentDAO {
                 negotiatedPrice = rs.getFloat("NegotiatedPrice") / 1000;
                 period = rs.getInt("Period");
                 remainExtendFee = rs.getFloat("RemainExtendFee");
-                
+
             }
             result.setConsigmentID(consignmentID);
             result.setName(fullname);
@@ -1576,7 +1576,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public ConsignmentDTO getInforForExpiredPage(String consignmentID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1585,11 +1585,11 @@ public class ConsignmentDAO {
         ProductDTO product = new ProductDTO();
         try {
             conn = DBUltilities.makeConnection();
-            
+
             Date tempDate = Calendar.getInstance().getTime();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
             String today = sdf.format(tempDate);
-            
+
             String query = "SELECT c.*, p.ProductName, p.Brand, cat.EnglishName, DATEDIFF(day,c.ReviewProductDate,?) AS DiffDate "
                     + "FROM Consignment c, Product p, Category cat WHERE ConsignmentID = ? AND c.ProductID = p.ProductID AND cat.CategoryID = p.CategoryID";
             stm = conn.prepareStatement(query);
@@ -1646,7 +1646,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public String getConsignmentIDByOrderID(String orderID) {
         Connection conn = null;
         ResultSet rs = null;
@@ -1681,7 +1681,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public ConsignmentDTO getInforForOnWebPage(String consignmentID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1691,7 +1691,7 @@ public class ConsignmentDAO {
         List<Integer> season = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            
+
             String query = "SELECT c.*, p.ProductName FROM Consignment c, Product p "
                     + "WHERE ConsignmentID = ? AND c.ProductID = p.ProductID";
             stm = conn.prepareStatement(query);
@@ -1734,7 +1734,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public List<ConsignmentDTO> getConsignmentInforForStatisticPage(int roleID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1795,7 +1795,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public ConsignmentDTO getDetailConsignment(String consignmentID) {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -1863,7 +1863,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     private String formatDate(String source) {
         if (source == null) {
             return "";
@@ -1879,7 +1879,7 @@ public class ConsignmentDAO {
             return "";
         }
     }
-    
+
     private List<ConsignmentDTO> getProduct(int storeOwnerID, int productStatusID, int consignmentStatusID, String orderCollumn) {
         Connection conn = null;
         ResultSet rs = null;
@@ -1887,7 +1887,7 @@ public class ConsignmentDAO {
         List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            
+
             String query = "SELECT c.*, p.* FROM Consignment c, Product p "
                     + "WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND "
                     + "p.ProductStatusID = ? AND c.ConsignmentStatusID = ?";
@@ -1934,7 +1934,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     private List<ConsignmentDTO> getCancelProduct(int storeOwnerID) {
         Connection conn = null;
         ResultSet rs = null;
@@ -1942,7 +1942,7 @@ public class ConsignmentDAO {
         List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
-            
+
             String query = "SELECT c.*, p.* FROM Consignment c, Product p "
                     + "WHERE c.StoreOwnerID = ? AND c.ProductID = p.ProductID AND "
                     + "p.ProductStatusID = ? AND c.ConsignmentStatusID = ? AND c.RaiseWebDate IS NOT NULL";
@@ -1989,7 +1989,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public List<ConsignmentDTO> getProductForManageProductPage(int storeOwnerID) {
         List<ConsignmentDTO> result = new ArrayList<>();
         List<ConsignmentDTO> temp = new ArrayList<>();
@@ -2033,11 +2033,11 @@ public class ConsignmentDAO {
         }
         return result;
     }
-    
+
     public List<ConsignmentDTO> getProductForManageSalesPage(int storeOwnerID) {
         Connection conn = null;
-        ResultSet rs = null;
-        PreparedStatement stm = null;
+        ResultSet rs = null, rsOrder = null;
+        PreparedStatement stm = null, stmOrder = null;
         List<ConsignmentDTO> result = new ArrayList<>();
         try {
             conn = DBUltilities.makeConnection();
@@ -2065,6 +2065,14 @@ public class ConsignmentDAO {
                 item.setConsigmentID(consignmentID);
                 item.setReviewProductDate(reviewProductDate);
                 item.setConsignmentStatusID(consignmentStatusID);
+                query = "SELECT COUNT(*) AS Quantity FROM [Order] WHERE ProductID = ? AND OrderStatusID = ?";
+                stmOrder = conn.prepareStatement(query);
+                stmOrder.setInt(1, productID);
+                stmOrder.setInt(2, OrderStatus.WAITING);
+                rsOrder = stmOrder.executeQuery();
+                while (rsOrder.next()) {
+                    item.setQuantity(rsOrder.getInt("Quantity"));
+                }
                 result.add(item);
             }
             return result;
@@ -2075,6 +2083,12 @@ public class ConsignmentDAO {
             try {
                 if (rs != null) {
                     rs.close();
+                }
+                if (rsOrder != null) {
+                    rs.close();
+                }
+                if (stmOrder != null) {
+                    stm.close();
                 }
                 if (stm != null) {
                     stm.close();
@@ -2087,7 +2101,7 @@ public class ConsignmentDAO {
             }
         }
     }
-    
+
     public int checkProductStatusByConsignmentID(String consignmentID) {
         Connection conn = null;
         ResultSet rs = null;
@@ -2125,6 +2139,61 @@ public class ConsignmentDAO {
         } catch (Exception e) {
             Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
             return -1;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+
+    public AccountDTO sellProductOnWeb(int productID, float sellingPrice) {
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement stm = null;
+        AccountDTO result = null;
+        try {
+            conn = DBUltilities.makeConnection();
+            conn.setAutoCommit(false);
+            String query = "UPDATE Product SET ProductStatusID = ?, SellingPrice = ? WHERE ProductID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, ProductStatus.SOLD);
+            stm.setFloat(2, sellingPrice * 1000);
+            stm.setInt(3, productID);
+            int a = stm.executeUpdate();
+            query = "SELECT * FROM Consignment WHERE ProductID = ?";
+            stm = conn.prepareStatement(query);
+            stm.setInt(1, productID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("FullName");
+                String email = rs.getString("Email");
+                String phone = rs.getString("Phone");
+                String consignmentID = rs.getString("ConsignmentID");
+                result = new AccountDTO();
+                result.setFullName(name);
+                result.setEmail(email);
+                result.setPhone(phone);
+                result.setAccountID(consignmentID);
+            }
+            if (result != null & a > 0) {
+                conn.commit();
+                return result;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            Logger.getLogger(ConsignmentDAO.class.getName()).log(Level.SEVERE, null, e);
+            return null;
         } finally {
             try {
                 if (rs != null) {

@@ -148,6 +148,10 @@ public class CancelProduct extends HttpServlet {
                         e.printStackTrace();
                     }
                     break;
+                case "refuse":
+                    //refuse receive product
+                    status = ProductStatus.ON_WEB;
+                    break;
             }
             //update database
             boolean flag = productDAO.cancelProduct(consignmentID, status, cancelFee);
