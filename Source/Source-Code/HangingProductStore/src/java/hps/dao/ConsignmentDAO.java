@@ -2164,11 +2164,13 @@ public class ConsignmentDAO {
         try {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
-            String query = "UPDATE Product SET ProductStatusID = ?, SellingPrice = ? WHERE ProductID = ?";
+            String today = getCurrentDate();
+            String query = "UPDATE Product SET ProductStatusID = ?, SellingPrice = ?, SellDate = ? WHERE ProductID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.SOLD);
             stm.setFloat(2, sellingPrice * 1000);
-            stm.setInt(3, productID);
+            stm.setString(3, today);
+            stm.setInt(4, productID);
             int a = stm.executeUpdate();
             query = "SELECT * FROM Consignment WHERE ProductID = ?";
             stm = conn.prepareStatement(query);
