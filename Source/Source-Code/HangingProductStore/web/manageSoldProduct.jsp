@@ -632,33 +632,24 @@
                 }
             }
             function checkCustomer2() {
+                var price = $("#sendPrice").val().trim();
+                var flag = true;
                 var n = $('input[name=chkboxCustomer]:checked').length;
+                if (n == 0) {
+                    alert('Vui lòng chọn ít nhất một khách hàng');
+                    return false;
+                }
                 $('input[name=chkboxCustomer]:checked').each(function () {
-                    var id = $(this).val();
-                    var sendPrice = $('#' + id).val().trim();
-                    if (sendPrice.length == 0) {
-                        alert('Vui lòng nhập giá để gửi cho khách hàng.');
-                        return false;
+                    if (isNaN(price) || price.length == 0 || price <= 0) {
+                        var id = '#' + $(this).val();
+                        var sendPrice = $("" + id).val();
+                        if (flag && (isNaN(price) || price.length == 0 || price <= 0)) {
+                            alert('Vui lòng nhập giá gửi khách hàng');
+                            flag = false;
+                        }
                     }
                 })
-                var price = $("#sendPrice").val().trim();
-                if (n == 0) {
-                    alert('Vui lòng chọn ít nhất một khách hàng.');
-                    return false;
-                }
-                if (price.length == 0) {
-                    alert('Vui lòng nhập giá gửi khách hàng.')
-                    return false;
-                }
-                if (price < 0) {
-                    alert('Giá gửi khách hàng phải là số dương.');
-                    return false;
-                }
-                if (isNaN(price)) {
-                    alert('Giá gửi khách hàng phải là số.');
-                    return false;
-                }
-                return false;
+                return flag;
             }
             function validateSellingPrice() {
                 var fee = $('#sellingPrice').val().trim();
@@ -755,13 +746,13 @@
                         if (isSpecial > 0) {
                             if (orderList[i].sendPrice == 0) {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id=' + orderList[i].orderID + ' name=' + orderList[i].orderID + '</td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' +
                                         orderList[i].phone + '</td><td>Chưa gửi giá</td></tr>';
                             } else {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id=' + orderList[i].orderID + ' name=' + orderList[i].orderID + '</td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' + orderList[i].phone + '</td><td>Đã gửi giá : ' +
                                         orderList[i].sendPrice.toMoney(0) + ' (ngàn đồng)</td></tr>';

@@ -156,7 +156,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
                 for (ConsignmentDTO consignor : listConsignor) {
                     if (consignor.getPhone() != null && !consignor.getPhone().equals("")) {
                         String sms = "Mon hang voi ma ki gui " + consignor.getConsigmentID() + " cua ban da qua han ki "
-                                + "gui. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
+                                + "gui. Gia thoa thuan la " + (int) (consignor.getNegotiatedPrice() / 1000) + " ngan dong. Vui long lien he voi chu cua hang de nhan hang hoac gia han ki gui";
                         try {
                             ulti.sendSMS(sms, consignor.getPhone());
                         } catch (TwilioRestException ex) {
@@ -168,7 +168,7 @@ public class ScheduleTaskServlet extends HttpServlet implements ServletContextLi
                     if (consignor.getEmail() != null && !consignor.getEmail().equals("")) {
                         String subject = "[HPS] Hết hạn kí gửi";
                         String email = "Xin chào " + consignor.getName() + "</br>Món hàng với mã kí gửi "
-                                + consignor.getConsigmentID() + " đã quá hạn kí gửi. Vui lòng liên hệ với chủ cửa hàng"
+                                + consignor.getConsigmentID() + " đã quá hạn kí gửi. Giá thỏa thuận của món hàng của bạn là " + (int) (consignor.getNegotiatedPrice() / 1000) + " ngàn đồng. Vui lòng liên hệ với chủ cửa hàng"
                                 + " để nhận hàng hoặc gia hạn kí gửi.</br> Trân trọng</br> HPS System";
                         ulti.sendEmail(consignor.getEmail(), subject, email);
                     }

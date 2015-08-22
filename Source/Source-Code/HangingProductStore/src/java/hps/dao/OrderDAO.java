@@ -342,10 +342,11 @@ public class OrderDAO {
             stmO.executeUpdate();
 
             query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = "
-                    + "(SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+                    + "(SELECT ProductID FROM [Order] WHERE OrderID = ?) AND ProductStatusID = ?";
             stmP = conn.prepareStatement(query);
             stmP.setInt(1, ProductStatus.ON_WEB);
             stmP.setString(2, orderID);
+            stmP.setInt(1, ProductStatus.ORDERED);
             stmP.executeUpdate();
 
             conn.commit();

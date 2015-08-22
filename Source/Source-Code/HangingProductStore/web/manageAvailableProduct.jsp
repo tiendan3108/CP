@@ -328,7 +328,7 @@
                                                     <div class="form-group">
                                                         <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm <font color="red">*</font></label>
                                                         <div class="col-sm-8">
-                                                            <input id="avai_ProductName" type="text" class="form-control" maxlength="100" name="txtProductName"/>
+                                                            <textarea cols="2" id="avai_ProductName" type="text" class="form-control" maxlength="100" name="txtProductName"></textarea>
                                                             <p class="help-block" id="er_avai_ProductName" style="color: red">  </p>
                                                         </div>
                                                     </div>
@@ -604,7 +604,7 @@
                                                     <div class="form-group">
                                                         <label for="txtProductName" class="col-sm-4 control-label" style="font-weight: bold">Tên sản phẩm <font color="red">*</font></label>
                                                         <div class="col-sm-8">
-                                                            <input id="onWeb_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"/>
+                                                            <textarea cols="2" id="onWeb_ProductName" type="text" class="form-control" maxlength="50" name="txtProductName"></textarea>
                                                             <p class="help-block" id="er_OnWeb_ProductName"style="color: red">  </p>
                                                         </div>
                                                     </div>

@@ -1330,7 +1330,7 @@ public class ConsignmentDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
             System.out.println("Today : " + today);
-            query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email FROM Consignment c, Product p WHERE "
+            query = "SELECT c.ConsignmentID, c.FullName, c.Phone, c.Email, c.NegotiatedPrice FROM Consignment c, Product p WHERE "
                     + "DATEDIFF(day,[RaiseWebDate],?) > Period AND p.ProductID = c.ProductID AND "
                     + "p.ProductStatusID > 1 AND p.ProductStatusID < 4 AND c.isExpiredMessage is NULL";
             stm = conn.prepareStatement(query);
@@ -1343,7 +1343,9 @@ public class ConsignmentDAO {
                 String fullName = rs.getString("FullName");
                 String phone = (rs.getString("Phone"));
                 String email = rs.getString("Email");
+                float negotiatedPrice = rs.getFloat("NegotiatedPrice");
                 ConsignmentDTO item = new ConsignmentDTO();
+                item.setNegotiatedPrice(negotiatedPrice);
                 item.setConsigmentID(consignmentID);
                 item.setName(fullName);
                 item.setPhone(phone);
@@ -2165,12 +2167,13 @@ public class ConsignmentDAO {
             conn = DBUltilities.makeConnection();
             conn.setAutoCommit(false);
             String today = getCurrentDate();
-            String query = "UPDATE Product SET ProductStatusID = ?, SellingPrice = ?, SellDate = ? WHERE ProductID = ?";
+            String query = "UPDATE Product SET ProductStatusID = ?, SellingPrice = ?, SellDate = ? WHERE ProductID = ? AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.SOLD);
             stm.setFloat(2, sellingPrice * 1000);
             stm.setString(3, today);
             stm.setInt(4, productID);
+            stm.setInt(5, ProductStatus.ON_WEB);
             int a = stm.executeUpdate();
             query = "SELECT * FROM Consignment WHERE ProductID = ?";
             stm = conn.prepareStatement(query);

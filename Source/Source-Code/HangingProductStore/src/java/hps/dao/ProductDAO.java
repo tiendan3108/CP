@@ -1202,18 +1202,20 @@ public class ProductDAO {
                 conn.setAutoCommit(false);
                 //update set product to agree cancel but not yet receive by consignor
                 query = "UPDATE Product SET ProductStatusID = ? WHERE "
-                        + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?)";
+                        + "ProductID = (SELECT c.ProductID FROM Consignment c WHERE c.ConsignmentID = ?) AND ProductStatusID = ?";
                 stmUpdateProduct = conn.prepareStatement(query);
                 stmUpdateProduct.setInt(1, ProductStatus.NOT_YET_RECEIVE);
                 stmUpdateProduct.setString(2, consignmentID);
+                stmUpdateProduct.setInt(3, ProductStatus.CANCEL);
                 resultUpdateProduct = stmUpdateProduct.executeUpdate();
 
                 //update set consignment status
-                query = "UPDATE Consignment SET ConsignmentStatusID = ?, CancelFee = ? WHERE ConsignmentID = ?";
+                query = "UPDATE Consignment SET ConsignmentStatusID = ?, CancelFee = ? WHERE ConsignmentID = ? AND ConsignmentStatusID = ?";
                 stmUpdateConsignment = conn.prepareStatement(query);
                 stmUpdateConsignment.setInt(1, ConsignmentStatus.CANCEL);
                 stmUpdateConsignment.setFloat(2, cancelFee);
                 stmUpdateConsignment.setString(3, consignmentID);
+                stmUpdateConsignment.setInt(4, ConsignmentStatus.RECEIVED);
                 resultUpdateConsignment = stmUpdateConsignment.executeUpdate();
 
                 if (resultUpdateProduct > 0 && resultUpdateConsignment > 0) {
@@ -1309,18 +1311,20 @@ public class ProductDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
 
-            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ?";
+            query = "UPDATE Consignment SET ReturnedPrice = ?, ReturnDate = ?, ConsignmentStatusID = ? WHERE ConsignmentID = ? AND ConsignmentStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setFloat(1, returnPrice);
             stm.setString(2, today);
             stm.setInt(3, ConsignmentStatus.COMPLETED);
             stm.setString(4, consignmentID);
+            stm.setInt(5, ConsignmentStatus.RECEIVED);
             result1 = stm.executeUpdate();
             query = "UPDATE Product set ProductStatusID = ? WHERE ProductID = "
-                    + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+                    + "(SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.COMPLETED);
             stm.setString(2, consignmentID);
+            stm.setInt(3, ProductStatus.SOLD);
             result2 = stm.executeUpdate();
             return (result1 > 0 && result2 > 0);
         } catch (SQLException e) {
@@ -1700,18 +1704,20 @@ public class ProductDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String today = sdf.format(tempDate);
 
-            String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ?";
+            String query = "UPDATE Consignment SET ReceivedDate = ?, ConsignmentStatusID = ?, ExpiredFee = ? WHERE ConsignmentID = ? AND ConsignmentStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, today);
             stm.setInt(2, ConsignmentStatus.COMPLETED);
             stm.setFloat(3, expiredFee);
             stm.setString(4, consignmentID);
+            stm.setInt(5, ConsignmentStatus.CANCEL);
             int i = stm.executeUpdate();
 
-            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.NOT_AVAILABLE);
             stm.setString(2, consignmentID);
+            stm.setInt(3, ProductStatus.NOT_AVAILABLE);
             int j = stm.executeUpdate();
             if (i > 0 && j > 0) {
                 conn.commit();
@@ -1768,7 +1774,7 @@ public class ProductDAO {
             stm.setString(1, consignmentID);
             stm.executeUpdate();
 
-            query = "UPDATE Consignment SET RemainExtendFee = (SELECT RemainExtendFee FROM Consignment WHERE ConsignmentID = ?) + ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ?, NegotiatedPrice = ? WHERE ConsignmentID = ?";
+            query = "UPDATE Consignment SET RemainExtendFee = (SELECT RemainExtendFee FROM Consignment WHERE ConsignmentID = ?) + ?, isExpiredMessage = null, ConsignmentStatusID = ?, Period = ?, NegotiatedPrice = ? WHERE ConsignmentID = ? AND ConsignmentStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, consignmentID);
             stm.setFloat(2, expiredFee);
@@ -1776,12 +1782,14 @@ public class ProductDAO {
             stm.setInt(4, 30 + dateFromNow);
             stm.setFloat(5, negotiatedPrice * 1000);
             stm.setString(6, consignmentID);
+            stm.setInt(7, ConsignmentStatus.EXPIRED);
             int i = stm.executeUpdate();
 
-            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?)";
+            query = "UPDATE Product SET ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM Consignment WHERE ConsignmentID = ?) AND ProductStatusiD = ?";
             stm = conn.prepareStatement(query);
             stm.setInt(1, ProductStatus.ON_WEB);
             stm.setString(2, consignmentID);
+            stm.setInt(2, ProductStatus.NOT_AVAILABLE);
             int j = stm.executeUpdate();
             if (i > 0 && j > 0) {
                 conn.commit();
@@ -1822,12 +1830,13 @@ public class ProductDAO {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String sellingDate = sdf.format(tempDate);
 
-            query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?)";
+            query = "UPDATE Product SET SellDate = ?, SellingPrice = ?, ProductStatusID = ? WHERE ProductID = (SELECT ProductID FROM [Order] WHERE OrderID = ?) AND ProductStatusID = ?";
             stm = conn.prepareStatement(query);
             stm.setString(1, sellingDate);
             stm.setFloat(2, sellingPrice);
             stm.setInt(3, ProductStatus.SOLD);
             stm.setString(4, orderID);
+            stm.setInt(5, ProductStatus.ORDERED);
             int i = stm.executeUpdate();
             query = "UPDATE [Order] SET OrderStatusID = ? WHERE OrderID = ?";
             stm = conn.prepareStatement(query);

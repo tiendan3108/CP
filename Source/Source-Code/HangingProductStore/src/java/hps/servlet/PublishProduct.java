@@ -61,7 +61,7 @@ public class PublishProduct extends HttpServlet {
         }
         return false;
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -195,7 +195,7 @@ public class PublishProduct extends HttpServlet {
                     if (!action.equals("available")) {
                         isPublish = false;
                     }
-                    if (currentTab == null) {
+                    if (currentTab == null || currentTab.equals("all")) {
                         currentTab = "all";
                     } else {
                         if (currentTab.equals("Trên web")) {
@@ -214,7 +214,7 @@ public class PublishProduct extends HttpServlet {
                     } else {
                         url = GlobalVariables.MANAGE_AVAILABLE_PRODUCT_SERVLET + "?status=fail#" + currentTab;
                     }
-
+                    
                 }
             }
             response.sendRedirect(url);

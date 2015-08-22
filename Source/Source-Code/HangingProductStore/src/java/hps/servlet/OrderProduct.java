@@ -137,10 +137,21 @@ public class OrderProduct extends HttpServlet {
                     }
                     if (orderIDs != null && orderIDs.length > 0 && isValid) {
                         for (String _orderID : orderIDs) {
-                            String phone = orderDAO.getCustomerInforByOrderID(_orderID, sendPrice);
+                            String tempPrice = request.getParameter(_orderID);
+                            int price = 0;
+                            if (tempPrice != null) {
+                                try {
+                                    price = Integer.parseInt(tempPrice);
+                                } catch (Exception e) {
+                                }
+                            }
+                            if (price == 0) {
+                                price = sendPrice;
+                            }
+                            String phone = orderDAO.getCustomerInforByOrderID(_orderID, price);
                             if (phone != null && !phone.equals("")) {
                                 try {
-                                    ultil.sendSMS(MessageString.sendPriceSMS(_orderID, sendPrice, user.getFullName()), phone);
+                                    ultil.sendSMS(MessageString.sendPriceSMS(_orderID, price, user.getFullName()), phone);
                                 } catch (TwilioRestException ex) {
                                     Logger.getLogger(OrderProduct.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (Exception ex) {
@@ -166,7 +177,7 @@ public class OrderProduct extends HttpServlet {
                         }
                     }
                 }
-                if (flag) {
+                if (flag || action.equals("sendPrice")) {
                     url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=success#" + currentTab;
                 } else {
                     url = GlobalVariables.MANAGE_SOLD_PRODUCT_SERVLET + "?status=fail#" + currentTab;

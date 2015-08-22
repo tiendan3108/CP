@@ -78,7 +78,7 @@
                     <p style="font-size: 16px; color: red">${err} </p>
                 </c:if>               
                 <div class="create-account">
-                    <p style="font-size: 18px"><a href="">Tạo Tài Khoản Mới </a>
+                    <p style="font-size: 18px"><a href="">Tạo Tài Khoản Mới </a><a href="HomeServlet" style="float: right">Trang chủ </a>
                     </p>
                 </div>
             </form>
