@@ -249,7 +249,7 @@
                                                             <c:when test="${c.consignmentStatusID == 1 or c.consignmentStatusID == 3}">
                                                                 <button type="button" class="btn btn-info" style="margin-right: 0px; color: black" 
                                                                         name="requestAcceptDetails" value="${c.consigmentID}"><i class="fa fa-eye"></i></button>       
-                                                                <c:if test="${c.consignmentStatusID == 1}">
+                                                                    <c:if test="${c.consignmentStatusID == 1}">
                                                                     <button name="btnRefuseRequest" value="${c.consigmentID}" style="margin-right: 0px" class="btn yellow"><i class="fa fa-remove"></i></button>
                                                                     </c:if>
                                                                     <c:if test="${c.consignmentStatusID == 3}">
@@ -259,8 +259,8 @@
                                                                 <c:otherwise>
                                                                 <button type="button" class="btn btn-info btn-block" style="margin-right: 0px; color: black" data-toggle="modal" data-target="#modalRefuseCancel"
                                                                         name="refuseCancelDetails" value="${c.consigmentID}"><i class="fa fa-eye"></i></button>
-                                                            </c:otherwise>
-                                                        </c:choose>
+                                                                </c:otherwise>
+                                                            </c:choose>
 
 
                                                     </td>
@@ -1358,10 +1358,10 @@
                                 $("#r_btnAction").val("r_accept");
 
                                 //$("#r_receivedDate").val(getCurrentDate());
-                                if (compareToCurrentDate(data.fromDate)) {
+                                if (compareToCurrentDate(data.fromDate) >= 0) {
                                     $("#r_receivedDate").val(data.fromDate);
                                 } else {
-                                    if (compareToCurrentDate(data.toDate)) {
+                                    if (compareToCurrentDate(data.toDate) >= 0) {
                                         $("#r_receivedDate").val(data.toDate);
                                     } else {
                                         $("#r_receivedDate").val(getCurrentDate());
@@ -1524,25 +1524,41 @@
                 if ($('#r_hour').val().length == 0) {
                     check = false;
                 }
-                if ($('#r_receivedDate').val().length == 0) {
+                var appointmentDate = $('#r_receivedDate').val();
+                if (appointmentDate.length == 0) {
                     check = false;
                 }
-//                if ($('#r_txtFullName').val().length <= 0 || $('#r_txtFullName').val().length > 50) {
-//                    check = false;
-//                }
-//
-//                if ($('#r_txtPhone').val().length < 10 || $('#r_txtPhone').val().substring(0, 1) != "0") {
-//                    check = false;
-//                }
-//                if ($("input[name='r_rdPayment'][value='cc']").is(":checked")) {
-//                    if ($('#r_txtPaypalAccount').val().length == 0) {
-//                        check = false;
-//                    }
-//                }
 
                 if (check) {
                     //$('form#r_form').submit();
-                    acceptRequest();
+
+                    var fromDate = $("#r_fromDateToDate").text().substring(0, 10);
+                    var toDate = $("#r_fromDateToDate").text().substring(12, 22);
+                    //alert(fromDate + ":" + fromDate.length + " <> " + toDate + ":" + toDate.length + " == " + appointmentDate + ":" + appointmentDate.length);
+
+                    if (compareToCurrentDate(fromDate) >= 0) {
+                        //alert(compareTwoDate(appointmentDate, fromDate) + " - " + compareTwoDate(appointmentDate, toDate));
+                        if (compareTwoDate(appointmentDate, fromDate) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                            acceptRequest();
+                        } else {
+                            showAlert("Xin chọn đúng ngày nhận hàng");
+                        }
+                    } else {
+                        if (compareToCurrentDate(fromDate) < 0 && compareToCurrentDate(toDate) >= 0) {
+                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                                acceptRequest();
+                            } else {
+                                showAlert("Xin chọn đúng ngày nhận hàng");
+                            }
+                        } else {
+                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0) {
+                                acceptRequest();
+                            } else {
+                                showAlert("Xin chọn đúng ngày nhận hàng");
+                            }
+                        }
+                    }
+                    //acceptRequest();
                 } else {
                     showAlert("Xin nhập đúng thông tin");
                 }
@@ -1617,7 +1633,8 @@
                 if ($('#r_hour').val().length == 0) {
                     check = false;
                 }
-                if ($('#r_receivedDate').val().length == 0) {
+                var appointmentDate = $('#r_receivedDate').val();
+                if (appointmentDate.length == 0) {
                     check = false;
                 }
                 if ($('#r_txtFullName').val().length <= 0 || $('#r_txtFullName').val().length > 50) {
@@ -1652,7 +1669,35 @@
                 }
 
                 if (check) {
-                    updateRequest();
+                    var fromDate = $("#r_fromDateToDate").text().substring(0, 10);
+                    var toDate = $("#r_fromDateToDate").text().substring(12, 22);
+                    //alert(fromDate + ":" + fromDate.length + " <> " + toDate + ":" + toDate.length + " == " + appointmentDate + ":" + appointmentDate.length);
+
+                    if (compareToCurrentDate(fromDate) >= 0) {
+                        //alert(compareTwoDate(appointmentDate, fromDate) + " - " + compareTwoDate(appointmentDate, toDate));
+                        if (compareTwoDate(appointmentDate, fromDate) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                            updateRequest();
+                        } else {
+                            showAlert("Xin chọn đúng ngày nhận hàng");
+                        }
+                    } else {
+                        if (compareToCurrentDate(fromDate) < 0 && compareToCurrentDate(toDate) >= 0) {
+                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                                updateRequest();
+                            } else {
+                                showAlert("Xin chọn đúng ngày nhận hàng");
+                            }
+                        } else {
+                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0) {
+                                updateRequest();
+                            } else {
+                                showAlert("Xin chọn đúng ngày nhận hàng");
+                            }
+                        }
+                    }
+
+
+                    //updateRequest();
                 } else {
                     showAlert("Xin nhập đầy đủ thông tin")
                 }
@@ -2125,6 +2170,7 @@
             }
 
             function compareToCurrentDate(target) {
+                //alert(target + " <> " + getCurrentDate());
                 var fromParts = target.split("-");
                 var date1 = new Date(fromParts[2], // year
                         fromParts[1] - 1, // month, starts with 0
@@ -2132,12 +2178,42 @@
 
                 var currentDate = new Date();
                 if (date1 < currentDate) {
-                    return false;
+                    return -1;
                 }
-                else {
-                    return true;
+                else if (date1.toDateString() === currentDate.toDateString()) {
+                    return 0;
+                }
+                else if (date1 > currentDate) {
+                    return 1;
+                } else {
+                    return -2;
                 }
             }
+
+            function compareTwoDate(fromDate, toDate) {
+                //alert(target + " <> " + getCurrentDate());
+                var fromParts = fromDate.split("-");
+                var date1 = new Date(fromParts[2], // year
+                        fromParts[1] - 1, // month, starts with 0
+                        fromParts[0]); // day
+
+                var toParts = toDate.split("-");
+                var date2 = new Date(toParts[2], // year
+                        toParts[1] - 1, // month, starts with 0
+                        toParts[0]); // day
+                if (date1 < date2) {
+                    return -1;
+                }
+                else if (date1.toDateString() === date2.toDateString()) {
+                    return 0;
+                }
+                else if (date1 > date2) {
+                    return 1;
+                } else {
+                    return -2;
+                }
+            }
+
 
             $("#searchStatus").change(function () {
                 var searchStatus = $(this).val();
