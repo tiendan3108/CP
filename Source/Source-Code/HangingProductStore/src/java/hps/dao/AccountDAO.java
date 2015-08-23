@@ -497,6 +497,7 @@ public class AccountDAO {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        JavaUltilities ultil = new JavaUltilities();
         try {
             con = DBUltilities.makeConnection();
             // Join 3 bang Account, StoreOwner va StoreOwner_Category de lay thong tin ve storeowner ung voi category
@@ -524,8 +525,10 @@ public class AccountDAO {
                 store.setFormula(rs.getFloat("Formula"));
 
                 //add MinPrice & MaxPrice
-                store.setMinPrice(Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000));
-                store.setMaxPrice(Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000));
+                
+                int percent = ultil.getPercentInPropertyFileByStoreOwnerID(store.getRoleID());
+                store.setMinPrice(Math.round((basicPrice * percent / 100) * (1 - store.getFormula() / 100) / 1000));
+                store.setMaxPrice(Math.round((basicPrice * percent / 100) * (1 + store.getFormula() / 100) / 1000));
                 list.add(store);
             }
             return list;

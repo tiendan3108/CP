@@ -221,9 +221,19 @@ public class ConsignCompleteServlet extends HttpServlet {
                         memberID = ((AccountDTO) session.getAttribute("ACCOUNT")).getRoleID();
                     }
                     //get storeOwnerID from step2
-                    int storeOwnerID = 0;
-
-                    storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
+                    
+                    int storeOwnerID = Integer.parseInt(session.getAttribute("STORE").toString());
+                    int percent = ulti.getPercentInPropertyFileByStoreOwnerID(storeOwnerID);
+                    if (percent < 0){
+                        System.out.println("Loi khi get percent of storeOwner" + storeOwnerID);
+                        percent = 60;
+                    }
+                    int period = ulti.getPeriodInPropertyFileByStoreOwnerID(storeOwnerID);
+                    if (period < 0){
+                        System.out.println("Loi khi get period of storeOwner" + storeOwnerID);
+                        period = 30;
+                    }
+                    
                     AccountDTO store = accountDAO.getStoreOwnerByID(storeOwnerID);
                     float maxPrice = 0;
                     float minPrice = 0;
@@ -235,8 +245,8 @@ public class ConsignCompleteServlet extends HttpServlet {
                     }
                     if (session.getAttribute("BASICPRICE") != null) {
                         double basicPrice = Double.parseDouble(session.getAttribute("BASICPRICE").toString());
-                        maxPrice = Math.round((basicPrice * 60 / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
-                        minPrice = Math.round((basicPrice * 60 / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
+                        maxPrice = Math.round((basicPrice * percent / 100) * (1 + store.getFormula() / 100) / 1000) * 1000;
+                        minPrice = Math.round((basicPrice * percent / 100) * (1 - store.getFormula() / 100) / 1000) * 1000;
                     }
                     // Set created date
 //                    Date date = new Date();
@@ -249,7 +259,7 @@ public class ConsignCompleteServlet extends HttpServlet {
                     }
 
                     ConsignmentDTO consignment = new ConsignmentDTO(consignmentID, productID, memberID, storeOwnerID, fullName,
-                            address, phone, email, paypalAccount, fromDate, toDate, 30, minPrice, maxPrice, "", 1);
+                            address, phone, email, paypalAccount, fromDate, toDate, period, minPrice, maxPrice, "", 1);
                     consignment.setDeliveryMethod(deliveryMethod);
                     consignment.setDesirePrice(desirePrice);
 

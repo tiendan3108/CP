@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,6 +85,81 @@ public class JavaUltilities {
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         }
         return sb.toString();
+    }
+
+    public int getPeriodInPropertyFileByStoreOwnerID(int storeOwnerID) {
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+
+            String realpath = JavaUltilities.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            realpath = realpath.substring(0, realpath.length() - 39).replaceAll("%20", " ").replaceAll("\\\\", "/") + "storeOwner" + storeOwnerID + ".properties";
+            System.out.println(realpath);
+
+            input = new FileInputStream(realpath);
+            if (input == null) {
+                System.out.println("Sorry, unable to find storeOwner" + storeOwnerID);
+                return - 1;
+            }
+
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            String period = prop.getProperty("period");
+            System.out.println("Period of storeOwner" + storeOwnerID + ": " + period);
+            return Integer.parseInt(period);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int getPercentInPropertyFileByStoreOwnerID(int storeOwnerID) {
+        Properties prop = new Properties();
+        InputStream input = null;
+
+        try {
+            //input = new FileInputStream("build/web/WEB-INF/storeOwner" + storeOwnerID + ".properties");
+            String realpath = JavaUltilities.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            realpath = realpath.substring(0, realpath.length() - 39).replaceAll("%20", " ").replaceAll("\\\\", "/") + "storeOwner" + storeOwnerID + ".properties";
+            System.out.println(realpath);
+
+            input = new FileInputStream(realpath);
+            if (input == null) {
+                System.out.println("Sorry, unable to find storeOwner" + storeOwnerID);
+                return - 1;
+            }
+            // load a properties file
+            prop.load(input);
+
+            // get the property value and print it out
+            String percent = prop.getProperty("percent");
+            System.out.println("Percent of storeOwner" + storeOwnerID + ": " + percent);
+            return Integer.parseInt(percent);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return -1;
     }
 
     /**
