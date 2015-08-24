@@ -1521,7 +1521,8 @@
 //                if ($('#r_productName').val().length <= 0 || $('#r_productName').val().length > 100) {
 //                    check = false;
 //                }
-                if ($('#r_hour').val().length == 0) {
+                var hour = $('#r_hour').val();
+                if (hour.length == 0) {
                     check = false;
                 }
                 var appointmentDate = $('#r_receivedDate').val();
@@ -1535,23 +1536,24 @@
                     var fromDate = $("#r_fromDateToDate").text().substring(0, 10);
                     var toDate = $("#r_fromDateToDate").text().substring(12, 22);
                     //alert(fromDate + ":" + fromDate.length + " <> " + toDate + ":" + toDate.length + " == " + appointmentDate + ":" + appointmentDate.length);
-
-                    if (compareToCurrentDate(fromDate) >= 0) {
-                        //alert(compareTwoDate(appointmentDate, fromDate) + " - " + compareTwoDate(appointmentDate, toDate));
+                    
+                    if (compareToCurrentDate(fromDate) > 0) {
                         if (compareTwoDate(appointmentDate, fromDate) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                    
                             acceptRequest();
                         } else {
                             showAlert("Xin chọn đúng ngày nhận hàng");
                         }
                     } else {
-                        if (compareToCurrentDate(fromDate) < 0 && compareToCurrentDate(toDate) >= 0) {
-                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                        if (compareToCurrentDate(fromDate) <= 0 && compareToCurrentDate(toDate) >= 0) {
+                            //if (compareTwoDatetime(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                            if (compareToCurrentDatetime(appointmentDate, hour) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
                                 acceptRequest();
                             } else {
                                 showAlert("Xin chọn đúng ngày nhận hàng");
                             }
                         } else {
-                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0) {
+                            if (compareToCurrentDatetime(appointmentDate, hour) >= 0) {
                                 acceptRequest();
                             } else {
                                 showAlert("Xin chọn đúng ngày nhận hàng");
@@ -1630,7 +1632,8 @@
                 if ($('#r_productName').val().length == 0 || $('#r_productName').val().length > 100) {
                     check = false;
                 }
-                if ($('#r_hour').val().length == 0) {
+                var hour = $('#r_hour').val();
+                if (hour.length == 0) {
                     check = false;
                 }
                 var appointmentDate = $('#r_receivedDate').val();
@@ -1673,7 +1676,7 @@
                     var toDate = $("#r_fromDateToDate").text().substring(12, 22);
                     //alert(fromDate + ":" + fromDate.length + " <> " + toDate + ":" + toDate.length + " == " + appointmentDate + ":" + appointmentDate.length);
 
-                    if (compareToCurrentDate(fromDate) >= 0) {
+                    if (compareToCurrentDate(fromDate) > 0) {
                         //alert(compareTwoDate(appointmentDate, fromDate) + " - " + compareTwoDate(appointmentDate, toDate));
                         if (compareTwoDate(appointmentDate, fromDate) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
                             updateRequest();
@@ -1681,14 +1684,16 @@
                             showAlert("Xin chọn đúng ngày nhận hàng");
                         }
                     } else {
-                        if (compareToCurrentDate(fromDate) < 0 && compareToCurrentDate(toDate) >= 0) {
-                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                        if (compareToCurrentDate(fromDate) <= 0 && compareToCurrentDate(toDate) >= 0) {
+                            //if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
+                            if (compareToCurrentDatetime(appointmentDate, hour) >= 0 && compareTwoDate(appointmentDate, toDate) <= 0) {
                                 updateRequest();
                             } else {
                                 showAlert("Xin chọn đúng ngày nhận hàng");
                             }
                         } else {
-                            if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0) {
+                            //if (compareTwoDate(appointmentDate, getCurrentDate()) >= 0) {
+                            if (compareToCurrentDatetime(appointmentDate, hour) >= 0) {
                                 updateRequest();
                             } else {
                                 showAlert("Xin chọn đúng ngày nhận hàng");
@@ -2190,6 +2195,30 @@
                 }
             }
 
+            function compareToCurrentDatetime(targetDate, targetHour) {
+                //alert(target + " <> " + getCurrentDate());
+                var fromParts = targetDate.split("-");
+                var fromParts2 = targetHour.split(":");
+                var date1 = new Date(fromParts[2], // year
+                        fromParts[1] - 1, // month, starts with 0
+                        fromParts[0], // day
+                        fromParts2[0], // Hour
+                        fromParts2[1]); //Minute
+
+                var currentDate = new Date();
+                if (date1 < currentDate) {
+                    return -1;
+                }
+                else if (date1.toDateString() === currentDate.toDateString()) {
+                    return 0;
+                }
+                else if (date1 > currentDate) {
+                    return 1;
+                } else {
+                    return -2;
+                }
+            }
+
             function compareTwoDate(fromDate, toDate) {
                 //alert(target + " <> " + getCurrentDate());
                 var fromParts = fromDate.split("-");
@@ -2201,6 +2230,36 @@
                 var date2 = new Date(toParts[2], // year
                         toParts[1] - 1, // month, starts with 0
                         toParts[0]); // day
+                if (date1 < date2) {
+                    return -1;
+                }
+                else if (date1.toDateString() === date2.toDateString()) {
+                    return 0;
+                }
+                else if (date1 > date2) {
+                    return 1;
+                } else {
+                    return -2;
+                }
+            }
+
+            function compareTwoDatetime(fromDate, fromHour, toDate, toHour) {
+                //alert(target + " <> " + getCurrentDate());
+                var fromParts = fromDate.split("-");
+                var fromParts2 = fromHour.split(":");
+                var date1 = new Date(fromParts[2], // year
+                        fromParts[1] - 1, // month, starts with 0
+                        fromParts[0], // day
+                        fromParts2[0], // Hour
+                        fromParts2[1]); //minute
+
+                var toParts = toDate.split("-");
+                var toParts2 = toHour.split(":");
+                var date2 = new Date(toParts[2], // year
+                        toParts[1] - 1, // month, starts with 0
+                        toParts[0], // day
+                        toParts2[0], // Hour
+                        toParts2[1]); // minute
                 if (date1 < date2) {
                     return -1;
                 }
