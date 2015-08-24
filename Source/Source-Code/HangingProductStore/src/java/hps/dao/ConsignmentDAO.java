@@ -969,7 +969,7 @@ public class ConsignmentDAO {
                             }
                         }
                     }
-                }else{
+                } else {
                     return false;
                 }
 
@@ -2029,6 +2029,10 @@ public class ConsignmentDAO {
         }
         // completed
         temp = getProduct(storeOwnerID, ProductStatus.NOT_AVAILABLE, ConsignmentStatus.COMPLETED, "ReceivedDate");
+        for (ConsignmentDTO next : temp) {
+            result.add(next);
+        }
+        temp = getProduct(storeOwnerID, ProductStatus.NOT_AVAILABLE, ConsignmentStatus.CANCEL, "CancelDate");
         for (ConsignmentDTO next : temp) {
             result.add(next);
         }

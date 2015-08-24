@@ -746,13 +746,13 @@
                         if (isSpecial > 0) {
                             if (orderList[i].sendPrice == 0) {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px;margin-left:20px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' +
                                         orderList[i].phone + '</td><td>Chưa gửi giá</td></tr>';
                             } else {
                                 row = '<tr><td style="text-align: center"><input type="checkbox" name="chkboxCustomer" value="' +
-                                        orderList[i].orderID + '"><input style="width : 60px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
+                                        orderList[i].orderID + '"><input style="width : 60px;margin-left:20px" type="text" id="' + orderList[i].orderID + '" name="' + orderList[i].orderID + '"> </td><td>' +
                                         orderList[i].fullName + '</td><td>' +
                                         orderList[i].orderedDate + '</td><td>' + orderList[i].phone + '</td><td>Đã gửi giá : ' +
                                         orderList[i].sendPrice.toMoney(0) + ' (ngàn đồng)</td></tr>';
