@@ -643,7 +643,7 @@
                     if (isNaN(price) || price.length == 0 || price <= 0) {
                         var id = '#' + $(this).val();
                         var sendPrice = $("" + id).val();
-                        if (flag && (isNaN(price) || price.length == 0 || price <= 0)) {
+                        if (flag && (isNaN(sendPrice) || sendPrice.length == 0 || sendPrice <= 0)) {
                             alert('Vui lòng nhập giá gửi khách hàng');
                             flag = false;
                         }

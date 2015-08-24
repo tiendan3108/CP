@@ -131,11 +131,9 @@ public class OrderProduct extends HttpServlet {
                     int sendPrice = 0;
                     try {
                         sendPrice = Integer.parseInt(temp_sendPrice);
-                        isValid = true;
                     } catch (Exception e) {
-                        isValid = false;
                     }
-                    if (orderIDs != null && orderIDs.length > 0 && isValid) {
+                    if (orderIDs != null && orderIDs.length > 0) {
                         for (String _orderID : orderIDs) {
                             String tempPrice = request.getParameter(_orderID);
                             int price = 0;

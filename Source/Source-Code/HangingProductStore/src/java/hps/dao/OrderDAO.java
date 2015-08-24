@@ -346,7 +346,7 @@ public class OrderDAO {
             stmP = conn.prepareStatement(query);
             stmP.setInt(1, ProductStatus.ON_WEB);
             stmP.setString(2, orderID);
-            stmP.setInt(1, ProductStatus.ORDERED);
+            stmP.setInt(3, ProductStatus.ORDERED);
             stmP.executeUpdate();
 
             conn.commit();
