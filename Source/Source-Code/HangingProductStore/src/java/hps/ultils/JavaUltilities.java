@@ -55,9 +55,9 @@ import org.apache.http.message.BasicNameValuePair;
 public class JavaUltilities {
 
     //variable for sendSMS
-    public static final String ACCOUNT_SID = "AC18c0b96b67f6c9ce74d60958f6019fdb";
-    public static final String AUTH_TOKEN = "7f171ea00675bd946f44cd423e88fc84";
-    public static final String PHONE_NUMBER = "+12057746464";
+    public static final String ACCOUNT_SID = "ACaccc9f2924b4f98df8febf14f6e7f338";
+    public static final String AUTH_TOKEN = "0f046f7e9bde41065f220f23f82e07a7";
+    public static final String PHONE_NUMBER = "+15307231732";
     //variable for sendEmail
     private static String USER_NAME = "HangingProductStore@gmail.com";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "hps123456"; // GMail password
