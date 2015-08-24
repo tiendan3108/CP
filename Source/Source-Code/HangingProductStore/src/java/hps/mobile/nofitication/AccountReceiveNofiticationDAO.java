@@ -7,6 +7,7 @@ package hps.mobile.nofitication;
 
 import hps.ultils.ConsignmentStatus;
 import hps.ultils.DBUltilities;
+import hps.ultils.DeliveryMethod;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,10 +34,12 @@ public class AccountReceiveNofiticationDAO {
             String query = "select COUNT(*) as num from Consignment, Account "
                     + "where Account.AccountID = ? "
                     + "And convert(varchar(10), Consignment.AppointmentDate, 102) = convert(varchar(10), getdate(), 102) "
-                    + "And Consignment.ConsignmentStatusID = ? ";
+                    + "And Consignment.ConsignmentStatusID = ? "
+                    + "And Consignment.DeliveryMethod = ? ";
             stm = con.prepareStatement(query);
             stm.setString(1, username);
             stm.setInt(2, ConsignmentStatus.ACCEPTED);
+            stm.setInt(3, DeliveryMethod.BY_STOREOWNER);
             rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("num");
