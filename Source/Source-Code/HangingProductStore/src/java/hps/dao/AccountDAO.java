@@ -527,6 +527,9 @@ public class AccountDAO {
                 //add MinPrice & MaxPrice
                 
                 int percent = ultil.getPercentInPropertyFileByStoreOwnerID(store.getRoleID());
+                if(percent < 0){
+                    percent = 60;
+                }
                 store.setMinPrice(Math.round((basicPrice * percent / 100) * (1 - store.getFormula() / 100) / 1000));
                 store.setMaxPrice(Math.round((basicPrice * percent / 100) * (1 + store.getFormula() / 100) / 1000));
                 list.add(store);
