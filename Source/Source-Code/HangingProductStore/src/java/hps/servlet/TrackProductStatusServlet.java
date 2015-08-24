@@ -120,24 +120,27 @@ public class TrackProductStatusServlet extends HttpServlet {
             } else if (action.equals("cancel")) {
                 String consignmentID = request.getParameter("consignmentID");
                 String searchValue = request.getParameter("searchValue");
-                dao.cancelConsignmentInProduct(consignmentID);
-
+                boolean result = dao.cancelConsignmentInProduct(consignmentID);
                 ConsignmentDTO consignment = dao.getConsignment(consignmentID);
-                if (consignment != null) {
-                    dao.populateStoreOwner(consignment);
-                    if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        java.util.Date currentDate = new java.util.Date();
-                        String today = df.format(currentDate);
-                        if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
-                            JavaUltilities java = new JavaUltilities();
-                            String noti = MessageString.titleNofitication;
-                            java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
-                            System.out.println("Send cancel notification");
+                if (!result) {
+                    request.setAttribute("ERROR", "Không thể hủy ký gửi này");
+                    System.out.println("KHONG THE XOA!!!!!");
+                } else {
+                    if (consignment != null) {
+                        dao.populateStoreOwner(consignment);
+                        if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
+                            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                            java.util.Date currentDate = new java.util.Date();
+                            String today = df.format(currentDate);
+                            if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
+                                JavaUltilities java = new JavaUltilities();
+                                String noti = MessageString.titleNofitication;
+                                java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
+                                System.out.println("Send cancel notification");
+                            }
                         }
                     }
                 }
-
                 request.setAttribute("CONSIGNMENT", consignment);
                 request.setAttribute("searchValue", consignmentID);
 
@@ -163,19 +166,25 @@ public class TrackProductStatusServlet extends HttpServlet {
             } else if (action.equals("m_cancel")) {
                 String actionValue = request.getParameter("actionValue");
                 String searchValue = request.getParameter("searchValue");
-                dao.cancelConsignmentInProduct(actionValue);
+                boolean result = dao.cancelConsignmentInProduct(actionValue);
                 ConsignmentDTO consignment = dao.getConsignment(searchValue);
-                if (consignment != null) {
-                    dao.populateStoreOwner(consignment);
-                    if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        java.util.Date currentDate = new java.util.Date();
-                        String today = df.format(currentDate);
-                        if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
-                            JavaUltilities java = new JavaUltilities();
-                            String noti = MessageString.titleNofitication;
-                            java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
-                            System.out.println("Send cancel notification");
+                if (!result) {
+                    request.setAttribute("ERROR", "Không thể hủy ký gửi này");
+                    System.out.println("KHONG THE XOA!!!!!");
+                } else {
+
+                    if (consignment != null) {
+                        dao.populateStoreOwner(consignment);
+                        if (consignment.getReviewProductDate() == null && consignment.getAppointmentDate() != null) {
+                            DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                            java.util.Date currentDate = new java.util.Date();
+                            String today = df.format(currentDate);
+                            if (consignment.getAppointmentDate().equals(today) && consignment.getDeliveryMethod() != 1) {
+                                JavaUltilities java = new JavaUltilities();
+                                String noti = MessageString.titleNofitication;
+                                java.sendNofitiCation(noti, MessageString.cancelProductNotification(consignment.getProduct().getName(), consignment.getConsigmentID()), AccountDAO.getGcmIDOfStoreOwnerByConsignmentID(consignment.getConsigmentID()));
+                                System.out.println("Send cancel notification");
+                            }
                         }
                     }
                 }

@@ -30,7 +30,7 @@
         <div id="wrapper_manage">
             <div class="row margin-bottom-40">
                 <!--BEGIN SIDEBAR -->
-                
+
                 <!-- END SIDEBAR -->
 
                 <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1" style="background-color: white; padding-top: 30px ">
@@ -107,8 +107,8 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <b><fmt:formatNumber 
-                                                    value="${c.desirePrice}" 
-                                                    maxFractionDigits="1"/></b>
+                                                        value="${c.desirePrice}" 
+                                                        maxFractionDigits="1"/></b>
                                                 </c:otherwise>
                                             </c:choose>
                                     </td>
@@ -315,7 +315,23 @@
             <!-- END SIDEBAR & CONTENT -->
 
         </div>
-
+        <!--Begin Modal -->
+        <div id="modalError" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #dfba49">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Thông báo</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="errorMessage" align="center">${ERROR}</h2>
+                    </div>
+                    <div class="modal-footer">    
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>                                    
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <script type="text/javascript" src="assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     </jsp:body>
@@ -332,7 +348,11 @@
         $("#datatable_ajax").dataTable();
     });
 
-
+    $(document).ready(function () {
+        if ($("#errorMessage").text().length > 0) {
+            $("#modalError").modal("show");
+        }
+    });
 
     function loadDetails(id) {
         $.get('TrackProductStatus', {btnAction: 'requestdetails', id: id}, function (data) {
@@ -363,7 +383,7 @@
 
             $("#div_r_reason").hide();
             $("#btnCancel").hide();
-            
+
             if (data.consignmentStatusID == 1) {
                 $("#r_status").html("<b><font color='green'>CHỜ XỬ LÝ</font></b>");
                 $("#btnCancel").show();
@@ -383,7 +403,7 @@
                 $("#r_reason").html(data.reason);
             }
             else if (data.consignmentStatusID == 4) {
-                $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");             
+                $("#r_status").html("<b><font color='blue'>HOÀN THÀNH</font></b>");
             }
 
             else if (data.consignmentStatusID == 6) {
@@ -392,11 +412,11 @@
             else if (data.consignmentStatusID == 4) {
                 $("#r_status").html("<b><font color='blue'>HOÀN TẤT</font></b>");
             }
-            
+
             else if (data.consignmentStatusID == 7) {
                 $("#r_status").html("<b><font color='red'>HOÀN TẤT HỦY</font></b>");
             }
-            
+
             else if (data.consignmentStatusID == 5) {
                 if (data.product.productStatusID == 2) {
                     $("#r_status").html("<b><font color='blue'>ĐÃ NHẬN HÀNG</font></b>");

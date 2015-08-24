@@ -259,7 +259,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header" style="background-color: #dfba49">
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title">Thông báo</h4>
+                                        <h4 class="modal-title">Lưu ý</h4>
                                     </div>
                                     <div class="modal-body">
                                         <h2 id="r_message" align="center">Bạn có chắc chắn muốn hủy ký gửi này không?</h2>
@@ -272,11 +272,29 @@
                                     </div>
                                     <div class="modal-footer">
                                         <form action="TrackProductStatus" method="POST">
-                                            <button type="submit" name="btnAction" class="btn btn-primary" value="cancel">Đồng ý</button>
+                                            <button type="submit" name="btnAction" class="btn btn-warning" value="cancel">Đồng ý</button>
                                             <input type="hidden" name="consignmentID" value="${c.consigmentID}"/>
                                             <input type="hidden" name="searchValue" value="${param.searchValue}"/>
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                                         </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                        
+                        <!-- Begin Modal -->
+                        <div id="modalError" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color: #dfba49">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Thông báo</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h2 id="errorMessage" align="center">${ERROR}</h2>
+                                    </div>
+                                    <div class="modal-footer">    
+                                            <button type="button" class="btn btn-warning" data-dismiss="modal">Đóng</button>                                    
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -321,5 +339,9 @@
 </template:shopbasic>
 
 <script type="text/javascript">
-
+$(document).ready(function () {
+    if($("#errorMessage").text().length > 0){
+        $("#modalError").modal("show");
+    }
+});
 </script> 
